@@ -1,4 +1,5 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises'
+import { createHash } from 'node:crypto'
 import { fileURLToPath } from 'node:url'
 import { build } from 'esbuild'
 import { marked } from 'marked'
@@ -101,9 +102,21 @@ if (Object.keys(sources).length !== registry.items.length)
 const apiReference = await buildApiReference()
 const directorySources = await readDirectorySources()
 await mkdir('site', { recursive: true })
-// The published package excludes site/, so the offline download can be embedded without recursion.
-execSync('npm pack --ignore-scripts --silent --pack-destination site', { stdio: 'pipe' })
 const archiveName = 'alpina-ui-' + registry.version + '.tgz'
+if (process.argv.includes('--release-package')) {
+  // Build hosts can produce different tar headers for identical package contents.
+  // Serve the exact release bytes pinned by the standalone example's lockfile.
+  const directory = 'recipes/rubrica/'
+  const archive = await readFile(directory + 'vendor/' + archiveName)
+  const lock = JSON.parse(await readFile(directory + 'package-lock.json', 'utf8'))
+  const expected = lock.packages['node_modules/alpina-ui']
+  const integrity = 'sha512-' + createHash('sha512').update(archive).digest('base64')
+  if (expected.version !== registry.version || expected.integrity !== integrity)
+    throw new Error('The release package does not match the address book lockfile.')
+  await writeFile('site/' + archiveName, archive)
+} else {
+  execSync('npm pack --ignore-scripts --silent --pack-destination site', { stdio: 'pipe' })
+}
 const archive = await readFile('site/' + archiveName)
 const release = {
   name: archiveName,

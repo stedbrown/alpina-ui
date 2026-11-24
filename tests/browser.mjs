@@ -218,11 +218,12 @@ try {
     await view('Sorgente').click()
     const select = main.getByLabel('File distribuiti')
     assert.equal(await select.inputValue(), item.entry)
-    assert.deepEqual((await select.locator('option').allTextContents()).sort(), [...item.files].sort())
-    for (const file of item.files) {
+    const distributed = [...item.files, 'ALPINA-LICENSE.txt'].sort()
+    assert.deepEqual((await select.locator('option').allTextContents()).sort(), distributed)
+    for (const file of distributed) {
       if (inspected.has(file) && file !== item.entry) continue
       await select.selectOption(file)
-      const original = await readFile(new URL('src/' + file, root), 'utf8')
+      const original = await readFile(new URL(file === 'ALPINA-LICENSE.txt' ? 'LICENSE' : 'src/' + file, root), 'utf8')
       assert.ok(
         normalize(await code.textContent()) === normalize(original),
         item.name + ' → ' + file + ' differs from source',

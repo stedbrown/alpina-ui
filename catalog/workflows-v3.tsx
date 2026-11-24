@@ -6,47 +6,47 @@ export function CalendarExample() {
 }
 
 export function DatePickerExample() {
-  return <DatePicker label="Data di ritiro" name="ritiro" defaultValue="2026-04-09" />
+  return <DatePicker locale="it-CH" name="collection" defaultValue="2026-04-09" />
 }
 
 export function InputOTPExample() {
-  return <Field label="Codice di verifica" description="Inserisci le sei cifre ricevute via SMS.">
-    {(control) => <InputOTP {...control} name="verifica" length={6} defaultValue="04" required />}
+  return <Field label="Verification code" description="Enter the six digits you received by SMS.">
+    {(control) => <InputOTP {...control} name="verification" length={6} defaultValue="04" required />}
   </Field>
 }
 
 export function NativeSelectExample() {
-  return <Field label="Formato di stampa">{(control) => <NativeSelect {...control} defaultValue="A4">
+  return <Field label="Print format">{(control) => <NativeSelect {...control} defaultValue="A4">
     <option>A5</option><option>A4</option><option>A3</option><option>A2</option>
   </NativeSelect>}</Field>
 }
 
 export function ToggleGroupExample() {
-  return <ToggleGroup label="Viste del catalogo" defaultValue={['anno']} options={[
-    { value: 'anno', label: 'Per anno' }, { value: 'autore', label: 'Per autore' },
-    { value: 'tecnica', label: 'Per tecnica' },
+  return <ToggleGroup label="Catalog views" defaultValue={['year']} options={[
+    { value: 'year', label: 'By year' }, { value: 'author', label: 'By author' },
+    { value: 'technique', label: 'By technique' },
   ]} />
 }
 
 export function QuestionnaireExample() {
   const [summary, setSummary] = useState('')
-  return <><Questionnaire label="Richiesta di consultazione" onComplete={(answers) => setSummary(answers.fondo + ' · ' + answers.sede)} questions={[
-    { id: 'fondo', label: 'Quale fondo vuoi consultare?', options: [{ value: 'Manifesti', label: 'Manifesti' }, { value: 'Periodici', label: 'Periodici' }] },
-    { id: 'sede', label: 'In quale sala?', options: [{ value: 'Lugano', label: 'Lugano' }, { value: 'Bellinzona', label: 'Bellinzona' }] },
+  return <><Questionnaire label="Reading room request" onComplete={(answers) => setSummary(answers.collection + ' · ' + answers.room)} questions={[
+    { id: 'collection', label: 'Which collection would you like to consult?', options: [{ value: 'Posters', label: 'Posters' }, { value: 'Periodicals', label: 'Periodicals' }] },
+    { id: 'room', label: 'Which reading room?', options: [{ value: 'Lugano', label: 'Lugano' }, { value: 'Bellinzona', label: 'Bellinzona' }] },
   ]} />{summary && <p><output>{summary}</output></p>}</>
 }
 
 export function MessageScrollerExample() {
   const [runs, setRuns] = useState(1)
-  return <div><MessageScroller label="Registro della tiratura">
-    {Array.from({ length: runs }, (_, i) => <p key={i}><strong>Tiratura {i + 1}.</strong> Prova di stampa registrata.</p>)}
-  </MessageScroller><Button variant="outline" onClick={() => setRuns((n) => n + 1)}>Registra una prova</Button></div>
+  return <div><MessageScroller label="Print run log">
+    {Array.from({ length: runs }, (_, i) => <p key={i}><strong>Print run {i + 1}.</strong> Print proof recorded.</p>)}
+  </MessageScroller><Button variant="outline" onClick={() => setRuns((n) => n + 1)}>Record a proof</Button></div>
 }
 
 export function TraceExample() {
-  return <Trace label="Revisione della bozza" events={[
-    { id: 'invio', time: '09.10', dateTime: '09:10', title: 'Bozza ricevuta' },
-    { id: 'controllo', time: '09.45', dateTime: '09:45', title: 'Controllo tipografico', detail: 'Verificati gli accenti sulle maiuscole e l’allineamento delle cifre.' },
-    { id: 'stampa', time: '11.20', dateTime: '11:20', title: 'Visto si stampi' },
+  return <Trace label="Draft review" events={[
+    { id: 'submission', time: '09.10', dateTime: '09:10', title: 'Draft received' },
+    { id: 'type-check', time: '09.45', dateTime: '09:45', title: 'Type check', detail: 'Checked the accents on capital letters and the alignment of numerals.' },
+    { id: 'print', time: '11.20', dateTime: '11:20', title: 'Approved for printing' },
   ]} />
 }

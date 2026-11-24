@@ -148,7 +148,7 @@ try {
   assert.ok(await controlled.isDisabled())
   assert.deepEqual(errors, [])
   console.log(
-    'CantonCombobox: ricerca in 4 lingue, tastiera, focus, valori controllati e FormData verificati.',
+    'CantonCombobox passed search in four languages, keyboard input, focus, controlled values and FormData checks.',
   )
 } finally {
   await browser.close()

@@ -8,7 +8,7 @@ export interface LocaleSelectProps extends Omit<
   ComponentPropsWithoutRef<'select'>,
   'children' | 'value' | 'defaultValue' | 'multiple'
 > {
-  /** Lingue disponibili, nell’ordine in cui devono comparire nel selettore. */
+  /** Available languages in the order they appear in the selector. */
   locales?: readonly SwissLocale[]
   value?: SwissLocale
   defaultValue?: SwissLocale

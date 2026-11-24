@@ -9,7 +9,7 @@ export function DirectoryLive() {
   useEffect(() => {
     window.scrollTo(0, 0)
     return () => {
-      document.documentElement.lang = 'it-CH'
+      document.documentElement.lang = 'en'
     }
   }, [])
   return (

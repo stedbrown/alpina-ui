@@ -1,16 +1,14 @@
-# Rubrica degli atelier · Atelierverzeichnis
+# Atelier address book
 
-Una rubrica italiano–tedesco per cercare, creare e modificare i recapiti di sette atelier fittizi. Le modifiche durano fino al ricaricamento della pagina. Puoi scaricare l’HTML dalla release e aprirlo direttamente nel browser, anche senza rete. [Release 0.5.0](https://github.com/stedbrown/alpina-ui/releases/tag/v0.5.0)
+This Italian–German example uses Alpina UI to search, create, and edit contact details for seven fictional design studios. Changes last until you reload the page. Download the standalone HTML and open it in a browser to try it offline. [Download the address book](https://github.com/stedbrown/alpina-ui/releases/download/v0.5.1/alpina-address-book-it-de.html)
 
-## Prova il flusso
+## Try the workflow
 
-Cerca un atelier per nome, città, cantone o numero postale. Seleziona un cantone e cambia lingua. Il filtro rimane attivo. Il nome del contatto apre la scheda. Il menu Azioni consente di modificare e rimuovere una voce. La rimozione richiede una conferma. Nel pannello di modifica puoi passare da IT a DE conservando i valori già inseriti.
+Search by studio name, town, canton, or postal code. Select a canton and switch languages. The filter stays active. Select a name to view its address, or open its action menu to edit or remove the entry. Removal requires confirmation. You can switch languages halfway through an edit and continue from the same draft.
 
-## Ricostruisci e verifica
+## Build and test
 
-Servono Node.js 20 o successivo e npm. La cartella `vendor` contiene lo stesso pacchetto Alpina UI 0.5.0 distribuito dal portale. Il lockfile ne verifica l’integrità e fissa le versioni delle altre dipendenze.
-
-Dalla radice del repository clonato esegui questi comandi.
+Use Node.js 20 or later and npm. The `vendor` directory contains the same Alpina UI 0.5.1 package offered by the catalog. The lockfile records its integrity and pins the other dependencies. From the repository root, run the following commands.
 
 ```sh
 cd recipes/rubrica
@@ -19,6 +17,6 @@ npm run build
 npm test
 ```
 
-La build genera `dist/rubrica-bilingue.html` e incorpora JavaScript e CSS. Per i test serve Chrome oppure Chromium. Puoi impostare `CHROME_PATH` per indicare il percorso dell’eseguibile.
+The build writes `dist/rubrica-bilingue.html` with JavaScript and CSS embedded. Browser tests require Chrome or Chromium. Set `CHROME_PATH` to choose an executable.
 
-Il componente `AtelierDirectory` è in `src/app.tsx`. Il punto di ingresso `src/main.tsx` carica gli stili della libreria e quelli della rubrica. Per misurare il CSS specifico della rubrica esegui `node scripts/css-count.mjs` dalla cartella di questo esempio. La prova di adozione documenta la riduzione da 56 a 43 dichiarazioni e descrive le scelte rimaste a carico dell’applicazione. [Confronto fra 0.4 e 0.5](PROVA.md)
+The `AtelierDirectory` component lives in `src/app.tsx`. Its standalone entry point, `src/main.tsx`, imports the library and application stylesheets. Run `node scripts/css-count.mjs` from this example’s directory to measure its custom CSS. The adoption report explains which changes reduced the stylesheet from 56 declarations to 43 and which layout choices remain specific to the directory. [Adoption report](PROVA.md)

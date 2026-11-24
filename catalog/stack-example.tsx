@@ -5,22 +5,18 @@ export function StackExample() {
   const id = useId()
   const [query, setQuery] = useState('')
   const names = ['Atelier Seefeld', 'Studio Limmat', 'Bottega al Ponte']
+  const count = names.filter((name) =>
+    name.toLocaleLowerCase('en').includes(query.trim().toLocaleLowerCase('en')),
+  ).length
   return (
     <Stack gap={3}>
-      <Label htmlFor={id}>Cerca un contatto</Label>
+      <Label htmlFor={id}>Find a contact</Label>
       <Input id={id} type="search" value={query} onChange={(e) => setQuery(e.target.value)} />
       <Stack direction="row" gap={2} justify="space-between">
         <Button variant="outline" disabled={!query} onClick={() => setQuery('')}>
-          Azzera ricerca
+          Clear search
         </Button>
-        <output>
-          {
-            names.filter((name) =>
-              name.toLocaleLowerCase('it').includes(query.trim().toLocaleLowerCase('it')),
-            ).length
-          }{' '}
-          contatti
-        </output>
+        <output>{count} {count === 1 ? 'contact' : 'contacts'}</output>
       </Stack>
     </Stack>
   )

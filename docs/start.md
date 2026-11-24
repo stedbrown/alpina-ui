@@ -1,24 +1,24 @@
-# Avvio rapido
+# Getting started
 
-Alpina UI 0.5.0 include 78 componenti per React, distribuiti come moduli ESM con tipi TypeScript, fogli di stile e sorgenti modificabili. Il catalogo e la guida sono in italiano. Il modulo indirizzo include le etichette e gli errori nelle quattro lingue nazionali. Negli altri componenti puoi passare le stringhe della tua applicazione.
+Alpina UI 0.5.1 includes 78 React components distributed as ESM modules with TypeScript declarations, stylesheets, and editable source. The catalog and guides are in English. The address form provides field labels and error messages in all four Swiss national languages. Other components accept strings from your application.
 
 <!-- alpina-download -->
 
-## Installa il pacchetto locale
+## Install the package
 
-In un progetto React 18.2 o 19, con Node.js 20 o successivo, scarica il pacchetto dal portale, sposta il file `alpina-ui-0.5.0.tgz` nella radice del progetto e installalo.
+In a React 18.2 or 19 project with Node.js 20 or later, download the package from the portal, move `alpina-ui-0.5.1.tgz` to the project root, and install it.
 
 ```sh
-npm install ./alpina-ui-0.5.0.tgz
+npm install ./alpina-ui-0.5.1.tgz
 ```
 
-Importa il CSS una volta nel punto di ingresso dell’app. I moduli JavaScript non caricano CSS implicitamente e si possono importare anche durante il rendering sul server.
+Import the CSS once at your application entry point. The JavaScript modules can also run during server rendering. They leave stylesheet loading to your application.
 
 ```tsx
 import "alpina-ui/styles.css"
 import { CurrencyCHF, SwissDate } from "alpina-ui"
 
-export function Riepilogo() {
+export function Summary() {
   return (
     <p>
       <CurrencyCHF amount={1280.5} locale="fr-CH" />
@@ -29,23 +29,23 @@ export function Riepilogo() {
 }
 ```
 
-## Includi un singolo componente
+## Include a single component
 
-Per un bundle mirato puoi importare un modulo e il suo stile. Il CSS specifico include le regole delle dipendenze del componente. Importa il tema una volta. I formattatori puri non richiedono fogli di stile.
+For a smaller bundle, import the component module and its stylesheet. Component CSS includes the rules for its dependencies. Import the theme once. Pure formatters work without stylesheets.
 
 ```tsx
 import "alpina-ui/theme.css"
 import "alpina-ui/styles/button.css"
 import { Button } from "alpina-ui/ui/button"
 
-export function Conferma() {
-  return <Button type="submit">Conferma</Button>
+export function Confirm() {
+  return <Button type="submit">Confirm</Button>
 }
 ```
 
-## Copia i sorgenti nel progetto
+## Copy source files into your project
 
-Dopo l’installazione del pacchetto locale, la CLI funziona anche offline. Il comando `list` mostra i nomi del registro. `add` scrive i file scelti, il tema e le loro dipendenze sotto `components/alpina`. I file già modificati nel progetto vengono conservati. `init` prepara il solo tema ed è facoltativo.
+Once you install the package, the CLI works offline. `list` shows registry names. `add` copies the selected files, their dependencies, the theme, and the license notice to `components/alpina`. It preserves files you have edited. The optional `init` command copies the theme and its license notice.
 
 ```sh
 npx --no-install alpina list
@@ -54,20 +54,20 @@ npx --no-install alpina add dialog --dir src/components/alpina --dry-run
 npx --no-install alpina add --all
 ```
 
-Con i sorgenti copiati, importa il tema da `./components/alpina/theme.css` e il componente da `./components/alpina/ui/button` o `./components/alpina/swiss/canton-select`. Adatta i percorsi alla posizione del file chiamante. I file TSX importano i rispettivi CSS e richiedono un bundler con supporto CSS e TypeScript. Gli import relativi `.js` nei sorgenti seguono la convenzione NodeNext.
+With copied sources, import the theme from `./components/alpina/theme.css` and components from paths such as `./components/alpina/ui/button` or `./components/alpina/swiss/canton-select`. Adjust the paths relative to the importing file. Each TSX file imports its own CSS and needs a bundler with CSS and TypeScript support. Relative `.js` imports follow the NodeNext convention.
 
-## Personalizza il tema
+## Customize the theme
 
-Gli stili della libreria usano classi con prefisso `al-`. Puoi applicare il tema scuro a tutta l’app o a una singola sezione. Per personalizzare l’identità visiva, carica le tue variabili dopo il tema. Il tema preferisce Helvetica Neue e Helvetica, con Arial e il sans-serif di sistema come alternative. I ruoli tipografici e le misure di impaginazione sono descritti nella guida al metodo svizzero.
+Library classes use the `al-` prefix. Apply the dark theme to an entire app or to one section. To customize the design, load your variables after the theme. The type stack starts with Helvetica Neue and Helvetica, followed by Arial and the system sans serif. The design guide explains the type roles and grid dimensions.
 
 ```tsx
 <section data-al-theme="dark">
-  <Button>Salva</Button>
+  <Button>Save</Button>
 </section>
 ```
 
 ```css
-.mia-app {
+.my-app {
   --al-accent: #eb0000;
   --al-on-accent: white;
   --al-radius: 0;
@@ -75,8 +75,8 @@ Gli stili della libreria usano classi con prefisso `al-`. Puoi applicare il tema
 }
 ```
 
-## Ambiente e accessibilità
+## Runtime and accessibility
 
-I controlli di modulo usano gli elementi HTML nativi. I componenti interattivi richiedono il browser dopo l’idratazione. Le modali usano `HTMLDialogElement.showModal()`. Nei framework con React Server Components, inserisci `"use client"` nei componenti dell’app che gestiscono stato, callback o render prop interattive. Le funzioni `formatCHF` e `formatSwissDate` sono importabili anche in codice server.
+Form controls use native HTML elements. Interactive components use the browser after hydration. Modals use `HTMLDialogElement.showModal()`. In frameworks with React Server Components, place `"use client"` in application components that manage interactive state, callbacks, or render props. You can import `formatCHF` and `formatSwissDate` in server code.
 
-Verifica i flussi della tua applicazione con le etichette, le traduzioni e i colori scelti. Il progetto include test automatici di tastiera e focus per i componenti interattivi.
+Test complete application flows with your labels, translations, and theme colors. The project includes automated keyboard and focus tests for interactive components.

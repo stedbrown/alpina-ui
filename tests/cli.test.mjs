@@ -56,7 +56,7 @@ test('init copies the theme and its notice, preserves the project license and su
   const originalTime = new Date('2005-01-01T12:00:00Z')
   await utimes(file, originalTime, originalTime)
   const { stdout } = await run('init')
-  assert.match(stdout, /presente\s+/)
+  assert.match(stdout, /present\s+/)
   assert.equal((await stat(file)).mtimeMs, originalTime.getTime())
 })
 
@@ -87,29 +87,29 @@ test('add --all copies the union of all registry entries once', async (t) => {
   const files = new Set(registry.items.flatMap((item) => item.files))
   const first = await run('add', '--all')
   assert.equal(
-    first.stdout.split(/\r?\n/).filter((line) => line.startsWith('aggiunto')).length,
+    first.stdout.split(/\r?\n/).filter((line) => line.startsWith('added')).length,
     files.size + 1,
   )
   await assertCopies(destination, files)
   const second = await run('add', '--all')
-  assert.doesNotMatch(second.stdout, /aggiunto|mantieni/)
+  assert.doesNotMatch(second.stdout, /added|keep/)
   assert.equal(
-    second.stdout.split(/\r?\n/).filter((line) => line.startsWith('presente')).length,
+    second.stdout.split(/\r?\n/).filter((line) => line.startsWith('present')).length,
     files.size + 1,
   )
 })
 
 test('dry runs describe files without creating directories or changing edited sources', async (t) => {
   const { run, cwd, destination } = await fixture(t)
-  assert.match((await run('init', '--dry-run')).stdout, /previsto\s+.*theme\.css/)
-  assert.match((await run('add', '--dry-run', 'dialog')).stdout, /previsto\s+.*dialog\.tsx/)
+  assert.match((await run('init', '--dry-run')).stdout, /planned\s+.*theme\.css/)
+  assert.match((await run('add', '--dry-run', 'dialog')).stdout, /planned\s+.*dialog\.tsx/)
   assert.deepEqual(await readdir(cwd), [])
   await run('init')
   const file = path.join(destination, 'theme.css')
   await writeFile(file, '/* Tema del progetto. */\n')
   const { stdout } = await run('add', 'button', '--dry-run')
-  assert.match(stdout, /mantieni\s+.*theme\.css/)
-  assert.match(stdout, /previsto\s+.*button\.tsx/)
+  assert.match(stdout, /keep\s+.*theme\.css/)
+  assert.match(stdout, /planned\s+.*button\.tsx/)
   assert.deepEqual(await listFiles(destination), [licenseFile, 'theme.css'])
   assert.equal(await readFile(file, 'utf8'), '/* Tema del progetto. */\n')
 })
@@ -121,7 +121,7 @@ test('add preserves modified shared components while installing missing dependen
   const changed = (await readFile(file, 'utf8')) + '\n// Modifica locale.\n'
   await writeFile(file, changed)
   const { stdout } = await run('add', 'canton-select')
-  assert.match(stdout, /mantieni\s+.*select\.tsx/)
+  assert.match(stdout, /keep\s+.*select\.tsx/)
   assert.equal(await readFile(file, 'utf8'), changed)
   assert.ok((await stat(path.join(destination, 'swiss', 'canton-select.tsx'))).isFile())
 })
@@ -140,12 +140,12 @@ test('diff detects installed entries, compares shared files once and preserves t
   const { stdout } = await run('diff')
   const selected = registry.items.filter((item) => ['dialog', 'sheet'].includes(item.name))
   const uniqueFiles = new Set(selected.flatMap((item) => item.files))
-  assert.ok(stdout.includes('Confronto con Alpina UI ' + registry.version))
-  assert.match(stdout, /allineato\s+.*theme\.css/)
-  assert.match(stdout, /mancante\s+.*modal-surface\.css/)
-  assert.match(stdout, /diverso\s+.*controllable\.ts/)
+  assert.ok(stdout.includes('Comparing with Alpina UI ' + registry.version))
+  assert.match(stdout, /aligned\s+.*theme\.css/)
+  assert.match(stdout, /missing\s+.*modal-surface\.css/)
+  assert.match(stdout, /modified\s+.*controllable\.ts/)
   assert.equal(stdout.match(/controllable\.ts/g)?.length, 1)
-  assert.ok(stdout.includes(`File allineati ${uniqueFiles.size - 1} · diversi 1 · mancanti 1`))
+  assert.ok(stdout.includes(`Files aligned ${uniqueFiles.size - 1} · modified 1 · missing 1`))
   assert.doesNotMatch(stdout, /note\.txt|canton-select/)
   assert.equal(await readFile(edited, 'utf8'), local)
   assert.equal((await stat(edited)).mtimeMs, time.getTime())
@@ -155,16 +155,16 @@ test('diff detects installed entries, compares shared files once and preserves t
 test('diff can inspect a new project, a named missing entry or the full registry without writing', async (t) => {
   const { run, cwd } = await fixture(t)
   const dir = 'src/alpina'
-  assert.match((await run('diff', '--dir', dir)).stdout, /Nessun sorgente Alpina/)
+  assert.match((await run('diff', '--dir', dir)).stdout, /No Alpina source files/)
   const { stdout } = await run('diff', 'button', '--dir', dir)
-  assert.match(stdout, /mancante\s+src[\\/]alpina[\\/]ui[\\/]button\.tsx/)
-  assert.match(stdout, /File allineati 0 · diversi 0 · mancanti 4/)
+  assert.match(stdout, /missing\s+src[\\/]alpina[\\/]ui[\\/]button\.tsx/)
+  assert.match(stdout, /Files aligned 0 · modified 0 · missing 4/)
   const all = await run('diff', '--all', '--dir', dir)
   const files = new Set(registry.items.flatMap((item) => item.files))
-  assert.equal(all.stdout.split(/\r?\n/).filter((row) => row.startsWith('mancante')).length, files.size + 1)
+  assert.equal(all.stdout.split(/\r?\n/).filter((row) => row.startsWith('missing')).length, files.size + 1)
   assert.deepEqual(await readdir(cwd), [])
   await run('init', '--dir', dir)
-  assert.match((await run('diff', '--dir', dir)).stdout, /File allineati 2 · diversi 0 · mancanti 0/)
+  assert.match((await run('diff', '--dir', dir)).stdout, /Files aligned 2 · modified 0 · missing 0/)
 })
 
 test('diff stays offline without Git, and explains an unavailable optional patch', async (t) => {
@@ -173,10 +173,10 @@ test('diff stays offline without Git, and explains an unavailable optional patch
   await writeFile(path.join(destination, 'theme.css'), '/* Tema dedicato */\n')
   const options = { cwd, env: { ...process.env, PATH: '' } }
   const status = await execute(process.execPath, [executable, 'diff'], options)
-  assert.match(status.stdout, /diverso\s+.*theme\.css/)
+  assert.match(status.stdout, /modified\s+.*theme\.css/)
   await assert.rejects(
     execute(process.execPath, [executable, 'diff', '--patch'], options),
-    (error) => error.code === 1 && error.stderr.includes('Per --patch installa Git'),
+    (error) => error.code === 1 && error.stderr.includes('Install Git to use --patch'),
   )
 })
 

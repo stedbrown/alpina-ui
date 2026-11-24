@@ -1,19 +1,19 @@
-# Costruire una rubrica italiano–tedesco
+# Build an Italian–German address book
 
-Per questa prova abbiamo iniziato da un progetto React vuoto e dal pacchetto scaricato dal portale Alpina 0.4. Le pagine Codice e API sono state il riferimento per i componenti. La seconda versione dell’app usa il portale 0.5. Il progetto della rubrica comprende esempi fittizi e funziona in locale.
+We started with an empty React project and the package downloaded from the Alpina 0.4 portal. The Code and API views were our reference for the components. The second version of the app uses the 0.5 portal. The address book runs locally and uses fictional records.
 
-## Lingua e dati
+## Language and contact data
 
-Conserva i dati dei contatti separati dalle etichette dell’interfaccia. Un cambio di lingua modifica titoli, campi, messaggi e azioni. Nome, via e località di un contatto restano quelli inseriti dall’utente. Mantieni ricerca, contatto e bozza nello stato dell’app. Assegna al documento il valore di lingua scelto. Per ordinare i nomi, usa un comparatore che riceve la lingua corrente.
+Keep contact data separate from interface labels. Switching languages changes headings, fields, messages, and actions. A contact's name, street, and locality retain the values entered by the user. Keep the search query, current contact, and draft in application state. Set the document language to the selected locale. Pass that locale to the name comparator when sorting records.
 
-I titoli `Typography` di livello heading e display prevedono la sillabazione automatica nella lingua del documento e possono spezzare una parola lunga quando manca un punto di sillabazione. Questo evita che un composto tedesco allarghi la pagina a 320 px.
+The heading and display roles of `Typography` support automatic hyphenation in the document language and can break a long word that has no available hyphenation point. A German compound can then fit at a viewport width of 320 px.
 
-La proprietà `locales` di `LocaleSelect` limita le opzioni e ne controlla l’ordine. In un selettore controllato, il valore corrente deve appartenere alle opzioni. Se scegli due pulsanti sempre visibili, anche `ButtonGroup` permette di presentare le due lingue con una sola azione per passare dall’una all’altra.
+The `locales` prop of `LocaleSelect` sets the available options and their order. With a controlled select, the current value must be one of those options. To keep both languages visible, use two buttons in a `ButtonGroup` so a single action switches languages.
 
-## Disposizione
+## Layout
 
-`Grid` determina le colonne della pagina. `Stack` dispone nello stesso gruppo titolo e azione o più controlli con un intervallo ricavato dai token. In una riga i figli vanno a capo se la traduzione tedesca richiede più spazio. Usa `columnGap` se vuoi intervalli orizzontali diversi da quelli verticali. `Item current={attivo}` allinea tutte le righe e segnala quella di cui sono visibili i dettagli. Per un filtro cantone, `CantonSelect allLabel="Tutti i cantoni"` presenta un'opzione vuota riselezionabile. Il valore nativo in `onChange` distingue tutti i cantoni da un singolo codice. Il progetto può definire la larghezza massima del foglio e la propria gerarchia editoriale.
+`Grid` sets the page columns. `Stack` places a heading beside an action, or groups related controls with spacing from theme tokens. Children in a row wrap when the German translation takes more room. Use `columnGap` to set a different horizontal gap. `Item current={active}` keeps all rows aligned and marks the record whose details are visible. For a canton filter, `CantonSelect allLabel="All cantons"` supplies an empty option the user can select again. The native `onChange` value distinguishes all cantons from a single canton code. The application sets the maximum page width and its own editorial hierarchy.
 
-## Azioni per contatto
+## Contact actions
 
-Fornisci a `DropdownMenu` un’etichetta che identifichi il contatto. `align="end"` allinea il menu alla fine del pulsante; `size="compact"` si adatta alle righe. Per la rimozione, `separatorBefore` e `tone="danger"` distinguono l’azione. La conferma e la modifica dei dati appartengono all’app. Per restituire il focus al pulsante dopo Annulla, conserva il suo `triggerRef`. Dopo l’eliminazione porta il focus su un controllo che esiste ancora.
+Give `DropdownMenu` a label that identifies the contact. `align="end"` aligns the menu to the end of its button and `size="compact"` fits a list row. Add `separatorBefore` and `tone="danger"` to distinguish the removal action. The application handles confirmation and changes to the records. Keep the button's `triggerRef` to restore focus after Cancel. After removal, move focus to a control that still exists.

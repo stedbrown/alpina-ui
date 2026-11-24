@@ -59,31 +59,31 @@ const demos = {
   StackExample,
 }
 const guideNames: Record<string, string> = {
-  research: 'Ricerca e fonti',
-  design: 'Misure e griglia',
-  start: 'Avvio rapido',
-  cli: 'Confrontare i sorgenti',
-  release: 'Passare alla 0.5',
-  directory: 'Rubrica bilingue',
-  portal: 'Costruire il portale',
-  core: 'Fondamenti',
-  elements: 'Testo e dati',
-  interactive: 'Interazioni',
-  actions: 'Menu e finestre',
-  workflows: 'Moduli e sequenze',
-  swiss: 'Formati svizzeri',
-  coverage: 'Confronto con shadcn/ui',
+  research: 'Research and sources',
+  design: 'Measurements and grids',
+  start: 'Quick start',
+  cli: 'Compare source files',
+  release: 'Upgrade to 0.5',
+  directory: 'Bilingual address book',
+  portal: 'Build the portal',
+  core: 'Foundations',
+  elements: 'Text and data',
+  interactive: 'Interactions',
+  actions: 'Menus and dialogs',
+  workflows: 'Forms and workflows',
+  swiss: 'Swiss formats',
+  coverage: 'Comparison with shadcn/ui',
 }
 const searchTerms: Record<string, string> = {
-  stack: 'barra strumenti toolbar spaziatura gruppo azioni',
-  'dropdown-menu': 'menu a tendina azioni contestuali',
-  'canton-select': 'filtro cantone tutti i cantoni',
-  'canton-combobox': 'filtro cantone ricerca località',
-  input: 'cerca contatti filtro ricerca',
-  'data-table': 'ordina contatti elenco',
-  'locale-select': 'selettore lingue bilingue tedesco italiano',
+  stack: 'toolbar spacing action groups',
+  'dropdown-menu': 'dropdown contextual actions',
+  'canton-select': 'canton filter all cantons',
+  'canton-combobox': 'canton filter search location',
+  input: 'search contacts filter',
+  'data-table': 'sort contacts list',
+  'locale-select': 'language selector bilingual German Italian',
 }
-const fold = (text: string) => text.normalize('NFD').replace(/\p{M}/gu, '').toLocaleLowerCase('it')
+const fold = (text: string) => text.normalize('NFD').replace(/\p{M}/gu, '').toLocaleLowerCase('en')
 const searchIndex = inventory.map((row) => ({
   row,
   text: fold([...row, searchTerms[row[0]] ?? ''].join(' ')),
@@ -107,13 +107,13 @@ function useRoute() {
 
 function Brand() {
   return (
-    <TextLink className="brand" href="#overview" aria-label="Alpina UI, panoramica">
+    <TextLink className="brand" href="#overview" aria-label="Alpina UI overview">
       <i aria-hidden="true" />
       Alpina UI
     </TextLink>
   )
 }
-const views = { Anteprima: '', Codice: 'codice', API: 'api', Sorgente: 'sorgente' } as const
+const views = { Preview: '', Code: 'code', API: 'api', Source: 'source' } as const
 type View = keyof typeof views
 function Workbench({
   item,
@@ -153,7 +153,7 @@ function Workbench({
         </Typography>
         <Typography>{description}</Typography>
       </header>
-      <ButtonGroup label="Vista del componente" className="view-toggle">
+      <ButtonGroup label="Component view" className="view-toggle">
         {(Object.keys(views) as View[]).map((view) => (
           <Button
             variant={view === mode ? 'primary' : 'outline'}
@@ -168,24 +168,24 @@ function Workbench({
           </Button>
         ))}
       </ButtonGroup>
-      <Preview visible={mode === 'Anteprima'}>
+      <Preview visible={mode === 'Preview'}>
         <Demo />
       </Preview>
       {mode === 'API' && <ApiReference entries={apiReference[id]} />}
-      {mode === 'Codice' && (
+      {mode === 'Code' && (
         <>
-          <CodeBlock className="snippet" label="Esempio.tsx" code={source} />
-          {source.includes('./esempio.css') && (
+          <CodeBlock className="snippet" label="Example.tsx" code={source} />
+          {source.includes('./example.css') && (
             <details>
-              <summary>Foglio CSS condiviso degli esempi</summary>
-              <CodeBlock label="esempio.css" code={exampleCss} />
+              <summary>Shared example stylesheet</summary>
+              <CodeBlock label="example.css" code={exampleCss} />
             </details>
           )}
         </>
       )}
-      {mode === 'Sorgente' && (
+      {mode === 'Source' && (
         <section className="source-view">
-          <Label htmlFor="source-file">File distribuiti</Label>
+          <Label htmlFor="source-file">Distributed files</Label>
           <Select id="source-file" value={file} onChange={(e) => setFile(e.target.value)}>
             {files.map((f) => (
               <option key={f}>{f}</option>
@@ -196,28 +196,29 @@ function Workbench({
       )}
       <CodeBlock
         className="install"
-        label="Aggiungi al progetto"
+        label="Add to your project"
         code={'npx --no-install alpina add ' + id}
       />
       <div className="bench-bottom">
-        <TextLink href="#guide/start">Installazione</TextLink>
-        <TextLink href={'#guide/' + guide}>Guida d’uso</TextLink>
+        <TextLink href="#guide/start">Installation</TextLink>
+        <TextLink href={'#guide/' + guide}>Usage guide</TextLink>
       </div>
     </article>
   )
 }
 function App() {
   const [hash, navigateView] = useRoute()
-  const [itemId, subpage] = hash.split('/')
+  const [itemId, viewPath] = hash.split('/')
+  const subpage = viewPath === 'codice' ? 'code' : viewPath === 'sorgente' ? 'source' : viewPath
   const item = inventory.find((row) => row[0] === itemId)
-  const mode = (Object.keys(views) as View[]).find((view) => views[view] === subpage) ?? 'Anteprima'
+  const mode = (Object.keys(views) as View[]).find((view) => views[view] === subpage) ?? 'Preview'
   const guide = hash.startsWith('guide/')
     ? Object.hasOwn(guideNames, hash.slice(6))
       ? hash.slice(6)
       : 'start'
     : null
-  const liveDirectory = hash === 'rubrica-bilingue'
-  const directory = hash === 'rubrica'
+  const liveDirectory = hash === 'bilingual-address-book' || hash === 'rubrica-bilingue'
+  const directory = hash === 'address-book' || hash === 'rubrica'
   const overview = !guide && !item && !directory
   const [query, setQuery] = useState('')
   const [mobile, setMobile] = useState(false)
@@ -235,7 +236,7 @@ function App() {
   const matches = searchIndex
     .filter((entry) => words.every((word) => entry.text.includes(word)))
     .map((entry) => entry.row)
-  const area = item?.[3] || (guide ? 'Documentazione' : directory ? 'Rubrica' : 'Campionario')
+  const area = item?.[3] || (guide ? 'Documentation' : directory ? 'Address book' : 'Specimen')
   function navigate() {
     setMobile(false)
     setQuery('')
@@ -265,7 +266,7 @@ function App() {
   }, [item, guide, area, liveDirectory])
   useEffect(() => {
     function shortcut(e: KeyboardEvent) {
-      if (location.hash === '#rubrica-bilingue') return
+      if (['#bilingual-address-book', '#rubrica-bilingue'].includes(location.hash)) return
       if (document.querySelector('dialog[open]') || e.isComposing || e.defaultPrevented) return
       const typing =
         e.target instanceof Element && e.target.closest('input,textarea,select,[contenteditable=true]')
@@ -287,7 +288,7 @@ function App() {
   const sidebar = (
     <Sidebar
       ref={list}
-      aria-label="Catalogo"
+      aria-label="Catalog"
       masthead={
         <>
           <Brand />
@@ -299,8 +300,8 @@ function App() {
           <Input
             ref={search}
             type="search"
-            aria-label="Cerca componenti"
-            placeholder="Cerca componenti"
+            aria-label="Search components"
+            placeholder="Search components"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {
@@ -316,24 +317,24 @@ function App() {
       footer={
         <>
           <span>React + TypeScript</span>
-          <span>{inventory.length} componenti</span>
+          <span>{inventory.length} components</span>
         </>
       }
     >
       {!query && (
         <NavigationMenu
-          label="Libreria"
+          label="Library"
           onNavigate={navigate}
           sections={[
             {
               links: [
-                { href: '#overview', label: 'Campionario', current: overview },
-                { href: '#rubrica', label: 'Rubrica clienti', current: directory },
-                { href: '#rubrica-bilingue', label: 'Rubrica IT / DE' },
-                { href: '#guide/start', label: 'Installazione', current: guide === 'start' },
+                { href: '#overview', label: 'Specimen', current: overview },
+                { href: '#address-book', label: 'Client address book', current: directory },
+                { href: '#bilingual-address-book', label: 'IT / DE address book' },
+                { href: '#guide/start', label: 'Installation', current: guide === 'start' },
                 {
                   href: '#guide/research',
-                  label: 'Documentazione',
+                  label: 'Documentation',
                   current: !!guide && guide !== 'start',
                 },
               ],
@@ -343,7 +344,7 @@ function App() {
       )}
       <NavigationMenu
         id="index-list"
-        label="Indice dei componenti"
+        label="Component index"
         onNavigate={navigate}
         sections={groups.map((title) => ({
           title,
@@ -352,7 +353,7 @@ function App() {
             .map((row) => ({ href: '#' + row[0], label: row[2], current: item?.[0] === row[0] })),
         }))}
       />
-      {!matches.length && <Empty role="status" title="Nessun componente trovato." />}
+      {!matches.length && <Empty role="status" title="No matching components." />}
     </Sidebar>
   )
   if (liveDirectory) return <DirectoryLive />
@@ -366,19 +367,19 @@ function App() {
       toolbar={
         <>
           <div className="bread">
-            <TextLink href="#overview">Libreria</TextLink>
+            <TextLink href="#overview">Library</TextLink>
             <span aria-hidden="true">/</span>
             <span>{area}</span>
           </div>
           <Button
             variant="ghost"
             size="sm"
-            aria-label="Tema scuro"
+            aria-label="Dark theme"
             aria-pressed={dark}
             onClick={() => setDark(!dark)}
           >
             <i className="theme-disc" aria-hidden="true" />
-            {dark ? 'Tema scuro' : 'Tema chiaro'}
+            {dark ? 'Dark theme' : 'Light theme'}
           </Button>
         </>
       }
@@ -389,7 +390,7 @@ function App() {
         <>
           <NavigationMenu
             className="guide-nav"
-            label="Sezioni della guida"
+            label="Guide sections"
             orientation="horizontal"
             sections={[
               {

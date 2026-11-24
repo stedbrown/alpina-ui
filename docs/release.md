@@ -1,15 +1,15 @@
-# Passare dalla 0.4 alla 0.5
+# Upgrading from 0.4 to 0.5
 
-Scarica `alpina-ui-0.5.0.tgz` da Installazione. Gli import e i 77 identificatori della 0.4 rimangono disponibili. Il nuovo componente `Stack` aggiunge la composizione su un asse con spaziature modulari, allineamento e ritorno a capo. Il registro comprende ora 78 voci.
+Download `alpina-ui-0.5.1.tgz` from Installation. All imports and 77 registry identifiers from 0.4 remain available. Version 0.5 adds `Stack`, a single-axis layout component with modular spacing, alignment, and wrapping, bringing the registry to 78 entries. Version 0.5.1 provides the English catalog and documentation.
 
-## Menu azioni
+## Action menus
 
-Le voci esistenti con `value`, `label`, `disabled` e `onSelect` continuano a funzionare. Puoi aggiungere un separatore prima di una voce con `separatorBefore` e dare rilievo a un'azione di rimozione con `tone="danger"`. Le proprietà `align` e `size` del menu permettono di usarlo sul margine di una riga. Il nuovo esempio del portale mostra modifica e rimozione con una conferma esplicita.
+Existing items with `value`, `label`, `disabled`, and `onSelect` continue to work. Add a divider before an item with `separatorBefore`, and use `tone="danger"` for a removal action. The menu's `align` and `size` props let it sit at the edge of a row. The portal example demonstrates editing and removing a record with explicit confirmation.
 
-## Selezione delle lingue
+## Language selection
 
-Quando `locales` è omesso, `LocaleSelect` mostra le quattro lingue nazionali. Per un servizio bilingue passa `locales={['it-CH', 'de-CH']}` e usa le stesse due lingue nello stato dell’applicazione.
+When you omit `locales`, `LocaleSelect` shows all four Swiss national languages. For a bilingual service, pass `locales={['it-CH', 'de-CH']}` and use the same two locales in application state.
 
-## Aggiornare i sorgenti copiati
+## Updating copied source
 
-Installa il pacchetto locale, poi confronta i file con `npx --no-install alpina diff dropdown-menu locale-select`. Se avevi usato una destinazione personalizzata, passa la stessa opzione `--dir`. Puoi aggiungere la nuova primitiva con `npx --no-install alpina add stack`. Prima di integrare un aggiornamento controlla le personalizzazioni locali rilevate dal confronto.
+Install the local package, then compare your files with `npx --no-install alpina diff dropdown-menu locale-select`. If you used a custom destination, pass the same `--dir` option. Add the new layout component with `npx --no-install alpina add stack`. Review local customizations in the diff before applying an update.

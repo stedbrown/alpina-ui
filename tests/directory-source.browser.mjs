@@ -25,8 +25,8 @@ try {
     })
   })
   await page.goto(new URL('site/index.html#guide/directory', project).href)
-  const section = page.getByRole('region', { name: 'Sorgenti della rubrica' })
-  const picker = section.getByRole('combobox', { name: 'File del progetto' })
+  const section = page.getByRole('region', { name: 'Address book source files' })
+  const picker = section.getByRole('combobox', { name: 'Project file' })
   const paths = await picker.locator('option').allTextContents()
   const expectedSrc = (await readdir(new URL('src/', recipe), { recursive: true }))
     .map((name) => 'src/' + name.replaceAll('\\', '/'))
@@ -46,21 +46,21 @@ try {
     const expected = await readFile(new URL(name, recipe))
     const pre = section.getByLabel(name, { exact: true })
     assert.deepEqual(Buffer.from(await pre.locator('code').textContent(), 'utf8'), expected, name)
-    await section.getByRole('button', { name: 'Copia', exact: true }).click()
-    await section.getByText('Copiato', { exact: true }).waitFor()
+    await section.getByRole('button', { name: 'Copy', exact: true }).click()
+    await section.getByText('Copied', { exact: true }).waitFor()
     assert.deepEqual(
       Buffer.from(await page.evaluate(() => window.copiedRubricaSource), 'utf8'),
       expected,
-      name + ' copiato',
+      name + ' copied',
     )
     assert.ok(
       await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
-      name + ' su mobile',
+      name + ' on mobile',
     )
   }
   console.log(
     paths.length +
-      ' file della rubrica: testo e contenuto passato agli appunti identici, portale offline a 320 px.',
+      ' address book source files matched the rendered and copied content at 320 px offline.',
   )
 } finally {
   await browser.close()

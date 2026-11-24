@@ -72,7 +72,7 @@ try {
   const menu = page.getByRole('menu')
   await menu.waitFor()
   const box = await menu.boundingBox()
-  console.log('Menu 320 px:', box)
+  console.log('Menu at 320 px:', box)
   await choice('Elimina').click()
   await confirm.getByRole('button', { name: 'Elimina' }).click()
   await confirm.waitFor({ state: 'hidden' })
@@ -102,7 +102,7 @@ try {
   assert.equal(await page.evaluate(() => JSON.stringify(localStorage).includes('Atelier Prova')), false)
   assert.deepEqual(errors, [])
   console.log(
-    'Verificati ricerca, ordinamento, filtri, IT/DE, creazione, errori, modifica, annullamento, focus, eliminazione, 320 px e dati effimeri.',
+    'Verified search, sorting, filters, language switching, creation, errors, edits, cancellation, focus, deletion, the 320 px layout, and transient data.',
   )
 } finally {
   await browser.close()

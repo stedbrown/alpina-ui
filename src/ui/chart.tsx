@@ -17,10 +17,10 @@ export function Chart({
   title,
   data,
   formatValue = String,
-  tableLabel = 'Tabella dei dati',
-  categoryLabel = 'Categoria',
-  valueLabel = 'Valore',
-  emptyLabel = 'Nessun dato',
+  tableLabel = 'Data table',
+  categoryLabel = 'Category',
+  valueLabel = 'Value',
+  emptyLabel = 'No data',
   className = '',
   ...props
 }: ChartProps): ReactElement {

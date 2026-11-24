@@ -30,16 +30,16 @@ export function Preview({ visible, children }: { visible: boolean; children: Rea
   return (
     <section className="sample" aria-labelledby={id + '-title'} hidden={!visible}>
       <div className="sample-toolbar">
-        <h2 id={id + '-title'}>Anteprima interattiva</h2>
+        <h2 id={id + '-title'}>Interactive preview</h2>
         <div className="sample-size">
-          <Label htmlFor={id + '-width'}>Larghezza</Label>
+          <Label htmlFor={id + '-width'}>Width</Label>
           <Select id={id + '-width'} value={width} onChange={(e) => setWidth(e.target.value)}>
-            <option value="">Adatta</option>
+            <option value="">Fit</option>
             <option value="320">320 px</option>
             <option value="480">480 px</option>
             <option value="768">768 px</option>
           </Select>
-          <span aria-label={'Larghezza effettiva ' + measured + ' pixel'}>{measured || '—'} px</span>
+          <span aria-label={'Actual width ' + measured + ' pixels'}>{measured || '—'} px</span>
         </div>
       </div>
       <div className="preview-stage">

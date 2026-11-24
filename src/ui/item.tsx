@@ -3,7 +3,7 @@ import './item.css'
 export interface ItemProps extends Omit<ComponentPropsWithoutRef<'div'>, 'title'> {
   title: ReactNode
   description?: ReactNode
-  /** Evidenzia la riga corrente. Passa false alle altre righe per conservare l’asse del testo. */
+  /** Highlights the current row. Pass false to other rows to keep their text aligned. */
   current?: boolean
   leading?: ReactNode
   trailing?: ReactNode

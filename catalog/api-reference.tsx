@@ -31,11 +31,11 @@ function ComponentContract({ entry }: { entry: ApiEntry }) {
   return (
     <div className="api-contract">
       {entry.props.length > 0 && (
-        <Table aria-label={'Proprietà di ' + entry.name}>
+        <Table aria-label={'Props for ' + entry.name}>
           <TableHeader>
             <TableRow>
-              <TableHead scope="col">Proprietà</TableHead>
-              <TableHead scope="col">Tipo TypeScript</TableHead>
+              <TableHead scope="col">Prop</TableHead>
+              <TableHead scope="col">TypeScript type</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -43,13 +43,13 @@ function ComponentContract({ entry }: { entry: ApiEntry }) {
               <TableRow key={prop.name}>
                 <TableHead scope="row">
                   <code>{prop.name}</code>
-                  <small>{prop.required ? 'Obbligatoria' : 'Facoltativa'}</small>
+                  <small>{prop.required ? 'Required' : 'Optional'}</small>
                 </TableHead>
                 <TableCell>
                   <code>{prop.type}</code>
                   {prop.defaultValue !== undefined && (
                     <small>
-                      Predefinito <code>{prop.defaultValue}</code>
+                      Default <code>{prop.defaultValue}</code>
                     </small>
                   )}
                   {prop.description && <p>{prop.description}</p>}
@@ -63,7 +63,7 @@ function ComponentContract({ entry }: { entry: ApiEntry }) {
         <dl className="api-native">
           {entry.native.map((type) => (
             <div key={type}>
-              <dt>Attributi HTML ereditati</dt>
+              <dt>Inherited HTML attributes</dt>
               <dd>
                 <code>{type}</code>
               </dd>
@@ -71,7 +71,7 @@ function ComponentContract({ entry }: { entry: ApiEntry }) {
           ))}
           {entry.ref && (
             <div>
-              <dt>Tipo del riferimento React</dt>
+              <dt>React ref type</dt>
               <dd>
                 <code>{entry.ref}</code>
               </dd>
@@ -80,9 +80,9 @@ function ComponentContract({ entry }: { entry: ApiEntry }) {
         </dl>
       )}
       {entry.types.length > 0 && (
-        <Collapsible summary={'Tipi usati da ' + entry.name}>
+        <Collapsible summary={'Types used by ' + entry.name}>
           <CodeBlock
-            label="Definizioni TypeScript"
+            label="TypeScript definitions"
             code={entry.types.map((type) => type.definition).join('\n\n')}
           />
         </Collapsible>
@@ -97,10 +97,10 @@ export function ApiReference({ entries }: { entries: readonly ApiEntry[] }) {
   return (
     <section className="api-reference" aria-labelledby={titleId}>
       <Typography as="h2" variant="heading" id={titleId}>
-        Riferimento API
+        API reference
       </Typography>
       <CodeBlock
-        label="Importazione"
+        label="Import"
         code={'import { ' + entries.map((entry) => entry.name).join(', ') + " } from 'alpina-ui'"}
       />
       <Typography as="h3" variant="heading">

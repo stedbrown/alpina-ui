@@ -25,11 +25,11 @@ export function AppShell({
   children,
   open,
   onOpenChange,
-  openLabel = 'Sfoglia componenti',
-  closeLabel = 'Chiudi indice',
-  skipLabel = 'Vai al contenuto',
+  openLabel = 'Browse components',
+  closeLabel = 'Close index',
+  skipLabel = 'Skip to content',
   mainId,
-  navigationLabel = 'Navigazione mobile',
+  navigationLabel = 'Mobile navigation',
   contentAs: Content = 'main',
 }: AppShellProps): ReactElement {
   const id = useId()

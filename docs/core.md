@@ -1,43 +1,43 @@
-# Componenti di base
+# Core components
 
-I componenti di base coprono tipografia, griglie, moduli, tabelle, contenitori, stati e navigazione. Gli esempi importano i componenti dal pacchetto e presuppongono che l'app abbia già caricato `alpina-ui/styles.css`. Se hai copiato i sorgenti con la CLI, cambia gli import per usare i percorsi locali. Ogni file TSX importa il proprio CSS.
+The core components cover typography, grids, forms, tables, containers, status indicators, and navigation. The examples import components from the package and assume your app already loads `alpina-ui/styles.css`. If you copied the source with the CLI, import from your local paths instead. Each TSX file imports its own CSS.
 
-## Tema e stati visivi
+## Theme and visual states
 
-Bianco e nero definiscono il campo di lettura. Il rosso #EB0000 identifica l’azione primaria, la voce corrente e gli errori accompagnati da testo. Il contorno di focus usa l’inchiostro del tema. I filetti usano trasparenze dell’inchiostro. Puoi cambiare i token sul contenitore di un’applicazione.
+Black and white form the reading surface. Red (`#EB0000`) identifies primary actions, the current item, and errors accompanied by text. Focus outlines use the theme's ink color. Dividing rules use transparent ink. Override tokens on an application container.
 
-| Variabili | Applicazione |
+| Variables | Use |
 | --- | --- |
-| `--al-bg`, `--al-surface`, `--al-soft`, `--al-hover` | Pagina, pannelli, riempimenti secondari e passaggio del puntatore. |
-| `--al-ink`, `--al-muted` | Testo principale, descrizioni e indicazioni di aiuto. |
-| `--al-line`, `--al-control` | Divisori tra contenuti e contorni dei controlli. |
-| `--al-accent`, `--al-on-accent`, `--al-accent-hover`, `--al-focus` | Azioni, testo sull'accento, passaggio del puntatore sull'azione primaria e focus. |
-| `--al-success`, `--al-warning`, `--al-danger` | Stati applicativi accompagnati da un'etichetta o un messaggio. |
-| `--al-font`, `--al-display`, `--al-mono` | Testo e titoli condividono la famiglia Helvetica Neue, Helvetica, Arial, con una sans-serif di sistema come ultima scelta. Il token monospaziato è disponibile per codice e riferimenti tecnici. |
-| `--al-unit`, `--al-space-1`…`--al-space-12`, `--al-space-16` | Il modulo vale 0,25 rem. Il numero indica quanti moduli occupa uno spazio. Per esempio, `--al-space-3` vale 12 px con la radice a 16 px. |
-| `--al-type-*`, `--al-leading-*` | Dimensione del carattere e interlinea indipendenti per ogni ruolo. La scala Alpina in px è caption 12/16, label 14/20, body 16/24, heading 24/28, display 48/48 e display-lg 64/64 con la radice a 16 px. |
-| `--al-radius`, `--al-shadow`, `--al-shadow-raised` | Raggio di base, rilievo dei controlli e pannelli sovrapposti. |
+| `--al-bg`, `--al-surface`, `--al-soft`, `--al-hover` | Page, panels, secondary fills, and pointer hover. |
+| `--al-ink`, `--al-muted` | Primary text, descriptions, and hints. |
+| `--al-line`, `--al-control` | Content dividers and control outlines. |
+| `--al-accent`, `--al-on-accent`, `--al-accent-hover`, `--al-focus` | Actions, text on the accent, primary action hover, and focus. |
+| `--al-success`, `--al-warning`, `--al-danger` | Application states accompanied by a label or message. |
+| `--al-font`, `--al-display`, `--al-mono` | Body and headings share the Helvetica Neue, Helvetica, Arial stack, with the system sans serif as fallback. The monospace token is available for code and technical references. |
+| `--al-unit`, `--al-space-1`…`--al-space-12`, `--al-space-16` | The module is 0.25 rem. The number indicates the number of modules. For example, `--al-space-3` is 12 px at a 16 px root. |
+| `--al-type-*`, `--al-leading-*` | Each role has its own font size and line height. At a 16 px root, the scale in pixels is caption 12/16, label 14/20, body 16/24, heading 24/28, display 48/48, and display-lg 64/64. |
+| `--al-radius`, `--al-shadow`, `--al-shadow-raised` | Base corner radius, control elevation, and overlay shadows. |
 
-Il pulsante standard e i campi sono alti almeno 44 px con un carattere base di 16 px. Sui dispositivi con puntatore poco preciso aumentano anche le aree attive delle caselle, dei radio e dei pulsanti compatti. Lo spinner avanza a otto scatti e si ferma quando è attiva la preferenza per il movimento ridotto. Il testo associato resta disponibile ai lettori di schermo.
+At a 16 px root, the standard button and input fields are at least 44 px high. Checkbox, radio, and compact button targets grow on devices with a coarse pointer. The spinner advances in eight steps and stops when reduced motion is requested. Its associated text remains available to screen readers.
 
-## Controlli e moduli
+## Controls and forms
 
-Le proprietà HTML indicate appartengono all'elemento sottostante e comprendono attributi ARIA, eventi e `className`. Nei controlli di testo e selezione puoi usare le coppie native `value`/`onChange` oppure `defaultValue`. Per le caselle e gli interruttori usa `checked`/`onChange` oppure `defaultChecked`. Button, Input, Textarea, Select, Checkbox e Switch inoltrano il `ref` al nodo HTML.
+The HTML props below belong to the underlying element and include ARIA attributes, events, and `className`. Text and select controls support native `value`/`onChange` or `defaultValue`. Checkboxes and switches use `checked`/`onChange` or `defaultChecked`. Button, Input, Textarea, Select, Checkbox, and Switch forward their `ref` to the HTML node.
 
-| Esportazione | Proprietà e valori predefiniti | Uso |
+| Export | Props and defaults | Use |
 | --- | --- | --- |
-| `Button` | Proprietà di `button`. `variant` accetta `primary` (predefinita), `secondary`, `outline`, `ghost`, `danger`. `size` accetta `sm`, `md` (predefinita), `lg`. | Il tipo predefinito è `button`. Specifica `type="submit"` per inviare il modulo. Assegna un nome accessibile ai pulsanti con sola icona. |
-| `Input` | Proprietà di `input`. Il tipo predefinito è `text`. | Supporta tipi nativi come `email`, `date`, `number`, con `name`, `autoComplete`, `required` e i vincoli del browser. |
-| `Textarea` | Proprietà di `textarea`. `rows` vale 3 per impostazione predefinita. | Adatta l'altezza iniziale con `rows` e la lunghezza massima con `maxLength`. |
-| `Select` | Proprietà di `select` e figli `option` o `optgroup`. | Il browser gestisce tastiera, ricerca per iniziale e selezione su dispositivi mobili. |
-| `Checkbox` | Proprietà di `input` con tipo fisso `checkbox`. | Usa un'etichetta associata. Imposta `value` se vuoi un valore specifico nei dati del modulo. |
-| `Switch` | Proprietà di `input` con tipo fisso `checkbox` e ruolo `switch`. | Indica uno stato binario. Mantieni stabile l'etichetta quando cambia lo stato, per esempio «Notifiche email». |
-| `RadioGroup` | `label: ReactNode`, `options: readonly RadioOption[]`, `value?`, `defaultValue?`, `onValueChange?(value)`, `required?`, proprietà di `fieldset` eccetto `children` e `onChange`. | Ogni opzione ha `value: string` univoco, `label: ReactNode` e `disabled?: boolean`. Il gruppo genera un nome comune oppure accetta `name`. Per la serializzazione del modulo imposta un nome stabile. |
-| `Field` | `label: ReactNode`, `children(control): ReactNode`, `id?`, `description?`, `error?`, `describedBy?: string`, proprietà di `div`. | Il callback riceve `FieldControlProps`. Distribuiscile sul controllo con `{...control}`. L'eventuale `id` identifica il controllo. `describedBy` aggiunge ID esterni, separati da spazi, a quelli del suggerimento e dell'errore. |
+| `Button` | Native `button` props. `variant` accepts `primary` (default), `secondary`, `outline`, `ghost`, or `danger`. `size` accepts `sm`, `md` (default), or `lg`. | Defaults to `type="button"`. Use `type="submit"` to submit a form. Give icon-only buttons an accessible name. |
+| `Input` | Native `input` props. Defaults to type `text`. | Supports native types such as `email`, `date`, and `number`, with `name`, `autoComplete`, `required`, and browser constraints. |
+| `Textarea` | Native `textarea` props. `rows` defaults to 3. | Set its initial height with `rows` and its maximum length with `maxLength`. |
+| `Select` | Native `select` props with `option` or `optgroup` children. | The browser handles keyboard navigation, type-ahead, and mobile selection. |
+| `Checkbox` | Native `input` props with its type fixed to `checkbox`. | Associate a label. Set `value` to submit a particular value with the form. |
+| `Switch` | Native `input` props with type `checkbox` and role `switch`. | Represents a binary state. Keep the label stable when the state changes, for example “Email notifications.” |
+| `RadioGroup` | `label: ReactNode`, `options: readonly RadioOption[]`, `value?`, `defaultValue?`, `onValueChange?(value)`, `required?`, and `fieldset` props except `children` and `onChange`. | Each option has a unique `value: string`, `label: ReactNode`, and optional `disabled?: boolean`. The group generates a shared name or accepts `name`. Supply a stable name to serialize form data. |
+| `Field` | `label: ReactNode`, `children(control): ReactNode`, `id?`, `description?`, `error?`, `describedBy?: string`, and `div` props. | The callback receives `FieldControlProps`. Spread `{...control}` onto the control. An optional `id` identifies it. `describedBy` adds space-separated external IDs to those of the hint and error. |
 
-### Un modulo con errore associato al campo
+### Associate a form error with its field
 
-L'etichetta porta il focus al campo. Quando l'indirizzo è incompleto, Field collega sia l'aiuto sia l'errore all'input e imposta `aria-invalid`. Il componente chiamante decide quando mostrare l'errore e cosa fare con i dati validi.
+Clicking the label focuses the field. When the email address is invalid, Field connects the hint and error to the input and sets `aria-invalid`. The calling component chooses when to show an error and what to do with valid data.
 
 ```tsx
 import { useState } from "react"
@@ -50,16 +50,16 @@ export function ContactForm({ onSave }: { onSave: (data: FormData) => void }) {
       event.preventDefault()
       onSave(new FormData(event.currentTarget))
     }}>
-      <Field label="Indirizzo email" description="Riceverai qui la conferma." error={error}>
+      <Field label="Email address" description="Your confirmation will be sent here." error={error}>
         {control => (
           <Input {...control} name="email" type="email" autoComplete="email" required
-            onInvalid={() => setError("Inserisci un indirizzo email valido.")}
+            onInvalid={() => setError("Enter a valid email address.")}
             onInput={event => {
               if (event.currentTarget.validity.valid) setError("")
             }} />
         )}
       </Field>
-      <Field label="Lingua di contatto">
+      <Field label="Contact language">
         {control => (
           <Select {...control} name="language" defaultValue="it">
             <option value="it">Italiano</option>
@@ -68,36 +68,36 @@ export function ContactForm({ onSave }: { onSave: (data: FormData) => void }) {
           </Select>
         )}
       </Field>
-      <Button type="submit">Salva contatto</Button>
+      <Button type="submit">Save contact</Button>
     </form>
   )
 }
 ```
 
-## Contenitori, stati e navigazione
+## Containers, status, and navigation
 
-| Esportazione | Proprietà e valori predefiniti | Uso |
+| Export | Props and defaults | Use |
 | --- | --- | --- |
-| `Badge` | Proprietà di `span`. `tone` accetta `neutral` (predefinito), `accent`, `success`, `danger`. | Inserisci un testo che identifichi lo stato anche senza colore. |
-| `Card` | Proprietà di `div`. `CardHeader`, `CardContent` e `CardFooter` accettano proprietà di `div`. | Componi liberamente le sezioni desiderate. |
-| `CardTitle`, `CardDescription` | Il titolo accetta proprietà di intestazione e `as` da `h1` a `h6`, con `h2` predefinito. La descrizione accetta proprietà di `p`. | Scegli il livello del titolo in base alla struttura della pagina. |
-| `Alert` | Proprietà di `div`, `title?: ReactNode`, `children`. `tone` accetta `info` (predefinito), `success`, `warning`, `danger`. | Per un aggiornamento dinamico usa `role="status"`. Riserva `role="alert"` ai messaggi urgenti. |
-| `Table`, `TableCaption` | Proprietà di `table` e `caption`. | Una didascalia descrive lo scopo della tabella. |
-| `TableHeader`, `TableBody`, `TableFooter`, `TableRow` | Proprietà di `thead`, `tbody`, `tfoot` e `tr`. | Mantieni la gerarchia HTML nativa delle sezioni e delle righe. |
-| `TableHead`, `TableCell` | Proprietà di `th` e `td`. `TableHead` usa `scope="col"` per impostazione predefinita. | Per un'intestazione di riga usa `scope="row"`. |
-| `DataTable<Row>` | `rows`, `columns`, `rowKey`, `caption`, `empty`, `sort?`, `defaultSort?`, `onSortChange?`. | Costruisce una tabella dai dati e consente di ordinare le colonne dotate di comparatore. |
-| `Separator` | Proprietà di `div` eccetto `children` e `role`. `orientation` accetta `horizontal` (predefinito) o `vertical`. `decorative` vale `true`. | Imposta `decorative={false}` quando la separazione deve essere annunciata. |
-| `Progress` | `label: string`, `value?: number`, `max?: number` (100), altre proprietà di `progress`. | Ometti `value` se la durata è sconosciuta. I valori finiti vengono limitati all'intervallo fra zero e `max`. |
-| `Spinner` | `label?: string`, proprietà di `span` eccetto `children`. | Con un'etichetta espone uno stato testuale. Accanto a un testo di caricamento già visibile, ometti `label` per lasciare lo spinner decorativo. |
-| `Skeleton` | Proprietà di `div` eccetto `children`. | Imposta le dimensioni con `className` o `style` e `aria-busy` sul contenitore in aggiornamento. Il segnaposto è decorativo. |
-| `Breadcrumb` | `label: string`, `items: readonly BreadcrumbItem[]`, altre proprietà di `nav` eccetto `children`. | Ogni voce ha `label: ReactNode` e `href?: string`. L'ultima voce riceve `aria-current="page"`. |
-| `Pagination` | `label: string`, `items: readonly PaginationItem[]`, `currentPage: number`, altre proprietà di `nav` eccetto `children`. | Ogni voce ha `page` univoca, `href`, `label?: ReactNode` e `accessibleLabel?: string`. Fornisci gli URL reali e includi la pagina corrente nelle voci. |
+| `Badge` | Native `span` props. `tone` accepts `neutral` (default), `accent`, `success`, or `danger`. | Include text that identifies the state when colors are unavailable. |
+| `Card` | Native `div` props. `CardHeader`, `CardContent`, and `CardFooter` also accept `div` props. | Compose the sections you need. |
+| `CardTitle`, `CardDescription` | Title accepts heading props and `as` from `h1` to `h6`, defaulting to `h2`. Description accepts `p` props. | Choose a heading level that fits your page structure. |
+| `Alert` | Native `div` props, `title?: ReactNode`, and `children`. `tone` accepts `info` (default), `success`, `warning`, or `danger`. | Use `role="status"` for a dynamic update and reserve `role="alert"` for urgent messages. |
+| `Table`, `TableCaption` | Native `table` and `caption` props. | A caption describes the purpose of the table. |
+| `TableHeader`, `TableBody`, `TableFooter`, `TableRow` | Native `thead`, `tbody`, `tfoot`, and `tr` props. | Preserve the native HTML hierarchy of sections and rows. |
+| `TableHead`, `TableCell` | Native `th` and `td` props. `TableHead` defaults to `scope="col"`. | Use `scope="row"` for a row heading. |
+| `DataTable<Row>` | `rows`, `columns`, `rowKey`, `caption`, `empty`, `sort?`, `defaultSort?`, and `onSortChange?`. | Builds a table from data and sorts columns that provide comparators. |
+| `Separator` | Native `div` props except `children` and `role`. `orientation` accepts `horizontal` (default) or `vertical`. `decorative` defaults to `true`. | Set `decorative={false}` when the separation should be announced. |
+| `Progress` | `label: string`, `value?: number`, `max?: number` (default 100), and other `progress` props. | Omit `value` when duration is unknown. Finite values are clamped between zero and `max`. |
+| `Spinner` | `label?: string` and native `span` props except `children`. | A label exposes a text status. Beside visible loading text, omit `label` to keep the spinner decorative. |
+| `Skeleton` | Native `div` props except `children`. | Set its size with `className` or `style` and mark the updating container `aria-busy`. The placeholder is decorative. |
+| `Breadcrumb` | `label: string`, `items: readonly BreadcrumbItem[]`, and other `nav` props except `children`. | Each item takes `label: ReactNode` and `href?: string`. The last item receives `aria-current="page"`. |
+| `Pagination` | `label: string`, `items: readonly PaginationItem[]`, `currentPage: number`, and other `nav` props except `children`. | Each item has a unique `page`, an `href`, and optional `label?: ReactNode` and `accessibleLabel?: string`. Supply real URLs and include the current page. |
 
-Ogni esportazione di componente ha un tipo omonimo con il suffisso `Props`. Sono disponibili anche `RadioOption`, `FieldControlProps`, `DataColumn<Row>`, `DataSort`, `BreadcrumbItem` e `PaginationItem`.
+Each component exports a corresponding type with the suffix `Props`. The package also exports `RadioOption`, `FieldControlProps`, `DataColumn<Row>`, `DataSort`, `BreadcrumbItem`, and `PaginationItem`.
 
-### Ordinare gli importi in franchi
+### Sort amounts in Swiss francs
 
-Nell'esempio la cella mostra l'importo nel formato svizzero italiano. Il comparatore usa i centesimi interi della riga, così 8 franchi precedono 120 franchi indipendentemente da simboli, separatori e spazi usati per la visualizzazione.
+This table displays amounts in Swiss Italian. The comparator uses integer centimes from each record, so 8 francs sorts before 120 francs regardless of the displayed symbols, spacing, or separators.
 
 ```tsx
 import { CurrencyCHF, DataTable, type DataColumn } from "alpina-ui"
@@ -105,9 +105,9 @@ import { CurrencyCHF, DataTable, type DataColumn } from "alpina-ui"
 type Invoice = { id: string; cents: number }
 
 const columns: DataColumn<Invoice>[] = [
-  { id: "id", header: "Fattura", cell: row => row.id },
+  { id: "id", header: "Invoice", cell: row => row.id },
   {
-    id: "amount", header: "Importo", align: "end",
+    id: "amount", header: "Amount", align: "end",
     cell: row => <CurrencyCHF amount={row.cents / 100} locale="it-CH" />,
     compare: (a, b) => a.cents - b.cents,
   },
@@ -116,24 +116,24 @@ const columns: DataColumn<Invoice>[] = [
 export function Invoices({ rows }: { rows: readonly Invoice[] }) {
   return (
     <DataTable rows={rows} columns={columns} rowKey={row => row.id}
-      caption="Fatture del trimestre" empty="Nessuna fattura nel trimestre."
+      caption="Quarterly invoices" empty="No invoices this quarter."
       defaultSort={{ column: "amount", direction: "ascending" }} />
   )
 }
 ```
 
-| Proprietà di `DataTableProps<Row>` | Comportamento |
+| `DataTableProps<Row>` property | Behavior |
 | --- | --- |
-| `rows: readonly Row[]` | Conserva l'ordine iniziale finché manca un ordinamento. Ordina una copia e mantiene l'ordine originale delle righe equivalenti. |
-| `columns: readonly DataColumn<Row>[]` | Ogni colonna richiede un `id` univoco, un `header` testuale e `cell(row): ReactNode`. `align` accetta `start` o `end`. `compare(a, b)` abilita l'ordinamento e restituisce un numero negativo, zero o un numero positivo. |
-| `rowKey(row): Key` | Restituisce una chiave React stabile e univoca, per esempio l'identificativo della fattura. |
-| `caption: string`, `empty: ReactNode` | La didascalia identifica la tabella e la regione scorrevole. Il messaggio vuoto occupa tutte le colonne. |
-| `defaultSort?: DataSort` | Se la tabella gestisce il proprio stato, imposta l'ordinamento iniziale con `{ column, direction }`. `column` deve essere l'ID di una colonna ordinabile. |
-| `sort?: DataSort \| null`, `onSortChange?(next: DataSort)` | Per controllare l'ordinamento, passa `sort` e aggiorna il valore nel callback. `null` conserva l'ordine delle righe fornite. Il callback riceve anche i cambiamenti della modalità non controllata. |
+| `rows: readonly Row[]` | Keeps the supplied order until sorting is applied. Sorts a copy and preserves the order of equivalent rows. |
+| `columns: readonly DataColumn<Row>[]` | Each column requires a unique `id`, a text `header`, and `cell(row): ReactNode`. `align` accepts `start` or `end`. Supply `compare(a, b)` to enable sorting. Return a negative number, zero, or a positive number. |
+| `rowKey(row): Key` | Returns a stable, unique React key such as an invoice ID. |
+| `caption: string`, `empty: ReactNode` | The caption identifies the table and its scrollable region. The empty message spans all columns. |
+| `defaultSort?: DataSort` | For internal state, set the initial sort with `{ column, direction }`. `column` must identify a sortable column. |
+| `sort?: DataSort \| null`, `onSortChange?(next: DataSort)` | Pass `sort` and update it in the callback to control sorting. `null` keeps the order of the supplied rows. The callback also receives changes in uncontrolled mode. |
 
-Le direzioni sono `ascending` e `descending`. Il primo clic su una nuova colonna la ordina in senso crescente. Le attivazioni successive alternano le due direzioni. Invio e Spazio attivano i pulsanti delle intestazioni. L'intestazione attiva espone `aria-sort` e le frecce visive sono decorative.
+Directions are `ascending` and `descending`. The first click on a new column sorts ascending. Subsequent activations alternate directions. Enter and Space activate the header buttons. The active header exposes `aria-sort`. The visual arrows are decorative.
 
-### Una scheda con tabella e paginazione
+### A card with a table and pagination
 
 ```tsx
 import {
@@ -144,21 +144,21 @@ import {
 export function Reservations() {
   return (
     <Card>
-      <CardHeader><CardTitle>Prenotazioni</CardTitle></CardHeader>
+      <CardHeader><CardTitle>Reservations</CardTitle></CardHeader>
       <CardContent>
         <Table>
-          <TableCaption>Partenze di sabato</TableCaption>
-          <TableHeader><TableRow><TableHead>Tratta</TableHead><TableHead>Stato</TableHead></TableRow></TableHeader>
+          <TableCaption>Saturday departures</TableCaption>
+          <TableHeader><TableRow><TableHead>Route</TableHead><TableHead>Status</TableHead></TableRow></TableHeader>
           <TableBody><TableRow>
             <TableHead scope="row">Lugano – Locarno</TableHead>
-            <TableCell><Badge tone="success">Confermata</Badge></TableCell>
+            <TableCell><Badge tone="success">Confirmed</Badge></TableCell>
           </TableRow></TableBody>
         </Table>
       </CardContent>
       <CardFooter>
-        <Pagination label="Pagine delle prenotazioni" currentPage={1} items={[
-          { page: 1, href: "?pagina=1", accessibleLabel: "Pagina 1" },
-          { page: 2, href: "?pagina=2", accessibleLabel: "Pagina 2" },
+        <Pagination label="Reservation pages" currentPage={1} items={[
+          { page: 1, href: "?page=1", accessibleLabel: "Page 1" },
+          { page: 2, href: "?page=2", accessibleLabel: "Page 2" },
         ]} />
       </CardFooter>
     </Card>
@@ -166,9 +166,9 @@ export function Reservations() {
 }
 ```
 
-## Tastiera e tecnologie assistive
+## Keyboard and assistive technology
 
-- In un gruppo di radio le frecce spostano la scelta. La barra spaziatrice attiva un interruttore o una casella. Il browser applica questi comportamenti ai controlli nativi.
-- Per etichettare un controllo singolo usa Field o un elemento `label` associato. Per i radio usa la legenda del gruppo. Traduci etichette, messaggi e nomi delle aree di navigazione nella lingua dell'interfaccia.
-- Spinner e Skeleton rispettano `prefers-reduced-motion`. Indica l'esito di un'operazione anche con testo leggibile.
-- Verifica il contrasto di testo, bordi e indicatori di focus se personalizzi i colori del tema. Prova il percorso completo del modulo con la sola tastiera, inclusa la correzione degli errori.
+- Arrow keys change the selection in a native radio group. Space activates a native switch or checkbox.
+- Use Field or an associated HTML `label` for an individual control. Use the group legend for radio buttons. Translate labels, messages, and navigation region names into the interface language.
+- Spinner and Skeleton respect `prefers-reduced-motion`. Provide readable text for the outcome of an operation.
+- If you customize the theme colors, check the contrast of text, borders, and focus indicators. Test the entire form using only the keyboard, including error correction.

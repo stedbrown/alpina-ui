@@ -1,32 +1,32 @@
-# Corrispondenza con shadcn/ui
+# Component coverage compared with shadcn/ui
 
-Il 24 novembre 2026 la sezione **All Components** di shadcn/ui comprendeva 66 famiglie. Il registro di Alpina UI 0.5.0 comprende 78 voci installabili. Per ognuno dei 66 nomi esiste una voce Alpina dedicata. Il confronto riguarda questo indice pubblico. Le sezioni AI Elements, Blocks, Charts e i registri della community hanno inventari distinti. [Indice ufficiale dei componenti](https://ui.shadcn.com/docs/components)
+On November 24, 2026, the **All Components** section of shadcn/ui listed 66 families. The Alpina UI 0.5.0 registry had 78 installable entries, including a dedicated entry for each of those 66 names. This comparison covers that public index. AI Elements, Blocks, Charts, and community registries have separate inventories. [Official shadcn/ui component index](https://ui.shadcn.com/docs/components)
 
-## Differenze da considerare nella scelta
+## Differences to consider
 
-| Famiglia | Comportamento documentato |
+| Family | Documented behavior |
 | --- | --- |
-| Attachment | La voce Alpina espone un collegamento a un file con nome e metadati. Shadcn compone anche anteprime dei media, avanzamento del caricamento e azioni indipendenti. [Attachment di shadcn](https://ui.shadcn.com/docs/components/base/attachment) |
-| Bubble | In Alpina un contenitore dispone il contenuto sul lato iniziale o finale della conversazione. Shadcn documenta anche gruppi di fumetti, reazioni e testo richiudibile. [Bubble di shadcn](https://ui.shadcn.com/docs/components/base/bubble) |
-| Marker | In Alpina un segno accanto al testo distingue tre stati. Shadcn usa la famiglia anche per note di sistema, righe bordate e separatori etichettati all’interno di una conversazione. [Marker di shadcn](https://ui.shadcn.com/docs/components/base/marker) |
-| Message | Alpina compone un articolo con autore, orario facoltativo e fumetto. In shadcn avatar, intestazione, piè di messaggio e allineamento si compongono con parti dedicate. [Message di shadcn](https://ui.shadcn.com/docs/components/base/message) |
-| Message Scroller | Alpina segue i nuovi messaggi e offre il ritorno in fondo a chi sta rileggendo lo storico. Shadcn documenta anche ancoraggio per turno, ripristino di trascrizioni, aggiunta di storico in cima e salto a un messaggio preciso. [Message Scroller di shadcn](https://ui.shadcn.com/docs/components/base/message-scroller) |
-| Questionnaire | Alpina gestisce una sequenza di domande a risposta singola obbligatoria con revisione e invio. Shadcn include anche selezione multipla, risposta libera e domande saltabili. [Questionnaire di shadcn](https://ui.shadcn.com/docs/components/base/questionnaire) |
-| Trace | Alpina espone una cronologia ordinata di eventi con orario e dettaglio espandibile. Le parti della Trace di shadcn si compongono anche in chiamate a strumenti, fonti e aggiornamenti progressivi di un agente. [Trace di shadcn](https://ui.shadcn.com/docs/components/base/trace) |
-| Code Block | Alpina mostra e copia una stringa con intestazione. Shadcn documenta anche numerazione delle righe, resa di differenze fra versioni e output di terminale. [Code Block di shadcn](https://ui.shadcn.com/docs/components/base/code-block) |
-| Chart | Alpina traccia barre per valori positivi e negativi e mette a disposizione la tabella sottostante. L’integrazione Recharts di shadcn offre più famiglie di grafici. [Chart di shadcn](https://ui.shadcn.com/docs/components/base/chart) |
-| Data Table | Il componente Alpina ordina righe e accetta celle personalizzate. La guida di shadcn costruisce una tabella con TanStack Table e tratta anche filtri, paginazione e visibilità delle colonne. [Data Table di shadcn](https://ui.shadcn.com/docs/components/base/data-table) |
-| Calendar e Date Picker | Alpina sceglie una data civile per volta nelle quattro lingue nazionali e garantisce il formato ISO del valore. La documentazione di shadcn include la selezione di intervalli. [Calendar di shadcn](https://ui.shadcn.com/docs/components/base/calendar) |
-| Select e Native Select | In Alpina entrambi conservano l’elemento HTML `select` e il selettore del dispositivo. La famiglia Select di shadcn descrive un controllo composto con pulsante di apertura e lista. [Select di shadcn](https://ui.shadcn.com/docs/components/base/select) |
-| Slider | Alpina usa un cursore HTML a un valore. Shadcn documenta anche uno slider con più maniglie. [Slider di shadcn](https://ui.shadcn.com/docs/components/base/slider) |
+| Attachment | Alpina links to a file and displays its name and metadata. shadcn/ui also composes media previews, upload progress, and independent actions. [shadcn/ui Attachment](https://ui.shadcn.com/docs/components/base/attachment) |
+| Bubble | Alpina places content at the start or end of a conversation row. shadcn/ui also documents bubble groups, reactions, and collapsible text. [shadcn/ui Bubble](https://ui.shadcn.com/docs/components/base/bubble) |
+| Marker | Alpina places a sign beside text to distinguish three states. shadcn/ui also uses this family for system notes, bordered rows, and labeled separators in a conversation. [shadcn/ui Marker](https://ui.shadcn.com/docs/components/base/marker) |
+| Message | Alpina composes an article with an author, optional time, and bubble. shadcn/ui provides dedicated parts for the avatar, header, footer, and alignment. [shadcn/ui Message](https://ui.shadcn.com/docs/components/base/message) |
+| Message Scroller | Alpina follows new messages and offers a return to the bottom for readers browsing earlier messages. shadcn/ui also documents per-turn anchoring, transcript restoration, prepending history, and jumping to a specific message. [shadcn/ui Message Scroller](https://ui.shadcn.com/docs/components/base/message-scroller) |
+| Questionnaire | Alpina handles a sequence of required single-choice questions with review and submission. shadcn/ui also offers multiple selection, free-form answers, and skippable questions. [shadcn/ui Questionnaire](https://ui.shadcn.com/docs/components/base/questionnaire) |
+| Trace | Alpina presents an ordered timeline with times and expandable details. shadcn/ui Trace parts also compose tool calls, sources, and incremental agent updates. [shadcn/ui Trace](https://ui.shadcn.com/docs/components/base/trace) |
+| Code Block | Alpina displays and copies a string with a header. shadcn/ui also documents line numbers, diffs, and terminal output. [shadcn/ui Code Block](https://ui.shadcn.com/docs/components/base/code-block) |
+| Chart | Alpina plots bars for positive and negative values and includes the underlying data table. The shadcn/ui Recharts integration offers additional chart families. [shadcn/ui Chart](https://ui.shadcn.com/docs/components/base/chart) |
+| Data Table | Alpina sorts rows and accepts custom cells. The shadcn/ui guide builds on TanStack Table and also covers filtering, pagination, and column visibility. [shadcn/ui Data Table](https://ui.shadcn.com/docs/components/base/data-table) |
+| Calendar and Date Picker | Alpina selects one civil date at a time in the four Swiss national languages and returns an ISO date value. The shadcn/ui documentation also covers date ranges. [shadcn/ui Calendar](https://ui.shadcn.com/docs/components/base/calendar) |
+| Select and Native Select | Both Alpina entries use the HTML `select` and the device picker. The shadcn/ui Select family describes a composite control with a trigger and list. [shadcn/ui Select](https://ui.shadcn.com/docs/components/base/select) |
+| Slider | Alpina uses a single-value HTML slider. shadcn/ui also documents a slider with multiple thumbs. [shadcn/ui Slider](https://ui.shadcn.com/docs/components/base/slider) |
 
-Le API sono specifiche di ciascuna libreria. Per stimare una migrazione contano le proprietà, gli stati e la resa effettivamente utilizzati nel proprio prodotto.
+Each library defines its own APIs. To estimate migration work, compare the props, states, and rendered behavior your product relies on.
 
-## Indice dei 66 nomi
+## Index of the 66 names
 
-La colonna «Voce Alpina» contiene l’identificatore accettato dal comando `alpina add`. L’export è il nome importabile da `alpina-ui`.
+“Alpina entry” is the identifier accepted by `alpina add`. “Export” is the name you can import from `alpina-ui`.
 
-| Componente shadcn | Voce Alpina | Export | Cartella |
+| shadcn/ui component | Alpina entry | Export | Directory |
 | --- | --- | --- | --- |
 | Accordion | `accordion` | `Accordion` | interactive |
 | Alert | `alert` | `Alert` | ui |
@@ -95,12 +95,12 @@ La colonna «Voce Alpina» contiene l’identificatore accettato dal comando `al
 | Trace | `trace` | `Trace` | interactive |
 | Typography | `typography` | `Typography` | ui |
 
-## Le altre 12 voci di Alpina
+## The other 12 Alpina entries
 
-| Uso | Voci Alpina |
+| Purpose | Alpina entries |
 | --- | --- |
-| Composizione e portale | `app-shell`, `grid`, `stack`, `prose`, `text-link` |
-| Lingua, cantoni e indirizzi | `canton-combobox`, `canton-select`, `locale-select`, `swiss-address-form`, `swiss-postal-code-input` |
-| Formati | `currency-chf`, `swiss-date` |
+| Layout and portal | `app-shell`, `grid`, `stack`, `prose`, `text-link` |
+| Language, cantons, and addresses | `canton-combobox`, `canton-select`, `locale-select`, `swiss-address-form`, `swiss-postal-code-input` |
+| Formatting | `currency-chf`, `swiss-date` |
 
-Il controllo `node --test tests/coverage.test.mjs` confronta questa fotografia documentale con le voci del registro e gli export del pacchetto compilato. Per una nuova rilevazione occorre ricontare l’indice pubblicato da shadcn.
+Run `node --test tests/coverage.test.mjs` to compare this documented snapshot with the registry entries and the compiled package exports. A fresh comparison requires a new count of the published shadcn/ui index.

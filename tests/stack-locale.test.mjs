@@ -16,14 +16,14 @@ test('stack expresses layout in public rhythm tokens and forwards native props',
   const html = renderToStaticMarkup(
     createElement(
       Stack,
-      { direction: 'row', gap: 2, justify: 'space-between', role: 'group', 'aria-label': 'Azioni' },
-      'Contatti',
+      { direction: 'row', gap: 2, justify: 'space-between', role: 'group', 'aria-label': 'Actions' },
+      'Contacts',
     ),
   )
   assert.match(html, /var\(--al-space-2\)/)
   assert.match(html, /flex-wrap:wrap/)
   assert.match(html, /space-between/)
-  assert.match(html, /aria-label="Azioni"/)
+  assert.match(html, /aria-label="Actions"/)
 })
 test('canton filter has a resettable option and the address placeholder remains disabled', () => {
   const filter = renderToStaticMarkup(
@@ -31,7 +31,7 @@ test('canton filter has a resettable option and the address placeholder remains 
   )
   assert.match(filter, /<option value="" selected="">Alle Kantone<\/option>/)
   const required = renderToStaticMarkup(
-    createElement(CantonSelect, { placeholder: 'Scegli un cantone' }),
+    createElement(CantonSelect, { placeholder: 'Choose a canton' }),
   )
   assert.match(required, /<option value="" disabled="" selected="">/)
 })

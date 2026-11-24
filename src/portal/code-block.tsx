@@ -14,9 +14,9 @@ export interface CodeBlockProps extends HTMLAttributes<HTMLElement> {
 export function CodeBlock({
   code,
   label,
-  copyLabel = 'Copia',
-  copiedLabel = 'Copiato',
-  manualLabel = 'Testo selezionato. Usa il comando Copia.',
+  copyLabel = 'Copy',
+  copiedLabel = 'Copied',
+  manualLabel = 'Text selected. Use your browser’s copy command.',
   className = '',
   ...props
 }: CodeBlockProps): ReactElement {

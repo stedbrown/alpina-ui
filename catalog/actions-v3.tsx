@@ -22,38 +22,38 @@ export function AlertDialogExample() {
     <div>
       {archived ? (
         <Button variant="outline" onClick={() => setArchived(false)}>
-          Ripristina la bozza
+          Restore draft
         </Button>
       ) : (
         <AlertDialog
-          title="Archiviare la bozza?"
-          description="Il manifesto resta nell’archivio e viene rimosso dalla coda di stampa."
-          trigger="Archivia bozza"
-          cancelLabel="Mantieni in coda"
-          confirmLabel="Archivia"
+          title="Archive this draft?"
+          description="The poster will move from the print queue to the archive."
+          trigger="Archive draft"
+          cancelLabel="Keep in queue"
+          confirmLabel="Archive"
           onConfirm={() => setArchived(true)}
         />
       )}
-      <p role="status">{archived ? 'Bozza archiviata.' : 'Bozza in coda di stampa.'}</p>
+      <p role="status">{archived ? 'Draft archived.' : 'Draft in print queue.'}</p>
     </div>
   )
 }
 export function CarouselExample() {
   const studies = [
-    { value: 'carta', label: 'Carta', word: 'Materia', detail: 'Carta naturale · 120 g/m²' },
+    { value: 'paper', label: 'Paper', word: 'Stock', detail: 'Uncoated paper · 120 g/m²' },
     {
-      value: 'inchiostro',
-      label: 'Inchiostro',
-      word: 'Segno',
-      detail: 'Nero pieno · un passaggio',
+      value: 'ink',
+      label: 'Ink',
+      word: 'Mark',
+      detail: 'Solid black · single pass',
     },
-    { value: 'forma', label: 'Formato', word: 'Misura', detail: 'Foglio A3 · 297 × 420 mm' },
+    { value: 'sheet', label: 'Format', word: 'Size', detail: 'A3 sheet · 297 × 420 mm' },
   ]
   return (
     <Carousel
-      label="Campionario di stampa"
-      previousLabel="Campione precedente"
-      nextLabel="Campione successivo"
+      label="Print samples"
+      previousLabel="Previous sample"
+      nextLabel="Next sample"
       items={studies.map((study) => ({
         ...study,
         content: (
@@ -72,9 +72,9 @@ export function ComboboxExample() {
   const [paper, setPaper] = useState('a3')
   return (
     <Combobox
-      label="Formato di stampa"
-      empty="Nessun formato trovato"
-      placeholder="Cerca per nome o dimensione"
+      label="Print format"
+      empty="No matching formats"
+      placeholder="Search by name or dimensions"
       value={paper}
       onValueChange={setPaper}
       options={[
@@ -87,37 +87,37 @@ export function ComboboxExample() {
   )
 }
 export function CommandExample() {
-  const [view, setView] = useState('Tutte le bozze')
+  const [view, setView] = useState('All drafts')
   return (
     <div>
       <Command
-        title="Vai alla raccolta"
-        trigger="Cerca una raccolta"
-        searchLabel="Cerca raccolta"
-        closeLabel="Chiudi ricerca"
-        empty="Nessuna raccolta trovata"
+        title="Go to collection"
+        trigger="Find a collection"
+        searchLabel="Search collections"
+        closeLabel="Close search"
+        empty="No matching collections"
         items={[
           {
             value: 'queue',
-            label: 'In lavorazione',
-            keywords: ['coda'],
-            onSelect: () => setView('In lavorazione'),
+            label: 'In progress',
+            keywords: ['queue'],
+            onSelect: () => setView('In progress'),
           },
           {
             value: 'proofs',
-            label: 'Da approvare',
-            keywords: ['prove'],
-            onSelect: () => setView('Da approvare'),
+            label: 'Awaiting approval',
+            keywords: ['proofs'],
+            onSelect: () => setView('Awaiting approval'),
           },
           {
             value: 'printed',
-            label: 'Stampate',
-            keywords: ['archivio'],
-            onSelect: () => setView('Stampate'),
+            label: 'Printed',
+            keywords: ['archive'],
+            onSelect: () => setView('Printed'),
           },
         ]}
       />
-      <p role="status">Raccolta aperta · {view}</p>
+      <p role="status">Open collection · {view}</p>
     </div>
   )
 }
@@ -125,12 +125,12 @@ export function ContextMenuExample() {
   const [copies, setCopies] = useState(1)
   return (
     <ContextMenu
-      label="Azioni sulla prova"
+      label="Proof actions"
       items={[
-        { value: 'duplicate', label: 'Duplica', onSelect: () => setCopies((n) => n + 1) },
+        { value: 'duplicate', label: 'Duplicate', onSelect: () => setCopies((n) => n + 1) },
         {
           value: 'reset',
-          label: 'Ripristina una copia',
+          label: 'Reset to one copy',
           disabled: copies === 1,
           onSelect: () => setCopies(1),
         },
@@ -138,25 +138,25 @@ export function ContextMenuExample() {
     >
       <div style={{ padding: '1rem', border: '1px solid currentColor' }}>
         <Typography as="p" variant="heading">
-          Prova di copertina
+          Cover proof
         </Typography>
-        <p>Clic destro o Maiusc + F10 per le azioni.</p>
-        <output aria-live="polite">Copie · {copies}</output>
+        <p>Right-click or press Shift + F10 to open the menu.</p>
+        <output aria-live="polite">Copies · {copies}</output>
       </div>
     </ContextMenu>
   )
 }
 export function DrawerExample() {
   const [open, setOpen] = useState(false),
-    [saved, setSaved] = useState('Bozza 01'),
+    [saved, setSaved] = useState('Draft 01'),
     [draft, setDraft] = useState(saved)
   return (
     <div>
       <Drawer
-        title="Nome della bozza"
-        description="Il nome compare nella coda di revisione."
-        trigger="Rinomina bozza"
-        closeLabel="Chiudi pannello"
+        title="Draft name"
+        description="This name appears in the review queue."
+        trigger="Rename draft"
+        closeLabel="Close panel"
         open={open}
         onOpenChange={(next) => {
           if (next) setDraft(saved)
@@ -170,11 +170,11 @@ export function DrawerExample() {
               setOpen(false)
             }}
           >
-            Salva nome
+            Save name
           </Button>
         }
       >
-        <Field label="Nome">
+        <Field label="Name">
           {(props) => <Input {...props} value={draft} onChange={(e) => setDraft(e.target.value)} />}
         </Field>
       </Drawer>
@@ -184,12 +184,11 @@ export function DrawerExample() {
 }
 export function HoverCardExample() {
   return (
-    <HoverCard trigger="Corpo tipografico" title="Corpo tipografico">
+    <HoverCard trigger="Type size" title="Type size">
       <p>
-        Misura del carattere espressa in punti. L’interlinea indica la distanza fra due linee di
-        base successive.
+        Type size is measured in points. Leading is the distance between two consecutive baselines.
       </p>
-      <p>Composizione d’esempio · 10/14 pt</p>
+      <p>Sample setting · 10/14 pt</p>
     </HoverCard>
   )
 }
@@ -198,21 +197,21 @@ export function MenubarExample() {
   return (
     <div>
       <Menubar
-        label="Comandi della prova"
+        label="Proof controls"
         menus={[
           {
             value: 'view',
-            label: 'Visualizza',
+            label: 'View',
             items: [
               {
                 value: 'larger',
-                label: 'Ingrandisci',
+                label: 'Zoom in',
                 disabled: scale >= 150,
                 onSelect: () => setScale((n) => n + 25),
               },
               {
                 value: 'smaller',
-                label: 'Riduci',
+                label: 'Zoom out',
                 disabled: scale <= 50,
                 onSelect: () => setScale((n) => n - 25),
               },
@@ -220,15 +219,15 @@ export function MenubarExample() {
           },
           {
             value: 'page',
-            label: 'Pagina',
+            label: 'Page',
             items: [
-              { value: 'actual', label: 'Dimensione originale', onSelect: () => setScale(100) },
-              { value: 'detail', label: 'Dettaglio', onSelect: () => setScale(150) },
+              { value: 'actual', label: 'Actual size', onSelect: () => setScale(100) },
+              { value: 'detail', label: 'Detail', onSelect: () => setScale(150) },
             ],
           },
         ]}
       />
-      <p role="status">Scala di anteprima · {scale}%</p>
+      <p role="status">Preview scale · {scale}%</p>
     </div>
   )
 }
@@ -236,11 +235,11 @@ export function PopoverExample() {
   const [copies, setCopies] = useState(1)
   return (
     <Popover
-      title="Impostazioni di tiratura"
-      trigger={'Tiratura · ' + copies}
-      closeLabel="Chiudi impostazioni"
+      title="Print run settings"
+      trigger={'Print run · ' + copies}
+      closeLabel="Close settings"
     >
-      <Field label="Numero di copie">
+      <Field label="Number of copies">
         {(props) => (
           <Input
             {...props}
@@ -261,31 +260,31 @@ export function PopoverExample() {
 export function ResizableExample() {
   return (
     <Resizable
-      label="Larghezza dell’indice"
+      label="Index width"
       defaultValue={35}
       min={20}
       max={75}
       first={
         <>
           <Typography as="h3" variant="label">
-            Indice
+            Index
           </Typography>
           <p>
-            01　Formato
+            01　Format
             <br />
-            02　Griglia
+            02　Grid
             <br />
-            03　Colore
+            03　Colour
           </p>
         </>
       }
       second={
         <>
           <Typography as="h3" variant="heading">
-            Formato
+            Format
           </Typography>
           <p>
-            Un foglio A3 misura 297 × 420 mm. Le due colonne condividono la stessa linea di base.
+            An A3 sheet measures 297 × 420 mm. Both columns share a baseline.
           </p>
         </>
       }

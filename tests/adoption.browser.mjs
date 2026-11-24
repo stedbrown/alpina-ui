@@ -21,23 +21,24 @@ try {
   const view = (name) => main.getByRole('button', { name, exact: true })
   await page.goto(site + '#swiss-address-form')
   const recipient = main.getByRole('textbox').first()
-  await recipient.fill('Studio tipografico')
-  const width = main.getByLabel('Larghezza', { exact: true })
+  await recipient.fill('Type studio')
+  const width = main.getByLabel('Width', { exact: true })
   await width.selectOption('320')
   assert.equal(Math.round((await main.locator('.preview-object').boundingBox()).width), 320)
-  await view('Codice').click()
+  await view('Code').click()
+  assert.equal(new URL(page.url()).hash, '#swiss-address-form/code')
   await view('API').click()
-  await main.getByRole('heading', { name: 'Riferimento API' }).waitFor()
+  await main.getByRole('heading', { name: 'API reference' }).waitFor()
   assert.equal(new URL(page.url()).hash, '#swiss-address-form/api')
   assert.ok(await main.getByRole('rowheader', { name: /onSave/ }).isVisible())
   await page.goBack()
-  await main.getByText('Esempio.tsx', { exact: true }).waitFor()
+  await main.getByText('Example.tsx', { exact: true }).waitFor()
   await page.goForward()
-  await view('Anteprima').click()
-  assert.equal(await recipient.inputValue(), 'Studio tipografico')
+  await view('Preview').click()
+  assert.equal(await recipient.inputValue(), 'Type studio')
   assert.equal(await width.inputValue(), '320')
   assert.equal(
-    await page.evaluate(() => JSON.stringify(localStorage).includes('Studio tipografico')),
+    await page.evaluate(() => JSON.stringify(localStorage).includes('Type studio')),
     false,
   )
   await page.setViewportSize({ width: 320, height: 740 })
@@ -50,22 +51,28 @@ try {
         document.querySelector('#index-list a[aria-current=page]')?.getAttribute('href') === '#' + id,
       entry.name,
     )
-    await main.getByRole('heading', { name: 'Riferimento API' }).waitFor()
+    await main.getByRole('heading', { name: 'API reference' }).waitFor()
     assert.equal(await view('API').getAttribute('aria-pressed'), 'true', entry.name)
     assert.ok(
       await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
       entry.name + ' API overflow',
     )
   }
+  await page.goto(site + '#dialog/sorgente')
+  await main.getByLabel('Distributed files').waitFor()
+  await view('Code').click()
+  await view('Source').click()
+  assert.equal(new URL(page.url()).hash, '#dialog/source')
   await page.goto(site + '#dialog/codice')
-  await view('Anteprima').click()
+  await main.getByText('Example.tsx', { exact: true }).waitFor()
+  await view('Preview').click()
   await main.locator('.preview-object [aria-haspopup="dialog"]').click()
   await page.locator('dialog[open]').waitFor()
   await page.goBack()
-  await main.getByText('Esempio.tsx', { exact: true }).waitFor()
+  await main.getByText('Example.tsx', { exact: true }).waitFor()
   await page.waitForFunction(() => !document.querySelector('dialog[open]'))
   await page.goto(site + '#guide/start')
-  const download = main.getByRole('link', { name: 'Scarica Alpina UI ' + manifest.version })
+  const download = main.getByRole('link', { name: 'Download Alpina UI ' + manifest.version })
   const waiting = page.waitForEvent('download')
   await download.click()
   const result = await waiting
@@ -76,7 +83,7 @@ try {
     await readFile(new URL('site/' + archiveName, project)),
   )
   console.log(
-    '78 schede API verificate a 320 px, campione preservato tra le viste, cronologia e download offline verificati.',
+    'Verified 78 API pages at 320 px, preview state across views, browser history and offline downloads.',
   )
 } finally {
   await browser.close()

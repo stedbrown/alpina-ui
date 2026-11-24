@@ -147,7 +147,7 @@ try {
     'solid',
   )
   console.log(
-    'DropdownMenu: IT/DE, allineamento logico LTR/RTL, mouse, touch, menu lungo, conferma, scroll e colori forzati verificati.',
+    'DropdownMenu passed IT/DE, logical LTR/RTL alignment, mouse, touch, long menu, confirmation, scrolling and forced-colour checks.',
   )
 } finally {
   await browser.close()

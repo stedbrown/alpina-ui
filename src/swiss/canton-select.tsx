@@ -14,7 +14,7 @@ export interface CantonSelectProps extends Omit<
   defaultValue?: CantonCode | ''
   /** Add an initially empty, disabled option. Required validates the empty value. */
   placeholder?: string
-  /** Opzione vuota riselezionabile per i filtri. Osserva anche il valore vuoto con onChange. */
+  /** Adds an empty option users can select again to clear a filter. Handle the empty value in onChange. */
   allLabel?: string
   onCantonChange?: (canton: CantonCode) => void
 }

@@ -11,18 +11,18 @@ const rows = Object.freeze([
   { id: 'C', cents: 12000 },
 ])
 const columns = [
-  { id: 'id', header: 'Fattura', cell: (row) => row.id },
+  { id: 'id', header: 'Invoice', cell: (row) => row.id },
   {
     id: 'cents',
-    header: 'Importo',
+    header: 'Amount',
     align: 'end',
     cell: (row) => createElement(CurrencyCHF, { amount: row.cents / 100 }),
     compare: (a, b) => a.cents - b.cents,
   },
 ]
 const props = {
-  caption: 'Contabilità',
-  empty: 'Non ci sono fatture',
+  caption: 'Accounts',
+  empty: 'No invoices',
   columns,
   rows,
   rowKey: (row) => row.id,
@@ -43,7 +43,7 @@ test('DataTable SSR sorts raw CHF stably without mutating the source or emitting
     ['B', 'A', 'C'],
   )
   assert.match(html, /<table class="al-table">/)
-  assert.match(html, /<caption>Contabilità<\/caption>/)
+  assert.match(html, /<caption>Accounts<\/caption>/)
   assert.match(html, /aria-sort="descending"/)
   assert.equal((html.match(/aria-sort=/g) ?? []).length, 1)
   assert.match(html, /<data lang="it-CH" value="8">/)
@@ -51,7 +51,7 @@ test('DataTable SSR sorts raw CHF stably without mutating the source or emitting
 
 test('DataTable renders one full-width empty cell and retains the column headers', () => {
   const html = renderToStaticMarkup(createElement(DataTable, { ...props, rows: [] }))
-  assert.match(html, /<tbody><tr><td colSpan="2">Non ci sono fatture<\/td><\/tr><\/tbody>/i)
-  assert.match(html, /<th[^>]*scope="col"[^>]*>Fattura<\/th>/)
+  assert.match(html, /<tbody><tr><td colSpan="2">No invoices<\/td><\/tr><\/tbody>/i)
+  assert.match(html, /<th[^>]*scope="col"[^>]*>Invoice<\/th>/)
   assert.doesNotMatch(html, /aria-sort=/)
 })

@@ -183,7 +183,7 @@ try {
   assert.equal(await form.getByRole('alert').count(), 0)
   assert.deepEqual(errors, [])
   console.log(
-    'SwissAddressForm: riepilogo e link in 4 lingue, focus, errori applicativi, recupero e layout verificati.',
+    'SwissAddressForm passed four-language error summaries and links, focus management, server errors, recovery and layout checks.',
   )
 } finally {
   await browser.close()

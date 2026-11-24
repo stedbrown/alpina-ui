@@ -1,54 +1,52 @@
-# Prova di adozione dal portale
+# Building an address book using only the portal
 
-## Condizioni
+## How the trial worked
 
-Ho creato un progetto React e TypeScript vuoto, aperto il catalogo HTML 0.4 in Chrome senza rete e scaricato il pacchetto dalla pagina **Installazione**. Le uniche informazioni usate su Alpina provengono da pagine effettivamente renderizzate del portale. La toolchain locale fornisce il compilatore, il bundler e il browser di prova. Non ho usato la Rubrica clienti dimostrativa del portale come sorgente.
+I started with an empty React and TypeScript project, opened the Alpina 0.4 HTML catalog in Chrome while offline, and downloaded the package from its installation guide. I used the published pages to learn Alpina and the local toolchain to compile and test the example. I wrote the address book from scratch, without copying the portal’s customer directory demo.
 
-Per la composizione ho consultato le guide Avvio rapido, Misure e griglia, Fondamenti e Formati svizzeri. Le schede API e Codice di Grid, Item, ToggleGroup, Field, Input, Select, DropdownMenu, Sheet, AlertDialog, Typography ed Empty coprono il percorso principale. La firma di SwissAddressForm documenta i valori iniziali e il salvataggio. La guida sui formati spiega che cambiare lingua conserva i valori della bozza.
+The quick start, grid, foundational component, and Swiss formatting guides covered the layout. I used the API and example views for Grid, Item, ToggleGroup, Field, Input, Select, DropdownMenu, Sheet, AlertDialog, Typography, and Empty. The SwissAddressForm reference documented initial values and saving. The formatting guide explained how language changes preserve an address draft.
 
-## Prima misura, Alpina 0.4
+## Baseline with Alpina 0.4
 
-Il CSS dell’applicazione comprende 20 blocchi di regole, 56 dichiarazioni e 101 righe con la formattazione del progetto. I numeri contano solo `src/rubrica.css`. Non ci sono stili inline né selettori sulle classi interne della libreria. Alcune regole esprimono la direzione grafica scelta per questa rubrica e sono facoltative per un altro progetto.
+The application stylesheet contained 20 rule blocks, 56 declarations, and 101 lines in the example’s formatting. The measurement covers only `src/rubrica.css`. The application used public APIs throughout, with no inline styles or selectors targeting internal library classes.
 
-| Parte della rubrica | Dove compare il CSS | Motivo |
+| Part of the address book | CSS involved | Why it was needed |
 | --- | --- | --- |
-| Composizione dei controlli | Regola condivisa di mast-line, opening e section-line | Quattro istanze affiancano elementi di natura diversa, con ritorno a capo e allineamento alla linea di base. Una regola da cinque dichiarazioni copre tutte le istanze. |
-| Pannello di modifica | editor-body | Disponi lingua e modulo in verticale con uno spazio tra i due. |
-| Ricerca, cantone e ordinamento | search-tools | Il filtro deve ospitare tre campi e ridistribuirli a seconda dello spazio. La griglia intrinseca sceglie il numero di colonne. |
-| Riga corrente | index-list li e relativo data-current | Mantieni la posizione del contenuto fra riga corrente e non corrente e associa al record aperto un tratto rosso. L’indicazione semantica è sul collegamento corrente. |
-| Intestazione, numero di registro, scheda postale | directory-title, record-folio, record-body, record address, record-canton | Gerarchia specifica dell’applicazione. Il numero di registro rimane fisso anche quando l’elenco viene riordinato. |
-| Testo tedesco | directory-title | Con una finestra da 320 px il titolo tedesco generava una pagina larga 357 px. Con sillabazione e ritorno a capo la misura è tornata a 320 px. |
+| Control bars | Shared rule for `mast-line`, `opening`, and `section-line` | Four bars pair different kinds of elements. Five shared declarations provide baseline alignment, spacing, and wrapping. |
+| Edit panel | `editor-body` | Places the language switch and the form in a vertical stack with a gap. |
+| Search, canton, and sort controls | `search-tools` | An intrinsic grid adjusts the number of columns to the available space. |
+| Current row | `index-list li` and its `data-current` state | A red rule identifies the open record while keeping the text aligned across rows. The link identifies the current record to assistive technology. |
+| Heading and address detail | `directory-title`, `record-folio`, `record-body`, `record address`, and `record-canton` | The heading, record number, and postal address have different roles in this application. Each record keeps its number when the list is sorted. |
+| Long German heading | `directory-title` | On a 320 px viewport, the German heading made the page 357 px wide. Hyphenation and wrapping brought the page back to 320 px. |
 
-La griglia a colonne, i controlli, l’errore di validazione, il pannello, la conferma di eliminazione e la tastiera del menu funzionano usando gli stili della libreria. Nell’indice, `Item` riceve il progressivo in `leading`, nome e località e il vero menu in `trailing`.
+The library already supplied the column grid, form controls, validation states, edit panel, confirmation dialog, and keyboard handling for the menu. Each `Item` received the record number in `leading`, the name and location in its content, and the action menu in `trailing`.
 
-## Contratti che richiedono lavoro applicativo
+## Decisions the application had to make
 
-Il filtro per cantone mostra solo i cantoni presenti nei dati e include un’opzione «Tutti» selezionabile. In 0.4 il placeholder di CantonSelect è disabilitato. La rubrica combina Select e il dataset cantonale pubblico che il portale descrive. La localizzazione dei toponimi nei dati di contatto conserva gli indirizzi postali originali.
+The canton filter lists only cantons represented in the dataset and includes an “All” option users can select to clear it. The 0.4 CantonSelect placeholder is disabled. I used Select with the public canton dataset documented in the portal. Localized display names preserve the original postal address.
 
-Nel menu 0.4 le azioni Modifica ed Elimina hanno lo stesso trattamento. Per distinguere l’eliminazione la rubrica apre un AlertDialog con un testo che identifica il contatto. Per tornare al trigger dopo l’annullamento, la prima implementazione individuava il pulsante del menu grazie al suo attributo ARIA nel record.
+The 0.4 menu gave Edit and Delete the same visual treatment. The application opened an AlertDialog naming the selected contact before deletion. To restore focus after cancellation, the first implementation located the menu button by its ARIA attribute inside the record.
 
-## Verifiche riproducibili
+## Repeating the trial with Alpina 0.5
 
-### Seconda implementazione con il portale 0.5
+I downloaded the new package from the portal, read the Stack, Item, Typography, and DropdownMenu references, and followed the bilingual address book guide. The data, workflows, and editorial design stayed the same. The application stylesheet now had **16 rule blocks, 43 declarations, and 78 lines**. That removed **13 of the original 56 declarations, or 23.2%**.
 
-Ho ripetuto il download dalla pagina Installazione del nuovo portale, consultato le schede API di Stack, Item, Typography e DropdownMenu e applicato la guida Rubrica bilingue. Ho mantenuto gli stessi dati, flussi e scelte editoriali. Nel foglio della rubrica restano **16 regole, 43 dichiarazioni e 78 righe**. Il confronto con le 56 dichiarazioni iniziali dà una riduzione di **13 dichiarazioni, pari al 23,2%**.
-
-| Miglioramento verificato | Delta nel CSS dell’applicazione |
+| Change | Application CSS removed |
 | --- | ---: |
-| Quattro barre usano Stack orizzontale con allineamento alla linea di base, ritorno a capo e due intervalli. Lo stesso componente dispone in colonna lingua e modulo nel pannello di modifica. | −8 dichiarazioni |
-| Item current segnala il contatto aperto e conserva l’allineamento del testo nelle altre righe. Il collegamento espone ancora aria-current. | −3 dichiarazioni |
-| Typography gestisce sillabazione e rientro per «Atelierverzeichnis». Senza le due regole locali il browser misura ancora 320 px a una finestra larga 320 px. | −2 dichiarazioni |
+| Four control bars use horizontal Stack with baseline alignment, wrapping, and separate gaps. The edit panel uses a vertical Stack for its language switch and form. | 8 declarations |
+| `Item current` marks the open record and keeps the other rows aligned. The link still exposes `aria-current`. | 3 declarations |
+| Typography handles wrapping and hyphenation for “Atelierverzeichnis”. The document still fits at 320 px after removing the two local rules. | 2 declarations |
 
-Il nuovo menu usa la variante compatta e l’allineamento finale sul pulsante. Un separatore precede Elimina e il trattamento distruttivo la distingue da Modifica. AlertDialog mantiene la conferma; triggerRef permette di ripristinare il focus sul comando corretto senza query sul DOM. Per il filtro cantonale ho mantenuto Select con i soli cantoni presenti nei dati. L’opzione allLabel di CantonSelect è utile per un filtro su tutti i 26.
+The compact menu aligns to the end of the trigger. A separator and destructive styling distinguish Delete from Edit. AlertDialog handles confirmation, and `triggerRef` restores focus to the correct button. The address book still uses Select to filter to cantons present in its data. For a filter that includes all 26 cantons, CantonSelect also offers `allLabel`.
 
-**Il CSS che resta.** La griglia intrinseca dei tre filtri usa quattro dichiarazioni, compresa la spaziatura verticale. L’elenco HTML usa tre dichiarazioni per togliere marker e rientri del browser mantenendo la semantica. Le altre 36 riguardano impaginazione e identità della rubrica: larghezza del foglio, margini, filetti, gerarchia del titolo e della scheda, numero di registro e recapito postale. Il testo digitato, gli stati di validazione, il menu e il dialogo di conferma funzionano con gli stili della libreria.
+### Where custom CSS remains
 
-Il progetto include `evidence/baseline-0.4.css` e i conteggi dettagliati prima e dopo. Le misure escludono il CSS interno della dipendenza. Cinque istanze di Stack spostano la decisione di layout nel JSX tramite proprietà pubbliche. La riduzione misura il CSS dell’applicazione, non il peso dell’intera pagina compilata.
+Four declarations lay out the three filters, including their vertical spacing. Three remove default list markers and indentation while preserving list semantics. The other 36 set the page width, margins, rules, title and detail hierarchy, record number, and postal address treatment. The library styles cover text inputs, validation states, the menu, and the confirmation dialog.
 
-### Test
+The repository includes the original stylesheet and the selector-level counts for each version. Five Stack instances express layout choices through public JSX properties. The metric measures the application stylesheet and excludes the library’s CSS and the size of the compiled page. [Baseline CSS](evidence/baseline-0.4.css) · [0.4 measurements](evidence/baseline-0.4.json) · [0.5 measurements](evidence/finale-0.5.json)
 
-`npm test` percorre ricerca senza accenti, filtro, ordinamento, selezione, errori, creazione, modifica, annullamento ed eliminazione. Verifica anche la lingua della pagina, la bozza di un modulo, il focus e l’assenza di dati dei contatti in localStorage. L’HTML è stato aperto con il browser offline. Il comando `node scripts/css-count.mjs` restituisce conteggio e dettaglio per selettore.
+## Reproduce the checks
 
-A 320, 390, 768 e 1440 px la pagina è stata provata in entrambe le lingue. Per la versione 0.4 le scansioni automatiche di lista, menu aperto, pannello di modifica e conferma in IT/DE a 320 e 1440 px hanno restituito zero violazioni rilevate in 16 stati.
+Run `npm test` in the example directory after building. It covers accent-insensitive search, filtering, sorting, selection, validation, creation, editing, cancellation, and deletion. It also checks the page language, draft preservation, keyboard focus, and that contact details stay out of localStorage. The standalone HTML was opened offline. Run `node scripts/css-count.mjs` for a count by selector.
 
-Anche nella versione 0.5 tutti i test funzionali sono passati. Ho ripetuto le 16 scansioni automatiche senza violazioni rilevate. A 320 px, nel caso provato, il menu finale occupa 192 px e il suo bordo sinistro è a 96 px: le due azioni restano nel viewport.
+Both languages were checked at widths of 320, 390, 768, and 1440 px. In 0.4, automated accessibility checks covered the list, open menu, edit panel, and confirmation dialog in both languages at 320 and 1440 px. No violations were reported across those 16 states. The functional tests passed in 0.5, and the same 16 accessibility checks again reported no violations. At a viewport width of 320 px, the tested menu measured 192 px wide with its left edge at 96 px, keeping both actions in view.

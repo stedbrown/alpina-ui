@@ -9,7 +9,7 @@ const usage = [
   'alpina init [--dir components/alpina] [--dry-run]',
   'alpina add button dialog … [--dir components/alpina] [--dry-run]',
   'alpina add --all [--dir components/alpina] [--dry-run]',
-  'alpina diff [nomi dei componenti | --all] [--dir components/alpina] [--patch]',
+  'alpina diff [component names | --all] [--dir components/alpina] [--patch]',
 ].join('\n')
 const root = fileURLToPath(new URL('../', import.meta.url))
 const licenseFile = 'ALPINA-LICENSE.txt'
@@ -28,10 +28,10 @@ async function checkPath(base, file) {
   for (const part of path.relative(base, file).split(path.sep)) {
     current = path.join(current, part)
     const info = await stat(current)
-    if (info?.isSymbolicLink()) throw new Error('Collegamento simbolico non seguito: ' + current)
-    if (info && current !== file && !info.isDirectory()) throw new Error('Percorso occupato: ' + current)
+    if (info?.isSymbolicLink()) throw new Error('Cannot follow symbolic link: ' + current)
+    if (info && current !== file && !info.isDirectory()) throw new Error('Path already in use: ' + current)
     if (current === file) {
-      if (info && !info.isFile()) throw new Error('Il percorso del file è occupato: ' + current)
+      if (info && !info.isFile()) throw new Error('Expected a regular file at: ' + current)
       return info
     }
   }
@@ -55,11 +55,11 @@ function printPatch(localFile, sourceFile) {
     { stdio: ['ignore', 'inherit', 'inherit'] },
   )
   if (result.error?.code === 'ENOENT')
-    throw new Error('Per --patch installa Git oppure esegui alpina diff senza --patch.')
+    throw new Error('Install Git to use --patch, or run alpina diff without --patch.')
   if (result.error) throw result.error
   // Git reports exit code 1 for a successful comparison with differences.
   if (result.status !== 0 && result.status !== 1)
-    throw new Error('Confronto Git interrotto: ' + localFile)
+    throw new Error('Git comparison failed: ' + localFile)
 }
 
 async function run([command, ...args]) {
@@ -90,7 +90,7 @@ async function run([command, ...args]) {
     else if (arg === '--patch' && command === 'diff') patch = true
     else if (arg === '--all') all = true
     else if (arg === '--dir' && args[i + 1] && !args[i + 1].startsWith('-')) dir = args[++i]
-    else if (arg.startsWith('-')) throw new Error('Opzione non valida: ' + arg)
+    else if (arg.startsWith('-')) throw new Error('Unknown option: ' + arg)
     else names.push(arg)
   }
   if (command === 'init' && (names.length || all)) throw new Error(usage)
@@ -98,7 +98,7 @@ async function run([command, ...args]) {
   if (command === 'diff' && all && names.length) throw new Error(usage)
   for (const name of names)
     if (!registry.items.some((item) => item.name === name))
-      throw new Error('Componente sconosciuto: ' + name)
+      throw new Error('Unknown component: ' + name)
   const cwd = process.cwd()
   const target = path.resolve(cwd, dir)
   const relative = path.relative(cwd, target)
@@ -108,7 +108,7 @@ async function run([command, ...args]) {
     relative.startsWith('..' + path.sep) ||
     path.isAbsolute(relative)
   ) {
-    throw new Error('Scegli una sottocartella del progetto per --dir.')
+    throw new Error('Choose a project subdirectory for --dir.')
   }
   const files = new Set(['theme.css'])
   const detect = command === 'diff' && !all && !names.length
@@ -123,13 +123,13 @@ async function run([command, ...args]) {
   }
   if (detect && files.size === 1 && !(await checkPath(cwd, path.join(target, 'theme.css')))) {
     console.log(
-      'Nessun sorgente Alpina individuato in ' + relative + '. Indica un componente per confrontarlo.',
+      'No Alpina source files found in ' + relative + '. Specify a component name to compare its files.',
     )
     return
   }
   files.add(licenseFile)
-  const counts = { allineato: 0, diverso: 0, mancante: 0 }
-  if (command === 'diff') console.log('Confronto con Alpina UI ' + registry.version)
+  const counts = { aligned: 0, modified: 0, missing: 0 }
+  if (command === 'diff') console.log('Comparing with Alpina UI ' + registry.version)
   const additions = []
   for (const file of files) {
     const dest = path.join(target, file)
@@ -139,22 +139,22 @@ async function run([command, ...args]) {
     const same = exists && (await readFile(dest)).equals(content)
     const displayPath = path.relative(cwd, dest)
     if (command === 'diff') {
-      const state = !exists ? 'mancante' : same ? 'allineato' : 'diverso'
+      const state = !exists ? 'missing' : same ? 'aligned' : 'modified'
       counts[state]++
       console.log(state.padEnd(11) + displayPath)
-      if (patch && state === 'diverso') printPatch(dest, source)
+      if (patch && state === 'modified') printPatch(dest, source)
     } else if (exists) {
-      console.log((same ? 'presente  ' : 'mantieni  ') + displayPath)
+      console.log((same ? 'present  ' : 'keep  ') + displayPath)
     } else additions.push({ dest, content })
   }
   if (command === 'diff') {
     console.log(
-      `File allineati ${counts.allineato} · diversi ${counts.diverso} · mancanti ${counts.mancante}`,
+      `Files aligned ${counts.aligned} · modified ${counts.modified} · missing ${counts.missing}`,
     )
     return
   }
   if (dry) {
-    for (const { dest } of additions) console.log('previsto  ' + path.relative(cwd, dest))
+    for (const { dest } of additions) console.log('planned  ' + path.relative(cwd, dest))
     return
   }
   const written = []
@@ -163,7 +163,7 @@ async function run([command, ...args]) {
       await mkdir(path.dirname(dest), { recursive: true })
       await writeFile(dest, content, { flag: 'wx' })
       written.push(dest)
-      console.log('aggiunto  ' + path.relative(cwd, dest))
+      console.log('added  ' + path.relative(cwd, dest))
     }
   } catch (error) {
     for (const dest of written.reverse()) await unlink(dest).catch(() => {})

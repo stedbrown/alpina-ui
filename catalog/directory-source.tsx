@@ -12,15 +12,15 @@ export function DirectorySource({ files }: { files: readonly DirectoryFile[] }) 
   return (
     <section aria-labelledby={headingId}>
       <Stack gap={4}>
-        <TextLink href="#rubrica-bilingue">Apri la rubrica IT / DE</TextLink>
+        <TextLink href="#bilingual-address-book">Open the IT / DE address book</TextLink>
         <Typography as="h2" variant="heading" id={headingId}>
-          Sorgenti della rubrica
+          Address book source files
         </Typography>
         <Typography>
-          Per compilare il progetto, salva il <TextLink href="#guide/start">pacchetto Alpina</TextLink>{' '}
-          nella cartella <code>vendor/</code> della rubrica.
+          To build the project, save the <TextLink href="#guide/start">Alpina package</TextLink>{' '}
+          in the address book’s <code>vendor/</code> directory.
         </Typography>
-        <Field label="File del progetto">
+        <Field label="Project file">
           {(control) => (
             <Select {...control} value={file.path} onChange={(event) => setSelected(event.target.value)}>
               {files.map((entry) => (

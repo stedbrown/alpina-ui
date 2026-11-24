@@ -1,4 +1,4 @@
-/* Stili del campionario. Tutti i selettori sono circoscritti alle anteprime Alpina. */
+/* Specimen styles are scoped to the Alpina component previews. */
 .apx {
   --apx-rule: color-mix(in srgb, var(--al-ink) 21%, transparent);
   display: grid;

@@ -16,11 +16,11 @@ export interface DropdownMenuItem extends ActionItem {}
 export interface DropdownMenuProps {
   label: ReactNode
   triggerLabel?: string
-  /** Riferimento al pulsante, per riportare il focus al contatto dopo un dialogo esterno. */
+  /** Ref to the trigger button for restoring focus after an external dialog closes. */
   triggerRef?: Ref<HTMLButtonElement>
-  /** Lato logico del pulsante a cui allineare il menu. */
+  /** Logical edge of the trigger used to align the menu. */
   align?: 'start' | 'end'
-  /** La variante compact riduce l’altezza del pulsante per un puntatore preciso e conserva il bersaglio touch. */
+  /** The compact size reduces the trigger height for fine pointers and retains the touch target. */
   size?: 'regular' | 'compact'
   items: readonly DropdownMenuItem[]
   open?: boolean

@@ -33,7 +33,7 @@ function Fixture() {
       ))}
       {(['info', 'success', 'warning', 'danger'] as const).map((tone) => (
         <Alert key={tone} title={tone} tone={tone}>
-          Messaggio
+          Message
         </Alert>
       ))}
       {(['primary', 'secondary', 'ghost', 'outline', 'danger'] as const).map((variant) => (
@@ -41,43 +41,43 @@ function Fixture() {
           {variant}
         </Button>
       ))}
-      <Marker variant="attention">Da verificare</Marker>
+      <Marker variant="attention">Needs review</Marker>
       <Chart
-        title="Inventario"
+        title="Inventory"
         data={[
-          { label: 'Nord', value: -10 },
-          { label: 'Sud', value: 20 },
+          { label: 'North', value: -10 },
+          { label: 'South', value: 20 },
           { label: 'Zero', value: 0 },
-          { label: 'Assente', value: NaN },
+          { label: 'Missing', value: NaN },
         ]}
       />
-      <Chart title="Serie vuota" data={[]} />
-      <Field id="costo" label="Costo" error="Inserisci il costo" describedBy="costo-error costo-error">
+      <Chart title="Empty series" data={[]} />
+      <Field id="cost" label="Cost" error="Enter the cost" describedBy="cost-error cost-error">
         {(props) => <Input {...props} numeric />}
       </Field>
-      <Checkbox ref={ref} aria-label="Tutti" indeterminate={mixed} onChange={() => setMixed(false)} />
-      <Checkbox aria-label="Selezione parziale" indeterminate />
-      <Switch aria-label="Prestito" stateLabels={{ on: 'Attivo', off: 'Sospeso' }} />
+      <Checkbox ref={ref} aria-label="All" indeterminate={mixed} onChange={() => setMixed(false)} />
+      <Checkbox aria-label="Partial selection" indeterminate />
+      <Switch aria-label="Loan" stateLabels={{ on: 'Active', off: 'Suspended' }} />
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead numeric>Totale</TableHead>
+            <TableHead numeric>Total</TableHead>
           </TableRow>
         </TableHeader>
       </Table>
-      <Toggle onPressedChange={() => setCount((x) => x + 1)}>Guida</Toggle>
+      <Toggle onPressedChange={() => setCount((x) => x + 1)}>Guide</Toggle>
       <output id="events">{count}</output>
-      <Toggle pressed={false}>Controllato</Toggle>
-      <Collapsible summary="Condizioni">Restituzione in sede</Collapsible>
-      <Slider aria-label="Corpo" min={12} max={24} step={2} defaultValue={16} />
+      <Toggle pressed={false}>Controlled</Toggle>
+      <Collapsible summary="Terms">Return on site</Collapsible>
+      <Slider aria-label="Type size" min={12} max={24} step={2} defaultValue={16} />
       <Avatar name="Ada Keller" src="data:image/png;base64,AAAA" />
-      <ScrollArea label="Indice" maxHeight={64}>
-        <div style={{ height: 320 }}>Indice dei nomi</div>
+      <ScrollArea label="Index" maxHeight={64}>
+        <div style={{ height: 320 }}>Index of names</div>
       </ScrollArea>
       <div style={{ width: '70rem', maxWidth: '100%' }}>
         <Grid>
           <GridItem large={4} start={{ large: 12 }}>
-            Colonna
+            Column
           </GridItem>
         </Grid>
       </div>

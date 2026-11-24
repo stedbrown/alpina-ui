@@ -27,11 +27,11 @@ export function Questionnaire({
   label,
   questions,
   onComplete,
-  previousLabel = 'Indietro',
-  nextLabel = 'Avanti',
-  submitLabel = 'Conferma',
-  completeLabel = 'Risposte registrate.',
-  editLabel = 'Modifica risposte',
+  previousLabel = 'Back',
+  nextLabel = 'Next',
+  submitLabel = 'Submit',
+  completeLabel = 'Answers recorded.',
+  editLabel = 'Edit answers',
   className = '',
 }: QuestionnaireProps): ReactElement {
   const [answers, setAnswers] = useState<Record<string, string>>({})

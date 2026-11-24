@@ -1,24 +1,37 @@
 # Alpina UI
 
-78 componenti React e TypeScript. Alpina riunisce una griglia tipografica responsiva, controlli da tastiera e formati svizzeri nelle quattro lingue nazionali. Bianco, nero e rosso sono gli inchiostri del sistema. Il portale è un’applicazione della libreria pubblica e funziona offline. Puoi usare il pacchetto ESM oppure copiare i sorgenti modificabili con la CLI.
+Alpina UI is a collection of 78 React components that brings Swiss typographic design to the web. Its responsive grid, left-aligned type, and black, white, and red palette carry through from the smallest control to the documentation site. Swiss address, date, and currency components support the country’s four national languages.
 
-Le 66 famiglie dell’indice principale di shadcn/ui hanno una voce Alpina. Le altre 12 includono la griglia e la composizione in righe flessibili, la struttura del portale e i moduli svizzeri. La guida documenta le capacità effettive di ogni famiglia e le differenze fra le due librerie. [Corrispondenze](docs/coverage.md)
+## Explore the catalog
 
-Nel campionario puoi attivare gli assi della griglia, cambiare la larghezza del contenitore e confrontare i valori effettivi con le regole. La ricerca ricostruisce riferimenti e decisioni progettuali attraverso le opere di Hofmann, Müller-Brockmann e Gerstner e il manuale FFS. [Ricerca sulla grafica svizzera](docs/research.md)
+Browse the hosted catalog or jump straight to a component. [Live catalog](https://alpina-ui.vercel.app/) · [Dropdown menu](https://alpina-ui.vercel.app/#dropdown-menu) · [Bilingual address book](https://alpina-ui.vercel.app/#bilingual-address-book)
 
-## Prova il catalogo
+Open the offline catalog in a browser to try every component, inspect its TypeScript API, and copy its source. Start with the typography specimen. Switch between 4, 8, and 12 columns to see how margins, gutters, and type sizes change with the available width. The portal uses the same public imports as any other Alpina application. [Download the offline catalog](https://github.com/stedbrown/alpina-ui/releases/download/v0.5.1/alpina-ui-catalog.html) · [Design and measurements](docs/design.md)
 
-Scarica il catalogo e apri il file nel browser, anche offline. Nel campionario di tipografia puoi attivare le guide per vedere colonne e ritmo. Ogni componente ha una demo interattiva, la scheda API e il sorgente. Se compili il progetto da un clone, trovi lo stesso portale in `site/index.html`. [Scarica il catalogo 0.5.0](https://github.com/stedbrown/alpina-ui/releases/download/v0.5.0/alpina-ui-catalogo.html) · [Metodo e misure](docs/design.md)
+The catalog covers all 66 families in the shadcn/ui component index reviewed on November 24, 2026. The other 12 entries include grid and stack layouts, Swiss localization tools, and components for building a documentation site. The comparison explains which interactions each family supports. [Component coverage](docs/coverage.md) · [Swiss graphic design research](docs/research.md)
 
-## Installa e sviluppa
+## Install
 
-In un progetto con React e React DOM 18.2 o 19 puoi installare il pacchetto direttamente dalla release GitHub. La guida spiega come importare un componente, caricare il CSS o copiare i sorgenti con la CLI. [Avvio rapido](docs/start.md)
+For a project using React and React DOM 18.2 or 19, install the package from the GitHub release.
 
 ```sh
-npm install https://github.com/stedbrown/alpina-ui/releases/download/v0.5.0/alpina-ui-0.5.0.tgz
+npm install https://github.com/stedbrown/alpina-ui/releases/download/v0.5.1/alpina-ui-0.5.1.tgz
 ```
 
-Per ricostruire libreria e catalogo dal sorgente usa Node.js 20.6 o successivo e npm.
+Import the stylesheet once at your application entry point and use components by name. You can also copy the TypeScript and CSS into your project with `npx --no-install alpina add button`. [Quick start](docs/start.md)
+
+```tsx
+import "alpina-ui/styles.css"
+import { Button } from "alpina-ui"
+
+export function SaveButton() {
+  return <Button type="submit">Save changes</Button>
+}
+```
+
+## Build from source
+
+Use Node.js 20.6 or later and npm. Run the build first. It generates the registry, ESM modules, declarations, and styles used by the catalog and tests.
 
 ```sh
 npm ci
@@ -30,48 +43,44 @@ npm run test:browser
 npm pack
 ```
 
-Per i test browser usa Chrome/Chromium disponibile sul sistema o imposta `CHROME_PATH` al suo eseguibile. Per rigenerare il catalogo dopo aver cambiato l’inventario, esegui prima la build. I test Node usano la cartella compilata `dist`. Il lockfile fissa le dipendenze di sviluppo.
+Open `site/index.html` to browse the local catalog. Browser tests use Chrome or Chromium. Set `CHROME_PATH` to select a specific executable.
 
-## Struttura
-
-| Cartella o file | Contenuto |
+| Path | Contents |
 | --- | --- |
-| `src/ui` | 40 componenti di base, inclusi Grid, Typography e DataTable |
-| `src/interactive` | 23 componenti interattivi e logica condivisa |
-| `src/swiss` | 9 componenti svizzeri, dataset e formattatori |
-| `src/portal` | 6 componenti per struttura, indice, codice e documentazione |
-| `src/theme.css` | Variabili dei due temi |
-| `cli` e `registry.json` | Comandi di distribuzione e inventario delle dipendenze |
-| `dist` | ESM, tipi e CSS pronti all’uso |
-| `catalog` e `site` | Sorgenti del catalogo e versione HTML offline |
-| `tests` | Verifiche di distribuzione, CLI, formati e interazione |
-| `docs` | Guide delle API e fonti dei dati svizzeri |
+| `src/ui` | 40 foundational components including Grid, Typography, and DataTable |
+| `src/interactive` | 23 interactive components and their shared behavior |
+| `src/swiss` | 9 Swiss components, datasets, and formatters |
+| `src/portal` | 6 components for navigation, page structure, code samples, and documentation |
+| `src/theme.css` | Tokens for the light and dark themes |
+| `cli` and `registry.json` | Commands for copying source files and a record of their dependencies |
+| `dist` | Generated ESM, TypeScript declarations, and CSS |
+| `catalog` and `site` | Catalog source and generated offline HTML |
+| `tests` | Packaging, CLI, localization, and interaction tests |
+| `docs` | Component guides, design research, and Swiss data sources |
 
-Le API complete si trovano nelle guide per [componenti di base](docs/core.md), [interazioni](docs/interactive.md) e [formati svizzeri](docs/swiss.md).
+## Try the bilingual address book
 
-## Progettare una rubrica bilingue
+Search seven fictional design studios, switch between Italian and German, and edit an address without losing your draft. The adoption report tracks the CSS needed to build the example using only the portal. Moving layout, current-row styling, and long-word handling into Alpina reduced the application stylesheet from 56 declarations to 43. [Try the offline address book](https://github.com/stedbrown/alpina-ui/releases/download/v0.5.1/alpina-address-book-it-de.html) · [Example source](recipes/rubrica) · [Adoption report](recipes/rubrica/PROVA.md)
 
-La rubrica degli atelier mostra ricerca, filtri e modifica di un indirizzo in italiano e tedesco. Il rapporto di adozione misura quanto CSS applicativo serve e quali regole sono passate nella libreria. [Scarica la rubrica da provare](https://github.com/stedbrown/alpina-ui/releases/download/v0.5.0/Rubrica-Alpina-IT-DE.html) · [Sorgenti dell’esempio](recipes/rubrica) · [Rapporto di adozione](recipes/rubrica/PROVA.md)
+## Inspect and update a component
 
-## Consultare e aggiornare
+Each component page has four views. The preview keeps your input when you switch to the example code, API reference, or distributed source. Adjust the preview width to see how a component behaves in a narrow container. A link such as `#swiss-address-form/api` opens the reference directly.
 
-Ciascuna voce del portale offre quattro viste. Anteprima mantiene il contenuto inserito durante la consultazione di Codice, API e Sorgente. Nel selettore di larghezza puoi provare il componente dentro contenitori diversi e leggerne la larghezza effettiva. Gli indirizzi come `#swiss-address-form/api` aprono direttamente la relativa vista.
+After upgrading the package, run `npx --no-install alpina diff` to compare copied components with the installed version. [CLI guide](docs/cli.md) · [Migration notes](docs/release.md)
 
-Per esaminare i sorgenti copiati dopo aver installato una nuova versione puoi usare `npx --no-install alpina diff`. Il comando confronta il progetto con il pacchetto locale. [Guida alla CLI](docs/cli.md) · [Novità e aggiornamento dalla 0.4](docs/release.md)
+## Bundle sizes
 
-## Dimensioni della versione 0.5.0
+Run `npm run size` after building to measure individual imports. The benchmark uses esbuild to minify ES2022 output and then applies gzip. React and React DOM are external peer dependencies. The full offline catalog also contains source files, interactive examples, and React itself.
 
-Esegui `npm run size` dopo la build per ripetere la misura. Il test raggruppa le esportazioni con esbuild, minifica per ES2022 e comprime con gzip. React e React DOM sono dipendenze peer esterne alla misura. I risultati si riferiscono ai componenti distribuiti. Il catalogo dimostrativo incorpora anche React, esempi e sorgenti.
-
-| Importazione | Byte gzip |
+| Import | Gzipped bytes |
 | --- | ---: |
-| Solo Button, JavaScript | 252 |
-| Solo CurrencyCHF, JavaScript | 639 |
-| Solo Dialog, JavaScript | 1.156 |
-| Tutte le esportazioni JavaScript | 25.417 |
-| Foglio di stile completo, tema incluso | 11.195 |
-| Solo CSS del pulsante, tema escluso | 737 |
+| Button JavaScript | 252 |
+| CurrencyCHF JavaScript | 639 |
+| Dialog JavaScript | 1,156 |
+| All JavaScript exports | 25,399 |
+| Full stylesheet including the theme | 11,195 |
+| Button CSS without the theme | 737 |
 
-## Licenza
+## License
 
-Il codice originale di Alpina UI è distribuito con licenza MIT. Per i dati derivati da Unicode CLDR si applica la licenza Unicode inclusa nel progetto. [Licenza MIT](LICENSE) · [Licenza Unicode](docs/UNICODE-LICENSE.txt)
+Alpina’s original code is available under the MIT license. Data derived from Unicode CLDR uses the included Unicode license. [MIT license](LICENSE) · [Unicode license](docs/UNICODE-LICENSE.txt)

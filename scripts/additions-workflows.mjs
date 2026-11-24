@@ -1,10 +1,10 @@
 export const additions = [
-  ['swiss', 'calendar', 'Calendar', 'Calendario', 'Svizzera', 'Sfoglia date civili nelle quattro lingue nazionali, con la settimana che inizia di lunedì.'],
-  ['swiss', 'date-picker', 'DatePicker', 'Selettore di data', 'Svizzera', 'Scegli una data in una finestra e invia al modulo il valore nel formato ISO.'],
-  ['interactive', 'input-otp', 'InputOTP', 'Codice monouso', 'Moduli', 'Inserisci o incolla un codice numerico, mantenendo gli zeri iniziali.'],
-  ['interactive', 'native-select', 'NativeSelect', 'Elenco nativo', 'Moduli', 'Usa il selettore del dispositivo con una linea di base o un contorno.'],
-  ['interactive', 'toggle-group', 'ToggleGroup', 'Gruppo di pulsanti', 'Moduli', 'Attiva una o più opzioni e conserva lo stato nel modulo.'],
-  ['interactive', 'questionnaire', 'Questionnaire', 'Questionario', 'Moduli', 'Raccogli una risposta per passaggio e consenti di rivedere le scelte.'],
-  ['interactive', 'message-scroller', 'MessageScroller', 'Registro messaggi', 'Feedback', 'Segui i nuovi messaggi e conserva la posizione durante la lettura dello storico.'],
-  ['interactive', 'trace', 'Trace', 'Cronologia eventi', 'Navigazione e dati', 'Leggi gli eventi in ordine e apri i dettagli di un singolo passaggio.'],
+  ['swiss', 'calendar', 'Calendar', 'Calendar', 'Swiss localization', 'Browse dates in the four national languages with weeks starting on Monday.'],
+  ['swiss', 'date-picker', 'DatePicker', 'Date picker', 'Swiss localization', 'Choose a date in a dialog and submit its ISO value with a form.'],
+  ['interactive', 'input-otp', 'InputOTP', 'One-time code', 'Forms', 'Type or paste a numeric code and preserve leading zeros.'],
+  ['interactive', 'native-select', 'NativeSelect', 'Native select', 'Forms', 'Use the device’s own selection control with an underline or an outline.'],
+  ['interactive', 'toggle-group', 'ToggleGroup', 'Toggle group', 'Forms', 'Select one or more options and submit their state with a form.'],
+  ['interactive', 'questionnaire', 'Questionnaire', 'Questionnaire', 'Forms', 'Collect one answer per step and let people review their choices.'],
+  ['interactive', 'message-scroller', 'MessageScroller', 'Message log', 'Feedback', 'Follow new messages while preserving the reading position in earlier entries.'],
+  ['interactive', 'trace', 'Trace', 'Event timeline', 'Navigation and data', 'Read events in sequence and expand a step for more detail.'],
 ]

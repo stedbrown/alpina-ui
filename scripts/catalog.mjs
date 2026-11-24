@@ -75,7 +75,7 @@ for (const file of [
         )
     }
     used.push('import "alpina-ui/styles.css"')
-    if (stmt.getText(source).includes('className=')) used.push('import "./esempio.css"')
+    if (stmt.getText(source).includes('className=')) used.push('import "./example.css"')
     sources[stmt.name.text] = '"use client"\n\n' + used.join('\n') + '\n\n' + stmt.getText(source)
   }
 }
@@ -97,7 +97,7 @@ const sourceFiles = Object.fromEntries(
   ),
 )
 if (Object.keys(sources).length !== registry.items.length)
-  throw new Error('Numero di esempi diverso dal registry')
+  throw new Error('The example count does not match the component registry')
 const apiReference = await buildApiReference()
 const directorySources = await readDirectorySources()
 await mkdir('site', { recursive: true })
@@ -175,9 +175,9 @@ const notices = await Promise.all(
 notices.unshift('Alpina UI\n' + license)
 notices.push(await readFile('src/swiss/UNICODE-LICENSE.txt', 'utf8'))
 const html =
-  '<!doctype html>\n<html lang="it-CH"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffffff"><title>Alpina UI</title><style>' +
+  '<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffffff"><title>Alpina UI</title><style>' +
   css +
-  '</style></head><body><div id="app"></div><noscript>Attiva JavaScript per provare i componenti interattivi.</noscript><script>' +
+  '</style></head><body><div id="app"></div><noscript>Enable JavaScript to try the interactive components.</noscript><script>' +
   script +
   '</script><script type="text/plain" id="third-party-notices">' +
   notices.join('\n\n') +
@@ -185,5 +185,5 @@ const html =
 await mkdir('site', { recursive: true })
 await writeFile('site/index.html', html)
 console.log(
-  'Catalogo offline: site/index.html (' + (Buffer.byteLength(html) / 1024).toFixed(0) + ' KiB)',
+  'Offline catalog: site/index.html (' + (Buffer.byteLength(html) / 1024).toFixed(0) + ' KiB)',
 )

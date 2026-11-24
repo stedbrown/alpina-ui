@@ -4,20 +4,20 @@ export function AppShellExample() {
   return (
     <AppShell
       contentAs="section"
-      navigationLabel="Navigazione dell’atelier"
+      navigationLabel="Studio navigation"
       brand="Atelier"
       sidebar={
-        <Sidebar as="div" role="group" aria-label="Sommario dell’esempio" masthead="Atelier">
-          <TextLink href="#sidebar">Indice laterale</TextLink>
+        <Sidebar as="div" role="group" aria-label="Example contents" masthead="Atelier">
+          <TextLink href="#sidebar">Sidebar index</TextLink>
         </Sidebar>
       }
-      toolbar="Archivio"
-      openLabel="Apri archivio"
+      toolbar="Archive"
+      openLabel="Open archive"
     >
       <Typography as="h2" variant="heading">
-        Edizioni disponibili
+        Available editions
       </Typography>
-      <p>Quaderni di composizione. Serie 1960–1965.</p>
+      <p>Typesetting notebooks, 1960–1965 series.</p>
     </AppShell>
   )
 }
@@ -26,17 +26,17 @@ export function SidebarExample() {
     <Sidebar
       as="div"
       role="group"
-      aria-label="Sommario dell’esempio"
-      masthead="Sommario"
-      footer="Edizione italiana"
+      aria-label="Example contents"
+      masthead="Contents"
+      footer="English edition"
     >
       <NavigationMenu
-        label="Capitoli del sommario"
+        label="Chapters"
         sections={[
           {
             links: [
-              { href: '#grid', label: 'Griglia modulare' },
-              { href: '#typography', label: 'Scala tipografica' },
+              { href: '#grid', label: 'Modular grid' },
+              { href: '#typography', label: 'Type scale' },
             ],
           },
         ]}
@@ -47,13 +47,13 @@ export function SidebarExample() {
 export function NavigationMenuExample() {
   return (
     <NavigationMenu
-      label="Indice del manuale"
+      label="Handbook contents"
       sections={[
         {
-          title: 'Documentazione',
+          title: 'Documentation',
           links: [
-            { href: '#navigation-menu', label: 'Navigazione', current: true },
-            { href: '#guide/research', label: 'Ricerca sul design svizzero' },
+            { href: '#navigation-menu', label: 'Navigation', current: true },
+            { href: '#guide/research', label: 'Swiss design research' },
           ],
         },
       ]}
@@ -63,26 +63,25 @@ export function NavigationMenuExample() {
 export function CodeBlockExample() {
   return (
     <CodeBlock
-      label="composizione.tsx"
-      code={'<Grid>\n  <GridItem small={4}>Programma</GridItem>\n</Grid>'}
+      label="layout.tsx"
+      code={'<Grid>\n  <GridItem small={4}>Programme</GridItem>\n</Grid>'}
     />
   )
 }
 export function TextLinkExample() {
   return (
     <p>
-      Consulta la <TextLink href="#guide/research">ricerca sulla grafica svizzera</TextLink> per leggere
-      le fonti del progetto.
+      See the <TextLink href="#guide/research">Swiss graphic design research</TextLink> for the sources behind this project.
     </p>
   )
 }
 export function ProseExample() {
   return (
     <Prose>
-      <h2>Le edizioni del teatro</h2>
-      <p>Il programma cambia ogni settimana. La data e l’orario occupano sempre la prima colonna.</p>
+      <h2>Theatre publications</h2>
+      <p>The programme changes each week. The first column always shows the date and time.</p>
       <p>
-        <TextLink href="#guide/research">Leggi la ricerca</TextLink>
+        <TextLink href="#guide/research">Read the research</TextLink>
       </p>
     </Prose>
   )

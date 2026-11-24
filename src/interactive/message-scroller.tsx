@@ -14,7 +14,7 @@ export interface MessageScrollerProps {
 export function MessageScroller({
   label,
   children,
-  jumpLabel = 'Vai all’ultimo messaggio',
+  jumpLabel = 'Jump to the latest message',
   className = '',
 }: MessageScrollerProps): ReactElement {
   const viewport = useRef<HTMLDivElement>(null)

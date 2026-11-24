@@ -90,28 +90,28 @@ export function Overview() {
     if (filter && address.canton !== filter) setFilter('')
     setCurrent(active.id)
     setOpen(false)
-    setNotice('Indirizzo aggiornato.')
+    setNotice('Address updated.')
   }
   return (
     <>
       <section className="intro">
         <div>
-          <h1>Rubrica clienti</h1>
+          <h1>Client address book</h1>
           <p>
-            Filtra i clienti, modifica il recapito e ordina gli importi. I dati di esempio rimangono in
-            questa sessione.
+            Filter clients by canton, edit an address, or sort order totals. Any changes last for
+            this session.
           </p>
         </div>
         <TextLink className="guide-cta" href="#guide/start">
-          Avvio rapido <span aria-hidden="true">↗</span>
+          Quick start <span aria-hidden="true">↗</span>
         </TextLink>
       </section>
       <section className="studio" aria-labelledby="studio-title">
         <div className="studio-top">
           <div>
-            <h2 id="studio-title">Contatti</h2>
+            <h2 id="studio-title">Contacts</h2>
           </div>
-          <div className="languages" role="group" aria-label="Lingua dei dati">
+          <div className="languages" role="group" aria-label="Data language">
             {locales.map((lang) => (
               <Button
                 variant="ghost"
@@ -131,7 +131,7 @@ export function Overview() {
         <div className="contacts-workspace">
           <div className="contact-list">
             <CantonCombobox
-              label="Filtra per cantone"
+              id="client-canton-filter"
               locale={locale}
               value={filter}
               onCantonChange={(c) => {
@@ -139,7 +139,7 @@ export function Overview() {
                 setNotice('')
               }}
             />
-            <ul aria-label="Clienti">
+            <ul aria-label="Clients">
               {visible.map((c) => (
                 <li key={c.id}>
                   <Button
@@ -170,9 +170,9 @@ export function Overview() {
             </ul>
             {!visible.length && (
               <div className="empty-list">
-                <p>Nessun cliente in questo cantone.</p>
+                <p>No clients in this canton.</p>
                 <Button size="sm" variant="outline" onClick={() => setFilter('')}>
-                  Azzera filtro
+                  Clear filter
                 </Button>
               </div>
             )}
@@ -209,17 +209,17 @@ export function Overview() {
                       setOpen(true)
                     }}
                   >
-                    Modifica indirizzo
+                    Edit address
                   </Button>
                   <TextLink href="#swiss-address-form">
-                    Componente <span aria-hidden="true">↗</span>
+                    Component <span aria-hidden="true">↗</span>
                   </TextLink>
                 </div>
                 <Sheet
                   open={open}
                   onOpenChange={setOpen}
                   title={active.address.recipient}
-                  closeLabel="Chiudi"
+                  closeLabel="Close"
                   className="address-drawer"
                 >
                   {open && (
@@ -233,7 +233,7 @@ export function Overview() {
                 </Sheet>
               </>
             ) : (
-              <span className="empty-detail">Seleziona un cliente per vedere il recapito.</span>
+              <span className="empty-detail">Select a client to see their address.</span>
             )}
           </div>
         </div>
@@ -241,34 +241,34 @@ export function Overview() {
           {notice}
         </span>
       </section>
-      <section className="orders-section" aria-label="Ordini dei clienti">
+      <section className="orders-section" aria-label="Client orders">
         <div className="section-lead">
-          <h2>Registro ordini</h2>
+          <h2>Order register</h2>
           <TextLink href="#data-table">
-            Tabella ordinabile <span aria-hidden="true">↗</span>
+            Sortable table <span aria-hidden="true">↗</span>
           </TextLink>
         </div>
         <DataTable
           rows={visible}
           rowKey={(row) => row.id}
-          caption="Ordini dei clienti in rubrica"
-          empty="Nessun ordine per questo cantone."
+          caption="Orders for clients in the address book"
+          empty="No orders for this canton."
           columns={[
             {
               id: 'client',
-              header: 'Cliente',
+              header: 'Client',
               cell: (r) => r.address.recipient,
               compare: (a, b) => a.address.recipient.localeCompare(b.address.recipient, locale),
             },
             {
               id: 'date',
-              header: 'Data',
+              header: 'Date',
               cell: (r) => <SwissDate value={r.date} locale={locale} />,
               compare: (a, b) => a.date.localeCompare(b.date),
             },
             {
               id: 'total',
-              header: 'Totale',
+              header: 'Total',
               align: 'end',
               cell: (r) => <CurrencyCHF amount={r.amount} locale={locale} />,
               compare: (a, b) => a.amount - b.amount,

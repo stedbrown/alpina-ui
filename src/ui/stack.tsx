@@ -4,15 +4,15 @@ import './stack.css'
 type Space = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 12
 
 export interface StackProps extends ComponentPropsWithoutRef<'div'> {
-  /** Dispone i figli lungo una riga o una colonna. */
+  /** Arranges children in a row or column. */
   direction?: 'row' | 'column'
-  /** Distanza in multipli del modulo tipografico di Alpina. */
+  /** Spacing in multiples of Alpina’s typographic unit. */
   gap?: Space
-  /** Spazio fra colonne quando differisce dalla distanza verticale. */
+  /** Horizontal gap when it differs from the vertical gap. */
   columnGap?: Space
   align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline'
   justify?: 'start' | 'center' | 'end' | 'space-between'
-  /** Permette ai gruppi di controlli di scendere su più righe. */
+  /** Allows controls to wrap onto additional lines. */
   wrap?: boolean
 }
 

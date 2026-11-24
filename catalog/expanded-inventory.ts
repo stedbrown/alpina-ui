@@ -2,302 +2,302 @@ export const expanded = [
   [
     "aspect-ratio",
     "AspectRatio",
-    "Proporzioni",
+    "Aspect ratio",
     "Layout",
-    "Mantiene il rapporto fra larghezza e altezza di immagini, video e tavole."
+    "Preserve the proportions of images, videos, and illustrations."
   ],
   [
     "attachment",
     "Attachment",
-    "Allegato",
-    "Contenuto",
-    "Presenta un file scaricabile con nome, formato e dimensione."
+    "Attachment",
+    "Content",
+    "Show a downloadable file with its name, format, and size."
   ],
   [
     "avatar",
     "Avatar",
     "Avatar",
-    "Contenuto",
-    "Identifica una persona con una fotografia o con le iniziali."
+    "Content",
+    "Identify a person with a photograph or initials."
   ],
   [
     "bubble",
     "Bubble",
-    "Fumetto",
-    "Contenuto",
-    "Dispone una battuta sul lato di lettura del suo autore."
+    "Chat bubble",
+    "Content",
+    "Place each speaker’s message on their side of a conversation."
   ],
   [
     "button-group",
     "ButtonGroup",
-    "Gruppo di pulsanti",
-    "Azioni",
-    "Riunisce azioni correlate in un gruppo con un nome accessibile."
+    "Button group",
+    "Actions",
+    "Give related actions a shared accessible name."
   ],
   [
     "chart",
     "Chart",
-    "Grafico a barre",
-    "Dati",
-    "Confronta variazioni positive e negative su un asse comune e ne espone i dati in tabella."
+    "Bar chart",
+    "Data",
+    "Compare positive and negative values on a shared axis and provide the data in a table."
   ],
   [
     "collapsible",
     "Collapsible",
-    "Sezione espandibile",
-    "Interazione",
-    "Apre un dettaglio con il controllo nativo del browser."
+    "Disclosure",
+    "Interaction",
+    "Expand details using the browser’s native disclosure control."
   ],
   [
     "direction",
     "Direction",
-    "Direzione di scrittura",
+    "Text direction",
     "Layout",
-    "Imposta l’ordine di lettura di un blocco anche in una pagina multilingue."
+    "Set the reading direction of a block on a multilingual page."
   ],
   [
     "empty",
     "Empty",
-    "Stato vuoto",
+    "Empty state",
     "Feedback",
-    "Spiega perché una raccolta è vuota e presenta l’azione successiva."
+    "Explain why a collection is empty and offer a next action."
   ],
   [
     "input-group",
     "InputGroup",
-    "Gruppo di inserimento",
-    "Moduli",
-    "Allinea unità, prefissi o azioni a un campo."
+    "Input group",
+    "Forms",
+    "Align units, prefixes, or actions with an input."
   ],
   [
     "item",
     "Item",
-    "Voce di elenco",
-    "Contenuto",
-    "Affianca titolo, descrizione e metadati lungo assi condivisi."
+    "List item",
+    "Content",
+    "Align a title, description, and metadata on a common grid."
   ],
   [
     "kbd",
     "Kbd",
-    "Tasto",
-    "Tipografia",
-    "Compone scorciatoie leggibili con la semantica nativa del tasto."
+    "Keyboard key",
+    "Typography",
+    "Display readable shortcuts with native keyboard-input markup."
   ],
   [
     "label",
     "Label",
-    "Etichetta",
-    "Moduli",
-    "Collega una dicitura al relativo controllo del modulo."
+    "Label",
+    "Forms",
+    "Associate a text label with its form control."
   ],
   [
     "marker",
     "Marker",
-    "Indicatore di stato",
+    "Status marker",
     "Feedback",
-    "Accosta testo e segno per riconoscere uno stato anche in monocromia."
+    "Pair text with a symbol so status remains legible in monochrome."
   ],
   [
     "message",
     "Message",
-    "Messaggio",
-    "Contenuto",
-    "Raccoglie autore, orario e testo di una conversazione."
+    "Message",
+    "Content",
+    "Group the author, time, and text of a message."
   ],
   [
     "scroll-area",
     "ScrollArea",
-    "Area di scorrimento",
+    "Scroll area",
     "Layout",
-    "Contiene una regione scorrevole con nome e accesso da tastiera."
+    "Give a scrollable region a name and keyboard access."
   ],
   [
     "slider",
     "Slider",
-    "Cursore",
-    "Moduli",
-    "Seleziona un valore su una scala con i comandi nativi del browser."
+    "Slider",
+    "Forms",
+    "Choose a value on a scale using native browser controls."
   ],
   [
     "toggle",
     "Toggle",
-    "Pulsante a due stati",
-    "Azioni",
-    "Attiva o disattiva una preferenza mantenendo un’etichetta stabile."
+    "Toggle button",
+    "Actions",
+    "Switch a preference on or off while keeping its label stable."
   ],
   [
     "alert-dialog",
     "AlertDialog",
-    "Conferma di un’azione",
-    "Finestre e menu",
-    "Richiede una decisione esplicita e porta il focus sull’azione prudente."
+    "Confirmation dialog",
+    "Dialogs and menus",
+    "Ask for an explicit decision and initially focus the safer action."
   ],
   [
     "carousel",
     "Carousel",
-    "Carosello",
-    "Navigazione",
-    "Sfoglia una serie di schede con controlli manuali e posizione leggibile."
+    "Carousel",
+    "Navigation",
+    "Browse a series of cards with manual controls and a position indicator."
   ],
   [
     "combobox",
     "Combobox",
-    "Selezione con ricerca",
-    "Moduli",
-    "Filtra le opzioni digitando e conferma la scelta da tastiera."
+    "Searchable select",
+    "Forms",
+    "Type to filter options and use the keyboard to confirm a choice."
   ],
   [
     "command",
     "Command",
-    "Ricerca comandi",
-    "Finestre e menu",
-    "Cerca un’azione per nome o parola chiave ed eseguila da tastiera."
+    "Command search",
+    "Dialogs and menus",
+    "Find an action by name or keyword and run it from the keyboard."
   ],
   [
     "context-menu",
     "ContextMenu",
-    "Menu contestuale",
-    "Finestre e menu",
-    "Offre azioni sul contenuto tramite clic destro o Maiusc + F10."
+    "Context menu",
+    "Dialogs and menus",
+    "Open actions for an item with a right-click or Shift + F10."
   ],
   [
     "drawer",
     "Drawer",
-    "Pannello inferiore",
-    "Finestre e menu",
-    "Raccoglie strumenti in un pannello modale richiudibile con un gesto."
+    "Bottom drawer",
+    "Dialogs and menus",
+    "Open tools in a modal panel and swipe to dismiss it."
   ],
   [
     "hover-card",
     "HoverCard",
-    "Scheda di anteprima",
-    "Finestre e menu",
-    "Mostra un approfondimento al passaggio, al focus o al tocco."
+    "Preview card",
+    "Dialogs and menus",
+    "Show more information on hover, focus, or tap."
   ],
   [
     "menubar",
     "Menubar",
-    "Barra dei menu",
-    "Navigazione",
-    "Riunisce gruppi di comandi con navigazione orizzontale e verticale."
+    "Menu bar",
+    "Navigation",
+    "Navigate command groups horizontally and their actions vertically."
   ],
   [
     "popover",
     "Popover",
-    "Pannello ancorato",
-    "Finestre e menu",
-    "Apre un pannello interattivo accanto al controllo che lo attiva."
+    "Anchored panel",
+    "Dialogs and menus",
+    "Open an interactive panel next to its trigger."
   ],
   [
     "resizable",
     "Resizable",
-    "Pannelli ridimensionabili",
+    "Resizable panels",
     "Layout",
-    "Regola lo spazio fra due pannelli con il puntatore o con i tasti freccia."
+    "Adjust the space between two panels with the pointer or arrow keys."
   ],
   [
     "calendar",
     "Calendar",
-    "Calendario",
-    "Svizzera",
-    "Sfoglia date civili nelle quattro lingue nazionali, con la settimana che inizia di lunedì."
+    "Calendar",
+    "Swiss localization",
+    "Browse dates in the four national languages with weeks starting on Monday."
   ],
   [
     "date-picker",
     "DatePicker",
-    "Selettore di data",
-    "Svizzera",
-    "Scegli una data in una finestra e invia al modulo il valore nel formato ISO."
+    "Date picker",
+    "Swiss localization",
+    "Choose a date in a dialog and submit its ISO value with a form."
   ],
   [
     "input-otp",
     "InputOTP",
-    "Codice monouso",
-    "Moduli",
-    "Inserisci o incolla un codice numerico, mantenendo gli zeri iniziali."
+    "One-time code",
+    "Forms",
+    "Type or paste a numeric code and preserve leading zeros."
   ],
   [
     "native-select",
     "NativeSelect",
-    "Elenco nativo",
-    "Moduli",
-    "Usa il selettore del dispositivo con una linea di base o un contorno."
+    "Native select",
+    "Forms",
+    "Use the device’s own selection control with an underline or an outline."
   ],
   [
     "toggle-group",
     "ToggleGroup",
-    "Gruppo di pulsanti",
-    "Moduli",
-    "Attiva una o più opzioni e conserva lo stato nel modulo."
+    "Toggle group",
+    "Forms",
+    "Select one or more options and submit their state with a form."
   ],
   [
     "questionnaire",
     "Questionnaire",
-    "Questionario",
-    "Moduli",
-    "Raccogli una risposta per passaggio e consenti di rivedere le scelte."
+    "Questionnaire",
+    "Forms",
+    "Collect one answer per step and let people review their choices."
   ],
   [
     "message-scroller",
     "MessageScroller",
-    "Registro messaggi",
+    "Message log",
     "Feedback",
-    "Segui i nuovi messaggi e conserva la posizione durante la lettura dello storico."
+    "Follow new messages while preserving the reading position in earlier entries."
   ],
   [
     "trace",
     "Trace",
-    "Cronologia eventi",
-    "Navigazione e dati",
-    "Leggi gli eventi in ordine e apri i dettagli di un singolo passaggio."
+    "Event timeline",
+    "Navigation and data",
+    "Read events in sequence and expand a step for more detail."
   ],
   [
     "app-shell",
     "AppShell",
-    "Struttura applicazione",
-    "Portale",
-    "Disponi indice, barra superiore e contenuto con un indice richiudibile su mobile."
+    "Application shell",
+    "Portal",
+    "Arrange the index, toolbar, and content with a collapsible index on small screens."
   ],
   [
     "sidebar",
     "Sidebar",
-    "Indice laterale",
-    "Portale",
-    "Tieni ricerca e intestazione ferme mentre scorri le voci."
+    "Sidebar",
+    "Portal",
+    "Keep the header and search in place while the list scrolls."
   ],
   [
     "navigation-menu",
     "NavigationMenu",
-    "Menu di navigazione",
-    "Portale",
-    "Raggruppa collegamenti e indica la pagina corrente."
+    "Navigation menu",
+    "Portal",
+    "Group links and identify the current page."
   ],
   [
     "code-block",
     "CodeBlock",
-    "Blocco di codice",
-    "Portale",
-    "Leggi, seleziona e copia un esempio con il nome del file."
+    "Code block",
+    "Portal",
+    "Read, select, and copy an example with its file name."
   ],
   [
     "text-link",
     "TextLink",
-    "Collegamento testuale",
-    "Portale",
-    "Apri una risorsa con un collegamento distinguibile nel testo."
+    "Text link",
+    "Portal",
+    "Make a link distinguishable within running text."
   ],
   [
     "prose",
     "Prose",
-    "Testo editoriale",
-    "Portale",
-    "Impagina una guida con titoli, paragrafi, tabelle e codice."
+    "Editorial text",
+    "Portal",
+    "Lay out guides with headings, paragraphs, tables, and code."
   ],
   [
     "stack",
     "Stack",
-    "Righe e colonne flessibili",
-    "Progetto grafico",
-    "Disponi controlli e azioni con spaziatura modulare, allineamento e ritorno a capo."
+    "Flexible rows and columns",
+    "Graphic design",
+    "Arrange controls and actions with consistent spacing, alignment, and wrapping."
   ]
 ] as const

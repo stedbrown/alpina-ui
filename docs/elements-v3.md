@@ -1,60 +1,60 @@
-# Tipografia e componenti di base
+# Typography and basic components
 
-Il margine di una colonna serve a ritrovare un’informazione quando cambia il contenuto. Nell’indice di Alpina, titoli lunghi possono andare a capo mentre le quantità in fondo alla riga mantengono il proprio asse. Nei moduli, etichetta, controllo e spiegazione iniziano sulla stessa verticale.
+The edge of a column helps readers find information as content changes. In Alpina's index, a long title can wrap while a quantity at the end of the row keeps its axis. In a form, the label, control, and explanation share a starting edge.
 
-## Dal manifesto allo schermo
+## From poster to screen
 
-Nella serie _Musica Viva_ di Josef Müller-Brockmann, la composizione cambia fra i manifesti del 1958 e del 1960. Proporzioni e raggruppamenti permettono di distinguere interpreti, programma e sede. Nel manifesto _Stadttheater Basel, Saison 60/61_ di Armin Hofmann la grande «t» comprende un’area su cui applicare il programma settimanale. Una struttura stabile può quindi ospitare informazione variabile, anche in un supporto stampato. [Poster House, The Swiss Grid](https://access.posterhouse.org/exhibition/swiss-grid-2/) · [Poster House, Stadttheater Basel](https://collection.posterhouse.org/poster/stadttheater-basel-saison-60-61/)
+Josef Müller-Brockmann's *Musica Viva* compositions vary between the 1958 and 1960 posters. Proportion and grouping distinguish performers, program, and venue. In Armin Hofmann's *Stadttheater Basel, Saison 60/61*, a large “t” leaves room to attach the weekly program. A stable structure accommodated changing information even in print. [Poster House, *The Swiss Grid*](https://access.posterhouse.org/exhibition/swiss-grid-2/) · [Poster House, *Stadttheater Basel*](https://collection.posterhouse.org/poster/stadttheater-basel-saison-60-61/)
 
-In _Giselle_ (1959) il contrasto tra il nome leggibile e il mosso della ballerina dà due tempi di lettura. I piccoli dettagli hanno un peso altrettanto concreto. Il tratto superiore del numero uno supera il margine per allinearne il fusto al testo vicino. In Alpina l’inizio degli elementi di testo resta comune, mentre un simbolo di stato occupa una colonna propria. [MoMA, Giselle](https://www.moma.org/collection/works/6775/) · [Poster House, lettura dell’opera](https://access.posterhouse.org/exhibition/swiss-grid-2/)
+In *Giselle* (1959), the legible name and the blurred dancer invite different reading speeds. Small details matter too. The top of the numeral one extends beyond the margin so its stem aligns with adjacent text. In Alpina, text elements share a starting edge while a status symbol occupies its own column. [MoMA, *Giselle*](https://www.moma.org/collection/works/6775/) · [Poster House, exhibition commentary](https://access.posterhouse.org/exhibition/swiss-grid-2/)
 
-## Misure digitali
+## Digital measurements
 
-Per le colonne numeriche c’è un precedente preciso. Nel manifesto *Ausstellung Musikinstrumente* (1962), Richard Paul Lohse allinea alla griglia il margine destro delle ore di apertura. Alpina riprende questo criterio in tabella, dove si devono confrontare gli importi scorrendo la colonna. [Poster House, opera e lettura degli orari](https://access.posterhouse.org/exhibition/swiss-grid-2/)
+Numerical columns have a specific precedent. In *Ausstellung Musikinstrumente* (1962), Richard Paul Lohse aligns the right edge of the opening hours to the grid. Alpina uses this principle in tables where people compare amounts by scanning down a column. [Poster House, poster and commentary on the opening hours](https://access.posterhouse.org/exhibition/swiss-grid-2/)
 
-Il modulo di Alpina vale `0.25rem`, cioè 4 px con la radice del browser a 16 px. È una scelta per questa libreria. Le opere storiche citate attestano un metodo compositivo, senza prescrivere misure CSS. Le interlinee predefinite sono 16, 20, 24, 28 e 48 px. Un corpo di 14 px resta sulla linea di 20 px. Bordi sottili e sagome dei glifi possono tagliare il modulo.
+Alpina's module is `0.25rem`, or 4 px at a 16 px browser root. The historical works document the compositional method. The CSS measurements belong to this library. Default line heights include 16, 20, 24, 28, and 48 px. A 14 px label sits in a 20 px line. Thin borders and glyph outlines can cross module boundaries.
 
-- `GridItem` accetta `start={{ small: 1, medium: 2, large: 3 }}` insieme alle ampiezze `small`, `medium` e `large`. L’inizio si ferma all’ultima colonna che può contenere l’elemento. Le soglie dipendono dalla larghezza del contenitore.
-- `Typography measure="reading"` limita il testo a 65ch, `measure="narrow"` a 44ch. La misura in ch si basa sullo zero del carattere, quindi il numero effettivo di lettere per riga varia.
-- `TableHead numeric` e `TableCell numeric` allineano i dati sul margine finale e attivano le cifre tabellari disponibili nel carattere. `Input numeric` dispone una quantità sullo stesso asse e richiede il tastierino decimale. La convalida dipende dal tipo di campo.
-- Con `Chart` lo zero è comune a tutte le barre. I valori negativi occupano il lato opposto e usano un tratteggio. La tabella apribile contiene categoria e valore. Per localizzare cifre o unità, passare `formatValue`. Le osservazioni non finite sono escluse e un insieme vuoto mostra `emptyLabel`.
-- `Alert`, `Badge` e `Marker` abbinano segni e testo. «Archiviato» o «Da verificare» comunica il significato anche quando i colori sono sostituiti dal sistema. Dare a ogni controllo un’etichetta nella lingua di chi lo usa.
+- `GridItem` accepts `start={{ small: 1, medium: 2, large: 3 }}` alongside the `small`, `medium`, and `large` spans. The starting position stops at the last column that can fit the item. Breakpoints use the container width.
+- `Typography measure="reading"` limits text to 65ch. `measure="narrow"` limits it to 44ch. The ch unit refers to the width of the font's zero, so the actual number of letters per line varies.
+- `TableHead numeric` and `TableCell numeric` align data to the end edge and request tabular figures when the font provides them. `Input numeric` aligns amounts the same way and requests a decimal keypad. Validation depends on the field type.
+- `Chart` gives every bar the same zero. Negative bars extend in the opposite direction and use hatching. An expandable table lists each category and its value. Pass `formatValue` to localize numbers and units. The chart skips non-finite observations and shows `emptyLabel` for an empty set.
+- `Alert`, `Badge`, and `Marker` combine signs with text. “Archived” and “Needs review” retain their meaning when the system overrides the colors. Give each control a label in the reader's language.
 
-## Comporre una pagina
+## Composing a page
 
-### Ingombri e superfici attive
+### Dimensions and hit areas
 
-Queste misure assumono una radice di 16 px. Le dimensioni espresse in rem seguono le preferenze tipografiche del browser. L’altezza minima permette al testo di occupare una seconda riga.
+These dimensions assume a 16 px root. Values in rem follow the browser's typography preferences. Minimum heights allow text to occupy a second line.
 
-| Elemento          | Misura e motivazione                                                                                                                                                                       |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Pulsante          | Le taglie sm, md e lg partono da 32, 44 e 48 px. Su un dispositivo con puntatore impreciso sm sale a 44 px. Toggle e il controllo del cursore riservano almeno 44 px in altezza.           |
-| Checkbox e switch | La checkbox separa un segno di 20 px dall’area attiva di 24 px, che si estende a 44 px con puntatore impreciso. Lo switch è largo 48 px e alto 32 px, con area attiva alta 44 px su touch. |
-| Testo nella riga  | Item dispone i contenuti con intervalli di 8 o 12 px. Date e conteggi hanno cifre tabellari. Su una riga corta i metadati si spostano sotto il titolo.                                     |
-| Avatar e tasto    | Avatar offre lati da 32, 40 e 56 px. Kbd ha una dimensione minima di 24 px e si allarga per un nome come «Invio».                                                                          |
-| Focus             | I controlli personalizzati mostrano un contorno di 2 px. Le zone scorrevoli disegnano l’indicatore all’interno, così il contenitore non lo ritaglia.                                       |
+| Element | Measurement and purpose |
+| --- | --- |
+| Button | Sizes sm, md, and lg start at 32, 44, and 48 px. With a coarse pointer, sm increases to 44 px. Toggle and the slider control reserve at least 44 px in height. |
+| Checkbox and switch | A 20 px checkbox mark sits in a 24 px hit area, increasing to 44 px with a coarse pointer. A switch is 48 px wide and 32 px high with a 44 px high touch target. |
+| Row text | Item uses 8 or 12 px gaps. Dates and counts use tabular figures. On a short row, metadata moves below the title. |
+| Avatar and key | Avatar offers 32, 40, and 56 px squares. Kbd starts at 24 px and grows to fit names such as “Enter.” |
+| Focus | Custom controls display a 2 px outline. Scrolling regions draw their indicator inside the edge to avoid clipping. |
 
-Il test browser misura il contrasto di testo, etichette, stati e contorni su campioni dei temi chiaro e scuro, compreso il tema applicato a un contenitore annidato. Verifica in modo indipendente lo stato premuto con i colori forzati e l’interazione con la sola tastiera. Le soglie di verifica sono 4,5 a 1 per il testo ordinario e 3 a 1 per gli indicatori grafici. [W3C, contrasto del testo](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html) · [W3C, contrasto non testuale](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)
+The browser test measures the contrast of text, labels, states, and outlines in light and dark samples, including a theme applied to a nested container. It also checks the pressed state in forced colors and keyboard-only interaction. The thresholds are 4.5 to 1 for ordinary text and 3 to 1 for graphical indicators. [W3C, text contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html) · [W3C, non-text contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)
 
-### Scelta dei componenti
+### Choosing a component
 
-| Esigenza               | Componenti e comportamento                                                                                                                                                                                                                                         |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Elenco di opere        | `Item` riceve titolo, descrizione e metadati. Un link nel titolo offre la navigazione nativa. `Empty` descrive un insieme vuoto e accetta un’azione.                                                                                                               |
-| Tavola e campione      | `AspectRatio` stabilizza le proporzioni del supporto. `Attachment` presenta un file con un vero collegamento che può ricevere `download`.                                                                                                                          |
-| Valore e unità         | Collegare `Label` al campo con `htmlFor` e `id`. Dentro `InputGroup` un suffisso che determina il significato del valore va associato con `aria-describedby`. `Slider` usa un input range nativo e accetta min, max e step.                                        |
-| Azioni correlate       | `ButtonGroup` dà un nome a un gruppo di pulsanti. Ogni pulsante conserva il proprio arresto di tabulazione. `Toggle` espone lo stato tramite `aria-pressed` e mantiene lo stesso nome in entrambe le posizioni.                                                    |
-| Messaggistica          | `Avatar` usa le iniziali se l’immagine manca o non si carica. Se il nome è già visibile, usare `decorative`. `Message` associa l’autore all’orario e al testo reso con `Bubble`. `Direction` imposta l’ordine di lettura del contenitore in documenti multilingue. |
-| Dettagli e navigazione | `Collapsible` usa details/summary ed è utilizzabile con tastiera. `ScrollArea` è una regione con nome e focus. `Kbd` rappresenta il nome del tasto, mentre il gestore della scorciatoia appartiene all’applicazione.                                               |
+| Task | Components and behavior |
+| --- | --- |
+| List works | `Item` accepts a title, description, and metadata. A title link provides native navigation. `Empty` describes an empty collection and accepts an action. |
+| Display a plate or specimen | `AspectRatio` holds the proportions of the frame. `Attachment` presents a file as a real link that accepts `download`. |
+| Enter a value with a unit | Link `Label` to the field with `htmlFor` and `id`. In `InputGroup`, associate a suffix that defines the unit with `aria-describedby`. `Slider` uses a native range input with min, max, and step. |
+| Group related actions | `ButtonGroup` gives a button group a name. Each button keeps its tab stop. `Toggle` exposes `aria-pressed` and keeps the same name in both states. |
+| Show messages | `Avatar` falls back to initials if an image is missing or fails to load. Use `decorative` when the name is already visible. `Message` associates the author with the time and the text in `Bubble`. `Direction` sets its container's reading direction in multilingual documents. |
+| Browse details | `Collapsible` uses keyboard-accessible details/summary. `ScrollArea` is a named, focusable region. `Kbd` represents a key name. The application implements the keyboard shortcut. |
 
-## Compatibilità con la serie 0.2
+## Compatibility with 0.2
 
-Le proprietà precedenti conservano i loro nomi. Le varianti aggiunte permettono di dichiarare il comportamento nei punti in cui serve.
+Existing prop names are preserved. The following options were introduced in 0.3.
 
-| Componenti                        | Uso introdotto nella 0.3                                                                                                                                                                                                                                                                   |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Button, Card                      | `busy` blocca una seconda attivazione e conserva il testo del pulsante. `Card as="article"` dà un contenitore semantico a un elemento autonomo.                                                                                                                                            |
-| Checkbox, Switch, RadioGroup      | `indeterminate` espone una selezione parziale anche al controllo nativo. `stateLabels={{ on: 'Attivo', off: 'Sospeso' }}` aggiunge lo stato visibile dello switch. `orientation="horizontal"` permette alle opzioni radio di andare a capo insieme alle etichette.                         |
-| Field, Select, Textarea           | Field ricompone gli ID di suggerimento ed errore eliminando i duplicati. `Select placeholder` aggiunge un’opzione vuota anche nei campi obbligatori a scelta singola. `Textarea autoGrow` segue il testo dove il browser supporta field-sizing e mantiene il comportamento nativo altrove. |
-| Progress, Skeleton, Spinner       | `formatValue(value, max)` espone l’unità accessibile del progresso. `Skeleton variant="text"` o `"avatar"` riserva uno spazio appropriato. `Spinner size` seleziona un diametro di 16, 20 o 32 px.                                                                                         |
-| Breadcrumb, Pagination, Separator | `currentIndex` permette di indicare una tappa intermedia. Pagination contrassegna i link alle pagine adiacenti con prev e next. `Separator weight="section"` dà maggiore enfasi a un cambio di sezione.                                                                                    |
+| Components | Behavior |
+| --- | --- |
+| Button, Card | `busy` prevents a second activation and preserves the button text. `Card as="article"` gives a self-contained item semantic markup. |
+| Checkbox, Switch, RadioGroup | `indeterminate` exposes partial selection on the native control. `stateLabels={{ on: 'Active', off: 'Paused' }}` adds visible switch states. `orientation="horizontal"` lets radio options wrap with their labels. |
+| Field, Select, Textarea | Field combines hint and error IDs and removes duplicates. `Select placeholder` adds an empty option in single-select fields, including required ones. `Textarea autoGrow` follows the text where the browser supports field-sizing and uses native behavior elsewhere. |
+| Progress, Skeleton, Spinner | `formatValue(value, max)` provides an accessible progress value with its unit. `Skeleton variant="text"` or `"avatar"` reserves the corresponding space. `Spinner size` selects a diameter of 16, 20, or 32 px. |
+| Breadcrumb, Pagination, Separator | `currentIndex` marks an intermediate step. Pagination marks adjacent page links with prev and next. `Separator weight="section"` emphasizes a section change. |

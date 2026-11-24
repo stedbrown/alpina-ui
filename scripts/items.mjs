@@ -11,9 +11,9 @@ export const additions = [
     'ui',
     'stack',
     'Stack',
-    'Righe e colonne flessibili',
-    'Progetto grafico',
-    'Disponi controlli e azioni con spaziatura modulare, allineamento e ritorno a capo.',
+    'Flexible rows and columns',
+    'Graphic design',
+    'Arrange controls and actions with consistent spacing, alignment, and wrapping.',
   ],
 ]
 // This is the public component inventory. The build derives source dependencies from imports.

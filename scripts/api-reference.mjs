@@ -78,24 +78,24 @@ function componentDefaults(source) {
 }
 
 const help = {
-  open: 'Apertura controllata dal chiamante.',
-  defaultOpen: 'Apertura iniziale in modalità non controllata.',
-  onOpenChange: 'Riceve il nuovo stato di apertura.',
-  initialFocusRef: 'Assegna il focus iniziale a questo elemento quando è montato nella finestra.',
+  open: 'Sets the open state in controlled mode.',
+  defaultOpen: 'Sets the initial open state in uncontrolled mode.',
+  onOpenChange: 'Receives the new open state.',
+  initialFocusRef: 'Moves initial focus to this element when it mounts in the dialog.',
   'Toast.duration':
-    'Durata in millisecondi. Il conto alla rovescia si ferma al passaggio del puntatore, con il focus e quando la pagina è nascosta.',
+    'Duration in milliseconds. The timer pauses on hover, while the toast has focus, and when the page is hidden.',
   'Tooltip.delay':
-    'Attesa in millisecondi al passaggio del puntatore. Il focus da tastiera mostra subito il suggerimento.',
-  'SwissDate.timeZone': 'Si applica alle istanze Date. Una data civile conserva il giorno indicato.',
+    'Hover delay in milliseconds. Keyboard focus shows the tooltip immediately.',
+  'SwissDate.timeZone': 'Applies to Date instances. Calendar dates retain the specified day.',
   'CantonSelect.placeholder':
-    'Aggiunge un’opzione vuota e disabilitata. Con required il modulo richiede una selezione.',
+    'Adds an empty, disabled option. With required set, the form requires a selection.',
   'LocaleSelect.placeholder':
-    'Aggiunge un’opzione vuota e disabilitata. Con required il modulo richiede una selezione.',
+    'Adds an empty, disabled option. With required set, the form requires a selection.',
   'SwissAddressForm.onSave':
-    'Riceve l’indirizzo validato. Restituisci fieldErrors per associare un messaggio ai singoli campi. È supportato anche il salvataggio asincrono.',
-  'DataTable.rowKey': 'Restituisce una chiave stabile per ciascuna riga.',
-  'DataTable.defaultSort': 'Ordinamento applicato inizialmente.',
-  'Field.children': 'Passa al controllo gli attributi che collegano etichetta, istruzioni ed errore.',
+    'Receives the validated address. Return fieldErrors to associate messages with individual fields. The callback can be asynchronous.',
+  'DataTable.rowKey': 'Returns a stable key for each row.',
+  'DataTable.defaultSort': 'Sets the initial sort order.',
+  'Field.children': 'Passes the control the attributes that associate its label, instructions, and error message.',
 }
 
 function relatedTypes(declarations, checker, local) {
@@ -161,7 +161,7 @@ export async function buildApiReference() {
   const entries = {}
   for (const item of items) {
     const module = program.getSourceFile(file(item.entry))
-    if (!module) throw new Error('Dichiarazione mancante per ' + item.name + '. Eseguire la build.')
+    if (!module) throw new Error('Missing declaration for ' + item.name + '. Run the build first.')
     const source = await readFile(path.join(project, 'src', item.entry), 'utf8')
     const defaults = componentDefaults(
       ts.createSourceFile(item.entry, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX),
@@ -208,7 +208,7 @@ export async function buildApiReference() {
         types: relatedTypes(propertyTypes, checker, local),
       })
     }
-    if (!components.length) throw new Error('Nessuna firma React per ' + item.name)
+    if (!components.length) throw new Error('No React signature for ' + item.name)
     entries[item.name] = components
   }
   return entries

@@ -3,13 +3,13 @@ import { Grid, GridItem, Typography, Select, Button, NavigationMenu } from 'alpi
 import './specimen.css'
 
 const programme = [
-  { time: '09:30', title: 'La misura della pagina', format: 'Lezione' },
-  { time: '11:00', title: 'Comporre con la griglia', format: 'Laboratorio' },
-  { time: '14:15', title: 'Leggere la città', format: 'Conversazione' },
+  { time: '09:30', title: 'Measuring the page', format: 'Lecture' },
+  { time: '11:00', title: 'Designing with a grid', format: 'Workshop' },
+  { time: '14:15', title: 'Reading the city', format: 'Discussion' },
 ] as const
 
 const widths = [
-  { value: 'auto', label: 'Automatica' },
+  { value: 'auto', label: 'Automatic' },
   { value: '320', label: '320 px' },
   { value: '640', label: '640 px' },
   { value: '960', label: '960 px' },
@@ -73,18 +73,18 @@ export function Specimen() {
           Alpina UI
         </Typography>
         <Typography as="p" variant="body" className="sp-intro">
-          Componenti React per progettare con la tipografia svizzera. Prova il programma qui sotto,
-          misura le colonne e consulta il codice.
+          React components for working with Swiss typography. Resize the program below,
+          measure its columns, and explore the code.
         </Typography>
       </header>
-      <section className="sp-workbench" aria-label="Campionario tipografico">
+      <section className="sp-workbench" aria-label="Typographic specimen">
         <div className="sp-toolbar">
           <Typography variant="label" as="p" className="sp-toolbar-title">
-            Campione tipografico
+            Type specimen
           </Typography>
           <div className="sp-controls">
             <div className="sp-width">
-              <label htmlFor={id + '-width'}>Larghezza</label>
+              <label htmlFor={id + '-width'}>Width</label>
               <Select
                 id={id + '-width'}
                 value={width}
@@ -110,7 +110,7 @@ export function Specimen() {
               onClick={() => setGuides(!guides)}
             >
               <span className="sp-guides-icon" aria-hidden="true" />
-              Mostra griglia
+              Show grid
             </Button>
           </div>
         </div>
@@ -119,7 +119,7 @@ export function Specimen() {
           className="sp-viewport"
           tabIndex={measures?.scrollable ? 0 : undefined}
           role="region"
-          aria-label="Programma illustrativo degli incontri di grafica"
+          aria-label="Sample program for the design talks"
           id={id}
         >
           <div
@@ -132,19 +132,19 @@ export function Specimen() {
                   Lugano
                 </Typography>
                 <Typography variant="caption" as="span">
-                  Programma illustrativo
+                  Sample program
                 </Typography>
               </GridItem>
               <GridItem small={1} medium={2} large={3} className="sp-date-cell">
-                <time dateTime="2026-11-24" aria-label="24 novembre 2026" className="sp-date">
+                <time dateTime="2026-11-24" aria-label="24 November 2026" className="sp-date">
                   <strong>24</strong>
-                  <span>nov.</span>
+                  <span>Nov</span>
                   <span>2026</span>
                 </time>
               </GridItem>
               <GridItem small={3} medium={6} large={9} className="sp-title-cell">
                 <Typography variant="display" as="h2" className="sp-poster-title">
-                  <span>Incontri</span> <span>di grafica</span>
+                  <span>Design</span> <span>talks</span>
                 </Typography>
               </GridItem>
               <GridItem className="sp-print" aria-hidden="true">
@@ -171,46 +171,46 @@ export function Specimen() {
             <span className="sp-unit-probe" aria-hidden="true" />
           </div>
         </div>
-        {measures?.scrollable && <p className="sp-scroll-hint">Scorri il campione in orizzontale.</p>}
-        <dl className="sp-measures" aria-label="Misure effettive del campione">
+        {measures?.scrollable && <p className="sp-scroll-hint">Scroll horizontally to see the full specimen.</p>}
+        <dl className="sp-measures" aria-label="Measured specimen dimensions">
           <div>
-            <dt>Larghezza</dt>
+            <dt>Width</dt>
             <dd>{measures ? measures.width + ' px' : '—'}</dd>
           </div>
           <div>
-            <dt>Colonne</dt>
+            <dt>Columns</dt>
             <dd>{measures?.columns ?? '—'}</dd>
           </div>
           <div>
-            <dt>Margine</dt>
+            <dt>Margin</dt>
             <dd>{measures ? measures.margin + ' px' : '—'}</dd>
           </div>
           <div>
-            <dt>Intercolonna</dt>
+            <dt>Gutter</dt>
             <dd>{measures ? measures.gutter + ' px' : '—'}</dd>
           </div>
           <div>
-            <dt>Unità</dt>
+            <dt>Unit</dt>
             <dd>{measures ? measures.unit + ' px' : '—'}</dd>
           </div>
           <div>
-            <dt>Corpo / interlinea titolo</dt>
+            <dt>Title size / line height</dt>
             <dd>{measures ? measures.typeSize + ' / ' + measures.lineHeight + ' px' : '—'}</dd>
           </div>
         </dl>
       </section>
       <NavigationMenu
         className="sp-links"
-        label="Esplora il sistema"
+        label="Explore the system"
         orientation="horizontal"
         sections={[
           {
             links: [
-              { href: '#guide/design', label: 'Guida al design' },
-              { href: '#guide/research', label: 'Ricerca e fonti' },
-              { href: '#grid', label: 'Griglia' },
-              { href: '#typography', label: 'Tipografia' },
-              { href: '#rubrica', label: 'Rubrica di esempio' },
+              { href: '#guide/design', label: 'Design guide' },
+              { href: '#guide/research', label: 'Research and sources' },
+              { href: '#grid', label: 'Grid' },
+              { href: '#typography', label: 'Typography' },
+              { href: '#address-book', label: 'Sample address book' },
             ],
           },
         ]}

@@ -35,7 +35,7 @@ function dependencies(file, seen = new Set()) {
     const key = [relative, relative.replace(/\.js$/, '.tsx'), relative.replace(/\.js$/, '.ts')].find(
       (p) => sources.has(p),
     )
-    if (!key) throw new Error('Import locale sconosciuto in ' + file + ' → ' + relative)
+    if (!key) throw new Error('Unknown local import in ' + file + ' → ' + relative)
     dependencies(key, seen)
   }
   return seen
@@ -89,4 +89,4 @@ for (const item of registry.items) {
     'dist/styles/' + item.name + '.css',
   )
 }
-console.log(registry.items.length + ' componenti compilati.')
+console.log(registry.items.length + ' components built.')

@@ -44,9 +44,9 @@ export function AspectRatioExample() {
 
 export function AttachmentExample() {
   const file =
-    'data:text/plain;charset=utf-8,' + encodeURIComponent('Atelier\nVenerdì, ore 14.00\nSala 3\n')
+    'data:text/plain;charset=utf-8,' + encodeURIComponent('Atelier\nFriday, 14:00\nRoom 3\n')
   return (
-    <Attachment filename="Programma.txt" href={file} download="Programma.txt" detail="Testo · UTF-8" />
+    <Attachment filename="Programme.txt" href={file} download="Programme.txt" detail="Text · UTF-8" />
   )
 }
 
@@ -54,7 +54,7 @@ export function AvatarExample() {
   return (
     <Item
       title="Nora Keller"
-      description="Responsabile archivio"
+      description="Archivist"
       leading={<Avatar name="Nora Keller" decorative />}
     />
   )
@@ -63,17 +63,17 @@ export function AvatarExample() {
 export function BubbleExample() {
   return (
     <div style={{ display: 'grid', gap: '1rem' }}>
-      <Bubble>La prova di stampa è pronta?</Bubble>
-      <Bubble side="end">Sì, puoi ritirarla in atelier.</Bubble>
+      <Bubble>Is the print proof ready?</Bubble>
+      <Bubble side="end">Yes, you can pick it up at the studio.</Bubble>
     </div>
   )
 }
 
 export function ButtonGroupExample() {
-  const [view, setView] = useState('Elenco')
+  const [view, setView] = useState('List')
   return (
-    <ButtonGroup label="Vista del catalogo">
-      {['Elenco', 'Tavole'].map((option) => (
+    <ButtonGroup label="Catalog view">
+      {['List', 'Plates'].map((option) => (
         <Toggle key={option} pressed={view === option} onPressedChange={() => setView(option)}>
           {option}
         </Toggle>
@@ -84,16 +84,16 @@ export function ButtonGroupExample() {
 
 export function ChartExample() {
   const data = [
-    { label: 'Gennaio', value: 18 },
-    { label: 'Febbraio', value: -7 },
-    { label: 'Marzo', value: 12 },
-    { label: 'Aprile', value: 24 },
+    { label: 'January', value: 18 },
+    { label: 'February', value: -7 },
+    { label: 'March', value: 12 },
+    { label: 'April', value: 24 },
   ]
   return (
     <Chart
-      title="Variazione delle iscrizioni"
+      title="Change in registrations"
       data={data}
-      valueLabel="Iscrizioni"
+      valueLabel="Registrations"
       formatValue={(value) =>
         new Intl.NumberFormat('it-CH', { signDisplay: 'exceptZero' }).format(value)
       }
@@ -103,8 +103,8 @@ export function ChartExample() {
 
 export function CollapsibleExample() {
   return (
-    <Collapsible summary="Condizioni di prestito">
-      I periodici si consultano in sede. Le monografie si possono prendere in prestito per 30 giorni.
+    <Collapsible summary="Borrowing policy">
+      Read periodicals on site. You can borrow monographs for 30 days.
     </Collapsible>
   )
 }
@@ -112,8 +112,8 @@ export function CollapsibleExample() {
 export function DirectionExample() {
   return (
     <div style={{ display: 'grid', gap: '.75rem' }}>
-      <Direction dir="ltr" lang="it">
-        Biblioteca di progetto
+      <Direction dir="ltr" lang="en">
+        Design library
       </Direction>
       <Direction dir="rtl" lang="ar">
         مكتبة التصميم
@@ -126,17 +126,17 @@ export function EmptyExample() {
   const [filtered, setFiltered] = useState(true)
   return filtered ? (
     <Empty
-      title="Nessuna pubblicazione trovata"
-      description="Il filtro selezionato cerca soltanto le monografie del 1960."
-      action={<Button onClick={() => setFiltered(false)}>Rimuovi filtro</Button>}
+      title="No matching publications"
+      description="This filter shows only monographs from 1960."
+      action={<Button onClick={() => setFiltered(false)}>Clear filter</Button>}
     />
   ) : (
     <Item
       title="Typographie"
-      description="Monografia · 1967"
+      description="Monograph · 1967"
       trailing={
         <Button variant="ghost" onClick={() => setFiltered(true)}>
-          Riapplica filtro
+          Reapply filter
         </Button>
       }
     />
@@ -147,7 +147,7 @@ export function InputGroupExample() {
   const id = useId()
   return (
     <div>
-      <Label htmlFor={id}>Larghezza della colonna</Label>
+      <Label htmlFor={id}>Column width</Label>
       <InputGroup trailing={<span id={id + '-unit'}>mm</span>}>
         <Input id={id} type="number" min={1} defaultValue={56} aria-describedby={id + '-unit'} />
       </InputGroup>
@@ -158,9 +158,9 @@ export function InputGroupExample() {
 export function ItemExample() {
   return (
     <Item
-      title="Archivio dei manifesti"
-      description="Inventario aggiornato a marzo"
-      trailing={<span>124 opere</span>}
+      title="Poster archive"
+      description="Inventory updated in March"
+      trailing={<span>124 works</span>}
     />
   )
 }
@@ -168,7 +168,7 @@ export function ItemExample() {
 export function KbdExample() {
   return (
     <p>
-      Per stampare su Windows premi <Kbd>Ctrl</Kbd> + <Kbd>P</Kbd>.
+      To print on Windows, press <Kbd>Ctrl</Kbd> + <Kbd>P</Kbd>.
     </p>
   )
 }
@@ -177,7 +177,7 @@ export function LabelExample() {
   const id = useId()
   return (
     <div>
-      <Label htmlFor={id}>Titolo della pubblicazione</Label>
+      <Label htmlFor={id}>Publication title</Label>
       <Input id={id} defaultValue="Neue Grafik" />
     </div>
   )
@@ -186,9 +186,9 @@ export function LabelExample() {
 export function MarkerExample() {
   return (
     <div style={{ display: 'grid', gap: '.5rem' }}>
-      <Marker>In lavorazione</Marker>
-      <Marker variant="closed">Archiviato</Marker>
-      <Marker variant="attention">Da verificare</Marker>
+      <Marker>In progress</Marker>
+      <Marker variant="closed">Archived</Marker>
+      <Marker variant="attention">Needs review</Marker>
     </div>
   )
 }
@@ -197,10 +197,10 @@ export function MessageExample() {
   return (
     <div style={{ display: 'grid', gap: '1rem' }}>
       <Message author="Marta" timestamp="09.12" dateTime="09:12">
-        Ho aggiornato l’indice.
+        I’ve updated the index.
       </Message>
       <Message author="Nora" timestamp="09.24" dateTime="09:24" side="end">
-        Ricevuto, preparo la nuova edizione.
+        Thanks. I’ll prepare the new edition.
       </Message>
     </div>
   )
@@ -208,19 +208,19 @@ export function MessageExample() {
 
 export function ScrollAreaExample() {
   const subjects = [
-    'Composizione',
-    'Contrasto',
-    'Fotografia',
-    'Griglia',
-    'Legatura',
-    'Litografia',
-    'Margini',
-    'Registro',
-    'Stampa',
-    'Tipografia',
+    'Composition',
+    'Contrast',
+    'Photography',
+    'Grid',
+    'Binding',
+    'Lithography',
+    'Margins',
+    'Registration',
+    'Printing',
+    'Typography',
   ]
   return (
-    <ScrollArea label="Indice delle materie" maxHeight="10rem">
+    <ScrollArea label="Subject index" maxHeight="10rem">
       {subjects.map((subject) => (
         <Item title={subject} key={subject} />
       ))}
@@ -233,13 +233,13 @@ export function SliderExample() {
   const [size, setSize] = useState(16)
   return (
     <div>
-      <Label htmlFor={id}>Corpo del testo</Label>
+      <Label htmlFor={id}>Body type size</Label>
       <Slider
         id={id}
         min={12}
         max={48}
         value={size}
-        aria-valuetext={size + ' punti'}
+        aria-valuetext={size + ' points'}
         onChange={(event) => setSize(event.currentTarget.valueAsNumber)}
       />
       <output htmlFor={id}>{size} pt</output>
@@ -248,5 +248,5 @@ export function SliderExample() {
 }
 
 export function ToggleExample() {
-  return <Toggle defaultPressed>Mostra le note</Toggle>
+  return <Toggle defaultPressed>Show notes</Toggle>
 }

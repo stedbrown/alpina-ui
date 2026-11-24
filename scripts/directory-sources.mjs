@@ -28,7 +28,7 @@ export async function readDirectorySources(root = project) {
     'tsconfig.json',
     'package.json',
   ]) {
-    if (!paths.includes(name)) throw new Error('Sorgente della rubrica mancante: ' + name)
+    if (!paths.includes(name)) throw new Error('Missing address book source file: ' + name)
   }
   const ordered = [
     ...paths.filter((name) => name.startsWith('src/')),

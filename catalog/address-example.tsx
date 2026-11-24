@@ -12,7 +12,7 @@ export function SwissAddressFormExample() {
   }
   return (
     <div style={{ display: 'grid', gap: '1rem' }}>
-      <Field label="Lingua del modulo">
+      <Field label="Form language">
         {(control) => <LocaleSelect {...control} value={locale} onLocaleChange={setLocale} />}
       </Field>
       <div onChange={() => setSaved(false)}>

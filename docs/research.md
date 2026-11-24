@@ -1,52 +1,52 @@
-# Disegnare con tre inchiostri
+# Designing with three inks
 
-## Che cosa rende svizzera un’interfaccia?
+## What makes an interface Swiss?
 
-Nella ricostruzione del DFAE la grafica svizzera nasce dall’incontro fra scuola, laboratorio tipografico e commissioni reali. A Basilea e Zurigo si insegnava grafica applicata già nel 1915. Negli anni Cinquanta e Sessanta quella cultura diventa riconoscibile fuori dai confini nazionali. Per una libreria digitale il parallelo più fertile è il lavoro in serie. Una bella apertura di catalogo è un singolo caso. Una griglia che continua a funzionare quando cambiano titolo, lingua e quantità di dati è un metodo di progetto. [About Switzerland, storia dello Swiss Style](https://www.aboutswitzerland.eda.admin.ch/it/swiss-style-forever-storia-della-nascita-di-una-tradizione-nel-campo-della-grafica)
+The Swiss Federal Department of Foreign Affairs traces Swiss graphic design to the meeting of the design school, the print workshop, and commissioned work. Basel and Zurich taught applied graphic design as early as 1915. By the 1950s and 1960s, their work was recognizable internationally. For a digital library, the useful comparison is a series. A single catalog spread can look striking. A grid that remains legible as the title, language, and quantity of information change gives designers a repeatable method. [About Switzerland, history of Swiss Style](https://www.aboutswitzerland.eda.admin.ch/it/swiss-style-forever-storia-della-nascita-di-una-tradizione-nel-campo-della-grafica)
 
-## Il rosso occupa una posizione
+## Where the red goes
 
-In *der Film* di Josef Müller-Brockmann (1960) il titolo attraversa un campo nero. Le informazioni sul luogo e sugli orari sono piccole, rosse e allineate alla F di Film. Il manifesto permette due letture a distanze diverse. Si riconosce il soggetto da lontano e si trovano i dettagli avvicinandosi. Lo stesso asse collega le due operazioni. La scheda dello Smithsonian distingue anche il grigio della parola «der» dal bianco di «Film». [Cooper Hewitt, Smithsonian Design Museum, der Film](https://www.si.edu/object/der-film-film%3Achndm_1999-46-2)
+In Josef Müller-Brockmann's *der Film* (1960), the title crosses a black field. Small red text giving the venue and opening hours aligns with the F in Film. A viewer can recognize the subject from across a room and find the details up close. The same axis links the two readings. The Smithsonian catalog also identifies the gray of “der” and the white of “Film.” [Cooper Hewitt, Smithsonian Design Museum, *der Film*](https://www.si.edu/object/der-film-film%3Achndm_1999-46-2)
 
-Per Alpina il vincolo è più preciso. Bianco, nero e rosso sono i tre colori pieni. Il campo bianco del portale resta continuo fra il titolo e l’esempio. Il rosso marca la data nel programma, la voce corrente nell’indice e le azioni primarie. In un avviso, la parola che identifica lo stato deve bastare a comprenderlo. Un bordo o un segno può rafforzarla. Se tutto fosse rosso l’accento perderebbe la sua funzione. Qui il vincolo dei tre colori risponde alla direzione artistica scelta per Alpina. Nel manifesto storico ogni autore decideva come usare gli inchiostri.
+Alpina uses white, black, and red as its three solid colors. The white field continues from the portal title to the example. Red marks the date in the program, the current index entry, and primary actions. In an alert, the word identifying the state must carry the meaning on its own. A border or sign can reinforce it. Frequent use weakens the accent. The three-color constraint belongs to Alpina's art direction. Historical poster designers made their own decisions about inks.
 
-### Perché questo rosso
+### Choosing a red
 
-Il rosso di Alpina è `#EB0000`. Sul bianco puro il rapporto di contrasto è circa 4,63:1, sul nero puro circa 4,53:1. Lo stesso accento rimane quindi leggibile in entrambi i temi. Un bordo fine fra due superfici usa una mescolanza di bianco e nero. I controlli essenziali hanno contorni più marcati e la selezione dell’indice abbina al colore un tratto verticale e il grassetto. Il visitatore può continuare a usare la palette di sistema quando attiva i colori forzati. Questi rapporti valgono per le coppie piene specificate. [W3C, contrasto minimo e luminanza relativa](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
+Alpina uses `#EB0000`. Against pure white, the contrast ratio is approximately 4.63 to 1. Against pure black, it is about 4.53 to 1. The accent remains legible in both themes. Fine rules between surfaces use mixtures of black and white. Essential control outlines have stronger contrast. The selected index entry combines color with a vertical rule and bold type. Forced-colors mode lets readers use their system palette. The ratios above apply to the stated solid color pairs. [W3C, minimum contrast and relative luminance](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
 
-## Una griglia per una serie
+## A grid for a series
 
-Nei manifesti di *Musica Viva*, Müller-Brockmann lavora con una famiglia di composizioni. Nell’esempio del 1958 quattro forme circolari si rapportano a una struttura di tre colonne. L’ordine del programma dà un asse alle informazioni, mentre la figura comunica il carattere della serata. Guardare più di un’edizione aiuta a capire quanta variazione può sostenere uno stesso impianto. [Poster House, Swiss Grid](https://access.posterhouse.org/exhibition/swiss-grid-2/)
+Müller-Brockmann's *Musica Viva* posters form a family of compositions. In the 1958 example, four circular shapes relate to a three-column structure. The program establishes an axis for practical information, while the figure conveys the character of the evening. Looking at successive editions shows how much variation one structure can sustain. [Poster House, *The Swiss Grid*](https://access.posterhouse.org/exhibition/swiss-grid-2/)
 
-Il libro *Designing Programmes* di Karl Gerstner (1964) sviluppa questo problema attraverso quattro saggi. Formulare un programma significa decidere quali relazioni devono tenere e quali parametri possono cambiare. Un’applicazione digitale può rendere osservabile il risultato. Nel campionario Alpina lo stesso elenco di incontri passa attraverso contenitori da 320, 640 e 960 px. Orario, titolo e formato rimangono identificabili. Accendendo la griglia si possono controllare gli assi. Cambiando la larghezza si possono leggere le misure calcolate dal browser. [Lars Müller Publishers, facsimile di Designing Programmes](https://www.lars-mueller-publishers.com/designing-programmes-0)
+Karl Gerstner explored this question in the four essays of *Designing Programmes* (1964). Designing a program means deciding which relationships must hold and which parameters can vary. A digital application makes the result observable. In Alpina's specimen, the same schedule appears in 320, 640, and 960 px containers. The time, title, and format stay identifiable. Turn on the grid to inspect the axes. Change the width to see what the browser actually computes. [Lars Müller Publishers, *Designing Programmes* facsimile](https://www.lars-mueller-publishers.com/designing-programmes-0)
 
-## Basilea e la correzione ottica
+## Basel and optical alignment
 
-Nel manifesto *Giselle* (1959) Armin Hofmann mette in relazione una figura fotografica in movimento e il contorno nitido delle lettere. Un dettaglio più sottile è l’allineamento ottico del numero 1. La percezione del suo tratto verticale conta quanto il limite geometrico del carattere. Nella stagione 1960–61 dello Stadttheater Basel, una grande lettera ricorrente lascia una zona libera per un programma settimanale variabile. Cambiano i contenuti, si riconosce la stagione. [MoMA, Giselle](https://www.moma.org/collection/works/6775/) · [Poster House, lettura delle opere](https://access.posterhouse.org/exhibition/swiss-grid-2/) · [Poster House, Stadttheater Basel](https://collection.posterhouse.org/poster/stadttheater-basel-saison-60-61/)
+In *Giselle* (1959), Armin Hofmann sets a moving photographic figure against the crisp outlines of letters. A quieter detail is the optical alignment of the numeral 1. Its vertical stroke matters to the eye as much as the geometric edge of the glyph. For the 1960–61 Stadttheater Basel season, a recurring large letter leaves a clear area for the changing weekly program. Audiences could recognize the season as the content changed. [MoMA, *Giselle*](https://www.moma.org/collection/works/6775/) · [Poster House, exhibition commentary](https://access.posterhouse.org/exhibition/swiss-grid-2/) · [Poster House, *Stadttheater Basel*](https://collection.posterhouse.org/poster/stadttheater-basel-saison-60-61/)
 
-Le cifre di un orario devono essere confrontabili riga per riga. In Alpina hanno larghezza tabulare. Un titolo grande può avere una spaziatura più stretta, mentre un campo di testo mantiene la propria leggibilità alla dimensione di lettura. Nel portale il nome tecnico, il titolo italiano e la descrizione occupano posizioni ricorrenti. La zona più ampia resta a disposizione del componente. Un calendario e un suggerimento da tastiera possono così avere ampiezze diverse sulla stessa pagina.
+Timetable digits must be comparable row by row. Alpina uses tabular figures for them. A display heading can use tighter spacing, while a text input needs to remain easy to read at body size. In the portal, the API name, display title, and description recur in consistent positions. The largest area belongs to the component. A calendar and a keyboard hint can therefore use different widths on the same page.
 
-## Dalla pagina alla segnaletica
+## From the page to wayfinding
 
-Il manuale FFS del 1978–80 documenta la costruzione del segno, i pittogrammi, i numeri dei binari e le dimensioni delle insegne. Hans Hartmann progettò il marchio nel 1972. Il lavoro successivo di Müller-Brockmann e collaboratori affronta la relazione fra segni, testi e supporti. Per un’interfaccia questo suggerisce di mantenere stabile il significato di una posizione. La voce selezionata, il titolo della vista e il suo contenuto formano un percorso che si può seguire anche da tastiera. [Museum für Gestaltung Zürich, manuale FFS](https://old.eguide.ch/en/objekt/sbb/)
+The 1978–80 Swiss Federal Railways (SBB) manual documents the construction of the symbol, pictograms, platform numbers, and sign dimensions. Hans Hartmann designed the mark in 1972. Müller-Brockmann and his collaborators later addressed the relationships among symbols, text, and sign surfaces. In an interface, a position can likewise retain its meaning across views. The selected entry, view title, and content form a route that can also be followed with a keyboard. [Museum für Gestaltung Zürich, SBB manual](https://old.eguide.ch/en/objekt/sbb/)
 
-Il sistema digitale contemporaneo delle FFS pubblica differenti numeri di colonne, margini e distanze fra colonne in funzione dello spazio disponibile. Le sue indicazioni per il visual design trattano anche zoom e aree interattive. È un precedente concreto per documentare le misure di un prodotto. Nella nostra libreria le soglie sono riferite al contenitore, così una griglia dentro un pannello reagisce allo spazio del pannello. [FFS, layout di Lyne](https://digital.sbb.ch/en/design-system/lyne/design-tokens/layout/) · [FFS, visual design accessibile](https://digital.sbb.ch/en/accessibility/roles/visual-design/)
+Today's SBB digital design system publishes column counts, margins, and gutters for different available widths. Its visual design guidance also addresses zoom and interactive targets. This is a precedent for documenting the measurements of a product. In Alpina, breakpoints refer to a component's container so a grid inside a panel responds to the width of that panel. [SBB Lyne layout](https://digital.sbb.ch/en/design-system/lyne/design-tokens/layout/) · [SBB accessible visual design](https://digital.sbb.ch/en/accessibility/roles/visual-design/)
 
-## Le misure di Alpina
+## Alpina's measurements
 
-| Contenitore | Colonne | Margine interno | Spazio fra colonne |
+| Container | Columns | Inner margin | Gutter |
 | --- | ---: | ---: | ---: |
-| Fino a 35,99 rem | 4 | 16 px | 12 px |
-| Da 36 rem | 8 | 24 px | 16 px |
-| Da 54 rem | 12 | 32 px | 24 px |
+| Below 36 rem | 4 | 16 px | 12 px |
+| From 36 rem | 8 | 24 px | 16 px |
+| From 54 rem | 12 | 32 px | 24 px |
 
-I pixel nella tabella corrispondono a una radice di 16 px. Il modulo di Alpina è 0,25 rem. Corpo e interlinea sono accoppiati per ruolo. Si usano 12/16 per annotazioni, 14/20 per etichette, 16/24 per lettura, 24/28 per titoli, 48/48 o 64/64 per il manifesto. L’interlinea governa il ritmo verticale anche quando il corpo, come nel caso dei 14 px, cade fra due moduli. Le misure sono scelte digitali di Alpina. Il testo cresce con le preferenze del lettore. La griglia guida la posizione dei blocchi. Una frase lunga può occupare più righe.
+Pixel equivalents assume a 16 px root. Alpina's module is 0.25 rem. Each role pairs type size with line height. Annotations use 12/16, labels 14/20, body text 16/24, headings 24/28, and display type 48/48 or 64/64. Line height sets the vertical rhythm even when type size falls between modules, as it does at 14 px. Alpina chose these measurements for digital interfaces. Text scales with reader preferences, the grid positions blocks, and a long sentence can wrap across several lines.
 
-## Come leggere il portale
+## Reading the portal
 
-1. Nel campionario, passa da 320 a 960 px e attiva «Mostra griglia». Segui la prima cifra degli orari e la prima lettera dei titoli.
-2. Nell’indice, apri una voce e poi una molto più lunga. Controlla il richiamo rosso e la posizione di Anteprima, Codice e Sorgente.
-3. Nella rubrica, cambia lingua, filtra i contatti e ordina gli importi. Confronta i margini anche quando il testo va a capo.
-4. Nel grafico, confronta le quantità leggendo le etichette. Nei moduli, prova una selezione e un errore. Identifica entrambi anche ignorando il colore.
+1. In the specimen, switch from 320 to 960 px and show the grid. Follow the first digit of each time and the first letter of each title.
+2. In the index, open a short entry and then a much longer one. Look for the red marker and the positions of Preview, Code, and Source.
+3. In the contact directory example, switch languages, filter contacts, and sort amounts. Compare the margins where text wraps.
+4. In the chart, compare quantities by reading their labels. In a form, make a selection and trigger an error. Identify both states using the text and marks alone.
 
-La distribuzione comprende gli stessi componenti utilizzati per l’indice, i comandi, il blocco di codice e la navigazione del portale. Il catalogo consente di confrontare il codice dell’esempio con i file installabili. Chi adotta la libreria può quindi ricostruire il comportamento che ha appena provato.
+The distribution includes the components used for the portal's index, controls, code block, and navigation. The catalog lets you compare each example with the installable source and reproduce the behavior you tried.

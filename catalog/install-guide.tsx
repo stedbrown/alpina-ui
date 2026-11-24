@@ -8,7 +8,7 @@ export function InstallGuide({ html }: { html: string }) {
       <div dangerouslySetInnerHTML={{ __html: intro }} />
       <div className="package-download">
         <TextLink href={release.data} download={release.name}>
-          Scarica Alpina UI {version}
+          Download Alpina UI {version}
           <span aria-hidden="true"> ↓</span>
         </TextLink>
         <Typography variant="caption">

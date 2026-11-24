@@ -23,15 +23,15 @@ test('the ESM package server-renders UI, interactive and Swiss components with p
     createElement(
       'main',
       null,
-      createElement(library.Button, null, 'Salva'),
+      createElement(library.Button, null, 'Save'),
       createElement(library.Tabs, {
-        label: 'Sezioni',
-        items: [{ value: 'conto', label: 'Conto', content: 'Dati del conto' }],
+        label: 'Sections',
+        items: [{ value: 'account', label: 'Account', content: 'Account details' }],
       }),
       createElement(library.CurrencyCHF, { amount: 47.5 }),
     ),
   )
-  assert.match(html, /<button[^>]*>Salva<\/button>/)
+  assert.match(html, /<button[^>]*>Save<\/button>/)
   assert.match(html, /role="tablist"/)
   assert.match(html, /role="tabpanel"/)
   assert.match(html, /<data lang="it-CH" value="47.5">/)

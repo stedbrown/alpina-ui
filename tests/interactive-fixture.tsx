@@ -19,18 +19,18 @@ const invoices = Object.freeze([
 const columns: DataColumn<(typeof invoices)[number]>[] = [
   {
     id: 'id',
-    header: 'Riferimento',
+    header: 'Reference',
     cell: (row) => row.id,
     compare: (a, b) => a.id.localeCompare(b.id),
   },
   {
     id: 'cents',
-    header: 'Importo',
+    header: 'Amount',
     align: 'end',
     cell: (row) => <CurrencyCHF amount={row.cents / 100} />,
     compare: (a, b) => a.cents - b.cents,
   },
-  { id: 'note', header: 'Nota', cell: () => 'In registro' },
+  { id: 'note', header: 'Note', cell: () => 'Registered' },
 ]
 
 function Fixture() {
@@ -40,94 +40,94 @@ function Fixture() {
   const [requestedSort, setRequestedSort] = useState<DataSort | null>(null)
   const [appliedSort, setAppliedSort] = useState<DataSort | null>(null)
   const actions = [
-    { value: 'view', label: 'Apri' },
-    { value: 'edit', label: 'Modifica', disabled: true },
-    { value: 'save', label: 'Salva' },
+    { value: 'view', label: 'Open' },
+    { value: 'edit', label: 'Edit', disabled: true },
+    { value: 'save', label: 'Save' },
   ]
   return (
     <main>
       <Dialog
-        title="Impostazioni locali"
-        trigger="Apri finestra"
-        description="Salva una preferenza."
-        closeLabel="Chiudi finestra"
+        title="Local settings"
+        trigger="Open window"
+        description="Save a preference."
+        closeLabel="Close window"
       >
-        <DropdownMenu label="Azioni locali" items={actions} onValueSelect={setChoice} />
-        <button type="button">Fine</button>
+        <DropdownMenu label="Local actions" items={actions} onValueSelect={setChoice} />
+        <button type="button">Done</button>
       </Dialog>
       <Sheet
         side="start"
         open={sheet}
         onOpenChange={setSheet}
-        title="Pannello"
-        trigger="Apri pannello"
-        closeLabel="Chiudi pannello"
+        title="Panel"
+        trigger="Open panel"
+        closeLabel="Close panel"
       >
         <button type="button" onClick={() => setSheet(false)}>
-          Applica
+          Apply
         </button>
       </Sheet>
       <Tabs
-        label="Lingue"
+        label="Languages"
         defaultValue="it"
         items={[
-          { value: 'it', label: 'Italiano', content: 'Contenuto italiano' },
-          { value: 'fr', label: 'Francese', content: 'Contenu français', disabled: true },
-          { value: 'de', label: 'Tedesco', content: 'Deutscher Inhalt' },
+          { value: 'it', label: 'Italian', content: 'Contenuto italiano' },
+          { value: 'fr', label: 'French', content: 'Contenu français', disabled: true },
+          { value: 'de', label: 'German', content: 'Deutscher Inhalt' },
         ]}
       />
       <Accordion
         items={[
-          { value: 'one', title: 'Prima sezione', content: 'Primo dettaglio' },
-          { value: 'two', title: 'Seconda sezione', content: 'Secondo dettaglio' },
+          { value: 'one', title: 'First section', content: 'First detail' },
+          { value: 'two', title: 'Second section', content: 'Second detail' },
         ]}
       />
       <div style={{ textAlign: 'right' }}>
-        <DropdownMenu label="Azioni" items={actions} onValueSelect={setChoice} />
+        <DropdownMenu label="Actions" items={actions} onValueSelect={setChoice} />
       </div>
       <button type="button" id="after-menu">
-        Seguito
+        Next control
       </button>
       <output data-choice="">{choice}</output>
-      <Tooltip content="Apre la guida">
+      <Tooltip content="Opens the guide">
         <button type="button" aria-describedby="context">
-          Aiuto
+          Help
         </button>
       </Tooltip>
       <span id="context" hidden>
-        Manuale Alpina.
+        Alpina manual.
       </span>
       <button type="button" onClick={() => setNotice(true)}>
-        Salva preferenze
+        Save preferences
       </button>
-      <Toast open={notice} onOpenChange={setNotice} closeLabel="Chiudi avviso">
-        Preferenze salvate
+      <Toast open={notice} onOpenChange={setNotice} closeLabel="Dismiss notification">
+        Preferences saved
       </Toast>
       <DataTable
-        caption="Fatture"
+        caption="Invoices"
         rows={invoices}
         columns={columns}
         rowKey={(row) => row.id}
-        empty="Nessuna fattura"
+        empty="No invoices"
       />
       <DataTable
-        caption="Fatture controllate"
+        caption="Controlled invoices"
         rows={invoices}
         columns={columns}
         rowKey={(row) => row.id}
         sort={appliedSort}
         onSortChange={setRequestedSort}
-        empty="Nessuna fattura"
+        empty="No invoices"
       />
       <button type="button" onClick={() => setAppliedSort(requestedSort)}>
-        Applica ordinamento
+        Apply sort
       </button>
       <DataTable
-        caption="Archivio"
+        caption="Archive"
         rows={[]}
         columns={columns}
         rowKey={(row) => row.id}
-        empty="L'archivio è vuoto"
+        empty="The archive is empty"
       />
     </main>
   )

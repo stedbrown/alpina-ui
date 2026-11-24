@@ -54,22 +54,22 @@ export function CurrencyCHFExample() {
   const [amount, setAmount] = useState('1280.50')
   const valid = amount.trim() !== '' && Number.isFinite(Number(amount))
   return (
-    <section className="apx apx-currency" aria-label="Preventivo di produzione">
+    <section className="apx apx-currency" aria-label="Production estimate">
       <div className="apx-money">
         <div className="apx-money-head">
-          <span>Preventivo di produzione</span>
+          <span>Production estimate</span>
           <span>{locale}</span>
         </div>
         <div className="specimen-value" aria-live="polite">
           {valid ? <CurrencyCHF amount={Number(amount)} locale={locale} /> : '—'}
         </div>
         <div className="apx-money-foot">
-          <span>Totale preventivo</span>
+          <span>Estimated total</span>
           <span>CHF</span>
         </div>
       </div>
       <div className="apx-controls apx-pair">
-        <Field label="Importo">
+        <Field label="Amount">
           {(props) => (
             <Input
               {...props}
@@ -80,7 +80,7 @@ export function CurrencyCHFExample() {
             />
           )}
         </Field>
-        <Field label="Lingua del formato">
+        <Field label="Formatting language">
           {(props) => <LocaleSelect {...props} value={locale} onLocaleChange={setLocale} />}
         </Field>
       </div>
@@ -96,8 +96,8 @@ export function SwissDateExample() {
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Agenda di produzione</p>
-          <h3>Consegna in atelier</h3>
+          <p className="apx-kicker">Production schedule</p>
+          <h3>Studio delivery</h3>
         </div>
       </header>
       <div className="apx-datecard">
@@ -105,11 +105,11 @@ export function SwissDateExample() {
           {valid ? date.slice(8) : '—'}
         </div>
         <output>
-          {valid ? <SwissDate value={date} locale={locale} dateStyle="full" /> : 'Scegli una data'}
+          {valid ? <SwissDate value={date} locale={locale} dateStyle="full" /> : 'Choose a date'}
         </output>
       </div>
       <div className="apx-pair">
-        <Field label="Data civile">
+        <Field label="Calendar date">
           {(props) => (
             <Input
               {...props}
@@ -121,7 +121,7 @@ export function SwissDateExample() {
             />
           )}
         </Field>
-        <Field label="Lingua del formato">
+        <Field label="Formatting language">
           {(props) => <LocaleSelect {...props} value={locale} onLocaleChange={setLocale} />}
         </Field>
       </div>
@@ -141,15 +141,15 @@ export function LocaleSelectExample() {
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Sportello di quartiere</p>
-          <h3>Corrispondenza</h3>
+          <p className="apx-kicker">Neighbourhood office</p>
+          <h3>Correspondence</h3>
         </div>
       </header>
-      <Field label="Lingua di corrispondenza">
+      <Field label="Correspondence language">
         {(props) => <LocaleSelect {...props} value={value} onLocaleChange={setValue} />}
       </Field>
       <div className="apx-tear">
-        <small>Saluto di apertura</small>
+        <small>Salutation</small>
         <output className="apx-greeting" lang={value}>
           {greetings[value]}
         </output>
@@ -167,24 +167,24 @@ export function CantonSelectExample() {
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Distribuzione regionale</p>
-          <h3>Territorio di consegna</h3>
+          <p className="apx-kicker">Regional distribution</p>
+          <h3>Delivery area</h3>
         </div>
       </header>
       <div className="apx-record">
         <span className="apx-canton">{canton}</span>
         <div>
-          <small className="apx-meta">Cantone selezionato</small>
+          <small className="apx-meta">Selected canton</small>
           <output className="apx-large" lang={locale}>
             {name}
           </output>
         </div>
       </div>
       <div className="apx-pair">
-        <Field label="Lingua dei nomi">
+        <Field label="Canton name language">
           {(props) => <LocaleSelect {...props} value={locale} onLocaleChange={setLocale} />}
         </Field>
-        <Field label="Cantone">
+        <Field label="Canton">
           {(props) => (
             <CantonSelect {...props} value={canton} locale={locale} onCantonChange={setCanton} />
           )}
@@ -201,21 +201,21 @@ export function SwissPostalCodeInputExample() {
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Spedizioni</p>
-          <h3>Etichetta del collo</h3>
+          <p className="apx-kicker">Shipping</p>
+          <h3>Parcel label</h3>
         </div>
       </header>
       <div className="apx-record">
         <span className="apx-stamp">CH</span>
         <div>
-          <small className="apx-meta">Numero postale di destinazione</small>
+          <small className="apx-meta">Destination postcode</small>
           <output className="apx-large">{valid ? value : '—'}</output>
         </div>
       </div>
       <Field
-        label="Numero postale di avviamento"
-        description="Inserisci quattro cifre."
-        error={value && !valid ? 'Controlla il formato del numero postale.' : undefined}
+        label="Postal code"
+        description="Enter four digits."
+        error={value && !valid ? 'Check the postal code format.' : undefined}
       >
         {(props) => (
           <SwissPostalCodeInput {...props} value={value} onChange={(e) => setValue(e.target.value)} />
@@ -231,19 +231,19 @@ export function ButtonExample() {
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Banco edizioni</p>
-          <h3>Copie del quaderno</h3>
+          <p className="apx-kicker">Publications desk</p>
+          <h3>Notebook copies</h3>
         </div>
       </header>
       <div className="apx-quantity">
         <div>
-          <small className="apx-meta">Quantità richiesta</small>
+          <small className="apx-meta">Requested quantity</small>
           <output>{copies}</output>
         </div>
         <div className="apx-actions">
-          <Button onClick={() => setCopies((n) => n + 1)}>Aggiungi copia</Button>
+          <Button onClick={() => setCopies((n) => n + 1)}>Add a copy</Button>
           <Button variant="outline" disabled={copies < 2} onClick={() => setCopies(1)}>
-            Ripristina
+            Reset
           </Button>
         </div>
       </div>
@@ -253,16 +253,16 @@ export function ButtonExample() {
 
 export function BadgeExample() {
   const projects = [
-    { name: 'Carta dei sentieri', city: 'Coira', state: 'Bozza', tone: 'neutral' },
-    { name: 'Segnaletica di quartiere', city: 'Bellinzona', state: 'In revisione', tone: 'accent' },
-    { name: 'Quaderno civico', city: 'Losanna', state: 'Approvato', tone: 'success' },
+    { name: 'Trail map', city: 'Chur', state: 'Draft', tone: 'neutral' },
+    { name: 'Neighbourhood wayfinding', city: 'Bellinzona', state: 'In review', tone: 'accent' },
+    { name: 'Civic notebook', city: 'Lausanne', state: 'Approved', tone: 'success' },
   ] as const
   return (
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Atelier territoriale</p>
-          <h3>Stato delle commesse</h3>
+          <p className="apx-kicker">Regional studio</p>
+          <h3>Job status</h3>
         </div>
       </header>
       <ul className="apx-list">
@@ -285,30 +285,30 @@ export function CardExample() {
   return (
     <Card className="apx apx-edition">
       <CardHeader>
-        <p className="apx-kicker">Edizioni d’atelier · N. 03</p>
-        <CardTitle as="h3">Quaderno civico</CardTitle>
-        <CardDescription>Bellinzona · Rilievi e segnaletica urbana</CardDescription>
+        <p className="apx-kicker">Studio editions · No. 03</p>
+        <CardTitle as="h3">Civic notebook</CardTitle>
+        <CardDescription>Bellinzona · Surveys and urban signage</CardDescription>
       </CardHeader>
       <CardContent>
         <dl className="apx-readout">
           <div>
-            <dt>Formato</dt>
-            <dd>A5, 32 pagine</dd>
+            <dt>Format</dt>
+            <dd>A5, 32 pages</dd>
           </div>
           <div>
-            <dt>Tiratura</dt>
-            <dd>80 copie numerate</dd>
+            <dt>Print run</dt>
+            <dd>80 numbered copies</dd>
           </div>
         </dl>
       </CardContent>
       <CardFooter>
-        <span role="status">{reserved ? 'Una copia in lista' : 'Lista di ritiro'}</span>
+        <span role="status">{reserved ? 'One copy reserved' : 'Collection list'}</span>
         <Button
           size="sm"
           variant={reserved ? 'outline' : 'primary'}
           onClick={() => setReserved(!reserved)}
         >
-          {reserved ? 'Rimuovi copia' : 'Aggiungi copia'}
+          {reserved ? 'Remove copy' : 'Add a copy'}
         </Button>
       </CardFooter>
     </Card>
@@ -317,24 +317,24 @@ export function CardExample() {
 
 export function InputExample() {
   const [query, setQuery] = useState('')
-  const places = ['Bellinzona', 'Coira', 'Losanna', 'Locarno']
+  const places = ['Bellinzona', 'Chur', 'Lausanne', 'Locarno']
   const matches = places.filter((name) =>
-    name.toLocaleLowerCase('it').includes(query.trim().toLocaleLowerCase('it')),
+    name.toLocaleLowerCase('en').includes(query.trim().toLocaleLowerCase('en')),
   )
   return (
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Distribuzione</p>
-          <h3>Punti di ritiro</h3>
+          <p className="apx-kicker">Distribution</p>
+          <h3>Collection points</h3>
         </div>
       </header>
-      <Field label="Cerca una località">
+      <Field label="Search locations">
         {(props) => (
           <Input
             {...props}
             type="search"
-            placeholder="Località"
+            placeholder="Location"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -347,24 +347,24 @@ export function InputExample() {
       </ul>
       <p className="apx-meta" role="status">
         {matches.length
-          ? matches.length + (matches.length === 1 ? ' sede disponibile' : ' sedi disponibili')
-          : 'Nessuna sede corrispondente.'}
+          ? matches.length + (matches.length === 1 ? ' location available' : ' locations available')
+          : 'No matching locations.'}
       </p>
     </section>
   )
 }
 export function TextareaExample() {
-  const [text, setText] = useState('Consegna al banco ritiro, ingresso nord.')
+  const [text, setText] = useState('Deliver to the collection desk at the north entrance.')
   return (
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Distinta di trasporto</p>
-          <h3>Istruzioni al corriere</h3>
+          <p className="apx-kicker">Delivery note</p>
+          <h3>Courier instructions</h3>
         </div>
       </header>
       <div className="apx-track">
-        <Field label="Note di consegna" description="Massimo 180 caratteri.">
+        <Field label="Delivery instructions" description="Up to 180 characters.">
           {(props) => (
             <Textarea
               {...props}
@@ -387,11 +387,11 @@ export function SelectExample() {
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Banco carta</p>
-          <h3>Formato finito</h3>
+          <p className="apx-kicker">Paper desk</p>
+          <h3>Trim size</h3>
         </div>
       </header>
-      <Field label="Formato carta">
+      <Field label="Paper size">
         {(props) => (
           <Select
             {...props}
@@ -409,7 +409,7 @@ export function SelectExample() {
           {format}
         </span>
         <div>
-          <small className="apx-meta">Dimensioni del foglio</small>
+          <small className="apx-meta">Sheet dimensions</small>
           <output className="apx-large">{formats[format]}</output>
         </div>
       </div>
@@ -417,18 +417,18 @@ export function SelectExample() {
   )
 }
 export function CheckboxExample() {
-  const items = ['Bozza stampata', 'Campione di carta', 'Distinta colori']
-  const [selected, setSelected] = useState<string[]>(['Bozza stampata'])
+  const items = ['Printed draft', 'Paper sample', 'Colour specification']
+  const [selected, setSelected] = useState<string[]>(['Printed draft'])
   return (
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Spedizione campioni</p>
-          <h3>Contenuto del plico</h3>
+          <p className="apx-kicker">Sample shipment</p>
+          <h3>Package contents</h3>
         </div>
       </header>
       <fieldset className="apx-checklist">
-        <legend>Allegati da includere</legend>
+        <legend>Enclosures</legend>
         {items.map((item) => (
           <label key={item} className="apx-inline">
             <Checkbox
@@ -445,35 +445,35 @@ export function CheckboxExample() {
       </fieldset>
       <footer className="apx-foot">
         <output>
-          {selected.length} di {items.length} allegati inclusi
+          {selected.length} of {items.length} enclosures included
         </output>
       </footer>
     </section>
   )
 }
 export function RadioGroupExample() {
-  const [method, setMethod] = useState('atelier')
+  const [method, setMethod] = useState('studio')
   return (
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Ordine di stampa</p>
-          <h3>Consegna delle copie</h3>
+          <p className="apx-kicker">Print order</p>
+          <h3>Delivery of copies</h3>
         </div>
       </header>
       <RadioGroup
-        label="Modalità di consegna"
+        label="Delivery method"
         value={method}
         onValueChange={setMethod}
         options={[
-          { value: 'atelier', label: 'Ritiro in atelier' },
-          { value: 'posta', label: 'Invio per posta' },
+          { value: 'studio', label: 'Studio collection' },
+          { value: 'post', label: 'Send by post' },
         ]}
       />
       <div className="apx-tear">
-        <small>{method === 'atelier' ? 'Punto di ritiro' : 'Destinazione'}</small>
+        <small>{method === 'studio' ? 'Collection point' : 'Destination'}</small>
         <output>
-          {method === 'atelier' ? 'Banco edizioni · Bellinzona' : 'Indirizzo del destinatario'}
+          {method === 'studio' ? 'Publications desk · Bellinzona' : 'Recipient’s address'}
         </output>
       </div>
     </section>
@@ -485,23 +485,23 @@ export function SwitchExample() {
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Archivio progetti</p>
-          <h3>Visibilità delle commesse</h3>
+          <p className="apx-kicker">Project archive</p>
+          <h3>Job visibility</h3>
         </div>
       </header>
       <label className="apx-toggle-row">
-        <span>Includi progetti archiviati</span>
+        <span>Include archived projects</span>
         <Switch checked={showArchived} onChange={(e) => setShowArchived(e.target.checked)} />
       </label>
       <ul className="apx-list">
         <li>
-          <strong>Carta dei sentieri</strong>
-          <Badge tone="success">In corso</Badge>
+          <strong>Trail map</strong>
+          <Badge tone="success">In progress</Badge>
         </li>
         {showArchived && (
           <li>
-            <strong>Quaderno civico</strong>
-            <Badge>Archiviato</Badge>
+            <strong>Civic notebook</strong>
+            <Badge>Archived</Badge>
           </li>
         )}
       </ul>
@@ -524,21 +524,21 @@ export function FieldExample() {
     >
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Atelier territoriale</p>
-          <h3>Nuova commessa</h3>
+          <p className="apx-kicker">Regional studio</p>
+          <h3>New print job</h3>
         </div>
       </header>
       <Field
-        label="Nome del progetto"
-        description="Almeno tre caratteri."
-        error={touched && !valid ? 'Inserisci un nome di almeno tre caratteri.' : undefined}
+        label="Project name"
+        description="At least three characters."
+        error={touched && !valid ? 'Enter a name with at least three characters.' : undefined}
       >
         {(props) => (
           <Input
             {...props}
             value={name}
             onBlur={() => setTouched(true)}
-            placeholder="Es. Segnaletica di quartiere"
+            placeholder="e.g. Neighbourhood wayfinding"
             onChange={(e) => {
               setName(e.target.value)
               setSaved('')
@@ -547,8 +547,8 @@ export function FieldExample() {
         )}
       </Field>
       <div className="apx-actions">
-        <Button type="submit">Crea bozza</Button>
-        <output>{saved && 'Bozza creata · ' + saved}</output>
+        <Button type="submit">Create draft</Button>
+        <output>{saved && 'Draft created · ' + saved}</output>
       </div>
     </form>
   )
@@ -559,21 +559,21 @@ export function AlertExample() {
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Verifica di produzione</p>
-          <h3>Controllo della prova</h3>
+          <p className="apx-kicker">Production check</p>
+          <h3>Proof review</h3>
         </div>
       </header>
       <Alert
-        title={checked ? 'Prova verificata' : 'Controllo richiesto'}
+        title={checked ? 'Proof checked' : 'Review required'}
         tone={checked ? 'success' : 'warning'}
       >
         {checked
-          ? 'Il formato finito è stato confermato.'
-          : 'Conferma il formato finito prima della tiratura.'}
+          ? 'The trim size has been confirmed.'
+          : 'Confirm the trim size before printing.'}
       </Alert>
       <label className="apx-inline">
         <Checkbox checked={checked} onChange={(e) => setChecked(e.target.checked)} />
-        Ho verificato il formato A3
+        I checked the A3 format
       </label>
     </section>
   )
@@ -583,41 +583,41 @@ export function SeparatorExample() {
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Scheda di lavorazione</p>
-          <h3>Quaderno civico</h3>
+          <p className="apx-kicker">Job sheet</p>
+          <h3>Civic notebook</h3>
         </div>
       </header>
       <div>
-        <strong>Legatoria</strong>
-        <p className="apx-meta">32 pagine · Punto metallico</p>
+        <strong>Bookbinding</strong>
+        <p className="apx-meta">32 pages · Saddle stitch</p>
       </div>
       <Separator />
       <div>
-        <strong>Consegna</strong>
-        <p className="apx-meta">Banco edizioni · 6500 Bellinzona</p>
+        <strong>Delivery</strong>
+        <p className="apx-meta">Publications desk · 6500 Bellinzona</p>
       </div>
     </section>
   )
 }
 export function ProgressExample() {
-  const tasks = ['Formato verificato', 'Colori approvati', 'Tiratura confermata']
-  const [done, setDone] = useState<string[]>(['Formato verificato'])
+  const tasks = ['Trim size checked', 'Colours approved', 'Print run confirmed']
+  const [done, setDone] = useState<string[]>(['Trim size checked'])
   return (
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Controllo qualità</p>
-          <h3>Preparazione della tiratura</h3>
+          <p className="apx-kicker">Quality control</p>
+          <h3>Print run setup</h3>
         </div>
       </header>
       <div className="apx-track">
         <div className="apx-fileline">
-          <strong>Verifiche completate</strong>
+          <strong>Checks complete</strong>
           <output>
             {done.length} / {tasks.length}
           </output>
         </div>
-        <Progress value={done.length} max={tasks.length} label="Verifiche di stampa completate" />
+        <Progress value={done.length} max={tasks.length} label="Print checks complete" />
       </div>
       <div className="apx-checklist">
         {tasks.map((task) => (
@@ -642,14 +642,14 @@ export function SpinnerExample() {
   useEffect(() => {
     let active = true
     let objectUrl = ''
-    // La durata minima rende osservabile l'attesa anche per questo piccolo esempio locale.
+    // Keep the loading indicator visible while this small local example prepares the file.
     const timer = window.setTimeout(async () => {
       const rows = [
-        ['Progetto', 'Cantone', 'Stato'],
-        ['Segnaletica di quartiere', 'TI', 'In corso'],
-        ['Carta dei sentieri', 'GR', 'In corso'],
-        ['Quaderno civico', 'VD', 'Archiviato'],
-        ['Affissioni di piazza', 'TI', 'Archiviato'],
+        ['Project', 'Canton', 'Status'],
+        ['Neighbourhood wayfinding', 'TI', 'In progress'],
+        ['Trail map', 'GR', 'In progress'],
+        ['Civic notebook', 'VD', 'Archived'],
+        ['Posters for the square', 'TI', 'Archived'],
       ]
       try {
         const csv = '\uFEFF' + rows.map((row) => row.join(';')).join('\r\n')
@@ -674,11 +674,11 @@ export function SpinnerExample() {
     setRun((index) => index + 1)
   }
   return (
-    <section className="apx" aria-label="Esportazione del registro">
+    <section className="apx" aria-label="Register export">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Archivio progetti</p>
-          <h3>Distinta di esportazione</h3>
+          <p className="apx-kicker">Project archive</p>
+          <h3>Export file</h3>
         </div>
         <span className="apx-filetype">CSV</span>
       </header>
@@ -687,26 +687,26 @@ export function SpinnerExample() {
           {file ? '↓' : failed ? '!' : <Spinner />}
         </div>
         <div>
-          <strong>registro-progetti.csv</strong>
+          <strong>project-register.csv</strong>
           <p className="apx-meta" role="status">
             {file
-              ? 'File pronto · ' + file.bytes + ' byte'
+              ? 'File ready · ' + file.bytes + ' bytes'
               : failed
-                ? 'Creazione del file non riuscita.'
-                : 'Preparazione del file…'}
+                ? 'Could not create the file.'
+                : 'Preparing file…'}
           </p>
         </div>
       </div>
       <footer className="apx-foot">
-        <span className="apx-meta">4 progetti · UTF-8</span>
+        <span className="apx-meta">4 projects · UTF-8</span>
         <div className="apx-actions">
           {file && (
-            <a className="apx-download" href={file.url} download="registro-progetti.csv">
-              Scarica CSV <span aria-hidden="true">↓</span>
+            <a className="apx-download" href={file.url} download="project-register.csv">
+              Download CSV <span aria-hidden="true">↓</span>
             </a>
           )}
           <Button variant="outline" size="sm" disabled={!file && !failed} onClick={regenerate}>
-            {failed ? 'Riprova' : 'Rigenera'}
+            {failed ? 'Retry' : 'Regenerate'}
           </Button>
         </div>
       </footer>
@@ -724,15 +724,15 @@ export function SkeletonExample() {
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Archivio progetti</p>
-          <h3>Ultime schede</h3>
+          <p className="apx-kicker">Project archive</p>
+          <h3>Latest records</h3>
         </div>
         <Button size="sm" variant="outline" onClick={() => setReady(false)} disabled={!ready}>
-          Ricarica
+          Reload
         </Button>
       </header>
       <ul className="apx-list" aria-busy={!ready}>
-        {['Carta dei sentieri', 'Quaderno civico', 'Affissioni di piazza'].map((name, index) => (
+        {['Trail map', 'Civic notebook', 'Posters for the square'].map((name, index) => (
           <li key={name}>
             {ready ? (
               <strong>{name}</strong>
@@ -748,32 +748,32 @@ export function SkeletonExample() {
         ))}
       </ul>
       <p className="apx-meta" role="status">
-        {ready ? '3 schede disponibili' : 'Caricamento delle schede…'}
+        {ready ? '3 records available' : 'Loading records…'}
       </p>
     </section>
   )
 }
 export function TableExample() {
   const entries = [
-    { name: 'Quaderno civico', format: 'A5', copies: 80 },
-    { name: 'Manifesto di quartiere', format: 'A3', copies: 40 },
-    { name: 'Carta dei sentieri', format: 'A4', copies: 120 },
+    { name: 'Civic notebook', format: 'A5', copies: 80 },
+    { name: 'Neighbourhood poster', format: 'A3', copies: 40 },
+    { name: 'Trail map', format: 'A4', copies: 120 },
   ]
   return (
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Piano di produzione</p>
-          <h3>Tirature in atelier</h3>
+          <p className="apx-kicker">Production plan</p>
+          <h3>Studio print runs</h3>
         </div>
       </header>
       <Table className="apx-table">
-        <TableCaption>Quantità per pubblicazione</TableCaption>
+        <TableCaption>Quantities by publication</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead scope="col">Pubblicazione</TableHead>
-            <TableHead scope="col">Formato</TableHead>
-            <TableHead scope="col">Copie</TableHead>
+            <TableHead scope="col">Publication</TableHead>
+            <TableHead scope="col">Format</TableHead>
+            <TableHead scope="col">Copies</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -787,14 +787,14 @@ export function TableExample() {
         </TableBody>
       </Table>
       <footer className="apx-foot">
-        <span className="apx-meta">Totale in produzione</span>
-        <strong>{entries.reduce((sum, entry) => sum + entry.copies, 0)} copie</strong>
+        <span className="apx-meta">Total in production</span>
+        <strong>{entries.reduce((sum, entry) => sum + entry.copies, 0)} copies</strong>
       </footer>
     </section>
   )
 }
 export function BreadcrumbExample() {
-  const names = ['Atelier', 'Edizioni', 'Quaderno civico']
+  const names = ['Atelier', 'Editions', 'Civic notebook']
   const [level, setLevel] = useState(() => {
     if (typeof window === 'undefined') return 2
     const param = new URLSearchParams(window.location.search).get('sezione')
@@ -803,7 +803,7 @@ export function BreadcrumbExample() {
   return (
     <section className="apx">
       <Breadcrumb
-        label="Percorso dell’archivio"
+        label="Archive breadcrumb"
         items={names
           .slice(0, level + 1)
           .map((label, index) =>
@@ -817,14 +817,14 @@ export function BreadcrumbExample() {
         }}
       />
       <div className="apx-tear">
-        <small>{level === 2 ? 'Pubblicazione' : 'Archivio'}</small>
+        <small>{level === 2 ? 'Publication' : 'Archive'}</small>
         <h3 className="apx-large">{names[level]}</h3>
         <p className="apx-meta">
           {
             [
-              'Laboratorio di stampa e legatoria.',
-              'Pubblicazioni dell’atelier.',
-              'A5 · 32 pagine · Bellinzona',
+              'Printing and bookbinding workshop.',
+              'Studio publications.',
+              'A5 · 32 pages · Bellinzona',
             ][level]
           }
         </p>
@@ -832,7 +832,7 @@ export function BreadcrumbExample() {
       {level < 2 && (
         <div className="apx-actions">
           <Button variant="outline" onClick={() => setLevel(level + 1)}>
-            Apri {names[level + 1]}
+            Open {names[level + 1]}
           </Button>
         </div>
       )}
@@ -841,12 +841,12 @@ export function BreadcrumbExample() {
 }
 export function PaginationExample() {
   const entries = [
-    ['Carta dei sentieri', 'Coira'],
-    ['Quaderno civico', 'Losanna'],
-    ['Segnaletica di quartiere', 'Bellinzona'],
-    ['Affissioni di piazza', 'Locarno'],
-    ['Indice degli atelier', 'Berna'],
-    ['Taccuino di riva', 'Lugano'],
+    ['Trail map', 'Chur'],
+    ['Civic notebook', 'Lausanne'],
+    ['Neighbourhood wayfinding', 'Bellinzona'],
+    ['Posters for the square', 'Locarno'],
+    ['Studio directory', 'Bern'],
+    ['Lakeside notebook', 'Lugano'],
   ]
   const [page, setPage] = useState(() => {
     if (typeof window === 'undefined') return 1
@@ -857,8 +857,8 @@ export function PaginationExample() {
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Edizioni</p>
-          <h3>Indice dei progetti</h3>
+          <p className="apx-kicker">Editions</p>
+          <h3>Project index</h3>
         </div>
       </header>
       <ul className="apx-list">
@@ -870,9 +870,9 @@ export function PaginationExample() {
         ))}
       </ul>
       <footer className="apx-foot">
-        <output className="apx-meta">Pagina {page} di 3</output>
+        <output className="apx-meta">Page {page} of 3</output>
         <Pagination
-          label="Pagine dei progetti"
+          label="Project pages"
           currentPage={page}
           onClick={(event) => {
             const link = (event.target as Element).closest('a')
@@ -884,7 +884,7 @@ export function PaginationExample() {
           items={[1, 2, 3].map((n) => ({
             page: n,
             href: '?pagina=' + n + '#pagination',
-            accessibleLabel: 'Pagina ' + n,
+            accessibleLabel: 'Page ' + n,
           }))}
         />
       </footer>
@@ -894,27 +894,27 @@ export function PaginationExample() {
 export function TabsExample() {
   const sections = [
     {
-      value: 'supporto',
-      label: 'Supporto',
+      value: 'stock',
+      label: 'Stock',
       rows: [
-        ['Carta', 'Naturale avorio'],
-        ['Grammatura', '140 g/m²'],
+        ['Paper', 'Natural ivory'],
+        ['Paper weight', '140 g/m²'],
       ],
     },
     {
-      value: 'stampa',
-      label: 'Stampa',
+      value: 'print',
+      label: 'Printing',
       rows: [
-        ['Tecnica', 'Offset'],
-        ['Passaggi', 'Due colori'],
+        ['Technique', 'Offset'],
+        ['Passes', 'Two colours'],
       ],
     },
     {
-      value: 'confezione',
-      label: 'Confezione',
+      value: 'finishing',
+      label: 'Finishing',
       rows: [
-        ['Legatura', 'Punto metallico'],
-        ['Foliazione', '32 pagine'],
+        ['Binding', 'Saddle stitch'],
+        ['Pagination', '32 pages'],
       ],
     },
   ]
@@ -922,12 +922,12 @@ export function TabsExample() {
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Quaderno civico</p>
-          <h3>Specifiche di produzione</h3>
+          <p className="apx-kicker">Civic notebook</p>
+          <h3>Production specifications</h3>
         </div>
       </header>
       <Tabs
-        label="Specifiche di produzione"
+        label="Production specifications"
         items={sections.map((section) => ({
           value: section.value,
           label: section.label,
@@ -951,28 +951,28 @@ export function AccordionExample() {
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Banco edizioni · Bellinzona</p>
-          <h3>Ritiro in atelier</h3>
+          <p className="apx-kicker">Publications desk · Bellinzona</p>
+          <h3>Studio collection</h3>
         </div>
       </header>
       <Accordion
         headingLevel={4}
-        defaultValue="dove"
+        defaultValue="where"
         items={[
           {
-            value: 'dove',
-            title: 'Dove ritiro le copie?',
-            content: 'Al banco edizioni, dall’ingresso del cortile.',
+            value: 'where',
+            title: 'Where can I collect my copies?',
+            content: 'At the publications desk. Use the courtyard entrance.',
           },
           {
-            value: 'cosa',
-            title: 'Cosa devo portare?',
-            content: 'La conferma di ritiro con il nome della commessa e il numero di copie.',
+            value: 'what',
+            title: 'What should I bring?',
+            content: 'Bring your collection confirmation with the job name and number of copies.',
           },
           {
-            value: 'delega',
-            title: 'Posso delegare il ritiro?',
-            content: 'Sì. Indica alla persona incaricata il nome della commessa.',
+            value: 'delegate',
+            title: 'Can someone collect on my behalf?',
+            content: 'Yes. Give them the job name before they arrive.',
           },
         ]}
       />
@@ -986,45 +986,45 @@ export function DialogExample() {
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Bellinzona · Serie A3</p>
-          <h3>Prova di stampa</h3>
+          <p className="apx-kicker">Bellinzona · A3 series</p>
+          <h3>Print proof</h3>
         </div>
-        <Badge tone={approved ? 'success' : 'accent'}>{approved ? 'Approvata' : 'Da approvare'}</Badge>
+        <Badge tone={approved ? 'success' : 'accent'}>{approved ? 'Approved' : 'Awaiting approval'}</Badge>
       </header>
       <div className="apx-record">
         <span className="apx-format" aria-hidden="true">
           A3
         </span>
         <div>
-          <strong>Manifesto di quartiere</strong>
-          <p className="apx-meta">Revisione 03 · 80 copie · 2 colori</p>
+          <strong>Neighbourhood poster</strong>
+          <p className="apx-meta">Revision 03 · 80 copies · 2 colours</p>
         </div>
       </div>
       <footer className="apx-foot">
         <span className="apx-meta" role="status">
-          {approved ? 'Pronta per la produzione' : 'In attesa di verifica'}
+          {approved ? 'Ready for production' : 'Awaiting review'}
         </span>
         <Dialog
-          trigger={approved ? 'Riapri revisione' : 'Verifica prova'}
-          title={approved ? 'Riapri la revisione' : 'Approva la prova'}
-          closeLabel="Chiudi"
+          trigger={approved ? 'Reopen review' : 'Review proof'}
+          title={approved ? 'Reopen the review' : 'Approve the proof'}
+          closeLabel="Close"
           open={open}
           onOpenChange={setOpen}
         >
           <div className="apx">
             <p className="apx-body">
               {approved
-                ? 'La prova tornerà tra quelle da verificare.'
-                : 'Conferma la revisione 03 del manifesto prima di avviare la tiratura.'}
+                ? 'The proof will return to the review queue.'
+                : 'Confirm revision 03 of the poster before starting the print run.'}
             </p>
             <dl className="apx-readout">
               <div>
-                <dt>Formato</dt>
+                <dt>Format</dt>
                 <dd>A3 · 297 × 420 mm</dd>
               </div>
               <div>
-                <dt>Tiratura</dt>
-                <dd>80 copie</dd>
+                <dt>Print run</dt>
+                <dd>80 copies</dd>
               </div>
             </dl>
             <div className="apx-actions">
@@ -1034,10 +1034,10 @@ export function DialogExample() {
                   setOpen(false)
                 }}
               >
-                {approved ? 'Riapri prova' : 'Approva prova'}
+                {approved ? 'Reopen proof' : 'Approve proof'}
               </Button>
               <Button variant="ghost" onClick={() => setOpen(false)}>
-                Annulla
+                Cancel
               </Button>
             </div>
           </div>
@@ -1048,10 +1048,10 @@ export function DialogExample() {
 }
 export function SheetExample() {
   const projects = [
-    { title: 'Segnaletica di quartiere', city: 'Bellinzona', canton: 'TI', status: 'In corso' },
-    { title: 'Carta dei sentieri', city: 'Coira', canton: 'GR', status: 'In corso' },
-    { title: 'Quaderno civico', city: 'Losanna', canton: 'VD', status: 'Archiviato' },
-    { title: 'Affissioni di piazza', city: 'Locarno', canton: 'TI', status: 'Archiviato' },
+    { title: 'Neighbourhood wayfinding', city: 'Bellinzona', canton: 'TI', status: 'In progress' },
+    { title: 'Trail map', city: 'Chur', canton: 'GR', status: 'In progress' },
+    { title: 'Civic notebook', city: 'Lausanne', canton: 'VD', status: 'Archived' },
+    { title: 'Posters for the square', city: 'Locarno', canton: 'TI', status: 'Archived' },
   ]
   const all = { canton: '', status: '' }
   const [open, setOpen] = useState(false)
@@ -1067,11 +1067,11 @@ export function SheetExample() {
   const count = filtered(draft).length
   const active = [filters.canton, filters.status].filter(Boolean)
   return (
-    <section className="apx" aria-label="Registro dei progetti">
+    <section className="apx" aria-label="Project register">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Atelier territoriale</p>
-          <h3>Registro dei progetti</h3>
+          <p className="apx-kicker">Regional studio</p>
+          <h3>Project register</h3>
         </div>
         <Sheet
           open={open}
@@ -1079,9 +1079,9 @@ export function SheetExample() {
             if (next) setDraft(filters)
             setOpen(next)
           }}
-          trigger={active.length ? 'Filtri (' + active.length + ')' : 'Filtra'}
-          title="Filtra progetti"
-          closeLabel="Chiudi filtri"
+          trigger={active.length ? 'Filters (' + active.length + ')' : 'Filter'}
+          title="Filter projects"
+          closeLabel="Close filters"
         >
           <form
             className="apx apx-filter"
@@ -1091,37 +1091,37 @@ export function SheetExample() {
               setOpen(false)
             }}
           >
-            <Field label="Cantone">
+            <Field label="Canton">
               {(props) => (
                 <Select
                   {...props}
                   value={draft.canton}
                   onChange={(e) => setDraft({ ...draft, canton: e.target.value })}
                 >
-                  <option value="">Tutti i cantoni</option>
+                  <option value="">All cantons</option>
                   <option value="TI">Ticino</option>
-                  <option value="GR">Grigioni</option>
+                  <option value="GR">Graubünden</option>
                   <option value="VD">Vaud</option>
                 </Select>
               )}
             </Field>
             <RadioGroup
-              label="Stato del progetto"
+              label="Project status"
               options={[
-                { value: '', label: 'Tutti gli stati' },
-                { value: 'In corso', label: 'In corso' },
-                { value: 'Archiviato', label: 'Archiviato' },
+                { value: '', label: 'All statuses' },
+                { value: 'In progress', label: 'In progress' },
+                { value: 'Archived', label: 'Archived' },
               ]}
               value={draft.status}
               onValueChange={(status) => setDraft({ ...draft, status })}
             />
             <p className="apx-meta" role="status">
-              {count} {count === 1 ? 'progetto corrispondente' : 'progetti corrispondenti'}
+              {count} {count === 1 ? 'matching project' : 'matching projects'}
             </p>
             <div className="apx-actions">
-              <Button type="submit">Applica filtri</Button>
+              <Button type="submit">Apply filters</Button>
               <Button type="button" variant="ghost" onClick={() => setDraft(all)}>
-                Azzera
+                Reset
               </Button>
             </div>
           </form>
@@ -1129,12 +1129,12 @@ export function SheetExample() {
       </header>
       <div className="apx-filterbar">
         <span role="status">
-          {visible.length} {visible.length === 1 ? 'progetto' : 'progetti'}
+          {visible.length} {visible.length === 1 ? 'project' : 'projects'}
           {active.length > 0 && ' · ' + active.join(' · ')}
         </span>
         {active.length > 0 && (
           <button className="apx-link" onClick={() => setFilters(all)}>
-            Rimuovi filtri
+            Clear filters
           </button>
         )}
       </div>
@@ -1146,11 +1146,11 @@ export function SheetExample() {
               <strong>{project.title}</strong>
               <small>{project.city}</small>
             </div>
-            <Badge tone={project.status === 'In corso' ? 'success' : 'neutral'}>{project.status}</Badge>
+            <Badge tone={project.status === 'In progress' ? 'success' : 'neutral'}>{project.status}</Badge>
           </li>
         ))}
       </ul>
-      {!visible.length && <p className="apx-empty">Nessun progetto corrisponde ai filtri scelti.</p>}
+      {!visible.length && <p className="apx-empty">No projects match the selected filters.</p>}
     </section>
   )
 }
@@ -1164,20 +1164,20 @@ export function DropdownMenuExample() {
     <>
       <Item
         title={name}
-        description={deleted ? 'Contatto eliminato' : 'Bellinzona · TI'}
+        description={deleted ? 'Contact deleted' : 'Bellinzona · TI'}
         trailing={
           <DropdownMenu
-            label="Azioni"
-            triggerLabel={'Azioni per ' + name}
+            label="Actions"
+            triggerLabel={'Actions for ' + name}
             align="end"
             size="compact"
             items={
               deleted
-                ? [{ value: 'restore', label: 'Ripristina contatto', onSelect: () => setDeleted(false) }]
+                ? [{ value: 'restore', label: 'Restore contact', onSelect: () => setDeleted(false) }]
                 : [
                     {
                       value: 'edit',
-                      label: 'Modifica nome',
+                      label: 'Edit name',
                       onSelect: () => {
                         setDraft(name)
                         setEditor(true)
@@ -1185,7 +1185,7 @@ export function DropdownMenuExample() {
                     },
                     {
                       value: 'delete',
-                      label: 'Elimina contatto…',
+                      label: 'Delete contact…',
                       separatorBefore: true,
                       tone: 'danger',
                       onSelect: () => setConfirm(true),
@@ -1195,7 +1195,7 @@ export function DropdownMenuExample() {
           />
         }
       />
-      <Dialog title="Modifica contatto" closeLabel="Chiudi" open={editor} onOpenChange={setEditor}>
+      <Dialog title="Edit contact" closeLabel="Close" open={editor} onOpenChange={setEditor}>
         <form
           onSubmit={(event) => {
             event.preventDefault()
@@ -1205,7 +1205,7 @@ export function DropdownMenuExample() {
             }
           }}
         >
-          <Field label="Nome del contatto">
+          <Field label="Contact name">
             {(control) => (
               <Input
                 {...control}
@@ -1216,17 +1216,17 @@ export function DropdownMenuExample() {
             )}
           </Field>
           <Button type="submit" disabled={!draft.trim()}>
-            Salva nome
+            Save name
           </Button>
         </form>
       </Dialog>
       <AlertDialog
-        title="Eliminare il contatto?"
+        title="Delete this contact?"
         description={name}
         open={confirm}
         onOpenChange={setConfirm}
-        cancelLabel="Annulla"
-        confirmLabel="Elimina"
+        cancelLabel="Cancel"
+        confirmLabel="Delete"
         onConfirm={() => setDeleted(true)}
       />
     </>
@@ -1240,11 +1240,11 @@ export function ToastExample() {
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Preferenze di progetto</p>
-          <h3>Lingua delle schede</h3>
+          <p className="apx-kicker">Project preferences</p>
+          <h3>Record language</h3>
         </div>
       </header>
-      <Field label="Lingua dei documenti">
+      <Field label="Document language">
         {(props) => (
           <LocaleSelect
             {...props}
@@ -1257,7 +1257,7 @@ export function ToastExample() {
         )}
       </Field>
       <footer className="apx-foot">
-        <span className="apx-meta">Impostazione attiva · {saved}</span>
+        <span className="apx-meta">Current setting · {saved}</span>
         <Button
           size="sm"
           onClick={() => {
@@ -1265,11 +1265,11 @@ export function ToastExample() {
             setOpen(true)
           }}
         >
-          Salva preferenze
+          Save preferences
         </Button>
       </footer>
-      <Toast open={open} onOpenChange={setOpen} tone="success" closeLabel="Chiudi notifica">
-        Preferenza salvata · {saved}
+      <Toast open={open} onOpenChange={setOpen} tone="success" closeLabel="Dismiss notification">
+        Preference saved · {saved}
       </Toast>
     </section>
   )
@@ -1279,20 +1279,20 @@ export function TooltipExample() {
     <section className="apx">
       <header className="apx-head">
         <div>
-          <p className="apx-kicker">Manifesto di quartiere</p>
-          <h3>Specifiche del foglio</h3>
+          <p className="apx-kicker">Neighbourhood poster</p>
+          <h3>Sheet specifications</h3>
         </div>
       </header>
       <dl className="apx-readout">
         <div>
-          <dt>Formato finito</dt>
+          <dt>Trim size</dt>
           <dd>A3 · 297 × 420 mm</dd>
         </div>
         <div>
           <dt className="apx-inline">
-            Abbondanza{' '}
-            <Tooltip content="Margine stampato oltre il bordo di taglio, su ciascun lato.">
-              <button className="apx-info" type="button" aria-label="Definizione di abbondanza">
+            Bleed{' '}
+            <Tooltip content="The printed area beyond the trim edge on each side of the sheet.">
+              <button className="apx-info" type="button" aria-label="Definition of bleed">
                 ?
               </button>
             </Tooltip>
@@ -1300,7 +1300,7 @@ export function TooltipExample() {
           <dd>3 mm</dd>
         </div>
         <div>
-          <dt>Formato con abbondanza</dt>
+          <dt>Size with bleed</dt>
           <dd>303 × 426 mm</dd>
         </div>
       </dl>

@@ -15,84 +15,84 @@ import '../src/theme.css'
 function Fixture() {
   const [choice, select] = useState('')
   const items = [
-    { value: 'c', label: 'Copertina' },
-    { value: 'p', label: 'Prova', disabled: true },
-    { value: 's', label: 'Stampa', keywords: ['tiratura'] },
+    { value: 'c', label: 'Cover' },
+    { value: 'p', label: 'Draft', disabled: true },
+    { value: 's', label: 'Print', keywords: ['run'] },
   ]
   return (
     <main>
       <form>
         <Combobox
-          label="Formato"
+          label="Format"
           options={[
             { value: 'a2', label: 'A2', disabled: true },
             { value: 'a3', label: 'A3' },
             { value: 'a4', label: 'A4' },
           ]}
-          empty="Nessuna misura"
+          empty="No matching sizes"
           defaultValue="a4"
           name="format"
           required
         />
-        <button type="reset">Ripristina</button>
+        <button type="reset">Reset</button>
       </form>
       <Command
-        title="Comandi"
-        trigger="Cerca"
-        closeLabel="Chiudi ricerca"
-        searchLabel="Trova azione"
-        empty="Nessun comando"
+        title="Commands"
+        trigger="Search"
+        closeLabel="Close search"
+        searchLabel="Find an action"
+        empty="No matching commands"
         items={items}
         onValueSelect={select}
       />
       <AlertDialog
-        trigger="Rimuovi"
-        title="Rimuovere?"
-        description="La prova sarà rimossa."
-        cancelLabel="Annulla"
-        confirmLabel="Conferma"
-        onConfirm={() => select('confermato')}
+        trigger="Remove"
+        title="Remove item?"
+        description="This proof will be removed."
+        cancelLabel="Cancel"
+        confirmLabel="Confirm"
+        onConfirm={() => select('confirmed')}
       />
       <Carousel
-        label="Prove"
+        label="Proofs"
         items={[
-          { value: 'one', label: 'Prima', content: 'Pagina I' },
-          { value: 'two', label: 'Seconda', content: 'Pagina II' },
+          { value: 'one', label: 'First', content: 'Page I' },
+          { value: 'two', label: 'Second', content: 'Page II' },
         ]}
-        previousLabel="Precedente"
-        nextLabel="Successiva"
+        previousLabel="Previous"
+        nextLabel="Next"
       />
-      <ContextMenu label="Area azioni" items={items} onValueSelect={select}>
-        Cartella A
+      <ContextMenu label="Actions area" items={items} onValueSelect={select}>
+        Folder A
       </ContextMenu>
       <Menubar
-        label="Modifica documento"
+        label="Edit document"
         menus={[
           { value: 'file', label: 'File', items },
-          { value: 'view', label: 'Visualizza', items: [{ value: 'zoom', label: 'Ingrandisci' }] },
+          { value: 'view', label: 'View', items: [{ value: 'zoom', label: 'Zoom in' }] },
         ]}
         onValueSelect={select}
       />
-      <Drawer title="Parametri" trigger="Mostra pannello" closeLabel="Chiudi pannello">
-        Misure
+      <Drawer title="Settings" trigger="Show panel" closeLabel="Close panel">
+        Measurements
       </Drawer>
-      <HoverCard trigger="Interlinea" title="Definizione" delay={10}>
-        <a href="#target">Glossario</a>
+      <HoverCard trigger="Leading" title="Definition" delay={10}>
+        <a href="#target">Glossary</a>
       </HoverCard>
-      <Popover title="Azioni rapide" trigger="Mostra opzioni" closeLabel="Chiudi opzioni">
-        <button>Vai</button>
+      <Popover title="Quick actions" trigger="Show options" closeLabel="Close options">
+        <button>Go</button>
       </Popover>
-      <button id="target">Seguito</button>
-      <Resizable label="Indice" first="Indice" second="Testo" defaultValue={40} min={10} max={80} />
+      <button id="target">Next control</button>
+      <Resizable label="Index" first="Index" second="Text" defaultValue={40} min={10} max={80} />
       <Tabs
-        label="Sezioni"
+        label="Sections"
         activation="manual"
         items={[
-          { value: 'a', label: 'Disegno', content: '01' },
-          { value: 'b', label: 'Produzione', content: '02' },
+          { value: 'a', label: 'Design', content: '01' },
+          { value: 'b', label: 'Production', content: '02' },
         ]}
       />
-      <output aria-label="Scelta">{choice}</output>
+      <output aria-label="Selection">{choice}</output>
     </main>
   )
 }

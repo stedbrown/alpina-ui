@@ -1,14 +1,14 @@
-# Costruire un portale con Alpina
+# Build a portal with Alpina
 
-Il catalogo importa i moduli da `alpina-ui` e lo stile da `alpina-ui/styles.css`. Una voce del catalogo corrisponde a un modulo installabile. Per copiare un gruppo di sorgenti usa per esempio `npx --no-install alpina add app-shell sidebar navigation-menu` nella tua applicazione.
+The catalog imports its components from `alpina-ui` and the stylesheet from `alpina-ui/styles.css`. Each entry corresponds to an installable module. To copy a group of source files, run a command such as `npx --no-install alpina add app-shell sidebar navigation-menu` in your application.
 
-| Componente | Contratto |
+| Component | API and behavior |
 | --- | --- |
-| AppShell | Accetta brand, sidebar, toolbar e children. Con open e onOpenChange puoi controllare l’indice mobile. mainId permette di collegare il contenuto alla navigazione del sito. |
-| Sidebar | Accetta masthead, tools, footer e children. Il ref punta alla zona di scorrimento, così puoi rendere visibile la voce corrente. |
-| NavigationMenu | Accetta label e sections. Ogni sezione contiene links con href, label e current. orientation può essere vertical o horizontal. I collegamenti supportano apertura in un’altra scheda. |
-| CodeBlock | Accetta code, label e le etichette di copia. Usa gli appunti quando disponibili e seleziona il codice quando occorre copiarlo manualmente. |
-| TextLink | Accetta gli attributi nativi di un collegamento e un ref. La sottolineatura distingue il testo interattivo anche senza colore. |
-| Prose | Impagina figli semantici dentro un article. Il portale gli fornisce esclusivamente il Markdown locale compilato durante la build. |
+| AppShell | Accepts `brand`, `sidebar`, `toolbar`, and `children`. Control the mobile index with `open` and `onOpenChange`. Use `mainId` to link directly to the main content from site navigation. |
+| Sidebar | Accepts `masthead`, `tools`, `footer`, and `children`. Its ref points to the scrolling region so you can bring the current entry into view. |
+| NavigationMenu | Takes `label` and `sections`. Each section contains `links` with `href`, `label`, and `current`. Set `orientation` to `vertical` or `horizontal`. Native links support opening in a new tab. |
+| CodeBlock | Accepts `code`, `label`, and copy-related labels. It uses the clipboard when available and selects the code for manual copying when needed. |
+| TextLink | Accepts native anchor attributes and a ref. An underline identifies the link even without color. |
+| Prose | Lays out semantic children in an `article`. The portal passes it local Markdown compiled at build time. |
 
-Il portale mantiene la ricerca e il percorso nella propria applicazione. I componenti pubblici si occupano di presentazione, navigazione nativa e controlli responsivi. Negli esempi di ogni voce si possono copiare i file effettivamente distribuiti.
+The portal application manages search and routing. The public components provide layout, native navigation, and responsive controls. Every catalog entry offers the source files shipped with the library.

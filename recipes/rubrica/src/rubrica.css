@@ -1,4 +1,4 @@
-/* Pagina e impaginazione editoriale */
+/* Page and editorial layout */
 body {
   margin: 0;
   background: var(--al-bg);
@@ -27,7 +27,7 @@ body {
   border-top: 2px solid var(--al-ink);
   border-bottom: 1px solid var(--al-line);
 }
-/* Composizione riutilizzata di controlli e contenuti */
+/* Shared layout for controls and content */
 .mast-line {
   padding-top: var(--al-space-3);
 }
@@ -37,7 +37,7 @@ body {
   gap: var(--al-space-3);
   padding-block: var(--al-space-4);
 }
-/* Indice, selezione e scheda del contatto */
+/* Directory index, selection, and contact details */
 .index-list {
   list-style: none;
   margin: 0;

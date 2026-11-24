@@ -67,7 +67,9 @@ export function Session() {
 
 ## Set a page on the grid
 
-The homepage uses the same grid with three optional properties. Use `surface="accent"` for a red band, `space="cover"` for its vertical padding, and `ruler` to show the active columns. A `Typography` heading with the `poster` variant scales with the available width. The `lead` role sets supporting copy between body and heading sizes. The site applies the optional `data-al-page` attribute to its body to use the library’s page defaults. [Homepage source](https://github.com/stedbrown/alpina-ui/blob/main/web/pages.tsx)
+On the homepage, the headline takes five columns and the letterform study takes seven at the widest grid setting. On a narrow screen, the headline, links and image follow each other in reading order. Switch the workshop notice from German to Italian to see how the type wraps within the same measure. [Homepage](https://alpina-ui.vercel.app/) · [Homepage source](https://github.com/stedbrown/alpina-ui/blob/main/web/pages.tsx)
+
+Use `space="cover"` to give an opening section responsive vertical padding. Set `surface="accent"` for a red band or `ruler` to show the active columns. The `poster` type role scales with the container width. The site sets `data-al-page` on the body to apply the library’s page defaults.
 
 ## Rows of controls
 

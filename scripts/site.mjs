@@ -42,12 +42,23 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
   const appCSS = '/assets/catalog-' + sha(css) + '.css'
   const core = await readFile('dist/styles.css', 'utf8')
   const coreCSS = '/assets/alpina-' + sha(core) + '.css'
+  const specimenBuild = await build({
+    entryPoints: ['web/type-specimen-controls.js'], bundle: true, format: 'esm',
+    target: 'es2022', write: false, minify: true,
+  })
+  const specimen = specimenBuild.outputFiles[0].text
+  const specimenJS = '/assets/type-specimen-' + sha(specimen) + '.js'
+  const preview = await readFile('web/assets/alpina-preview.png')
+  const previewURL = origin + '/assets/alpina-preview.png?v=' + sha(preview)
   await Promise.all([
     output(appJS, script), output(appCSS, css), output(coreCSS, core),
+    output(specimenJS, specimen),
     output('third-party-notices.txt', notices.join('\n\n')),
     output('registry.json', JSON.stringify(registry)), output('reference/api.json', JSON.stringify(apiReference)),
     output('skills/alpina-ui/SKILL.md', await readFile('skills/alpina-ui/SKILL.md')),
-    output('assets/alpina-preview.png', await readFile('web/assets/alpina-preview.png')),
+    output('assets/alpina-preview.png', preview),
+    output('assets/alpina-type-specimen.webp', await readFile('web/assets/alpina-type-specimen.webp')),
+    output('assets/alpina-mark.png', await readFile('web/assets/alpina-mark.png')),
   ])
 
   const projects = [
@@ -61,14 +72,16 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
     const tags = [
       '<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffffff">',
       '<title>' + escape(caption) + '</title><meta name="description" content="' + escape(description) + '">',
-      '<link rel="canonical" href="' + escape(url) + '"><link rel="icon" href="data:,">',
+      '<link rel="canonical" href="' + escape(url) + '"><link rel="icon" type="image/png" sizes="64x64" href="/assets/alpina-mark.png">',
       '<meta property="og:type" content="website"><meta property="og:site_name" content="Alpina UI">',
       '<meta property="og:title" content="' + escape(caption) + '"><meta property="og:description" content="' + escape(description) + '">',
-      '<meta property="og:url" content="' + escape(url) + '"><meta property="og:image" content="' + origin + '/assets/alpina-preview.png">',
-      '<meta name="twitter:card" content="summary_large_image"><meta property="og:image:alt" content="Alpina UI, a Swiss typographic design system for React">',
+      '<meta property="og:url" content="' + escape(url) + '"><meta property="og:image" content="' + previewURL + '">',
+      '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">',
+      '<meta name="twitter:card" content="summary_large_image"><meta property="og:image:alt" content="Swiss type for React beside Alpina’s red letterform study">',
       '<link rel="license" href="/third-party-notices.txt"><link rel="stylesheet" href="' + (options.app ? appCSS : coreCSS) + '">',
     ]
     if (options.redirect) tags.push('<script>' + options.redirect + '</script>')
+    if (options.specimen) tags.push('<script type="module" src="' + specimenJS + '"></script>')
     const content = options.app ? '<div id="app">' + body + '</div><script defer src="' + appJS + '"></script>' : body
     await output(route + 'index.html', '<!doctype html>\n<html lang="en"><head>' + tags.join('\n') + '</head><body data-al-page>' + content + '</body></html>')
     paths.push(url)
@@ -77,7 +90,8 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
   // Translate only known bookmarks from the original single-file catalog. Leave local page anchors alone.
   const ids = JSON.stringify(registry.items.map((item) => item.name))
   const legacy = `(()=>{const h=location.hash.slice(1);if(!h)return;const p={rubrica:"client-directory","address-book":"client-directory","rubrica-bilingue":"bilingual-address-book","bilingual-address-book":"bilingual-address-book"};if(Object.hasOwn(p,h))location.replace("/examples/"+p[h]+"/");else if(h==="overview"||h.startsWith("guide/")||${ids}.includes(h.split("/")[0]))location.replace("/docs/#"+h)})();`
-  await page('/', siteName, '78 open-source React and TypeScript components built around Swiss typography, a responsive grid, and support for Switzerland’s four national languages.', render(Landing), { redirect: legacy })
+  await page('/', siteName, 'Open-source React and TypeScript components for forms, tables and multilingual interfaces on a Swiss typographic grid.',
+    render(Landing, { version: registry.version, count: inventory.length }), { redirect: legacy, specimen: true })
   await page('/examples/', 'Example projects', 'Explore complete Alpina UI applications, from a bilingual studio address book to a client directory with sortable orders.', render(Examples))
   const agentsMarkdown = await readFile('docs/agents.md', 'utf8')
   const agentsHTML = await marked.parse(agentsMarkdown)

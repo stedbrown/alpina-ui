@@ -414,3 +414,37 @@ textarea {
 .directory-return a:focus-visible {
   outline-color: var(--al-bg);
 }
+.site-nav,
+.project-nav {
+  min-width: 0;
+}
+.project-nav {
+  padding: var(--al-space-2) max(clamp(1rem, 3vw, 3rem), calc((100% - 76rem) / 2));
+  border-block-end: 1px solid var(--al-line);
+  background: var(--al-bg);
+}
+.project-nav[data-orientation='horizontal'] ul {
+  gap: 0.25rem clamp(0.75rem, 2vw, 2rem);
+}
+.project-nav a {
+  font-size: var(--al-type-caption);
+}
+.project-nav li:first-child a {
+  font-weight: 700;
+}
+.client-project {
+  max-width: 82rem;
+  margin-inline: auto;
+  padding: var(--al-space-4) clamp(1rem, 3vw, 3rem) clamp(2.5rem, 7vw, 6rem);
+}
+@media (max-width: 650px) {
+  .site-nav + .al-button .theme-name {
+    display: none;
+  }
+  .site-nav + .al-button .theme-disc {
+    margin: 0;
+  }
+  .site-nav[data-orientation='horizontal'] ul {
+    gap: 0.15rem 0.75rem;
+  }
+}

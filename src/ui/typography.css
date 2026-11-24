@@ -11,6 +11,28 @@
   font-size: var(--al-type-caption);
   line-height: var(--al-leading-caption);
 }
+.al-type[data-role='inherit'] {
+  font: inherit;
+  letter-spacing: inherit;
+}
+.al-type[data-role='lead'] {
+  font-size: clamp(var(--al-space-5), 2.3cqi, var(--al-space-9));
+  line-height: 1.13;
+  letter-spacing: -0.035em;
+  text-wrap: pretty;
+}
+.al-type[data-role='poster'] {
+  font-family: var(--al-display);
+  font-size: clamp(3.5rem, 21.25cqi, 24rem);
+  font-weight: 700;
+  line-height: .98;
+  letter-spacing: -.063em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.al-type[data-tone='ink'] { color: var(--al-ink); }
+.al-type[data-tone='paper'] { color: var(--al-bg); }
+.al-type[data-tone='accent'] { color: var(--al-accent); }
 .al-type[data-role='label'] {
   font-size: var(--al-type-label);
   line-height: var(--al-leading-label);

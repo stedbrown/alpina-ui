@@ -1,0 +1,73 @@
+import assert from 'node:assert/strict'
+import { existsSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
+import { chromium } from 'playwright-core'
+
+const origin = 'https://alpina.test'
+const site = new URL('../site/', import.meta.url)
+const executable = process.env.CHROME_PATH ?? process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
+const browser = await chromium.launch(
+  executable ? { executablePath: executable } : existsSync(chromium.executablePath()) ? {} : { channel: 'chrome' },
+)
+try {
+  const page = await browser.newPage({ viewport: { width: 1140, height: 800 } })
+  await page.route(origin + '/**', async (route) => {
+    const { pathname } = new URL(route.request().url())
+    const file = pathname.endsWith('/') || !pathname.split('/').pop().includes('.')
+      ? pathname.replace(/\/?$/, '/index.html')
+      : pathname
+    await route.fulfill({ path: fileURLToPath(new URL('.' + file, site)) })
+  })
+  const main = page.getByRole('main')
+  const nav = page.getByRole('navigation', { name: 'Site navigation' })
+  const index = page.getByRole('navigation', { name: 'Component index' })
+  await page.goto(origin + '/docs/')
+  await main.getByRole('heading', { name: 'Getting started', level: 1 }).waitFor()
+  assert.deepEqual(await nav.getByRole('link').allTextContents(), ['Home', 'Docs', 'Examples', 'For agents'])
+  assert.equal(await nav.getByRole('link', { name: 'Examples' }).getAttribute('href'), '/examples/')
+  assert.equal(await nav.getByRole('link', { name: 'For agents' }).getAttribute('href'), '/agents/')
+  assert.equal(await index.getByRole('link').count(), 78)
+  await index.getByRole('link', { name: 'DropdownMenu', exact: true }).click()
+  await main.getByRole('heading', { name: 'DropdownMenu', level: 1 }).waitFor()
+  await main.getByRole('button', { name: 'API', exact: true }).click()
+  await main.getByRole('heading', { name: 'API reference' }).waitFor()
+  assert.equal(new URL(page.url()).pathname, '/docs/components/dropdown-menu/')
+  await page.goto(origin + '/docs/#dropdown-menu/api')
+  await main.getByRole('heading', { name: 'API reference' }).waitFor()
+  await page.goto(origin + '/docs/guides/directory/')
+  await main.getByRole('link', { name: 'Open the IT / DE address book' }).click()
+  await main.getByRole('heading', { name: 'Rubrica degli atelier', level: 1 }).waitFor()
+  assert.equal(await index.count(), 0)
+  const project = page.getByRole('navigation', { name: 'Example navigation' })
+  assert.equal(await project.getByRole('link', { name: /Examples/ }).getAttribute('href'), '/examples/')
+  await page.getByRole('button', { name: 'Deutsch', exact: true }).click()
+  await main.getByRole('heading', { name: 'Atelierverzeichnis', level: 1 }).waitFor()
+  await page.goBack()
+  await main.getByRole('heading', { name: 'Build an Italian–German address book', level: 1 }).waitFor()
+  await page.setViewportSize({ width: 320, height: 750 })
+  await page.goto(origin + '/examples/client-directory')
+  await main.getByRole('heading', { name: 'Client address book', level: 1 }).waitFor()
+  assert.equal(await index.count(), 0)
+  assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth))
+  await main.getByRole('link', { name: 'Sortable table' }).click()
+  assert.equal(new URL(page.url()).pathname, '/docs/components/data-table/')
+  await main.getByRole('button', { name: 'Preview', exact: true }).waitFor()
+  assert.ok(await nav.getByRole('link', { name: 'Examples' }).isVisible())
+  assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth))
+  await page.keyboard.press('Control+k')
+  const search = page.getByRole('searchbox', { name: 'Search components' })
+  await search.fill('CurrencyCHF')
+  await search.press('Enter')
+  await main.getByRole('heading', { name: 'CurrencyCHF', level: 1 }).waitFor()
+  assert.equal(new URL(page.url()).pathname, '/docs/components/currency-chf/')
+  const browse = page.getByRole('button', { name: 'Browse components' })
+  await browse.focus()
+  await browse.press('Enter')
+  await search.focus()
+  await search.press('Escape')
+  assert.equal(await browse.getAttribute('aria-expanded'), 'false')
+  assert.ok(await browse.evaluate((link) => link === document.activeElement))
+  console.log('Hosted docs, canonical component and guide pages, legacy links, and both independent projects passed.')
+} finally {
+  await browser.close()
+}

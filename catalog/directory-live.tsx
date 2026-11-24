@@ -5,7 +5,7 @@ import { AtelierDirectory } from 'alpina:atelier'
 
 const style = directorySources.find((file) => file.path === 'src/rubrica.css')!.content
 
-export function DirectoryLive() {
+export function DirectoryLive({ standalone = false }: { standalone?: boolean }) {
   useEffect(() => {
     window.scrollTo(0, 0)
     return () => {
@@ -15,11 +15,13 @@ export function DirectoryLive() {
   return (
     <>
       <style>{style}</style>
-      <nav aria-label="Alpina UI" className="directory-return">
-        <TextLink href="#guide/directory">
-          <span aria-hidden="true">← </span>Alpina UI
-        </TextLink>
-      </nav>
+      {!standalone && (
+        <nav lang="en" aria-label="Alpina UI" className="directory-return">
+          <TextLink href="#guide/directory">
+            <span aria-hidden="true">← </span>Alpina UI
+          </TextLink>
+        </nav>
+      )}
       <AtelierDirectory />
     </>
   )

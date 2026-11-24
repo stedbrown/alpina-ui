@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { componentHref, guideHref } from './paths.js'
 import {
   Button,
   TextLink,
@@ -74,7 +75,7 @@ const country: Record<SwissLocale, string> = {
   'rm-CH': 'Svizra',
 }
 
-export function Overview() {
+export function Overview({ hosted = false }: { hosted?: boolean }) {
   const [contacts, setContacts] = useState(initialContacts)
   const [current, setCurrent] = useState('BA')
   const [locale, setLocale] = useState<SwissLocale>('it-CH')
@@ -102,7 +103,7 @@ export function Overview() {
             this session.
           </p>
         </div>
-        <TextLink className="guide-cta" href="#guide/start">
+        <TextLink className="guide-cta" href={guideHref('start', hosted)}>
           Quick start <span aria-hidden="true">↗</span>
         </TextLink>
       </section>
@@ -211,7 +212,7 @@ export function Overview() {
                   >
                     Edit address
                   </Button>
-                  <TextLink href="#swiss-address-form">
+                  <TextLink href={componentHref('swiss-address-form', hosted)}>
                     Component <span aria-hidden="true">↗</span>
                   </TextLink>
                 </div>
@@ -244,7 +245,7 @@ export function Overview() {
       <section className="orders-section" aria-label="Client orders">
         <div className="section-lead">
           <h2>Order register</h2>
-          <TextLink href="#data-table">
+          <TextLink href={componentHref('data-table', hosted)}>
             Sortable table <span aria-hidden="true">↗</span>
           </TextLink>
         </div>

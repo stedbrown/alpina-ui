@@ -3,5 +3,5 @@ dist/
 /site/
 /catalog/relief.webp
 *.tgz
-!/recipes/rubrica/vendor/alpina-ui-0.5.1.tgz
+!/recipes/rubrica/vendor/alpina-ui-0.6.0.tgz
 .vercel/

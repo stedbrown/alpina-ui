@@ -1,4 +1,14 @@
 /* Import once. Theme values can be overridden on any containing element. */
+body[data-al-page] {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100svh;
+  margin: 0;
+  background: var(--al-bg);
+  color: var(--al-ink);
+  font-family: var(--al-font);
+}
+body[data-al-page] > footer:last-child { margin-block-start: auto; }
 :root,
 [data-al-theme='dark'],
 [data-al-theme='light'] {

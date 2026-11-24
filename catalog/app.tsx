@@ -18,6 +18,7 @@ import {
 } from 'alpina-ui'
 import 'alpina-ui/styles.css'
 import { inventory, type Item } from './inventory.js'
+import { bilingualProject, clientProject, componentHref, guideHref } from './paths.js'
 import * as baseExamples from './demos.js'
 import * as dataExamples from './data-examples.js'
 import * as designExamples from './design-examples.js'
@@ -63,7 +64,7 @@ const guideNames: Record<string, string> = {
   design: 'Measurements and grids',
   start: 'Quick start',
   cli: 'Compare source files',
-  release: 'Upgrade to 0.5',
+  release: 'Migration notes',
   directory: 'Bilingual address book',
   portal: 'Build the portal',
   core: 'Foundations',
@@ -74,6 +75,24 @@ const guideNames: Record<string, string> = {
   swiss: 'Swiss formats',
   coverage: 'Comparison with shadcn/ui',
 }
+const guideGroups = [
+  { title: 'Get started', keys: ['start', 'cli', 'release'] },
+  { title: 'Design', keys: ['design', 'research'] },
+  {
+    title: 'Guides',
+    keys: ['core', 'elements', 'interactive', 'actions', 'workflows', 'swiss', 'portal', 'directory', 'coverage'],
+  },
+]
+const pathname = location.pathname.replace(/(?:\/index\.html)?\/?$/, '')
+const [, pageType, pageId] = /^\/docs\/(guides|components)\/([\w-]+)$/.exec(pathname) ?? []
+const hostedDocs = pathname === '/docs' || !!pageId
+const pathRoute = pageType === 'guides' ? 'guide/' + pageId : pageId
+const siteLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/docs/', label: 'Docs', current: true },
+  { href: '/examples/', label: 'Examples' },
+  { href: '/agents/', label: 'For agents' },
+]
 const searchTerms: Record<string, string> = {
   stack: 'toolbar spacing action groups',
   'dropdown-menu': 'dropdown contextual actions',
@@ -107,7 +126,7 @@ function useRoute() {
 
 function Brand() {
   return (
-    <TextLink className="brand" href="#overview" aria-label="Alpina UI overview">
+    <TextLink className="brand" href={hostedDocs ? '/' : '#overview'} aria-label={hostedDocs ? 'Alpina UI home' : 'Alpina UI overview'}>
       <i aria-hidden="true" />
       Alpina UI
     </TextLink>
@@ -147,9 +166,9 @@ function Workbench({
   return (
     <article className="bench" aria-labelledby="item-heading">
       <header className="component-hero">
-        <code className="component-path">{name}</code>
+        <code className="component-path">{hostedDocs ? 'alpina-ui/' + files[0].replace(/\.tsx$/, '') : name}</code>
         <Typography variant="display" as="h1" id="item-heading">
-          {title}
+          {hostedDocs ? name : title}
         </Typography>
         <Typography>{description}</Typography>
       </header>
@@ -200,21 +219,22 @@ function Workbench({
         code={'npx --no-install alpina add ' + id}
       />
       <div className="bench-bottom">
-        <TextLink href="#guide/start">Installation</TextLink>
-        <TextLink href={'#guide/' + guide}>Usage guide</TextLink>
+        <TextLink href={guideHref('start', hostedDocs)}>Installation</TextLink>
+        <TextLink href={guideHref(guide, hostedDocs)}>Usage guide</TextLink>
       </div>
     </article>
   )
 }
 function App() {
   const [hash, navigateView] = useRoute()
-  const [itemId, viewPath] = hash.split('/')
+  const route = hash || pathRoute || (hostedDocs ? 'guide/start' : 'overview')
+  const [itemId, viewPath] = route.split('/')
   const subpage = viewPath === 'codice' ? 'code' : viewPath === 'sorgente' ? 'source' : viewPath
   const item = inventory.find((row) => row[0] === itemId)
   const mode = (Object.keys(views) as View[]).find((view) => views[view] === subpage) ?? 'Preview'
-  const guide = hash.startsWith('guide/')
-    ? Object.hasOwn(guideNames, hash.slice(6))
-      ? hash.slice(6)
+  const guide = route.startsWith('guide/')
+    ? Object.hasOwn(guideNames, route.slice(6))
+      ? route.slice(6)
       : 'start'
     : null
   const liveDirectory = hash === 'bilingual-address-book' || hash === 'rubrica-bilingue'
@@ -242,6 +262,10 @@ function App() {
     setQuery('')
   }
   useEffect(() => {
+    if (hostedDocs && (directory || liveDirectory))
+      location.replace(liveDirectory ? bilingualProject : clientProject)
+  }, [directory, liveDirectory])
+  useEffect(() => {
     document.documentElement.dataset.alTheme = dark ? 'dark' : 'light'
     try {
       localStorage.setItem('alpina-catalog-theme', dark ? 'dark' : 'light')
@@ -251,7 +275,8 @@ function App() {
   }, [dark])
   useEffect(() => {
     if (liveDirectory) return
-    document.title = (item?.[2] || (guide && guideNames[guide]) || area) + ' · Alpina UI'
+    const title = item ? (hostedDocs ? item[1] : item[2]) : (guide && guideNames[guide]) || area
+    document.title = title + ' · Alpina UI'
     window.scrollTo(0, 0)
     const mobileLayout = matchMedia('(max-width:740px)').matches
     if (!first.current && mobileLayout)
@@ -306,7 +331,7 @@ function App() {
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter' && query && matches[0]) {
-                location.hash = matches[0][0]
+                location.href = componentHref(matches[0][0], hostedDocs)
                 navigate()
               }
             }}
@@ -321,7 +346,24 @@ function App() {
         </>
       }
     >
-      {!query && (
+      {!query && hostedDocs && (
+        <NavigationMenu
+          label="Documentation guides"
+          onNavigate={navigate}
+          sections={guideGroups.map(({ title, keys }) => ({
+            title,
+            links: [
+              ...keys.map((key) => ({
+                href: guideHref(key, true),
+                label: key === 'directory' ? 'Build a bilingual address book' : guideNames[key],
+                current: guide === key,
+              })),
+              ...(title === 'Design' ? [{ href: '/docs/#overview', label: 'Typography specimen', current: overview }] : []),
+            ],
+          }))}
+        />
+      )}
+      {!query && !hostedDocs && (
         <NavigationMenu
           label="Library"
           onNavigate={navigate}
@@ -350,7 +392,11 @@ function App() {
           title,
           links: matches
             .filter((row) => row[3] === title)
-            .map((row) => ({ href: '#' + row[0], label: row[2], current: item?.[0] === row[0] })),
+            .map((row) => ({
+              href: componentHref(row[0], hostedDocs),
+              label: hostedDocs ? row[1] : row[2],
+              current: item?.[0] === row[0],
+            })),
         }))}
       />
       {!matches.length && <Empty role="status" title="No matching components." />}
@@ -366,11 +412,15 @@ function App() {
       mainId="main-content"
       toolbar={
         <>
-          <div className="bread">
-            <TextLink href="#overview">Library</TextLink>
-            <span aria-hidden="true">/</span>
-            <span>{area}</span>
-          </div>
+          {hostedDocs ? (
+            <NavigationMenu label="Site navigation" className="site-nav" orientation="horizontal" sections={[{ links: siteLinks }]} />
+          ) : (
+            <div className="bread">
+              <TextLink href="#overview">Library</TextLink>
+              <span aria-hidden="true">/</span>
+              <span>{area}</span>
+            </div>
+          )}
           <Button
             variant="ghost"
             size="sm"
@@ -379,7 +429,7 @@ function App() {
             onClick={() => setDark(!dark)}
           >
             <i className="theme-disc" aria-hidden="true" />
-            {dark ? 'Dark theme' : 'Light theme'}
+            <span className="theme-name">{dark ? 'Dark theme' : 'Light theme'}</span>
           </Button>
         </>
       }
@@ -388,33 +438,60 @@ function App() {
         <Workbench key={item[0]} item={item} mode={mode} navigateView={navigateView} />
       ) : guide ? (
         <>
-          <NavigationMenu
-            className="guide-nav"
-            label="Guide sections"
-            orientation="horizontal"
-            sections={[
-              {
-                links: Object.entries(guideNames).map(([key, label]) => ({
-                  href: '#guide/' + key,
-                  label,
-                  current: key === guide,
-                })),
-              },
-            ]}
-          />
+          {!hostedDocs && (
+            <NavigationMenu
+              className="guide-nav"
+              label="Guide sections"
+              orientation="horizontal"
+              sections={[
+                {
+                  links: Object.entries(guideNames).map(([key, label]) => ({
+                    href: '#guide/' + key,
+                    label,
+                    current: key === guide,
+                  })),
+                },
+              ]}
+            />
+          )}
           {guide === 'start' ? (
             <InstallGuide html={guides.start} />
           ) : (
             <Prose className="guide-content" dangerouslySetInnerHTML={{ __html: guides[guide] }} />
           )}
-          {guide === 'directory' && <DirectorySource files={directorySources} />}
+          {guide === 'directory' && <DirectorySource files={directorySources} hosted={hostedDocs} />}
         </>
       ) : directory ? (
         <Overview />
       ) : (
-        <Specimen />
+        <Specimen hosted={hostedDocs} />
       )}
     </AppShell>
   )
 }
-createRoot(document.getElementById('app')!).render(<App />)
+function Project({ bilingual }: { bilingual: boolean }) {
+  const source = bilingual
+    ? 'https://github.com/stedbrown/alpina-ui/tree/main/recipes/rubrica'
+    : 'https://github.com/stedbrown/alpina-ui/blob/main/catalog/overview.tsx'
+  return (
+    <>
+      <NavigationMenu
+        lang="en"
+        label="Example navigation"
+        className="project-nav"
+        orientation="horizontal"
+        sections={[{ links: [
+          { href: '/examples/', label: '← Examples' },
+          { href: bilingual ? guideHref('directory', true) : componentHref('swiss-address-form', true), label: 'Documentation' },
+          { href: source, label: 'Source on GitHub' },
+        ] }]}
+      />
+      {bilingual ? <DirectoryLive standalone /> : (
+        <main className="client-project"><Overview hosted /></main>
+      )}
+    </>
+  )
+}
+const isBilingualProject = pathname + '/' === bilingualProject
+const isProject = isBilingualProject || pathname + '/' === clientProject
+createRoot(document.getElementById('app')!).render(isProject ? <Project bilingual={isBilingualProject} /> : <App />)

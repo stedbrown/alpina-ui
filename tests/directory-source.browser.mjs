@@ -24,7 +24,7 @@ try {
       },
     })
   })
-  await page.goto(new URL('site/index.html#guide/directory', project).href)
+  await page.goto(new URL('site/catalog.html#guide/directory', project).href)
   const section = page.getByRole('region', { name: 'Address book source files' })
   const picker = section.getByRole('combobox', { name: 'Project file' })
   const paths = await picker.locator('option').allTextContents()

@@ -11,7 +11,7 @@ const browser = await chromium.launch(
 )
 try {
   const page = await browser.newPage({ offline: true, viewport: { width: 390, height: 844 } })
-  const site = new URL('../site/index.html', import.meta.url).href
+  const site = new URL('../site/catalog.html', import.meta.url).href
   await page.goto(site + '#guide/directory')
   assert.equal(await page.locator('html').getAttribute('lang'), 'en')
   await page.getByRole('link', { name: 'Open the IT / DE address book' }).click()

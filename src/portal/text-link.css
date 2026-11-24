@@ -12,3 +12,39 @@
   outline: 2px solid var(--al-focus);
   outline-offset: 2px;
 }
+.al-text-link[data-variant='quiet'] {
+  text-decoration: none;
+}
+.al-text-link[data-variant='quiet']:hover {
+  text-decoration: underline;
+}
+.al-text-link[data-variant='action'],
+.al-text-link[data-variant='skip'] {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 2.75rem;
+  padding: var(--al-space-2) var(--al-space-4);
+  background: var(--al-ink);
+  color: var(--al-bg);
+  text-decoration: none;
+  font: 600 var(--al-type-label)/var(--al-leading-label) var(--al-font);
+}
+.al-text-link[data-variant='action']:hover {
+  text-decoration: underline;
+}
+.al-text-link[data-variant='skip']:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  min-block-size: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  padding: 0;
+}
+.al-text-link[data-variant='skip']:focus {
+  position: fixed;
+  inset: var(--al-space-2) auto auto var(--al-space-2);
+  z-index: 20;
+}

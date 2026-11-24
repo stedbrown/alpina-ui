@@ -3,12 +3,32 @@ import './grid.css'
 
 export interface GridProps extends HTMLAttributes<HTMLDivElement> {
   guides?: boolean
+  as?: 'div' | 'header' | 'main' | 'section' | 'article' | 'footer'
+  /** Block padding for a compact band, a content section, or a larger opening section. */
+  space?: 'compact' | 'section' | 'cover'
+  surface?: 'paper' | 'ink' | 'accent'
+  /** Prints the column numbers and gutters of the active responsive grid. */
+  ruler?: boolean
 }
-export function Grid({ guides = false, children, className = '', ...props }: GridProps): ReactElement {
+export function Grid({
+  as: Element = 'div',
+  guides = false,
+  ruler = false,
+  space,
+  surface,
+  children,
+  className = '',
+  ...props
+}: GridProps): ReactElement {
   return (
-    <div {...props} className={('al-layout ' + className).trim()}>
+    <Element {...props} data-space={space} data-surface={surface} className={('al-layout ' + className).trim()}>
       <div className="al-grid" data-guides={guides || undefined}>
         {children}
+        {ruler && (
+          <div className="al-grid-ruler" aria-hidden="true">
+            {Array.from({ length: 12 }, (_, i) => <span key={i}>{i + 1}</span>)}
+          </div>
+        )}
         {guides && (
           <div className="al-grid-guides" aria-hidden="true">
             {Array.from({ length: 12 }, (_, i) => (
@@ -17,7 +37,7 @@ export function Grid({ guides = false, children, className = '', ...props }: Gri
           </div>
         )}
       </div>
-    </div>
+    </Element>
   )
 }
 type Span4 = 1 | 2 | 3 | 4

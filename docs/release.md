@@ -1,6 +1,14 @@
-# Upgrading from 0.4 to 0.5
+# Upgrading Alpina UI
 
-Download `alpina-ui-0.5.1.tgz` from Installation. All imports and 77 registry identifiers from 0.4 remain available. Version 0.5 adds `Stack`, a single-axis layout component with modular spacing, alignment, and wrapping, bringing the registry to 78 entries. Version 0.5.1 provides the English catalog and documentation.
+## Version 0.6
+
+The public site has dedicated documentation, runnable examples, and agent tools. Existing catalog bookmarks still open their component, guide, or project. The single-file catalog remains available for offline use. [Documentation](https://alpina-ui.vercel.app/docs/) · [Projects](https://alpina-ui.vercel.app/examples/) · [Agent tools](https://alpina-ui.vercel.app/agents/)
+
+The homepage demonstrates the new Grid surfaces and column ruler, the poster and lead type roles, and TextLink navigation variants. Install the 0.6.0 package to use them in your application. The local CLI now accepts `alpina mcp` for read-only access to its installed reference files.
+
+## From 0.4 to 0.5
+
+All imports and 77 registry identifiers from 0.4 remain available. Version 0.5 adds `Stack`, a single-axis layout component with modular spacing, alignment, and wrapping, bringing the registry to 78 entries. Version 0.5.1 introduced the English catalog and documentation.
 
 ## Action menus
 

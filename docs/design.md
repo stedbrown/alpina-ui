@@ -65,6 +65,10 @@ export function Session() {
 
 `Grid` accepts `guides` to show columns and the vertical module. `GridItem` sets the span at each width. `Typography` lets you choose a visual role independently of the semantic level set by `as`. Copy these sources with `npx --no-install alpina add grid typography`.
 
+## Set a page on the grid
+
+The homepage uses the same grid with three optional properties. Use `surface="accent"` for a red band, `space="cover"` for its vertical padding, and `ruler` to show the active columns. A `Typography` heading with the `poster` variant scales with the available width. The `lead` role sets supporting copy between body and heading sizes. The site applies the optional `data-al-page` attribute to its body to use the library’s page defaults. [Homepage source](https://github.com/stedbrown/alpina-ui/blob/main/web/pages.tsx)
+
 ## Rows of controls
 
 Use `Grid` to allocate areas of the page and `Stack` to arrange elements inside an area. With `direction="row"`, children wrap when space runs out, including when an Italian label becomes a longer German one. `gap={2}` is two modules, or 8 px at a 16 px root. `justify="space-between"` places two groups at opposite ends of the available space. In a column, children stretch across the width and the default gap is 4.

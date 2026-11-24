@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState, type CSSProperties } from 'react'
 import { Grid, GridItem, Typography, Select, Button, NavigationMenu } from 'alpina-ui'
+import { clientProject, componentHref, guideHref } from './paths.js'
 import './specimen.css'
 
 const programme = [
@@ -31,7 +32,7 @@ function px(value: string) {
   return Math.round(Number.parseFloat(value) * 10) / 10
 }
 
-export function Specimen() {
+export function Specimen({ hosted }: { hosted: boolean }) {
   const [width, setWidth] = useState<Width>('auto')
   const [guides, setGuides] = useState(false)
   const [measures, setMeasures] = useState<Measures>()
@@ -206,11 +207,11 @@ export function Specimen() {
         sections={[
           {
             links: [
-              { href: '#guide/design', label: 'Design guide' },
-              { href: '#guide/research', label: 'Research and sources' },
-              { href: '#grid', label: 'Grid' },
-              { href: '#typography', label: 'Typography' },
-              { href: '#address-book', label: 'Sample address book' },
+              { href: guideHref('design', hosted), label: 'Design guide' },
+              { href: guideHref('research', hosted), label: 'Research and sources' },
+              { href: componentHref('grid', hosted), label: 'Grid' },
+              { href: componentHref('typography', hosted), label: 'Typography' },
+              { href: hosted ? clientProject : '#address-book', label: 'Sample address book' },
             ],
           },
         ]}

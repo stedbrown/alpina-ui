@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url'
 
 const usage = [
   'alpina list',
+  'alpina mcp',
   'alpina init [--dir components/alpina] [--dry-run]',
   'alpina add button dialog … [--dir components/alpina] [--dry-run]',
   'alpina add --all [--dir components/alpina] [--dry-run]',
@@ -65,6 +66,10 @@ function printPatch(localFile, sourceFile) {
 async function run([command, ...args]) {
   if (!command || command === '--help' || command === '-h') return console.log(usage)
   if (command === '--version') return console.log(registry.version)
+  if (command === 'mcp' && !args.length) {
+    const { serveCatalog } = await import('./mcp.mjs')
+    return serveCatalog(root, registry)
+  }
   if (command === 'list' && !args.length) {
     for (const group of new Set(registry.items.map((item) => item.group))) {
       console.log(

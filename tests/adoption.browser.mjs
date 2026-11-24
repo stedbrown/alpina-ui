@@ -16,7 +16,7 @@ const browser = await chromium.launch(launch)
 try {
   const context = await browser.newContext({ offline: true, viewport: { width: 1440, height: 940 } })
   const page = await context.newPage()
-  const site = new URL('site/index.html', project).href
+  const site = new URL('site/catalog.html', project).href
   const main = page.getByRole('main')
   const view = (name) => main.getByRole('button', { name, exact: true })
   await page.goto(site + '#swiss-address-form')

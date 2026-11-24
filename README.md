@@ -2,11 +2,11 @@
 
 Alpina UI is a collection of 78 React components that brings Swiss typographic design to the web. Its responsive grid, left-aligned type, and black, white, and red palette carry through from the smallest control to the documentation site. Swiss address, date, and currency components support the country’s four national languages.
 
-## Explore the catalog
+## Explore Alpina
 
-Browse the hosted catalog or jump straight to a component. [Live catalog](https://alpina-ui.vercel.app/) · [Dropdown menu](https://alpina-ui.vercel.app/#dropdown-menu) · [Bilingual address book](https://alpina-ui.vercel.app/#bilingual-address-book)
+The homepage uses Alpina’s public grid, typography, links, and navigation components. Open the documentation for installation and component APIs, or explore complete applications in the project gallery. [Homepage](https://alpina-ui.vercel.app/) · [Documentation](https://alpina-ui.vercel.app/docs/) · [Examples](https://alpina-ui.vercel.app/examples/)
 
-Open the offline catalog in a browser to try every component, inspect its TypeScript API, and copy its source. Start with the typography specimen. Switch between 4, 8, and 12 columns to see how margins, gutters, and type sizes change with the available width. The portal uses the same public imports as any other Alpina application. [Download the offline catalog](https://github.com/stedbrown/alpina-ui/releases/download/v0.5.1/alpina-ui-catalog.html) · [Design and measurements](docs/design.md)
+Open the offline catalog in a browser to try every component, inspect its TypeScript API, and copy its source. Start with the typography specimen. Switch between 4, 8, and 12 columns to see how margins, gutters, and type sizes change with the available width. The portal uses the same public imports as any other Alpina application. [Download the offline catalog](https://github.com/stedbrown/alpina-ui/releases/download/v0.6.0/alpina-ui-catalog.html) · [Design and measurements](docs/design.md)
 
 The catalog covers all 66 families in the shadcn/ui component index reviewed on November 24, 2026. The other 12 entries include grid and stack layouts, Swiss localization tools, and components for building a documentation site. The comparison explains which interactions each family supports. [Component coverage](docs/coverage.md) · [Swiss graphic design research](docs/research.md)
 
@@ -15,7 +15,7 @@ The catalog covers all 66 families in the shadcn/ui component index reviewed on 
 For a project using React and React DOM 18.2 or 19, install the package from the GitHub release.
 
 ```sh
-npm install https://github.com/stedbrown/alpina-ui/releases/download/v0.5.1/alpina-ui-0.5.1.tgz
+npm install https://github.com/stedbrown/alpina-ui/releases/download/v0.6.0/alpina-ui-0.6.0.tgz
 ```
 
 Import the stylesheet once at your application entry point and use components by name. You can also copy the TypeScript and CSS into your project with `npx --no-install alpina add button`. [Quick start](docs/start.md)
@@ -43,7 +43,7 @@ npm run test:browser
 npm pack
 ```
 
-Open `site/index.html` to browse the local catalog. Browser tests use Chrome or Chromium. Set `CHROME_PATH` to select a specific executable.
+Serve `site/` with a static HTTP server to browse the website from its homepage. Open `site/catalog.html` directly for the self-contained offline catalog. Browser tests use Chrome or Chromium. Set `CHROME_PATH` to select a specific executable.
 
 | Path | Contents |
 | --- | --- |
@@ -54,19 +54,24 @@ Open `site/index.html` to browse the local catalog. Browser tests use Chrome or 
 | `src/theme.css` | Tokens for the light and dark themes |
 | `cli` and `registry.json` | Commands for copying source files and a record of their dependencies |
 | `dist` | Generated ESM, TypeScript declarations, and CSS |
-| `catalog` and `site` | Catalog source and generated offline HTML |
+| `web`, `catalog`, and `site` | Public pages, interactive documentation, and the generated website and offline catalog |
+| `skills/alpina-ui` | Agent skill distributed with the package |
 | `tests` | Packaging, CLI, localization, and interaction tests |
 | `docs` | Component guides, design research, and Swiss data sources |
 
 ## Try the bilingual address book
 
-Search seven fictional design studios, switch between Italian and German, and edit an address without losing your draft. The adoption report tracks the CSS needed to build the example using only the portal. Moving layout, current-row styling, and long-word handling into Alpina reduced the application stylesheet from 56 declarations to 43. [Try the offline address book](https://github.com/stedbrown/alpina-ui/releases/download/v0.5.1/alpina-address-book-it-de.html) · [Example source](recipes/rubrica) · [Adoption report](recipes/rubrica/PROVA.md)
+Search seven fictional design studios, switch between Italian and German, and edit an address without losing your draft. The adoption report tracks the CSS needed to build the example using only the portal. Moving layout, current-row styling, and long-word handling into Alpina reduced the application stylesheet from 56 declarations to 43. [Try the offline address book](https://github.com/stedbrown/alpina-ui/releases/download/v0.6.0/alpina-address-book-it-de.html) · [Example source](recipes/rubrica) · [Adoption report](recipes/rubrica/PROVA.md)
 
 ## Inspect and update a component
 
 Each component page has four views. The preview keeps your input when you switch to the example code, API reference, or distributed source. Adjust the preview width to see how a component behaves in a narrow container. A link such as `#swiss-address-form/api` opens the reference directly.
 
 After upgrading the package, run `npx --no-install alpina diff` to compare copied components with the installed version. [CLI guide](docs/cli.md) · [Migration notes](docs/release.md)
+
+## Use Alpina with a coding agent
+
+Run `npx skills add stedbrown/alpina-ui --skill alpina-ui` to give a coding agent instructions for composing Alpina interfaces. The optional local MCP server lets it search the installed registry and read version-matched TypeScript declarations, source files, and guides. [Agent setup](https://alpina-ui.vercel.app/agents/) · [Machine-readable index](https://alpina-ui.vercel.app/llms.txt)
 
 ## Bundle sizes
 
@@ -77,8 +82,8 @@ Run `npm run size` after building to measure individual imports. The benchmark u
 | Button JavaScript | 252 |
 | CurrencyCHF JavaScript | 639 |
 | Dialog JavaScript | 1,156 |
-| All JavaScript exports | 25,399 |
-| Full stylesheet including the theme | 11,195 |
+| All JavaScript exports | 25,481 |
+| Full stylesheet including the theme | 11,661 |
 | Button CSS without the theme | 737 |
 
 ## License

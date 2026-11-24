@@ -7,10 +7,11 @@ import ts from 'typescript'
 import { execSync } from 'node:child_process'
 import { buildApiReference } from './api-reference.mjs'
 import { readDirectorySources } from './directory-sources.mjs'
+import { buildWebsite } from './site.mjs'
 
 process.chdir(fileURLToPath(new URL('../', import.meta.url)))
 const guides = {}
-for (const [key, file] of Object.entries({
+const guideFiles = {
   coverage: 'docs/coverage.md',
   research: 'docs/research.md',
   portal: 'docs/portal.md',
@@ -25,7 +26,8 @@ for (const [key, file] of Object.entries({
   design: 'docs/design.md',
   interactive: 'docs/interactive.md',
   swiss: 'docs/swiss.md',
-})) {
+}
+for (const [key, file] of Object.entries(guideFiles)) {
   guides[key] = (await marked.parse(await readFile(file, 'utf8'))).replace(
     /<pre>/g,
     '<pre tabindex="0">',
@@ -196,7 +198,8 @@ const html =
   notices.join('\n\n') +
   '</script></body></html>'
 await mkdir('site', { recursive: true })
-await writeFile('site/index.html', html)
+await writeFile('site/catalog.html', html)
+await buildWebsite({ guides, guideFiles, apiReference, registry, script, css, notices })
 console.log(
-  'Offline catalog: site/index.html (' + (Buffer.byteLength(html) / 1024).toFixed(0) + ' KiB)',
+  'Offline catalog: site/catalog.html (' + (Buffer.byteLength(html) / 1024).toFixed(0) + ' KiB)',
 )

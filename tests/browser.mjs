@@ -33,7 +33,7 @@ for (const file of [
     }
   }
 }
-const url = new URL('site/index.html', root).href
+const url = new URL('site/catalog.html', root).href
 const executable = process.env.CHROME_PATH ?? process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
 const launch = executable
   ? { executablePath: executable }

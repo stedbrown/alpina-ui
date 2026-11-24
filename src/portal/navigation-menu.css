@@ -46,7 +46,7 @@
 }
 .al-navigation[data-orientation='horizontal'] ul {
   display: flex;
-  gap: 0.25rem 1rem;
+  gap: var(--al-space-1) clamp(var(--al-space-2), 2.5vw, var(--al-space-4));
   flex-wrap: wrap;
   align-items: baseline;
 }

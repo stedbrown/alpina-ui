@@ -1,0 +1,67 @@
+.al-combo {
+  position: relative;
+  min-inline-size: 0;
+  font-family: var(--al-font);
+}
+.al-combo input[role='combobox'] {
+  inline-size: 100%;
+  padding-inline-end: 2rem;
+}
+.al-combo-glyph {
+  position: absolute;
+  inset-inline-end: 1rem;
+  inset-block-start: 43%;
+  inline-size: 0.4rem;
+  block-size: 0.4rem;
+  border-inline-end: 1.5px solid currentColor;
+  border-block-end: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+.al-combo-popup {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  visibility: hidden;
+  z-index: 1000;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+  border: 1px solid var(--al-ink);
+  background: var(--al-surface);
+  color: var(--al-ink);
+  padding: var(--al-space-1);
+  font: 400 var(--al-type-label)/var(--al-leading-label) var(--al-font);
+}
+.al-combo-popup ul {
+  min-block-size: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.al-combo-popup li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--al-space-2);
+  padding: var(--al-space-2);
+  cursor: pointer;
+}
+.al-combo-popup li[data-active='true'],
+.al-combo-popup li:hover {
+  background: var(--al-ink);
+  color: var(--al-surface);
+}
+.al-combo-popup li[aria-disabled='true'] {
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+.al-combo-popup p {
+  margin: var(--al-space-2);
+}
+.al-combo-popup small {
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,75 @@
+.al-resizable {
+  display: grid;
+  grid-template-columns: minmax(0, var(--al-first-track)) 1.5rem minmax(0, var(--al-second-track));
+  min-inline-size: 0;
+  border-block: 1px solid var(--al-ink);
+  color: var(--al-ink);
+  font: 400 var(--al-type-body)/var(--al-leading-body) var(--al-font);
+}
+.al-resize-pane {
+  grid-column: 1;
+  grid-row: 1;
+  min-block-size: 0;
+  min-inline-size: 0;
+  overflow: auto;
+  padding: var(--al-space-3);
+}
+.al-resize-pane:last-child {
+  grid-column: 3;
+}
+.al-resize-grip {
+  position: relative;
+  grid-column: 2;
+  grid-row: 1;
+  display: grid;
+  place-items: center;
+  min-block-size: 3rem;
+  touch-action: none;
+  cursor: col-resize;
+  user-select: none;
+}
+.al-resize-grip::before,
+.al-resize-grip::after {
+  content: '';
+  position: absolute;
+  background: var(--al-ink);
+}
+.al-resize-grip::before {
+  inline-size: 1px;
+  block-size: 100%;
+}
+.al-resize-grip::after {
+  inline-size: 3px;
+  block-size: 1.75rem;
+}
+.al-resize-grip:hover::after,
+.al-resize-grip:focus-visible::after {
+  background: var(--al-accent);
+}
+.al-resize-grip:focus-visible {
+  outline: 2px solid var(--al-focus);
+  outline-offset: -2px;
+}
+.al-resizable[data-orientation='vertical'] {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, var(--al-first-track)) 1.5rem minmax(0, var(--al-second-track));
+  block-size: 20rem;
+}
+.al-resizable[data-orientation='vertical'] .al-resize-pane:last-child {
+  grid-column: 1;
+  grid-row: 3;
+}
+.al-resizable[data-orientation='vertical'] .al-resize-grip {
+  grid-column: 1;
+  grid-row: 2;
+  min-block-size: 0;
+  cursor: row-resize;
+}
+.al-resizable[data-orientation='vertical'] .al-resize-grip::before {
+  inline-size: 100%;
+  block-size: 1px;
+}
+.al-resizable[data-orientation='vertical'] .al-resize-grip::after {
+  inline-size: 1.75rem;
+  block-size: 3px;
+}

@@ -1,0 +1,23 @@
+.al-empty {
+  display: grid;
+  justify-items: start;
+  gap: var(--al-space-2);
+  padding: var(--al-space-6) var(--al-space-4);
+  border-block: 1px solid var(--al-line);
+  color: var(--al-ink);
+  font-family: var(--al-font);
+  overflow-wrap: anywhere;
+}
+.al-empty-title {
+  font-size: var(--al-type-heading);
+  line-height: var(--al-leading-heading);
+  font-weight: 650;
+}
+.al-empty-description {
+  max-inline-size: 56ch;
+  font-size: var(--al-type-body);
+  line-height: var(--al-leading-body);
+}
+.al-empty-action {
+  margin-block-start: var(--al-space-2);
+}

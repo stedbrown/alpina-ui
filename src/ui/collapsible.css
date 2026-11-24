@@ -1,0 +1,20 @@
+.al-collapsible {
+  border-block: 1px solid var(--al-line);
+  font-family: var(--al-font);
+  color: var(--al-ink);
+}
+.al-collapsible summary {
+  cursor: pointer;
+  min-block-size: 2.75rem;
+  box-sizing: border-box;
+  padding: var(--al-space-3) var(--al-space-2);
+  font: 600 var(--al-type-label)/var(--al-leading-label) var(--al-font);
+}
+.al-collapsible summary:focus-visible {
+  outline: 2px solid var(--al-focus);
+  outline-offset: -2px;
+}
+.al-collapsible-content {
+  padding: 0 var(--al-space-2) var(--al-space-4);
+  overflow-wrap: anywhere;
+}

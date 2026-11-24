@@ -1,0 +1,37 @@
+.al-code-block {
+  background: var(--al-surface);
+  color: var(--al-ink);
+  border: 1px solid var(--al-line);
+  margin: 0;
+  min-width: 0;
+  font-family: var(--al-font);
+}
+.al-code-block figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.25rem 0.6rem 0.25rem 0.9rem;
+  border-bottom: 1px solid var(--al-line);
+  font-size: 0.8rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.al-code-block pre {
+  background: var(--al-soft);
+  font: 0.82rem/1.6 var(--al-mono);
+  margin: 0;
+  padding: 1rem;
+  max-height: 34rem;
+  overflow: auto;
+  tab-size: 2;
+}
+.al-code-block pre:focus-visible {
+  outline: 2px solid var(--al-focus);
+  outline-offset: -2px;
+}
+.al-code-block [role='status']:not(:empty) {
+  display: block;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.8rem;
+}

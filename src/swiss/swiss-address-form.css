@@ -1,0 +1,109 @@
+.al-address-form {
+  container-type: inline-size;
+  box-sizing: border-box;
+  inline-size: 100%;
+  max-inline-size: 44rem;
+  min-inline-size: 0;
+  border: 1px solid var(--al-line);
+  border-radius: var(--al-radius);
+  background: var(--al-surface);
+  color: var(--al-ink);
+  font: 400 var(--al-type-body)/var(--al-leading-body) var(--al-font);
+}
+.al-address-heading {
+  padding: var(--al-space-5) var(--al-space-6);
+  border-block-start: 3px solid var(--al-ink);
+  border-block-end: 1px solid var(--al-line);
+}
+.al-address-heading h2 {
+  margin: 0;
+  font: 650 var(--al-type-heading)/var(--al-leading-heading) var(--al-display);
+  letter-spacing: -0.025em;
+}
+.al-address-heading p {
+  margin: var(--al-space-1) 0 0;
+  color: var(--al-muted);
+  font-size: var(--al-type-label);
+  line-height: var(--al-leading-label);
+}
+.al-address-summary {
+  margin: var(--al-space-5) var(--al-space-6) 0;
+  padding-inline-start: var(--al-space-3);
+  border-inline-start: 3px solid var(--al-danger);
+}
+.al-address-summary ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--al-space-4);
+  margin: var(--al-space-1) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.al-address-summary a {
+  display: inline-block;
+  padding-block: var(--al-space-2);
+  font-size: var(--al-type-label);
+  line-height: var(--al-leading-label);
+}
+.al-address-fields {
+  display: grid;
+  grid-template-columns: minmax(calc(var(--al-unit) * 20), 0.38fr) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--al-space-5) var(--al-space-3);
+  min-inline-size: 0;
+  margin: 0;
+  padding: var(--al-space-6);
+  border: 0;
+}
+.al-address-recipient,
+.al-address-street,
+.al-address-canton {
+  grid-column: 1 / -1;
+}
+.al-address-postcode input {
+  font-variant-numeric: tabular-nums;
+}
+.al-address-fields :is(input, select)[aria-invalid='true'] {
+  border-block-end: 2px dashed var(--al-danger);
+}
+.al-address-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--al-space-4);
+  border-block-start: 1px solid var(--al-line);
+  padding: var(--al-space-4) var(--al-space-6);
+}
+.al-address-save-error {
+  flex: 1 1 11rem;
+  color: var(--al-danger);
+  font-size: var(--al-type-label);
+  line-height: var(--al-leading-label);
+}
+@container (min-width: 36rem) {
+  .al-address-fields {
+    grid-template-columns: minmax(calc(var(--al-unit) * 20), 0.42fr) minmax(0, 1fr) minmax(0, 1.2fr);
+  }
+  .al-address-canton {
+    grid-column: auto;
+  }
+}
+@container (max-width: 22rem) {
+  .al-address-summary {
+    margin-inline: var(--al-space-4);
+  }
+  .al-address-heading,
+  .al-address-actions,
+  .al-address-fields {
+    padding-inline: var(--al-space-4);
+  }
+  .al-address-actions .al-button {
+    inline-size: 100%;
+  }
+}
+@container (max-width: 16rem) {
+  .al-address-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

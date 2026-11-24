@@ -1,0 +1,78 @@
+/* Pagina e impaginazione editoriale */
+body {
+  margin: 0;
+  background: var(--al-bg);
+  color: var(--al-ink);
+  font-family: var(--al-font);
+}
+.directory {
+  max-width: 82rem;
+  margin-inline: auto;
+  padding: var(--al-space-4) clamp(1rem, 3vw, 3rem);
+}
+.mast {
+  border-top: 4px solid var(--al-ink);
+}
+.opening {
+  padding-block: clamp(2rem, 5vw, 5rem);
+}
+.directory .directory-title {
+  margin: 0 0 var(--al-space-3);
+  font-size: clamp(2.75rem, 6vw, 5.75rem);
+  line-height: 0.96;
+  letter-spacing: -0.065em;
+}
+.section-line {
+  padding-block: var(--al-space-3);
+  border-top: 2px solid var(--al-ink);
+  border-bottom: 1px solid var(--al-line);
+}
+/* Composizione riutilizzata di controlli e contenuti */
+.mast-line {
+  padding-top: var(--al-space-3);
+}
+.search-tools {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+  gap: var(--al-space-3);
+  padding-block: var(--al-space-4);
+}
+/* Indice, selezione e scheda del contatto */
+.index-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.serial {
+  font: 500 var(--al-type-caption)/1 var(--al-mono);
+}
+.record-body {
+  padding: var(--al-space-5);
+  border: 1px solid var(--al-line);
+  overflow-wrap: anywhere;
+}
+.record .record-folio {
+  margin-block: var(--al-space-1) var(--al-space-6);
+  font-size: clamp(3.75rem, 7vw, 7.5rem);
+  line-height: 0.95;
+  color: var(--al-accent);
+}
+.record h3 {
+  margin: 0 0 var(--al-space-2);
+  font-size: var(--al-type-heading);
+  line-height: var(--al-leading-heading);
+}
+.record address {
+  font-style: normal;
+  line-height: var(--al-leading-body);
+}
+.record-canton {
+  margin-top: var(--al-space-5);
+  padding-top: var(--al-space-3);
+  border-top: 1px solid var(--al-line);
+}
+.foot {
+  border-top: 1px solid var(--al-line);
+  margin-top: var(--al-space-8);
+  padding-block: var(--al-space-4);
+}

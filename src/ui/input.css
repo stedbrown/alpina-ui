@@ -1,0 +1,51 @@
+.al-input {
+  display: block;
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-inline-size: 0;
+  min-block-size: var(--al-space-11);
+  padding: var(--al-space-2) var(--al-space-3);
+  border: 1px solid var(--al-control);
+  border-radius: var(--al-radius);
+  background: var(--al-surface);
+  color: var(--al-ink);
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 4%);
+  font: 400 var(--al-type-body)/var(--al-leading-body) var(--al-font);
+}
+.al-input::placeholder {
+  color: var(--al-muted);
+  opacity: 1;
+}
+@media (hover: hover) {
+  .al-input:hover:enabled {
+    border-color: var(--al-ink);
+  }
+}
+.al-input:focus-visible {
+  border-color: var(--al-focus);
+  outline: 2px solid var(--al-focus);
+  outline-offset: 2px;
+}
+.al-input[aria-invalid='true'] {
+  border-color: var(--al-danger);
+  box-shadow: inset 2px 0 var(--al-danger);
+}
+.al-input:disabled {
+  border-color: var(--al-line);
+  background: var(--al-soft);
+  color: var(--al-muted);
+  cursor: not-allowed;
+}
+@media (forced-colors: active) {
+  .al-input[aria-invalid='true'] {
+    border-style: dashed;
+  }
+  .al-input:disabled {
+    color: GrayText;
+    border-color: GrayText;
+  }
+}
+.al-input:is([data-numeric], [type='number']) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}

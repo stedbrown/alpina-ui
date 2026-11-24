@@ -1,0 +1,35 @@
+.al-trace {
+  font-family: var(--al-font);
+  color: var(--al-ink);
+}
+.al-trace h3 {
+  margin: 0 0 var(--al-space-3);
+}
+.al-trace ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.al-trace li {
+  display: grid;
+  grid-template-columns: minmax(4.5rem, auto) 1fr;
+  align-items: baseline;
+  gap: var(--al-space-3);
+  padding-block: var(--al-space-3);
+  border-block-start: 1px solid var(--al-line);
+}
+.al-trace li > div:only-child {
+  grid-column: 1/-1;
+}
+.al-trace time,
+.al-trace-time {
+  font: var(--al-type-label)/1.5 var(--al-mono);
+  color: var(--al-muted);
+}
+.al-trace summary {
+  font-weight: 650;
+  cursor: pointer;
+}
+.al-trace details > div {
+  padding-block-start: var(--al-space-2);
+}

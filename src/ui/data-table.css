@@ -1,0 +1,54 @@
+.al-data-table {
+  max-width: 100%;
+  overflow: auto;
+  color: var(--al-ink);
+  font-family: var(--al-font);
+}
+.al-data-table .al-table {
+  width: 100%;
+}
+.al-data-table caption {
+  text-align: start;
+  caption-side: top;
+  font-weight: 600;
+}
+.al-data-table th[data-numeric] button {
+  justify-content: end;
+  margin-inline-end: calc(-1 * var(--al-space-1));
+}
+.al-data-table th button span {
+  min-inline-size: 1ch;
+}
+.al-data-table th button {
+  min-height: var(--al-space-9);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--al-space-2);
+  font: inherit;
+  color: inherit;
+  border: 0;
+  background: transparent;
+  padding: 0 var(--al-space-1);
+  border-radius: calc(var(--al-radius) * 0.65);
+  cursor: pointer;
+  white-space: nowrap;
+}
+@media (pointer: coarse) {
+  .al-data-table th button {
+    min-height: var(--al-space-11);
+    min-width: var(--al-space-11);
+  }
+}
+.al-data-table th button:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.al-data-table th[aria-sort] button span {
+  color: var(--al-ink);
+  font-weight: 700;
+}
+.al-data-table th button:focus-visible,
+.al-data-table:focus-visible {
+  outline: 2px solid var(--al-focus);
+  outline-offset: -2px;
+}

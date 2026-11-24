@@ -1,0 +1,29 @@
+.al-command ul {
+  list-style: none;
+  margin: var(--al-space-3) 0 0;
+  padding: 0;
+  max-height: min(45dvh, 20rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.al-command li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  border-block-end: 1px solid var(--al-ink);
+  padding: var(--al-space-3) var(--al-space-2);
+  cursor: pointer;
+}
+.al-command li[aria-selected='true'] {
+  background: var(--al-ink);
+  color: var(--al-surface);
+}
+.al-command li[aria-disabled='true'] {
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+.al-command small,
+.al-command p[role='status'] {
+  font-size: var(--al-type-label);
+}

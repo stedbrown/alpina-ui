@@ -1,0 +1,11 @@
+.al-button-group {
+  display: inline-flex;
+  max-inline-size: 100%;
+  gap: var(--al-space-1);
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+.al-button-group[data-orientation='vertical'] {
+  flex-direction: column;
+  align-items: stretch;
+}

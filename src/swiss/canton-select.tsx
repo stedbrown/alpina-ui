@@ -1,0 +1,67 @@
+'use client'
+
+import { forwardRef, type ComponentPropsWithoutRef } from 'react'
+import { NativeSelect } from '../interactive/native-select.js'
+import { cantons, type CantonCode } from './cantons.js'
+import { defaultSwissLocale, type SwissLocale } from './locales.js'
+
+export interface CantonSelectProps extends Omit<
+  ComponentPropsWithoutRef<'select'>,
+  'children' | 'value' | 'defaultValue' | 'multiple'
+> {
+  locale?: SwissLocale
+  value?: CantonCode | ''
+  defaultValue?: CantonCode | ''
+  /** Add an initially empty, disabled option. Required validates the empty value. */
+  placeholder?: string
+  /** Opzione vuota riselezionabile per i filtri. Osserva anche il valore vuoto con onChange. */
+  allLabel?: string
+  onCantonChange?: (canton: CantonCode) => void
+}
+
+export const CantonSelect = forwardRef<HTMLSelectElement, CantonSelectProps>(function CantonSelect(
+  {
+    locale = defaultSwissLocale,
+    value,
+    defaultValue,
+    placeholder,
+    allLabel,
+    onChange,
+    onCantonChange,
+    ...props
+  },
+  ref,
+) {
+  const initialValue =
+    defaultValue ?? (placeholder === undefined && allLabel === undefined ? undefined : '')
+  return (
+    <NativeSelect
+      appearance="outline"
+      lang={locale}
+      {...props}
+      ref={ref}
+      value={value}
+      defaultValue={value === undefined ? initialValue : undefined}
+      onChange={(event) => {
+        const next = event.currentTarget.value
+        onChange?.(event)
+        if (next) onCantonChange?.(next as CantonCode)
+      }}
+    >
+      {allLabel !== undefined ? (
+        <option value="">{allLabel}</option>
+      ) : (
+        placeholder !== undefined && (
+          <option value="" disabled>
+            {placeholder}
+          </option>
+        )
+      )}
+      {cantons.map(({ code, names }) => (
+        <option key={code} value={code} lang={locale}>
+          {names[locale]} ({code})
+        </option>
+      ))}
+    </NativeSelect>
+  )
+})

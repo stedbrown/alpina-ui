@@ -1,0 +1,16 @@
+.al-kbd {
+  display: inline-grid;
+  place-items: center;
+  box-sizing: border-box;
+  min-inline-size: 1.5rem;
+  min-block-size: 1.5rem;
+  padding: 0 0.375rem;
+  border: 1px solid var(--al-control);
+  border-block-end-width: 2px;
+  border-radius: var(--al-radius);
+  background: var(--al-bg);
+  color: var(--al-ink);
+  font: var(--al-type-caption)/var(--al-leading-caption) var(--al-mono);
+  vertical-align: middle;
+  white-space: nowrap;
+}

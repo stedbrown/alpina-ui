@@ -1,0 +1,6 @@
+.al-modal.al-alert-dialog {
+  border-block-start-color: var(--al-accent);
+}
+.al-alert-dialog .al-modal-footer {
+  justify-content: flex-start;
+}

@@ -1,0 +1,37 @@
+.al-input-group {
+  display: flex;
+  align-items: stretch;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  border: 1px solid var(--al-control);
+  border-radius: var(--al-radius);
+  background: var(--al-bg);
+  color: var(--al-ink);
+  font-family: var(--al-font);
+}
+.al-input-group-addon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-inline-size: 0;
+  padding-inline: var(--al-space-2);
+  font-size: var(--al-type-label);
+  font-variant-numeric: tabular-nums;
+}
+.al-input-group > :is(input, select, textarea) {
+  flex: 1 1 0;
+  min-inline-size: 0;
+  margin: 0;
+  border: 0;
+}
+.al-input-group:focus-within {
+  outline: 2px solid var(--al-focus);
+  outline-offset: 2px;
+}
+.al-input-group > :is(input, select, textarea):focus-visible {
+  outline: none;
+}
+.al-input-group:has([aria-invalid='true']) {
+  border-color: var(--al-danger);
+  border-block-end-width: 2px;
+}

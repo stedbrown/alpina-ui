@@ -1,0 +1,16 @@
+.al-bubble {
+  max-inline-size: min(60ch, 90%);
+  inline-size: fit-content;
+  padding: var(--al-space-2) var(--al-space-3);
+  border-inline-start: 2px solid var(--al-ink);
+  background: var(--al-soft);
+  color: var(--al-ink);
+  font: 400 var(--al-type-body)/var(--al-leading-body) var(--al-font);
+  overflow-wrap: anywhere;
+}
+.al-bubble[data-side='end'] {
+  margin-inline-start: auto;
+  border-inline-start: 0;
+  border-inline-end: 2px solid var(--al-ink);
+  background: var(--al-bg);
+}

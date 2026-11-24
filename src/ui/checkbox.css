@@ -1,0 +1,78 @@
+.al-checkbox {
+  appearance: none;
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  box-sizing: border-box;
+  inline-size: var(--al-space-6);
+  block-size: var(--al-space-6);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--al-radius);
+  background: transparent;
+  color: var(--al-on-accent);
+  vertical-align: middle;
+  cursor: pointer;
+}
+.al-checkbox::before,
+.al-checkbox::after {
+  content: '';
+  grid-area: 1 / 1;
+  box-sizing: border-box;
+}
+.al-checkbox::before {
+  inline-size: var(--al-space-5);
+  block-size: var(--al-space-5);
+  border: 1.5px solid var(--al-control);
+  border-radius: calc(var(--al-radius) * 0.65);
+  background: var(--al-surface);
+  box-shadow: var(--al-shadow);
+}
+.al-checkbox:is(:checked, :indeterminate, [aria-checked='mixed'])::before {
+  background: var(--al-accent);
+  border-color: var(--al-accent);
+}
+.al-checkbox:checked::after {
+  inline-size: 0.38rem;
+  block-size: 0.66rem;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  transform: translateY(-1px) rotate(45deg);
+}
+.al-checkbox:is(:indeterminate, [aria-checked='mixed'])::after {
+  inline-size: 0.6rem;
+  block-size: 2px;
+  background: currentColor;
+  border: 0;
+  transform: none;
+}
+.al-checkbox:focus-visible {
+  outline: 2px solid var(--al-focus);
+  outline-offset: 2px;
+}
+.al-checkbox:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+@media (hover: hover) {
+  .al-checkbox:hover:enabled::before {
+    border-color: var(--al-ink);
+  }
+}
+@media (pointer: coarse) {
+  .al-checkbox {
+    inline-size: var(--al-space-11);
+    block-size: var(--al-space-11);
+  }
+}
+@media (forced-colors: active) {
+  .al-checkbox {
+    appearance: auto;
+    accent-color: auto;
+  }
+  .al-checkbox::before,
+  .al-checkbox::after {
+    content: none;
+  }
+}

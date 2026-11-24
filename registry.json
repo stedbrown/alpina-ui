@@ -1,0 +1,944 @@
+{
+  "name": "alpina-ui",
+  "version": "0.5.0",
+  "items": [
+    {
+      "name": "grid",
+      "group": "ui",
+      "entry": "ui/grid.tsx",
+      "files": [
+        "theme.css",
+        "ui/grid.tsx",
+        "ui/grid.css"
+      ]
+    },
+    {
+      "name": "typography",
+      "group": "ui",
+      "entry": "ui/typography.tsx",
+      "files": [
+        "theme.css",
+        "ui/typography.tsx",
+        "ui/typography.css"
+      ]
+    },
+    {
+      "name": "button",
+      "group": "ui",
+      "entry": "ui/button.tsx",
+      "files": [
+        "theme.css",
+        "ui/button.tsx",
+        "ui/button.css"
+      ]
+    },
+    {
+      "name": "badge",
+      "group": "ui",
+      "entry": "ui/badge.tsx",
+      "files": [
+        "theme.css",
+        "ui/badge.tsx",
+        "ui/badge.css"
+      ]
+    },
+    {
+      "name": "card",
+      "group": "ui",
+      "entry": "ui/card.tsx",
+      "files": [
+        "theme.css",
+        "ui/card.tsx",
+        "ui/card.css"
+      ]
+    },
+    {
+      "name": "input",
+      "group": "ui",
+      "entry": "ui/input.tsx",
+      "files": [
+        "theme.css",
+        "ui/input.tsx",
+        "ui/input.css"
+      ]
+    },
+    {
+      "name": "textarea",
+      "group": "ui",
+      "entry": "ui/textarea.tsx",
+      "files": [
+        "theme.css",
+        "ui/textarea.tsx",
+        "ui/textarea.css"
+      ]
+    },
+    {
+      "name": "select",
+      "group": "ui",
+      "entry": "ui/select.tsx",
+      "files": [
+        "theme.css",
+        "ui/select.tsx",
+        "ui/select.css"
+      ]
+    },
+    {
+      "name": "checkbox",
+      "group": "ui",
+      "entry": "ui/checkbox.tsx",
+      "files": [
+        "theme.css",
+        "ui/checkbox.tsx",
+        "ui/checkbox.css"
+      ]
+    },
+    {
+      "name": "radio-group",
+      "group": "ui",
+      "entry": "ui/radio-group.tsx",
+      "files": [
+        "theme.css",
+        "ui/radio-group.tsx",
+        "ui/radio-group.css"
+      ]
+    },
+    {
+      "name": "switch",
+      "group": "ui",
+      "entry": "ui/switch.tsx",
+      "files": [
+        "theme.css",
+        "ui/switch.tsx",
+        "ui/switch.css"
+      ]
+    },
+    {
+      "name": "field",
+      "group": "ui",
+      "entry": "ui/field.tsx",
+      "files": [
+        "theme.css",
+        "ui/field.tsx",
+        "ui/field.css"
+      ]
+    },
+    {
+      "name": "alert",
+      "group": "ui",
+      "entry": "ui/alert.tsx",
+      "files": [
+        "theme.css",
+        "ui/alert.tsx",
+        "ui/alert.css"
+      ]
+    },
+    {
+      "name": "table",
+      "group": "ui",
+      "entry": "ui/table.tsx",
+      "files": [
+        "theme.css",
+        "ui/table.tsx",
+        "ui/table.css"
+      ]
+    },
+    {
+      "name": "data-table",
+      "group": "ui",
+      "entry": "ui/data-table.tsx",
+      "files": [
+        "theme.css",
+        "ui/data-table.tsx",
+        "ui/table.tsx",
+        "ui/table.css",
+        "ui/scroll-area.tsx",
+        "ui/scroll-area.css",
+        "ui/data-table.css"
+      ]
+    },
+    {
+      "name": "separator",
+      "group": "ui",
+      "entry": "ui/separator.tsx",
+      "files": [
+        "theme.css",
+        "ui/separator.tsx",
+        "ui/separator.css"
+      ]
+    },
+    {
+      "name": "progress",
+      "group": "ui",
+      "entry": "ui/progress.tsx",
+      "files": [
+        "theme.css",
+        "ui/progress.tsx",
+        "ui/progress.css"
+      ]
+    },
+    {
+      "name": "spinner",
+      "group": "ui",
+      "entry": "ui/spinner.tsx",
+      "files": [
+        "theme.css",
+        "ui/spinner.tsx",
+        "ui/spinner.css"
+      ]
+    },
+    {
+      "name": "skeleton",
+      "group": "ui",
+      "entry": "ui/skeleton.tsx",
+      "files": [
+        "theme.css",
+        "ui/skeleton.tsx",
+        "ui/skeleton.css"
+      ]
+    },
+    {
+      "name": "breadcrumb",
+      "group": "ui",
+      "entry": "ui/breadcrumb.tsx",
+      "files": [
+        "theme.css",
+        "ui/breadcrumb.tsx",
+        "ui/breadcrumb.css"
+      ]
+    },
+    {
+      "name": "pagination",
+      "group": "ui",
+      "entry": "ui/pagination.tsx",
+      "files": [
+        "theme.css",
+        "ui/pagination.tsx",
+        "ui/pagination.css"
+      ]
+    },
+    {
+      "name": "aspect-ratio",
+      "group": "ui",
+      "entry": "ui/aspect-ratio.tsx",
+      "files": [
+        "theme.css",
+        "ui/aspect-ratio.tsx",
+        "ui/aspect-ratio.css"
+      ]
+    },
+    {
+      "name": "attachment",
+      "group": "ui",
+      "entry": "ui/attachment.tsx",
+      "files": [
+        "theme.css",
+        "ui/attachment.tsx",
+        "ui/attachment.css"
+      ]
+    },
+    {
+      "name": "avatar",
+      "group": "ui",
+      "entry": "ui/avatar.tsx",
+      "files": [
+        "theme.css",
+        "ui/avatar.tsx",
+        "ui/avatar.css"
+      ]
+    },
+    {
+      "name": "bubble",
+      "group": "ui",
+      "entry": "ui/bubble.tsx",
+      "files": [
+        "theme.css",
+        "ui/bubble.tsx",
+        "ui/bubble.css"
+      ]
+    },
+    {
+      "name": "button-group",
+      "group": "ui",
+      "entry": "ui/button-group.tsx",
+      "files": [
+        "theme.css",
+        "ui/button-group.tsx",
+        "ui/button-group.css"
+      ]
+    },
+    {
+      "name": "chart",
+      "group": "ui",
+      "entry": "ui/chart.tsx",
+      "files": [
+        "theme.css",
+        "ui/chart.tsx",
+        "ui/chart.css"
+      ]
+    },
+    {
+      "name": "collapsible",
+      "group": "ui",
+      "entry": "ui/collapsible.tsx",
+      "files": [
+        "theme.css",
+        "ui/collapsible.tsx",
+        "ui/collapsible.css"
+      ]
+    },
+    {
+      "name": "direction",
+      "group": "ui",
+      "entry": "ui/direction.tsx",
+      "files": [
+        "theme.css",
+        "ui/direction.tsx",
+        "ui/direction.css"
+      ]
+    },
+    {
+      "name": "empty",
+      "group": "ui",
+      "entry": "ui/empty.tsx",
+      "files": [
+        "theme.css",
+        "ui/empty.tsx",
+        "ui/empty.css"
+      ]
+    },
+    {
+      "name": "input-group",
+      "group": "ui",
+      "entry": "ui/input-group.tsx",
+      "files": [
+        "theme.css",
+        "ui/input-group.tsx",
+        "ui/input-group.css"
+      ]
+    },
+    {
+      "name": "item",
+      "group": "ui",
+      "entry": "ui/item.tsx",
+      "files": [
+        "theme.css",
+        "ui/item.tsx",
+        "ui/item.css"
+      ]
+    },
+    {
+      "name": "kbd",
+      "group": "ui",
+      "entry": "ui/kbd.tsx",
+      "files": [
+        "theme.css",
+        "ui/kbd.tsx",
+        "ui/kbd.css"
+      ]
+    },
+    {
+      "name": "label",
+      "group": "ui",
+      "entry": "ui/label.tsx",
+      "files": [
+        "theme.css",
+        "ui/label.tsx",
+        "ui/label.css"
+      ]
+    },
+    {
+      "name": "marker",
+      "group": "ui",
+      "entry": "ui/marker.tsx",
+      "files": [
+        "theme.css",
+        "ui/marker.tsx",
+        "ui/marker.css"
+      ]
+    },
+    {
+      "name": "message",
+      "group": "ui",
+      "entry": "ui/message.tsx",
+      "files": [
+        "theme.css",
+        "ui/message.tsx",
+        "ui/bubble.tsx",
+        "ui/bubble.css",
+        "ui/message.css"
+      ]
+    },
+    {
+      "name": "scroll-area",
+      "group": "ui",
+      "entry": "ui/scroll-area.tsx",
+      "files": [
+        "theme.css",
+        "ui/scroll-area.tsx",
+        "ui/scroll-area.css"
+      ]
+    },
+    {
+      "name": "slider",
+      "group": "ui",
+      "entry": "ui/slider.tsx",
+      "files": [
+        "theme.css",
+        "ui/slider.tsx",
+        "ui/slider.css"
+      ]
+    },
+    {
+      "name": "toggle",
+      "group": "ui",
+      "entry": "ui/toggle.tsx",
+      "files": [
+        "theme.css",
+        "ui/toggle.tsx",
+        "ui/toggle.css"
+      ]
+    },
+    {
+      "name": "stack",
+      "group": "ui",
+      "entry": "ui/stack.tsx",
+      "files": [
+        "theme.css",
+        "ui/stack.tsx",
+        "ui/stack.css"
+      ]
+    },
+    {
+      "name": "dialog",
+      "group": "interactive",
+      "entry": "interactive/dialog.tsx",
+      "files": [
+        "theme.css",
+        "interactive/dialog.tsx",
+        "interactive/modal-surface.tsx",
+        "interactive/controllable.ts",
+        "interactive/floating.ts",
+        "interactive/modal-surface.css"
+      ]
+    },
+    {
+      "name": "sheet",
+      "group": "interactive",
+      "entry": "interactive/sheet.tsx",
+      "files": [
+        "theme.css",
+        "interactive/sheet.tsx",
+        "interactive/modal-surface.tsx",
+        "interactive/controllable.ts",
+        "interactive/floating.ts",
+        "interactive/modal-surface.css"
+      ]
+    },
+    {
+      "name": "tabs",
+      "group": "interactive",
+      "entry": "interactive/tabs.tsx",
+      "files": [
+        "theme.css",
+        "interactive/tabs.tsx",
+        "interactive/controllable.ts",
+        "interactive/roving.ts",
+        "interactive/navigation.ts",
+        "interactive/tabs.css"
+      ]
+    },
+    {
+      "name": "accordion",
+      "group": "interactive",
+      "entry": "interactive/accordion.tsx",
+      "files": [
+        "theme.css",
+        "interactive/accordion.tsx",
+        "interactive/controllable.ts",
+        "interactive/roving.ts",
+        "interactive/navigation.ts",
+        "interactive/accordion.css"
+      ]
+    },
+    {
+      "name": "dropdown-menu",
+      "group": "interactive",
+      "entry": "interactive/dropdown-menu.tsx",
+      "files": [
+        "theme.css",
+        "interactive/dropdown-menu.tsx",
+        "interactive/controllable.ts",
+        "interactive/action-list.tsx",
+        "interactive/navigation.ts",
+        "interactive/search-options.ts",
+        "interactive/floating.ts",
+        "interactive/dropdown-menu.css",
+        "interactive/dismiss.ts"
+      ]
+    },
+    {
+      "name": "toast",
+      "group": "interactive",
+      "entry": "interactive/toast.tsx",
+      "files": [
+        "theme.css",
+        "interactive/toast.tsx",
+        "interactive/toast.css"
+      ]
+    },
+    {
+      "name": "tooltip",
+      "group": "interactive",
+      "entry": "interactive/tooltip.tsx",
+      "files": [
+        "theme.css",
+        "interactive/tooltip.tsx",
+        "interactive/floating.ts",
+        "interactive/hover-intent.ts",
+        "interactive/tooltip.css"
+      ]
+    },
+    {
+      "name": "alert-dialog",
+      "group": "interactive",
+      "entry": "interactive/alert-dialog.tsx",
+      "files": [
+        "theme.css",
+        "interactive/alert-dialog.tsx",
+        "ui/button.tsx",
+        "ui/button.css",
+        "interactive/controllable.ts",
+        "interactive/modal-surface.tsx",
+        "interactive/floating.ts",
+        "interactive/modal-surface.css",
+        "interactive/alert-dialog.css"
+      ]
+    },
+    {
+      "name": "carousel",
+      "group": "interactive",
+      "entry": "interactive/carousel.tsx",
+      "files": [
+        "theme.css",
+        "interactive/carousel.tsx",
+        "ui/button.tsx",
+        "ui/button.css",
+        "interactive/controllable.ts",
+        "interactive/navigation.ts",
+        "interactive/carousel.css"
+      ]
+    },
+    {
+      "name": "combobox",
+      "group": "interactive",
+      "entry": "interactive/combobox.tsx",
+      "files": [
+        "theme.css",
+        "interactive/combobox.tsx",
+        "ui/field.tsx",
+        "ui/field.css",
+        "ui/input.tsx",
+        "ui/input.css",
+        "interactive/floating.ts",
+        "interactive/controllable.ts",
+        "interactive/search-options.ts",
+        "interactive/combobox.css"
+      ]
+    },
+    {
+      "name": "command",
+      "group": "interactive",
+      "entry": "interactive/command.tsx",
+      "files": [
+        "theme.css",
+        "interactive/command.tsx",
+        "ui/input.tsx",
+        "ui/input.css",
+        "interactive/dialog.tsx",
+        "interactive/modal-surface.tsx",
+        "interactive/controllable.ts",
+        "interactive/floating.ts",
+        "interactive/modal-surface.css",
+        "interactive/search-options.ts",
+        "interactive/command.css"
+      ]
+    },
+    {
+      "name": "context-menu",
+      "group": "interactive",
+      "entry": "interactive/context-menu.tsx",
+      "files": [
+        "theme.css",
+        "interactive/context-menu.tsx",
+        "interactive/action-list.tsx",
+        "interactive/navigation.ts",
+        "interactive/search-options.ts",
+        "interactive/floating.ts",
+        "interactive/dropdown-menu.css",
+        "interactive/dismiss.ts",
+        "interactive/context-menu.css"
+      ]
+    },
+    {
+      "name": "drawer",
+      "group": "interactive",
+      "entry": "interactive/drawer.tsx",
+      "files": [
+        "theme.css",
+        "interactive/drawer.tsx",
+        "interactive/controllable.ts",
+        "interactive/modal-surface.tsx",
+        "interactive/floating.ts",
+        "interactive/modal-surface.css",
+        "interactive/drawer.css"
+      ]
+    },
+    {
+      "name": "hover-card",
+      "group": "interactive",
+      "entry": "interactive/hover-card.tsx",
+      "files": [
+        "theme.css",
+        "interactive/hover-card.tsx",
+        "interactive/hover-intent.ts",
+        "interactive/floating.ts",
+        "interactive/hover-card.css"
+      ]
+    },
+    {
+      "name": "menubar",
+      "group": "interactive",
+      "entry": "interactive/menubar.tsx",
+      "files": [
+        "theme.css",
+        "interactive/menubar.tsx",
+        "interactive/action-list.tsx",
+        "interactive/navigation.ts",
+        "interactive/search-options.ts",
+        "interactive/floating.ts",
+        "interactive/dropdown-menu.css",
+        "interactive/dismiss.ts",
+        "interactive/menubar.css"
+      ]
+    },
+    {
+      "name": "popover",
+      "group": "interactive",
+      "entry": "interactive/popover.tsx",
+      "files": [
+        "theme.css",
+        "interactive/popover.tsx",
+        "ui/button.tsx",
+        "ui/button.css",
+        "interactive/controllable.ts",
+        "interactive/floating.ts",
+        "interactive/dismiss.ts",
+        "interactive/popover.css"
+      ]
+    },
+    {
+      "name": "resizable",
+      "group": "interactive",
+      "entry": "interactive/resizable.tsx",
+      "files": [
+        "theme.css",
+        "interactive/resizable.tsx",
+        "interactive/controllable.ts",
+        "interactive/resizable.css"
+      ]
+    },
+    {
+      "name": "input-otp",
+      "group": "interactive",
+      "entry": "interactive/input-otp.tsx",
+      "files": [
+        "theme.css",
+        "interactive/input-otp.tsx",
+        "ui/input.tsx",
+        "ui/input.css",
+        "interactive/input-otp.css"
+      ]
+    },
+    {
+      "name": "native-select",
+      "group": "interactive",
+      "entry": "interactive/native-select.tsx",
+      "files": [
+        "theme.css",
+        "interactive/native-select.tsx",
+        "ui/select.tsx",
+        "ui/select.css",
+        "interactive/native-select.css"
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "group": "interactive",
+      "entry": "interactive/toggle-group.tsx",
+      "files": [
+        "theme.css",
+        "interactive/toggle-group.tsx",
+        "ui/button.tsx",
+        "ui/button.css",
+        "interactive/toggle-group.css"
+      ]
+    },
+    {
+      "name": "questionnaire",
+      "group": "interactive",
+      "entry": "interactive/questionnaire.tsx",
+      "files": [
+        "theme.css",
+        "interactive/questionnaire.tsx",
+        "ui/button.tsx",
+        "ui/button.css",
+        "ui/progress.tsx",
+        "ui/progress.css",
+        "ui/radio-group.tsx",
+        "ui/radio-group.css",
+        "interactive/questionnaire.css"
+      ]
+    },
+    {
+      "name": "message-scroller",
+      "group": "interactive",
+      "entry": "interactive/message-scroller.tsx",
+      "files": [
+        "theme.css",
+        "interactive/message-scroller.tsx",
+        "ui/button.tsx",
+        "ui/button.css",
+        "interactive/message-scroller.css"
+      ]
+    },
+    {
+      "name": "trace",
+      "group": "interactive",
+      "entry": "interactive/trace.tsx",
+      "files": [
+        "theme.css",
+        "interactive/trace.tsx",
+        "interactive/trace.css"
+      ]
+    },
+    {
+      "name": "swiss-address-form",
+      "group": "swiss",
+      "entry": "swiss/swiss-address-form.tsx",
+      "files": [
+        "theme.css",
+        "swiss/swiss-address-form.tsx",
+        "ui/button.tsx",
+        "ui/button.css",
+        "ui/field.tsx",
+        "ui/field.css",
+        "ui/input.tsx",
+        "ui/input.css",
+        "ui/typography.tsx",
+        "ui/typography.css",
+        "portal/text-link.tsx",
+        "portal/text-link.css",
+        "swiss/canton-select.tsx",
+        "interactive/native-select.tsx",
+        "ui/select.tsx",
+        "ui/select.css",
+        "interactive/native-select.css",
+        "swiss/cantons.ts",
+        "swiss/locales.ts",
+        "swiss/postal-code.ts",
+        "swiss/swiss-postal-code-input.tsx",
+        "swiss/swiss-address-form.css"
+      ]
+    },
+    {
+      "name": "currency-chf",
+      "group": "swiss",
+      "entry": "swiss/currency-chf.tsx",
+      "files": [
+        "theme.css",
+        "swiss/currency-chf.tsx",
+        "swiss/format-chf.ts",
+        "swiss/locales.ts",
+        "swiss/UNICODE-LICENSE.txt"
+      ]
+    },
+    {
+      "name": "swiss-date",
+      "group": "swiss",
+      "entry": "swiss/swiss-date.tsx",
+      "files": [
+        "theme.css",
+        "swiss/swiss-date.tsx",
+        "swiss/format-swiss-date.ts",
+        "swiss/locales.ts",
+        "swiss/UNICODE-LICENSE.txt"
+      ]
+    },
+    {
+      "name": "locale-select",
+      "group": "swiss",
+      "entry": "swiss/locale-select.tsx",
+      "files": [
+        "theme.css",
+        "swiss/locale-select.tsx",
+        "interactive/native-select.tsx",
+        "ui/select.tsx",
+        "ui/select.css",
+        "interactive/native-select.css",
+        "swiss/locales.ts"
+      ]
+    },
+    {
+      "name": "canton-select",
+      "group": "swiss",
+      "entry": "swiss/canton-select.tsx",
+      "files": [
+        "theme.css",
+        "swiss/canton-select.tsx",
+        "interactive/native-select.tsx",
+        "ui/select.tsx",
+        "ui/select.css",
+        "interactive/native-select.css",
+        "swiss/cantons.ts",
+        "swiss/locales.ts"
+      ]
+    },
+    {
+      "name": "canton-combobox",
+      "group": "swiss",
+      "entry": "swiss/canton-combobox.tsx",
+      "files": [
+        "theme.css",
+        "swiss/canton-combobox.tsx",
+        "interactive/floating.ts",
+        "ui/field.tsx",
+        "ui/field.css",
+        "ui/button.tsx",
+        "ui/button.css",
+        "ui/input.tsx",
+        "ui/input.css",
+        "swiss/cantons.ts",
+        "swiss/locales.ts",
+        "swiss/canton-combobox.css"
+      ]
+    },
+    {
+      "name": "swiss-postal-code-input",
+      "group": "swiss",
+      "entry": "swiss/swiss-postal-code-input.tsx",
+      "files": [
+        "theme.css",
+        "swiss/swiss-postal-code-input.tsx",
+        "ui/input.tsx",
+        "ui/input.css",
+        "swiss/postal-code.ts",
+        "swiss/locales.ts"
+      ]
+    },
+    {
+      "name": "calendar",
+      "group": "swiss",
+      "entry": "swiss/calendar.tsx",
+      "files": [
+        "theme.css",
+        "swiss/calendar.tsx",
+        "ui/button.tsx",
+        "ui/button.css",
+        "interactive/controllable.ts",
+        "swiss/calendar-dates.ts",
+        "swiss/format-swiss-date.ts",
+        "swiss/locales.ts",
+        "swiss/calendar.css",
+        "swiss/UNICODE-LICENSE.txt"
+      ]
+    },
+    {
+      "name": "date-picker",
+      "group": "swiss",
+      "entry": "swiss/date-picker.tsx",
+      "files": [
+        "theme.css",
+        "swiss/date-picker.tsx",
+        "interactive/dialog.tsx",
+        "interactive/modal-surface.tsx",
+        "interactive/controllable.ts",
+        "interactive/floating.ts",
+        "interactive/modal-surface.css",
+        "swiss/calendar.tsx",
+        "ui/button.tsx",
+        "ui/button.css",
+        "swiss/calendar-dates.ts",
+        "swiss/format-swiss-date.ts",
+        "swiss/locales.ts",
+        "swiss/calendar.css",
+        "swiss/swiss-date.tsx",
+        "swiss/date-picker.css",
+        "swiss/UNICODE-LICENSE.txt"
+      ]
+    },
+    {
+      "name": "app-shell",
+      "group": "portal",
+      "entry": "portal/app-shell.tsx",
+      "files": [
+        "theme.css",
+        "portal/app-shell.tsx",
+        "ui/button.tsx",
+        "ui/button.css",
+        "portal/app-shell.css"
+      ]
+    },
+    {
+      "name": "sidebar",
+      "group": "portal",
+      "entry": "portal/sidebar.tsx",
+      "files": [
+        "theme.css",
+        "portal/sidebar.tsx",
+        "portal/sidebar.css"
+      ]
+    },
+    {
+      "name": "navigation-menu",
+      "group": "portal",
+      "entry": "portal/navigation-menu.tsx",
+      "files": [
+        "theme.css",
+        "portal/navigation-menu.tsx",
+        "portal/navigation-menu.css"
+      ]
+    },
+    {
+      "name": "code-block",
+      "group": "portal",
+      "entry": "portal/code-block.tsx",
+      "files": [
+        "theme.css",
+        "portal/code-block.tsx",
+        "ui/button.tsx",
+        "ui/button.css",
+        "portal/code-block.css"
+      ]
+    },
+    {
+      "name": "text-link",
+      "group": "portal",
+      "entry": "portal/text-link.tsx",
+      "files": [
+        "theme.css",
+        "portal/text-link.tsx",
+        "portal/text-link.css"
+      ]
+    },
+    {
+      "name": "prose",
+      "group": "portal",
+      "entry": "portal/prose.tsx",
+      "files": [
+        "theme.css",
+        "portal/prose.tsx",
+        "portal/prose.css"
+      ]
+    }
+  ]
+}

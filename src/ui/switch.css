@@ -1,0 +1,98 @@
+.al-switch {
+  appearance: none;
+  display: inline-grid;
+  align-items: center;
+  box-sizing: border-box;
+  inline-size: var(--al-space-12);
+  block-size: var(--al-space-8);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--al-radius);
+  background: transparent;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.al-switch::before,
+.al-switch::after {
+  content: '';
+  grid-area: 1 / 1;
+  box-sizing: border-box;
+}
+.al-switch::before {
+  inline-size: 100%;
+  block-size: var(--al-space-7);
+  border: 1px solid var(--al-control);
+  border-radius: calc(var(--al-radius) + 2px);
+  background: var(--al-soft);
+}
+.al-switch::after {
+  justify-self: start;
+  inline-size: var(--al-space-5);
+  block-size: var(--al-space-5);
+  margin-inline: var(--al-space-1);
+  border-radius: calc(var(--al-radius) * 0.72);
+  background: var(--al-muted);
+}
+.al-switch:checked::before {
+  background: var(--al-accent);
+  border-color: var(--al-accent);
+}
+.al-switch:checked::after {
+  justify-self: end;
+  background: var(--al-on-accent);
+}
+.al-switch:focus-visible {
+  outline: 2px solid var(--al-focus);
+  outline-offset: 2px;
+}
+.al-switch:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+@media (hover: hover) {
+  .al-switch:hover:enabled::before {
+    border-color: var(--al-ink);
+  }
+}
+@media (pointer: coarse) {
+  .al-switch {
+    block-size: var(--al-space-11);
+  }
+}
+@media (forced-colors: active) {
+  .al-switch {
+    forced-color-adjust: none;
+  }
+  .al-switch::before {
+    background: Canvas;
+    border-color: ButtonText;
+  }
+  .al-switch::after {
+    background: ButtonText;
+  }
+  .al-switch:checked::before {
+    background: Highlight;
+    border-color: Highlight;
+  }
+  .al-switch:checked::after {
+    background: HighlightText;
+  }
+  .al-switch:disabled::before {
+    border-color: GrayText;
+  }
+  .al-switch:focus-visible {
+    outline-color: Highlight;
+  }
+}
+.al-switch-state {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--al-space-2);
+  color: var(--al-ink);
+  font: 600 var(--al-type-label)/var(--al-leading-label) var(--al-font);
+}
+.al-switch:checked ~ .al-switch-off,
+.al-switch:not(:checked) ~ .al-switch-on {
+  display: none;
+}

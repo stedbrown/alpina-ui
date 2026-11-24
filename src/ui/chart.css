@@ -1,0 +1,101 @@
+.al-chart {
+  margin: 0;
+  min-inline-size: 0;
+  color: var(--al-ink);
+  font-family: var(--al-font);
+}
+.al-chart figcaption {
+  margin-block-end: var(--al-space-4);
+  font-size: var(--al-type-heading);
+  line-height: var(--al-leading-heading);
+  font-weight: 650;
+}
+.al-chart-plot {
+  display: grid;
+  grid-template-columns: minmax(4ch, 1fr) minmax(2rem, 3fr) fit-content(16ch);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.al-chart-plot li {
+  display: grid;
+  grid-column: 1/-1;
+  grid-template-columns: subgrid;
+  align-items: center;
+  column-gap: var(--al-space-2);
+  padding-block: var(--al-space-1);
+  border-block-start: 1px solid var(--al-line);
+}
+.al-chart-plot li > :first-child {
+  overflow-wrap: anywhere;
+}
+.al-chart-track {
+  position: relative;
+  display: block;
+  height: 1.25rem;
+}
+.al-chart-track:before {
+  position: absolute;
+  inset-block: -0.25rem;
+  inset-inline-start: var(--al-chart-origin);
+  border-inline-start: 1px solid var(--al-control);
+  content: '';
+}
+.al-chart-track i {
+  position: absolute;
+  inset-block: 0.125rem;
+  box-sizing: border-box;
+  background: var(--al-ink);
+}
+.al-chart-track i[data-negative] {
+  border: 1px solid var(--al-ink);
+  background: repeating-linear-gradient(135deg, transparent 0 2px, var(--al-ink) 2px 3px);
+}
+.al-chart-value,
+.al-chart td {
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
+.al-chart details {
+  margin-block-start: var(--al-space-3);
+  border-block-start: 1px solid var(--al-line);
+}
+.al-chart summary {
+  cursor: pointer;
+  padding-block: var(--al-space-3);
+  font-size: var(--al-type-label);
+  font-weight: 600;
+}
+.al-chart summary:focus-visible {
+  outline: 2px solid var(--al-focus);
+  outline-offset: -2px;
+}
+.al-chart-data {
+  overflow-x: auto;
+}
+.al-chart table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--al-type-label);
+}
+.al-chart :is(th, td) {
+  padding: var(--al-space-2);
+  border-block-end: 1px solid var(--al-line);
+}
+.al-chart th {
+  text-align: start;
+}
+.al-chart thead th:last-child {
+  text-align: end;
+}
+@media (forced-colors: active) {
+  .al-chart-track i {
+    background: CanvasText;
+    forced-color-adjust: none;
+  }
+  .al-chart-track i[data-negative] {
+    border: 1px solid CanvasText;
+    background: Canvas;
+  }
+}

@@ -1,0 +1,21 @@
+.al-message {
+  display: grid;
+  gap: var(--al-space-1);
+  justify-items: start;
+  font-family: var(--al-font);
+  color: var(--al-ink);
+}
+.al-message[data-side='end'] {
+  justify-items: end;
+}
+.al-message header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--al-space-2);
+  font-size: var(--al-type-caption);
+  line-height: var(--al-leading-caption);
+}
+.al-message time {
+  font-variant-numeric: tabular-nums;
+}

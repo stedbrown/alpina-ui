@@ -1,0 +1,31 @@
+.al-field {
+  display: grid;
+  align-content: start;
+  gap: var(--al-space-1);
+  min-inline-size: 0;
+  font-family: var(--al-font);
+}
+.al-field-label {
+  inline-size: fit-content;
+  color: var(--al-ink);
+  font-size: var(--al-type-label);
+  font-weight: 650;
+  line-height: var(--al-leading-label);
+}
+.al-field-hint,
+.al-field-error {
+  font-size: var(--al-type-caption);
+  line-height: var(--al-leading-caption);
+  overflow-wrap: anywhere;
+}
+.al-field-hint {
+  color: var(--al-muted);
+}
+.al-field-error {
+  color: var(--al-ink);
+  font-weight: 600;
+}
+.al-field[data-invalid] .al-field-error {
+  padding-inline-start: var(--al-space-2);
+  border-inline-start: 2px solid var(--al-danger);
+}

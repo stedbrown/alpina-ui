@@ -1,0 +1,6 @@
+.al-label {
+  display: inline-block;
+  color: var(--al-ink);
+  font: 600 var(--al-type-label)/var(--al-leading-label) var(--al-font);
+  overflow-wrap: anywhere;
+}

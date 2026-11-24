@@ -1,0 +1,28 @@
+.al-modal.al-drawer {
+  position: fixed;
+  inset: auto 0 0;
+  margin: 0 auto;
+  inline-size: min(100%, 46rem);
+  max-block-size: 85dvh;
+  padding-block-end: max(var(--al-modal-inset), env(safe-area-inset-bottom));
+  transform: translateY(var(--al-drag, 0));
+  border-block-end: 0;
+}
+.al-drawer-grip {
+  display: grid;
+  place-items: center;
+  block-size: 2.75rem;
+  margin: calc(-1 * var(--al-modal-inset)) calc(-1 * var(--al-modal-inset)) 0;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+.al-drawer-grip:active {
+  cursor: grabbing;
+}
+.al-drawer-grip::after {
+  content: '';
+  inline-size: 2.75rem;
+  block-size: 3px;
+  background: var(--al-ink);
+}

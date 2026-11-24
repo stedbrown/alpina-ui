@@ -1,0 +1,15 @@
+.al-message-scroller [role='log'] {
+  overflow: auto;
+  overscroll-behavior: contain;
+  max-block-size: var(--al-log-height, 16rem);
+  scrollbar-gutter: stable;
+  border-block: 1px solid var(--al-line);
+  padding-block: var(--al-space-2);
+}
+.al-message-scroller [role='log']:focus-visible {
+  outline: 2px solid var(--al-focus);
+  outline-offset: 1px;
+}
+.al-message-scroller > .al-button {
+  margin-block-start: var(--al-space-2);
+}

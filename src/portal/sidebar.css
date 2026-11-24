@@ -1,0 +1,45 @@
+.al-sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-inline-size: 0;
+  font-family: var(--al-font);
+  color: var(--al-ink);
+  background: var(--al-bg);
+}
+.al-sidebar-head,
+.al-sidebar-foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding: 1rem 1.25rem;
+}
+.al-sidebar-head {
+  min-height: 3.5rem;
+  border-bottom: 1px solid var(--al-line);
+}
+.al-sidebar-tools {
+  padding: 1rem 1.25rem 0.75rem;
+}
+.al-sidebar-scroll {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  flex: 1;
+  min-height: 0;
+  padding: 0.25rem 1.25rem 1.25rem;
+}
+.al-sidebar-foot {
+  border-top: 1px solid var(--al-line);
+  font: var(--al-type-caption)/var(--al-leading-caption) var(--al-font);
+}
+@media (max-width: 740px) {
+  .al-app-index .al-sidebar {
+    height: min(70dvh, 34rem);
+  }
+  .al-app-index .al-sidebar-head {
+    display: none;
+  }
+}

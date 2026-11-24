@@ -1,0 +1,57 @@
+.al-accordion {
+  border-block-start: 2px solid var(--al-ink);
+  color: var(--al-ink);
+  font: 400 var(--al-type-body)/var(--al-leading-body) var(--al-font);
+}
+.al-accordion-item {
+  border-block-end: 1px solid var(--al-ink);
+}
+.al-accordion-heading {
+  margin: 0;
+  font: inherit;
+}
+.al-accordion-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--al-space-4);
+  inline-size: 100%;
+  min-block-size: var(--al-space-12);
+  padding: var(--al-space-3) var(--al-space-2);
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: 600 var(--al-type-body)/var(--al-leading-body) var(--al-font);
+  text-align: start;
+  cursor: pointer;
+}
+.al-accordion-button:hover:enabled .al-accordion-mark,
+.al-accordion-button[aria-expanded='true'] .al-accordion-mark {
+  background: var(--al-ink);
+  color: var(--al-surface);
+}
+.al-accordion-button:disabled {
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+.al-accordion-button:focus-visible {
+  outline: 2px solid var(--al-focus);
+  outline-offset: -2px;
+}
+.al-accordion-mark {
+  display: grid;
+  place-items: center;
+  flex: none;
+  inline-size: var(--al-space-6);
+  block-size: var(--al-space-6);
+  font: 500 1.25rem/1 var(--al-font);
+}
+.al-accordion-panel {
+  padding: 0 var(--al-space-10) var(--al-space-5) var(--al-space-2);
+  max-inline-size: 64ch;
+  line-height: var(--al-leading-body);
+  overflow-wrap: anywhere;
+}
+.al-accordion-panel[hidden] {
+  display: none;
+}

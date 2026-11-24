@@ -1,0 +1,34 @@
+.al-carousel {
+  min-inline-size: 0;
+  color: var(--al-ink);
+  font-family: var(--al-font);
+}
+.al-carousel:focus-visible {
+  outline: 2px solid var(--al-focus);
+  outline-offset: 3px;
+}
+.al-carousel-stage {
+  min-inline-size: 0;
+  touch-action: pan-y pinch-zoom;
+}
+.al-carousel-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--al-space-3);
+  padding-block-start: var(--al-space-3);
+  border-block-start: 1px solid var(--al-ink);
+  font-size: var(--al-type-label);
+  line-height: var(--al-leading-label);
+}
+.al-carousel-bar b {
+  margin-inline-end: var(--al-space-2);
+  font-variant-numeric: tabular-nums;
+}
+.al-carousel-bar > div {
+  display: flex;
+  gap: var(--al-space-1);
+}
+.al-carousel:dir(rtl) .al-carousel-bar button span {
+  transform: scaleX(-1);
+}

@@ -1,0 +1,15 @@
+.al-marker {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--al-space-1);
+  color: var(--al-ink);
+  font: 500 var(--al-type-label)/var(--al-leading-label) var(--al-font);
+}
+.al-marker-symbol {
+  inline-size: 1em;
+  text-align: center;
+  flex: none;
+}
+.al-marker[data-variant='attention'] .al-marker-symbol {
+  color: var(--al-accent);
+}

@@ -1,0 +1,43 @@
+.al-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--al-space-4);
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  padding: var(--al-space-6);
+  border: 1px solid var(--al-line);
+  border-radius: var(--al-radius);
+  background: var(--al-surface);
+  color: var(--al-ink);
+  font-family: var(--al-font);
+  font-size: var(--al-type-body);
+  line-height: var(--al-leading-body);
+}
+.al-card-header {
+  display: grid;
+  gap: var(--al-space-1);
+}
+.al-card-title {
+  margin: 0;
+  font: 600 var(--al-type-heading)/var(--al-leading-heading) var(--al-display);
+  letter-spacing: -0.012em;
+  overflow-wrap: anywhere;
+}
+.al-card-description {
+  margin: 0;
+  max-inline-size: 68ch;
+  color: var(--al-muted);
+  font-size: var(--al-type-label);
+  line-height: var(--al-leading-label);
+}
+.al-card-content {
+  min-inline-size: 0;
+}
+.al-card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--al-space-2);
+  padding-block-start: var(--al-space-4);
+  border-block-start: 1px solid var(--al-line);
+}

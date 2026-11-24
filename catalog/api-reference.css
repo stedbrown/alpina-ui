@@ -1,0 +1,50 @@
+.api-reference,
+.api-contract {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--al-space-4);
+  min-inline-size: 0;
+}
+.api-reference details {
+  min-inline-size: 0;
+}
+.api-reference .al-table {
+  table-layout: fixed;
+  overflow-wrap: anywhere;
+}
+.api-reference .al-table thead th:first-child {
+  width: 34%;
+}
+.api-reference .al-table :is(th, td) {
+  padding-inline: clamp(0.4rem, 1.5vw, 1rem);
+  vertical-align: top;
+}
+.api-contract :is(code, small) {
+  font-size: var(--al-type-label);
+}
+.api-contract code {
+  font-family: var(--al-mono);
+}
+.api-contract small {
+  display: block;
+  margin-top: var(--al-space-1);
+  font-size: var(--al-type-caption);
+  font-weight: 400;
+}
+.api-contract td p {
+  margin: var(--al-space-2) 0 0;
+  font-size: var(--al-type-label);
+}
+.api-native {
+  display: grid;
+  gap: var(--al-space-3);
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.api-native dt {
+  font-weight: 600;
+  font-size: var(--al-type-label);
+}
+.api-native dd {
+  margin: 0;
+}

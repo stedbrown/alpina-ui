@@ -1,0 +1,40 @@
+.al-table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  color: var(--al-ink);
+  text-align: start;
+  font: 400 var(--al-type-body)/var(--al-leading-body) var(--al-font);
+  font-variant-numeric: tabular-nums;
+}
+.al-table > caption {
+  padding-block-end: var(--al-space-3);
+  color: var(--al-muted);
+  text-align: start;
+  font-size: var(--al-type-label);
+  line-height: var(--al-leading-label);
+}
+.al-table > :is(thead, tbody, tfoot) > tr > :is(th, td) {
+  padding: var(--al-space-3) var(--al-space-4);
+  border-block-end: 1px solid var(--al-line);
+  text-align: start;
+}
+.al-table > thead > tr > th {
+  border-block-end-color: var(--al-control);
+  background: var(--al-soft);
+  color: var(--al-muted);
+  font-size: var(--al-type-label);
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  line-height: var(--al-leading-label);
+}
+.al-table > tbody > tr > th {
+  font-weight: 600;
+}
+.al-table > tfoot {
+  background: var(--al-soft);
+  font-weight: 650;
+}
+.al-table [data-numeric] {
+  text-align: end;
+  font-variant-numeric: tabular-nums lining-nums;
+}

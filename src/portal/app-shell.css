@@ -1,0 +1,93 @@
+.al-app-shell {
+  display: grid;
+  grid-template-columns: clamp(14rem, 21vw, 19rem) minmax(0, 1fr);
+  position: relative;
+  min-width: 0;
+  min-height: 100dvh;
+  background: var(--al-bg);
+  color: var(--al-ink);
+  font-family: var(--al-font);
+}
+.al-app-shell :where(*, *::before, *::after) {
+  box-sizing: border-box;
+}
+.al-app-index {
+  position: sticky;
+  inset-block-start: 0;
+  align-self: start;
+  height: 100dvh;
+  min-width: 0;
+  border-inline-end: 1px solid var(--al-line);
+  z-index: 2;
+  background: var(--al-bg);
+}
+.al-app-page,
+.al-app-main {
+  min-width: 0;
+}
+.al-app-main {
+  max-width: 100rem;
+  margin-inline: auto;
+  padding: clamp(1rem, 3.3vw, 3.5rem);
+  outline: none;
+}
+.al-app-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 3.5rem;
+  padding: 0.4rem clamp(1rem, 3.3vw, 3.5rem);
+  border-bottom: 1px solid var(--al-line);
+  gap: 1rem;
+}
+.al-app-mobile {
+  display: none;
+}
+.al-skip {
+  position: absolute;
+  z-index: 15;
+  inset: 0.5rem auto auto 0.5rem;
+  padding: 0.7rem;
+  clip-path: inset(50%);
+  pointer-events: none;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  background: var(--al-ink);
+  color: var(--al-bg);
+}
+.al-skip:focus {
+  clip-path: none;
+  inline-size: auto;
+  block-size: auto;
+  overflow: visible;
+  pointer-events: auto;
+}
+@media (max-width: 740px) {
+  .al-app-shell {
+    display: block;
+  }
+  .al-app-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid var(--al-line);
+  }
+  .al-app-index {
+    display: none;
+    position: static;
+    height: auto;
+    max-height: 70dvh;
+    overflow: auto;
+    border: 0;
+    border-bottom: 2px solid var(--al-ink);
+  }
+  .al-app-shell[data-index-open='true'] > .al-app-index {
+    display: block;
+  }
+  .al-app-bar {
+    min-height: 2.8rem;
+  }
+}

@@ -1,0 +1,45 @@
+.al-toast {
+  color: var(--al-ink);
+  font: 500 var(--al-type-label)/var(--al-leading-label) var(--al-font);
+}
+.al-toast[data-visible='true'] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--al-space-3);
+  padding: var(--al-space-2) var(--al-space-2) var(--al-space-2) var(--al-space-4);
+  border: 1px solid var(--al-ink);
+  border-inline-start-width: 4px;
+  background: var(--al-surface);
+}
+.al-toast[data-tone='success'][data-visible='true'] {
+  border-inline-start: 6px double var(--al-ink);
+}
+.al-toast[data-tone='danger'][data-visible='true'] {
+  border-inline-start-color: var(--al-accent);
+}
+.al-toast-message {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+.al-toast-dismiss {
+  display: grid;
+  flex: none;
+  place-items: center;
+  inline-size: var(--al-space-11);
+  block-size: var(--al-space-11);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--al-ink);
+  font: 400 1.5rem/1 var(--al-font);
+  cursor: pointer;
+}
+.al-toast-dismiss:hover {
+  background: var(--al-ink);
+  color: var(--al-surface);
+}
+.al-toast-dismiss:focus-visible {
+  outline: 2px solid var(--al-focus);
+  outline-offset: -2px;
+}

@@ -1,0 +1,15 @@
+.al-native-select.al-select {
+  box-shadow: none;
+}
+.al-native-select.al-select[data-appearance='line'] {
+  border-width: 0 0 1px;
+  border-radius: 0;
+  padding-inline-start: 0;
+  background: transparent;
+}
+.al-native-select.al-select:focus-visible {
+  outline-offset: 2px;
+}
+.al-native-select.al-select[aria-invalid='true'] {
+  border-block-end: 2px dashed var(--al-danger);
+}

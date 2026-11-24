@@ -1,0 +1,13 @@
+.al-calendar { inline-size: min(100%, 22rem); color: var(--al-ink); font-family: var(--al-font); }
+.al-calendar-head { display: flex; align-items: center; border-block: 1px solid var(--al-line); padding-block: var(--al-space-2); }
+.al-calendar-head strong { margin-inline-end: auto; }
+.al-calendar-head .al-button { min-inline-size: 2.25rem; font-size: 1.25rem; }
+.al-calendar table { border-collapse: collapse; table-layout: fixed; width: 100%; text-align: center; }
+.al-calendar th { font-size: var(--al-type-caption); font-weight: 500; color: var(--al-muted); padding-block: var(--al-space-2); }
+.al-calendar td { padding: 1px; }
+.al-calendar td button { appearance: none; box-sizing: border-box; width: 100%; min-height: 2.35rem; border: 1px solid transparent; border-radius: var(--al-radius); background: transparent; color: inherit; font: inherit; font-variant-numeric: tabular-nums; cursor: pointer; }
+.al-calendar td button[aria-current] { text-decoration: underline; text-underline-offset: .22em; }
+.al-calendar td button:enabled:hover { background: var(--al-hover); }
+.al-calendar td[aria-selected=true] button:enabled { background: var(--al-ink); color: var(--al-surface); font-weight: 700; }
+.al-calendar td button:disabled { text-decoration: line-through; cursor: default; }
+.al-calendar td button:focus-visible { outline: 2px solid var(--al-focus); outline-offset: -2px; }

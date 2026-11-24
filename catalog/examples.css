@@ -1,0 +1,391 @@
+/* Stili del campionario. Tutti i selettori sono circoscritti alle anteprime Alpina. */
+.apx {
+  --apx-rule: color-mix(in srgb, var(--al-ink) 21%, transparent);
+  display: grid;
+  min-inline-size: 0;
+  gap: 1.05rem;
+  color: var(--al-ink);
+  font: 1rem/1.4 var(--al-font);
+  text-align: start;
+  overflow-wrap: anywhere;
+}
+.apx *,
+.apx *::before,
+.apx *::after {
+  box-sizing: border-box;
+}
+.apx :is(h3, h4, p, dl, dt, dd, ul) {
+  margin: 0;
+}
+.apx :is(.apx-kicker, .apx-code, .apx-filetype, .apx-money-head, .apx-money-foot) {
+  font-family: var(--al-mono);
+  font-size: 0.68rem;
+  line-height: 1.4;
+  letter-spacing: 0.065em;
+}
+.apx .apx-kicker {
+  color: var(--al-muted);
+  text-transform: uppercase;
+  margin-block-end: 0.25rem;
+}
+.apx .apx-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+}
+.apx .apx-head h3,
+.apx-edition .al-card-title {
+  font: 650 clamp(1.4rem, 3.2vw, 1.95rem)/1.03 var(--al-font);
+  letter-spacing: -0.045em;
+}
+.apx :is(.apx-meta, .apx-list small, .apx-register small, .apx-tear > small) {
+  display: block;
+  color: var(--al-muted);
+  font-size: 0.87rem;
+  line-height: 1.4;
+}
+.apx :is(.apx-list strong, .apx-register strong, .apx-record strong, .apx-transfer strong) {
+  display: block;
+  color: var(--al-ink);
+  font-weight: 600;
+  line-height: 1.25;
+}
+.apx :is(.apx-code, .apx-filetype) {
+  font-variant-numeric: tabular-nums;
+}
+.apx .apx-filetype {
+  padding: 0.3rem 0.45rem;
+  border: 1px solid var(--apx-rule);
+  border-radius: 2px;
+}
+.apx .apx-actions,
+.apx .apx-inline {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.apx .apx-foot,
+.apx .apx-filterbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
+}
+.apx .apx-foot {
+  border-block-start: 1px solid var(--apx-rule);
+  padding-block-start: 0.85rem;
+}
+.apx .apx-filterbar {
+  font-size: 0.88rem;
+  color: var(--al-muted);
+}
+.apx .apx-link {
+  border: 0;
+  padding: 0.1rem;
+  background: transparent;
+  color: var(--al-accent);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+.apx .apx-pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.5rem), 1fr));
+  gap: 0.8rem 1.1rem;
+}
+.apx .apx-pair > * {
+  min-inline-size: 0;
+}
+.apx .apx-empty {
+  padding: 0.8rem;
+  border: 1px dashed var(--apx-rule);
+  color: var(--al-muted);
+}
+.apx .apx-list,
+.apx .apx-register {
+  padding: 0;
+  list-style: none;
+  border-block-start: 1px solid var(--al-ink);
+}
+.apx .apx-list > li,
+.apx .apx-register > li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 0.8rem;
+  padding-block: 0.7rem;
+  border-block-end: 1px solid var(--apx-rule);
+}
+.apx .apx-register > li {
+  display: grid;
+  grid-template-columns: 2.3rem minmax(0, 1fr) auto;
+}
+.apx .apx-region {
+  align-self: center;
+  font: 600 1rem/1.1 var(--al-mono);
+  letter-spacing: -0.05em;
+  color: var(--al-muted);
+}
+.apx .apx-readout {
+  display: grid;
+  gap: 0;
+}
+.apx .apx-readout > div {
+  padding-block: 0.55rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.6rem;
+  border-block-end: 1px solid var(--apx-rule);
+}
+.apx .apx-readout dt {
+  color: var(--al-muted);
+}
+.apx .apx-readout dd {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.apx .apx-quantity,
+.apx .apx-datecard,
+.apx .apx-tear,
+.apx .apx-transfer,
+.apx .apx-record {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-inline-size: 0;
+}
+.apx .apx-record,
+.apx .apx-transfer {
+  border-block: 1px solid var(--apx-rule);
+  padding-block: 1rem;
+}
+.apx .apx-record :is(.apx-meta, small),
+.apx .apx-transfer .apx-meta {
+  margin-block: 0.15rem;
+}
+.apx .apx-transfer + .apx-foot {
+  border: 0;
+  padding-block-start: 0;
+}
+.apx .apx-transfer-mark {
+  display: grid;
+  place-items: center;
+  flex: none;
+  inline-size: 3.3rem;
+  block-size: 3.3rem;
+  background: var(--al-soft);
+  font: 500 2rem/1 var(--al-font);
+  color: var(--al-accent);
+}
+.apx .apx-transfer-mark .al-spinner {
+  width: 1.7rem;
+  height: 1.7rem;
+}
+.apx .apx-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--al-accent);
+  border-radius: var(--al-radius);
+  background: var(--al-accent);
+  color: var(--al-on-accent);
+  font: 600 0.9rem/1.2 var(--al-font);
+  text-decoration: none;
+}
+.apx .apx-download:hover {
+  filter: brightness(0.92);
+}
+.apx .apx-large,
+.apx .apx-greeting {
+  display: block;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+.apx .apx-format,
+.apx .apx-stamp,
+.apx .apx-canton {
+  flex: none;
+  display: grid;
+  place-items: center;
+  font: 650 1.7rem/0.98 var(--al-font);
+  letter-spacing: -0.06em;
+}
+.apx .apx-format {
+  width: 2.85rem;
+  aspect-ratio: 297 / 420;
+  border: 1px solid var(--al-ink);
+  background: var(--al-soft);
+}
+.apx .apx-stamp {
+  padding: 0.6rem;
+  border: 2px solid var(--al-ink);
+}
+.apx .apx-canton {
+  width: 3.4rem;
+  height: 3.4rem;
+  background: var(--al-accent);
+  color: var(--al-on-accent);
+}
+.apx .apx-datecard {
+  padding-block: 0.65rem;
+  border-block: 1px solid var(--apx-rule);
+}
+.apx .apx-datecard output {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.apx .apx-day,
+.apx .apx-quantity output {
+  flex: none;
+  display: block;
+  font: 600 clamp(2.8rem, 5vw, 4.2rem)/1 var(--al-font);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.08em;
+  color: var(--al-accent);
+}
+.apx .apx-quantity {
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-block-start: 0.8rem;
+  border-block-start: 1px solid var(--apx-rule);
+}
+.apx .apx-tear {
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.25rem;
+  border-inline-start: 0.3rem solid var(--al-accent);
+  background: var(--al-soft);
+  padding: 0.9rem 1.1rem;
+}
+.apx .apx-body {
+  line-height: 1.5;
+}
+.apx-edition .al-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+.apx-currency {
+  gap: 0.7rem;
+}
+.apx .apx-money {
+  padding: 1rem clamp(1rem, 3vw, 1.5rem);
+  color: #fff;
+  background: #000;
+  border-inline-start: 0.4rem solid #eb0000;
+}
+.apx .apx-money-head,
+.apx .apx-money-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+}
+.apx .apx-money-head {
+  text-transform: uppercase;
+}
+.apx .apx-money-foot {
+  color: #fff;
+  border-block-start: 1px solid #fff;
+  padding-block-start: 0.55rem;
+}
+.apx-currency .specimen-value {
+  padding-block: 0.5rem 0.8rem;
+  font: 600 var(--al-type-display)/var(--al-leading-display) var(--al-font);
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+}
+.apx .apx-controls {
+  padding: 0.8rem;
+  background: var(--al-surface);
+  border: 1px solid var(--apx-rule);
+}
+.apx .apx-checklist {
+  display: grid;
+  gap: 0.55rem;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+.apx .apx-checklist legend {
+  font-weight: 600;
+  padding: 0 0 0.45rem;
+}
+.apx .apx-counter {
+  justify-self: end;
+  color: var(--al-muted);
+  font: 0.8rem/1.2 var(--al-mono);
+}
+.apx .apx-toggle-row {
+  border-block: 1px solid var(--apx-rule);
+  padding-block: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: center;
+}
+.apx .apx-fileline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.8rem;
+}
+.apx .apx-fileline > span {
+  color: var(--al-muted);
+  font: 0.85rem/1.4 var(--al-mono);
+}
+.apx .apx-track {
+  display: grid;
+  gap: 0.65rem;
+}
+.apx .apx-info {
+  display: inline-grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  padding: 0;
+  background: var(--al-soft);
+  color: var(--al-ink);
+  border: 1px solid var(--apx-rule);
+  border-radius: 50%;
+  font: 600 0.85rem/1 var(--al-font);
+  cursor: help;
+}
+.apx .apx-table td:last-child,
+.apx .apx-table th:last-child {
+  text-align: end;
+}
+.apx .apx-table th,
+.apx .apx-table td {
+  white-space: normal;
+}
+@media (max-width: 420px) {
+  .apx {
+    gap: 0.8rem;
+  }
+  .apx .apx-register > li {
+    grid-template-columns: 1.65rem minmax(0, 1fr) auto;
+    gap: 0.45rem;
+  }
+  .apx .apx-list > li {
+    gap: 0.45rem;
+  }
+  .apx .apx-region {
+    font-size: 0.88rem;
+  }
+  .apx .apx-money-head,
+  .apx .apx-money-foot {
+    font-size: 0.63rem;
+  }
+}

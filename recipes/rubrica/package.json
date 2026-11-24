@@ -1,0 +1,25 @@
+{
+  "name": "rubrica-bilingue",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit && node scripts/build.mjs",
+    "test": "node tests/browser.mjs"
+  },
+  "dependencies": {
+    "alpina-ui": "file:vendor/alpina-ui-0.5.0.tgz",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.1",
+    "@types/react-dom": "19.3.0",
+    "esbuild": "0.25.12",
+    "playwright-core": "1.65.1",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

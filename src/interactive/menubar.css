@@ -1,0 +1,30 @@
+.al-menubar {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: var(--al-space-1);
+  border-block: 1px solid var(--al-ink);
+  padding-block: var(--al-space-1);
+}
+.al-menubar-trigger {
+  background: transparent;
+  color: var(--al-ink);
+  border: 0;
+  min-block-size: var(--al-space-10);
+  padding-inline: var(--al-space-3);
+  font: 600 var(--al-type-label)/var(--al-leading-label) var(--al-font);
+  cursor: pointer;
+}
+.al-menubar-trigger:hover,
+.al-menubar-trigger[aria-expanded='true'] {
+  background: var(--al-ink);
+  color: var(--al-surface);
+}
+.al-menubar-trigger:focus-visible {
+  outline: 2px solid var(--al-focus);
+  outline-offset: -2px;
+}
+.al-menubar-trigger[aria-disabled='true'] {
+  text-decoration: line-through;
+  cursor: not-allowed;
+}

@@ -1,0 +1,88 @@
+{
+  "file": "src/rubrica.css",
+  "lines": 101,
+  "rules": 20,
+  "declarations": 56,
+  "detail": [
+    {
+      "selector": "body",
+      "declarations": 4
+    },
+    {
+      "selector": ".directory",
+      "declarations": 3
+    },
+    {
+      "selector": ".mast",
+      "declarations": 1
+    },
+    {
+      "selector": ".opening",
+      "declarations": 1
+    },
+    {
+      "selector": ".directory .directory-title",
+      "declarations": 6
+    },
+    {
+      "selector": ".section-line",
+      "declarations": 3
+    },
+    {
+      "selector": ".mast-line, .opening, .section-line",
+      "declarations": 5
+    },
+    {
+      "selector": ".mast-line",
+      "declarations": 1
+    },
+    {
+      "selector": ".search-tools",
+      "declarations": 4
+    },
+    {
+      "selector": ".editor-body",
+      "declarations": 3
+    },
+    {
+      "selector": ".index-list",
+      "declarations": 3
+    },
+    {
+      "selector": ".index-list li",
+      "declarations": 2
+    },
+    {
+      "selector": ".index-list li[data-current='true']",
+      "declarations": 1
+    },
+    {
+      "selector": ".serial",
+      "declarations": 1
+    },
+    {
+      "selector": ".record-body",
+      "declarations": 3
+    },
+    {
+      "selector": ".record .record-folio",
+      "declarations": 4
+    },
+    {
+      "selector": ".record h3",
+      "declarations": 3
+    },
+    {
+      "selector": ".record address",
+      "declarations": 2
+    },
+    {
+      "selector": ".record-canton",
+      "declarations": 3
+    },
+    {
+      "selector": ".foot",
+      "declarations": 3
+    }
+  ]
+}

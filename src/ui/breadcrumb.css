@@ -1,0 +1,52 @@
+.al-breadcrumb {
+  color: var(--al-muted);
+  font: 400 var(--al-type-label)/var(--al-leading-label) var(--al-font);
+}
+.al-breadcrumb > ol {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--al-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.al-breadcrumb > ol > li {
+  display: inline-flex;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  align-items: center;
+  gap: var(--al-space-2);
+}
+.al-breadcrumb > ol > li + li::before {
+  content: '';
+  box-sizing: border-box;
+  flex: none;
+  inline-size: 1px;
+  block-size: 0.875em;
+  border-inline-start: 1px solid var(--al-control);
+  transform: skewX(-18deg);
+}
+.al-breadcrumb a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--al-space-6);
+  color: inherit;
+  text-underline-offset: 0.2em;
+}
+.al-breadcrumb a:hover {
+  color: var(--al-ink);
+}
+.al-breadcrumb a:focus-visible {
+  outline: 2px solid var(--al-focus);
+  outline-offset: 2px;
+}
+.al-breadcrumb [aria-current='page'] {
+  color: var(--al-ink);
+  font-weight: 650;
+}
+@media (pointer: coarse) {
+  .al-breadcrumb a {
+    min-block-size: var(--al-space-11);
+  }
+}

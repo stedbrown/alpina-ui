@@ -1,0 +1,103 @@
+.al-canton-anchor {
+  position: relative;
+  min-width: 0;
+}
+.al-canton-anchor > .al-input {
+  padding-inline-end: var(--al-space-12);
+}
+.al-canton-anchor > .al-canton-clear {
+  display: grid;
+  place-items: center;
+  position: absolute;
+  inset-block: var(--al-space-1);
+  inset-inline-end: var(--al-space-1);
+  inline-size: var(--al-space-9);
+  margin: 0;
+  padding: 0;
+  color: var(--al-muted);
+  background: transparent;
+  border: 0;
+  border-radius: var(--al-radius);
+  font: 400 var(--al-type-heading)/var(--al-leading-heading) var(--al-font);
+  cursor: pointer;
+}
+.al-canton-clear:focus-visible {
+  outline: 2px solid var(--al-focus);
+  outline-offset: -2px;
+}
+.al-canton-clear:hover:enabled {
+  background: var(--al-soft);
+  color: var(--al-ink);
+}
+.al-canton-clear:disabled {
+  cursor: not-allowed;
+}
+.al-canton-chevron {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: var(--al-space-4);
+  inline-size: var(--al-space-2);
+  block-size: var(--al-space-2);
+  box-sizing: border-box;
+  border: solid var(--al-muted);
+  border-width: 0 2px 2px 0;
+  transform: translateY(-65%) rotate(45deg);
+  pointer-events: none;
+}
+.al-canton-popup {
+  position: fixed;
+  z-index: 1000;
+  inset: auto;
+  visibility: hidden;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  overflow: clip;
+  max-inline-size: calc(100vw - var(--al-space-4));
+  margin: 0;
+  padding: var(--al-space-1);
+  border: 1px solid var(--al-line);
+  border-radius: var(--al-radius);
+  font: 400 var(--al-type-body)/var(--al-leading-body) var(--al-font);
+  color: var(--al-ink);
+  background: var(--al-surface);
+  box-shadow: var(--al-shadow-raised);
+}
+.al-canton-options {
+  min-block-size: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.al-canton-options li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--al-space-3);
+  padding: var(--al-space-2) var(--al-space-3);
+  border-inline-start: 2px solid transparent;
+  cursor: pointer;
+}
+.al-canton-options li:hover {
+  background: var(--al-soft);
+}
+.al-canton-options li[data-active='true'] {
+  background: var(--al-soft);
+  border-color: var(--al-accent);
+}
+.al-canton-options li[data-committed='true'] {
+  font-weight: 650;
+}
+.al-canton-code {
+  flex: none;
+  color: var(--al-muted);
+  font: 500 var(--al-type-caption)/var(--al-leading-caption) var(--al-mono);
+}
+.al-canton-empty {
+  color: var(--al-muted);
+  padding: var(--al-space-3);
+  font-size: var(--al-type-label);
+  line-height: var(--al-leading-label);
+}

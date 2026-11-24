@@ -1,0 +1,8 @@
+.al-stack {
+  display: flex;
+  min-inline-size: 0;
+  gap: var(--al-stack-gap);
+}
+.al-stack > :where(*) {
+  min-inline-size: 0;
+}

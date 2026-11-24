@@ -1,0 +1,29 @@
+.al-progress {
+  display: block;
+  inline-size: 100%;
+  block-size: var(--al-space-2);
+  accent-color: var(--al-accent);
+  vertical-align: middle;
+}
+.al-progress[value] {
+  appearance: none;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 1px solid var(--al-control);
+  border-radius: var(--al-radius);
+  background: var(--al-soft);
+}
+.al-progress[value]::-webkit-progress-bar {
+  background: var(--al-soft);
+}
+.al-progress[value]::-webkit-progress-value {
+  background: var(--al-accent);
+}
+.al-progress[value]::-moz-progress-bar {
+  background: var(--al-accent);
+}
+@media (forced-colors: active) {
+  .al-progress[value] {
+    appearance: auto;
+  }
+}

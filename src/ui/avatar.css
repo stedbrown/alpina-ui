@@ -1,0 +1,26 @@
+.al-avatar {
+  --al-avatar-size: 2.5rem;
+  display: inline-grid;
+  vertical-align: middle;
+  inline-size: var(--al-avatar-size);
+  block-size: var(--al-avatar-size);
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--al-control);
+  box-sizing: border-box;
+  background: var(--al-soft);
+  color: var(--al-ink);
+  font: 650 var(--al-type-label)/1 var(--al-font);
+}
+.al-avatar[data-size='sm'] {
+  --al-avatar-size: 2rem;
+}
+.al-avatar[data-size='lg'] {
+  --al-avatar-size: 3.5rem;
+  font-size: var(--al-type-heading);
+}
+.al-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

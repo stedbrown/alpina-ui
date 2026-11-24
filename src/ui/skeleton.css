@@ -1,0 +1,40 @@
+.al-skeleton {
+  min-block-size: 1em;
+  border-radius: calc(var(--al-radius) * 0.7);
+  background-color: var(--al-soft);
+  background-image: linear-gradient(
+    105deg,
+    transparent 25%,
+    color-mix(in srgb, var(--al-line) 48%, transparent) 48%,
+    transparent 68%
+  );
+  background-size: 240% 100%;
+  animation: al-skeleton-scan 1.85s ease-in-out infinite;
+}
+@keyframes al-skeleton-scan {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -80% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .al-skeleton {
+    animation: none;
+    background-image: none;
+  }
+}
+@media (forced-colors: active) {
+  .al-skeleton {
+    border: 1px dashed GrayText;
+  }
+}
+.al-skeleton[data-variant='text'] {
+  min-block-size: var(--al-space-4);
+  margin-block: var(--al-space-1);
+}
+.al-skeleton[data-variant='avatar'] {
+  inline-size: var(--al-space-10);
+  block-size: var(--al-space-10);
+}

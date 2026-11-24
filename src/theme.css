@@ -1,0 +1,85 @@
+/* Import once. Theme values can be overridden on any containing element. */
+:root,
+[data-al-theme='dark'],
+[data-al-theme='light'] {
+  color-scheme: light;
+  --al-bg: #fff;
+  --al-surface: #fff;
+  --al-ink: #000;
+  --al-muted: var(--al-ink);
+  --al-line: color-mix(in srgb, var(--al-ink) 26%, var(--al-bg));
+  --al-control: var(--al-ink);
+  --al-soft: color-mix(in srgb, var(--al-ink) 4%, var(--al-bg));
+  --al-hover: color-mix(in srgb, var(--al-ink) 9%, var(--al-bg));
+  --al-accent: #eb0000;
+  --al-on-accent: #fff;
+  --al-accent-hover: #000;
+  --al-danger: var(--al-accent);
+  --al-success: var(--al-ink);
+  --al-warning: var(--al-ink);
+  --al-focus: var(--al-ink);
+  --al-radius: 0px;
+  --al-shadow: none;
+  --al-shadow-raised: 0 4px 0 -1px var(--al-ink);
+  --al-unit: 0.25rem;
+  --al-space-0: 0;
+  --al-space-1: var(--al-unit);
+  --al-space-2: calc(var(--al-unit) * 2);
+  --al-space-3: calc(var(--al-unit) * 3);
+  --al-space-4: calc(var(--al-unit) * 4);
+  --al-space-5: calc(var(--al-unit) * 5);
+  --al-space-6: calc(var(--al-unit) * 6);
+  --al-space-7: calc(var(--al-unit) * 7);
+  --al-space-8: calc(var(--al-unit) * 8);
+  --al-space-9: calc(var(--al-unit) * 9);
+  --al-space-10: calc(var(--al-unit) * 10);
+  --al-space-11: calc(var(--al-unit) * 11);
+  --al-space-12: calc(var(--al-unit) * 12);
+  --al-space-16: calc(var(--al-unit) * 16);
+  --al-type-caption: var(--al-space-3);
+  --al-leading-caption: var(--al-space-4);
+  --al-type-label: calc(var(--al-unit) * 3.5);
+  --al-leading-label: var(--al-space-5);
+  --al-type-body: var(--al-space-4);
+  --al-leading-body: var(--al-space-6);
+  --al-type-heading: var(--al-space-6);
+  --al-leading-heading: var(--al-space-7);
+  --al-type-display: var(--al-space-12);
+  --al-leading-display: var(--al-space-12);
+  --al-type-display-lg: var(--al-space-16);
+  --al-leading-display-lg: var(--al-space-16);
+  --al-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --al-display: var(--al-font);
+  --al-mono: ui-monospace, 'SFMono-Regular', Consolas, monospace;
+}
+[data-al-theme='dark'] {
+  color-scheme: dark;
+  --al-bg: #000;
+  --al-surface: #000;
+  --al-ink: #fff;
+  --al-on-accent: #fff;
+  --al-accent-hover: #000;
+  --al-focus: #fff;
+}
+@media (forced-colors: active) {
+  :root,
+  [data-al-theme] {
+    --al-bg: Canvas;
+    --al-surface: Canvas;
+    --al-ink: CanvasText;
+    --al-muted: CanvasText;
+    --al-line: ButtonBorder;
+    --al-control: ButtonText;
+    --al-soft: Canvas;
+    --al-hover: Canvas;
+    --al-accent: Highlight;
+    --al-on-accent: HighlightText;
+    --al-accent-hover: Highlight;
+    --al-danger: CanvasText;
+    --al-warning: CanvasText;
+    --al-success: CanvasText;
+    --al-focus: Highlight;
+    --al-shadow: none;
+    --al-shadow-raised: none;
+  }
+}

@@ -1,0 +1,20 @@
+.al-toggle-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 1px;
+  max-width: 100%;
+  border-block-end: 1px solid var(--al-line);
+}
+.al-toggle-group .al-button {
+  border-radius: 0;
+  border: 0;
+  border-block-end: 2px solid transparent;
+}
+.al-toggle-group .al-button[aria-pressed='true'] {
+  border-block-end-color: var(--al-accent);
+  font-weight: 700;
+  color: var(--al-ink);
+}
+.al-toggle-group .al-button:focus-visible {
+  outline-offset: -2px;
+}

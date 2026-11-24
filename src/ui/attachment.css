@@ -1,0 +1,30 @@
+.al-attachment {
+  display: inline-flex;
+  max-inline-size: 100%;
+  padding-block: 0.5rem;
+  min-block-size: 2.75rem;
+  box-sizing: border-box;
+  align-items: center;
+  gap: var(--al-space-2);
+  color: var(--al-ink);
+  text-decoration: none;
+  font: 500 var(--al-type-label)/var(--al-leading-label) var(--al-font);
+}
+.al-attachment svg {
+  inline-size: 1rem;
+  flex: none;
+}
+.al-attachment-name {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  overflow-wrap: anywhere;
+}
+.al-attachment-detail {
+  overflow-wrap: anywhere;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+.al-attachment:focus-visible {
+  outline: 2px solid var(--al-focus);
+  outline-offset: 2px;
+}

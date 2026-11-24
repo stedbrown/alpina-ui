@@ -1,0 +1,30 @@
+.al-toggle {
+  min-block-size: 2.75rem;
+  padding: var(--al-space-2) var(--al-space-3);
+  border: 1px solid var(--al-control);
+  border-radius: var(--al-radius);
+  color: var(--al-ink);
+  background: var(--al-bg);
+  font: 600 var(--al-type-label)/var(--al-leading-label) var(--al-font);
+  cursor: pointer;
+}
+.al-toggle[aria-pressed='true'] {
+  background: var(--al-ink);
+  color: var(--al-bg);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+.al-toggle:focus-visible {
+  outline: 2px solid var(--al-focus);
+  outline-offset: 2px;
+}
+.al-toggle:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+@media (forced-colors: active) {
+  .al-toggle[aria-pressed='true'] {
+    border-color: Highlight;
+    border-block-end-width: 3px;
+  }
+}

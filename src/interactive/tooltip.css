@@ -1,0 +1,24 @@
+.al-tooltip-anchor {
+  display: inline-flex;
+  max-inline-size: 100%;
+}
+.al-tooltip-bubble {
+  position: fixed;
+  inset: auto;
+  z-index: 12;
+  visibility: hidden;
+  box-sizing: border-box;
+  margin: 0;
+  max-inline-size: min(32ch, calc(100vw - 1rem));
+  overflow: auto;
+  padding: var(--al-space-2) var(--al-space-3);
+  border: 1px solid var(--al-ink);
+  border-radius: 0;
+  background: var(--al-ink);
+  color: var(--al-surface);
+  font: 500 var(--al-type-label)/var(--al-leading-label) var(--al-font);
+  overflow-wrap: anywhere;
+}
+.al-tooltip-bubble[hidden] {
+  display: none;
+}

@@ -1,0 +1,467 @@
+{
+  "accordion": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "3fcc616cd1bae50b80af"
+  },
+  "ahv-input": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "fc4d3621e0e9dd1f96d2"
+  },
+  "alert": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "26e800e337357764219d"
+  },
+  "alert-dialog": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "25455884f423469a231c"
+  },
+  "app-shell": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "de8f1cb770466592ff47"
+  },
+  "aspect-ratio": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "fe3b10fa73df63e2880b"
+  },
+  "attachment": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "722d6cda193175f5236f"
+  },
+  "avatar": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "df4e04cf25d1e101d89e"
+  },
+  "badge": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "aee10a15a227c73c1cf2"
+  },
+  "bar-chart": {
+    "stage": "Beta",
+    "changed": "2026-11-25",
+    "source": "197abd2dedf386082eeb"
+  },
+  "breadcrumb": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "c5c7109645e91d50845d"
+  },
+  "bubble": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "323606a0d25b218e087b"
+  },
+  "button": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "0c0b8add60afe1529587"
+  },
+  "button-group": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "8ea92b0e62a7124625c0"
+  },
+  "calendar": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "de9af1eef573efac17ae"
+  },
+  "canton-combobox": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "f627a92c77b5b95fc09e"
+  },
+  "canton-select": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "0ad75e9268f56fa7dd33"
+  },
+  "card": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "90fe9d025c5930c5e776"
+  },
+  "carousel": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "1598f95be47cdfae1db3"
+  },
+  "chart": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "1eb380f451d7a40df01e"
+  },
+  "chart-table": {
+    "stage": "Beta",
+    "changed": "2026-11-25",
+    "source": "ad0819480f868775e081"
+  },
+  "checkbox": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "7a212fdda3fe1769c0ab"
+  },
+  "code-block": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "f8ebb93f6da88eca4816"
+  },
+  "collapsible": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "e07036ac69e3bf1366b3"
+  },
+  "combobox": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "d1e2f86f60890b102eae"
+  },
+  "command": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "f673444003066ec96689"
+  },
+  "context-menu": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "82ef00e0734973aa17ce"
+  },
+  "currency-chf": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "0cdc9744f0894afe64ac"
+  },
+  "data-table": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "f1d6f83b831e8de4cf4e"
+  },
+  "date-picker": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "11aa452d10c9c1648f09"
+  },
+  "description-list": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "3102e8e96c2a3cb57c5c"
+  },
+  "dialog": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "284bd49ab3819b3efa00"
+  },
+  "direction": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "4e90099d3060e955162e"
+  },
+  "drawer": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "8356dcea53649e4cf70c"
+  },
+  "dropdown-menu": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "dc9d1ac56f46fc5b0945"
+  },
+  "empty": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "e4846b46887206bd5fe2"
+  },
+  "field": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "6314c0f3e241b927df8f"
+  },
+  "figure": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "9fc8d40ac5a910be0665"
+  },
+  "grid": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "08b20971fa6a182e2ea3"
+  },
+  "grid-overlay": {
+    "stage": "Beta",
+    "changed": "2026-11-25",
+    "source": "bcd320782202f5fd7ce2"
+  },
+  "hover-card": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "3ecfcd0d514610bd06b0"
+  },
+  "iban-input": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "1736946557dab2aebaab"
+  },
+  "icon": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "39e0bdc705c36094fd84"
+  },
+  "input": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "632471952d0fceca95d5"
+  },
+  "input-group": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "92676aa65f81522a0e9e"
+  },
+  "input-otp": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "b8aab94e6c11648f2574"
+  },
+  "item": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "04d85abe32e1ac3dbba0"
+  },
+  "kbd": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "28f087059ba15c5a5bd1"
+  },
+  "label": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "d6cc6046dc73b720b51f"
+  },
+  "line-chart": {
+    "stage": "Beta",
+    "changed": "2026-11-25",
+    "source": "0766e6c71ce1e447dcdb"
+  },
+  "locale-select": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "60e4589cf3149d05cc8c"
+  },
+  "marker": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "75c626861f0e41fdce0b"
+  },
+  "menubar": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "ca1df5f7c261dc17cf8e"
+  },
+  "message": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "48dbed74cfc6b8ae0ff3"
+  },
+  "message-scroller": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "9b5aec4267a38822aaf0"
+  },
+  "multilingual-field": {
+    "stage": "Beta",
+    "changed": "2026-11-25",
+    "source": "fab86fb817cf52b16c38"
+  },
+  "native-select": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "9c596bbbf7a8b0c8300f"
+  },
+  "navigation-menu": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "654d686fe3783dd20128"
+  },
+  "pagination": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "d29e4dffed28827c2f5b"
+  },
+  "phone-input": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "83ecc4cf77d45d3a333b"
+  },
+  "popover": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "44411763cfb41aee3a68"
+  },
+  "progress": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "b9a05a1805366c56332d"
+  },
+  "prose": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "380a4f3c9878d21ce64c"
+  },
+  "questionnaire": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "a304813946da0d2e6595"
+  },
+  "radio-group": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "6496c203c0cb4a6bcd46"
+  },
+  "resizable": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "c2b8e9264460cfeb0615"
+  },
+  "scroll-area": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "244612ef3bea1a7a60f8"
+  },
+  "select": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "decfc0c914cb24afc673"
+  },
+  "separator": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "021f7e741609edc22f96"
+  },
+  "sheet": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "befd587855ec3b363b5b"
+  },
+  "sidebar": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "37e0253827d04f8de5ea"
+  },
+  "skeleton": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "8048f3805e76334ca199"
+  },
+  "slider": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "00c7a6484fb68dca2b5a"
+  },
+  "sparkline": {
+    "stage": "Beta",
+    "changed": "2026-11-25",
+    "source": "fbfb1c1899b8105b0b00"
+  },
+  "spinner": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "2c9ccf0f00c92e62288d"
+  },
+  "stack": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "77b542dce4297d3b9992"
+  },
+  "steps": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "21eeaaac622bae19404e"
+  },
+  "swiss-address-form": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "cc00f059e3f6c41142b2"
+  },
+  "swiss-date": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "3b61333261ce8f67efaf"
+  },
+  "swiss-postal-code-input": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "9708ea6b48f9688c16e4"
+  },
+  "swiss-qr-bill": {
+    "stage": "Beta",
+    "changed": "2026-11-25",
+    "source": "b73cf7ad1cf0e7dff2cd"
+  },
+  "switch": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "d8779abf28296d43830a"
+  },
+  "table": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "8ab3b71d7362d94797ee"
+  },
+  "tabs": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "8e32867b153a0e22eab9"
+  },
+  "text-link": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "20aa9e2556c2e0ef9b09"
+  },
+  "textarea": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "bc5b06481537c8c016af"
+  },
+  "toast": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "20d9b80071c89544d653"
+  },
+  "toggle": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "8f56c09be81b12923c8b"
+  },
+  "toggle-group": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "0ccfc97f940b76f25336"
+  },
+  "tooltip": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "56fa28c90b6f75aa9851"
+  },
+  "trace": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "07a33c6e7b9f31c77c17"
+  },
+  "typography": {
+    "stage": "Stable",
+    "changed": "2026-11-25",
+    "source": "47c81609c3fc8e6d785b"
+  },
+  "uid-input": {
+    "stage": "Beta",
+    "changed": "2026-11-25",
+    "source": "762a4abf8466025f4eb3"
+  }
+}

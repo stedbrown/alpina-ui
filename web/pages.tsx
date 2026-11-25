@@ -54,6 +54,7 @@ export function Footer({ version }: { version?: string } = {}) {
           <TextLink href="/" variant="quiet"><Typography as="span" variant="label">Alpina UI{version && ' · v' + version}</Typography></TextLink>
           <Stack direction="row" gap={4}>
             <TextLink href={repository + '/blob/main/LICENSE'}>MIT license</TextLink>
+            <TextLink href="/status/">Component status</TextLink>
             <TextLink href={repository}><GitHubLabel /></TextLink>
           </Stack>
         </Stack>

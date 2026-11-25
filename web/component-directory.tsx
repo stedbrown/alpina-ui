@@ -12,6 +12,7 @@ export function ComponentDirectory() {
           <Stack gap={3}>
             <Typography as="h1" variant="title">Component index</Typography>
             <Typography>{inventory.length} React components. Open one to try it, inspect its API or copy the source.</Typography>
+            <TextLink href="/status/">Check component status</TextLink>
           </Stack>
         </GridItem>
         <GridItem medium={3} large={4} start={{ large: 9 }}>

@@ -1,0 +1,467 @@
+{
+  "accordion": {
+    "js": 1152,
+    "lazy": 0,
+    "css": 704
+  },
+  "ahv-input": {
+    "js": 1024,
+    "lazy": 0,
+    "css": 576
+  },
+  "alert": {
+    "js": 384,
+    "lazy": 0,
+    "css": 576
+  },
+  "alert-dialog": {
+    "js": 2304,
+    "lazy": 0,
+    "css": 1728
+  },
+  "app-shell": {
+    "js": 1792,
+    "lazy": 0,
+    "css": 1472
+  },
+  "aspect-ratio": {
+    "js": 320,
+    "lazy": 0,
+    "css": 256
+  },
+  "attachment": {
+    "js": 448,
+    "lazy": 0,
+    "css": 384
+  },
+  "avatar": {
+    "js": 576,
+    "lazy": 0,
+    "css": 320
+  },
+  "badge": {
+    "js": 1216,
+    "lazy": 0,
+    "css": 512
+  },
+  "bar-chart": {
+    "js": 1152,
+    "lazy": 0,
+    "css": 960
+  },
+  "breadcrumb": {
+    "js": 1152,
+    "lazy": 0,
+    "css": 512
+  },
+  "bubble": {
+    "js": 256,
+    "lazy": 0,
+    "css": 320
+  },
+  "button": {
+    "js": 1152,
+    "lazy": 0,
+    "css": 896
+  },
+  "button-group": {
+    "js": 256,
+    "lazy": 0,
+    "css": 192
+  },
+  "calendar": {
+    "js": 7360,
+    "lazy": 0,
+    "css": 1472
+  },
+  "canton-combobox": {
+    "js": 5120,
+    "lazy": 0,
+    "css": 1920
+  },
+  "canton-select": {
+    "js": 1344,
+    "lazy": 0,
+    "css": 640
+  },
+  "card": {
+    "js": 384,
+    "lazy": 0,
+    "css": 576
+  },
+  "carousel": {
+    "js": 2176,
+    "lazy": 0,
+    "css": 1088
+  },
+  "chart": {
+    "js": 832,
+    "lazy": 0,
+    "css": 896
+  },
+  "chart-table": {
+    "js": 1152,
+    "lazy": 0,
+    "css": 960
+  },
+  "checkbox": {
+    "js": 384,
+    "lazy": 0,
+    "css": 704
+  },
+  "code-block": {
+    "js": 1728,
+    "lazy": 0,
+    "css": 1152
+  },
+  "collapsible": {
+    "js": 320,
+    "lazy": 0,
+    "css": 384
+  },
+  "combobox": {
+    "js": 3968,
+    "lazy": 0,
+    "css": 1792
+  },
+  "command": {
+    "js": 2368,
+    "lazy": 0,
+    "css": 1664
+  },
+  "context-menu": {
+    "js": 3712,
+    "lazy": 0,
+    "css": 1216
+  },
+  "currency-chf": {
+    "js": 1152,
+    "lazy": 0,
+    "css": 192
+  },
+  "data-table": {
+    "js": 1280,
+    "lazy": 0,
+    "css": 1024
+  },
+  "date-picker": {
+    "js": 8960,
+    "lazy": 0,
+    "css": 2368
+  },
+  "description-list": {
+    "js": 320,
+    "lazy": 0,
+    "css": 448
+  },
+  "dialog": {
+    "js": 1280,
+    "lazy": 0,
+    "css": 1216
+  },
+  "direction": {
+    "js": 192,
+    "lazy": 0,
+    "css": 128
+  },
+  "drawer": {
+    "js": 1600,
+    "lazy": 0,
+    "css": 1344
+  },
+  "dropdown-menu": {
+    "js": 3840,
+    "lazy": 0,
+    "css": 1152
+  },
+  "empty": {
+    "js": 320,
+    "lazy": 0,
+    "css": 384
+  },
+  "field": {
+    "js": 512,
+    "lazy": 0,
+    "css": 384
+  },
+  "figure": {
+    "js": 320,
+    "lazy": 0,
+    "css": 256
+  },
+  "grid": {
+    "js": 2176,
+    "lazy": 0,
+    "css": 1408
+  },
+  "grid-overlay": {
+    "js": 2304,
+    "lazy": 0,
+    "css": 1536
+  },
+  "hover-card": {
+    "js": 1856,
+    "lazy": 0,
+    "css": 640
+  },
+  "iban-input": {
+    "js": 1088,
+    "lazy": 0,
+    "css": 576
+  },
+  "icon": {
+    "js": 1408,
+    "lazy": 0,
+    "css": 128
+  },
+  "input": {
+    "js": 256,
+    "lazy": 0,
+    "css": 576
+  },
+  "input-group": {
+    "js": 320,
+    "lazy": 0,
+    "css": 512
+  },
+  "input-otp": {
+    "js": 896,
+    "lazy": 0,
+    "css": 704
+  },
+  "item": {
+    "js": 384,
+    "lazy": 0,
+    "css": 512
+  },
+  "kbd": {
+    "js": 192,
+    "lazy": 0,
+    "css": 320
+  },
+  "label": {
+    "js": 192,
+    "lazy": 0,
+    "css": 192
+  },
+  "line-chart": {
+    "js": 1536,
+    "lazy": 0,
+    "css": 960
+  },
+  "locale-select": {
+    "js": 704,
+    "lazy": 0,
+    "css": 640
+  },
+  "marker": {
+    "js": 320,
+    "lazy": 0,
+    "css": 256
+  },
+  "menubar": {
+    "js": 3840,
+    "lazy": 0,
+    "css": 1280
+  },
+  "message": {
+    "js": 448,
+    "lazy": 0,
+    "css": 512
+  },
+  "message-scroller": {
+    "js": 1600,
+    "lazy": 0,
+    "css": 1024
+  },
+  "multilingual-field": {
+    "js": 3968,
+    "lazy": 0,
+    "css": 2112
+  },
+  "native-select": {
+    "js": 384,
+    "lazy": 0,
+    "css": 640
+  },
+  "navigation-menu": {
+    "js": 1472,
+    "lazy": 0,
+    "css": 1088
+  },
+  "pagination": {
+    "js": 384,
+    "lazy": 0,
+    "css": 576
+  },
+  "phone-input": {
+    "js": 1024,
+    "lazy": 0,
+    "css": 576
+  },
+  "popover": {
+    "js": 2624,
+    "lazy": 0,
+    "css": 1152
+  },
+  "progress": {
+    "js": 384,
+    "lazy": 0,
+    "css": 448
+  },
+  "prose": {
+    "js": 192,
+    "lazy": 0,
+    "css": 832
+  },
+  "questionnaire": {
+    "js": 2368,
+    "lazy": 0,
+    "css": 1600
+  },
+  "radio-group": {
+    "js": 512,
+    "lazy": 0,
+    "css": 704
+  },
+  "resizable": {
+    "js": 1344,
+    "lazy": 0,
+    "css": 704
+  },
+  "scroll-area": {
+    "js": 320,
+    "lazy": 0,
+    "css": 192
+  },
+  "select": {
+    "js": 320,
+    "lazy": 0,
+    "css": 576
+  },
+  "separator": {
+    "js": 320,
+    "lazy": 0,
+    "css": 320
+  },
+  "sheet": {
+    "js": 1280,
+    "lazy": 0,
+    "css": 1216
+  },
+  "sidebar": {
+    "js": 320,
+    "lazy": 0,
+    "css": 512
+  },
+  "skeleton": {
+    "js": 256,
+    "lazy": 0,
+    "css": 256
+  },
+  "slider": {
+    "js": 256,
+    "lazy": 0,
+    "css": 256
+  },
+  "sparkline": {
+    "js": 1536,
+    "lazy": 0,
+    "css": 960
+  },
+  "spinner": {
+    "js": 320,
+    "lazy": 0,
+    "css": 768
+  },
+  "stack": {
+    "js": 448,
+    "lazy": 0,
+    "css": 192
+  },
+  "steps": {
+    "js": 320,
+    "lazy": 0,
+    "css": 448
+  },
+  "swiss-address-form": {
+    "js": 7872,
+    "lazy": 34240,
+    "css": 2880
+  },
+  "swiss-date": {
+    "js": 1344,
+    "lazy": 0,
+    "css": 192
+  },
+  "swiss-postal-code-input": {
+    "js": 704,
+    "lazy": 0,
+    "css": 576
+  },
+  "swiss-qr-bill": {
+    "js": 7168,
+    "lazy": 0,
+    "css": 1536
+  },
+  "switch": {
+    "js": 320,
+    "lazy": 0,
+    "css": 768
+  },
+  "table": {
+    "js": 448,
+    "lazy": 0,
+    "css": 576
+  },
+  "tabs": {
+    "js": 1216,
+    "lazy": 0,
+    "css": 704
+  },
+  "text-link": {
+    "js": 1088,
+    "lazy": 0,
+    "css": 576
+  },
+  "textarea": {
+    "js": 320,
+    "lazy": 0,
+    "css": 640
+  },
+  "toast": {
+    "js": 960,
+    "lazy": 0,
+    "css": 512
+  },
+  "toggle": {
+    "js": 384,
+    "lazy": 0,
+    "css": 512
+  },
+  "toggle-group": {
+    "js": 2368,
+    "lazy": 0,
+    "css": 1152
+  },
+  "tooltip": {
+    "js": 1728,
+    "lazy": 0,
+    "css": 384
+  },
+  "trace": {
+    "js": 448,
+    "lazy": 0,
+    "css": 512
+  },
+  "typography": {
+    "js": 256,
+    "lazy": 0,
+    "css": 768
+  },
+  "uid-input": {
+    "js": 1088,
+    "lazy": 0,
+    "css": 576
+  }
+}

@@ -33,6 +33,8 @@ jobs:
           package-manager-cache: false
       - run: npm ci
       - run: npm run build
+      - name: Check component status, bundle budgets and tree-shaking
+        run: npm run test:package-quality
       - run: npm run typecheck
       - run: npm test
       - run: npm run catalog -- --release-package
@@ -43,6 +45,10 @@ jobs:
         run: npm run test:integrations
         env:
           NEXT_TELEMETRY_DISABLED: '1'
+      - name: Verify every root and subpath export in a production React Server Component
+        run: node integrations/rsc-contract.mjs
+      - name: Check emitted Vite assets and browser requests for a root Button import
+        run: node integrations/button-bundle.mjs
       - name: Attach visual differences
         if: failure()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2

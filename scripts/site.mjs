@@ -78,7 +78,7 @@ async function loadPages() {
 }
 
 export async function buildWebsite({ guides, guideFiles, apiReference, registry, script, css, notices }) {
-  const { Landing, Examples, Icons, Themes, Principles, Blocks, BlockPage, blocks, ComponentDirectory, ReferencePage, ExampleIntroduction, inventory, projects } = await loadPages()
+  const { Landing, Examples, Icons, Themes, Principles, Blocks, BlockPage, blocks, ComponentDirectory, ComponentStatus, ReferencePage, ExampleIntroduction, inventory, projects } = await loadPages()
   const paths = []
   const appJS = '/assets/catalog-' + sha(script) + '.js'
   const appCSS = '/assets/catalog-' + sha(css) + '.css'
@@ -168,6 +168,10 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
   }
   await page('/examples/', 'Example projects', 'Try workshop registration, invoice review, a bilingual studio address book and a client directory built with Alpina UI.', render(Examples))
   await page('/docs/components/', 'Component index', 'Find a React component by name, task or category and open its preview, source code and API.', render(ComponentDirectory), { filter: true })
+  const status = JSON.parse(await readFile('scripts/component-status.json', 'utf8'))
+  const records = inventory.map(([slug, name]) => ({ ...status[slug], slug, name }))
+    .sort((a, b) => a.name.localeCompare(b.name, 'en'))
+  await page('/status/', 'Component status', 'Check the API maturity and latest source change for every Alpina component.', render(ComponentStatus, { records }))
   const agentsMarkdown = await readFile('docs/agents.md', 'utf8')
   const agentsHTML = await renderGuide(agentsMarkdown)
   await page('/agents/', 'Agent tools', 'Install the Alpina UI skill or connect a read-only local MCP server to search components, inspect source, and read guides.', render(ReferencePage, { agents: true, html: agentsHTML }))

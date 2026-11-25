@@ -1,4 +1,6 @@
 .alpina/
+.rsc-check-*/
+.button-check-*/
 .next/
 *.tsbuildinfo
 next-env.d.ts

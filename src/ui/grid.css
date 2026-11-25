@@ -44,6 +44,12 @@
 }
 .al-grid-guides[hidden] { display: none; }
 .al-grid-item {
+  /* Placement belongs to this item, including when it contains a second grid. */
+  --al-start-s: auto;
+  --al-start-m: auto;
+  --al-start-l: auto;
+  --al-row: auto;
+  --al-row-span: 1;
   grid-column: var(--al-start-s, auto) / span var(--al-span-s);
   min-width: 0;
 }

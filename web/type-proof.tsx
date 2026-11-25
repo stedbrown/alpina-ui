@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useNumericSetting } from './proof-setting.js'
 import { Label, Separator, Slider, Stack, Typography } from 'alpina-ui'
 
 export function TypeProof({ interactive = true }: { interactive?: boolean }) {
-  const [size, setSize] = useState(144)
-  const [spacing, setSpacing] = useState(-50)
+  const [size, setSize] = useNumericSetting('proof-scale', 144)
+  const [spacing, setSpacing] = useNumericSetting('proof-spacing', -50)
   const tracking = spacing / 1000
   const trackingLabel = tracking.toFixed(3).replace('-', '−') + ' em'
   return <Stack gap={4} surface="ink">

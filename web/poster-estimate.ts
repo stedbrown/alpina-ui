@@ -1,8 +1,8 @@
 export const initialCopies = 100
+export const pressSetup = 24
+export const unitPrice = (secondInk: boolean) => secondInk ? 1.60 : 1.20
 
 /** One setup charge per edition, plus paper and ink for each poster. */
 export function posterEstimate(copies: number, secondInk: boolean) {
-  const setupCents = 2400
-  const printCents = secondInk ? 160 : 120
-  return (setupCents + copies * printCents) / 100
+  return (pressSetup * 100 + copies * Math.round(unitPrice(secondInk) * 100)) / 100
 }

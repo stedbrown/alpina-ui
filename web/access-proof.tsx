@@ -1,9 +1,11 @@
 import { useRef, useState, type FormEvent } from 'react'
 import { Badge, Button, Field, GridSpecimen, Input, Label, Separator, Slider, Stack, Switch, Typography } from 'alpina-ui'
 
+import { useNumericSetting, useSwitchSetting } from './proof-setting.js'
+
 export function AccessProof({ interactive = true }: { interactive?: boolean }) {
-  const [zoom, setZoom] = useState(100)
-  const [system, setSystem] = useState(false)
+  const [zoom, setZoom] = useNumericSetting('proof-zoom', 100)
+  const [system, setSystem] = useSwitchSetting('proof-contrast', false)
   const [held, setHeld] = useState(false)
   const [missing, setMissing] = useState(false)
   const name = useRef<HTMLInputElement>(null)

@@ -76,6 +76,20 @@ try {
   })
   assert.deepEqual(cell.slice(0, 2), ['2', 'span 2'])
   assert.ok(cell.slice(2).every(value => value.startsWith('subgrid')))
+  const nested = render({}, h(GridItem, {
+    start: { small: 2, medium: 2, large: 3 }, small: 3, medium: 7, large: 10, row: 2, rowSpan: 2,
+  }, h(Grid, null, ...['First', 'Second'].map(label =>
+    h(GridItem, { key: label, small: 2, medium: 4, large: 6 }, label)))))
+  await page.setContent('<style>' + css + '</style><main>' + nested + '</main>')
+  for (const width of [320, 800, 1440]) {
+    await page.setViewportSize({ width, height: 900 })
+    const cells = page.locator('.al-grid-item .al-grid-item')
+    const first = await cells.first().boundingBox()
+    const second = await cells.last().boundingBox()
+    compare(first.y, second.y)
+    assert.ok(second.x >= first.x + first.width, 'Nested grid items occupy adjacent columns at ' + width)
+    assert.equal(await cells.first().evaluate(el => getComputedStyle(el).gridRowStart), 'auto')
+  }
   console.log('Verified named fields, both asymmetrical splits, equal gutters, shared tracks and container reflow.')
 } finally {
   await browser.close()

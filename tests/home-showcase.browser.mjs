@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import { existsSync } from 'node:fs'
+import { readFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { chromium } from 'playwright-core'
 
@@ -59,6 +60,44 @@ async function verifyInitialGeometry(viewport) {
   }
 }
 
+// Visitors can reach native controls before the deferred React chunk arrives.
+async function verifyEarlyEdits() {
+  const html = await readFile(new URL('index.html', site), 'utf8')
+  const entry = html.match(/src="(\/assets\/showcase-[^"]+)"/)[1]
+  const script = await readFile(new URL('.' + entry, site), 'utf8')
+  const deferred = script.match(/import\("\.\/(sample-[^"]+)"/)[1]
+  const page = await browser.newPage()
+  let release
+  const gate = new Promise(resolve => { release = resolve })
+  await page.route(origin + '/**', async route => {
+    const { pathname } = new URL(route.request().url())
+    if (pathname.endsWith('/' + deferred)) await gate
+    return route.fulfill({ path: fileURLToPath(new URL(pathname === '/' ? 'index.html' : pathname.slice(1), site)) })
+  })
+  try {
+    await page.goto(origin)
+    await page.getByRole('slider', { name: 'Type size' }).press('End')
+    await page.getByRole('slider', { name: 'Preview zoom' }).press('End')
+    await page.getByRole('switch', { name: 'Simulate forced colors' }).press('Space')
+    await page.getByRole('switch', { name: 'Add a second ink' }).press('Space')
+    await page.getByRole('slider', { name: 'Edition size' }).press('End')
+    await page.getByRole('button', { name: 'Add to queue' }).click()
+    release()
+    await page.waitForFunction(() => getComputedStyle(document.getElementById('type-proof')).fontSize === '192px')
+    await page.waitForFunction(() => document.querySelector('#access-proof .al-grid-proof').dataset.palette === 'system')
+    assert.equal(await page.locator('output[for="proof-zoom"]').textContent(), '400%')
+    const sheet = page.getByRole('button', { name: 'Poster edition 04' })
+    await sheet.click()
+    const ticket = page.getByRole('dialog', { name: 'Poster edition 04' })
+    assert.match(await ticket.innerText(), /250 copies/)
+    assert.match(await ticket.innerText(), /Black and red/)
+    assert.match(await ticket.innerText(), /CHF\s*424\.00/)
+  } finally {
+    release()
+    await page.close()
+  }
+}
+
 async function checkSecondWeek(chart) {
   await chart.getByText('View hours as a table', { exact: true }).press('Enter')
   const table = chart.getByRole('table', { name: 'Hours on press' })
@@ -66,6 +105,7 @@ async function checkSecondWeek(chart) {
 }
 
 try {
+  await verifyEarlyEdits()
   for (const viewport of [{ width: 390, height: 844 }, { width: 1350, height: 940 }]) await verifyInitialGeometry(viewport)
   const page = await homepage(true)
   const cover = page.locator('main [data-entrance="sequence"]')
@@ -142,7 +182,7 @@ try {
   assert.ok(await proof.evaluate(node => node.scrollWidth <= node.clientWidth + 1), 'The 400% proof also fits a phone')
   await zoom.press('Home')
   await page.setViewportSize({ width: 1280, height: 900 })
-  await page.getByRole('button', {name:'View job sheet'}).click()
+  await page.getByRole('button', {name:'Studio programme', exact: true}).click()
   await page.getByRole('dialog', {name:'Studio programme'}).waitFor()
   await page.keyboard.press('Escape')
   const queue = page.getByRole('table', {name:'Print queue'})
@@ -158,11 +198,23 @@ try {
   const ink = estimate.getByRole('switch', { name: 'Add a second ink' })
   await slider.press('ArrowRight')
   assert.equal(await slider.getAttribute('aria-valuetext'), '125 copies')
-  assert.match(await estimate.getByRole('status').innerText(), /CHF\s*174\.00/)
+  assert.match(await estimate.locator('[data-estimate-total]').innerText(), /CHF\s*174\.00/)
   await ink.press('Space')
   assert.ok(await ink.isChecked())
-  assert.match(await estimate.getByRole('status').innerText(), /CHF\s*224\.00/)
+  assert.match(await estimate.locator('[data-estimate-total]').innerText(), /CHF\s*224\.00/)
 
+  await estimate.getByRole('button', { name: 'Add to queue' }).press('Enter')
+  const notice = page.getByRole('status').filter({ hasText: 'Poster edition 04 added to the queue.' })
+  await notice.waitFor()
+  await page.getByRole('button', { name: 'Dismiss print notification' }).press('Enter')
+  await notice.waitFor({ state: 'hidden' })
+  const created = queue.getByRole('row').filter({ hasText: 'Poster edition 04' })
+  assert.match(await created.innerText(), /125/)
+  await created.getByRole('button', { name: 'Poster edition 04' }).click()
+  const sheet = page.getByRole('dialog', { name: 'Poster edition 04' })
+  assert.match(await sheet.innerText(), /Black and red/)
+  assert.match(await sheet.innerText(), /CHF\s*224\.00/)
+  await sheet.getByRole('button', { name: 'Close job sheet' }).press('Enter')
   const log = page.getByRole('region', { name: 'Press log' })
   await log.getByRole('combobox', { name: 'Reporting week' }).press('Space')
   await page.keyboard.press('End')
@@ -190,6 +242,12 @@ try {
 
   for (const width of [320, 768, 1440, 2560]) {
     await page.setViewportSize({width, height:900})
+    if (width >= 1440) {
+      const quote = await estimate.boundingBox()
+      const chart = await log.boundingBox()
+      assert.equal(quote.y, chart.y, 'Print estimate and press log share a desktop row')
+      assert.ok(chart.x >= quote.x + quote.width, 'The press log starts in the next grid field')
+    }
     for (const colorScheme of ['light', 'dark']) {
       await page.emulateMedia({colorScheme, reducedMotion:'reduce'})
       const layout = await page.evaluate(() => {
@@ -222,7 +280,7 @@ try {
   const staticPage = await homepage(false)
   const staticQueue = staticPage.getByRole('table', {name:'Print queue'})
   assert.equal(await staticQueue.getByRole('button').count(), 0)
-  await staticPage.getByText('View job sheet', {exact:true}).filter({ visible: true }).press('Enter')
+  await staticPage.getByText('Studio programme', {exact:true}).filter({ visible: true }).press('Enter')
   assert.ok(await staticPage.getByText('150 copies', {exact:true}).filter({visible:true}).isVisible())
   const staticEstimate = staticPage.getByRole('region', { name: 'Poster estimate' })
   assert.ok(await staticEstimate.getByText('100 copies · Black ink').isVisible())

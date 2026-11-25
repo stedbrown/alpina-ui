@@ -144,7 +144,7 @@ async function loadPages() {
 }
 
 export async function buildWebsite({ outputDir, guides, guideFiles, guideManifest, apiReference, componentGuidance, registry, script, css, notices, renderComponent }) {
-  const { Landing, TypeProof, AccessProof, PressQueue, InstallCommand, StartHere, Examples, DesignerKit, StaticApi, Icons, Themes, Principles, Blocks, BlockPage, blockDemos, blocks, ComponentDirectory, ComponentStatus, ReferencePage, GuideLanguages, downloadLabel, ExampleIntroduction, inventory, projects } = await loadPages()
+  const { Landing, TypeProof, AccessProof, PrintDesk, InstallCommand, StartHere, Examples, DesignerKit, StaticApi, Icons, Themes, Principles, Blocks, BlockPage, blockDemos, blocks, ComponentDirectory, ComponentStatus, ReferencePage, GuideLanguages, downloadLabel, ExampleIntroduction, inventory, projects } = await loadPages()
   async function output(name, data) {
     const target = path.join(outputDir, name)
     await mkdir(path.dirname(target), { recursive: true })
@@ -259,7 +259,7 @@ export async function buildWebsite({ outputDir, guides, guideFiles, guideManifes
   const command = 'npm install ' + siteUrl + '/alpina-ui-' + registry.version + '.tgz'
   const typeProof = renderToString(createElement(TypeProof), { identifierPrefix: 'landing-type-' })
   const access = renderToString(createElement(AccessProof), { identifierPrefix: 'landing-access-' })
-  const queue = renderToString(createElement(PressQueue), { identifierPrefix: 'landing-queue-' })
+  const queue = renderToString(createElement(PrintDesk), { identifierPrefix: 'landing-queue-' })
   const installation = renderToString(createElement(InstallCommand, { command }), { identifierPrefix: 'landing-install-' })
   await page('/', siteMetadata.name, siteMetadata.description,
     render(Landing, { version: registry.version, count: inventory.length, queue, command, installation, access, typeProof }), { redirect: legacy, showcase: true })

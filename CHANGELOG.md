@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.13.0 · 25 November 2026
+
+- InvoiceDocument shows two decimal places for every CHF unit and net price. Fractional quantities can carry a unit, such as 2.5 h or 1.25 m². Sub-cent prices retain their arithmetic precision.
+- Use Rumantsch Grischun in Swiss forms, validations, payment references and correspondence. The portal demonstrates all four national languages and the number formatter preserves exact decimal strings on systems without Romansh ICU data.
+- Share nine localized Standard Schema v1 validators between browser and server. The Next.js example checks an IBAN again at submission. [Validation guide](https://alpina-ui.vercel.app/docs/guides/validation/)
+- Reconcile grouped CHF ledgers with decimal alignment, accounting negatives, subtotals, double-ruled totals, Swiss-date sorting and repeated A4 headings. [DataTable](https://alpina-ui.vercel.app/docs/components/data-table/)
+- Parse Swiss QR payment data with field and line errors. Scan on-device, read a local image or multipage PDF, and confirm the payment summary. [QrBillScanner](https://alpina-ui.vercel.app/docs/components/qr-bill-scanner/)
+- Every component reference documents its keys. Browser regressions cover forced colors and higher contrast in light and dark, 200% text size and WCAG text spacing. A reflowable payment transcription accompanies the print slip.
+
 ## 0.12.0 · 25 November 2026
 
 - Restore the red Alpina masthead, visible GitHub label and “Swiss UI for React.” headline. Financial values, dates and identifiers keep their line. Browser checks inspect text geometry at eight widths and compare the homepage and public routes against screenshot references.

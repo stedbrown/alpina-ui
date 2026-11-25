@@ -4,10 +4,10 @@ Start with one screen that already has a keyboard or form-submission test. A but
 
 ## Install alongside shadcn/ui
 
-Install Alpina UI 0.12.0 from the portal's versioned package archive in your React project. To upgrade later, install the archive for the version you want to use. If your team edits component source, the CLI can copy selected TypeScript, CSS and dependencies into `components/alpina`. Your existing shadcn/ui source can stay in `components/ui`. [Installation guide](https://alpina-ui.vercel.app/docs/guides/start/)
+Install Alpina UI 0.13.0 from the portal's versioned package archive in your React project. To upgrade later, install the archive for the version you want to use. If your team edits component source, the CLI can copy selected TypeScript, CSS and dependencies into `components/alpina`. Your existing shadcn/ui source can stay in `components/ui`. [Installation guide](https://alpina-ui.vercel.app/docs/guides/start/)
 
 ```sh
-npm install https://alpina-ui.vercel.app/alpina-ui-0.12.0.tgz
+npm install https://alpina-ui.vercel.app/alpina-ui-0.13.0.tgz
 # Optional editable source for the first screen
 npx --no-install alpina add button field input
 ```
@@ -79,7 +79,7 @@ These 66 families follow the project's recorded shadcn/ui component index. Each 
 | Combobox | [Combobox](https://alpina-ui.vercel.app/docs/components/combobox/) | Pass searchable `options`, a `label` and an `empty` message. Store the selected option’s string value with `onValueChange`. |
 | Command | [Command](https://alpina-ui.vercel.app/docs/components/command/) | Describe commands in `items`. Translate the dialog title, search label, empty state and close action. |
 | Context Menu | [ContextMenu](https://alpina-ui.vercel.app/docs/components/context-menu/) | Wrap the invocation region in `ContextMenu`. Configure each action in `items` and handle the chosen value in `onValueSelect`. |
-| Data Table | [DataTable](https://alpina-ui.vercel.app/docs/components/data-table/) | Supply `rows`, typed `columns`, `rowKey`, `caption` and `empty`. Give formatted cells a raw-value `compare` function. Keep app filtering and paging in the parent. |
+| Data Table | [DataTable](https://alpina-ui.vercel.app/docs/components/data-table/) | Supply `rows`, typed `columns`, `rowKey`, `caption` and `empty`. Use `format: 'chf'`, `'decimal'` or `'swiss-date'` for built-in sorting. Custom cells accept a `compare` function. Keep app filtering and paging in the parent. |
 | Date Picker | [DatePicker](https://alpina-ui.vercel.app/docs/components/date-picker/) | Use the calendar’s single ISO-date value. Pass `name` for form submission and `clearable` when a date is optional. |
 | Dialog | [Dialog](https://alpina-ui.vercel.app/docs/components/dialog/) | Move the title, trigger, close label and footer onto the dialog. Pass the panel body as children and retain `open` / `onOpenChange` for controlled state. |
 | Direction | [Direction](https://alpina-ui.vercel.app/docs/components/direction/) | Wrap the text region with `dir="rtl"`, `"ltr"` or `"auto"`. Logical layout then follows the chosen writing direction. |

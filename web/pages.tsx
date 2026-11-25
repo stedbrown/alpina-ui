@@ -92,7 +92,7 @@ export function Landing({ version, count }: { version: string; count: number }) 
             <Typography variant="lead" measure="narrow">React components for Swiss addresses, payments and multilingual forms.</Typography>
             <Stack direction="row" gap={4}>
               <TextLink variant="action" href="/docs/components/">Browse components ({count})  <Icon name="arrow-right" size={18}/></TextLink>
-              <TextLink href="/docs/">Installation</TextLink>
+              <TextLink href="/start-here/">Start here</TextLink>
             </Stack>
           </Stack>
         </GridItem>

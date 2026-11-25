@@ -1,4 +1,5 @@
 declare module 'alpina:content' {
+  export const componentGuidance: Record<string, import('../web/component-guidance.js').Guidance>
   export const guides: Record<string, string>
   export const usageNotes: Record<string, string>
   export const sources: Record<string, string>

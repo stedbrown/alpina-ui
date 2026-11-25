@@ -13,6 +13,7 @@ import { appearanceHead, buildWebsite, renderGuide, siteGrid } from './site.mjs'
 
 process.chdir(fileURLToPath(new URL('../', import.meta.url)))
 const guides = {}
+const componentGuidance = JSON.parse(await readFile('docs/component-guidance.json', 'utf8'))
 const guideFiles = {
   coverage: 'docs/coverage.md',
   migration: 'docs/migration.md',
@@ -172,6 +173,7 @@ const catalogOptions = offline => ({
           contents:
             'export const guides=' +
             JSON.stringify(guides) +
+            ';export const componentGuidance=' + JSON.stringify(offline ? componentGuidance : {}) +
             ';export const usageNotes=' +
             JSON.stringify(Object.fromEntries(registry.items.map(({ name, usage }) => [name, usage]))) +
             ';export const sources=' +
@@ -243,7 +245,7 @@ await mkdir('site/assets', { recursive: true })
 for (const file of hosted.outputFiles) {
   if (file !== hostedEntry && file.path.endsWith('.js')) await writeFile(file.path, file.contents)
 }
-await buildWebsite({ guides, guideFiles, apiReference, registry, script: hostedEntry.text, css, notices, renderComponent })
+await buildWebsite({ guides, guideFiles, apiReference, componentGuidance, registry, script: hostedEntry.text, css, notices, renderComponent })
 console.log(
   'Offline catalog: site/catalog.html (' + (Buffer.byteLength(html) / 1024).toFixed(0) + ' KiB)',
 )

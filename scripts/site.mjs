@@ -103,7 +103,7 @@ async function loadPages() {
   return import('data:text/javascript;base64,' + Buffer.from(result.outputFiles[0].contents).toString('base64'))
 }
 
-export async function buildWebsite({ guides, guideFiles, apiReference, registry, script, css, notices, renderComponent }) {
+export async function buildWebsite({ guides, guideFiles, apiReference, componentGuidance, registry, script, css, notices, renderComponent }) {
   const { Landing, Examples, DesignerKit, Icons, Themes, Principles, Blocks, BlockPage, blockDemos, blocks, ComponentDirectory, ComponentStatus, ReferencePage, ExampleIntroduction, inventory, projects } = await loadPages()
   const paths = []
   const appJS = '/assets/catalog-' + sha(script) + '.js'
@@ -172,6 +172,10 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
       '<link rel="stylesheet" href="' + fontsURL + '">',
       appearanceHead,
     ]
+    if (options.guidance) {
+      const json = JSON.stringify(options.guidance).replace(/</g, '\\u003c')
+      tags.push('<script type="application/json" id="component-guidance-data">' + json + '</script>')
+    }
     if (options.redirect) tags.push('<script>' + options.redirect + '</script>')
     if (options.showcase) tags.push(
       '<script>document.documentElement.dataset.showcaseJs=""</script>',
@@ -255,9 +259,13 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
       const props = part.props.map((p) => '<li><code>' + escape(p.name) + '</code> — ' + (p.required ? 'required' : 'optional') + ', <code>' + escape(p.type) + '</code></li>').join('')
       return '<h2>' + escape(part.name) + '</h2>' + (props ? '<ul>' + props + '</ul>' : '<p>Accepts the documented native element attributes.</p>')
     }).join('')
+    const entry = componentGuidance[slug]
+    if (!entry) throw new Error('Missing editorial guidance for ' + slug)
+    const guidance = { slug, entry }
+    await output('reference/components/' + slug + '.json', JSON.stringify(entry))
     const route = '/docs/components/' + slug
     const body = renderComponent(route)
-    await page(route + '/', name + ' — ' + title, description, body, { app: true, prerender: true, noScript: '<noscript><section aria-label="Component API">' + contracts + '</section></noscript>' })
+    await page(route + '/', name + ' — ' + title, description, body, { app: true, prerender: true, guidance, noScript: '<noscript><section aria-label="Component API">' + contracts + '</section></noscript>' })
   }
   const index = [
     '# Alpina UI', '', '> React components for Swiss typography and multilingual interfaces. The current release is ' + registry.version + '.', '',

@@ -37,6 +37,7 @@ import { IconExample } from './icon-example.js'
 import * as composition from './composition-examples.js'
 import { SwissAddressFormExample } from './address-example.js'
 import { ApiReference } from './api-reference.js'
+import { ReferenceGuidance } from './reference-guidance.js'
 import { Preview } from './preview.js'
 import { InstallGuide } from './install-guide.js'
 import { DirectoryLive } from './directory-live.js'
@@ -222,6 +223,7 @@ function Workbench({
           <Typography measure="reading">{usageNotes[id]}</Typography>
         </Stack>
       )}
+      {mode === 'Preview' && <ReferenceGuidance key={id} slug={id} />}
       {mode === 'API' && <ApiReference entries={apiReference[id]} />}
       {mode === 'Code' && (
         <>

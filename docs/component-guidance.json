@@ -1,0 +1,1522 @@
+{
+  "accordion": {
+    "use": "Let readers scan a set of independent questions and expand those relevant to them.",
+    "avoid": "Show mandatory instructions and short, sequential procedures directly on the page.",
+    "access": "Use meaningful trigger names, preserve heading order and let readers toggle each section by keyboard.",
+    "content": "Use a specific question or topic per heading. A single question should introduce one answer in each language.",
+    "example": {
+      "good": "Which documents do I need?",
+      "poor": "Important information 2"
+    },
+    "copy": {
+      "de-CH": "Welche Unterlagen brauche ich?",
+      "fr-CH": "Quels documents faut-il fournir ?",
+      "it-CH": "Quali documenti servono?",
+      "rm-CH": "Tge documents dovri?"
+    }
+  },
+  "ahv-input": {
+    "use": "Collect a Swiss social insurance number in a workflow that requires the personal identifier and its check digit.",
+    "avoid": "Use UidInput when identifying a Swiss enterprise and a separate reference for a customer account.",
+    "access": "Provide the expected grouped format in a persistent hint and support pasting all digits. Use synthetic numbers in shared examples.",
+    "content": "Use the local name of the social insurance number. Give the 756 prefix and grouping once in the hint.",
+    "example": {
+      "good": "Social insurance number · 756.xxxx.xxxx.xx",
+      "poor": "Enter identity code here"
+    },
+    "copy": {
+      "de-CH": "AHV-Nummer",
+      "fr-CH": "Numéro AVS",
+      "it-CH": "Numero AVS",
+      "rm-CH": "Numer AVS"
+    }
+  },
+  "alert": {
+    "use": "Keep an explanation visible when an interruption changes what someone can do on the page.",
+    "avoid": "For a routine save with no follow-up, a brief status is sufficient. Repeated alerts interrupt reading.",
+    "access": "Keep the heading in document order. Reserve live alert announcements for information that arrives after the page has loaded.",
+    "content": "State the event and a feasible next step in one or two short sentences. Avoid blame and internal error codes as the headline.",
+    "example": {
+      "good": "Booking unavailable. Choose another date.",
+      "poor": "ERROR 409!"
+    },
+    "copy": {
+      "de-CH": "Termin nicht verfügbar",
+      "fr-CH": "Rendez-vous indisponible",
+      "it-CH": "Appuntamento non disponibile",
+      "rm-CH": "Termin betg disponibel"
+    }
+  },
+  "alert-dialog": {
+    "use": "Ask for an explicit decision before deleting a record or discarding work that cannot be recovered.",
+    "avoid": "Routine saves and reversible display changes can proceed without interrupting the person.",
+    "access": "State the consequence in the description. Keep the safe action reachable and return focus sensibly after cancellation or deletion.",
+    "content": "Name the object in the question and use an unambiguous verb for confirmation. Keep the consequence to one plain sentence.",
+    "example": {
+      "good": "Delete draft invoice 104? / Delete draft",
+      "poor": "Are you sure? / Yes"
+    },
+    "copy": {
+      "de-CH": "Entwurf löschen",
+      "fr-CH": "Supprimer le brouillon",
+      "it-CH": "Elimina bozza",
+      "rm-CH": "Stizzar il sboz"
+    }
+  },
+  "app-shell": {
+    "use": "Give a workspace a consistent header, navigation area and main reading area across several routes.",
+    "avoid": "Use a single document layout for a printed letter or an isolated embeddable widget.",
+    "access": "Provide one main landmark, a skip target and a descriptive page heading. Keep the same navigation order between routes.",
+    "content": "Use the product name once in the header. Reserve the main heading for the task or record currently open.",
+    "example": {
+      "good": "Permit office · Applications",
+      "poor": "Welcome to our digital platform"
+    },
+    "copy": {
+      "de-CH": "Bewilligungsstelle",
+      "fr-CH": "Service des autorisations",
+      "it-CH": "Ufficio autorizzazioni",
+      "rm-CH": "Uffizi da permissiuns"
+    }
+  },
+  "aspect-ratio": {
+    "use": "Reserve the final shape of a photo, film or diagram as its container changes width.",
+    "avoid": "A fixed aspect ratio clips variable-length copy and forms. Let text determine their height.",
+    "access": "Give the contained image an appropriate alternative and preserve the edges of maps or diagrams used for instructions.",
+    "content": "Describe the useful subject in a brief alternative. Leave the decorative frame unlabelled and put extended context in a caption.",
+    "example": {
+      "good": "Entrance on the south side of the station",
+      "poor": "Image 03, landscape"
+    },
+    "copy": {
+      "de-CH": "Südeingang",
+      "fr-CH": "Entrée sud",
+      "it-CH": "Ingresso sud",
+      "rm-CH": "Entrada sid"
+    }
+  },
+  "attachment": {
+    "use": "Link to a real file that someone can open or download, such as a meeting agenda.",
+    "avoid": "A form that collects files needs an upload input and feedback about accepted formats.",
+    "access": "Use the document name in the link. Add the format and size where they can be read alongside it.",
+    "content": "Name the subject and edition first. Put file details after the title and retain official names in translated versions.",
+    "example": {
+      "good": "Council agenda, March 2027 · PDF, 240 KB",
+      "poor": "Download file"
+    },
+    "copy": {
+      "de-CH": "Traktandenliste",
+      "fr-CH": "Ordre du jour",
+      "it-CH": "Ordine del giorno",
+      "rm-CH": "Glista da tractandas"
+    }
+  },
+  "avatar": {
+    "use": "Identify a sender or account visually when a portrait or initials aid recognition.",
+    "avoid": "A photo by itself cannot distinguish homonyms or identify someone in a consequential approval step.",
+    "access": "Provide the person's name. Mark the avatar decorative if the adjacent name already identifies the same person.",
+    "content": "Use the name the person supplies, including accents. Translate the role or team next to it and allow long names to wrap.",
+    "example": {
+      "good": "Anna Caduff · Secretariat",
+      "poor": "AC"
+    },
+    "copy": {
+      "de-CH": "Sekretariat",
+      "fr-CH": "Secrétariat",
+      "it-CH": "Segreteria",
+      "rm-CH": "Secretariat"
+    }
+  },
+  "badge": {
+    "use": "Put a brief state next to the record it describes, such as an invoice awaiting payment.",
+    "avoid": "Use an Alert when the reader needs an explanation or a next action.",
+    "access": "Spell out the state. Check that the same text still distinguishes the records in forced colours.",
+    "content": "Use a short state such as a single adjective. Keep the same grammatical form across the badges in a list.",
+    "example": {
+      "good": "Paid",
+      "poor": "Green"
+    },
+    "copy": {
+      "de-CH": "Bezahlt",
+      "fr-CH": "Payée",
+      "it-CH": "Pagata",
+      "rm-CH": "Pajà"
+    }
+  },
+  "bar-chart": {
+    "use": "Compare the magnitude or signed change of independent categories against a shared zero baseline.",
+    "avoid": "Use LineChart for change through time and a table when readers need to look up many exact values.",
+    "access": "Give the figure a subject and unit. Supply category labels and an equivalent data table that preserves negative values.",
+    "content": "Name the measure and period in the title. Keep place names intact and put the unit next to the values or in the column heading.",
+    "example": {
+      "good": "Quarterly change in loans / Bern −32",
+      "poor": "Quarterly results / Bern 32"
+    },
+    "copy": {
+      "de-CH": "Veränderung der Ausleihen",
+      "fr-CH": "Variation des prêts",
+      "it-CH": "Variazione dei prestiti",
+      "rm-CH": "Midada dals emprests"
+    }
+  },
+  "breadcrumb": {
+    "use": "Show where a page sits within a hierarchy that visitors can follow back up.",
+    "avoid": "Use a Back action for history-dependent navigation and Steps for progress through a sequential form.",
+    "access": "Give the trail a navigation name. Identify the current location and keep dividers out of link names.",
+    "content": "Use the short destination name at each level. Keep parent and child distinct even when their translated names share a prefix.",
+    "example": {
+      "good": "Services / Permits / Building permit",
+      "poor": "Home / More / Details"
+    },
+    "copy": {
+      "de-CH": "Baubewilligung",
+      "fr-CH": "Permis de construire",
+      "it-CH": "Licenza edilizia",
+      "rm-CH": "Permiss da construcziun"
+    }
+  },
+  "bubble": {
+    "use": "Separate individual utterances within a conversation whose speakers are already identified.",
+    "avoid": "A system-wide notice, policy or detailed instruction deserves a persistent section outside the conversation.",
+    "access": "Identify the author in text. Start and end alignment alone cannot communicate who wrote a message.",
+    "content": "Keep one thought per message and preserve the original language when quoting someone. Short sentences survive narrow screens.",
+    "example": {
+      "good": "Your document is ready for collection.",
+      "poor": "Done."
+    },
+    "copy": {
+      "de-CH": "Das Dokument ist bereit.",
+      "fr-CH": "Le document est prêt.",
+      "it-CH": "Il documento è pronto.",
+      "rm-CH": "Il document è pront."
+    }
+  },
+  "button": {
+    "use": "Submit, save or change something in the current task. A payment instruction benefits from naming the object of the action.",
+    "avoid": "Use a TextLink for a destination visitors should be able to open in a new tab.",
+    "access": "Give icon-only buttons a name. Keep the action name visible while work is pending and expose the outcome near the form.",
+    "content": "Use a verb and its object. Aim for one short phrase in each language and let the button grow for the longest translation.",
+    "example": {
+      "good": "Save address",
+      "poor": "OK"
+    },
+    "copy": {
+      "de-CH": "Adresse speichern",
+      "fr-CH": "Enregistrer l’adresse",
+      "it-CH": "Salva indirizzo",
+      "rm-CH": "Memorisar l’adressa"
+    }
+  },
+  "button-group": {
+    "use": "Present closely related actions on the same object, such as printing or downloading its receipt.",
+    "avoid": "Separate a destructive action from a row of routine actions when a mistaken activation would be costly.",
+    "access": "Name the group and keep its focus order consistent when buttons wrap to a second row.",
+    "content": "Use matching short verbs with objects where needed. Make each action understandable when announced on its own.",
+    "example": {
+      "good": "Print receipt / Download receipt",
+      "poor": "Action 1 / Action 2"
+    },
+    "copy": {
+      "de-CH": "Beleg drucken",
+      "fr-CH": "Imprimer le reçu",
+      "it-CH": "Stampa ricevuta",
+      "rm-CH": "Stampar il quittament"
+    }
+  },
+  "calendar": {
+    "use": "Let people inspect a whole month or compare candidate appointment dates with neighbouring days and holidays.",
+    "avoid": "Use a text date field for a known date far from the current month, such as a birth date.",
+    "access": "Name the calendar and preserve the focus indicator while moving between dates by keyboard. Give holidays a textual name in addition to the visual mark.",
+    "content": "Use the local month name and the full holiday name where space allows. Explain in one sentence what a marked date means for this service.",
+    "example": {
+      "good": "Choose an appointment date",
+      "poor": "Red means unavailable, probably"
+    },
+    "copy": {
+      "de-CH": "Termin wählen",
+      "fr-CH": "Choisir une date de rendez-vous",
+      "it-CH": "Scegliere la data dell’appuntamento",
+      "rm-CH": "Tscherner la data dal termin"
+    }
+  },
+  "canton-combobox": {
+    "use": "Find a canton from its name or abbreviation without stepping through all the cantons.",
+    "avoid": "Use CantonSelect when device-native selection or a simple short form matters more than search.",
+    "access": "Provide a visible label, test selecting a suggestion with the keyboard and distinguish an empty search from a confirmed choice.",
+    "content": "Keep the query hint to one brief instruction. Use a real abbreviation as an example only if both names and codes work.",
+    "example": {
+      "good": "Search by name or abbreviation",
+      "poor": "Enter internal territory identifier"
+    },
+    "copy": {
+      "de-CH": "Name oder Kürzel suchen",
+      "fr-CH": "Rechercher un nom ou un sigle",
+      "it-CH": "Cercare per nome o sigla",
+      "rm-CH": "Tschertgar tenor num u abreviaziun"
+    }
+  },
+  "canton-select": {
+    "use": "Ask for a Swiss canton from a fixed list when a native picker fits the form.",
+    "avoid": "Use CantonCombobox for frequent lookups by abbreviation or partial name.",
+    "access": "Associate the select with a visible Canton label. Keep an explicit empty option when a canton has yet to be chosen.",
+    "content": "Use the local name for the field and allow enough width for complete canton names. Keep abbreviations uppercase when displayed.",
+    "example": {
+      "good": "Canton of residence",
+      "poor": "Region code number"
+    },
+    "copy": {
+      "de-CH": "Wohnkanton",
+      "fr-CH": "Canton de domicile",
+      "it-CH": "Cantone di domicilio",
+      "rm-CH": "Chantun da domicil"
+    }
+  },
+  "card": {
+    "use": "Group the identity, details and available actions for one booking or case.",
+    "avoid": "Several unrelated tasks in one card need their own headings or a list with separate links.",
+    "access": "Give the card a meaningful heading. Keep links and buttons as individual focus targets with visible text.",
+    "content": "Lead with the record name. Limit the description to one sentence and allow names in each language to wrap.",
+    "example": {
+      "good": "Workshop registration / 12 places available",
+      "poor": "Details / Information about this item"
+    },
+    "copy": {
+      "de-CH": "Kursanmeldung",
+      "fr-CH": "Inscription au cours",
+      "it-CH": "Iscrizione al corso",
+      "rm-CH": "Annunzia al curs"
+    }
+  },
+  "carousel": {
+    "use": "Let readers move between related visual examples that make sense one at a time.",
+    "avoid": "A list or grid works better when readers need to compare every item before choosing.",
+    "access": "Give previous and next controls names and make the current position available in text. Keep navigation usable without a swipe.",
+    "content": "Use short directional labels and identify the subject of the slide. Keep the translated caption separate from the position indicator.",
+    "example": {
+      "good": "Next floor plan / Plan 2 of 4",
+      "poor": "›"
+    },
+    "copy": {
+      "de-CH": "Nächster Plan",
+      "fr-CH": "Plan suivant",
+      "it-CH": "Pianta successiva",
+      "rm-CH": "Proxim plan"
+    }
+  },
+  "chart": {
+    "use": "Offer a quick, labelled comparison of values with the underlying data always available.",
+    "avoid": "For a temporal series, use the line chart. For a dense financial statement, use a table with units and totals.",
+    "access": "Describe what the categories represent. Keep numeric values in the alternative table even if the graph is hidden or printed.",
+    "content": "Use a short title that specifies the measure. Keep the category labels parallel and make every axis or column unit explicit.",
+    "example": {
+      "good": "Opening hours by branch",
+      "poor": "Overview"
+    },
+    "copy": {
+      "de-CH": "Öffnungszeiten",
+      "fr-CH": "Heures d’ouverture",
+      "it-CH": "Orari di apertura",
+      "rm-CH": "Uras d’avertura"
+    }
+  },
+  "chart-table": {
+    "use": "Let readers compare the size of a value and retrieve its exact number in the same row.",
+    "avoid": "Use a simple table for identifiers and ranks whose lengths have no meaningful numerical scale.",
+    "access": "Keep real headers for each column and let the written value carry the measurement. The comparison marks are decorative.",
+    "content": "Name the measured quantity in the numeric header. Use one unit and precision across rows and keep office names in full.",
+    "example": {
+      "good": "Office / Copies printed / Lugano 120",
+      "poor": "Office / Score / Lugano ★★★"
+    },
+    "copy": {
+      "de-CH": "Gedruckte Exemplare",
+      "fr-CH": "Exemplaires imprimés",
+      "it-CH": "Copie stampate",
+      "rm-CH": "Exemplars stampads"
+    }
+  },
+  "checkbox": {
+    "use": "Let someone choose any number of independent options before submitting a form.",
+    "avoid": "Use RadioGroup when exactly one answer is permitted. Use Switch for a setting that applies immediately.",
+    "access": "Make the text part of the label and expose a mixed state when a parent represents partially selected children.",
+    "content": "Phrase each label as an affirmative choice. Keep the key noun near the beginning and move qualifications into a hint.",
+    "example": {
+      "good": "Send a copy by email",
+      "poor": "Do not disable email copies"
+    },
+    "copy": {
+      "de-CH": "Kopie per E-Mail senden",
+      "fr-CH": "Envoyer une copie par courriel",
+      "it-CH": "Invia una copia per e-mail",
+      "rm-CH": "Trametter ina copia per e-mail"
+    }
+  },
+  "code-block": {
+    "use": "Present a complete command, configuration fragment or code example that readers may copy intact.",
+    "avoid": "Use inline code for a single prop name within a sentence and Prose for an explanation spanning paragraphs.",
+    "access": "Name the snippet with its file name or purpose. Allow keyboard access to horizontal scrolling and give the copy action an accessible name.",
+    "content": "Use a concise caption and preserve code exactly in every translation. Put translated explanations outside the snippet.",
+    "example": {
+      "good": "Terminal · npm run build",
+      "poor": "Run these magic commands!!!"
+    },
+    "copy": {
+      "de-CH": "Installationsbefehl",
+      "fr-CH": "Commande d’installation",
+      "it-CH": "Comando di installazione",
+      "rm-CH": "Cumond d’installaziun"
+    }
+  },
+  "collapsible": {
+    "use": "Hide a short, optional explanation such as how a reference number is assigned.",
+    "avoid": "Keep information needed to complete the current field visible next to that field.",
+    "access": "Use a descriptive summary that toggles with the keyboard. Place controls inside the expanded content rather than inside the summary.",
+    "content": "Write a short question or a specific subject for the trigger. Its meaning should survive when the panel is closed.",
+    "example": {
+      "good": "How is the fee calculated?",
+      "poor": "Learn more"
+    },
+    "copy": {
+      "de-CH": "Berechnung der Gebühr",
+      "fr-CH": "Calcul de la taxe",
+      "it-CH": "Calcolo della tassa",
+      "rm-CH": "Calculaziun da la taxa"
+    }
+  },
+  "combobox": {
+    "use": "Search a long set of permitted values, especially when people know only part of a name.",
+    "avoid": "Offer a native select for a few familiar options. Free text without a constrained set belongs in an Input.",
+    "access": "Name the input and expose its expanded state and active option. Make it clear when typed text has become a committed choice.",
+    "content": "Name the requested entity. Use a short instruction for searching and a specific empty result that points to a next step.",
+    "example": {
+      "good": "Search municipality / No matches for Luga",
+      "poor": "Select / Error"
+    },
+    "copy": {
+      "de-CH": "Gemeinde suchen",
+      "fr-CH": "Rechercher une commune",
+      "it-CH": "Cerca un comune",
+      "rm-CH": "Tschertgar ina vischnanca"
+    }
+  },
+  "command": {
+    "use": "Search available commands when an experienced user wants to go straight to a known task.",
+    "avoid": "Keep common tasks visible in the ordinary interface so discovery never depends on remembering a shortcut.",
+    "access": "Label the search field and announce the results. Escape should return focus to the invoking control.",
+    "content": "Start each result with the action and name its object. Keep synonyms in search metadata so labels stay short.",
+    "example": {
+      "good": "Create a new invoice",
+      "poor": "Invoices module 03"
+    },
+    "copy": {
+      "de-CH": "Rechnung erstellen",
+      "fr-CH": "Créer une facture",
+      "it-CH": "Crea fattura",
+      "rm-CH": "Crear in quint"
+    }
+  },
+  "context-menu": {
+    "use": "Offer shortcuts to actions on a particular document, row or selection.",
+    "avoid": "Keep a visible route to every essential command for people who never use a context click.",
+    "access": "Provide a keyboard invocation and an ordinary actions button. Return focus to the item when the menu closes.",
+    "content": "Name the commands with concise verbs. Include the object when the same action could affect a larger selection.",
+    "example": {
+      "good": "Rename document",
+      "poor": "Modify"
+    },
+    "copy": {
+      "de-CH": "Dokument umbenennen",
+      "fr-CH": "Renommer le document",
+      "it-CH": "Rinomina documento",
+      "rm-CH": "Midar il num dal document"
+    }
+  },
+  "currency-chf": {
+    "use": "Set Swiss franc amounts in a ledger, credit note or payment total so that amounts can be compared down a column.",
+    "avoid": "Use an editable amount field when the reader needs to enter a sum. Cash rounding belongs only on applicable cash totals.",
+    "access": "Supply the display locale so the spoken minus is in the reader’s language. Keep the amount and its currency together at narrow widths.",
+    "content": "Name the amount in a short heading and let CurrencyCHF supply the currency and digits. Explain a credit in the adjacent description.",
+    "example": {
+      "good": "Credit balance · CHF −12.50",
+      "poor": "Money CHF CHF −12.5"
+    },
+    "copy": {
+      "de-CH": "Guthaben",
+      "fr-CH": "Avoir",
+      "it-CH": "Credito",
+      "rm-CH": "Credit"
+    }
+  },
+  "data-table": {
+    "use": "Let readers reorder comparable records, such as invoices by due date or amount.",
+    "avoid": "A fixed tariff schedule with a prescribed reading order only needs Table.",
+    "access": "Use the sort button inside the header, expose its direction and translate the sort hint. Compare dates and amounts by their underlying values.",
+    "content": "Use the field name as the header, with the unit when needed. Put the sorting instruction in the hint instead of repeating it in every heading.",
+    "example": {
+      "good": "Due date",
+      "poor": "Click here to sort this column"
+    },
+    "copy": {
+      "de-CH": "Fälligkeit",
+      "fr-CH": "Échéance",
+      "it-CH": "Scadenza",
+      "rm-CH": "Scadenza"
+    }
+  },
+  "date-picker": {
+    "use": "Choose one nearby date in a form where opening a calendar helps people see weekdays and availability.",
+    "avoid": "Use SwissDate to display an existing deadline in a read-only summary.",
+    "access": "Label the trigger with the purpose of the date. Verify focus returns after a keyboard selection or Escape and the chosen date remains discernible.",
+    "content": "Use a brief noun phrase naming the date’s role. Keep any booking restriction in a separate hint.",
+    "example": {
+      "good": "Delivery date",
+      "poor": "Select a value"
+    },
+    "copy": {
+      "de-CH": "Lieferdatum",
+      "fr-CH": "Date de livraison",
+      "it-CH": "Data di consegna",
+      "rm-CH": "Data da furniziun"
+    }
+  },
+  "description-list": {
+    "use": "Pair distinct terms with their values in an address, receipt or read-only profile.",
+    "avoid": "Repeated records sharing columns belong in a table. Use Prose for a long explanation.",
+    "access": "Keep each term adjacent to its description in the DOM and test that their relationship survives the narrow layout.",
+    "content": "Use brief, distinct terms. Let long official names wrap in the value column without shortening the source data.",
+    "example": {
+      "good": "Registered office / Chur",
+      "poor": "Information / Chur"
+    },
+    "copy": {
+      "de-CH": "Sitz",
+      "fr-CH": "Siège",
+      "it-CH": "Sede",
+      "rm-CH": "Sedia"
+    }
+  },
+  "dialog": {
+    "use": "Interrupt the current view for a focused edit that can be completed or cancelled without navigating away.",
+    "avoid": "An optional note belongs in a disclosure. A broad multi-step process benefits from a dedicated page.",
+    "access": "Give the dialog a title and a named close control. On dismiss, return focus to a meaningful place in the invoking view.",
+    "content": "Name the specific task in the title. Use a short action on each button and a sentence for any explanation.",
+    "example": {
+      "good": "Edit delivery address / Save address",
+      "poor": "Dialog / OK"
+    },
+    "copy": {
+      "de-CH": "Lieferadresse bearbeiten",
+      "fr-CH": "Modifier l’adresse de livraison",
+      "it-CH": "Modifica indirizzo di consegna",
+      "rm-CH": "Modifitgar l’adressa da furniziun"
+    }
+  },
+  "direction": {
+    "use": "Establish the reading direction of an embedded passage whose script differs from the surrounding interface.",
+    "avoid": "A change from German to French changes the language but keeps the same reading direction. Set the language tag for that change.",
+    "access": "Use the correct language and direction on the passage itself. Isolate embedded references or names that use a different script.",
+    "content": "Preserve names as supplied and use a short caption to identify the translated passage. Keep punctuation inside its language run.",
+    "example": {
+      "good": "Original message / [passage in its own direction]",
+      "poor": "Manually reversed characters in the translation"
+    },
+    "copy": {
+      "de-CH": "Originalnachricht",
+      "fr-CH": "Message original",
+      "it-CH": "Messaggio originale",
+      "rm-CH": "Messadi original"
+    }
+  },
+  "drawer": {
+    "use": "Present a focused task from the edge of the screen, especially on a small device.",
+    "avoid": "Put long reading material or multi-stage navigation on a page with a stable URL.",
+    "access": "Give the drawer a title and an explicit close button. Opening, completing and dismissing it must work without a drag gesture.",
+    "content": "Use a direct title and keep the primary action visible after the instructions wrap. Put one task in each drawer.",
+    "example": {
+      "good": "Choose a collection date",
+      "poor": "Options"
+    },
+    "copy": {
+      "de-CH": "Abholdatum wählen",
+      "fr-CH": "Choisir la date de retrait",
+      "it-CH": "Scegli data di ritiro",
+      "rm-CH": "Tscherner la data da retratga"
+    }
+  },
+  "dropdown-menu": {
+    "use": "Collect secondary commands that act on the same selected record.",
+    "avoid": "Use a Select to choose a stored value. Keep a frequent primary action visible outside the menu.",
+    "access": "Give the trigger a purpose, support arrow-key movement and restore focus on dismiss. Identify destructive commands with words.",
+    "content": "Use parallel verb phrases, typically one action and one object. Give repeated menus names that include the target record.",
+    "example": {
+      "good": "Actions for invoice 104 / Download invoice",
+      "poor": "More / Item 1"
+    },
+    "copy": {
+      "de-CH": "Rechnung herunterladen",
+      "fr-CH": "Télécharger la facture",
+      "it-CH": "Scarica fattura",
+      "rm-CH": "Telechargiar il quint"
+    }
+  },
+  "empty": {
+    "use": "Explain an empty collection and offer the next useful action, such as creating its first address.",
+    "avoid": "A pending request needs a loading state. A failed request needs an error and a way to retry.",
+    "access": "Keep the heading and recovery action in reading order. After applying a filter, announce the result count near the search control.",
+    "content": "Use a short factual heading followed by one next step. Distinguish an empty collection from a search with no matches.",
+    "example": {
+      "good": "No invoices yet. Create your first invoice.",
+      "poor": "Nothing here."
+    },
+    "copy": {
+      "de-CH": "Noch keine Rechnungen",
+      "fr-CH": "Aucune facture pour le moment",
+      "it-CH": "Nessuna fattura per ora",
+      "rm-CH": "Anc nagins quints"
+    }
+  },
+  "field": {
+    "use": "Keep the label, format hint and error for one editor together across validation states.",
+    "avoid": "Several radios or checkboxes sharing a question need a fieldset and legend.",
+    "access": "Pass the supplied control attributes to the real input so its label, description and validation message are linked.",
+    "content": "Name one value, give one concrete format example and use a corrective sentence for an error. Keep the hint separate from the label.",
+    "example": {
+      "good": "Reference / Enter the reference shown on your letter.",
+      "poor": "Invalid input!"
+    },
+    "copy": {
+      "de-CH": "Referenznummer",
+      "fr-CH": "Numéro de référence",
+      "it-CH": "Numero di riferimento",
+      "rm-CH": "Numer da referenza"
+    }
+  },
+  "figure": {
+    "use": "Keep a photograph, diagram or map together with its caption and source.",
+    "avoid": "An uncaptioned decorative background does not need a figure landmark and credit line in the reading flow.",
+    "access": "Describe the visual information in the image alternative. Use the caption for context or provenance instead of repeating the alternative.",
+    "content": "Use one concise caption naming what the reader is seeing. Keep creator and source in a separate credit in each language.",
+    "example": {
+      "good": "Station entrance on Bahnhofplatz, seen from the tram stop.",
+      "poor": "Photo of a place."
+    },
+    "copy": {
+      "de-CH": "Bahnhofeingang",
+      "fr-CH": "Entrée de la gare",
+      "it-CH": "Ingresso della stazione",
+      "rm-CH": "Entrada da la staziun"
+    }
+  },
+  "grid": {
+    "use": "Give related blocks a shared edge, such as the name and contact details on an address card.",
+    "avoid": "A single sequence of fields is easier to maintain in a Stack. Columns can make their reading order ambiguous.",
+    "access": "Keep the DOM in reading order. Check that the title still precedes the details when the grid collapses to one column.",
+    "content": "Use a short noun phrase at the head of each field. Allow adjacent columns to grow when the French phrase takes another line.",
+    "example": {
+      "good": "Billing address / Route du Lac 8 / 1007 Lausanne",
+      "poor": "Column 2 / Route du Lac 8 / More information"
+    },
+    "copy": {
+      "de-CH": "Rechnungsadresse",
+      "fr-CH": "Adresse de facturation",
+      "it-CH": "Indirizzo di fatturazione",
+      "rm-CH": "Adressa da quint"
+    }
+  },
+  "grid-overlay": {
+    "use": "Inspect the placement of columns and baselines while reviewing a layout at real viewport widths.",
+    "avoid": "Leave the overlay hidden during ordinary reading and data entry. It is a proofing aid for the interface author.",
+    "access": "Preserve keyboard access to the underlying page and provide a way to dismiss the overlay without a pointer.",
+    "content": "Name the toggled aid precisely in a short action phrase. Keep the keyboard shortcut separate from the translated label.",
+    "example": {
+      "good": "Show layout grid / Ctrl + Shift + G",
+      "poor": "Graphics on"
+    },
+    "copy": {
+      "de-CH": "Raster anzeigen",
+      "fr-CH": "Afficher la grille",
+      "it-CH": "Mostra griglia",
+      "rm-CH": "Mussar la rait"
+    }
+  },
+  "hover-card": {
+    "use": "Offer an optional preview of a person or record next to a link to its full details.",
+    "avoid": "Keep essential decisions and touch-only actions available by activation elsewhere.",
+    "access": "Make the preview reachable from its trigger by keyboard. Give people a direct way to open the full record outside the preview.",
+    "content": "Use the record name as the title and one identifying detail beneath it. A short destination label can lead to the full record.",
+    "example": {
+      "good": "Anna Caduff / Secretariat / View profile",
+      "poor": "More about this"
+    },
+    "copy": {
+      "de-CH": "Profil ansehen",
+      "fr-CH": "Voir le profil",
+      "it-CH": "Vedi profilo",
+      "rm-CH": "Guardar il profil"
+    }
+  },
+  "iban-input": {
+    "use": "Collect a Swiss account identifier on a payout form where grouping and a checksum help catch transcription errors.",
+    "avoid": "Use a country-aware account field for payments that accept international IBANs beyond the component’s supported scope.",
+    "access": "Keep the account label visible while typing. Give anyone correcting a failed checksum a concrete next step and allow pasting the entire value.",
+    "content": "Use IBAN in every language. Explain the expected country prefix or whose account is required in a separate short hint.",
+    "example": {
+      "good": "Account IBAN · Copy it from your bank statement.",
+      "poor": "Account details invalid!"
+    },
+    "copy": {
+      "de-CH": "IBAN des Kontos",
+      "fr-CH": "IBAN du compte",
+      "it-CH": "IBAN del conto",
+      "rm-CH": "IBAN dal conto"
+    }
+  },
+  "icon": {
+    "use": "Identify a familiar action or destination when its compact shape helps people scan a toolbar.",
+    "avoid": "An unfamiliar symbol for a payment or irreversible action needs a visible text label.",
+    "access": "Hide a decorative icon from assistive technology. When it is the only visible content of a control, name the control by its action.",
+    "content": "Write the action or destination in a few words. Avoid describing the geometry of a symbol when naming a control.",
+    "example": {
+      "good": "Search the directory",
+      "poor": "Magnifying glass"
+    },
+    "copy": {
+      "de-CH": "Verzeichnis durchsuchen",
+      "fr-CH": "Rechercher dans le répertoire",
+      "it-CH": "Cerca nella rubrica",
+      "rm-CH": "Tschertgar en il register"
+    }
+  },
+  "input": {
+    "use": "Collect one short value such as a family name that the person can type or paste.",
+    "avoid": "Use Textarea for correspondence and Select for a closed list of permitted values.",
+    "access": "Associate a persistent label with the input. Preserve the entered value when reporting a validation error.",
+    "content": "Name the value with a noun. Put examples or format instructions on a separate line so the label remains short.",
+    "example": {
+      "good": "Family name",
+      "poor": "Enter details here…"
+    },
+    "copy": {
+      "de-CH": "Familienname",
+      "fr-CH": "Nom de famille",
+      "it-CH": "Cognome",
+      "rm-CH": "Num da famiglia"
+    }
+  },
+  "input-group": {
+    "use": "Keep a prefix, unit or adjacent action visually attached to one editable value.",
+    "avoid": "Several independent questions each need their own label and field instead of a shared border.",
+    "access": "Give the editor an explicit label that includes the unit when it matters. Name any adjacent icon button separately.",
+    "content": "Keep a fixed prefix short. Put explanations in the label or hint so that units and long translations leave room to type.",
+    "example": {
+      "good": "Weight (kg) / 12",
+      "poor": "12 / ?"
+    },
+    "copy": {
+      "de-CH": "Gewicht (kg)",
+      "fr-CH": "Poids (kg)",
+      "it-CH": "Peso (kg)",
+      "rm-CH": "Paisa (kg)"
+    }
+  },
+  "input-otp": {
+    "use": "Collect a short verification code delivered through a separate channel when every position belongs to the same value.",
+    "avoid": "Use a password field for reusable credentials of arbitrary length.",
+    "access": "Label the whole code, allow pasting and test one-time-code autofill. Explain how to request a new code when the first expires.",
+    "content": "State the number of digits once in the instruction. Keep delivery and expiry details in a separate sentence.",
+    "example": {
+      "good": "Enter the six-digit code from your email.",
+      "poor": "Fill in each box one character at a time."
+    },
+    "copy": {
+      "de-CH": "Sechsstelligen Code eingeben",
+      "fr-CH": "Saisir le code à six chiffres",
+      "it-CH": "Inserire il codice a sei cifre",
+      "rm-CH": "Endatar il code da sis cifras"
+    }
+  },
+  "invoice-document": {
+    "use": "Issue a printable, itemised Swiss invoice with its VAT breakdown, total and QR payment section on the same document.",
+    "avoid": "Use SwissQrBill alone when the surrounding system already produces the complete invoice body.",
+    "access": "Provide meaningful line descriptions and keep quantity, tax and total headings attached to their columns. Check reading order and print long invoices over several pages.",
+    "content": "Use a short noun phrase for each service and state its period or quantity when that identifies the charge. Keep the invoice number consistent across the document.",
+    "example": {
+      "good": "Studio hire · 2 days",
+      "poor": "Miscellaneous services as agreed"
+    },
+    "copy": {
+      "de-CH": "Ateliermiete",
+      "fr-CH": "Location de l’atelier",
+      "it-CH": "Affitto dell’atelier",
+      "rm-CH": "Locaziun da l’atelier"
+    }
+  },
+  "item": {
+    "use": "Show the identity and short description of a record in a list, optionally with an action alongside it.",
+    "avoid": "Use a table when values must line up across several comparable columns.",
+    "access": "Give a linked title its own accessible name. Distinguish repeated row actions with the record name.",
+    "content": "Use the identifying name as the title and reserve the second line for one distinguishing fact. Avoid repeating the title in the description.",
+    "example": {
+      "good": "Lausanne office / Open until 17:00",
+      "poor": "Office / Office information"
+    },
+    "copy": {
+      "de-CH": "Regionalstelle Lausanne",
+      "fr-CH": "Bureau régional de Lausanne",
+      "it-CH": "Ufficio regionale di Losanna",
+      "rm-CH": "Post regiunal da Losanna"
+    }
+  },
+  "kbd": {
+    "use": "Show the actual keyboard shortcut for an action already available on screen.",
+    "avoid": "A keycap used as the only way to start a task leaves touch and switch users without an action.",
+    "access": "Keep a normal focusable control alongside the shortcut and adapt modifier names to the user's platform.",
+    "content": "Keep key names short and literal. Translate the description of the action separately from the key sequence.",
+    "example": {
+      "good": "Search documents · Ctrl + K",
+      "poor": "Press the special key"
+    },
+    "copy": {
+      "de-CH": "Dokumente suchen",
+      "fr-CH": "Rechercher des documents",
+      "it-CH": "Cerca documenti",
+      "rm-CH": "Tschertgar documents"
+    }
+  },
+  "label": {
+    "use": "Associate a short, visible name with a specific native control when composing a custom form row.",
+    "avoid": "Use Field when the editor also has hints or errors that need programmatic associations.",
+    "access": "Match htmlFor to the control's unique id. Clicking the label should focus or toggle the intended control.",
+    "content": "Name the requested value in a compact noun phrase. Include a unit when two otherwise identical labels could be confused.",
+    "example": {
+      "good": "Street and house number",
+      "poor": "Type here"
+    },
+    "copy": {
+      "de-CH": "Strasse und Hausnummer",
+      "fr-CH": "Rue et numéro",
+      "it-CH": "Via e numero civico",
+      "rm-CH": "Via e numer da chasa"
+    }
+  },
+  "letter": {
+    "use": "Compose a printable A4 letter with sender, recipient, date, subject and body aligned to an envelope window.",
+    "avoid": "Use a responsive article for web-only correspondence and InvoiceDocument for itemised charges.",
+    "access": "Keep the reading order logical independently of the position of the address window. Leave fold marks out of the accessible text and test print at actual size.",
+    "content": "Use a one-line factual subject and short paragraphs. Keep the recipient’s postal spelling unchanged when translating the body.",
+    "example": {
+      "good": "Confirmation of your appointment",
+      "poor": "IMPORTANT MESSAGE FOR YOU!!!"
+    },
+    "copy": {
+      "de-CH": "Bestätigung Ihres Termins",
+      "fr-CH": "Confirmation de votre rendez-vous",
+      "it-CH": "Conferma del suo appuntamento",
+      "rm-CH": "Conferma da Voss termin"
+    }
+  },
+  "line-chart": {
+    "use": "Show observations in a meaningful sequence, such as passenger counts across weekdays.",
+    "avoid": "Unordered categories create an invented trend when connected by a line. Compare them with bars instead.",
+    "access": "Describe the time span and unit. Preserve missing observations as such in the supplied data and explain any gaps in the description.",
+    "content": "Use the measured quantity as the title. Keep time labels short and repeat dates consistently throughout a language edition.",
+    "example": {
+      "good": "Passengers per weekday / Monday 420",
+      "poor": "Trend / Point A"
+    },
+    "copy": {
+      "de-CH": "Fahrgäste pro Werktag",
+      "fr-CH": "Voyageurs par jour ouvrable",
+      "it-CH": "Passeggeri per giorno lavorativo",
+      "rm-CH": "Passagiers per di da lavur"
+    }
+  },
+  "locale-select": {
+    "use": "Let a person switch the language of an application or a specific form using language names in their own spelling.",
+    "avoid": "Use MultilingualField for editing different translations of one piece of content.",
+    "access": "Label the scope of the switch. After a page-wide change, update the document language and retain focus or restore it to an equivalent control.",
+    "content": "Use the language’s own name as its option. Keep the label to a noun phrase that says what will change.",
+    "example": {
+      "good": "Form language",
+      "poor": "Choose country flag"
+    },
+    "copy": {
+      "de-CH": "Formularsprache",
+      "fr-CH": "Langue du formulaire",
+      "it-CH": "Lingua del modulo",
+      "rm-CH": "Lingua dal formular"
+    }
+  },
+  "marker": {
+    "use": "Place a state symbol beside a concise name in a schedule or task list.",
+    "avoid": "A decorative symbol or an unexplained prioritisation code adds noise to a plain list.",
+    "access": "Provide the written state beside its shape so it remains understandable without colour or vision.",
+    "content": "Choose one short word or phrase for each state. Keep the same state wording in the legend and the row.",
+    "example": {
+      "good": "▲ Needs review",
+      "poor": "▲"
+    },
+    "copy": {
+      "de-CH": "Prüfung ausstehend",
+      "fr-CH": "À vérifier",
+      "it-CH": "Da verificare",
+      "rm-CH": "Da controllar"
+    }
+  },
+  "menubar": {
+    "use": "Organise repeated application commands into familiar groups in a workspace or editor.",
+    "avoid": "Use NavigationMenu for ordinary site links where readers expect standard Tab navigation.",
+    "access": "Name the menubar and test arrow keys, Escape and focus return across menus. Keep commands available with a keyboard.",
+    "content": "Use short category nouns for top-level menus and verbs for commands beneath them. Preserve familiar ordering across translations.",
+    "example": {
+      "good": "File / Print document",
+      "poor": "Menu 1 / Execute"
+    },
+    "copy": {
+      "de-CH": "Datei",
+      "fr-CH": "Fichier",
+      "it-CH": "File",
+      "rm-CH": "Datoteca"
+    }
+  },
+  "message": {
+    "use": "Identify one contribution to a conversation with a speaker and optional time.",
+    "avoid": "Use a page-level Alert for a system failure outside the exchange.",
+    "access": "Expose the speaker's name for every change of speaker and give timestamps a machine-readable date where available.",
+    "content": "Use the actual sender name followed by a concise statement. Translate role names and keep quoted messages in their original language.",
+    "example": {
+      "good": "Reception, 14:10 / Your appointment is confirmed.",
+      "poor": "14:10 / Yes"
+    },
+    "copy": {
+      "de-CH": "Empfang",
+      "fr-CH": "Réception",
+      "it-CH": "Ricezione",
+      "rm-CH": "Recepziun"
+    }
+  },
+  "message-scroller": {
+    "use": "Keep the newest messages visible in a conversation while allowing someone to read older replies.",
+    "avoid": "Use a paginated or filterable list for an archive people consult by date.",
+    "access": "Name the log. Test that incoming messages leave the reading position alone when someone scrolls up. Give the jump action an explicit label.",
+    "content": "Use a short destination for the jump control. Keep sender names and message text separate.",
+    "example": {
+      "good": "Latest messages",
+      "poor": "Down"
+    },
+    "copy": {
+      "de-CH": "Neueste Nachrichten",
+      "fr-CH": "Derniers messages",
+      "it-CH": "Ultimi messaggi",
+      "rm-CH": "Ultimas novitads"
+    }
+  },
+  "multilingual-field": {
+    "use": "Edit several translations of the same title or description and see which languages still need text.",
+    "avoid": "Use LocaleSelect when only the language of the interface changes.",
+    "access": "Keep each field associated with its language and label. Test moving between languages by keyboard and announcing completion independently of colour.",
+    "content": "Write one source phrase per field. Agree a length budget in each language and review the copied wording before publishing.",
+    "example": {
+      "good": "Publication title · Français",
+      "poor": "Translation 2"
+    },
+    "copy": {
+      "de-CH": "Titel der Publikation",
+      "fr-CH": "Titre de la publication",
+      "it-CH": "Titolo della pubblicazione",
+      "rm-CH": "Titel da la publicaziun"
+    }
+  },
+  "native-select": {
+    "use": "Offer one familiar value from a short list on a phone using the device’s own selection interface.",
+    "avoid": "Use a searchable combobox when people know the name of a place in a long directory.",
+    "access": "Provide a visible Label with htmlFor. Choose a default only when it is a real, reversible choice.",
+    "content": "Name the category in one to three words. Write options as nouns in the same grammatical form.",
+    "example": {
+      "good": "Delivery method",
+      "poor": "Please make your selection from the list below"
+    },
+    "copy": {
+      "de-CH": "Versandart",
+      "fr-CH": "Mode de livraison",
+      "it-CH": "Modalità di consegna",
+      "rm-CH": "Moda da spediziun"
+    }
+  },
+  "navigation-menu": {
+    "use": "Move among the top-level sections of a site using links people can bookmark and open in another tab.",
+    "avoid": "Use DropdownMenu for commands that change the current item, such as duplicating an invoice.",
+    "access": "Give each navigation landmark a distinct name when several are present. Expose the active link with aria-current and retain native link behaviour.",
+    "content": "Prefer short destination names. Keep the visible label close to the destination page heading in each language.",
+    "example": {
+      "good": "Services / Fees / Contact",
+      "poor": "Explore / More / Discover"
+    },
+    "copy": {
+      "de-CH": "Dienstleistungen",
+      "fr-CH": "Prestations",
+      "it-CH": "Servizi",
+      "rm-CH": "Servetschs"
+    }
+  },
+  "pagination": {
+    "use": "Navigate between stable pages of records while retaining a shareable position in a list.",
+    "avoid": "Use Steps for a sequence of tasks. A short list that fits on one page seldom needs pagination.",
+    "access": "Mark the current page and give page-number links meaningful names. Keep the target available to keyboards and touch.",
+    "content": "Translate page names and directional actions. A short phrase containing the actual page number works out of context.",
+    "example": {
+      "good": "Page 3 of 8",
+      "poor": "Go"
+    },
+    "copy": {
+      "de-CH": "Seite 3",
+      "fr-CH": "Page 3",
+      "it-CH": "Pagina 3",
+      "rm-CH": "Pagina 3"
+    }
+  },
+  "phone-input": {
+    "use": "Ask for a Swiss callback number and display it in international +41 format.",
+    "avoid": "Use an international telephone field when contacts may need a foreign number or an extension.",
+    "access": "Use a visible phone label and a telephone keyboard. Make the format hint available after typing and offer a clear correction for the country prefix.",
+    "content": "Say whether the number is for a callback. Keep +41 in the format hint, outside the field name.",
+    "example": {
+      "good": "Callback number",
+      "poor": "Contact ID"
+    },
+    "copy": {
+      "de-CH": "Telefonnummer für Rückruf",
+      "fr-CH": "Numéro de rappel",
+      "it-CH": "Numero per essere richiamati",
+      "rm-CH": "Numer per clamar enavos"
+    }
+  },
+  "popover": {
+    "use": "Reveal optional contextual information or a small control near the element that opened it.",
+    "avoid": "A consequential choice that blocks the current task belongs in a modal dialog.",
+    "access": "Give the trigger and panel meaningful names. Check Escape, outside clicks and focus when the panel contains controls.",
+    "content": "Name the thing being explained. Keep the explanation to a short paragraph and move longer guidance to a linked page.",
+    "example": {
+      "good": "How we calculate postage",
+      "poor": "Information about additional information"
+    },
+    "copy": {
+      "de-CH": "Portoberechnung",
+      "fr-CH": "Calcul des frais de port",
+      "it-CH": "Calcolo delle spese postali",
+      "rm-CH": "Calculaziun dals custs da porto"
+    }
+  },
+  "progress": {
+    "use": "Show how much of an operation has finished when the total can be measured, such as imported records.",
+    "avoid": "A spinner with an activity label fits work whose completion cannot be estimated.",
+    "access": "Name the operation. Update its numeric value with measured progress and avoid announcing every percentage point.",
+    "content": "Use the activity name and a short count or percentage. Pair a completed quantity with its total in all four translations.",
+    "example": {
+      "good": "Imported 18 of 30 addresses",
+      "poor": "Almost there…"
+    },
+    "copy": {
+      "de-CH": "Adressen importieren",
+      "fr-CH": "Importer les adresses",
+      "it-CH": "Importa indirizzi",
+      "rm-CH": "Importar adressas"
+    }
+  },
+  "prose": {
+    "use": "Set a guide, policy or long-form explanation with a readable measure, paragraphs, headings and lists.",
+    "avoid": "Use Grid and Table for dense data or a form that needs field alignment.",
+    "access": "Use a logical heading hierarchy, meaningful link text and captions for embedded illustrations. Let text resize and reflow on narrow screens.",
+    "content": "Give each section a descriptive heading and each paragraph one subject. Split long translated sentences at a natural thought boundary.",
+    "example": {
+      "good": "How to submit an application",
+      "poor": "General information and various other things"
+    },
+    "copy": {
+      "de-CH": "Gesuch einreichen",
+      "fr-CH": "Déposer une demande",
+      "it-CH": "Presentare una domanda",
+      "rm-CH": "Inoltrar ina dumonda"
+    }
+  },
+  "questionnaire": {
+    "use": "Guide someone through a sequence of short questions with one answer due at each step.",
+    "avoid": "Show a single form when people need to compare and revise several answers together.",
+    "access": "Give the questionnaire a distinct name. On step changes, verify focus reaches the new question and earlier answers survive Back.",
+    "content": "Ask one direct question per step. Use complete choices that still make sense when read without their neighbours.",
+    "example": {
+      "good": "How should we contact you? Email / Phone",
+      "poor": "Communication channel preference configuration?"
+    },
+    "copy": {
+      "de-CH": "Wie dürfen wir Sie kontaktieren?",
+      "fr-CH": "Comment vous contacter ?",
+      "it-CH": "Come possiamo contattarla?",
+      "rm-CH": "Co pudain nus contactar Vus?"
+    }
+  },
+  "radio-group": {
+    "use": "Show a small set of mutually exclusive choices together, for example two ways of receiving an invoice.",
+    "avoid": "Multiple simultaneous choices require checkboxes. A long list with similar names is easier to search.",
+    "access": "Label the group through its legend. The option text must distinguish each choice when read after the same group label.",
+    "content": "Use a short question or noun for the legend. Give options matching forms, such as two delivery methods.",
+    "example": {
+      "good": "Invoice delivery / Email / Post",
+      "poor": "Settings / Yes / No"
+    },
+    "copy": {
+      "de-CH": "Rechnungsversand",
+      "fr-CH": "Envoi de la facture",
+      "it-CH": "Invio della fattura",
+      "rm-CH": "Spediziun dal quint"
+    }
+  },
+  "resizable": {
+    "use": "Let a reviewer widen a document beside its annotations while keeping both panes visible.",
+    "avoid": "On a narrow screen, give each pane its own view if neither remains readable at minimum width.",
+    "access": "Give the separator a name that identifies the pane being resized. Verify keyboard resizing at both limits and keep the handle visible at high zoom.",
+    "content": "Use a short noun phrase for the separator. Translate the pane name consistently with its heading.",
+    "example": {
+      "good": "Document width",
+      "poor": "Drag here with your mouse"
+    },
+    "copy": {
+      "de-CH": "Dokumentbreite",
+      "fr-CH": "Largeur du document",
+      "it-CH": "Larghezza del documento",
+      "rm-CH": "Ladezza dal document"
+    }
+  },
+  "scroll-area": {
+    "use": "Constrain a genuinely long panel while keeping the rest of a workspace within reach.",
+    "avoid": "A short paragraph or a standard form generally reads better with normal page scrolling.",
+    "access": "Name the region, allow keyboard scrolling and leave room for focus outlines at its edges. Check that scrolling can continue onto the page.",
+    "content": "Give the panel a short subject label. Distinguish it from nearby scrollable regions using the content it contains.",
+    "example": {
+      "good": "Revision history",
+      "poor": "Scrollable box"
+    },
+    "copy": {
+      "de-CH": "Änderungsverlauf",
+      "fr-CH": "Historique des modifications",
+      "it-CH": "Cronologia delle modifiche",
+      "rm-CH": "Istorgia da las modificaziuns"
+    }
+  },
+  "select": {
+    "use": "Offer a short set of known values, such as a preferred delivery method, inside a form.",
+    "avoid": "Use search for a long unfamiliar list where readers need to match part of a name.",
+    "access": "Label the select and preserve the native keyboard interaction. Give the empty option a distinct meaning when the field is optional.",
+    "content": "Use parallel names for the options. Choose one short noun phrase per option and test the longest in its collapsed state.",
+    "example": {
+      "good": "Delivery method / By post",
+      "poor": "Choose / Option 1"
+    },
+    "copy": {
+      "de-CH": "Versandart",
+      "fr-CH": "Mode d’envoi",
+      "it-CH": "Modalità di invio",
+      "rm-CH": "Moda da spediziun"
+    }
+  },
+  "separator": {
+    "use": "Mark the boundary between two groups of information within the same task.",
+    "avoid": "A page section with a new subject needs a heading. A line alone gives the reader no topic to navigate to.",
+    "access": "Leave ornamental rules hidden from assistive technology. Expose a semantic separator only where a boundary carries meaning.",
+    "content": "The rule has no label in normal reading. Give the following section a short, descriptive heading in each language.",
+    "example": {
+      "good": "Delivery address / [rule] / Payment method",
+      "poor": "[rule] / [rule] / Details"
+    },
+    "copy": {
+      "de-CH": "Zahlungsart",
+      "fr-CH": "Mode de paiement",
+      "it-CH": "Metodo di pagamento",
+      "rm-CH": "Moda da pajament"
+    }
+  },
+  "sheet": {
+    "use": "Edit related information in a modal side panel while retaining the context of the record behind it.",
+    "avoid": "Use a full page for long forms that require supporting documents or complex navigation.",
+    "access": "Name the panel and close action. Verify that the last input and the footer actions can be reached with a keyboard at high zoom.",
+    "content": "Give the panel a short object-specific title. Break longer instructions into field-level hints in each language.",
+    "example": {
+      "good": "Edit billing details",
+      "poor": "Settings panel"
+    },
+    "copy": {
+      "de-CH": "Rechnungsdaten bearbeiten",
+      "fr-CH": "Modifier les données de facturation",
+      "it-CH": "Modifica dati di fatturazione",
+      "rm-CH": "Modifitgar las datas dal quint"
+    }
+  },
+  "sidebar": {
+    "use": "Provide persistent section navigation beside a set of related workspaces or reference pages.",
+    "avoid": "Use a short row of navigation links if there are only a few destinations and they already fit in the header.",
+    "access": "Name the navigation region and mark the current destination. Make the mobile opener describe what it reveals and support a return to the page.",
+    "content": "Group related destinations under a short heading. Use the same nouns that readers will see as page titles.",
+    "example": {
+      "good": "Billing: Invoices, Credit notes",
+      "poor": "Administration: Area 1, Area 2"
+    },
+    "copy": {
+      "de-CH": "Abrechnung",
+      "fr-CH": "Facturation",
+      "it-CH": "Fatturazione",
+      "rm-CH": "Facturaziun"
+    }
+  },
+  "skeleton": {
+    "use": "Reserve space for a known heading, row or card while its data arrives.",
+    "avoid": "If the request fails, show an error with recovery. Continuing the placeholder hides the outcome.",
+    "access": "Keep placeholders silent and outside the tab order. Name the loading region once when people need to know why content is absent.",
+    "content": "Leave the placeholder itself empty. A neighbouring status can name the collection in a short phrase.",
+    "example": {
+      "good": "Loading invoices",
+      "poor": "Loading… Loading… Loading…"
+    },
+    "copy": {
+      "de-CH": "Rechnungen laden",
+      "fr-CH": "Chargement des factures",
+      "it-CH": "Caricamento fatture",
+      "rm-CH": "Chargiar ils quints"
+    }
+  },
+  "slider": {
+    "use": "Adjust a bounded quantity when exploring nearby values is part of the task.",
+    "avoid": "Use a numeric input for an exact amount that someone must transcribe from an official record.",
+    "access": "Associate the label, minimum, maximum and current value. Verify the keyboard step matches the precision the task requires.",
+    "content": "Name the quantity and unit. Pair the thumb with a concise value so the person can read the setting without estimating its position.",
+    "example": {
+      "good": "Print size / 120 mm",
+      "poor": "More / Less"
+    },
+    "copy": {
+      "de-CH": "Druckbreite (mm)",
+      "fr-CH": "Largeur d’impression (mm)",
+      "it-CH": "Larghezza di stampa (mm)",
+      "rm-CH": "Ladezza da stampa (mm)"
+    }
+  },
+  "sparkline": {
+    "use": "Add a compact trend beside a current reading in a monitoring summary.",
+    "avoid": "Use a full chart if readers need axes, precise comparisons or an explanation of a sudden change.",
+    "access": "Name the quantity, unit and interval in text. Keep the latest observation and data disclosure available independently of the line.",
+    "content": "Pair a brief measure name with its final value. Give the time window in a caption rather than squeezing it into the graphic.",
+    "example": {
+      "good": "Reservoir level / 14 m at 15:00",
+      "poor": "A line with no unit or time"
+    },
+    "copy": {
+      "de-CH": "Wasserstand",
+      "fr-CH": "Niveau de l’eau",
+      "it-CH": "Livello dell’acqua",
+      "rm-CH": "Nivel da l’aua"
+    }
+  },
+  "spinner": {
+    "use": "Show that a brief operation is still active while its result is unavailable.",
+    "avoid": "Use Progress when the amount of work is measurable. Use a Skeleton when you can reserve the shape of incoming content.",
+    "access": "Provide a status label when the spinner is the only feedback. Leave it decorative when the same message is already announced nearby.",
+    "content": "Name the activity in a short phrase. Keep the wording factual and avoid promising how long an unknown wait will take.",
+    "example": {
+      "good": "Loading appointments",
+      "poor": "Just a second!"
+    },
+    "copy": {
+      "de-CH": "Termine laden",
+      "fr-CH": "Chargement des rendez-vous",
+      "it-CH": "Caricamento appuntamenti",
+      "rm-CH": "Chargiar ils termins"
+    }
+  },
+  "stack": {
+    "use": "Space a sequence of controls or paragraphs consistently as their translations wrap.",
+    "avoid": "Use Grid when rows in neighbouring cards must align to the same tracks.",
+    "access": "Keep the source order meaningful. Check that wrapping a button group preserves the expected reading and tab order.",
+    "content": "Group copy that belongs to the same decision. Use one short heading per group and give qualifications their own line.",
+    "example": {
+      "good": "Contact details / Name / Email address",
+      "poor": "Name / unrelated action / Email address"
+    },
+    "copy": {
+      "de-CH": "Kontaktperson",
+      "fr-CH": "Personne de contact",
+      "it-CH": "Persona di contatto",
+      "rm-CH": "Persuna da contact"
+    }
+  },
+  "steps": {
+    "use": "Show progress through a sequence with a defined order, such as submitting an application.",
+    "avoid": "Use Tabs for peer subjects readers can visit in any order.",
+    "access": "Label the sequence and mark the current step in text or programmatically. Keep the visual and reading orders identical.",
+    "content": "Name the task at each step with a short phrase. Put its number outside the translated label so reordering remains possible.",
+    "example": {
+      "good": "Contact details / Documents / Review",
+      "poor": "Step A / Step B / Step C"
+    },
+    "copy": {
+      "de-CH": "Kontaktdaten",
+      "fr-CH": "Coordonnées",
+      "it-CH": "Dati di contatto",
+      "rm-CH": "Datas da contact"
+    }
+  },
+  "swiss-address-form": {
+    "use": "Collect a recipient and a Swiss delivery address, with a locality suggestion after the postal code is entered.",
+    "avoid": "Provide country-specific fields when someone can enter addresses outside Switzerland.",
+    "access": "Keep the postal hint associated with its field. If multiple localities share a code, let the person choose and verify a keyboard-only correction.",
+    "content": "Use the postal abbreviation familiar in each language. Put the four-digit instruction below the label and leave street names in their original spelling.",
+    "example": {
+      "good": "Postal code • Four digits",
+      "poor": "Enter the location details here"
+    },
+    "copy": {
+      "de-CH": "Postleitzahl",
+      "fr-CH": "NPA",
+      "it-CH": "NPA",
+      "rm-CH": "Numer postal"
+    }
+  },
+  "swiss-date": {
+    "use": "Show a filing deadline or an issue date in the reader’s Swiss locale while retaining its machine-readable value.",
+    "avoid": "Use DatePicker for choosing a date and a time formatter for an appointment time.",
+    "access": "Pass an unambiguous date or instant to the time element. For a deadline, include its meaning in nearby text so the date has context.",
+    "content": "Use a short date-role label. Prefer a written month in correspondence where two numeric date conventions might collide.",
+    "example": {
+      "good": "Issued on 12 March 2027",
+      "poor": "03/12/27"
+    },
+    "copy": {
+      "de-CH": "Ausstellungsdatum",
+      "fr-CH": "Date d’émission",
+      "it-CH": "Data di emissione",
+      "rm-CH": "Data d’emissiun"
+    }
+  },
+  "swiss-postal-code-input": {
+    "use": "Collect a Swiss four-digit postal code as a text identifier, including when another field will capture the locality.",
+    "avoid": "Use an international postal address field for addresses whose codes can contain letters.",
+    "access": "Associate a visible label and four-digit hint with the input. Keep format errors next to it and leave the value available for correction.",
+    "content": "Use PLZ or NPA where familiar and spell out the instruction in plain language. A sample code is four digits without separators.",
+    "example": {
+      "good": "Postal code · 3000",
+      "poor": "Location number (integer)"
+    },
+    "copy": {
+      "de-CH": "Postleitzahl (vier Ziffern)",
+      "fr-CH": "NPA (quatre chiffres)",
+      "it-CH": "NPA (quattro cifre)",
+      "rm-CH": "Numer postal (quatter cifras)"
+    }
+  },
+  "swiss-qr-bill": {
+    "use": "Place the Swiss QR payment part and its receipt together beneath a payable invoice.",
+    "avoid": "Use InvoiceDocument when a customer also needs line items, the tax breakdown and the amount due.",
+    "access": "Keep the human-readable payee, account, reference and amount available alongside the QR code. Verify the physical print at actual size.",
+    "content": "Use the supported payment-part language for prescribed headings. Translate the surrounding payment instructions separately and keep them outside the QR code’s clear area.",
+    "example": {
+      "good": "Account / Payable to",
+      "poor": "Scan the square for all payment details"
+    },
+    "copy": {
+      "de-CH": "Zahlungsinformationen",
+      "fr-CH": "Informations de paiement",
+      "it-CH": "Informazioni di pagamento",
+      "rm-CH": "Infurmaziuns da pajament"
+    }
+  },
+  "switch": {
+    "use": "Apply a persistent on/off preference immediately, such as receiving appointment reminders.",
+    "avoid": "A choice collected with other answers for later submission belongs in a checkbox.",
+    "access": "Keep a stable accessible name in both states and announce the stored state if an update fails.",
+    "content": "Name the preference in a few words. The control communicates its current value, so the label can stay the same after activation.",
+    "example": {
+      "good": "Appointment reminders",
+      "poor": "Turn off reminders now"
+    },
+    "copy": {
+      "de-CH": "Terminerinnerungen",
+      "fr-CH": "Rappels de rendez-vous",
+      "it-CH": "Promemoria appuntamenti",
+      "rm-CH": "Promemorias per termins"
+    }
+  },
+  "table": {
+    "use": "Present records with the same fields so readers can compare a value across rows.",
+    "avoid": "A single invoice summary with distinct labels and values works better as a DescriptionList.",
+    "access": "Use column and row headers as needed. Give the table a caption and keep each unit clear when navigating cell by cell.",
+    "content": "Use a short noun as each header. Put the shared unit in the header and reserve enough space for complete figures.",
+    "example": {
+      "good": "Amount (CHF) / 120.00",
+      "poor": "Number / 120"
+    },
+    "copy": {
+      "de-CH": "Betrag",
+      "fr-CH": "Montant",
+      "it-CH": "Importo",
+      "rm-CH": "Import"
+    }
+  },
+  "tabs": {
+    "use": "Switch among peer views of the same object while preserving its context, such as a case and its documents.",
+    "avoid": "Required steps should remain in a sequence. Hiding validation errors behind unrelated tabs makes a form harder to finish.",
+    "access": "Name the tablist, associate tabs with their panels and check arrow-key movement. Choose manual activation for slow panels.",
+    "content": "Use compact, parallel nouns. Distinguish the labels without suffixes that disappear when space is tight.",
+    "example": {
+      "good": "Overview / Documents / History",
+      "poor": "Details / Other details / More"
+    },
+    "copy": {
+      "de-CH": "Dokumente",
+      "fr-CH": "Documents",
+      "it-CH": "Documenti",
+      "rm-CH": "Documents"
+    }
+  },
+  "text-link": {
+    "use": "Lead to a related document or a stable URL from a paragraph of running text.",
+    "avoid": "Use Button when the operation submits or changes the current record without navigating.",
+    "access": "Make the link purpose clear in context and retain its visual indicator on keyboard focus. Describe downloads or new windows where readers need to know.",
+    "content": "Use the destination’s actual name in the link. Keep punctuation outside the link unless it belongs to the title.",
+    "example": {
+      "good": "Download the tariff schedule (PDF)",
+      "poor": "Click here"
+    },
+    "copy": {
+      "de-CH": "Gebührentarif herunterladen (PDF)",
+      "fr-CH": "Télécharger le tarif (PDF)",
+      "it-CH": "Scaricare il tariffario (PDF)",
+      "rm-CH": "Telechargiar il tariffari (PDF)"
+    }
+  },
+  "textarea": {
+    "use": "Collect a delivery instruction or another response whose length and line breaks matter.",
+    "avoid": "A postal code or date belongs in a field that communicates its expected format.",
+    "access": "Keep the label outside the editable area. Make any length limit available before typing and identify the field if a submission fails.",
+    "content": "Use a specific prompt. A single sentence can clarify the kind of detail the recipient needs, in each language.",
+    "example": {
+      "good": "Delivery instructions / Where can we leave the parcel?",
+      "poor": "Notes / Please enter all other information below."
+    },
+    "copy": {
+      "de-CH": "Lieferhinweise",
+      "fr-CH": "Instructions de livraison",
+      "it-CH": "Istruzioni di consegna",
+      "rm-CH": "Instrucziuns da furniziun"
+    }
+  },
+  "toast": {
+    "use": "Acknowledge a completed action without moving focus away from ongoing work.",
+    "avoid": "Keep validation errors, payment instructions and information needed later in the page itself.",
+    "access": "Use a concise announcement. Give people time and keyboard access to any offered action, and keep persistent outcomes discoverable elsewhere.",
+    "content": "Write one short sentence in the past tense where natural. Name the saved or changed object and omit congratulatory filler.",
+    "example": {
+      "good": "Address saved.",
+      "poor": "Success!"
+    },
+    "copy": {
+      "de-CH": "Adresse gespeichert.",
+      "fr-CH": "Adresse enregistrée.",
+      "it-CH": "Indirizzo salvato.",
+      "rm-CH": "Adressa memorisada."
+    }
+  },
+  "toggle": {
+    "use": "Turn a reversible tool or formatting choice on and off while the tool stays in place.",
+    "avoid": "Use a Button for a one-time command such as printing, and a Switch for a stored preference that applies immediately.",
+    "access": "Keep the name stable and let the pressed state communicate whether the tool is active.",
+    "content": "Use one short tool name in both states. Translate the name of the effect, not the inverse action that follows it.",
+    "example": {
+      "good": "Bold, pressed",
+      "poor": "Turn off bold, pressed"
+    },
+    "copy": {
+      "de-CH": "Fett",
+      "fr-CH": "Gras",
+      "it-CH": "Grassetto",
+      "rm-CH": "Grass"
+    }
+  },
+  "toggle-group": {
+    "use": "Keep two or three peer display modes within reach while the same data stays on screen.",
+    "avoid": "Use Tabs when each choice opens a separate panel of content.",
+    "access": "Name the group and each toggle. Ensure a selected state remains perceptible in monochrome and check keyboard movement through the group.",
+    "content": "Use parallel one- or two-word labels. Repeat the object only in the group name.",
+    "example": {
+      "good": "View: List / Grid",
+      "poor": "Select an option: Default / Mode B"
+    },
+    "copy": {
+      "de-CH": "Ansicht",
+      "fr-CH": "Affichage",
+      "it-CH": "Vista",
+      "rm-CH": "Vista"
+    }
+  },
+  "tooltip": {
+    "use": "Explain a familiar, focusable control or an abbreviation with a short supplementary hint.",
+    "avoid": "Move required information, links or form controls into the page or a Popover.",
+    "access": "Show the hint on focus as well as hover, allow Escape to dismiss it and give the trigger its own accessible name.",
+    "content": "Use a brief phrase that adds information beyond the control label. Keep the full translated hint readable at high zoom.",
+    "example": {
+      "good": "Export / Downloads the filtered rows as CSV",
+      "poor": "Export / Export"
+    },
+    "copy": {
+      "de-CH": "Gefilterte Zeilen exportieren",
+      "fr-CH": "Exporter les lignes filtrées",
+      "it-CH": "Esporta le righe filtrate",
+      "rm-CH": "Exportar las lingias filtradas"
+    }
+  },
+  "trace": {
+    "use": "Expose the sequence of an import or delivery run and let a support engineer open details of individual events.",
+    "avoid": "Use a progress bar for a single completion percentage with no event history.",
+    "access": "Give the trace a label describing the operation. Keep each expandable summary meaningful when its details are collapsed.",
+    "content": "Use past-tense event names of two to five words. Place technical identifiers in the expanded detail.",
+    "example": {
+      "good": "Address list imported",
+      "poor": "Finished stage 2"
+    },
+    "copy": {
+      "de-CH": "Adressliste importiert",
+      "fr-CH": "Liste d’adresses importée",
+      "it-CH": "Elenco degli indirizzi importato",
+      "rm-CH": "Glista d’adressas importada"
+    }
+  },
+  "typography": {
+    "use": "Distinguish the page subject, section headings and running text in a programme or reference page.",
+    "avoid": "A change in text size alone cannot turn a paragraph into a navigable heading.",
+    "access": "Choose the heading level for its place in the outline. Select its visual size independently and check wrapping at text zoom.",
+    "content": "Put the subject in the first words of a title. Keep dates and venue details in the following line in every edition.",
+    "example": {
+      "good": "Spring programme / Events in Bern",
+      "poor": "WELCOME / Here is the list you requested"
+    },
+    "copy": {
+      "de-CH": "Frühlingsprogramm",
+      "fr-CH": "Programme de printemps",
+      "it-CH": "Programma primaverile",
+      "rm-CH": "Program da primavaira"
+    }
+  },
+  "uid-input": {
+    "use": "Collect the Swiss enterprise identification number from a supplier’s registration details.",
+    "avoid": "Use AhvInput for a person’s social insurance number. A UID checksum alone cannot establish an enterprise’s current VAT registration.",
+    "access": "Expand the abbreviation in the label or hint and associate the checksum feedback with the field. Keep the CHE prefix visible in the example.",
+    "content": "Use the national abbreviation familiar to the reader. Present the business identifier separately from any VAT suffix.",
+    "example": {
+      "good": "Enterprise ID · CHE-xxx.xxx.xxx",
+      "poor": "VAT status verified"
+    },
+    "copy": {
+      "de-CH": "Unternehmens-Identifikationsnummer",
+      "fr-CH": "Numéro d’identification des entreprises",
+      "it-CH": "Numero d’identificazione delle imprese",
+      "rm-CH": "Numer d’identificaziun da las interpresas"
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import { CategoryAxis, LineGuides } from './plot-axis.js'
 import type { Ref } from 'react'
 import { PlotFrame, scaleSeries, ValueBar, type PlotProps } from './plot-frame.js'
 import type { ChartDatum } from './chart-datum.js'
@@ -39,8 +40,7 @@ export function ComparisonPlot({ series = [], kind, elementRef, categoryLabel = 
       })}</ol></div>)}</div> : <div className="al-series-line" aria-hidden="true">
       <div className="al-series-scale" data-flat={min === max || undefined}><span>{format(max)}</span>{min !== max && <span>{format(min)}</span>}</div>
       <svg width="100%" height="144" className="al-series-trace">
-        <line x1="0" x2="100%" y1={y(min)} y2={y(min)} />
-        {max !== min && <line x1="0" x2="100%" y1={y(max)} y2={y(max)} />}
+        <LineGuides top={y(max)} bottom={y(min)} />
         {values.map((group, index) => {
           let path = '', previous = false
           for (const [i, label] of categories.entries()) {
@@ -58,7 +58,7 @@ export function ComparisonPlot({ series = [], kind, elementRef, categoryLabel = 
           </g>
         })}
       </svg>
-      <div className="al-series-range"><span>{categories[0]}</span>{categories.length > 1 && <span>{categories.at(-1)}</span>}</div>
+      <CategoryAxis labels={categories} />
     </div>}
     <details><summary>{tableLabel}</summary><div className="al-series-table-scroll" role="region" aria-label={tableLabel} tabIndex={0}><table className="al-series-table">
       <thead><tr><th scope="col">{categoryLabel}</th>{series.map((group, i) => <th scope="col" key={i}>{group.name}</th>)}</tr></thead>

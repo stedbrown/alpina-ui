@@ -25,7 +25,7 @@
 }
 .al-series-bars span, .al-series-table :is(th,td) { overflow-wrap: anywhere; }
 .al-series-bars li > :last-child, .al-series-table tr > :last-child { text-align: end; }
-.al-value-bar rect, .al-series-trace circle { fill: var(--al-accent); }
+.al-value-bar rect:not([fill]), .al-series-trace circle { fill: var(--al-accent); }
 .al-series svg line { stroke: var(--al-control); stroke-width: 1; }
 .al-series-trace > line { stroke: var(--al-line); }
 .al-series-scale[data-flat] { justify-content: center; }
@@ -44,7 +44,7 @@
 .al-series-table th:first-child { padding-inline-start: 0; }
 .al-series-table td:has(svg) { width: 38%; }
 @media (forced-colors: active) {
-  .al-value-bar rect, .al-series-trace circle { fill: CanvasText; }
+  .al-value-bar rect:not([fill]), .al-series-trace circle { fill: CanvasText; }
 }
 
 .al-series-bars li > :last-child, .al-series-table td:last-child,
@@ -59,9 +59,14 @@
 .al-series-legend li line { stroke-width: 3; }
 .al-series-line-group path { stroke: currentColor; stroke-width: 2; fill: none; }
 .al-series-line-group circle { fill: currentColor; }
-.al-series-line-group[data-series="0"], .al-series-legend [data-series="0"] svg { color: var(--al-accent); }
-.al-series-legend rect { fill: currentColor; }
-.al-series-legend [data-series="2"] rect { fill: var(--al-surface); stroke: currentColor; }
+.al-series-line-group[data-series="0"], .al-series-legend [data-series="0"] svg,
+.al-series-bars [data-series="0"] svg { color: var(--al-accent); }
+.al-series-legend rect, .al-series-bars [data-series] rect:not([fill]) { fill: currentColor; }
+.al-series-legend [data-series="2"] rect, .al-series-bars [data-series="2"] rect:not([fill]) {
+  fill: var(--al-surface);
+  stroke: currentColor;
+}
+.al-series-bars [data-series] :is(rect[fill], pattern path) { stroke: currentColor; }
 .al-series-legend li line { stroke: currentColor; }
 .al-series-groups {
   display: grid;
@@ -72,7 +77,18 @@
 .al-series-group { margin-block-start: var(--al-space-4); }
 .al-series-group > strong { grid-column: 1 / -1; }
 .al-series-group .al-series-bars { margin-block-start: var(--al-space-1); }
-.al-series-bars li[data-series="1"] rect { fill: var(--al-ink); }
-.al-series-bars li[data-series="2"] rect { fill: var(--al-surface); stroke: var(--al-control); }
 .al-series-table-scroll { overflow: auto; max-inline-size: 100%; }
 .al-series-table-scroll td { white-space: nowrap; text-align: end; }
+
+.al-value-bar pattern path { fill: none; stroke: var(--al-ink); stroke-width: 1.5; }
+.al-value-bar rect[fill] { stroke: var(--al-ink); }
+.al-series-trace .al-series-guides line { stroke: var(--al-line); }
+.al-series-range { position: relative; }
+.al-series-range:has(.al-series-middle) > span { max-inline-size: 30%; }
+.al-series-middle { position: absolute; transform: translateX(-50%); text-align: center; }
+@media (forced-colors: active) {
+  /* Keep marks and keys in the same system ink, including hollow bars and hatch strokes. */
+  .al-series-bars [data-series] svg, .al-series-legend svg, .al-series-line-group { forced-color-adjust: none; }
+  .al-value-bar rect[fill], .al-value-bar pattern path { forced-color-adjust: none; stroke: CanvasText; }
+  .al-series-trace .al-series-guides line { stroke: GrayText; }
+}

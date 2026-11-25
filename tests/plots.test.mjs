@@ -63,3 +63,15 @@ test('named comparisons align series by category and preserve missing readings i
     assert.match(html(chart, { series: [] }), /No observations/)
   }
 })
+
+test('negative bars have an independent hatch, and line axes label an intermediate category', () => {
+  const data = ['Jan', 'Feb', 'Mar'].map((label, i) => ({ label, value: i - 1 }))
+  const bars = html(BarChart, { data })
+  assert.equal((bars.match(/<pattern /g) ?? []).length, 1)
+  assert.match(bars, /<rect fill="url\(#.+?\)"/)
+  for (const props of [{ data }, { series: [{ name: 'Budget', data }] }]) {
+    const line = html(LineChart, props)
+    assert.match(line, /class="al-series-middle"[^>]*>Feb</)
+    assert.match(line, /class="al-series-guides"[\s\S]*?stroke-dasharray="2 4"/)
+  }
+})

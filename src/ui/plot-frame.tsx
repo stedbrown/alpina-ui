@@ -28,11 +28,15 @@ export function scaleSeries(rows: readonly ChartDatum[], includeZero = true) {
 }
 
 export function ValueBar({ value, position }: { value: number; position: (n: number) => number }) {
+  const hatch = useId() + '-loss'
   const origin = position(0)
   const end = position(value)
   return <svg className="al-value-bar" width="100%" height="24" aria-hidden="true">
+    {value < 0 && <defs><pattern id={hatch} width="6" height="6" patternUnits="userSpaceOnUse">
+      <path d="M-1 1L1 -1M0 6L6 0M5 7L7 5" />
+    </pattern></defs>}
     <line x1={origin + '%'} x2={origin + '%'} y1="0" y2="24" />
-    <rect x={Math.min(origin, end) + '%'} y="4" width={Math.abs(end - origin) + '%'} height="16" />
+    <rect fill={value < 0 ? 'url(#' + hatch + ')' : undefined} x={Math.min(origin, end) + '%'} y="4" width={Math.abs(end - origin) + '%'} height="16" />
   </svg>
 }
 

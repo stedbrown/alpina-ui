@@ -51,12 +51,13 @@ const registry = {
 }
 const summaries = new Map((await loadInventory()).map(([name, , , , summary]) => [name, summary]))
 const usageNotes = JSON.parse(await readFile('scripts/component-usage.json', 'utf8'))
-const publicCompanions = { steps: 'ui/form-steps.tsx', 'locale-select': 'swiss/language-switcher.tsx' }
+const publicCompanions = { 'app-shell': 'portal/theme-initialization.ts', steps: 'ui/form-steps.tsx', 'locale-select': 'swiss/language-switcher.tsx' }
 for (const [group, names] of Object.entries(groups)) {
   for (const name of names) {
     const entry = group + '/' + name + '.tsx'
     await access('src/' + entry)
     const files = dependencies(entry)
+    if (files.has('ui/icon.tsx')) files.add('ui/OCTICONS-LICENSE.txt')
     if (files.has('swiss/locale-context.internal.ts')) dependencies('swiss/alpina-provider.ts', files)
     if (publicCompanions[name]) dependencies(publicCompanions[name], files)
     if (files.has('swiss/format-chf.ts') || files.has('swiss/format-swiss-date.ts') || files.has('swiss/format-swiss-number.ts'))

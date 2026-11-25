@@ -7,9 +7,9 @@ import { Footer, Masthead, PageHeading } from './pages.js'
 
 const groups = {
   Navigation: ['arrow-right', 'arrow-left', 'arrow-up-right', 'chevron-down', 'chevron-right', 'external-link', 'menu', 'search'],
-  Actions: ['plus', 'minus', 'close', 'check', 'copy', 'download', 'filter', 'sort', 'sliders'],
+  Actions: ['plus', 'minus', 'close', 'check', 'copy', 'download', 'filter', 'sort', 'sliders', 'theme-auto', 'sun', 'moon'],
   Content: ['grid', 'list', 'table', 'calendar', 'clock', 'document', 'folder', 'book', 'map-pin', 'info'],
-  Development: ['code', 'git-branch', 'git-commit', 'repository', 'star'],
+  Development: ['code', 'github', 'git-branch', 'git-commit', 'repository', 'star'],
 } satisfies Record<string, IconName[]>
 
 const searchTerms: Partial<Record<IconName, string>> = {
@@ -25,7 +25,7 @@ export function Icons() {
   return <>
     <Masthead current="icons" />
     <PageRegion as="main" id="content" tabIndex={-1}>
-      <PageHeading title="Alpina icons" summary={`${iconNames.length} original pictograms drawn on a 24-unit grid. Choose a size and copy the JSX.`}>
+      <PageHeading title="Alpina icons" summary={`${iconNames.length} interface symbols on a 24-unit grid, including the GitHub mark. Choose a size and copy the JSX.`}>
         <Stack align="start"><TextLink href="/docs/components/icon/">Icon usage and API <Icon name="arrow-right" size={16} /></TextLink></Stack>
       </PageHeading>
       <template id="icon-tools">

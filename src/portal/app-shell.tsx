@@ -102,5 +102,5 @@ export function AppShell({
   )
 }
 
-export { AppearanceButton, type AppearanceButtonProps } from './appearance-button.internal.js'
+export { AppearanceButton, ThemeToggle, type AppearanceButtonProps } from './appearance-button.internal.js'
 export { ComponentPreview, type ComponentPreviewProps } from './component-preview.internal.js'

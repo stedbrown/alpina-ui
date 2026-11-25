@@ -7,7 +7,7 @@ import { createElement } from 'react'
 import { renderToStaticMarkup, renderToString } from 'react-dom/server'
 import { Marked, marked } from 'marked'
 import {
-  CodeSample, GridOverlay, InlineCode, NavigationMenu, PageRegion, Table, TableBody, TableCell,
+  CodeSample, themeInitializationScript, GridOverlay, InlineCode, NavigationMenu, PageRegion, Table, TableBody, TableCell,
   TableHead, TableHeader, TableRow, TextLink, Typography, parseCivilDate,
 } from 'alpina-ui'
 import { deploymentLinks, siteMetadata, siteUrl } from './site-config.mjs'
@@ -59,25 +59,7 @@ const guideMarkdown = new Marked({ renderer: {
 } })
 export function renderGuide(markdown) { return guideMarkdown.parse(deploymentLinks(markdown)) }
 
-// Apply the saved catalog appearance before the first paint on every public page.
-function initializeAppearance() {
-  const key = 'alpina-catalog-theme'
-  const root = document.documentElement
-  function apply(mode) {
-    root.dataset.alTheme = mode === 'dark' || mode === 'light' ? mode : 'auto'
-  }
-  try { apply(localStorage.getItem(key)) } catch { apply('auto') }
-  document.addEventListener('click', event => {
-    if (!event.target.closest?.('[data-site-appearance]')) return
-    const next = { auto: 'light', light: 'dark', dark: 'auto' }[root.dataset.alTheme]
-    apply(next)
-    try { localStorage.setItem(key, next) } catch { /* Storage can be disabled. */ }
-  })
-  window.addEventListener('storage', event => {
-    if (event.key === key || event.key === null) apply(event.newValue)
-  })
-}
-export const appearanceHead = '<script>(' + initializeAppearance.toString() + ')()</script>'
+export const appearanceHead = '<script>' + themeInitializationScript + '</script>'
 
 const escape = (text) => String(text).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
 const sha = (text) => createHash('sha256').update(text).digest('hex').slice(0, 16)

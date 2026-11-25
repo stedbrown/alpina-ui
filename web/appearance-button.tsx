@@ -1,5 +1,5 @@
-import { AppearanceButton as ThemeControl } from 'alpina-ui'
+import { ThemeToggle } from 'alpina-ui'
 
 export function AppearanceButton() {
-  return <ThemeControl data-site-appearance="" title="Change appearance" />
+  return <ThemeToggle data-site-appearance="" title="Change appearance" />
 }

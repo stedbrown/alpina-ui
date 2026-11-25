@@ -663,7 +663,8 @@
       "files": [
         "theme.css",
         "ui/icon.tsx",
-        "ui/icon.css"
+        "ui/icon.css",
+        "ui/OCTICONS-LICENSE.txt"
       ]
     },
     {
@@ -1584,6 +1585,9 @@
         "ui/button.css",
         "portal/app-shell.css",
         "portal/appearance-button.internal.tsx",
+        "portal/theme-initialization.ts",
+        "ui/icon.tsx",
+        "ui/icon.css",
         "portal/appearance-button.internal.css",
         "portal/component-preview.internal.tsx",
         "ui/label.tsx",
@@ -1592,7 +1596,8 @@
         "ui/select-enhancement.internal.tsx",
         "ui/select-picker.internal.ts",
         "ui/select.css",
-        "portal/component-preview.internal.css"
+        "portal/component-preview.internal.css",
+        "ui/OCTICONS-LICENSE.txt"
       ]
     },
     {
@@ -1614,12 +1619,15 @@
       "group": "portal",
       "entry": "portal/navigation-menu.tsx",
       "summary": "Group links and identify the current page.",
-      "usage": "Label the navigation and mark the current link. In touch layouts each link gets a 44px target and its padding follows the writing direction.",
+      "usage": "Use a named navigation landmark and mark its current link. With horizontal orientation, collapseLabel supplies a button for the narrow-screen link panel. The browser opens the panel with Enter or Space and returns focus on Escape, even without JavaScript. Choose a paper, ink or accent surface for a navigation bar. Pass a NavigationBrand through brand and release links, repository links and ThemeToggle through actions. ThemeToggle follows the device until a reader chooses light or dark, persists the preference, and accepts translated labels.",
       "files": [
         "theme.css",
         "portal/navigation-menu.tsx",
+        "ui/icon.tsx",
+        "ui/icon.css",
         "ui/slot.tsx",
-        "portal/navigation-menu.css"
+        "portal/navigation-menu.css",
+        "ui/OCTICONS-LICENSE.txt"
       ]
     },
     {

@@ -18,6 +18,10 @@ export interface NavigationSection {
 export interface NavigationMenuProps extends Omit<ComponentPropsWithoutRef<'nav'>, 'children'> {
   label: string
   sections: readonly NavigationSection[]
+  /** Home link or identity placed at the leading grid edge. */
+  brand?: ReactNode
+  /** Utilities after the route links, such as a release link and ThemeToggle. */
+  actions?: ReactNode
   orientation?: 'vertical' | 'horizontal'
   /** Foreground and background for this navigation. Otherwise follow the surrounding theme. */
   surface?: 'paper' | 'ink' | 'accent'
@@ -29,7 +33,9 @@ export interface NavigationMenuProps extends Omit<ComponentPropsWithoutRef<'nav'
 export const NavigationMenu = forwardRef<HTMLElement, NavigationMenuProps>(function NavigationMenu({
   label,
   sections,
-  orientation = 'vertical',
+  brand,
+  actions,
+  orientation = brand || actions ? 'horizontal' : 'vertical',
   collapseLabel,
   surface,
   align = 'start',
@@ -70,13 +76,40 @@ export const NavigationMenu = forwardRef<HTMLElement, NavigationMenuProps>(funct
     ))
   return (
     <nav {...props} ref={ref} aria-label={label} className={('al-navigation ' + className).trim()}
-      data-orientation={orientation} data-collapsible={collapsible || undefined} data-align={align} data-surface={surface}>
-      {collapsible ? <>
-        <button type="button" className="al-navigation-trigger" popoverTarget={panelId} aria-controls={panelId}>
-          <Icon name="menu" size={18} />{collapseLabel}
-        </button>
-        <div className="al-navigation-links" id={panelId} popover="auto">{links}</div>
-      </> : <div className="al-navigation-links">{links}</div>}
+      data-framed={brand || actions ? '' : undefined} data-orientation={orientation} data-collapsible={collapsible || undefined} data-align={align} data-surface={surface}>
+      <div className="al-navigation-layout" data-bar={brand || actions ? '' : undefined}>
+        {brand && <div className="al-navigation-brand-slot">{brand}</div>}
+        {collapsible ? <>
+          <button type="button" className="al-navigation-trigger" popoverTarget={panelId} aria-controls={panelId}>
+            <Icon name="menu" size={18} /><span>{collapseLabel}</span>
+          </button>
+          <div className="al-navigation-links" id={panelId} popover="auto">{links}</div>
+        </> : <div className="al-navigation-links">{links}</div>}
+        {actions && <div className="al-navigation-actions">{actions}</div>}
+      </div>
     </nav>
   )
+})
+
+export interface NavigationBrandProps extends ComponentPropsWithoutRef<'a'> {
+  /** Image URL for the brand mark. The adjacent name supplies its alternative text. */
+  logo?: string
+}
+export const NavigationBrand = forwardRef<HTMLAnchorElement, NavigationBrandProps>(function NavigationBrand(
+  { logo, children, className = '', ...props }, ref,
+) {
+  return <a {...props} ref={ref} className={('al-navigation-brand ' + className).trim()}>
+    {logo && <img src={logo} alt="" width="32" height="32" />}{children}
+  </a>
+})
+
+export interface NavigationActionProps extends ComponentPropsWithoutRef<'a'> {
+  icon?: ReactNode
+}
+export const NavigationAction = forwardRef<HTMLAnchorElement, NavigationActionProps>(function NavigationAction(
+  { icon, children, className = '', ...props }, ref,
+) {
+  return <a {...props} ref={ref} className={('al-navigation-action ' + className).trim()} data-icon={icon ? '' : undefined}>
+    {icon}<span>{children}</span>
+  </a>
 })

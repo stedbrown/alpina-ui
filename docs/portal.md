@@ -13,6 +13,31 @@ The catalog imports its components from `alpina-ui` and the stylesheet from `alp
 
 The portal application manages search and routing. The public components provide layout, native navigation, and responsive controls. Every catalog entry offers the source files shipped with the library.
 
+## A site header
+
+Pass the home link through `brand` and utilities through `actions`. `NavigationBrand` accepts a logo URL and visible name. `NavigationAction` keeps its accessible label when an icon is shown on its own at phone widths.
+
+```tsx
+import { Icon, NavigationAction, NavigationBrand, NavigationMenu, ThemeToggle } from 'alpina-ui'
+
+<NavigationMenu label="Primary" collapseLabel="Menu"
+  brand={<NavigationBrand href="/" logo="/studio.svg">Studio</NavigationBrand>}
+  actions={<>
+    <NavigationAction href="/releases/">v2.0</NavigationAction>
+    <NavigationAction href="https://github.com/example/studio" icon={<Icon name="github" size={18} />}>GitHub</NavigationAction>
+    <ThemeToggle />
+  </>}
+  sections={[{ links: [
+    { href: "/work/", label: "Work", current: true },
+    { href: "/contact/", label: "Contact" },
+  ] }]}
+/>
+```
+
+ThemeToggle starts in automatic mode, follows the device preference and cycles to light and dark. Its icon and accessible action label change together. The choice persists in local storage and synchronizes across tabs. Supply translated `labels` for the three modes. For server-rendered pages, put `themeInitializationScript` in a script in the document head to apply the saved preference before paint. Apply your site's script nonce when required. A page with scripting disabled keeps the system preference and the navigation links.
+
+The GitHub symbol reproduces the GitHub Invertocat from Primer Octicons. Use it to link to a project on GitHub. [GitHub brand guidelines](https://brand.github.com/foundations/logo) · [Octicons MIT license](https://github.com/primer/octicons/blob/main/LICENSE)
+
 ## A sidebar with router links
 
 Supply the brand once. The shell keeps it above the index on desktop and beside its disclosure on mobile. `SideNav` provides a named navigation landmark and list. Set `active` on the current link to show its rule and expose `aria-current="page"`. With `asChild`, the router owns the anchor and its URL.

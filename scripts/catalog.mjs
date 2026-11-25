@@ -246,6 +246,7 @@ for (const [file, label] of scannerNotices) notices.push(label + '\n' + await re
 notices.unshift('Alpina UI\n' + license)
 notices.push(await readFile('src/swiss/UNICODE-LICENSE.txt', 'utf8'))
 notices.push('Postal localities ©swisstopo. https://www.swisstopo.admin.ch/en/terms-of-use-free-geodata-and-geoservices')
+notices.push(await readFile('src/ui/OCTICONS-LICENSE.txt', 'utf8'))
 notices.push('Inter\n' + await readFile('src/fonts/OFL.txt', 'utf8'))
 const offlineFonts = await build({
   entryPoints: ['src/fonts.css'], bundle: true, write: false, minify: true, loader: { '.woff2': 'dataurl' },

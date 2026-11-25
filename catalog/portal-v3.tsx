@@ -1,4 +1,4 @@
-import { AppShell, Sidebar, SideNav, SideNavLink, NavigationMenu, CodeBlock, TextLink, Prose, Typography } from 'alpina-ui'
+import { AppShell, Sidebar, SideNav, SideNavLink, NavigationMenu, NavigationBrand, NavigationAction, ThemeToggle, CodeBlock, TextLink, Prose, Typography } from 'alpina-ui'
 
 export function AppShellExample() {
   return (
@@ -51,15 +51,13 @@ export function NavigationMenuExample() {
   return (
     <NavigationMenu
       label="Handbook contents"
-      sections={[
-        {
-          title: 'Documentation',
-          links: [
-            { href: '#navigation-menu', label: 'Navigation', current: true },
-            { href: '#guide/design', label: 'Swiss design research' },
-          ],
-        },
-      ]}
+      collapseLabel="Menu"
+      brand={<NavigationBrand href="#navigation-menu">Handbook</NavigationBrand>}
+      actions={<><NavigationAction href="#guide/release">Releases</NavigationAction><ThemeToggle /></>}
+      sections={[{ links: [
+        { href: '#navigation-menu', label: 'Navigation', current: true },
+        { href: '#guide/design', label: 'Design' }
+      ] }]}
     />
   )
 }

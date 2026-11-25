@@ -254,9 +254,11 @@ try {
   await focused(preview.locator('.al-app-main'))
 
   await visit('navigation-menu')
-  const destinations = role('navigation').getByRole('link')
-  await destinations.first().press('Tab')
-  await focused(destinations.nth(1))
+  const handbook = role('navigation')
+  const menuButton = handbook.getByRole('button', { name: 'Menu', exact: true })
+  if (await menuButton.isVisible()) await menuButton.press('Enter')
+  await handbook.getByRole('link', { name: 'Navigation', exact: true }).press('Tab')
+  await focused(handbook.getByRole('link', { name: 'Design', exact: true }))
 
   await visit('pagination')
   await role('link', 'Page 2').press('Enter')

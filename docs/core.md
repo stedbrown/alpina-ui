@@ -222,7 +222,7 @@ export function Reservations() {
 
 ## Collecting files
 
-`FileInput` accepts a local file by keyboard, pointer, drop or clipboard paste. Use `multiple` to collect several files across selections. Each row shows its filename, localized size and remove action. The component announces changes and validates `accept` for all three input methods. A rejected selection preserves the existing files. Validate the file contents again in your receiving application.
+`FileInput` accepts a local file by keyboard, pointer, drop or clipboard paste. Use `multiple` to collect several files across selections. Each row shows its filename, localized size and remove action. The component announces changes and validates `accept` for all three input methods. Set `maxSize` in bytes per file and `maxFiles` for the entire selection. An oversized file, unsupported type or excess file count rejects the entire incoming batch and preserves the previous selection. Validate the file contents again in your receiving application.
 
 ```tsx
 <form method="post" action="/evidence" encType="multipart/form-data">

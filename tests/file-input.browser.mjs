@@ -14,8 +14,10 @@ const app = await build({ stdin: { resolveDir: process.cwd(), contents: [
   'import {Attachment, Dropzone} from "alpina-ui"',
   'function App() {',
   '  const [files,setFiles] = useState([])',
+  '  const [locale,setLocale] = useState("fr-CH")',
   '  return h("form",{id:"evidence"},',
-  '    h(Dropzone,{id:"proof",name:"proof",multiple:true,required:true,accept:".txt",locale:"fr-CH"}),',
+  '    h(Dropzone,{id:"proof",name:"proof",multiple:true,required:true,maxFiles:3,maxSize:1250,accept:".txt",locale}),',
+  '    h("select",{"aria-label":"File language",value:locale,onChange:e=>setLocale(e.target.value)},["en","de-CH","fr-CH","it-CH","rm-CH"].map(lang=>h("option",{key:lang},lang))),',
   '    h(Attachment,{mode:"upload",id:"draft",name:"draft",files,onFilesChange:setFiles,locale:"rm-CH"}),',
   '    h("button",{type:"button",onClick:()=>setFiles([new File(["original bytes"],"draft.txt")])},"Restore"),',
   '    h("button",{type:"reset"},"Reset"), h("button",{type:"submit"},"Send"))',
@@ -79,6 +81,22 @@ try {
   await transfer(input, 'drop', ['blocked.png'])
   await zone.getByRole('alert').getByText('Choisissez un type de fichier pris en charge.').waitFor()
   assert.equal((await payload(input)).length, 3)
+  await transfer(input, 'paste', ['fourth.txt'])
+  await zone.getByRole('alert').getByText('Nombre maximal de fichiers : 3.').waitFor()
+  const pickerLanguage = page.getByRole('combobox', { name: 'File language' })
+  for (const [locale, countLabel] of [['en', 'Maximum number'], ['de-CH', 'Anzahl Dateien'], ['it-CH', 'Numero massimo'], ['rm-CH', 'Dumber maximal']]) {
+    await pickerLanguage.selectOption(locale)
+    await zone.getByRole('alert').getByText(new RegExp(countLabel + '.*3')).waitFor()
+  }
+  await pickerLanguage.selectOption('fr-CH')
+  await input.setInputFiles({ name: 'large.txt', mimeType: 'text/plain', buffer: Buffer.alloc(1251) })
+  await zone.getByRole('alert').getByText(/Taille maximale par fichier/).waitFor()
+  for (const [locale, sizeLabel] of [['en', 'Maximum size'], ['de-CH', 'Dateigrösse'], ['it-CH', 'Dimensione massima'], ['rm-CH', 'Grondezza maximala']]) {
+    await pickerLanguage.selectOption(locale)
+    await zone.getByRole('alert').getByText(new RegExp(sizeLabel)).waitFor()
+  }
+  await pickerLanguage.selectOption('fr-CH')
+  assert.deepEqual((await payload(input)).map(([name]) => name), ['first.txt', 'second.txt', 'clipboard.txt'])
   await zone.getByRole('button', { name: 'Retirer second.txt' }).press('Enter')
   assert.ok(await input.evaluate(node => document.activeElement === node))
   await zone.getByRole('status').getByText(/Retrait.*second.txt/).waitFor()

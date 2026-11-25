@@ -11,8 +11,14 @@ export interface FileInputProps extends Omit<ComponentPropsWithoutRef<'input'>, 
   locale?: SwissMessageLocale
   /** Supply actual Files to restore or control both the visible list and native form value. */
   files?: readonly File[]
+  /** Maximum size of each file in bytes. */
+  maxSize?: number
+  /** Maximum file count across selections. */
+  maxFiles?: number
   onFilesChange?: (files: File[]) => void
 }
+
+type FileError = '' | 'unsupported' | 'one' | 'required' | { kind: 'tooLarge' | 'tooMany'; limit: number }
 
 const useBrowserLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect
 
@@ -42,7 +48,7 @@ function fileSize(bytes: number, locale: SwissMessageLocale) {
 }
 
 export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(function FileInput({
-  id, locale = 'en', files, onFilesChange, accept, multiple = false, disabled, className = '',
+  id, locale = 'en', files, onFilesChange, maxSize, maxFiles, accept, multiple = false, disabled, className = '',
   onChange, onInvalid, 'aria-describedby': describedBy, ...props
 }, ref) {
   const uid = useId()
@@ -52,7 +58,7 @@ export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(function F
   const [local, setLocal] = useState<File[]>([])
   const selected = files ?? local
   const [dragging, setDragging] = useState(false)
-  const [error, setError] = useState<'unsupported' | 'one' | 'required' | ''>('')
+  const [error, setError] = useState<FileError>('')
   const [notice, setNotice] = useState<{ action: 'added' | 'removed'; names: string }>()
   const words = fileWords[locale]
   const change = useRef(onFilesChange)
@@ -88,9 +94,17 @@ export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(function F
       setError(!multiple && incoming.length > 1 ? 'one' : 'unsupported')
       return
     }
+    if (maxSize !== undefined && incoming.some(file => file.size > maxSize)) {
+      setError({ kind: 'tooLarge', limit: maxSize })
+      return
+    }
     const next = multiple ? [...selected] : []
     for (const file of incoming) {
       if (!next.includes(file)) next.push(file)
+    }
+    if (maxFiles !== undefined && next.length > maxFiles) {
+      setError({ kind: 'tooMany', limit: maxFiles })
+      return
     }
     setError('')
     if (incoming.length) setNotice({ action: 'added', names: incoming.map(file => file.name).join(', ') })
@@ -172,7 +186,9 @@ export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(function F
       </li>
     ))}</ul>}
     <span className="al-file-announcement" role="status" aria-live="polite" aria-atomic="true">{notice && words[notice.action] + ' · ' + notice.names}</span>
-    {error && <span id={uid + '-error'} className="al-file-error" role="alert">{words[error]}</span>}
+    {error && <span id={uid + '-error'} className="al-file-error" role="alert">{typeof error === 'string' ? words[error] :
+      error.kind === 'tooLarge' ? words.tooLarge.replace('{size}', fileSize(error.limit, locale)) :
+      words.tooMany.replace('{count}', formatSwissNumber(error.limit, locale))}</span>}
   </div>
 })
 

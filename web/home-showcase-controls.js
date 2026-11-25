@@ -3,12 +3,10 @@ import { posterEstimate } from './poster-estimate.js'
 import { enhanceSpecimen } from './type-specimen-controls.js'
 
 function enhanceEstimate(card) {
-  const template = card.querySelector('template')
-  const fallback = card.querySelector('[data-print-summary]')
   const total = card.querySelector('[data-estimate-total]')
-  const copies = template.content.getElementById('poster-copies')
-  const ink = template.content.getElementById('poster-second-ink')
-  const count = template.content.querySelector('[data-copy-count]')
+  const copies = card.querySelector('#poster-copies')
+  const ink = card.querySelector('#poster-second-ink')
+  const count = card.querySelector('[data-copy-count]')
 
   function update() {
     const label = copies.value + ' copies'
@@ -19,25 +17,17 @@ function enhanceEstimate(card) {
 
   copies.addEventListener('input', update)
   ink.addEventListener('change', update)
-  fallback.replaceWith(template.content)
-  template.remove()
-  update()
+  if (copies.value !== copies.defaultValue || ink.checked !== ink.defaultChecked) update()
 }
 
 function enhancePressLog(card) {
-  const template = card.querySelector('template')
-  const select = template.content.querySelector('select')
-  const fallback = card.querySelector('[data-print-weeks]')
-  const weeks = Array.from(fallback.children)
-  const charts = weeks.map((week) => week.querySelector('figure'))
-  const initial = Math.max(0, weeks.findIndex((week) => week.open))
-  const hadFocus = fallback.contains(document.activeElement)
-  select.selectedIndex = initial
-  fallback.replaceChildren(charts[initial])
-  fallback.before(template.content)
-  template.remove()
-  select.addEventListener('change', () => fallback.replaceChildren(charts[select.selectedIndex]))
-  if (hadFocus) select.focus()
+  const select = card.querySelector('#press-week')
+  const charts = card.querySelectorAll('[data-print-weeks] > figure')
+  function update() {
+    charts.forEach((chart, index) => { chart.hidden = index !== select.selectedIndex })
+  }
+  select.addEventListener('change', update)
+  if (select.selectedIndex !== 0) update()
 }
 
 const estimate = document.getElementById('poster-estimate')

@@ -39,7 +39,7 @@ export function Preview({ visible, children }: { visible: boolean; children: Rea
             <option value="480">480 px</option>
             <option value="768">768 px</option>
           </Select>
-          <span aria-label={'Actual width ' + measured + ' pixels'}>{measured || '—'} px</span>
+          <span aria-label={measured ? 'Actual width ' + measured + ' pixels' : undefined}>{measured ? measured + ' px' : ''}</span>
         </div>
       </div>
       <div className="preview-stage">

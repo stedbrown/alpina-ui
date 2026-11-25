@@ -331,7 +331,7 @@ textarea {
   padding-block: 0.2rem;
 }
 .sample-size > span {
-  min-width: 5.5ch;
+  width: 7ch;
   text-align: end;
   font: var(--al-type-caption)/var(--al-leading-caption) var(--al-mono);
 }

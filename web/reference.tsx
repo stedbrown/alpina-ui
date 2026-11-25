@@ -9,6 +9,7 @@ export { DesignerKit } from './kit.js'
 export { Icons } from './icons.js'
 export { Themes } from './themes.js'
 export { Principles } from './principles.js'
+export { blockDemos } from './block-demos.js'
 export { Blocks, BlockPage, blocks } from './blocks.js'
 export { projects } from './projects.js'
 export { inventory }

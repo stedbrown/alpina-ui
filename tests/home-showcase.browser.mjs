@@ -10,15 +10,53 @@ const browser = await chromium.launch(
   executable ? { executablePath: executable } : existsSync(chromium.executablePath()) ? {} : { channel: 'chrome' },
 )
 
-async function homepage(javaScriptEnabled) {
-  const page = await browser.newPage({ javaScriptEnabled })
-  await page.route(origin + '/**', route => {
+async function homepage(javaScriptEnabled, viewport, beforeModule) {
+  const page = await browser.newPage({ javaScriptEnabled, viewport })
+  await page.route(origin + '/**', async route => {
     const { pathname } = new URL(route.request().url())
+    if (beforeModule && /^\/assets\/showcase-[\w-]+\.js$/.test(pathname)) await beforeModule()
     const file = pathname === '/' ? 'index.html' : pathname.slice(1)
     return route.fulfill({ path: fileURLToPath(new URL(file, site)) })
   })
-  await page.goto(origin)
+  await page.goto(origin, { waitUntil: beforeModule ? 'commit' : 'load' })
   return page
+}
+
+// Delay the actual external module until the browser has laid out the complete page.
+async function verifyInitialGeometry(viewport) {
+  let release
+  let requested
+  const gate = new Promise(resolve => { release = resolve })
+  const entered = new Promise(resolve => { requested = resolve })
+  const page = await homepage(true, viewport, async () => { requested(); await gate })
+  function measure() {
+    const selectors = [
+      '#type-specimen', '#type-specimen [role="tablist"]', '#type-specimen [role="tabpanel"]:not([hidden]) time',
+      '#poster-estimate', '#poster-copies', '#poster-estimate [data-estimate-total]',
+      '#press-log', '#press-week', '#press-log [data-print-weeks]', '#press-log [data-print-weeks] figure:not([hidden])',
+      '#press-log .al-card-footer',
+    ]
+    return selectors.map(selector => {
+      const box = document.querySelector(selector)?.getBoundingClientRect()
+      if (!box?.width || !box?.height) throw Error('Missing initial showcase element: ' + selector)
+      return [selector, box.x, box.y, box.width, box.height]
+    })
+  }
+  try {
+    await entered
+    await page.locator('#press-log .al-card-footer').waitFor()
+    await page.waitForFunction(() => document.querySelector('link[rel="stylesheet"][href*="/fonts-"]').sheet)
+    await page.evaluate(() => document.fonts.ready)
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))))
+    const first = await page.evaluate(measure)
+    release()
+    await page.waitForLoadState('load')
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))))
+    assert.deepEqual(await page.evaluate(measure), first, 'Loading showcase handlers moved the layout at ' + viewport.width + ' px')
+  } finally {
+    release()
+    await page.close()
+  }
 }
 
 async function checkSecondWeek(chart) {
@@ -28,6 +66,7 @@ async function checkSecondWeek(chart) {
 }
 
 try {
+  for (const viewport of [{ width: 390, height: 844 }, { width: 1350, height: 940 }]) await verifyInitialGeometry(viewport)
   const page = await homepage(true)
   const estimate = page.getByRole('region', { name: 'Poster estimate' })
   const slider = estimate.getByRole('slider', { name: 'Edition size' })
@@ -69,12 +108,12 @@ try {
   assert.equal(await staticEstimate.getByRole('slider').count(), 0)
 
   const staticLog = staticPage.getByRole('region', { name: 'Press log' })
-  await staticLog.getByText('22–26 March 2027', { exact: true }).press('Enter')
+  await staticLog.locator('[data-showcase-fallback]').getByText('22–26 March 2027', { exact: true }).press('Enter')
   await checkSecondWeek(staticLog.getByRole('figure', { name: 'Hours on press' }))
   const staticInvoice = staticPage.getByRole('region', { name: 'Invoice AP-104' })
-  await staticInvoice.getByText('Italian', { exact: true }).press('Enter')
-  assert.ok(await staticInvoice.getByText('Totale fattura').isVisible())
-  console.log('Homepage print estimate, weekly chart and localized invoice passed keyboard and static checks.')
+  await staticInvoice.locator('[data-showcase-fallback]').getByText('Italian', { exact: true }).press('Enter')
+  assert.ok(await staticInvoice.locator('[data-showcase-fallback]').getByText('Totale fattura').isVisible())
+  console.log('Homepage showcase geometry stayed fixed before and after the module loaded. Keyboard and no-script examples passed.')
 } finally {
   await browser.close()
 }

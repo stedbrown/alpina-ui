@@ -3,7 +3,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { build } from 'esbuild'
 import { createElement } from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
+import { renderToStaticMarkup, renderToString } from 'react-dom/server'
 import { marked } from 'marked'
 import { buildDesignerKit } from './designer-kit.mjs'
 
@@ -40,6 +40,31 @@ const siteName = 'Alpina UI'
 const escape = (text) => String(text).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
 const sha = (text) => createHash('sha256').update(text).digest('hex').slice(0, 16)
 const render = (component, props) => renderToStaticMarkup(createElement(component, props))
+
+// A reader can reach the prerendered index trigger before the catalog module arrives.
+function rememberIndexIntent() {
+  const root = document.getElementById('app')
+  const trigger = root.querySelector('.al-app-mobile button[aria-expanded]')
+  const listeners = new AbortController()
+  const options = { capture: true, signal: listeners.signal }
+  root.addEventListener('click', event => {
+    if (event.target.closest?.('button') !== trigger) return
+    event.stopPropagation()
+    root.dataset.indexIntent = root.dataset.indexIntent ? '' : 'browse'
+  }, options)
+  window.addEventListener('keydown', event => {
+    if (event.defaultPrevented || event.isComposing || document.querySelector('dialog[open]')) return
+    const command = event.key.toLowerCase() === 'k' && (event.ctrlKey || event.metaKey)
+    const slash = event.key === '/' && !event.ctrlKey && !event.metaKey && !event.altKey &&
+      !event.target.closest?.('input,textarea,select,[contenteditable=true]')
+    if (!command && !slash) return
+    event.preventDefault()
+    event.stopPropagation()
+    root.dataset.indexIntent = 'search'
+  }, options)
+  root.addEventListener('alpina-index-ready', () => listeners.abort(), { once: true })
+}
+const indexIntentScript = '<script>(' + rememberIndexIntent.toString() + ')()</script>'
 
 // Keep the proofing layer outside the app root so it works on static and hydrated routes.
 const overlay = render(GridOverlay, { hidden: true, 'data-site-grid': '' })
@@ -78,8 +103,8 @@ async function loadPages() {
   return import('data:text/javascript;base64,' + Buffer.from(result.outputFiles[0].contents).toString('base64'))
 }
 
-export async function buildWebsite({ guides, guideFiles, apiReference, registry, script, css, notices }) {
-  const { Landing, Examples, DesignerKit, Icons, Themes, Principles, Blocks, BlockPage, blocks, ComponentDirectory, ComponentStatus, ReferencePage, ExampleIntroduction, inventory, projects } = await loadPages()
+export async function buildWebsite({ guides, guideFiles, apiReference, registry, script, css, notices, renderComponent }) {
+  const { Landing, Examples, DesignerKit, Icons, Themes, Principles, Blocks, BlockPage, blockDemos, blocks, ComponentDirectory, ComponentStatus, ReferencePage, ExampleIntroduction, inventory, projects } = await loadPages()
   const paths = []
   const appJS = '/assets/catalog-' + sha(script) + '.js'
   const appCSS = '/assets/catalog-' + sha(css) + '.css'
@@ -89,7 +114,9 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
     entryPoints: ['src/fonts.css'], bundle: true, write: false, outdir: 'assets', minify: true,
     assetNames: '[name]-[hash]', loader: { '.woff2': 'file' },
   })
-  const fontCSS = fontBuild.outputFiles.find(file => file.path.endsWith('.css')).text
+  // Public pages preload the Latin face. Optional display avoids a late font swap on a slow connection.
+  const fontCSS = fontBuild.outputFiles.find(file => file.path.endsWith('.css')).text.replaceAll('font-display:swap', 'font-display:optional')
+  const latinFont = '/assets/' + path.basename(fontBuild.outputFiles.find(file => /inter-latin-wght-normal-.*\.woff2$/.test(file.path)).path)
   const fontsURL = '/assets/fonts-' + sha(fontCSS) + '.css'
   const showcaseBuild = await build({
     entryPoints: ['web/home-showcase-controls.js'], bundle: true, format: 'esm',
@@ -140,17 +167,21 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
       '<meta property="og:url" content="' + escape(url) + '"><meta property="og:image" content="' + previewURL + '">',
       '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">',
       '<meta name="twitter:card" content="summary_large_image"><meta property="og:image:alt" content="Alpina UI homepage with a print estimate, a Swiss invoice and a press-hours chart">',
+      '<link rel="preload" as="font" type="font/woff2" crossorigin href="' + latinFont + '">',
       '<link rel="license" href="/third-party-notices.txt"><link rel="stylesheet" href="' + (options.app ? appCSS : coreCSS) + '">',
       '<link rel="stylesheet" href="' + fontsURL + '">',
       appearanceHead,
     ]
     if (options.redirect) tags.push('<script>' + options.redirect + '</script>')
-    if (options.showcase) tags.push('<script type="module" src="' + showcaseJS + '"></script>')
+    if (options.showcase) tags.push(
+      '<script>document.documentElement.dataset.showcaseJs=""</script>',
+      '<style>html[data-showcase-js] [data-showcase-fallback],html:not([data-showcase-js]) [data-showcase-live]{display:none!important}</style>',
+      '<script type="module" src="' + showcaseJS + '"></script>')
     if (options.icons) tags.push('<script type="module" src="' + iconsJS + '"></script>')
     if (options.theme) tags.push('<script type="module" src="' + themeJS + '"></script>')
     if (options.block) tags.push('<script type="module" src="' + blockJS + '"></script>')
     if (options.filter) tags.push('<script type="module" src="' + filterJS + '"></script>')
-    const content = options.app ? '<div id="app">' + body + '</div><script type="module" src="' + appJS + '"></script>' : body
+    const content = options.app ? '<div id="app"' + (options.prerender ? ' data-prerendered' : '') + '>' + body + '</div>' + (options.noScript ?? '') + (options.prerender ? indexIntentScript : '') + '<script type="module" src="' + appJS + '"></script>' : body
     await output(route + 'index.html', '<!doctype html>\n<html lang="en" data-al-theme="auto"><head>' + tags.join('\n') + '</head><body data-al-page>' + siteGrid + content + '</body></html>')
     paths.push(url)
   }
@@ -178,7 +209,7 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
   await page(reviewRoute, 'Portal design review', 'Compare the Alpina homepage, component directory and reference before and after the 0.11 release.', render(ReferencePage, { html: review }))
   await page('/blocks/', 'Page blocks', 'Copy complete login, dashboard, account settings and CHF pricing pages with the Alpina CLI.', render(Blocks))
   for (const block of blocks) {
-    await page('/blocks/' + block.slug + '/', block.title + ' block', block.detail, render(BlockPage, { block }), { block: true })
+    await page('/blocks/' + block.slug + '/', block.title + ' block', block.detail, render(BlockPage, { block, preview: renderToString(await blockDemos[block.slug]()) }), { block: true })
   }
   await page('/examples/', 'Example projects', 'Try workshop registration, invoice review, a bilingual studio address book and a client directory built with Alpina UI.', render(Examples))
   await page('/docs/components/', 'Component index', 'Find a React component by name, task or category and open its preview, source code and API.', render(ComponentDirectory), { filter: true })
@@ -219,14 +250,14 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
     guideLinks.push('- [' + title + '](' + origin + '/reference/' + key + '.md)')
   }
 
-  for (const [slug, name, title, group, description] of inventory) {
-    const { usage } = registry.items.find((entry) => entry.name === slug)
+  for (const [slug, name, title, , description] of inventory) {
     const contracts = apiReference[slug].map((part) => {
       const props = part.props.map((p) => '<li><code>' + escape(p.name) + '</code> — ' + (p.required ? 'required' : 'optional') + ', <code>' + escape(p.type) + '</code></li>').join('')
       return '<h2>' + escape(part.name) + '</h2>' + (props ? '<ul>' + props + '</ul>' : '<p>Accepts the documented native element attributes.</p>')
     }).join('')
-    const html = '<p>' + escape(group) + '</p><h1>' + escape(name) + '</h1><p>' + escape(description) + '</p><h2>Usage notes</h2><p>' + escape(usage) + '</p>' + contracts + '<p><a href="/docs/components/">Component index</a></p>'
-    await page('/docs/components/' + slug + '/', name + ' — ' + title, description, render(ReferencePage, { html }), { app: true })
+    const route = '/docs/components/' + slug
+    const body = renderComponent(route)
+    await page(route + '/', name + ' — ' + title, description, body, { app: true, prerender: true, noScript: '<noscript><section aria-label="Component API">' + contracts + '</section></noscript>' })
   }
   const index = [
     '# Alpina UI', '', '> React components for Swiss typography and multilingual interfaces. The current release is ' + registry.version + '.', '',

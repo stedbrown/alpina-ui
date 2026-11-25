@@ -23,26 +23,24 @@ function PrintEstimate() {
         <CardDescription>A2 on uncoated stock, 140 g/m²</CardDescription>
       </CardHeader>
       <Separator />
-      <Stack gap={1} data-print-summary="">
+      <Stack data-showcase-fallback="" gap={1}>
         <Typography variant="label">{initialCopies} copies · Black ink</Typography>
         <Typography variant="caption">CHF 24 setup + CHF 1.20 per copy</Typography>
       </Stack>
-      <template>
-        <Stack gap={3}>
-          <Stack gap={0}>
-            <Stack direction="row" justify="space-between">
-              <Label htmlFor="poster-copies">Edition size</Label>
-              <Typography as="span" variant="label" numeric data-copy-count="">{initialCopies} copies</Typography>
-            </Stack>
-            <Slider id="poster-copies" min={25} max={250} step={25} defaultValue={initialCopies}
-              aria-valuetext={initialCopies + ' copies'} />
+      <Stack gap={3} data-showcase-live="">
+        <Stack gap={0}>
+          <Stack direction="row" justify="space-between">
+            <Label htmlFor="poster-copies">Edition size</Label>
+            <Typography as="span" variant="label" numeric data-copy-count="">{initialCopies} copies</Typography>
           </Stack>
-          <Stack direction="row" justify="space-between" wrap={false}>
-            <Label htmlFor="poster-second-ink">Add a second ink</Label>
-            <Switch id="poster-second-ink" />
-          </Stack>
+          <Slider id="poster-copies" min={25} max={250} step={25} defaultValue={initialCopies}
+            aria-valuetext={initialCopies + ' copies'} />
         </Stack>
-      </template>
+        <Stack direction="row" justify="space-between" wrap={false}>
+          <Label htmlFor="poster-second-ink">Add a second ink</Label>
+          <Switch id="poster-second-ink" />
+        </Stack>
+      </Stack>
       <Stack gap={1} role="status" aria-atomic="true">
         <Typography variant="caption">Estimated total</Typography>
         <Typography variant="heading" numeric lang="de-CH" data-estimate-total="">
@@ -57,6 +55,12 @@ function PrintEstimate() {
   )
 }
 
+function PressChart({ hours, hidden }: { hours: number[]; hidden?: boolean }) {
+  return <Chart title="Hours on press" hidden={hidden}
+    data={hours.map((value, day) => ({ label: weekdays[day], value }))}
+    categoryLabel="Weekday" valueLabel="Hours" tableLabel="View hours as a table" />
+}
+
 function PressLog() {
   return (
     <Card as="section" id="press-log" aria-label="Press log">
@@ -64,22 +68,22 @@ function PressLog() {
         <Typography variant="label">Basel Print Room</Typography>
         <Icon name="clock" size={20} />
       </Stack>
-      <Stack gap={0} data-print-weeks="">
+      <Stack gap={1} data-showcase-live="">
+        <Label htmlFor="press-week">Reporting week</Label>
+        <Select id="press-week" defaultValue={printWeeks[0].week}>
+          {printWeeks.map(({ week }) => <option key={week}>{week}</option>)}
+        </Select>
+      </Stack>
+      <Stack gap={0} data-print-weeks="" data-showcase-live="">
+        {printWeeks.map(({ week, hours }, index) => <PressChart key={week} hours={hours} hidden={index !== 0} />)}
+      </Stack>
+      <Stack data-showcase-fallback="" gap={0}>
         {printWeeks.map(({ week, hours }, index) => (
           <Collapsible key={week} summary={week} name="press-week" open={index === 0}>
-            <Chart title="Hours on press" data={hours.map((value, day) => ({ label: weekdays[day], value }))}
-              categoryLabel="Weekday" valueLabel="Hours" tableLabel="View hours as a table" />
+            <PressChart hours={hours} />
           </Collapsible>
         ))}
       </Stack>
-      <template>
-        <Stack gap={1}>
-          <Label htmlFor="press-week">Reporting week</Label>
-          <Select id="press-week" defaultValue={printWeeks[0].week}>
-            {printWeeks.map(({ week }) => <option key={week}>{week}</option>)}
-          </Select>
-        </Stack>
-      </template>
       <CardFooter><TextLink href="/docs/components/chart/">Chart component</TextLink></CardFooter>
     </Card>
   )

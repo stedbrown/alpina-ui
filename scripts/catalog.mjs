@@ -1,3 +1,5 @@
+import { createElement } from 'react'
+import { renderToString } from 'react-dom/server'
 import { readFile, writeFile, mkdir } from 'node:fs/promises'
 import { createHash } from 'node:crypto'
 import { fileURLToPath } from 'node:url'
@@ -194,7 +196,22 @@ const catalogOptions = offline => ({
     },
   ],
 })
-const [result, hosted] = await Promise.all([build(catalogOptions(true)), build(catalogOptions(false))])
+const serverOptions = catalogOptions(true)
+const [result, hosted, prerender] = await Promise.all([
+  build(catalogOptions(true)), build(catalogOptions(false)),
+  build({ ...serverOptions, alias: {}, platform: 'node', format: 'esm', splitting: false,
+    plugins: [{
+      name: 'server-react',
+      setup(ctx) {
+        ctx.onResolve({ filter: /^(react(?:\/jsx-runtime)?|react-dom(?:\/client)?|alpina-ui)$/ }, args => ({
+          path: import.meta.resolve(args.path), external: true,
+        }))
+      },
+    }, ...serverOptions.plugins],
+  }),
+])
+const { App } = await import('data:text/javascript;base64,' + Buffer.from(prerender.outputFiles.find(f => f.path.endsWith('.js')).contents).toString('base64'))
+const renderComponent = pathname => renderToString(createElement(App, { pathname }))
 const script = result.outputFiles
   .find((f) => f.path.endsWith('.js'))
   .text.replace(/<\/script/gi, '<\\/script')
@@ -226,7 +243,7 @@ await mkdir('site/assets', { recursive: true })
 for (const file of hosted.outputFiles) {
   if (file !== hostedEntry && file.path.endsWith('.js')) await writeFile(file.path, file.contents)
 }
-await buildWebsite({ guides, guideFiles, apiReference, registry, script: hostedEntry.text, css, notices })
+await buildWebsite({ guides, guideFiles, apiReference, registry, script: hostedEntry.text, css, notices, renderComponent })
 console.log(
   'Offline catalog: site/catalog.html (' + (Buffer.byteLength(html) / 1024).toFixed(0) + ' KiB)',
 )

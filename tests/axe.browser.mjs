@@ -12,6 +12,7 @@ try {
   const remaining = [...routes]
   async function auditPages() {
     const page = await openPublicPage(browser, { viewport: { width: 1280, height: 900 } })
+    page.on('pageerror', error => failures.push(new URL(page.url()).pathname + ' ' + error.message))
     for (let path; (path = remaining.shift());) {
       await page.goto(siteOrigin + path)
       await page.getByRole('main').waitFor()

@@ -30,7 +30,7 @@ export function Blocks() {
   </>
 }
 
-export function BlockPage({ block }: {block: Block}) {
+export function BlockPage({ block, preview }: {block: Block; preview: string}) {
   return <>
     <Masthead current="blocks" />
     <Grid width="site" space="compact" surface="ink"><GridItem>
@@ -43,13 +43,7 @@ export function BlockPage({ block }: {block: Block}) {
     {block.slug === 'login' && <Grid width="site" space="compact"><GridItem><Typography variant="caption">
       Sign in with <strong>demo@example.org</strong> and the password <strong>atelier-demo</strong>. The preview checks these sample credentials locally.
     </Typography></GridItem></Grid>}
-    <div id="content" tabIndex={-1} data-block-preview={block.slug}>
-      <Grid as="main" width="site" space="cover"><GridItem><Stack>
-        <Typography as="h1" variant="display">{block.title}</Typography>
-        <Typography>{block.detail}</Typography>
-        <noscript><Typography>Enable JavaScript to try this block or open its React source above.</Typography></noscript>
-      </Stack></GridItem></Grid>
-    </div>
+    <div id="content" tabIndex={-1} data-block-preview={block.slug} dangerouslySetInnerHTML={{ __html: preview }} />
     <Footer />
   </>
 }

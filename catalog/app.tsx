@@ -1,6 +1,6 @@
 import { AppearanceButton } from '../web/appearance-button.js'
-import { useEffect, useRef, useState } from 'react'
-import { createRoot } from 'react-dom/client'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import {
   AppShell,
   Sidebar,
@@ -106,22 +106,6 @@ function guideContent(html: string, hosted: boolean) {
   return html.replace(/href="https:\/\/alpina-ui\.vercel\.app\/docs\/(components|guides)\/([\w-]+)\/"/g,
     (_, section, slug) => 'href="' + (section === 'guides' ? guideHref(slug, false) : componentHref(slug, false)) + '"')
 }
-const pathname = location.pathname.replace(/(?:\/index\.html)?\/?$/, '')
-const [, pageType, pageId] = /^\/docs\/(guides|components)\/([\w-]+)$/.exec(pathname) ?? []
-const hostedDocs = pathname === '/docs' || !!pageId
-const pathRoute = pageType === 'guides' ? 'guide/' + pageId : pageId
-const siteLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/docs/', label: 'Docs', current: pageType !== 'components' },
-  { href: '/docs/components/', label: 'Components', current: pageType === 'components' },
-  { href: '/blocks/', label: 'Blocks' },
-  { href: '/icons/', label: 'Icons' },
-  { href: '/themes/', label: 'Themes' },
-  { href: '/principles/', label: 'Principles' },
-  { href: '/examples/', label: 'Examples' },
-  { href: '/agents/', label: 'Agents' },
-  { href: 'https://github.com/stedbrown/alpina-ui', label: <><Icon name="git-branch" size={18} />{' GitHub'}</> },
-]
 const searchTerms: Record<string, string> = {
   stack: 'toolbar spacing action groups',
   icon: 'pictogram symbol SVG glyph git branch repository',
@@ -139,7 +123,7 @@ const searchIndex = inventory.map((row) => ({
 }))
 const groups = Array.from(new Set(inventory.map((row) => row[3])))
 function useRoute() {
-  const [hash, setHash] = useState(() => location.hash.slice(1))
+  const [hash, setHash] = useState(() => typeof location === 'undefined' ? '' : location.hash.slice(1))
   useEffect(() => {
     const update = () => {
       setHash(location.hash.slice(1))
@@ -154,7 +138,7 @@ function useRoute() {
   return [hash, navigateView] as const
 }
 
-function Brand() {
+function Brand({ hostedDocs }: { hostedDocs: boolean }) {
   return (
     <TextLink className="brand" href={hostedDocs ? '/' : '#overview'} aria-label={hostedDocs ? 'Alpina UI home' : 'Alpina UI overview'}>
       Alpina UI
@@ -176,10 +160,12 @@ function PostalDirectorySource({ file }: { file: string }) {
 }
 function Workbench({
   item,
+  hostedDocs,
   mode,
   navigateView,
 }: {
   item: Item
+  hostedDocs: boolean
   mode: View
   navigateView: (next: string) => void
 }) {
@@ -273,7 +259,23 @@ function Workbench({
     </article>
   )
 }
-function App() {
+export function App({ pathname }: { pathname: string }) {
+  const [, pageType, pageId] = /^\/docs\/(guides|components)\/([\w-]+)$/.exec(pathname) ?? []
+  const hostedDocs = pathname === '/docs' || !!pageId
+  const pathRoute = pageType === 'guides' ? 'guide/' + pageId : pageId
+  const siteLinks = [
+    { href: '/', label: 'Home' },
+    { href: '/docs/', label: 'Docs', current: pageType !== 'components' },
+    { href: '/docs/components/', label: 'Components', current: pageType === 'components' },
+    { href: '/blocks/', label: 'Blocks' },
+    { href: '/icons/', label: 'Icons' },
+    { href: '/themes/', label: 'Themes' },
+    { href: '/principles/', label: 'Principles' },
+    { href: '/examples/', label: 'Examples' },
+    { href: '/agents/', label: 'Agents' },
+    { href: 'https://github.com/stedbrown/alpina-ui', label: <><Icon name="git-branch" size={18} />{' GitHub'}</> },
+  ]
+
   const [hash, navigateView] = useRoute()
   const route = hash || pathRoute || (hostedDocs ? 'guide/start' : 'overview')
   const [itemId, viewPath] = route.split('/')
@@ -290,7 +292,10 @@ function App() {
   const workflow = workflowProjects.find((project) => project.slug === hash)
   const overview = !guide && !item && !directory
   const [query, setQuery] = useState('')
-  const [mobile, setMobile] = useState(false)
+  const [index, setIndex] = useState({ open: false, focusSearch: false })
+  const setIndexOpen = useCallback((open: boolean) => {
+    setIndex(previous => previous.open === open ? previous : { open, focusSearch: false })
+  }, [])
   const search = useRef<HTMLInputElement>(null)
   const list = useRef<HTMLDivElement>(null)
   const first = useRef(true)
@@ -300,7 +305,7 @@ function App() {
     .map((entry) => entry.row)
   const area = item?.[3] || (guide ? 'Documentation' : directory ? 'Address book' : 'Specimen')
   function navigate() {
-    setMobile(false)
+    setIndexOpen(false)
     setQuery('')
   }
   useEffect(() => {
@@ -324,7 +329,16 @@ function App() {
       if (a.bottom > b.bottom || a.top < b.top) list.current.scrollTop += a.top - b.top - 40
     }
   }, [item, guide, area, liveDirectory, workflow])
+  useLayoutEffect(() => {
+    if (!index.focusSearch) return
+    search.current?.focus()
+    search.current?.select()
+  }, [index])
   useEffect(() => {
+    function focusSearch() {
+      // Each shortcut also requests focus again when the index is already open.
+      setIndex({ open: true, focusSearch: true })
+    }
     function shortcut(e: KeyboardEvent) {
       if (['#bilingual-address-book', '#rubrica-bilingue'].includes(location.hash) || workflowProjects.some(({ slug }) => location.hash === '#' + slug)) return
       if (document.querySelector('dialog[open]') || e.isComposing || e.defaultPrevented) return
@@ -335,23 +349,25 @@ function App() {
         (e.key === '/' && !typing && !e.ctrlKey && !e.metaKey && !e.altKey)
       ) {
         e.preventDefault()
-        setMobile(true)
-        requestAnimationFrame(() => {
-          search.current?.focus()
-          search.current?.select()
-        })
+        focusSearch()
       }
     }
     window.addEventListener('keydown', shortcut)
+    const root = document.getElementById('app')!
+    root.dispatchEvent(new Event('alpina-index-ready'))
+    const intent = root.dataset.indexIntent
+    delete root.dataset.indexIntent
+    if (intent === 'browse') setIndexOpen(true)
+    if (intent === 'search') focusSearch()
     return () => window.removeEventListener('keydown', shortcut)
-  }, [])
+  }, [setIndexOpen])
   const sidebar = (
     <Sidebar
       ref={list}
       aria-label="Catalog"
       masthead={
         <>
-          <Brand />
+          <Brand hostedDocs={hostedDocs} />
           <span className="version">v{version}</span>
         </>
       }
@@ -442,10 +458,10 @@ function App() {
   if (workflow) return <WorkflowExample key={workflow.slug} project={workflow} hosted={false} />
   return (
     <AppShell
-      brand={<Brand />}
+      brand={<Brand hostedDocs={hostedDocs} />}
       sidebar={sidebar}
-      open={mobile}
-      onOpenChange={setMobile}
+      open={index.open}
+      onOpenChange={setIndexOpen}
       mainId="main-content"
       toolbar={
         <>
@@ -463,7 +479,7 @@ function App() {
       }
     >
       {item ? (
-        <Workbench key={item[0]} item={item} mode={mode} navigateView={navigateView} />
+        <Workbench key={item[0]} item={item} hostedDocs={hostedDocs} mode={mode} navigateView={navigateView} />
       ) : guide ? (
         <>
           {!hostedDocs && (
@@ -537,9 +553,14 @@ function WorkflowExample({ project, hosted }: { project: WorkflowProject; hosted
     {project.slug === 'workshop-registration' ? <WorkshopRegistration /> : <InvoiceReview />}
   </>
 }
-const isBilingualProject = pathname + '/' === bilingualProject
-const isProject = isBilingualProject || pathname + '/' === clientProject
-const workflow = workflowProjects.find(({ slug }) => pathname === '/examples/' + slug)
-createRoot(document.getElementById('app')!).render(workflow
-  ? <WorkflowExample project={workflow} hosted />
-  : isProject ? <Project bilingual={isBilingualProject} /> : <App />)
+if (typeof document !== 'undefined') {
+  const pathname = location.pathname.replace(/(?:\/index\.html)?\/?$/, '')
+  const bilingual = pathname + '/' === bilingualProject
+  const workflow = workflowProjects.find(({ slug }) => pathname === '/examples/' + slug)
+  const page = workflow ? <WorkflowExample project={workflow} hosted />
+    : bilingual || pathname + '/' === clientProject ? <Project bilingual={bilingual} /> : <App pathname={pathname} />
+  const root = document.getElementById('app')!
+  // Bookmarked views and query-configured examples can differ from the canonical preview.
+  if (root.hasAttribute('data-prerendered') && !location.hash && !location.search) hydrateRoot(root, page)
+  else createRoot(root).render(page)
+}

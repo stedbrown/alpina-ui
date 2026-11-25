@@ -55,7 +55,7 @@ async function checkNarrowDatePicker(page, requireFullWeek = false) {
     const box = sunday.getBoundingClientRect()
     const header = el.querySelector('thead th:last-child')
     const runs = document.createRange()
-    runs.selectNodeContents(header)
+    runs.selectNodeContents([...header.children].find(label => label.checkVisibility()))
     return {
       weekday: sunday.closest('td').cellIndex,
       lastColumn: sunday.closest('tr').cells.length - 1,
@@ -73,6 +73,32 @@ async function checkNarrowDatePicker(page, requireFullWeek = false) {
 const browser = await launchBrowser()
 try {
   const errors = []
+  const narrow = await browser.newPage({ viewport: { width: 180, height: 600 }, isMobile: true, hasTouch: true })
+  narrow.setDefaultTimeout(15_000)
+  await mountComponentGallery(narrow)
+  async function checkNarrowCalendar(calendar) {
+    const headings = calendar.getByRole('columnheader')
+    assert.equal(await headings.count(), 7, 'Week numbers require explicit opt-in')
+    const next = calendar.locator('.al-calendar-head button').last()
+    await next.click()
+    const day = calendar.locator('[data-day][tabindex="0"]')
+    await day.press('End')
+    const sunday = calendar.locator('[data-day]:focus')
+    assert.equal(await sunday.evaluate(el => el.closest('td').cellIndex), 6)
+    const readable = await calendar.evaluate(el => {
+      const box = el.getBoundingClientRect()
+      return el.scrollWidth <= el.clientWidth + 1 && [...el.querySelectorAll('th[scope=col], button')].every(control => {
+        const rect = control.getBoundingClientRect()
+        return rect.left >= -1 && rect.right <= innerWidth + 1 && rect.left >= box.left - 1 && rect.right <= box.right + 1
+      })
+    })
+    assert.ok(readable, 'Both month controls and seven weekday columns must fit 180 CSS pixels')
+    await sunday.press('Enter')
+  }
+  await checkNarrowCalendar(narrow.locator('[data-component="calendar"] .al-calendar'))
+  await narrow.locator('[data-component="date-picker"] [aria-haspopup="dialog"]').click()
+  await checkNarrowCalendar(narrow.locator('[data-component="date-picker"] dialog .al-calendar'))
+  await narrow.close()
   for (const width of [320, 640, 1280]) {
     const page = await browser.newPage({ viewport: { width, height: 900 } })
     page.setDefaultTimeout(15_000)

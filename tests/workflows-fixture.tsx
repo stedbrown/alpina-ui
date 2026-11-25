@@ -19,7 +19,7 @@ function Fixture() {
   const [lines, setLines] = useState(16)
   return <>
     <LocaleSelect aria-label="Language" value={locale} onLocaleChange={setLocale} />
-    <Calendar locale={locale} canton="NE" defaultValue="2024-02-29" min="2024-01-10" max="2025-03-01" />
+    <Calendar showWeekNumbers locale={locale} canton="NE" defaultValue="2024-02-29" min="2024-01-10" max="2025-03-01" />
     <form aria-label="Data">
       <DatePicker locale={locale} canton="NE" name="day" label="Collection" defaultValue="2024-02-29" clearable />
       <InputOTP aria-label="Code" defaultValue="0123" name="otp" required />

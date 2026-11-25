@@ -165,7 +165,7 @@ By default, amounts round to the nearest centime. Set `cashRounding` on `Currenc
 
 `formatSwissDate(value, locale?, options?)` accepts Gregorian civil dates in exact `YYYY-MM-DD` format (years 0001–9999) and `Date` objects. A civil date retains its day in every time zone. A `Date` represents an instant and defaults to `Europe/Zurich`, including seasonal clock changes. For instants, pass another IANA zone in `timeZone`. `dateStyle` accepts `short` (default, DD.MM.YYYY), `medium`, `long`, and `full`. Use `formatSwissTime(instant, timeZone?)` for a 24-hour clock. Midnight reads 00:00. Invalid dates and infinite amounts produce a `RangeError`.
 
-The Calendar starts on Monday and shows the ISO week in each row. Pass `showWeekNumbers={false}` to hide this column. `isoWeek(day)` returns the week number and ISO week year, which can differ from the civil year in late December and early January.
+The Calendar starts on Monday. Pass `showWeekNumbers` to display the ISO week beside each row. The default seven-column layout and the DatePicker dialog fit 180 CSS pixels. Narrow calendars shorten the visible weekday headings while retaining full names for assistive technology. `isoWeek(day)` returns the week number and ISO week year, which can differ from the civil year in late December and early January.
 
 ## Schedule work around public holidays
 

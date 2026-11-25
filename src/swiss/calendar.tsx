@@ -29,7 +29,7 @@ export interface CalendarProps {
 }
 
 export const Calendar = forwardRef<HTMLElement, CalendarProps>(function Calendar(
-  { value, defaultValue = '', onValueChange, defaultMonth, min = firstCivilDay, max = lastCivilDay, locale = defaultSwissLocale, showWeekNumbers = true, canton, holidayRegion, observance, className = '' },
+  { value, defaultValue = '', onValueChange, defaultMonth, min = firstCivilDay, max = lastCivilDay, locale = defaultSwissLocale, showWeekNumbers = false, canton, holidayRegion, observance, className = '' },
   ref,
 ) {
   const [selection, select] = useControllable(value, defaultValue, onValueChange)
@@ -108,7 +108,10 @@ export const Calendar = forwardRef<HTMLElement, CalendarProps>(function Calendar
         <Button size="sm" variant="ghost" aria-label={text.next} disabled={month >= max.slice(0, 7)} onClick={() => moveMonth(1)}>›</Button>
       </div>
       <table ref={grid} role="grid" aria-labelledby={id}>
-        <thead><tr>{showWeekNumbers && <th scope="col" aria-label={weekLabel}>{weekShort}</th>}{labels.days.map(({ full, short }) => <th key={full} scope="col" aria-label={full}>{short}</th>)}</tr></thead>
+        <thead><tr>{(showWeekNumbers ? [{ full: weekLabel, short: weekShort }, ...labels.days] : labels.days).map(({ full, short }) =>
+          <th key={full} scope="col" aria-label={full}>
+            <span className="al-calendar-short">{short}</span><span className="al-calendar-narrow">{short[0]}</span>
+          </th>)}</tr></thead>
         <tbody>{Array.from({ length: rows }, (_, row) => (
           <tr key={row}>{showWeekNumbers && <th scope="row">{isoWeek(addDays(first, row * 7 - start)).week}</th>}{Array.from({ length: 7 }, (_, column) => {
             const n = row * 7 + column - start + 1

@@ -2,3 +2,7 @@
 .al-date-picker > button { display: inline-flex; align-items: center; justify-content: space-between; gap: var(--al-space-5); }
 .al-date-picker .al-modal { max-inline-size: min(25rem, calc(100vw - 2rem)); }
 .al-date-picker .al-calendar { inline-size: 100%; }
+@media (max-width: 16rem) {
+  .al-date-picker .al-modal { inline-size: 100%; max-inline-size: 100%; --al-modal-inset: var(--al-unit); }
+  .al-date-picker .al-modal-title { overflow-wrap: break-word; min-inline-size: 0; }
+}

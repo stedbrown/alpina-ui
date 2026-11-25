@@ -1,6 +1,6 @@
 import { moveButton } from 'alpina-ui/interactive/roving'
 
-function enhanceSpecimen(region) {
+export function enhanceSpecimen(region) {
   const disclosures = region.querySelector('[data-specimen-disclosures]')
   const template = region.querySelector('template')
   if (!disclosures || !template) return
@@ -35,6 +35,3 @@ function enhanceSpecimen(region) {
   template.remove()
   if (hadFocus) tabs[initial].focus()
 }
-
-const region = document.getElementById('type-specimen')
-if (region) enhanceSpecimen(region)

@@ -20,4 +20,6 @@ Use `Grid` and `GridItem` when elements must align to shared columns. Use `Stack
 
 For an action menu followed by a confirmation dialog, keep the menu trigger reference and restore focus when the dialog closes. Read the `directory` guide for the complete flow, including where focus goes after a record is deleted.
 
+Use `Icon` for interface symbols. The installed `iconNames` export lists the supported names. Keep the icon decorative next to visible text and put the accessible name on an icon-only button or link.
+
 For Swiss address inputs, dates, or CHF amounts, use the `swiss` guide to choose a component or formatter. Keep the interface locale separate from stored postal addresses and civil dates. When switching languages mid-edit, keep the draft and update the form labels. The IT/DE address book demonstrates this interaction.

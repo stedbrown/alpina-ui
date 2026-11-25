@@ -18,3 +18,20 @@
 .al-toggle-group .al-button:focus-visible {
   outline-offset: -2px;
 }
+.al-toggle-group[data-layout='grid'] {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 8rem), 1fr));
+  gap: var(--al-space-1);
+  border: 0;
+}
+.al-toggle-group[data-layout='grid'] > .al-button {
+  min-inline-size: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--al-space-3);
+  background: var(--al-soft);
+  text-align: start;
+}
+.al-toggle-group[data-layout='grid'] > .al-button:hover:enabled {
+  background: var(--al-hover);
+}

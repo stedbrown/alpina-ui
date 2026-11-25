@@ -9,6 +9,7 @@ export const additions = [
   ...portal,
   ['ui', 'description-list', 'DescriptionList', 'Read-only details', 'Navigation and data', 'Pair labels with values in a responsive order, address or invoice summary.'],
   ['ui', 'figure', 'Figure', 'Captioned figure', 'Graphic design', 'Keep an image or specimen with its caption and source.'],
+  ['ui', 'icon', 'Icon', 'Interface icons', 'Graphic design', 'Identify an action, destination or state with an original Alpina pictogram.'],
   ['ui', 'steps', 'Steps', 'Workflow progress', 'Forms', 'Show the order of a workflow and identify the current step.'],
   [
     'ui',

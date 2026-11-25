@@ -1,6 +1,6 @@
 {
   "name": "alpina-ui",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "items": [
     {
       "name": "grid",
@@ -460,6 +460,17 @@
       ]
     },
     {
+      "name": "icon",
+      "group": "ui",
+      "entry": "ui/icon.tsx",
+      "usage": "Use a decorative icon beside visible action text. Give an icon-only button or link its own accessible name. Set the icon’s label when the graphic itself conveys meaning.",
+      "files": [
+        "theme.css",
+        "ui/icon.tsx",
+        "ui/icon.css"
+      ]
+    },
+    {
       "name": "steps",
       "group": "ui",
       "entry": "ui/steps.tsx",
@@ -769,7 +780,7 @@
       "name": "toggle-group",
       "group": "interactive",
       "entry": "interactive/toggle-group.tsx",
-      "usage": "Tab enters a group once. Arrow keys move focus, Home and End reach its edges, and pressing Space changes the focused option.",
+      "usage": "Tab enters a group once. Arrow keys move focus, Home and End reach its edges, and pressing Space changes the focused option. Use layout=\"grid\" for equal-width tiles with arrow navigation between rows.",
       "files": [
         "theme.css",
         "interactive/toggle-group.tsx",

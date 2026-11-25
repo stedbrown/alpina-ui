@@ -95,11 +95,12 @@ Each library defines its own APIs. To estimate migration work, compare the props
 | Trace | `trace` | `Trace` | interactive |
 | Typography | `typography` | `Typography` | ui |
 
-## The 15 additional entries in Alpina 0.7
+## The 16 additional entries in Alpina 0.8
 
 | Purpose | Alpina entries |
 | --- | --- |
 | Layout and portal | `app-shell`, `figure`, `grid`, `stack`, `prose`, `text-link` |
+| Interface symbols | `icon` |
 | Read-only summaries and workflows | `description-list`, `steps` |
 | Language, cantons, and addresses | `canton-combobox`, `canton-select`, `locale-select`, `swiss-address-form`, `swiss-postal-code-input` |
 | Formatting | `currency-chf`, `swiss-date` |

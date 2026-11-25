@@ -308,6 +308,13 @@ export const expanded = [
     "Keep an image or specimen with its caption and source."
   ],
   [
+    "icon",
+    "Icon",
+    "Interface icons",
+    "Graphic design",
+    "Identify an action, destination or state with an original Alpina pictogram."
+  ],
+  [
     "steps",
     "Steps",
     "Workflow progress",

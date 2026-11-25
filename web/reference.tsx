@@ -4,6 +4,7 @@ import { inventory } from '../catalog/inventory.js'
 
 export { Landing, Examples } from './pages.js'
 export { ComponentDirectory } from './component-directory.js'
+export { Icons } from './icons.js'
 export { projects } from './projects.js'
 export { inventory }
 

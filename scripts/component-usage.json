@@ -36,6 +36,7 @@
   "figure": "Supply meaningful alternative text for informative images. The caption can identify the study and credit can link to its source. The image keeps its intrinsic proportions.",
   "grid": "Use width=\"site\" to center the columns inside a 100rem frame. Use align to position items within the row. Column spans follow the container width.",
   "hover-card": "Touch users get a taller trigger. Long panel text wraps and the panel fits the visible viewport while remaining reachable by keyboard.",
+  "icon": "Use a decorative icon beside visible action text. Give an icon-only button or link its own accessible name. Set the icon’s label when the graphic itself conveys meaning.",
   "input": "Use readOnly when a value is available to inspect or copy. Validation marks the logical leading edge of the control, including in right-to-left layouts.",
   "input-group": "Use an affix for a unit or prefix that belongs to the input. The group shares a visible focus and validation boundary, and long affixes can wrap.",
   "input-otp": "Formatted-paste handling respects read-only and disabled fields. Editable inputs retain leading zeros and normalize full-width digits.",
@@ -76,7 +77,7 @@
   "textarea": "Set rows for the starting height and enable auto-grow when appropriate. Read-only and validation states follow the same conventions as Input.",
   "toast": "A focused notification can be dismissed with Escape. Its dismiss button and Escape return focus to the control used to reach this notification.",
   "toggle": "Keep the toggle’s label stable and communicate its on/off state with aria-pressed. The control supports Space and long labels can wrap.",
-  "toggle-group": "Tab enters a group once. Arrow keys move focus, Home and End reach its edges, and pressing Space changes the focused option.",
+  "toggle-group": "Tab enters a group once. Arrow keys move focus, Home and End reach its edges, and pressing Space changes the focused option. Use layout=\"grid\" for equal-width tiles with arrow navigation between rows.",
   "tooltip": "Attach a short description to an existing focusable control. Focus shows it immediately. Escape dismisses it and the popup stays within the visible viewport.",
   "trace": "Time and event text align to a consistent gutter. Long entries wrap, keyboard focus outlines the disclosure, and touch users get a taller summary.",
   "typography": "Choose the semantic heading level with as and its visual size with variant. The title role scales with the container and wraps long multilingual headings."

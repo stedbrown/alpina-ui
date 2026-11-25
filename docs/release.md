@@ -1,5 +1,9 @@
 # Upgrading Alpina UI
 
+## Version 0.8
+
+`Icon` adds a family of original SVG pictograms to the registry. Render `<Icon name="git-branch" size={18} />` beside a repository link. Adjacent text gives the link its accessible name. When a symbol stands alone and conveys information, set its `label`. [Icon gallery](https://alpina-ui.vercel.app/icons/) · [Icon reference](https://alpina-ui.vercel.app/docs/components/icon/)
+
 ## Version 0.7.1
 
 In `SwissAddressForm`, the postal code, locality and canton controls line up when they share a row, including when a hint or validation message wraps. [Swiss address form](https://alpina-ui.vercel.app/docs/components/swiss-address-form/)

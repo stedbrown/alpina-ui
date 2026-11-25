@@ -1,21 +1,21 @@
 # Alpina UI
 
-Alpina UI is a collection of 81 React components that brings Swiss typographic design to the web. Its responsive grid, left-aligned type, and black, white, and red palette carry through from the smallest control to the documentation site. Swiss address, date, and currency components support the country’s four national languages.
+Alpina UI is a collection of 82 React components that brings Swiss typographic design to the web. Its responsive grid, left-aligned type, and black, white, and red palette carry through from the smallest control to the documentation site. Swiss address, date, and currency components support the country’s four national languages.
 
 ## Explore Alpina
 
-Switch invoice AP-104 between German, French and Italian on the homepage. The invoice uses the same supplier record and total calculation as the review application. Browse components by task and open a preview to read its interaction notes, inspect the types and copy the source. [Homepage](https://alpina-ui.vercel.app/) · [Component index](https://alpina-ui.vercel.app/docs/components/) · [Installation](https://alpina-ui.vercel.app/docs/)
+Change the size of a poster edition, switch an invoice between three languages or read the press hours as a table on the homepage. Follow a component link to inspect its types and copy the source. The icon gallery shows the original Alpina symbols used for navigation, actions and status. [Homepage](https://alpina-ui.vercel.app/) · [Component index](https://alpina-ui.vercel.app/docs/components/) · [Icon gallery](https://alpina-ui.vercel.app/icons/) · [Installation](https://alpina-ui.vercel.app/docs/)
 
-Open the offline catalog in a browser to try every component, inspect its TypeScript API, and copy its source. Start with the typography specimen. Switch between 4, 8, and 12 columns to see how margins, gutters, and type sizes change with the available width. The portal uses the same public imports as any other Alpina application. [Download the offline catalog](https://github.com/stedbrown/alpina-ui/releases/download/v0.7.1/alpina-ui-catalog.html) · [Design and measurements](docs/design.md)
+Open the offline catalog in a browser to try every component, inspect its TypeScript API, and copy its source. Start with the typography specimen. Switch between 4, 8, and 12 columns to see how margins, gutters, and type sizes change with the available width. The portal uses the same public imports as any other Alpina application. [Download the offline catalog](https://github.com/stedbrown/alpina-ui/releases/download/v0.8.0/alpina-ui-catalog.html) · [Design and measurements](docs/design.md)
 
-The catalog covers all 66 families in the shadcn/ui component index reviewed on November 24, 2026. The other 15 entries include grid and stack layouts, Swiss localization tools, and components for building a documentation site. The comparison explains which interactions each family supports. [Component coverage](docs/coverage.md) · [Swiss graphic design research](docs/research.md)
+The catalog covers all 66 families in the shadcn/ui component index reviewed on November 24, 2026. The other 16 entries include grid and stack layouts, interface icons, Swiss localization tools, and components for building a documentation site. The comparison explains which interactions each family supports. [Component coverage](docs/coverage.md) · [Swiss graphic design research](docs/research.md)
 
 ## Install
 
 For a project using React and React DOM 18.2 or 19, install the package from the GitHub release.
 
 ```sh
-npm install https://github.com/stedbrown/alpina-ui/releases/download/v0.7.1/alpina-ui-0.7.1.tgz
+npm install https://github.com/stedbrown/alpina-ui/releases/download/v0.8.0/alpina-ui-0.8.0.tgz
 ```
 
 Import the stylesheet once at your application entry point and use components by name. You can also copy the TypeScript and CSS into your project with `npx --no-install alpina add button`. [Quick start](docs/start.md)
@@ -47,7 +47,7 @@ Serve `site/` with a static HTTP server to browse the website from its homepage.
 
 | Path | Contents |
 | --- | --- |
-| `src/ui` | 43 foundational components including Grid, Typography, and DataTable |
+| `src/ui` | 44 foundational components including Grid, Typography, Icon, and DataTable |
 | `src/interactive` | 23 interactive components and their shared behavior |
 | `src/swiss` | 9 Swiss components, datasets, and formatters |
 | `src/portal` | 6 components for navigation, page structure, code samples, and documentation |
@@ -61,7 +61,7 @@ Serve `site/` with a static HTTP server to browse the website from its homepage.
 
 ## Try the bilingual address book
 
-Search seven fictional design studios, switch between Italian and German, and edit an address without losing your draft. The adoption report tracks the CSS needed to build the example using only the portal. Moving layout, current-row styling, and long-word handling into Alpina reduced the application stylesheet from 56 declarations to 43. [Try the offline address book](https://github.com/stedbrown/alpina-ui/releases/download/v0.7.1/alpina-address-book-it-de.html) · [Example source](recipes/rubrica) · [Adoption report](recipes/rubrica/PROVA.md)
+Search seven fictional design studios, switch between Italian and German, and edit an address without losing your draft. The adoption report tracks the CSS needed to build the example using only the portal. Moving layout, current-row styling, and long-word handling into Alpina reduced the application stylesheet from 56 declarations to 43. [Try the offline address book](https://github.com/stedbrown/alpina-ui/releases/download/v0.8.0/alpina-address-book-it-de.html) · [Example source](recipes/rubrica) · [Adoption report](recipes/rubrica/PROVA.md)
 
 ## Inspect and update a component
 
@@ -89,8 +89,9 @@ Run `npm run size` after building to measure individual imports. The benchmark u
 | Button JavaScript | 252 |
 | CurrencyCHF JavaScript | 655 |
 | Dialog JavaScript | 1,155 |
-| All JavaScript exports | 27,112 |
-| Full stylesheet including the theme | 12,754 |
+| Icon JavaScript, all 32 drawings | 1,245 |
+| All JavaScript exports | 28,539 |
+| Full stylesheet including the theme | 12,842 |
 | Button CSS without the theme | 736 |
 
 ## License

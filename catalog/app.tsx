@@ -13,6 +13,7 @@ import {
   ButtonGroup,
   Grid,
   GridItem,
+  Icon,
   Label,
   Select,
   Typography,
@@ -30,6 +31,7 @@ import * as actions from './actions-v3.js'
 import * as workflows from './workflows-v3.js'
 import * as portal from './portal-v3.js'
 import { StackExample } from './stack-example.js'
+import { IconExample } from './icon-example.js'
 import * as composition from './composition-examples.js'
 import { SwissAddressFormExample } from './address-example.js'
 import { ApiReference } from './api-reference.js'
@@ -66,6 +68,7 @@ const demos = {
   ...portal,
   SwissAddressFormExample,
   StackExample,
+  IconExample,
 }
 const guideNames: Record<string, string> = {
   research: 'Research and sources',
@@ -97,12 +100,16 @@ const hostedDocs = pathname === '/docs' || !!pageId
 const pathRoute = pageType === 'guides' ? 'guide/' + pageId : pageId
 const siteLinks = [
   { href: '/', label: 'Home' },
-  { href: '/docs/', label: 'Docs', current: true },
+  { href: '/docs/', label: 'Docs', current: pageType !== 'components' },
+  { href: '/docs/components/', label: 'Components', current: pageType === 'components' },
+  { href: '/icons/', label: 'Icons' },
   { href: '/examples/', label: 'Examples' },
-  { href: '/agents/', label: 'For agents' },
+  { href: '/agents/', label: 'Agents' },
+  { href: 'https://github.com/stedbrown/alpina-ui', label: <><Icon name="git-branch" size={18} />{' GitHub'}</> },
 ]
 const searchTerms: Record<string, string> = {
   stack: 'toolbar spacing action groups',
+  icon: 'pictogram symbol SVG glyph git branch repository',
   'dropdown-menu': 'dropdown contextual actions',
   'canton-select': 'canton filter all cantons',
   'canton-combobox': 'canton filter search location',

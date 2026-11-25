@@ -36,25 +36,27 @@ async function loadPages() {
 }
 
 export async function buildWebsite({ guides, guideFiles, apiReference, registry, script, css, notices }) {
-  const { Landing, Examples, ComponentDirectory, ReferencePage, ExampleIntroduction, inventory, projects } = await loadPages()
+  const { Landing, Examples, Icons, ComponentDirectory, ReferencePage, ExampleIntroduction, inventory, projects } = await loadPages()
   const paths = []
   const appJS = '/assets/catalog-' + sha(script) + '.js'
   const appCSS = '/assets/catalog-' + sha(css) + '.css'
   const core = await readFile('dist/styles.css', 'utf8')
   const coreCSS = '/assets/alpina-' + sha(core) + '.css'
-  const specimenBuild = await build({
-    entryPoints: ['web/type-specimen-controls.js'], bundle: true, format: 'esm',
+  const showcaseBuild = await build({
+    entryPoints: ['web/home-showcase-controls.js'], bundle: true, format: 'esm',
     target: 'es2022', write: false, minify: true,
   })
-  const specimen = specimenBuild.outputFiles[0].text
-  const specimenJS = '/assets/type-specimen-' + sha(specimen) + '.js'
+  const showcase = showcaseBuild.outputFiles[0].text
+  const showcaseJS = '/assets/showcase-' + sha(showcase) + '.js'
+  const icons = await readFile('web/icon-controls.js', 'utf8')
+  const iconsJS = '/assets/icons-' + sha(icons) + '.js'
   const filter = await readFile('web/directory-filter.js', 'utf8')
   const filterJS = '/assets/component-filter-' + sha(filter) + '.js'
   const preview = await readFile('web/assets/alpina-preview.png')
   const previewURL = origin + '/assets/alpina-preview.png?v=' + sha(preview)
   await Promise.all([
     output(appJS, script), output(appCSS, css), output(coreCSS, core),
-    output(specimenJS, specimen),
+    output(showcaseJS, showcase), output(iconsJS, icons),
     output(filterJS, filter),
     output('third-party-notices.txt', notices.join('\n\n')),
     output('registry.json', JSON.stringify(registry)), output('reference/api.json', JSON.stringify(apiReference)),
@@ -75,11 +77,12 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
       '<meta property="og:title" content="' + escape(caption) + '"><meta property="og:description" content="' + escape(description) + '">',
       '<meta property="og:url" content="' + escape(url) + '"><meta property="og:image" content="' + previewURL + '">',
       '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">',
-      '<meta name="twitter:card" content="summary_large_image"><meta property="og:image:alt" content="Alpina UI components for React beside a multilingual Swiss invoice">',
+      '<meta name="twitter:card" content="summary_large_image"><meta property="og:image:alt" content="Alpina UI homepage with a print estimate, a Swiss invoice and a press-hours chart">',
       '<link rel="license" href="/third-party-notices.txt"><link rel="stylesheet" href="' + (options.app ? appCSS : coreCSS) + '">',
     ]
     if (options.redirect) tags.push('<script>' + options.redirect + '</script>')
-    if (options.specimen) tags.push('<script type="module" src="' + specimenJS + '"></script>')
+    if (options.showcase) tags.push('<script type="module" src="' + showcaseJS + '"></script>')
+    if (options.icons) tags.push('<script type="module" src="' + iconsJS + '"></script>')
     if (options.filter) tags.push('<script type="module" src="' + filterJS + '"></script>')
     const content = options.app ? '<div id="app">' + body + '</div><script defer src="' + appJS + '"></script>' : body
     await output(route + 'index.html', '<!doctype html>\n<html lang="en"><head>' + tags.join('\n') + '</head><body data-al-page>' + content + '</body></html>')
@@ -90,7 +93,8 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
   const ids = JSON.stringify(registry.items.map((item) => item.name))
   const legacy = `(()=>{const h=location.hash.slice(1);if(!h)return;const p={rubrica:"client-directory","address-book":"client-directory","rubrica-bilingue":"bilingual-address-book","bilingual-address-book":"bilingual-address-book"};if(Object.hasOwn(p,h))location.replace("/examples/"+p[h]+"/");else if(h==="overview"||h.startsWith("guide/")||${ids}.includes(h.split("/")[0]))location.replace("/docs/#"+h)})();`
   await page('/', siteName, 'Open-source React and TypeScript components for forms, tables and multilingual interfaces on a Swiss typographic grid.',
-    render(Landing, { version: registry.version, count: inventory.length }), { redirect: legacy, specimen: true })
+    render(Landing, { version: registry.version, count: inventory.length }), { redirect: legacy, showcase: true })
+  await page('/icons/', 'Alpina icons', 'Browse original SVG icons for navigation, actions, content and Git workflows. Preview sizes and copy React code.', render(Icons), { icons: true })
   await page('/examples/', 'Example projects', 'Try workshop registration, invoice review, a bilingual studio address book and a client directory built with Alpina UI.', render(Examples))
   await page('/docs/components/', 'Component index', 'Find a React component by name, task or category and open its preview, source code and API.', render(ComponentDirectory), { filter: true })
   const agentsMarkdown = await readFile('docs/agents.md', 'utf8')
@@ -138,7 +142,7 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
   const index = [
     '# Alpina UI', '', '> React components for Swiss typography and multilingual interfaces. The current release is ' + registry.version + '.', '',
     '## Agent tools', '', '- [Agent setup](' + origin + '/reference/agents.md)', '- [Project skill](' + origin + '/skills/alpina-ui/SKILL.md)',
-    '- [Component registry](' + origin + '/registry.json)', '- [TypeScript API reference](' + origin + '/reference/api.json)',
+    '- [Component registry](' + origin + '/registry.json)', '- [TypeScript API reference](' + origin + '/reference/api.json)', '- [Icon directory](' + origin + '/icons/)',
     '', '## Guides', '', ...guideLinks, '', '## Examples', '', ...projects.map((p) => '- [' + p.title + '](' + origin + '/examples/' + p.slug + '/): ' + p.description), '',
   ]
   await Promise.all([

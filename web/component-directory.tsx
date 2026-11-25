@@ -5,7 +5,7 @@ import { Masthead, Footer } from './pages.js'
 export function ComponentDirectory() {
   const groups = [...new Set(inventory.map((entry) => entry[3]))]
   return <>
-    <Masthead current="docs" />
+    <Masthead current="components" />
     <main id="content" tabIndex={-1}>
       <Grid width="site" space="cover">
         <GridItem medium={5} large={7}>

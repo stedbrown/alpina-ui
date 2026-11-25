@@ -10,14 +10,14 @@ From your application directory, run the following command and choose your agent
 npx skills add stedbrown/alpina-ui --skill alpina-ui
 ```
 
-For a project-local installation from the package, copy `node_modules/alpina-ui/skills/alpina-ui/` into your agent’s project skills directory. For example, an agent that uses `.agents/skills/` should find `.agents/skills/alpina-ui/SKILL.md`. The skill includes its MIT license. [Read the skill](https://github.com/stedbrown/alpina-ui/blob/v0.7.1/skills/alpina-ui/SKILL.md) · [Agent Skills specification](https://agentskills.io/specification)
+For a project-local installation from the package, copy `node_modules/alpina-ui/skills/alpina-ui/` into your agent’s project skills directory. For example, an agent that uses `.agents/skills/` should find `.agents/skills/alpina-ui/SKILL.md`. The skill includes its MIT license. [Read the skill](https://github.com/stedbrown/alpina-ui/blob/v0.8.0/skills/alpina-ui/SKILL.md) · [Agent Skills specification](https://agentskills.io/specification)
 
 ## Connect the local MCP server
 
 Install Alpina UI in your application using Node.js 20 or later. The following command pins the package and its reference data to the same release.
 
 ```sh
-npm install https://github.com/stedbrown/alpina-ui/releases/download/v0.7.1/alpina-ui-0.7.1.tgz
+npm install https://github.com/stedbrown/alpina-ui/releases/download/v0.8.0/alpina-ui-0.8.0.tgz
 ```
 
 Configure a local **stdio** server in your MCP client. Start `node` with the absolute path to the installed CLI and the argument `mcp`. For clients that use the `mcpServers` JSON format, replace the example path below with your own. On Windows, paths such as `C:/projects/store/node_modules/alpina-ui/cli/alpina.mjs` work in JSON.

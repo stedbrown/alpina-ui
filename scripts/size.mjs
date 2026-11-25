@@ -17,6 +17,6 @@ async function size(name) {
   return gzipSync(result.outputFiles[0].contents).length
 }
 console.log('Minified and gzipped ESM in bytes, excluding React and React DOM')
-for (const name of ['Button', 'CurrencyCHF', 'Dialog', '*']) console.log(name, await size(name))
+for (const name of ['Button', 'CurrencyCHF', 'Dialog', 'Icon', '*']) console.log(name, await size(name))
 console.log('Full stylesheet', gzipSync(await readFile('dist/styles.css')).length)
 console.log('Button stylesheet', gzipSync(await readFile('dist/styles/button.css')).length)

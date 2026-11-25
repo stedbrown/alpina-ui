@@ -14,6 +14,8 @@ export interface ToggleGroupProps {
   label: string
   options: readonly ToggleOption[]
   multiple?: boolean
+  /** A responsive sheet of equal-width choices. Row layout wraps to fit by default. */
+  layout?: 'row' | 'grid'
   value?: readonly string[]
   defaultValue?: readonly string[]
   onValueChange?: (values: string[]) => void
@@ -26,6 +28,7 @@ export function ToggleGroup({
   label,
   options,
   multiple = false,
+  layout = 'row',
   value,
   defaultValue,
   onValueChange,
@@ -68,7 +71,26 @@ export function ToggleGroup({
       role="group"
       aria-label={label}
       data-al-roving=""
-      onKeyDown={(event) => moveButton(event, 'horizontal')}
+      data-layout={layout}
+      onKeyDown={(event) => {
+        const direction = event.key === 'ArrowDown' ? 1 : event.key === 'ArrowUp' ? -1 : 0
+        if (layout !== 'grid' || !direction) {
+          moveButton(event, 'horizontal')
+          return
+        }
+        const current = event.target
+        if (!(current instanceof HTMLButtonElement) || current.parentElement !== event.currentTarget ||
+          event.altKey || event.ctrlKey || event.metaKey) return
+        const choices = Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>(':scope > button:enabled'))
+        const rowsAhead = choices.filter(choice => (choice.offsetTop - current.offsetTop) * direction > 0)
+        const nextRow = direction === 1 ? Math.min : Math.max
+        const rowTop = nextRow(...(rowsAhead.length ? rowsAhead : choices).map(choice => choice.offsetTop))
+        const row = choices.filter(choice => choice.offsetTop === rowTop)
+        const nearest = row.reduce((best, choice) => Math.abs(choice.offsetLeft - current.offsetLeft) <
+          Math.abs(best.offsetLeft - current.offsetLeft) ? choice : best, row[0])
+        event.preventDefault()
+        nearest?.focus()
+      }}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocused(null)
       }}

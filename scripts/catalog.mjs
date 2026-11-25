@@ -42,6 +42,7 @@ for (const file of [
     (name) => 'catalog/' + name + '.tsx',
   ),
   'catalog/stack-example.tsx',
+  'catalog/icon-example.tsx',
   'catalog/composition-examples.tsx',
   'catalog/demos.tsx',
   'catalog/address-example.tsx',
@@ -118,7 +119,7 @@ if (process.argv.includes('--release-package')) {
     throw new Error('The release package does not match the address book lockfile.')
   await writeFile('site/' + archiveName, archive)
   // Preserve installation URLs for projects pinned to earlier releases.
-  for (const previous of ['alpina-ui-0.6.0.tgz', 'alpina-ui-0.7.0.tgz']) {
+  for (const previous of ['alpina-ui-0.6.0.tgz', 'alpina-ui-0.7.0.tgz', 'alpina-ui-0.7.1.tgz']) {
     await writeFile('site/' + previous, await readFile(directory + 'vendor/' + previous))
   }
 } else {

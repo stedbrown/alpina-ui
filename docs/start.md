@@ -1,6 +1,6 @@
 # Getting started
 
-Alpina UI 0.7.1 includes 81 React components distributed as ESM modules with TypeScript declarations, stylesheets, and editable source. The catalog and guides are in English. The address form provides field labels and error messages in all four Swiss national languages. Other components accept strings from your application.
+Alpina UI 0.8.0 includes 82 React components distributed as ESM modules with TypeScript declarations, stylesheets, and editable source. The catalog and guides are in English. The address form provides field labels and error messages in all four Swiss national languages. Other components accept strings from your application.
 
 <!-- alpina-download -->
 
@@ -8,10 +8,10 @@ Find a component by name or task, or try a complete workflow before installing. 
 
 ## Install the package
 
-In a React 18.2 or 19 project with Node.js 20 or later, download the package from the portal, move `alpina-ui-0.7.1.tgz` to the project root, and install it.
+In a React 18.2 or 19 project with Node.js 20 or later, download the package from the portal, move `alpina-ui-0.8.0.tgz` to the project root, and install it.
 
 ```sh
-npm install ./alpina-ui-0.7.1.tgz
+npm install ./alpina-ui-0.8.0.tgz
 ```
 
 Import the CSS once at your application entry point. The JavaScript modules can also run during server rendering. They leave stylesheet loading to your application.
@@ -51,12 +51,14 @@ Once you install the package, the CLI works offline. `list` shows registry names
 
 ```sh
 npx --no-install alpina list
-npx --no-install alpina add button canton-select
+npx --no-install alpina add button icon canton-select
 npx --no-install alpina add dialog --dir src/components/alpina --dry-run
 npx --no-install alpina add --all
 ```
 
 With copied sources, import the theme from `./components/alpina/theme.css` and components from paths such as `./components/alpina/ui/button` or `./components/alpina/swiss/canton-select`. Adjust the paths relative to the importing file. Each TSX file imports its own CSS and needs a bundler with CSS and TypeScript support. Relative `.js` imports follow the NodeNext convention.
+
+For a repository link, place `<Icon name="git-branch" size={18} />` beside the link text. The `iconNames` export lists every available name. [Browse icons](https://alpina-ui.vercel.app/icons/) · [Icon reference](https://alpina-ui.vercel.app/docs/components/icon/)
 
 ## Customize the theme
 

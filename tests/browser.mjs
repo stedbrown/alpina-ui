@@ -14,6 +14,7 @@ for (const file of [
   'data-examples',
   'address-example',
   'stack-example',
+  'icon-example',
   'composition-examples',
   'elements-v3',
   'actions-v3',
@@ -75,7 +76,7 @@ try {
   const metrics = main.locator('.sp-measures dd')
   assert.equal(await gridButton.getAttribute('aria-pressed'), 'false')
   assert.equal(await guideLayer.count(), 0)
-  assert.equal(registry.items.length, 81)
+  assert.equal(registry.items.length, 82)
   assert.equal(await page.locator('#index-list a').count(), registry.items.length)
 
   for (const screen of [1440, 768, 390]) {

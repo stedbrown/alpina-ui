@@ -163,6 +163,23 @@ test('MCP handles misspellings, transpositions, abbreviations, diacritics and un
   cases.forEach(([query, expected], i) => assert.equal(replies[i].result.content[0].text.split(' ')[0], expected, query))
 })
 
+test('stdio finds dialogs and Swiss postcode fields in everyday phrases', () => {
+  const cases = [
+    ['dialog', ['finestra di dialogo', 'aprire una finestra di dialogo', 'open a dialog box',
+      'ein Dialogfenster öffnen', 'ouvrir une boîte de dialogue', 'avrir ina fanestra da dialog']],
+    ['swiss-postal-code-input', ['codice postale', 'numero postale di avviamento', 'ricerca per codice postale',
+      'search by postal code', 'nach PLZ suchen', 'recherche par code postal', 'tschertgar tenor numer postal']],
+  ]
+  for (const [id, queries] of cases) {
+    const [, ...responses] = exchange([hello, ...queries.map((query, i) => call(i + 2, 'search_components', { query }))])
+    for (const [i, { result }] of responses.entries()) {
+      const ids = result.content[0].text.split('\n').map(line => line.split(' ')[0])
+      assert.equal(ids[0], id, queries[i])
+      if (id === 'swiss-postal-code-input') assert.ok(ids.includes('swiss-address-form'), queries[i])
+    }
+  }
+})
+
 test('get_guide selects only published translations', () => {
   const [, french, unavailable] = exchange([hello, call(2, 'get_guide', { slug: 'swiss', language: 'fr' }),
     call(3, 'get_guide', { slug: 'release', language: 'fr' })])

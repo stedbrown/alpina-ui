@@ -113,8 +113,12 @@ export const topics = [
     'invoice|billing|invoicing', 'Rechnung|Fakturierung|Rechnungen', 'facture|facturation|factures',
     'fattura|fatture|fatturazione', 'quint|quints|facturaziun'] },
   { items: ['swiss-address-form', 'swiss-postal-code-input', 'canton-select', 'canton-combobox'], aliases: [
-    'address|mailing address|street address', 'Adresse|Anschrift|Wohnadresse', 'adresse|domicile|coordonnées postales',
+    'address|mailing address|street address|SwissAddressFields', 'Adresse|Anschrift|Wohnadresse', 'adresse|domicile|coordonnées postales',
     'indirizzo|recapito|domicilio', 'adressa|domicil|lieu da domicil'] },
+  { items: ['swiss-postal-code-input', 'swiss-address-form'], aliases: [
+    'postal code|postcode|ZIP code', 'Postleitzahl|PLZ|Postleitzahl eingeben',
+    'code postal|NPA|numéro postal d’acheminement', 'codice postale|NPA|numero postale di avviamento|CAP',
+    'numer postal|numer postal da quatter cifras|endatar il numer postal'] },
   { items: ['data-table', 'table', 'chart-table'], aliases: [
     'ledger|accounting|bookkeeping', 'Hauptbuch|Buchhaltung|Kontenblatt', 'grand livre|comptabilité|livre des comptes',
     'libro mastro|contabilità|registro contabile', 'cudesch principal|contabilitad|register da contos'] },
@@ -125,8 +129,9 @@ export const topics = [
     'chart|graph|data visualization', 'Diagramm|Grafik|Datenvisualisierung', 'graphique|diagramme|visualisation de données',
     'grafico|diagramma|visualizzazione dati', 'diagram|grafica|visualisaziun da datas'] },
   { items: ['dialog', 'alert-dialog', 'sheet', 'drawer'], aliases: [
-    'modal|modal dialog|dialog box', 'Dialog|Modalfenster|modales Fenster', 'dialogue|fenêtre modale|boîte de dialogue',
-    'modale|finestra|dialogo', 'dialog|fanestra|fanestra da dialog'] },
+    'modal|modal dialog|dialog box|dialog window', 'Dialog|Dialogfenster|Modalfenster|modales Fenster',
+    'dialogue|fenêtre modale|boîte de dialogue|fenêtre de dialogue',
+    'modale|finestra|dialogo|finestra di dialogo', 'dialog|fanestra|fanestra da dialog|fanestra modala'] },
   { items: ['dropdown-menu', 'context-menu', 'menubar', 'navigation-menu'], aliases: [
     'dropdown|drop down menu|action menu', 'Dropdown|Ausklappmenü|Aktionsmenü', 'menu déroulant|menu des actions|menu dépliant',
     'menu a tendina|menu a discesa|menu azioni', 'menu da selecziun|menu d’acziuns|menu extensibel'] },

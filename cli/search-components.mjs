@@ -39,6 +39,10 @@ function edits(a, b, limit) {
 function aliasScore(query, alias) {
   if (alias === query) return 500
   if (query.length >= 3 && alias.startsWith(query)) return 300
+  // Match complete words in requests such as “ouvrir une boîte de dialogue”.
+  // A longer phrase is more specific than an individual word from another control.
+  if (alias.length >= 3 && query.length <= 160 && (' ' + query + ' ').includes(' ' + alias + ' '))
+    return 160 + Math.min(alias.length, 80)
   if (query.length < 4 || query.length > 80) return 0
   const limit = query.length >= 7 ? 2 : 1
   const distance = edits(query, alias, limit)

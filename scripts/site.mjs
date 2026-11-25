@@ -13,6 +13,13 @@ import { deploymentLinks, siteMetadata, siteUrl } from './site-config.mjs'
 import { buildDesignerKit } from './designer-kit.mjs'
 
 const render = (component, props) => renderToStaticMarkup(createElement(component, props))
+// Allow prose and code examples to wrap around document identifiers while preserving each identifier.
+const documentId = /(?<![A-Za-z0-9])([A-Z]{1,8}[-‑]\d{2,}(?:[.-]\d+)*)(?![A-Za-z0-9])/g
+function keepDocumentIds(text) {
+  return text.split(documentId).map((part, index) => index % 2
+    ? createElement(Typography, { key: index, as: 'span', variant: 'inherit', numeric: true }, part)
+    : part)
+}
 const guideMarkdown = new Marked({ renderer: {
   code({ text, lang }) { return render(CodeSample, { code: text, language: lang }) },
   codespan({ text }) {
@@ -22,9 +29,11 @@ const guideMarkdown = new Marked({ renderer: {
         return render(InlineCode, { children: createElement('time', { dateTime: text }, text) })
       } catch { /* A non-date example is still valid inline code. */ }
     }
-    return render(InlineCode, { children: text, unbroken: /^(?:CHE-\d{3}\.\d{3}\.\d{3}|\+41(?:[ \u00a0]?\d){9})$/.test(text) })
+    return render(InlineCode, { children: keepDocumentIds(text), unbroken: /^(?:CHE-\d{3}\.\d{3}\.\d{3}|\+41(?:[ \u00a0]?\d){9})$/.test(text) })
   },
   link({ href, title, tokens }) {
+    if (tokens.length === 1 && tokens[0].type === 'text' && !tokens[0].tokens && tokens[0].text.search(documentId) >= 0)
+      return render(TextLink, { href, title, children: keepDocumentIds(tokens[0].text) })
     return render(TextLink, { href, title, dangerouslySetInnerHTML: { __html: this.parser.parseInline(tokens) } })
   },
   table({ header, rows }) {

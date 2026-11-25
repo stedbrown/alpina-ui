@@ -38,6 +38,8 @@ const scor = createCreditorReference('539007547034')
 formatCreditorReference(scor) // RF18 5390 0754 7034
 ```
 
+For invoice `2026-0141`, use `createQrReference('2026-0141', { stripSeparators: true })`. For an alphanumeric series, `createCreditorReference('INV-2026-0141', { stripSeparators: true })` preserves the prefix in an RF reference. A QR-IBAN requires a numeric series. If several invoice series reuse the same digits, assign each a unique numeric payment identifier before generating its QRR.
+
 A QRR body accepts up to 26 decimal digits, including at least one nonzero digit. A SCOR body accepts up to 21 ASCII letters or digits. Each generator adds the check digits. The slip and the scanner use the same display grouping. [SIX implementation guidelines, sections 3.5 and 4.4](https://www.six-group.com/dam/download/banking-services/standardization/qr-bill/ig-qr-bill-v2.4-en.pdf)
 
 ## Printing a document

@@ -85,3 +85,18 @@ test('the non-payable notification is the only permitted zero-amount exception',
   assert.throws(() => buildSwissQrPayload(notification), RangeError)
   assert.throws(() => buildSwissQrPayload({ ...notification, amount: '1.00' }), RangeError)
 })
+
+test('grouped invoice identifiers preserve meaningful digits and RF prefixes', () => {
+  const grouped = { stripSeparators: true }
+  for (const value of ['2026-0141', '2026/0141', '2026.0141', '2026\u202f0141']) {
+    assert.equal(createQrReference(value, grouped), createQrReference('20260141'))
+    assert.equal(createCreditorReference(value, grouped), createCreditorReference('20260141'))
+    assert.throws(() => createQrReference(value), /stripSeparators/)
+  }
+  assert.equal(createCreditorReference('INV-2026-0141', grouped), createCreditorReference('INV20260141'))
+  assert.throws(() => createQrReference('INV-2026-0141', grouped), /numeric identifier/)
+  for (const value of [-1, '-1', '2?3', '01-']) {
+    assert.throws(() => createQrReference(value, grouped), RangeError)
+    assert.throws(() => createCreditorReference(value, grouped), RangeError)
+  }
+})

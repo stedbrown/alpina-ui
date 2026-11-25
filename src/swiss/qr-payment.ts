@@ -94,27 +94,34 @@ export function isCreditorReference(input: string): boolean {
   return scorIssue(input) === undefined
 }
 
-function referenceBody(value: string | number | bigint): string {
+export interface PaymentReferenceOptions {
+  /** Remove spaces, periods, slashes and hyphens between groups of letters or digits. */
+  stripSeparators?: boolean
+}
+
+function referenceBody(value: string | number | bigint, options?: PaymentReferenceOptions): string {
   if (typeof value !== 'string' && typeof value !== 'bigint' && typeof value !== 'number')
     throw new TypeError('Expected an identifier string, integer or bigint.')
   if (typeof value === 'number' && !Number.isSafeInteger(value))
     throw new RangeError('Pass long identifiers as strings or bigint to preserve every digit.')
-  return String(value)
+  const body = String(value)
+  return options?.stripSeparators && typeof value === 'string'
+    ? body.replace(/([A-Za-z0-9])[ ./\u00a0\u202f‐‑-]+(?=[A-Za-z0-9])/g, '$1') : body
 }
 
 /** Add the recursive modulo-10 digit to 1–26 digits and left-pad to the SIX length. */
-export function createQrReference(value: string | number | bigint): string {
-  const input = referenceBody(value)
+export function createQrReference(value: string | number | bigint, options?: PaymentReferenceOptions): string {
+  const input = referenceBody(value, options)
   if (!/^\d{1,26}$/.test(input) || /^0+$/.test(input))
-    throw new RangeError('Supply 1 to 26 decimal digits, with at least one nonzero digit.')
+    throw new RangeError('Supply 1 to 26 digits containing a nonzero digit. For a grouped invoice number, use { stripSeparators: true }. Map letter prefixes to a unique numeric identifier or use an RF reference with an ordinary IBAN.')
   const body = input.padStart(26, '0')
   return body + qrCheckDigit(body)
 }
 
 /** Create an ISO 11649 reference from 1–21 ASCII letters or digits. */
-export function createCreditorReference(value: string | number | bigint): string {
-  const input = referenceBody(value)
-  if (!/^[a-zA-Z0-9]{1,21}$/.test(input)) throw new RangeError('Supply 1 to 21 letters A–Z or decimal digits.')
+export function createCreditorReference(value: string | number | bigint, options?: PaymentReferenceOptions): string {
+  const input = referenceBody(value, options)
+  if (!/^[a-zA-Z0-9]{1,21}$/.test(input)) throw new RangeError('Supply 1 to 21 ASCII letters or digits. For an invoice number such as INV-2026-0141, use { stripSeparators: true }.')
   const body = input.toUpperCase()
   return 'RF' + String(98 - mod97(body + 'RF00')).padStart(2, '0') + body
 }

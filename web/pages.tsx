@@ -83,7 +83,7 @@ export function Landing({ version, count, queue, command, installation }: { vers
   return <>
     <Masthead current="home" />
     <PageRegion as="main" id="content" tabIndex={-1}>
-      <Grid as="section" width="site" space="cover" align="end" surface="accent" aria-labelledby="home-title">
+      <Grid as="section" width="site" space="cover" align="end" surface="accent" entrance="sequence" aria-labelledby="home-title">
         <GridItem><Stack direction="row" justify="space-between" gap={2}>
           <Typography variant="label">Alpina UI / React component library</Typography>
           <TextLink href="/docs/guides/release/">v{version}</TextLink>

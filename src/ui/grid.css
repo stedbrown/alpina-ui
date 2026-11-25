@@ -149,3 +149,16 @@
       color-mix(in srgb, var(--al-accent) 10%, transparent) calc(var(--al-row-period) - var(--al-gutter)) var(--al-row-period));
   }
 }
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  .al-layout[data-entrance='sequence'] > .al-grid > .al-grid-item {
+    animation: al-grid-entry 260ms var(--al-ease) backwards;
+  }
+  .al-layout[data-entrance='sequence'] > .al-grid > .al-grid-item:nth-child(2) { animation-delay: 35ms; }
+  .al-layout[data-entrance='sequence'] > .al-grid > .al-grid-item:nth-child(3) { animation-delay: 70ms; }
+  .al-layout[data-entrance='sequence'] > .al-grid > .al-grid-item:nth-child(n + 4) { animation-delay: 105ms; }
+  @keyframes al-grid-entry {
+    from { transform: translateY(var(--al-space-2)); }
+    to { transform: translateY(0); }
+  }
+}

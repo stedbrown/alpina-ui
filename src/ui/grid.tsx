@@ -36,6 +36,8 @@ function positiveTrack(value: number | undefined) {
 }
 export interface GridProps extends HTMLAttributes<HTMLDivElement> {
   guides?: boolean
+  /** Introduce the first three rows once. Respects the reader's reduced-motion setting. */
+  entrance?: 'sequence'
   as?: 'div' | 'header' | 'main' | 'section' | 'article' | 'footer'
   /** Block padding for a compact band, a content section, or a larger opening section. */
   space?: 'compact' | 'section' | 'cover'
@@ -55,6 +57,7 @@ export const Grid = forwardRef<HTMLElement, GridProps>(function Grid(
   {
     as: Element = 'div',
     guides = false,
+    entrance,
     ruler = false,
     rows,
     fields,
@@ -80,7 +83,7 @@ export const Grid = forwardRef<HTMLElement, GridProps>(function Grid(
   const tracks = ruler || guides ? Array.from({ length: Math.max(4, columns) }, (_, i) => i) : []
   return createElement(
     Element,
-    { ...props, ref, 'data-space': space, 'data-surface': surface, className: ('al-layout ' + className).trim() },
+    { ...props, ref, 'data-entrance': entrance, 'data-space': space, 'data-surface': surface, className: ('al-layout ' + className).trim() },
     <div className="al-grid" data-width={width} data-align={align} data-guides={guides || undefined}
       data-fields={matrix ? 'matrix' : typeof fields === 'string' ? fields : undefined}
       data-rows={rowCount} style={trackStyle}>

@@ -68,6 +68,13 @@ async function checkSecondWeek(chart) {
 try {
   for (const viewport of [{ width: 390, height: 844 }, { width: 1350, height: 940 }]) await verifyInitialGeometry(viewport)
   const page = await homepage(true)
+  const cover = page.locator('main [data-entrance="sequence"]')
+  assert.equal(await cover.count(), 1)
+  const animation = () => cover.locator('.al-grid-item').evaluateAll(nodes => nodes.map(node => getComputedStyle(node).animationName))
+  await page.emulateMedia({reducedMotion:'no-preference'})
+  assert.ok((await animation()).every(name => name === 'al-grid-entry'))
+  await page.emulateMedia({reducedMotion:'reduce'})
+  assert.ok((await animation()).every(name => name === 'none'))
   const grid = page.getByRole('switch', {name:'Show grid'})
   assert.ok(await page.locator('#programme-guides').isVisible())
   await grid.press('Space')

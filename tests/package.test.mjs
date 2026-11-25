@@ -14,6 +14,13 @@ const source = new URL('src/', root)
 const manifest = JSON.parse(await readFile(new URL('package.json', root), 'utf8'))
 const registry = JSON.parse(await readFile(require.resolve('alpina-ui/registry.json'), 'utf8'))
 
+test('CommonJS and ESM consumers can read the installed package version', async () => {
+  const metadata = 'alpina-ui/package.json'
+  assert.equal(require(metadata).version, manifest.version)
+  const json = await readFile(new URL(import.meta.resolve(metadata)), 'utf8')
+  assert.equal(JSON.parse(json).version, manifest.version)
+})
+
 test('the ESM package server-renders UI, interactive and Swiss components with peer React', () => {
   for (const peer of ['react', 'react-dom']) {
     assert.ok(manifest.peerDependencies[peer])

@@ -84,6 +84,7 @@ try {
   const dependency = createRequire(join(scratch, 'node_modules/alpina-ui/package.json'))
   for (const project of workspace.workspaces) {
     const consumer = createRequire(join(scratch, project, 'package.json'))
+    assert.equal(consumer('alpina-ui/package.json').version, manifest.version, project + ' installed Alpina version')
     for (const name of ['react', 'react-dom']) {
       assert.equal(consumer(name + '/package.json').version, version, project + ' ' + name)
       assert.equal(dependency.resolve(name), consumer.resolve(name), 'Shared peer instance in ' + project)

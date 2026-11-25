@@ -23,6 +23,9 @@
   line-height: var(--al-leading-body);
 }
 .al-item-description {
+  max-inline-size: clamp(45ch, var(--al-measure), 75ch);
+  text-wrap: pretty;
+  hyphens: auto;
   margin-block-start: var(--al-space-1);
   font-size: var(--al-type-label);
   line-height: var(--al-leading-label);

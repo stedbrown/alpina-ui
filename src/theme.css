@@ -63,6 +63,7 @@ body[data-al-page] > footer:last-child { margin-block-start: auto; }
   --al-font: var(--al-font-family, 'Helvetica Neue', Helvetica, Arial, sans-serif);
   --al-display: var(--al-font);
   --al-mono: ui-monospace, 'SFMono-Regular', Consolas, monospace;
+  --al-measure: 66ch;
 }
 [data-al-theme='dark'] {
   color-scheme: dark;

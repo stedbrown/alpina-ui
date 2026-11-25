@@ -2,6 +2,10 @@
   margin: 0;
   text-align: start;
   font-family: var(--al-font);
+  font-kerning: normal;
+  font-variant-numeric: proportional-nums;
+  hyphens: auto;
+  hanging-punctuation: first last;
   font-size: var(--al-type-body);
   line-height: var(--al-leading-body);
   font-weight: 400;
@@ -61,11 +65,14 @@
   text-wrap: balance;
 }
 .al-type[data-measure='reading'] {
-  max-inline-size: 65ch;
+  max-inline-size: clamp(45ch, var(--al-measure), 75ch);
 }
 .al-type[data-measure='narrow'] {
-  max-inline-size: 44ch;
+  max-inline-size: 45ch;
 }
+p.al-type { text-wrap: pretty; }
+:is(h1, h2, h3, h4, h5, h6).al-type { text-wrap: balance; }
+:is(.al-table, .al-data-table) .al-type { font-variant-numeric: tabular-nums; }
 .al-type[data-numeric] {
   font-variant-numeric: tabular-nums lining-nums;
 }

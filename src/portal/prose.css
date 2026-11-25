@@ -1,11 +1,18 @@
 .al-prose {
   color: var(--al-ink);
   font: var(--al-type-body)/var(--al-leading-body) var(--al-font);
-  max-width: 76ch;
+  max-inline-size: clamp(45ch, var(--al-measure), 75ch);
+  text-align: start;
+  font-kerning: normal;
+  font-variant-numeric: proportional-nums;
+  hanging-punctuation: first last;
+  hyphens: auto;
   min-width: 0;
   overflow-wrap: anywhere;
 }
-.al-prose :where(h1, h2, h3) {
+.al-prose p { text-wrap: pretty; }
+.al-prose :where(code, pre, samp, kbd) { hyphens: none; }
+.al-prose :where(h1, h2, h3, h4, h5, h6) {
   text-wrap: balance;
   line-height: var(--al-leading-heading);
   line-height: round(up, 1.08em, var(--al-unit));
@@ -50,6 +57,7 @@
   font-size: 0.87em;
 }
 .al-prose table {
+  font-variant-numeric: tabular-nums;
   display: block;
   max-width: 100%;
   overflow-x: auto;

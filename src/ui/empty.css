@@ -16,7 +16,9 @@
   font-weight: 650;
 }
 .al-empty-description {
-  max-inline-size: 56ch;
+  max-inline-size: clamp(45ch, var(--al-measure), 75ch);
+  text-wrap: pretty;
+  hyphens: auto;
   font-size: var(--al-type-body);
   line-height: var(--al-leading-body);
 }

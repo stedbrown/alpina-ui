@@ -101,7 +101,9 @@
 }
 .al-modal-description {
   margin: var(--al-space-3) 0 0;
-  max-inline-size: 58ch;
+  max-inline-size: clamp(45ch, var(--al-measure), 75ch);
+  text-wrap: pretty;
+  hyphens: auto;
   line-height: var(--al-leading-body);
 }
 .al-modal-content,

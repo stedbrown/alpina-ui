@@ -16,6 +16,9 @@
 }
 .al-field-hint,
 .al-field-error {
+  max-inline-size: clamp(45ch, var(--al-measure), 75ch);
+  text-wrap: pretty;
+  hyphens: auto;
   font-size: var(--al-type-label);
   line-height: var(--al-leading-label);
   overflow-wrap: anywhere;

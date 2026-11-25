@@ -27,7 +27,9 @@
 }
 .al-card-description {
   margin: 0;
-  max-inline-size: 68ch;
+  max-inline-size: clamp(45ch, var(--al-measure), 75ch);
+  text-wrap: pretty;
+  hyphens: auto;
   color: var(--al-muted);
   font-size: var(--al-type-label);
   line-height: var(--al-leading-label);

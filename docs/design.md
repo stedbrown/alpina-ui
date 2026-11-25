@@ -32,6 +32,10 @@ The values below are specifications for this library. Inspect them in the specim
 | Section heading | 24 / 28 px | Entry point for a group |
 | Display heading | 48 / 48 px | First information to recognize |
 
+Ruder’s *Typographie* treats the space between letters, words and lines as part of reading. Alpina gives captions a 16 px line so they can sit under a field without competing with its label. The body role adds room for accents and wrapped instructions. Headings use tighter leading because their larger letters already separate the lines. Use a heading element for the document outline and choose its visual role separately. [Emil Ruder, *Typography. A Manual of Design*](https://niggli.ch/en/products/typographie)
+
+Prose and descriptions use a ragged right edge in Switzerland’s left-to-right languages. The default reading measure is 66 zero-glyph widths. Set `--al-measure` to change it between 45ch and 75ch. Narrow surfaces still reflow to the available width. Paragraphs request pretty wrapping and headings request balanced wrapping. Language tags select the browser’s hyphenation dictionary. Optical punctuation depends on browser support. Body text uses kerning and proportional figures. Tables, dates and currency use tabular figures so units line up.
+
 “16 / 24” means 16 px type in a 24 px line box. Three lines occupy 72 px, or 18 vertical modules of 4 px. The rhythm applies to the line boxes. Visible letter height and baseline position also depend on the metrics of the available font.
 
 | Container width | Columns | Gutter | Margin on each side |

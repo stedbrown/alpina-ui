@@ -51,7 +51,8 @@
 }
 .al-accordion-panel {
   padding: 0 var(--al-space-10) var(--al-space-5) var(--al-space-2);
-  max-inline-size: 64ch;
+  max-inline-size: clamp(45ch, var(--al-measure), 75ch);
+  text-wrap: pretty;
   line-height: var(--al-leading-body);
   overflow-wrap: anywhere;
 }

@@ -242,6 +242,60 @@
       ]
     },
     {
+      "name": "bar-chart",
+      "group": "ui",
+      "entry": "ui/bar-chart.tsx",
+      "usage": "Compare signed values on a common scale with directly labelled bars. Pass title, description and data with label and value for each observation. Use loading while fetching data and formatValue for units.",
+      "files": [
+        "theme.css",
+        "ui/bar-chart.tsx",
+        "ui/plot-frame.tsx",
+        "ui/chart-datum.ts",
+        "ui/plots.css"
+      ]
+    },
+    {
+      "name": "line-chart",
+      "group": "ui",
+      "entry": "ui/line-chart.tsx",
+      "usage": "Plot an ordered series with a labelled scale and a readable data table. Pass title, description and data with label and value for each observation. Use loading while fetching data and formatValue for units.",
+      "files": [
+        "theme.css",
+        "ui/line-chart.tsx",
+        "ui/plot-frame.tsx",
+        "ui/chart-datum.ts",
+        "ui/plots.css",
+        "ui/line-plot.tsx"
+      ]
+    },
+    {
+      "name": "sparkline",
+      "group": "ui",
+      "entry": "ui/sparkline.tsx",
+      "usage": "Show a short trend with its last observation and the underlying values. Pass title, description and data with label and value for each observation. Use loading while fetching data and formatValue for units.",
+      "files": [
+        "theme.css",
+        "ui/sparkline.tsx",
+        "ui/plot-frame.tsx",
+        "ui/chart-datum.ts",
+        "ui/plots.css",
+        "ui/line-plot.tsx"
+      ]
+    },
+    {
+      "name": "chart-table",
+      "group": "ui",
+      "entry": "ui/chart-table.tsx",
+      "usage": "Compare magnitudes while reading precise values in a semantic table. Pass title, description and data with label and value for each observation. Use loading while fetching data and formatValue for units.",
+      "files": [
+        "theme.css",
+        "ui/chart-table.tsx",
+        "ui/plot-frame.tsx",
+        "ui/chart-datum.ts",
+        "ui/plots.css"
+      ]
+    },
+    {
       "name": "aspect-ratio",
       "group": "ui",
       "entry": "ui/aspect-ratio.tsx",
@@ -304,7 +358,8 @@
       "files": [
         "theme.css",
         "ui/chart.tsx",
-        "ui/chart.css"
+        "ui/chart.css",
+        "ui/chart-datum.ts"
       ]
     },
     {

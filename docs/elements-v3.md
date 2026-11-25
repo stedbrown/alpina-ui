@@ -58,3 +58,16 @@ Existing prop names are preserved. The following options were introduced in 0.3.
 | Field, Select, Textarea | Field combines hint and error IDs and removes duplicates. `Select placeholder` adds an empty option in single-select fields, including required ones. `Textarea autoGrow` follows the text where the browser supports field-sizing and uses native behavior elsewhere. |
 | Progress, Skeleton, Spinner | `formatValue(value, max)` provides an accessible progress value with its unit. `Skeleton variant="text"` or `"avatar"` reserves the corresponding space. `Spinner size` selects a diameter of 16, 20, or 32 px. |
 | Breadcrumb, Pagination, Separator | `currentIndex` marks an intermediate step. Pagination marks adjacent page links with prev and next. `Separator weight="section"` emphasizes a section change. |
+
+## SVG data graphics
+
+Choose `BarChart` to compare categories against zero, `LineChart` for an ordered series, and `Sparkline` for a compact trend with its final reading. `ChartTable` aligns each printed value and its comparison bar on the same table row. Bars share a zero baseline. Lines and sparklines use the observed range so small changes remain visible. Each takes a title, an optional description and an ordered array of finite numeric observations. Missing or non-finite values are omitted. A series with no observations displays its empty state.
+
+```tsx
+<BarChart title="Quarterly change" description="Change in passengers compared with last year."
+  categoryLabel="Station" valueLabel="Passengers" data={[
+    { label: 'Bern', value: 36 }, { label: 'Luzern', value: -12 },
+  ]} />
+```
+
+Use `formatValue` for presentation units and `loading` while observations are outstanding. The native data disclosure exposes values and labels in reading order. With `ChartTable`, this table is the primary view.

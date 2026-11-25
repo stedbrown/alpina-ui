@@ -1,6 +1,6 @@
 # Component coverage compared with shadcn/ui
 
-Alpina UI 0.10.0 has 89 installable component entries. The table below maps 66 of them to the families in the shadcn/ui **All Components** index recorded on November 24, 2026. The other 23 cover Swiss forms, formatting, icons, layout and navigation. The four copyable pages in Alpina's block gallery have their own CLI names and are counted separately. [Official shadcn/ui component index](https://ui.shadcn.com/docs/components) · [Alpina block gallery](https://alpina-ui.vercel.app/blocks/)
+Alpina UI 0.10.0 has 93 installable component entries. The table below maps 66 of them to the families in the shadcn/ui **All Components** index recorded on November 24, 2026. The other 27 cover Swiss forms, formatting, icons, layout and navigation. The four copyable pages in Alpina's block gallery have their own CLI names and are counted separately. [Official shadcn/ui component index](https://ui.shadcn.com/docs/components) · [Alpina block gallery](https://alpina-ui.vercel.app/blocks/)
 
 ## Differences to consider
 
@@ -95,11 +95,12 @@ The table records one documented implementation for each family. To estimate mig
 | Trace | `trace` | `Trace` | interactive |
 | Typography | `typography` | `Typography` | ui |
 
-## The 23 additional entries in Alpina 0.10.0
+## The 27 additional entries in Alpina 0.10.0
 
 | Purpose | Alpina entries |
 | --- | --- |
 | Layout and portal | `app-shell`, `figure`, `grid`, `grid-overlay`, `stack`, `prose`, `text-link` |
+| SVG data graphics | `bar-chart`, `line-chart`, `sparkline`, `chart-table` |
 | Interface symbols | `icon` |
 | Read-only summaries and workflows | `description-list`, `steps` |
 | Language, cantons, and addresses | `canton-combobox`, `canton-select`, `locale-select`, `multilingual-field`, `swiss-address-form`, `swiss-postal-code-input` |

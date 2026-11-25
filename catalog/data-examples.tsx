@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CantonCombobox, type CantonCode, CurrencyCHF, DataTable } from 'alpina-ui'
+import { BarChart, ChartTable, LineChart, Sparkline, CantonCombobox, type CantonCode, CurrencyCHF, DataTable } from 'alpina-ui'
 
 export function CantonComboboxExample() {
   const [code, setCode] = useState<CantonCode | ''>('')
@@ -48,4 +48,34 @@ export function DataTableExample() {
       ]}
     />
   )
+}
+
+export function BarChartExample() {
+  return <BarChart title="Change in library loans" description="Change against the previous quarter, in loans."
+    categoryLabel="Branch" valueLabel="Change" data={[
+      { label: 'Oerlikon', value: 128 }, { label: 'Altstadt', value: 84 }, { label: 'Wiedikon', value: -32 },
+    ]} />
+}
+
+export function LineChartExample() {
+  return <LineChart title="Passenger counts" description="Morning departures at the station, Monday through Friday."
+    categoryLabel="Day" valueLabel="Passengers" data={[
+      { label: 'Mon', value: 420 }, { label: 'Tue', value: 520 }, { label: 'Wed', value: 480 },
+      { label: 'Thu', value: 560 }, { label: 'Fri', value: 460 },
+    ]} />
+}
+
+export function SparklineExample() {
+  return <Sparkline title="Reservoir level" description="Water level across four readings, in metres."
+    categoryLabel="Time" valueLabel="Metres" formatValue={n => n + ' m'} data={[
+      { label: '06:00', value: 18 }, { label: '09:00', value: 16 },
+      { label: '12:00', value: 17 }, { label: '15:00', value: 14 },
+    ]} />
+}
+
+export function ChartTableExample() {
+  return <ChartTable title="Printed editions" description="Copies delivered to each regional office."
+    categoryLabel="Office" valueLabel="Copies" data={[
+      { label: 'Basel', value: 360 }, { label: 'Bern', value: 240 }, { label: 'Lugano', value: 120 },
+    ]} />
 }

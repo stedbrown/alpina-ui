@@ -42,6 +42,34 @@ export const expanded = [
     "Prepare a SIX QR-bill payment part and receipt with a scannable Swiss QR Code."
   ],
   [
+    "bar-chart",
+    "BarChart",
+    "Horizontal bar chart",
+    "Navigation and data",
+    "Compare signed values on a common scale with directly labelled bars."
+  ],
+  [
+    "line-chart",
+    "LineChart",
+    "Time series",
+    "Navigation and data",
+    "Plot an ordered series with a labelled scale and a readable data table."
+  ],
+  [
+    "sparkline",
+    "Sparkline",
+    "Compact trend",
+    "Navigation and data",
+    "Show a short trend with its last observation and the underlying values."
+  ],
+  [
+    "chart-table",
+    "ChartTable",
+    "Table with bars",
+    "Navigation and data",
+    "Compare magnitudes while reading precise values in a semantic table."
+  ],
+  [
     "aspect-ratio",
     "AspectRatio",
     "Aspect ratio",

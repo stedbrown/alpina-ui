@@ -1,9 +1,7 @@
 import { forwardRef, useId, type ComponentPropsWithoutRef, type CSSProperties } from 'react'
 import './chart.css'
-export interface ChartDatum {
-  label: string
-  value: number
-}
+import type { ChartDatum } from './chart-datum.js'
+export type { ChartDatum } from './chart-datum.js'
 export interface ChartProps extends Omit<ComponentPropsWithoutRef<'figure'>, 'title'> {
   title: string
   data: readonly ChartDatum[]

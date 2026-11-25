@@ -87,5 +87,9 @@
   "toggle-group": "Tab enters a group once. Arrow keys move focus, Home and End reach its edges, and pressing Space changes the focused option. Use layout=\"grid\" for equal-width tiles with arrow navigation between rows.",
   "tooltip": "Attach a short description to an existing focusable control. Focus shows it immediately. Escape dismisses it and the popup stays within the visible viewport.",
   "trace": "Time and event text align to a consistent gutter. Long entries wrap, keyboard focus outlines the disclosure, and touch users get a taller summary.",
-  "typography": "Choose the semantic heading level with as and its visual size with variant. The title role scales with the container and wraps long multilingual headings."
+  "typography": "Choose the semantic heading level with as and its visual size with variant. The title role scales with the container and wraps long multilingual headings.",
+  "bar-chart": "Compare signed values on a common scale with directly labelled bars. Pass title, description and data with label and value for each observation. Use loading while fetching data and formatValue for units.",
+  "line-chart": "Plot an ordered series with a labelled scale and a readable data table. Pass title, description and data with label and value for each observation. Use loading while fetching data and formatValue for units.",
+  "sparkline": "Show a short trend with its last observation and the underlying values. Pass title, description and data with label and value for each observation. Use loading while fetching data and formatValue for units.",
+  "chart-table": "Compare magnitudes while reading precise values in a semantic table. Pass title, description and data with label and value for each observation. Use loading while fetching data and formatValue for units."
 }

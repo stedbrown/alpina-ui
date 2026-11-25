@@ -1,8 +1,6 @@
 'use client'
 import { useId, useState } from 'react'
 import {
-  Grid,
-  GridItem,
   AspectRatio,
   Attachment,
   Field,
@@ -31,15 +29,11 @@ import {
 
 export function AspectRatioExample() {
   return (
-    <Grid>
-      <GridItem medium={6} large={8}>
-        <Stack surface="soft" inset={4}>
-          <AspectRatio ratio={3 / 2}>
-            <Typography variant="display">3 ∶ 2</Typography>
-          </AspectRatio>
-        </Stack>
-      </GridItem>
-    </Grid>
+    <Stack asChild surface="soft" inset={4}>
+      <AspectRatio ratio={3 / 2}>
+        <Typography variant="display">3 ∶ 2</Typography>
+      </AspectRatio>
+    </Stack>
   )
 }
 

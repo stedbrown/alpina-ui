@@ -20,7 +20,9 @@ test('Markdown headers and body cells preserve authored column alignment and inl
     '| --- | :--- | :---: | ---: |',
     '| Uno | [Link](/docs/) | *Two* | `1.25 m²` |',
   ].join('\n'))
-  assert.match(html, /<table class="al-table">/)
+  const opening = html.match(/<table\b[^>]*>/)?.[0] ?? ''
+  assert.match(opening, /\btabindex="0"/)
+  assert.match(opening, /\bclass="al-table"/)
   for (const tag of ['th', 'td']) {
     const cells = [...html.matchAll(new RegExp('<' + tag + '\\b([^>]*)>', 'g'))]
     assert.deepEqual(cells.map(([, attributes]) => attributes.match(/data-text-align="(\w+)"/)?.[1]),

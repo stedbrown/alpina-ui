@@ -23,6 +23,9 @@
   overflow-wrap: anywhere;
 }
 .al-table > thead > tr > th {
+  /* Let auto layout reserve each word's width before wrapping body copy. */
+  overflow-wrap: break-word;
+  hyphens: manual;
   border-image-source: linear-gradient(var(--al-control) 0 0);
   background: var(--al-soft);
   color: var(--al-muted);

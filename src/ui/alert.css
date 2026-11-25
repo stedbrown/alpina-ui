@@ -31,6 +31,7 @@
   line-height: var(--al-leading-label);
 }
 .al-alert-sign {
+  box-sizing: border-box;
   display: inline-grid;
   place-items: center;
   inline-size: 1.25rem;

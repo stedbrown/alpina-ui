@@ -5,7 +5,7 @@
 
 React components for Swiss software, from a multilingual address form to a printable QR-bill.
 
-[![CI](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml) [![MIT license](https://img.shields.io/badge/license-MIT-222222)](LICENSE) [![Package version](https://img.shields.io/badge/version-0.14.0-eb0000)](CHANGELOG.md)
+[![CI](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml) [![MIT license](https://img.shields.io/badge/license-MIT-222222)](LICENSE) [![Package version](https://img.shields.io/badge/version-1.0.0--rc.1-eb0000)](CHANGELOG.md)
 
 [Live site](https://alpina-ui.vercel.app/) · [Documentation](https://alpina-ui.vercel.app/docs/) · [Designer kit](https://alpina-ui.vercel.app/kit/) · [Design principles](https://alpina-ui.vercel.app/principles/) · [Changelog](CHANGELOG.md) · [API stability](docs/api-stability.md)
 
@@ -18,7 +18,7 @@ React components for Swiss software, from a multilingual address form to a print
 In an existing React 18.2 or 19 app, install the versioned archive and import the stylesheet once.
 
 ```sh
-npm install https://alpina-ui.vercel.app/alpina-ui-0.14.0.tgz
+npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.1.tgz
 ```
 
 ```tsx

@@ -180,9 +180,9 @@
     "css": 384
   },
   "field": {
-    "js": 512,
+    "js": 576,
     "lazy": 0,
-    "css": 384
+    "css": 512
   },
   "figure": {
     "js": 320,
@@ -477,7 +477,7 @@
   "typography": {
     "js": 512,
     "lazy": 0,
-    "css": 896
+    "css": 1024
   },
   "uid-input": {
     "js": 1792,

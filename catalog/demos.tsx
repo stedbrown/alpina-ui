@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import {
   Stack,
+  ScrollArea,
   Typography,
   DescriptionList,
   FieldSet,
@@ -836,25 +837,27 @@ export function TableExample() {
           </Typography>
         </Stack>
       </Stack>
-      <Table>
-        <TableCaption>Quantities by publication</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead scope="col">Publication</TableHead>
-            <TableHead scope="col">Format</TableHead>
-            <TableHead scope="col" numeric>Copies</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {entries.map((entry) => (
-            <TableRow key={entry.name}>
-              <TableHead scope="row">{entry.name}</TableHead>
-              <TableCell>{entry.format}</TableCell>
-              <TableCell numeric>{entry.copies}</TableCell>
+      <ScrollArea label="Studio print quantities">
+        <Table>
+          <TableCaption>Quantities by publication</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead scope="col">Publication</TableHead>
+              <TableHead scope="col">Size</TableHead>
+              <TableHead scope="col" numeric aria-label="Qty (number of copies)">Qty</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {entries.map((entry) => (
+              <TableRow key={entry.name}>
+                <TableHead scope="row">{entry.name}</TableHead>
+                <TableCell>{entry.format}</TableCell>
+                <TableCell numeric>{entry.copies}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </ScrollArea>
       <Stack direction="row" justify="space-between">
         <Typography as="span" variant="caption">
           Total in production
@@ -1072,7 +1075,7 @@ export function DialogExample() {
           A3
         </Typography>
         <Stack gap={1}>
-          <strong>Neighbourhood poster</strong>
+          <Typography as="span"><strong>Neighbourhood poster</strong></Typography>
           <Typography variant="caption">Revision 03 · 80 copies · 2 colours</Typography>
         </Stack>
       </Stack>

@@ -14,7 +14,7 @@ const browser = await chromium.launch({ ...(process.env.CHROME_PATH && { executa
 try {
   const page = await browser.newPage()
   await page.setContent('<style>*{margin:0}svg{display:block;width:100vw;height:100vh}</style>' + logo)
-  for (const [size, filename] of [[32, 'favicon.ico'], [180, 'apple-touch-icon.png'], [192, 'icon-192.png'], [512, 'icon-512.png']]) {
+  for (const [size, filename] of [[32, 'favicon.ico'], [64, 'alpina-mark.png'], [180, 'apple-touch-icon.png'], [192, 'icon-192.png'], [512, 'icon-512.png']]) {
     await page.setViewportSize({ width: size, height: size })
     const png = await page.screenshot()
     if (filename.endsWith('.ico')) {

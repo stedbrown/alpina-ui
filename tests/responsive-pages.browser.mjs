@@ -45,6 +45,13 @@ function layoutIssues() {
     }
     if (innerWidth === 800 && !(compactLanguage && compactProgress)) errors.add('Expected compact English navigation at 800px')
   }
+  if (location.pathname === '/docs/components/table/') {
+    for (const header of document.querySelectorAll('.al-preview-content thead th')) {
+      const text = document.createRange()
+      text.selectNodeContents(header)
+      checkLines(text, 'print-run table heading ' + header.textContent)
+    }
+  }
   for (const value of document.querySelectorAll('time, .al-swiss-figures bdi, .al-type[data-numeric], .al-table-value, .al-bill-number, a[href^="tel:"], .al-chart-value, .al-series-bars li > :last-child, .al-series-scale span, .al-series-table td:last-child')) {
     if (!value.checkVisibility() || value.matches(':has(.al-swiss-figures)')) continue
     const range = document.createRange()

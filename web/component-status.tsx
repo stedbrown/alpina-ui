@@ -1,5 +1,4 @@
-import { PageRegion } from 'alpina-ui'
-import { Grid, GridItem, SwissDate, Table, TableBody, TableCell, TableHead, TableHeader,
+import { Grid, GridItem, PageRegion, ScrollArea, SwissDate, Table, TableBody, TableCell, TableHead, TableHeader,
   TableRow, TextLink, Typography } from 'alpina-ui'
 import { Masthead, Footer, PageHeading } from './pages.js'
 
@@ -21,16 +20,18 @@ export function ComponentStatus({ records }: { records: ComponentRecord[] }) {
           <TextLink href="/docs/guides/beta-review/">Read the 1.0 Beta recommendations</TextLink>
         </GridItem>
         <GridItem medium={5} large={8}>
-          <Table aria-label="Component release status">
-            <TableHeader><TableRow><TableHead>Component</TableHead><TableHead>Stage</TableHead><TableHead>Last change</TableHead></TableRow></TableHeader>
-            <TableBody>{records.map(record =>
-              <TableRow key={record.slug}>
-                <TableCell><TextLink href={'/docs/components/' + record.slug + '/'}>{record.name}</TextLink></TableCell>
-                <TableCell>{record.stage}</TableCell>
-                <TableCell><SwissDate value={record.changed} locale="de-CH" /></TableCell>
-              </TableRow>
-            )}</TableBody>
-          </Table>
+          <ScrollArea label="Component release status table">
+            <Table aria-label="Component release status">
+              <TableHeader><TableRow><TableHead>Component</TableHead><TableHead>Stage</TableHead><TableHead>Last change</TableHead></TableRow></TableHeader>
+              <TableBody>{records.map(record =>
+                <TableRow key={record.slug}>
+                  <TableCell><TextLink href={'/docs/components/' + record.slug + '/'}>{record.name}</TextLink></TableCell>
+                  <TableCell>{record.stage}</TableCell>
+                  <TableCell><SwissDate value={record.changed} locale="de-CH" /></TableCell>
+                </TableRow>
+              )}</TableBody>
+            </Table>
+          </ScrollArea>
         </GridItem>
       </Grid>
     </PageRegion>

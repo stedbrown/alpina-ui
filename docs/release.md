@@ -1,5 +1,9 @@
 # Upgrading Alpina UI
 
+## Version 1.0.0-rc.1
+
+Install the [candidate archive](https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.1.tgz) in a test application. Compare its [SHA‑512 digest](https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.1.tgz.sha512) with the downloaded bytes. The [0.x migration guide](https://alpina-ui.vercel.app/docs/guides/migrate-1-0/) covers both renamed font assets and tested examples. The [Beta recommendations](https://alpina-ui.vercel.app/docs/guides/beta-review/) await maintainer decisions. The three packed framework projects run at both supported React endpoints in [CI](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml). To return to 0.14.0, restore the previous application lockfile or install the archive below.
+
 ## Version 0.14.0
 
 Install the [0.14.0 archive](https://alpina-ui.vercel.app/alpina-ui-0.14.0.tgz). When upgrading local component copies, include the file picker sources returned by the CLI. Applications hosting Inter themselves should copy the two new optical-size WOFF2 files alongside the matching stylesheet. Existing attachment links still accept their original props. [File input](https://alpina-ui.vercel.app/docs/components/file-input/) · [Public service block](https://alpina-ui.vercel.app/blocks/public-service/) · [API policy](https://github.com/stedbrown/alpina-ui/blob/main/docs/api-stability.md)

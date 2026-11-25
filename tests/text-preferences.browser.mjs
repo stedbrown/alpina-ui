@@ -75,6 +75,7 @@ try {
   const errors = []
   for (const width of [320, 640, 1280]) {
     const page = await browser.newPage({ viewport: { width, height: 900 } })
+    page.setDefaultTimeout(15_000)
     await mountComponentGallery(page)
     await page.locator('.al-bill-reading summary, .al-series details summary').evaluateAll(nodes => {
       for (const summary of nodes) summary.parentElement.open = true
@@ -104,6 +105,7 @@ try {
     await page.close()
   }
   const portal = await openPublicPage(browser, { viewport: { width: 800, height: 900 } })
+  portal.setDefaultTimeout(15_000)
   for (const route of ['/', '/kit/', '/docs/components/swiss-address-form/', '/docs/components/data-table/', '/blocks/login/']) {
     await portal.goto(siteOrigin + route)
     await portal.locator('h1').first().waitFor()

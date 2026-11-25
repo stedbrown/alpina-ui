@@ -32,7 +32,7 @@ const guideMarkdown = new Marked({ renderer: {
       key: index, scope: Cell === TableHead ? 'col' : undefined, textAlign: cell.align ?? undefined,
       dangerouslySetInnerHTML: { __html: this.parser.parseInline(cell.tokens) },
     }))
-    return render(Table, { children: [
+    return render(Table, { tabIndex: 0, children: [
       createElement(TableHeader, { key: 'head' }, createElement(TableRow, null, cells(header, TableHead))),
       createElement(TableBody, { key: 'body' }, rows.map((row, index) =>
         createElement(TableRow, { key: index }, cells(row, TableCell)))),
@@ -183,7 +183,7 @@ export async function buildWebsite({ outputDir, guides, guideFiles, apiReference
     output('skills/alpina-ui/SKILL.md', deploymentLinks(await readFile('skills/alpina-ui/SKILL.md', 'utf8'))),
     output(siteMetadata.imagePath, preview),
     output('assets/alpina-type-specimen.webp', await readFile('web/assets/alpina-type-specimen.webp')),
-    ...['logo.svg', 'logo-mono.svg', 'icon-192.png', 'icon-512.png'].map(async name => output('assets/' + name, await readFile('web/assets/' + name))),
+    ...['logo.svg', 'logo-mono.svg', 'alpina-mark.png', 'icon-192.png', 'icon-512.png'].map(async name => output('assets/' + name, await readFile('web/assets/' + name))),
     ...['favicon.svg', 'favicon.ico', 'apple-touch-icon.png', 'site.webmanifest'].map(async name => output(name, await readFile('web/assets/' + name))),
   ])
 

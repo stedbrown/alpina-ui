@@ -38,7 +38,8 @@
 .al-field-set {
   margin: 0;
   min-inline-size: 0;
-  border: 1px solid var(--al-line);
+  border: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 1px;
   padding: var(--al-space-3);
 }
 .al-field-set > legend {

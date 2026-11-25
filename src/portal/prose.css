@@ -66,6 +66,13 @@
   border-collapse: collapse;
   font-size: 0.88rem;
 }
+.al-prose table :is(th, td),
+.al-prose .al-table :is(th, td),
+.al-prose table :is(a, code) {
+  overflow-wrap: break-word;
+  hyphens: manual;
+}
+.al-prose table:focus-visible { outline: 2px solid var(--al-focus); outline-offset: 2px; }
 .al-prose th,
 .al-prose td {
   border-block-start: var(--al-unit) solid var(--al-line);

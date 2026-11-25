@@ -44,9 +44,6 @@ const gridSwitch = document.getElementById('show-grid')
 gridSwitch.addEventListener('change', () => {
   document.getElementById('programme-guides').hidden = !gridSwitch.checked
 })
-const typeProof = document.getElementById('type-proof')
-document.getElementById('proof-scale').addEventListener('change', event => { typeProof.dataset.role = event.target.value })
-document.getElementById('proof-spacing').addEventListener('change', event => { typeProof.dataset.tracking = event.target.value })
 const themeSwitch = document.getElementById('proof-dark')
 themeSwitch.addEventListener('change', () => {
   const sheets = document.querySelectorAll('[data-appearance-sheet]')

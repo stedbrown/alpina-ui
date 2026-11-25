@@ -74,5 +74,10 @@ try {
     'Text column narrower than 4ch: Lo sportello serve solo Lugano.',
     'Text column narrower than 4ch: Wrapper width',
   ])
+  await page.setContent('<style>p {font:48px/1 monospace;width:3ch}</style>' +
+    '<p class="al-type" data-role="specimen">Aa Rg</p>' +
+    '<p class="al-type" data-role="specimen" style="width:1ch;overflow-wrap:anywhere">Ab</p>' +
+    '<p class="al-type" data-role="specimen" style="width:1ch;overflow:hidden">Cd</p>')
+  assert.deepEqual((await page.evaluate(readableLabelIssues)).sort(), ['Split type specimen: Ab', 'Type specimen overflows: Cd'])
   console.log('Invoice references, actions and description terms retain their intrinsic reading width.')
 } finally { await browser.close() }

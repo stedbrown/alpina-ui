@@ -133,3 +133,13 @@ address.al-type { font-style: normal; }
 }
 .al-type[data-tracking='normal'] { letter-spacing: normal; }
 .al-type[data-tracking='optical'] { letter-spacing: var(--al-display-tracking); }
+
+.al-type[data-role='specimen'] {
+  font: 600 var(--al-specimen-size, 8rem)/1 var(--al-display);
+  letter-spacing: var(--al-display-tracking);
+  font-optical-sizing: auto;
+  hyphens: none;
+  overflow-wrap: normal;
+  text-wrap: wrap;
+}
+.al-type[data-tracking='custom'] { letter-spacing: var(--al-type-tracking); }

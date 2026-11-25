@@ -144,7 +144,7 @@ async function loadPages() {
 }
 
 export async function buildWebsite({ outputDir, guides, guideFiles, guideManifest, apiReference, componentGuidance, registry, script, css, notices, renderComponent }) {
-  const { Landing, AccessProof, PressQueue, InstallCommand, StartHere, Examples, DesignerKit, StaticApi, Icons, Themes, Principles, Blocks, BlockPage, blockDemos, blocks, ComponentDirectory, ComponentStatus, ReferencePage, GuideLanguages, downloadLabel, ExampleIntroduction, inventory, projects } = await loadPages()
+  const { Landing, TypeProof, AccessProof, PressQueue, InstallCommand, StartHere, Examples, DesignerKit, StaticApi, Icons, Themes, Principles, Blocks, BlockPage, blockDemos, blocks, ComponentDirectory, ComponentStatus, ReferencePage, GuideLanguages, downloadLabel, ExampleIntroduction, inventory, projects } = await loadPages()
   async function output(name, data) {
     const target = path.join(outputDir, name)
     await mkdir(path.dirname(target), { recursive: true })
@@ -257,11 +257,12 @@ export async function buildWebsite({ outputDir, guides, guideFiles, guideManifes
   const ids = JSON.stringify(registry.items.map((item) => item.name))
   const legacy = `(()=>{const h=location.hash.slice(1);if(!h)return;const p={rubrica:"client-directory","address-book":"client-directory","rubrica-bilingue":"bilingual-address-book","bilingual-address-book":"bilingual-address-book"};if(Object.hasOwn(p,h))location.replace("/examples/"+p[h]+"/");else if(h==="overview"||h.startsWith("guide/")||${ids}.includes(h.split("/")[0]))location.replace("/docs/#"+h)})();`
   const command = 'npm install ' + siteUrl + '/alpina-ui-' + registry.version + '.tgz'
+  const typeProof = renderToString(createElement(TypeProof), { identifierPrefix: 'landing-type-' })
   const access = renderToString(createElement(AccessProof), { identifierPrefix: 'landing-access-' })
   const queue = renderToString(createElement(PressQueue), { identifierPrefix: 'landing-queue-' })
   const installation = renderToString(createElement(InstallCommand, { command }), { identifierPrefix: 'landing-install-' })
   await page('/', siteMetadata.name, siteMetadata.description,
-    render(Landing, { version: registry.version, count: inventory.length, queue, command, installation, access }), { redirect: legacy, showcase: true })
+    render(Landing, { version: registry.version, count: inventory.length, queue, command, installation, access, typeProof }), { redirect: legacy, showcase: true })
   await page('/start-here/', 'Start here', 'Choose a developer, designer or shadcn migration path into Alpina UI.', render(StartHere))
   await buildDesignerKit(output)
   await page('/kit/', 'Designer kit', 'Download editable column grids, an A4 type sheet and light and dark design tokens for your design tools.', render(DesignerKit))

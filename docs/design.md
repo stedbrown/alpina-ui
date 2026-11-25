@@ -163,6 +163,8 @@ Use `Grid` to allocate areas of the page and `Stack` to arrange elements inside 
 
 ## Proof a layout at a fixed width
 
+Use `<Typography variant="specimen" specimenSize={144} tracking={-0.05}>Aa Rg</Typography>` when comparing letterforms. The size is measured in CSS pixels and numeric tracking in em. Optical sizing follows the live type size. [Type specimen](https://alpina-ui.vercel.app/#type)
+
 Place a Grid inside `GridSpecimen` to inspect the same content at its available width or at a width in CSS pixels. A fixed proof scrolls inside its labelled region. Set `zoom={4}` to magnify the same content to 400% and test its layout at one quarter of the available width. Set `palette="system"` to preview system colors locally. The focus indicator and written state remain available in both palettes. `observeGridSpecimen(viewport, textSample, onMeasure)` reports the rendered width, column count, margin, gutter, grid unit, font size, line height and horizontal overflow after a resize. Call its returned cleanup function when the specimen unmounts.
 
 Use `Typography variant="display" responsive` for display text that follows the enclosing Alpina grid. Its size and line height are 40/40 px up to 19 rem, 48/48 px up to the 54 rem breakpoint and 64/64 px above it at the default grid unit. A `DescriptionList layout="columns"` can present those measurements as a compact row that wraps in reading order.

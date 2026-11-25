@@ -1,8 +1,8 @@
 import { numberText } from './number-text.js'
-import { createElement, forwardRef, type HTMLAttributes } from 'react'
+import { createElement, forwardRef, type CSSProperties, type HTMLAttributes } from 'react'
 import './typography.css'
 
-export type TypeRole = 'inherit' | 'caption' | 'label' | 'body' | 'lead' | 'heading' | 'display' | 'title' | 'poster' | 'masthead' | 'folio'
+export type TypeRole = 'inherit' | 'caption' | 'label' | 'body' | 'lead' | 'heading' | 'display' | 'title' | 'poster' | 'masthead' | 'folio' | 'specimen'
 export interface TypographyProps extends HTMLAttributes<HTMLElement> {
   as?: 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div' | 'output' | 'address'
   /** IDs of the controls contributing to a calculated output. */
@@ -12,7 +12,9 @@ export interface TypographyProps extends HTMLAttributes<HTMLElement> {
   /** Adjust display type to the active 4/8/12-column grid. */
   responsive?: boolean
   /** Natural font spacing or the calibrated tracking for the selected display role. */
-  tracking?: 'normal' | 'optical'
+  tracking?: 'normal' | 'optical' | number
+  /** Font size in CSS pixels for the specimen role. Numeric tracking is measured in em. */
+  specimenSize?: number
   numeric?: boolean
   tone?: 'ink' | 'paper' | 'accent'
 }
@@ -24,13 +26,22 @@ export const Typography = forwardRef<HTMLElement, TypographyProps>(function Typo
     numeric = false,
     responsive = false,
     tracking,
+    specimenSize,
+    style,
     tone,
     className = '',
     ...props
   },
   ref,
 ) {
+  if (specimenSize !== undefined && !(Number.isFinite(specimenSize) && specimenSize > 0)) throw new RangeError('Specimen size must be positive.')
+  if (typeof tracking === 'number' && !Number.isFinite(tracking)) throw new RangeError('Tracking must be finite.')
   return createElement(Element, {
+    style: (specimenSize !== undefined || typeof tracking === 'number') ? {
+      '--al-specimen-size': specimenSize === undefined ? undefined : specimenSize + 'px',
+      '--al-type-tracking': typeof tracking === 'number' ? tracking + 'em' : undefined,
+      ...style,
+    } as CSSProperties : style,
     ...props,
     ref,
     children: numeric && (typeof props.children === 'string' || typeof props.children === 'number' || typeof props.children === 'bigint')
@@ -38,7 +49,7 @@ export const Typography = forwardRef<HTMLElement, TypographyProps>(function Typo
     className: ('al-type ' + className).trim(),
     'data-role': variant,
     'data-tone': tone,
-    'data-tracking': tracking,
+    'data-tracking': typeof tracking === 'number' ? 'custom' : tracking,
     'data-measure': measure,
     'data-responsive': responsive || undefined,
     'data-numeric': numeric || undefined,

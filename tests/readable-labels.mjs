@@ -26,7 +26,20 @@ export function readableLabelIssues(root = document.body) {
     const fourCh = 4 * canvas.measureText('0').width
     // Layout pixels keep the text and its box in the same coordinate system,
     // including inside scaled, millimetre-accurate document previews.
-    if (canvas.measureText(node.data.trim()).width >= fourCh) {
+    if (parent.matches('.al-type[data-role="specimen"]')) {
+      // A pair of display letters can be a complete line. Check the actual runs at the
+      // chosen size and tracking so a narrow or clipped letterform still fails.
+      const frame = parent.getBoundingClientRect()
+      for (const word of node.data.matchAll(/\S+/gu)) {
+        range.setStart(node, word.index)
+        range.setEnd(node, word.index + word[0].length)
+        const runs = [...range.getClientRects()].filter(rect => rect.width && rect.height)
+        if (runs.some(rect => Math.abs(rect.top - runs[0].top) > 1))
+          issues.add('Split type specimen: ' + word[0])
+        if (runs.some(rect => rect.left < frame.left - 1 || rect.right > frame.right + 1))
+          issues.add('Type specimen overflows: ' + word[0])
+      }
+    } else if (canvas.measureText(node.data.trim()).width >= fourCh) {
       for (let owner = box; owner; owner = owner.parentElement) {
         const display = getComputedStyle(owner).display
         const width = owner instanceof HTMLElement ? owner.offsetWidth : owner.getBBox?.().width

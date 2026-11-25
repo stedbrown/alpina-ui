@@ -80,7 +80,7 @@ export function PageHeading({ title, summary, children }: { title: string; summa
   </Grid>
 }
 
-export function Landing({ version, count, queue, command, installation, access }: { version: string; count: number; queue: string; command: string; installation: string; access: string }) {
+export function Landing({ version, count, queue, command, installation, access, typeProof }: { version: string; count: number; queue: string; command: string; installation: string; access: string; typeProof: string }) {
   return <>
     <Masthead current="home" />
     <PageRegion as="main" id="content" tabIndex={-1}>
@@ -113,7 +113,7 @@ export function Landing({ version, count, queue, command, installation, access }
         </Stack></GridItem>
       </Grid>
       <GridStudy />
-      <TypeStudy />
+      <TypeStudy html={typeProof} />
       <HomeShowcase queue={queue} />
       <AppearanceStudy />
       <AccessStudy html={access} />

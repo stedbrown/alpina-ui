@@ -1,9 +1,10 @@
 import type { ReactNode } from 'react'
 import {
-  Collapsible, Field, Grid, GridItem, GridOverlay, GridSpecimen, InlineCode, Label,
-  Select, Separator, Stack, Switch, TextLink, Typography,
+  Collapsible, Grid, GridItem, GridOverlay, GridSpecimen, InlineCode, Label,
+  Separator, Stack, Switch, TextLink, Typography,
 } from 'alpina-ui'
 import { AppearancePair } from './appearance-pair.js'
+import { TypeProof } from './type-proof.js'
 import { AccessProof } from './access-proof.js'
 import { TypeSpecimen } from './type-specimen.js'
 
@@ -42,23 +43,13 @@ export function GridStudy() {
   </Grid>
 }
 
-export function TypeStudy() {
+export function TypeStudy({ html }: { html: string }) {
   return <Grid as="section" width="site" space="chapter" id="type" surface="ink" aria-labelledby="type-title">
-    <GridItem medium={3} large={4}><SectionIntro id="type-title" title="The typography" text="Look at the space between the letters. Change the scale and spacing of the same word.">
+    <GridItem medium={3} large={4}><SectionIntro id="type-title" title="The typography" text="Compare a capital, a bowl and a descender. Set the size in pixels and the tracking in em.">
       <TextLink href="/docs/components/typography/">Explore Typography →</TextLink>
     </SectionIntro></GridItem>
-    <GridItem medium={5} large={7} start={{ large: 6 }}><Stack gap={5}>
-      <Typography variant="masthead" tracking="optical" id="type-proof">Grotesk</Typography>
-      <Separator />
-      <Stack direction="row" gap={5} align="end" scripting="enabled">
-        <Field id="proof-scale" label="Type scale">{control => <Select {...control} defaultValue="masthead">
-          <option value="heading">Heading</option><option value="display">Display</option><option value="masthead">Masthead</option>
-        </Select>}</Field>
-        <Field id="proof-spacing" label="Letter spacing">{control => <Select {...control} defaultValue="optical">
-          <option value="optical">Optical</option><option value="normal">Normal</option>
-        </Select>}</Field>
-      </Stack>
-    </Stack></GridItem>
+    <GridItem medium={5} large={7} start={{ large: 6 }}><Stack scripting="enabled" data-landing-island="type" dangerouslySetInnerHTML={{ __html: html }} />
+      <Stack scripting="none"><TypeProof interactive={false} /></Stack></GridItem>
   </Grid>
 }
 

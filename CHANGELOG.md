@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.0-rc.3 · 25 November 2026
+
+- **Public API** Add `AlpinaProvider` for locale inheritance, the `nowrap` flag for custom DataTable columns and the opt-in `stripSeparators` option for QRR and creditor references. Typography adds a masthead role and configurable tracking. Grid supports an optional entrance sequence. [Reviewed declarations](etc/alpina-ui.api.md)
+- Align address controls and move descriptions and errors below the field group. Keep day numbers separated at 180 px. FormSteps measures its actual labels before switching to a compact counter.
+- Print the active tab panel at full width. FileInput retains valid files in the native form payload and reports individual rejected names. Primary action labels remain legible when Windows forces system colors.
+- Organize documentation by task, translate Start and Swiss into German, French and Italian, and permanently redirect consolidated pages. Publish reader guides in the archive and provide ranked multilingual search and four tested workflows for coding agents.
+- Introduce the flat-topped peak, three starting paths and an interactive typographic poster with grid, type, component, accessibility and theme specimens. See the [light](docs/images/home-light.png) and [dark](docs/images/home-dark.png) editions.
+
 ## 1.0.0-rc.2 · 25 November 2026
 
 - **Public API** Add payment-reference generation and formatting, exact centime formatting, invoice content and address composition, shared address fields, responsive form navigation, server field feedback, booking availability, normalized Swiss input callbacks, file limits, queued notifications, sidebar navigation and comparative charts. Existing single-series charts and inline notifications continue to work. Pass `showWeekNumbers` explicitly to retain week numbers. See the [reviewed declarations](etc/alpina-ui.api.md).

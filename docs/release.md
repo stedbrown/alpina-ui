@@ -1,5 +1,13 @@
 # Upgrading Alpina UI
 
+## Version 1.0.0-rc.3
+
+[Download the candidate](https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.3.tgz) and [verify its SHA-512 checksum](https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.3.tgz.sha512). The previous archive below remains available for rollback.
+
+Set the interface language once with `AlpinaProvider`. Address feedback spans the field group, accounting links can keep identifiers together, and file selection reports each rejected filename while preserving valid uploads. Print a tabbed document to include its active panel. For grouped numeric invoice IDs, pass `{ stripSeparators: true }` to the reference generator.
+
+The [homepage](https://alpina-ui.vercel.app/) demonstrates composition through working specimens. The [starting paths](https://alpina-ui.vercel.app/start-here/) lead into the redesigned guides. Start and Swiss are available in English, Italian, German and French. Local MCP searches also accept task names in those languages.
+
 ## Version 1.0.0-rc.2
 
 Install the [candidate archive](https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.2.tgz) and verify its [SHA-512 digest](https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.2.tgz.sha512). This candidate addresses feedback from four applications: a joinery invoicing app, a municipal service counter, a fiduciary ledger and a mobile appointment calendar.

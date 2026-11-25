@@ -303,6 +303,7 @@ export * from './interactive/tooltip.js';
 export * from './interactive/trace.js';
 export * from './swiss/address-lines.js';
 export * from './swiss/ahv-input.js';
+export * from './swiss/alpina-provider.js';
 export * from './swiss/calendar-dates.js';
 export * from './swiss/calendar.js';
 export * from './swiss/canton-combobox.js';
@@ -994,6 +995,18 @@ import { type SwissIdentifierInputProps } from './identifier-field.js';
 export interface AhvInputProps extends SwissIdentifierInputProps {
 }
 export declare const AhvInput: import("react").ForwardRefExoticComponent<AhvInputProps & import("react").RefAttributes<HTMLInputElement>>;
+~~~
+
+## swiss/alpina-provider.d.ts
+Client entry.
+~~~ts
+import { type ReactNode } from 'react';
+import type { SwissMessageLocale } from './locales.js';
+export interface AlpinaProviderProps {
+    locale: SwissMessageLocale;
+    children?: ReactNode;
+}
+export declare function AlpinaProvider({ locale, children }: AlpinaProviderProps): import("react").FunctionComponentElement<import("react").ProviderProps<SwissMessageLocale | undefined>>;
 ~~~
 
 ## swiss/calendar-dates.d.ts
@@ -2157,8 +2170,11 @@ export declare class SwissQrValidationError extends RangeError {
 }
 export declare function isQrReference(input: string): boolean;
 export declare function isCreditorReference(input: string): boolean;
-export declare function createQrReference(value: string | number | bigint): string;
-export declare function createCreditorReference(value: string | number | bigint): string;
+export interface PaymentReferenceOptions {
+    stripSeparators?: boolean;
+}
+export declare function createQrReference(value: string | number | bigint, options?: PaymentReferenceOptions): string;
+export declare function createCreditorReference(value: string | number | bigint, options?: PaymentReferenceOptions): string;
 export declare function formatQrReference(value: string): string;
 export declare function formatCreditorReference(value: string): string;
 export declare function prepareSwissQrBill(bill: SwissQrBillData, locale?: SwissMessageLocale): {
@@ -2592,6 +2608,7 @@ export interface DataColumn<Row> {
     cell: (row: Row) => ReactNode;
     compare?: (a: Row, b: Row) => number;
     align?: "start" | "end";
+    nowrap?: boolean;
 }
 export type AccountingColumn<Row> = {
     id: string;
@@ -2776,6 +2793,7 @@ export { GridSpecimen, observeGridSpecimen, type GridMeasurements, type GridSpec
 export type GridFields = "thirds" | "five-seven" | readonly string[];
 export interface GridProps extends HTMLAttributes<HTMLDivElement> {
     guides?: boolean;
+    entrance?: "sequence";
     as?: "div" | "header" | "main" | "section" | "article" | "footer";
     space?: "compact" | "section" | "cover";
     width?: "site" | "full";
@@ -3256,13 +3274,14 @@ export declare const Toggle: import("react").ForwardRefExoticComponent<TogglePro
 ## ui/typography.d.ts
 ~~~ts
 import { type HTMLAttributes } from 'react';
-export type TypeRole = "inherit" | "caption" | "label" | "body" | "lead" | "heading" | "display" | "title" | "poster";
+export type TypeRole = "inherit" | "caption" | "label" | "body" | "lead" | "heading" | "display" | "title" | "poster" | "masthead";
 export interface TypographyProps extends HTMLAttributes<HTMLElement> {
     as?: "span" | "p" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "div" | "output" | "address";
     htmlFor?: string;
     variant?: TypeRole;
     measure?: "reading" | "narrow";
     responsive?: boolean;
+    tracking?: "normal" | "optical";
     numeric?: boolean;
     tone?: "ink" | "paper" | "accent";
 }

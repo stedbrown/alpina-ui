@@ -310,7 +310,7 @@
     "css": 576
   },
   "phone-input": {
-    "js": 1408,
+    "js": 1600,
     "lazy": 0,
     "css": 704
   },
@@ -405,9 +405,9 @@
     "css": 1344
   },
   "swiss-address-form": {
-    "js": 10048,
+    "js": 11072,
     "lazy": 34240,
-    "css": 3456
+    "css": 3840
   },
   "swiss-date": {
     "js": 1344,
@@ -415,7 +415,7 @@
     "css": 256
   },
   "swiss-postal-code-input": {
-    "js": 1472,
+    "js": 1664,
     "lazy": 0,
     "css": 704
   },
@@ -430,9 +430,9 @@
     "css": 768
   },
   "table": {
-    "js": 2432,
+    "js": 2816,
     "lazy": 0,
-    "css": 1024
+    "css": 1088
   },
   "tabs": {
     "js": 1216,

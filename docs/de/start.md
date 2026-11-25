@@ -1,6 +1,6 @@
 # Erste Schritte
 
-Alpina UI 1.0.0-rc.2 enthält 97 installierbare React-Komponenten und fünf kopierbare Seiten. Das Paket liefert ESM-Module, TypeScript-Deklarationen, Stylesheets und bearbeitbaren Quellcode. Die Einführung und der Leitfaden zur Schweiz sind auch auf Deutsch, Französisch und Italienisch verfügbar. Das Adressformular bietet Feldbezeichnungen und Fehlermeldungen in allen vier Landessprachen.
+Alpina UI 1.0.0-rc.3 enthält 97 installierbare React-Komponenten und fünf kopierbare Seiten. Das Paket liefert ESM-Module, TypeScript-Deklarationen, Stylesheets und bearbeitbaren Quellcode. Die Einführung und der Leitfaden zur Schweiz sind auch auf Deutsch, Französisch und Italienisch verfügbar. Das Adressformular bietet Feldbezeichnungen und Fehlermeldungen in allen vier Landessprachen.
 
 <!-- alpina-download -->
 
@@ -13,10 +13,10 @@ Wenn deine Anwendung shadcn/ui verwendet, zeigt der Leitfaden, wie beide Bibliot
 Installiere das versionsgebundene Paket direkt vom Portal in einem Projekt mit React 18.2 oder 19 und Node.js ab Version 20.
 
 ```sh
-npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.2.tgz
+npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.3.tgz
 ```
 
-Hast du das Archiv bereits heruntergeladen, führe `npm install ./alpina-ui-1.0.0-rc.2.tgz` in seinem Verzeichnis aus. Importiere das CSS einmal am Einstiegspunkt der Anwendung. Die JavaScript-Module lassen sich auch auf dem Server ausführen.
+Hast du das Archiv bereits heruntergeladen, führe `npm install ./alpina-ui-1.0.0-rc.3.tgz` in seinem Verzeichnis aus. Importiere das CSS einmal am Einstiegspunkt der Anwendung. Die JavaScript-Module lassen sich auch auf dem Server ausführen.
 
 ```tsx
 import "alpina-ui/styles.css"
@@ -85,7 +85,7 @@ Klassen beginnen mit `al-`. Verwende das dunkle Thema in der ganzen App oder ein
 
 ## Die Sprache der Oberfläche setzen
 
-Mit `AlpinaProvider` gibst du einem Teilbaum eine gemeinsame Sprache. Ein explizites `locale` an der Komponente hat Vorrang vor dem nächsten Provider, ein verschachtelter Provider vor seinem Elternteil. Komponenten mit englischen Texten unterstützen auch `en`. Reine Formatierungsfunktionen in Server Actions oder ausserhalb von React erhalten die Sprache weiterhin als Positionsargument.
+Mit `AlpinaProvider` gibst du einem Teilbaum eine gemeinsame Sprache. Ein explizites `locale` an der Komponente hat Vorrang vor dem nächsten Provider, ein verschachtelter Provider vor seinem Elternteil. Komponenten mit englischen Texten unterstützen auch `en`. Reine Formatierungsfunktionen in Server Actions oder ausserhalb von React erhalten die Sprache weiterhin als Positionsargument. Bei mit der CLI kopierten Komponenten importierst du den Provider aus `swiss/alpina-provider` im selben Zielverzeichnis.
 
 ```tsx
 import { AlpinaProvider, FileInput } from "alpina-ui"

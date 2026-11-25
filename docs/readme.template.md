@@ -6,7 +6,7 @@ Open-source React components built on the Swiss typographic grid. Compose forms,
 
 [![CI](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml) [![MIT license](https://img.shields.io/badge/license-MIT-222222)](LICENSE) [![Package version](https://img.shields.io/badge/version-{{BADGE_VERSION}}-eb0000)](CHANGELOG.md)
 
-[Live site]({{SITE}}/) · [Documentation]({{SITE}}/docs/) · [Designer kit]({{SITE}}/kit/) · [Design principles]({{SITE}}/principles/) · [Changelog](CHANGELOG.md) · [API stability](docs/api-stability.md)
+[Live site]({{SITE}}/) · [Start here]({{SITE}}/start-here/) · [Documentation]({{SITE}}/docs/) · [Designer kit]({{SITE}}/kit/) · [Design principles]({{SITE}}/principles/) · [Changelog](CHANGELOG.md) · [API stability](docs/api-stability.md)
 
 | Light | Dark |
 | --- | --- |
@@ -38,7 +38,7 @@ To own the source, run `npx --no-install alpina add button`. To copy a complete 
 - Edit translations in German, French, Italian and Romansh side by side. English is also available in the public-service workflow and validation messages. Apply statutory or common holiday calendars by canton when calculating business days. [Language fields]({{SITE}}/docs/components/multilingual-field/) · [Swiss formats]({{SITE}}/docs/guides/swiss/)
 - Build a booking calendar with day availability and cantonal holidays. Compare budget and actuals as grouped bars, multiple lines or printable accounting tables. [Calendar]({{SITE}}/docs/components/calendar/) · [Accounting tables]({{SITE}}/docs/components/data-table/)
 - Lay out a page on four, eight or twelve columns. Inter’s optical sizes, tabular figures and a four-pixel baseline carry through to tables, print and dark mode. Export the tokens and printable sheets for design work. [Principles]({{SITE}}/principles/) · [Kit]({{SITE}}/kit/) · [Theme builder]({{SITE}}/themes/)
-- Inspect a component’s keyboard behavior and screen-reader guidance alongside its source. CI checks interactions, automated accessibility, forced colors and visual regressions. [Reference]({{SITE}}/docs/components/) · [Testing](docs/visual-testing.md)
+- Inspect a component’s keyboard behavior and screen-reader guidance alongside its source. CI checks interactions, automated accessibility, forced colors and visual regressions. [Reference]({{SITE}}/docs/components/) · [Testing](https://github.com/stedbrown/alpina-ui/blob/main/docs/visual-testing.md)
 
 ## Component directory
 

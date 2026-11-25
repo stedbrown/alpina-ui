@@ -1,6 +1,6 @@
 # Getting started
 
-Alpina UI 1.0.0-rc.2 includes 97 installable React component entries and five copyable pages. The package contains ESM modules, TypeScript declarations, stylesheets and editable source. The Start and Swiss guides are also available in German, French and Italian. The address form provides field labels and error messages in all four Swiss national languages.
+Alpina UI 1.0.0-rc.3 includes 97 installable React component entries and five copyable pages. The package contains ESM modules, TypeScript declarations, stylesheets and editable source. The Start and Swiss guides are also available in German, French and Italian. The address form provides field labels and error messages in all four Swiss national languages.
 
 <!-- alpina-download -->
 
@@ -13,10 +13,10 @@ If your application uses shadcn/ui, the migration guide shows how to keep both l
 In a React 18.2 or 19 project with Node.js 20 or later, install the versioned package directly from the portal.
 
 ```sh
-npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.2.tgz
+npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.3.tgz
 ```
 
-If you downloaded the archive first, run `npm install ./alpina-ui-1.0.0-rc.2.tgz` in the directory that contains it. Import the CSS once at your application entry point. The JavaScript modules can also run during server rendering.
+If you downloaded the archive first, run `npm install ./alpina-ui-1.0.0-rc.3.tgz` in the directory that contains it. Import the CSS once at your application entry point. The JavaScript modules can also run during server rendering.
 
 ```tsx
 import "alpina-ui/styles.css"
@@ -85,7 +85,7 @@ Library classes use the `al-` prefix. Apply the dark theme to an entire app or t
 
 ## Set the interface language
 
-Wrap a subtree in `AlpinaProvider` to share its locale. An explicit component `locale` wins over the nearest provider, and a nested provider overrides its parent. Components with English copy also support `en`. Pure formatters used in server actions or elsewhere outside React still take the locale as their positional argument.
+Wrap a subtree in `AlpinaProvider` to share its locale. An explicit component `locale` wins over the nearest provider, and a nested provider overrides its parent. Components with English copy also support `en`. Pure formatters used in server actions or elsewhere outside React still take the locale as their positional argument. When using CLI source copies, import the provider from `swiss/alpina-provider` inside the same destination directory as the copied components.
 
 ```tsx
 import { AlpinaProvider, FileInput } from "alpina-ui"

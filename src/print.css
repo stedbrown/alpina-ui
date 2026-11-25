@@ -1,0 +1,43 @@
+/* The SIX payment sheet has its own named, zero-margin page. */
+@page { size: A4 portrait; margin: 16mm 16mm 18mm; }
+
+@media print {
+  body[data-al-page], .al-app-shell, .al-app-page {
+    display: block;
+    min-block-size: 0;
+    background: white;
+    color: black;
+  }
+  :root, [data-al-theme] {
+    color-scheme: light;
+    --al-bg: white;
+    --al-surface: white;
+    --al-ink: black;
+    --al-muted: black;
+    --al-control: black;
+  }
+  body[data-al-page] > :is(header, footer), .al-app-bar, .al-app-index, .al-app-mobile,
+  .al-skip, .al-navigation, .al-sidebar, .al-code-block figcaption button,
+  .guide-nav, .view-toggle, .project-nav, .al-grid-overlay, [data-al-print='hide'] {
+    display: none !important;
+  }
+  .al-app-main, .al-data-table, .al-prose table, .al-scroll-area {
+    overflow: visible;
+    max-block-size: none !important;
+    block-size: auto;
+  }
+  .al-prose table { display: table; }
+  :is(.al-table, .al-prose table) thead { display: table-header-group; }
+  :is(.al-table, .al-prose table) tfoot { display: table-footer-group; }
+  :is(.al-table, .al-prose table) tr, .al-card, .al-figure { break-inside: avoid; }
+  :is(.al-prose, main) :is(h1, h2, h3, h4) { break-after: avoid; }
+  :is(.al-prose, .al-type) { orphans: 3; widows: 3; }
+  :is(.al-prose, main, [data-al-print='document']) a[href]:not([href^='#'], [href^='javascript:'], [href^='data:'], [download])::after {
+    content: " (" attr(href) ")";
+    font-size: .85em;
+    font-weight: normal;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .al-code-block pre, .al-prose pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+}

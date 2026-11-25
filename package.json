@@ -27,6 +27,7 @@
     },
     "./styles.css": "./dist/styles.css",
     "./fonts.css": "./src/fonts.css",
+    "./print.css": "./src/print.css",
     "./tailwind.css": "./src/tailwind.css",
     "./styles/*": "./dist/styles/*",
     "./theme.css": "./src/theme.css",

@@ -24,6 +24,10 @@ export function PaymentSlip() {
 }
 ```
 
+## Printing a document
+
+The full Alpina stylesheet sets A4 portrait with 16 mm top and side margins and an 18 mm foot margin. Printed tables repeat their headings and keep rows together. Cards stay together when they fit a page, and document links show their destinations. Navigation and elements marked `data-al-print="hide"` disappear. Apps importing individual component styles can add `import 'alpina-ui/print.css'` for the same document rules. A standalone QR-bill uses its own zero-margin A4 page to preserve the physical dimensions of the payment section.
+
 ## Payment data
 
 Both CH and LI accounts require a valid IBAN checksum. Account type and reference must agree.

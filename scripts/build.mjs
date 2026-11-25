@@ -85,7 +85,7 @@ async function css(files, target) {
   await writeFile(target, (await transform(source, { loader: 'css', minify: true })).code)
 }
 await mkdir('dist/styles', { recursive: true })
-await css(['theme.css', ...paths.filter((f) => f.endsWith('.css'))], 'dist/styles.css')
+await css(['theme.css', ...paths.filter((f) => f.endsWith('.css')), 'print.css'], 'dist/styles.css')
 for (const item of registry.items) {
   await css(
     item.files.filter((f) => f.endsWith('.css') && f !== 'theme.css'),

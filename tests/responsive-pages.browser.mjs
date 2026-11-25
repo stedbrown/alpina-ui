@@ -21,6 +21,16 @@ function layoutIssues() {
     }
   }
   const nav = document.querySelector('.al-app-bar > .site-nav')
+  for (const button of document.querySelectorAll('header [data-site-appearance]')) {
+    const header = button.closest('header')
+    const menu = header.querySelector('summary')
+    if (menu?.checkVisibility() && menu.getBoundingClientRect().right > button.getBoundingClientRect().left + tolerance)
+      errors.add('Appearance control overlaps the menu')
+  }
+  const heading = document.querySelector('.component-hero h1')
+  const preview = document.querySelector('.sample:not([hidden]) .preview-object')
+  if (heading && preview && Math.abs(heading.getBoundingClientRect().left - preview.getBoundingClientRect().left) > tolerance)
+    errors.add('Live example is off the component heading column')
   if (nav) {
     const control = nav.nextElementSibling
     const a = nav.getBoundingClientRect(), b = control.getBoundingClientRect()

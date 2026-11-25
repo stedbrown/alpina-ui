@@ -1,12 +1,12 @@
-import { Grid, GridItem, Icon, Separator, Stack, TextLink, Typography, type IconName } from 'alpina-ui'
-import { Footer, Masthead } from './pages.js'
+import { Grid, GridItem, Icon, Separator, Stack, TextLink, Typography } from 'alpina-ui'
+import { Footer, Masthead, PageHeading } from './pages.js'
 
 export const blocks = [
-  { slug: 'login', title: 'Login', icon: 'repository', detail: 'An email and password form with validation, submission state and an application sign-in callback.' },
-  { slug: 'dashboard', title: 'Dashboard', icon: 'table', detail: 'An invoice ledger with a reporting period, a chart and a sortable table of CHF amounts.' },
-  { slug: 'account-settings', title: 'Account settings', icon: 'sliders', detail: 'Edit a profile, choose a language and save email preferences. Discard changes to recover the last saved values.' },
-  { slug: 'pricing', title: 'CHF pricing', icon: 'document', detail: 'Compare plans by billing interval and download a quote or connect your checkout.' },
-] as const satisfies ReadonlyArray<{slug: string; title: string; icon: IconName; detail: string}>
+  { slug: 'login', title: 'Login', detail: 'An email and password form with validation, submission state and an application sign-in callback.' },
+  { slug: 'dashboard', title: 'Dashboard', detail: 'An invoice ledger with a reporting period, a chart and a sortable table of CHF amounts.' },
+  { slug: 'account-settings', title: 'Account settings', detail: 'Edit a profile, choose a language and save email preferences. Discard changes to recover the last saved values.' },
+  { slug: 'pricing', title: 'CHF pricing', detail: 'Compare plans by billing interval and download a quote or connect your checkout.' },
+] as const
 type Block = (typeof blocks)[number]
 const source = (slug: string) => 'https://github.com/stedbrown/alpina-ui/blob/main/blocks/' + slug + '.tsx'
 
@@ -14,16 +14,11 @@ export function Blocks() {
   return <>
     <Masthead current="blocks" />
     <main id="content" tabIndex={-1}>
-      <Grid width="site"><GridItem><Separator /></GridItem></Grid>
-      <Grid width="site" space="cover" align="end">
-        <GridItem medium={4} large={7}><Typography as="h1" variant="title">Page blocks</Typography></GridItem>
-        <GridItem medium={4} large={5}><Typography measure="narrow">Four complete React pages built from public Alpina components. Try a page, then copy its TypeScript file into your project with the CLI.</Typography></GridItem>
-      </Grid>
+      <PageHeading title="Page blocks" summary="Four complete React pages. Try a page, then copy its TypeScript file with the CLI." />
       {blocks.map(block => <Grid key={block.slug} as="article" width="site" space="compact">
         <GridItem><Separator /></GridItem>
-        <GridItem small={1} medium={1} large={1}><Icon name={block.icon} size={32} /></GridItem>
-        <GridItem small={3} medium={3} large={5}><Typography as="h2" variant="display"><TextLink variant="quiet" href={'/blocks/' + block.slug + '/'}>{block.title}</TextLink></Typography></GridItem>
-        <GridItem medium={4} large={5} start={{ large: 8 }}>
+        <GridItem medium={4} large={7}><Typography as="h2" variant="display"><TextLink variant="quiet" href={'/blocks/' + block.slug + '/'}>{block.title}</TextLink></Typography></GridItem>
+        <GridItem medium={4} large={5}>
           <Stack gap={3} align="start">
             <Typography measure="narrow">{block.detail}</Typography>
             <Stack direction="row"><TextLink variant="action" href={'/blocks/' + block.slug + '/'}>Open page <Icon name="arrow-right" size={16} /></TextLink>

@@ -2,7 +2,7 @@ import {
   Button, Field, Grid, GridItem, Icon, iconNames, Input, Select, Separator, Stack,
   TextLink, Typography, type IconName,
 } from 'alpina-ui'
-import { Footer, Masthead } from './pages.js'
+import { Footer, Masthead, PageHeading } from './pages.js'
 
 const groups = {
   Navigation: ['arrow-right', 'arrow-left', 'arrow-up-right', 'chevron-down', 'chevron-right', 'external-link', 'menu', 'search'],
@@ -24,18 +24,9 @@ export function Icons() {
   return <>
     <Masthead current="icons" />
     <main id="content" tabIndex={-1}>
-      <Grid width="site"><GridItem><Separator /></GridItem></Grid>
-      <Grid width="site" space="cover" align="end">
-        <GridItem medium={4} large={7}>
-          <Typography as="h1" variant="title">Alpina icons</Typography>
-        </GridItem>
-        <GridItem medium={4} large={5}>
-          <Stack gap={2} align="start">
-            <Typography measure="narrow">{iconNames.length} original pictograms drawn on a 24-unit grid. Each uses a two-unit stroke and inherits the surrounding text color.</Typography>
-            <TextLink href="/docs/components/icon/">Icon usage and API <Icon name="arrow-right" size={16} /></TextLink>
-          </Stack>
-        </GridItem>
-      </Grid>
+      <PageHeading title="Alpina icons" summary={`${iconNames.length} original pictograms drawn on a 24-unit grid. Choose a size and copy the JSX.`}>
+        <Stack align="start"><TextLink href="/docs/components/icon/">Icon usage and API <Icon name="arrow-right" size={16} /></TextLink></Stack>
+      </PageHeading>
       <template id="icon-tools">
         <Grid width="site" space="compact" surface="paper" align="end">
           <GridItem medium={4} large={5}>

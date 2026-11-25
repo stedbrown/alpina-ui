@@ -157,7 +157,6 @@ function useRoute() {
 function Brand() {
   return (
     <TextLink className="brand" href={hostedDocs ? '/' : '#overview'} aria-label={hostedDocs ? 'Alpina UI home' : 'Alpina UI overview'}>
-      <i aria-hidden="true" />
       Alpina UI
     </TextLink>
   )
@@ -207,11 +206,11 @@ function Workbench({
   return (
     <article className="bench" aria-labelledby="item-heading">
       <header className="component-hero">
-        <code className="component-path">{hostedDocs ? 'alpina-ui/' + files[0].replace(/\.tsx$/, '') : name}</code>
         <Typography variant="display" as="h1" id="item-heading">
           {hostedDocs ? name : title}
         </Typography>
         <Typography>{description}</Typography>
+        <code className="component-path">{hostedDocs ? 'alpina-ui/' + files[0].replace(/\.tsx$/, '') : name}</code>
       </header>
       <ButtonGroup label="Component view" className="view-toggle">
         {(Object.keys(views) as View[]).map((view) => (
@@ -504,7 +503,7 @@ function Project({ bilingual }: { bilingual: boolean }) {
     : 'https://github.com/stedbrown/alpina-ui/blob/main/catalog/overview.tsx'
   return (
     <>
-      <NavigationMenu
+      <Grid as="header" width="site" space="compact"><GridItem><NavigationMenu
         lang="en"
         label="Example navigation"
         className="project-nav"
@@ -515,7 +514,7 @@ function Project({ bilingual }: { bilingual: boolean }) {
           { href: bilingual ? guideHref('directory', true) : componentHref('swiss-address-form', true), label: 'Documentation' },
           { href: source, label: 'Source on GitHub' },
         ] }]}
-      />
+      /></GridItem></Grid>
       {bilingual ? <DirectoryLive standalone /> : (
         <main className="client-project"><Overview hosted /></main>
       )}
@@ -524,7 +523,7 @@ function Project({ bilingual }: { bilingual: boolean }) {
 }
 function WorkflowExample({ project, hosted }: { project: WorkflowProject; hosted: boolean }) {
   return <>
-    <Grid as="header" space="compact"><GridItem>
+    <Grid as="header" width="site" space="compact"><GridItem>
       <TextLink variant="skip" href="#main-content" onClick={(event) => {
         event.preventDefault()
         document.getElementById('main-content')?.focus()

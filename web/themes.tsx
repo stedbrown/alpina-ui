@@ -1,5 +1,5 @@
 import { Badge, Button, CurrencyCHF, Field, Grid, GridItem, Icon, Input, Select, Separator, Stack, Textarea, TextLink, Typography } from 'alpina-ui'
-import { Footer, Masthead } from './pages.js'
+import { Footer, Masthead, PageHeading } from './pages.js'
 import { defaultTheme, themeValues } from './theme-values.js'
 
 const initial = themeValues(defaultTheme)
@@ -8,11 +8,7 @@ export function Themes() {
   return <>
     <Masthead current="themes" />
     <main id="content" tabIndex={-1}>
-      <Grid width="site"><GridItem><Separator /></GridItem></Grid>
-      <Grid width="site" space="cover" align="end">
-        <GridItem medium={4} large={7}><Typography as="h1" variant="title">Theme builder</Typography></GridItem>
-        <GridItem medium={4} large={5}><Typography measure="narrow">Set the accent, grid unit and paper color. Try them on an invoice, check the contrast and copy the CSS into your project.</Typography></GridItem>
-      </Grid>
+      <PageHeading title="Theme builder" summary="Set the accent and grid unit. Check the invoice contrast and copy the CSS." />
       <Grid width="site" space="compact" align="start">
         <GridItem medium={3} large={4}>
           <template id="theme-tools">

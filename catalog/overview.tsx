@@ -181,7 +181,6 @@ export function Overview({ hosted = false }: { hosted?: boolean }) {
             {active ? (
               <>
                 <div className="address-card">
-                  <div className="engraving" aria-hidden="true"></div>
                   <div className="postal-data" lang={locale}>
                     <div className="postal-label">
                       <span>{labels.recipient}</span>

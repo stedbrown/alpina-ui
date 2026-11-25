@@ -6,7 +6,8 @@ import { chromium } from 'playwright-core'
 
 const origin = 'https://alpina.test'
 const site = new URL('../site/', import.meta.url)
-const componentCount = JSON.parse(await readFile(new URL('registry.json', site), 'utf8')).items.length
+const componentSlugs = JSON.parse(await readFile(new URL('registry.json', site), 'utf8')).items.map(item => item.name)
+const componentCount = componentSlugs.length
 const executable = process.env.CHROME_PATH ?? process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
 const browser = await chromium.launch(
   executable ? { executablePath: executable } : existsSync(chromium.executablePath()) ? {} : { channel: 'chrome' },
@@ -36,7 +37,10 @@ try {
   await filter.fill('unknowncomponent')
   assert.ok((await main.getByRole('status').innerText()).startsWith('No matches'))
   await main.getByRole('button', { name: 'Clear' }).click()
-  assert.equal(await main.getByRole('link').count(), componentCount)
+  const entries = main.locator('[data-directory-entry]').getByRole('link')
+  assert.deepEqual(await entries.evaluateAll(links => links.map(link => link.pathname).sort()),
+    componentSlugs.map(slug => '/docs/components/' + slug + '/').sort())
+  assert.equal(await main.getByRole('link', { name: 'Check component status' }).getAttribute('href'), '/status/')
   assert.ok(await filter.evaluate(input => input === document.activeElement))
   await page.goto(origin + '/docs/')
   await main.getByRole('heading', { name: 'Getting started', level: 1 }).waitFor()

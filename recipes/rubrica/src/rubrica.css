@@ -6,9 +6,9 @@ body {
   font-family: var(--al-font);
 }
 .directory {
-  max-width: 82rem;
+  max-width: 100rem;
   margin-inline: auto;
-  padding: var(--al-space-4) clamp(1rem, 3vw, 3rem);
+  padding-block: var(--al-space-4);
 }
 .mast {
   border-top: 4px solid var(--al-ink);
@@ -33,7 +33,7 @@ body {
 }
 .search-tools {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
   gap: var(--al-space-3);
   padding-block: var(--al-space-4);
 }

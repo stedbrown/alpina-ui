@@ -1,6 +1,7 @@
 import { AppearanceButton } from './appearance-button.js'
+import type { ReactNode } from 'react'
 import {
-  Avatar, Figure, Grid, GridItem, Icon, iconNames, NavigationMenu, Separator,
+  Button, Figure, Grid, GridItem, Icon, iconNames, NavigationMenu, Separator,
   Stack, TextLink, Typography, type IconName,
 } from 'alpina-ui'
 import { HomeShowcase } from './home-showcase.js'
@@ -28,20 +29,20 @@ export function Masthead({ current }: { current: Section }) {
     <Grid as="header" width="site" space="compact">
       <GridItem>
         <TextLink variant="skip" href="#content">Skip to content</TextLink>
-        <Stack direction="row" justify="space-between" align="start" gap={3} wrap={false}>
-          <Stack direction="row" gap={3} wrap={false}>
+        <Stack direction="row" justify="space-between" align="start" gap={2} wrap={false}>
+          <Stack direction="row" gap={1} wrap={false}>
             <TextLink variant="quiet" href="/" aria-current={current === 'home' ? 'page' : undefined}>
-              <Stack direction="row" gap={2} wrap={false}>
-                <Avatar decorative size="sm" name="Alpina" src="/assets/alpina-mark.png" />
-                <Typography as="span" variant="heading">Alpina UI</Typography>
-              </Stack>
+              <Typography as="span" variant="heading">Alpina UI</Typography>
             </TextLink>
-            <NavigationMenu label="Repository" orientation="horizontal" sections={[{ links: [{ href: repository, label: <GitHubLabel /> }] }]} />
+            <Button asChild variant="ghost" size="sm"><a href={repository} aria-label="GitHub" title="GitHub repository">
+              <Icon name="git-branch" size={18} />
+            </a></Button>
           </Stack>
           <NavigationMenu label="Main navigation" orientation="horizontal" align="end" collapseLabel="Menu" sections={[{ links }]} />
           <AppearanceButton />
         </Stack>
       </GridItem>
+      <GridItem><Separator /></GridItem>
     </Grid>
   )
 }
@@ -65,25 +66,26 @@ export function Footer({ version }: { version?: string } = {}) {
 
 const iconSamples: IconName[] = ['git-branch', 'grid', 'calendar', 'map-pin', 'sliders', 'book']
 
+export function PageHeading({ title, summary, children }: { title: string; summary: ReactNode; children?: ReactNode }) {
+  return <Grid as="section" width="site" space="section" align="start" aria-labelledby="page-title">
+    <GridItem medium={4} large={7}><Typography as="h1" variant="title" id="page-title">{title}</Typography></GridItem>
+    <GridItem medium={4} large={5}><Stack gap={5}>
+      <Typography variant="lead" measure="narrow">{summary}</Typography>
+      {children}
+    </Stack></GridItem>
+  </Grid>
+}
+
 export function Landing({ version, count }: { version: string; count: number }) {
   return <>
     <Masthead current="home" />
     <main id="content" tabIndex={-1}>
-      <Grid width="site"><GridItem><Separator /></GridItem></Grid>
-      <Grid as="section" width="site" space="cover" align="end" aria-labelledby="home-title">
-        <GridItem medium={4} large={7}>
-          <Typography as="h1" variant="title" id="home-title"><Typography as="span" variant="inherit" tone="accent">Swiss</Typography> UI for React.</Typography>
-        </GridItem>
-        <GridItem medium={4} large={5}>
-          <Stack gap={4} align="start">
-            <Typography measure="narrow">{count} editable components and <TextLink href="/icons/">{iconNames.length} original icons</TextLink>. Build forms, data tables and multilingual interfaces on a Swiss typographic grid.</Typography>
-            <Stack direction="row" gap={4}>
-              <TextLink variant="action" href="/docs/components/">Browse components  <Icon name="arrow-right" size={18}/></TextLink>
-              <TextLink href="/docs/">Installation</TextLink>
-            </Stack>
-          </Stack>
-        </GridItem>
-      </Grid>
+      <PageHeading title="Alpina UI" summary="React components for Swiss addresses, payments and multilingual forms.">
+        <Stack direction="row" gap={4}>
+          <TextLink variant="action" href="/docs/components/">Browse components ({count})  <Icon name="arrow-right" size={18}/></TextLink>
+          <TextLink href="/docs/">Installation</TextLink>
+        </Stack>
+      </PageHeading>
       <HomeShowcase />
       <Grid width="site"><GridItem><Separator weight="section" /></GridItem></Grid>
       <Grid as="section" width="site" space="section" align="center" aria-labelledby="icons-title">
@@ -104,7 +106,7 @@ export function Landing({ version, count }: { version: string; count: number }) 
       <Grid as="section" width="site" space="section" aria-labelledby="projects-title">
         <GridItem medium={3} large={4}>
           <Stack gap={3} align="start">
-            <Typography as="h2" variant="display" id="projects-title">Examples.</Typography>
+            <Typography as="h2" variant="display" id="projects-title">Examples</Typography>
             <Typography measure="narrow">Try a complete interaction, then open the project's React source.</Typography>
             <TextLink href="/examples/">All {projects.length} projects <Icon name="arrow-right" size={16} /></TextLink>
           </Stack>
@@ -121,16 +123,16 @@ export function Landing({ version, count }: { version: string; count: number }) 
       <Grid width="site"><GridItem><Separator /></GridItem></Grid>
       <Grid as="section" width="site" space="section" align="center" aria-labelledby="design-title">
         <GridItem medium={4} large={5}>
-          <Figure image={{ src: '/assets/alpina-type-specimen.webp', alt: 'A red Alpina booklet over a sheet of printed letterforms.', width: 1280, height: 880, loading: 'lazy' }}
-            caption="Alpina letterform study" />
-        </GridItem>
-        <GridItem medium={4} large={5} start={{ large: 7 }}>
           <Stack gap={4} align="start">
-            <Typography as="h2" variant="display" id="design-title">The Swiss grid.</Typography>
+            <Typography as="h2" variant="display" id="design-title">The Swiss grid</Typography>
             <Typography measure="narrow">Four, eight or twelve columns align labels, actions and figures as the space changes. A four-pixel spacing unit gives forms and editorial pages the same rhythm.</Typography>
             <TextLink href="/principles/">Explore the design principles →</TextLink>
             <TextLink href="/docs/guides/design/">Read the design notes →</TextLink>
           </Stack>
+        </GridItem>
+        <GridItem medium={4} large={5} start={{ large: 7 }}>
+          <Figure image={{ src: '/assets/alpina-type-specimen.webp', alt: 'A red Alpina booklet over a sheet of printed letterforms.', width: 1280, height: 880, loading: 'lazy' }}
+            caption="Alpina letterform study" />
         </GridItem>
       </Grid>
     </main>
@@ -142,10 +144,7 @@ export function Examples() {
   return <>
     <Masthead current="examples" />
     <main id="content" tabIndex={-1}>
-      <Grid as="section" width="site" space="cover" aria-labelledby="examples-title">
-        <GridItem><Typography as="h1" variant="title" id="examples-title">Example projects</Typography></GridItem>
-        <GridItem large={7}><Typography measure="narrow">Four applications built with Alpina. Try a workflow, then read the same source that runs it here.</Typography></GridItem>
-      </Grid>
+      <PageHeading title="Example projects" summary="Try the complete workflows, then open the React source that runs each one." />
       {projects.map((project) =>
         <Grid as="article" width="site" key={project.slug} space="compact">
           <GridItem><Separator /></GridItem>

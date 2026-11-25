@@ -55,11 +55,11 @@ export function WorkshopRegistration() {
   }
 
   return (
-    <Grid as="main" id="main-content" space="section" tabIndex={-1}>
+    <Grid as="main" id="main-content" width="site" space="section" tabIndex={-1}>
       <GridItem large={5}>
-        <Stack gap={4} inset={6} surface="ink">
-          <Typography variant="label">Basel Print Room</Typography>
+        <Stack gap={4}>
           <Typography as="h1" variant="display">Workshop registration</Typography>
+          <Typography variant="label">Basel Print Room</Typography>
           <Typography measure="narrow">Book one place at a hands-on print workshop. Materials and use of the press are included.</Typography>
           <Separator />
           <Typography variant="caption">This is a demo. Your registration stays on this page until you reload it.</Typography>

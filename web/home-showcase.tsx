@@ -88,9 +88,9 @@ function PressLog() {
 export function HomeShowcase() {
   return (
     <Grid as="section" id="component-showcase" aria-label="Interactive component examples" width="site" space="compact">
-      <GridItem medium={4} large={4}><PrintEstimate /></GridItem>
-      <GridItem medium={4} large={4}><TypeSpecimen /></GridItem>
-      <GridItem medium={8} large={4}><PressLog /></GridItem>
+      <GridItem medium={4} large={4} subgrid="rows"><TypeSpecimen /></GridItem>
+      <GridItem medium={4} large={4} subgrid="rows"><PrintEstimate /></GridItem>
+      <GridItem medium={8} large={4} subgrid="rows"><PressLog /></GridItem>
     </Grid>
   )
 }

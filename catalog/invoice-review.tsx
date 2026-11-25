@@ -51,7 +51,7 @@ export function InvoiceReview() {
   }
 
   return (
-    <Grid as="main" id="main-content" space="section" tabIndex={-1}>
+    <Grid as="main" id="main-content" width="site" space="section" tabIndex={-1}>
       <GridItem>
         <Stack gap={3}>
           <Typography as="h1" variant="display">Invoice review</Typography>

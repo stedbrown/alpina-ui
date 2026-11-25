@@ -15,8 +15,8 @@ export { inventory }
 export function ReferencePage({ html, agents = false }: { html: string; agents?: boolean }) {
   return <>
     <Masthead current={agents ? 'agents' : 'docs'} />
-    <Grid as="main" id="content" space="section">
-      <GridItem medium={6} large={8} start={{ medium: 2, large: 3 }}>
+    <Grid as="main" id="content" width="site" space="section">
+      <GridItem medium={7} large={8}>
         <Prose dangerouslySetInnerHTML={{ __html: html }} />
       </GridItem>
     </Grid>
@@ -27,7 +27,7 @@ export function ReferencePage({ html, agents = false }: { html: string; agents?:
 export function ExampleIntroduction({ title, description }: { title: string; description: string }) {
   return <>
     <Masthead current="examples" />
-    <Grid as="main" id="content" space="section">
+    <Grid as="main" id="content" width="site" space="section">
       <GridItem large={8}>
         <Stack gap={6}>
           <Typography as="h1" variant="display">{title}</Typography>

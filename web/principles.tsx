@@ -3,7 +3,7 @@ import {
   Badge, CurrencyCHF, Grid, GridItem, Separator, Stack, Table,
   TableBody, TableCell, TableHead, TableHeader, TableRow, TextLink, Typography,
 } from 'alpina-ui'
-import { Footer, Masthead } from './pages.js'
+import { Footer, Masthead, PageHeading } from './pages.js'
 
 const sources = {
   grid: ['Josef Müller-Brockmann, Grid Systems', 'https://niggli.ch/en/products/rastersysteme-fur-die-visuelle-gestaltung'],
@@ -103,10 +103,7 @@ export function Principles() {
   return <>
     <Masthead current="principles" />
     <main id="content" tabIndex={-1}>
-      <Grid width="site" space="cover" align="end">
-        <GridItem medium={4} large={7}><Typography as="h1" variant="title">Design principles</Typography></GridItem>
-        <GridItem medium={4} large={5}><Typography measure="narrow">Eight decisions from a working Swiss interface. Compare each pair using the same components and the same information.</Typography></GridItem>
-      </Grid>
+      <PageHeading title="Design principles" summary="Eight decisions from a working Swiss interface. Compare each pair using the same components and the same information." />
       {rules.map(({ id, title, note, source, sample }) => <Grid as="section" width="site" space="compact" aria-labelledby={id} key={id}>
         <GridItem><Separator weight="section" /></GridItem>
         <GridItem medium={8} large={4}><Stack gap={3} align="start">

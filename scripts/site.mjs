@@ -162,6 +162,15 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
   await page('/icons/', 'Alpina icons', 'Browse original SVG icons for navigation, actions, content and Git workflows. Preview sizes and copy React code.', render(Icons), { icons: true })
   await page('/themes/', 'Theme builder', 'Preview your accent, grid and light or dark appearance on Alpina components. Check text contrast and copy CSS variables.', render(Themes), { theme: true })
   await page('/principles/', 'Design principles', 'Eight Swiss design decisions demonstrated with working Alpina components and paired examples.', render(Principles))
+  const reviewRoute = '/releases/0.11/'
+  const review = await renderGuide(await readFile('docs/release-0.11-design.md', 'utf8'))
+  for (const surface of ['home', 'index', 'reference']) {
+    for (const edition of ['before', 'after']) {
+      const file = 'images/' + surface + '-' + edition + '.jpg'
+      await output(reviewRoute + file, await readFile('docs/' + file))
+    }
+  }
+  await page(reviewRoute, 'Portal design review', 'Compare the Alpina homepage, component directory and reference before and after the 0.11 release.', render(ReferencePage, { html: review }))
   await page('/blocks/', 'Page blocks', 'Copy complete login, dashboard, account settings and CHF pricing pages with the Alpina CLI.', render(Blocks))
   for (const block of blocks) {
     await page('/blocks/' + block.slug + '/', block.title + ' block', block.detail, render(BlockPage, { block }), { block: true })

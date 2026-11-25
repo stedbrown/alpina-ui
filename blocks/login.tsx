@@ -48,12 +48,11 @@ export function LoginBlock({
   return (
     <Grid as="main" width="site" space="section" align="start">
       <GridItem medium={4} large={5}>
-        <Stack surface="ink" inset={6} gap={6}>
-          <Typography variant="label">{workspaceName}</Typography>
-          <Separator />
+        <Stack gap={4}>
           <Typography as="h1" variant="title" tabIndex={-1} ref={heading}>
             {status === 'success' ? 'Signed in' : 'Sign in'}
           </Typography>
+          <Typography variant="label">{workspaceName}</Typography>
           <Typography measure="narrow">
             {status === 'success' ? 'Your workspace is ready.' : 'Use your work email and password to open your account.'}
           </Typography>

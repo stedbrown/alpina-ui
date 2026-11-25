@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.11.0 · 25 November 2026
+
+### Forms and scheduling
+
+- Edit translations in German, French, Italian and Romansh with optional English, per-language completion and native form values. Choose tabs, parallel editors or textareas.
+- Calendar and DatePicker mark federal and cantonal holidays with support for regional rules. `swissHolidays` and `addBusinessDays` work with local civil dates. The Swiss forms guide documents the geographic and historical scope.
+- SwissAddressForm loads the official residential postcode directory on the first complete postcode. Select a locality and canton, including postcodes that cross cantonal boundaries, or enter an address manually. The self-contained catalog also works offline.
+
+### Data and appearance
+
+- BarChart, LineChart, Sparkline and ChartTable draw SVG data graphics with text descriptions and accessible data tables.
+- The portal opens in automatic appearance. Its control cycles through automatic, light and dark and remembers the choice. Negative franc amounts use a mathematical minus with a localized spoken equivalent.
+- The portal revises column alignment, heading hierarchy and spacing. [Before and after](https://alpina-ui.vercel.app/releases/0.11/) · [Design notes on GitHub](https://github.com/stedbrown/alpina-ui/blob/main/docs/release-0.11-design.md)
+
+### Packaging and adoption
+
+- Three production integration projects exercise a Next.js Server Action, React Router navigation and React Hook Form with Zod. CI builds each against the packed library.
+- Per-component size budgets and tree-shaking checks run alongside React Server Component compatibility checks. [Component status](https://alpina-ui.vercel.app/status/) records maturity and the latest source change.
+
 ## 0.10.0 · 25 November 2026
 
 ### Layout and reading

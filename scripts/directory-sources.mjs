@@ -23,7 +23,6 @@ export async function readDirectorySources(root = project) {
     'src/app.tsx',
     'src/copy.ts',
     'src/data.ts',
-    'src/rubrica.css',
     'scripts/build.mjs',
     'tsconfig.json',
     'package.json',

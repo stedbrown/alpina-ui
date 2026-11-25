@@ -10,7 +10,7 @@ try {
     document.addEventListener('alpina-index-ready', () => { window.catalogReady = true }, { capture: true, once: true })
   })
   page.setDefaultTimeout(5000)
-  const preview = page.locator('.preview-object')
+  const preview = page.locator('.al-preview-content')
   const role = (name, label) => preview.getByRole(name, label ? { name: label, exact: true } : {})
   const checked = new Set()
   async function visit(slug) {

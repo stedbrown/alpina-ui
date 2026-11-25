@@ -33,6 +33,7 @@ try {
     .filter((name) => /\.(?:[cm]?[jt]sx?|css|html|json)$/i.test(name))
   for (const name of [...expectedSrc, 'scripts/build.mjs', 'package.json', 'tsconfig.json'])
     assert.ok(paths.includes(name), name)
+  assert.ok(!paths.some(name => name.startsWith('src/') && name.endsWith('.css')), 'The recipe uses Alpina styles only')
   assert.equal(paths.length, new Set(paths).size)
   assert.ok(
     paths.every(

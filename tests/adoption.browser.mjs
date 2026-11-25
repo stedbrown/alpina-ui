@@ -24,7 +24,7 @@ try {
   await recipient.fill('Type studio')
   const width = main.getByLabel('Width', { exact: true })
   await width.selectOption('320')
-  assert.equal(Math.round((await main.locator('.preview-object').boundingBox()).width), 320)
+  assert.equal(Math.round((await main.locator('.al-preview-content').boundingBox()).width), 320)
   await view('Code').click()
   assert.equal(new URL(page.url()).hash, '#swiss-address-form/code')
   await view('API').click()
@@ -43,7 +43,7 @@ try {
   )
   await page.setViewportSize({ width: 320, height: 740 })
   await width.selectOption('768')
-  assert.ok((await main.locator('.preview-object').boundingBox()).width <= 320)
+  assert.ok((await main.locator('.al-preview-content').boundingBox()).width <= 320)
   for (const entry of registry.items) {
     await page.goto(site + '#' + entry.name + '/api')
     await page.waitForFunction(
@@ -66,7 +66,7 @@ try {
   await page.goto(site + '#dialog/codice')
   await main.getByText('Example.tsx', { exact: true }).waitFor()
   await view('Preview').click()
-  await main.locator('.preview-object [aria-haspopup="dialog"]').click()
+  await main.locator('.al-preview-content [aria-haspopup="dialog"]').click()
   await page.locator('dialog[open]').waitFor()
   await page.goBack()
   await main.getByText('Example.tsx', { exact: true }).waitFor()

@@ -1,10 +1,11 @@
+import { PageRegion, InlineCode } from 'alpina-ui'
 import { Figure, Grid, GridItem, Separator, Stack, TextLink, Typography } from 'alpina-ui'
 import { Footer, Masthead, PageHeading } from './pages.js'
 
 export function DesignerKit() {
   return <>
     <Masthead current="kit" />
-    <main id="content" tabIndex={-1}>
+    <PageRegion as="main" id="content" tabIndex={-1}>
       <PageHeading title="Designer kit" summary="Take the same columns, type sizes and inks from the component library into your layout file." />
       <Grid as="section" width="site" space="compact" align="start" aria-labelledby="sheet-title">
         <GridItem><Separator weight="section" /></GridItem>
@@ -42,13 +43,13 @@ export function DesignerKit() {
           </Stack>
           <Stack gap={2}>
             <Typography as="h3" variant="heading">Style Dictionary</Typography>
-            <Typography>Each configuration includes its token source. Run <code>style-dictionary build --config alpina-light.style-dictionary.json</code> to write CSS variables to the build directory. Use the dark filename for dark mode.</Typography>
+            <Typography>Each configuration includes its token source. Run <InlineCode>style-dictionary build --config alpina-light.style-dictionary.json</InlineCode> to write CSS variables to the build directory. Use the dark filename for dark mode.</Typography>
             <Stack direction="row" gap={4}><TextLink download href="/kit/alpina-light.style-dictionary.json">Light configuration</TextLink><TextLink download href="/kit/alpina-dark.style-dictionary.json">Dark configuration</TextLink></Stack>
             <TextLink href="https://styledictionary.com/info/tokens/">Style Dictionary token format</TextLink>
           </Stack>
         </Stack></GridItem>
       </Grid>
-    </main>
+    </PageRegion>
     <Footer />
   </>
 }

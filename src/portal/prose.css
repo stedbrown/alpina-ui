@@ -79,3 +79,40 @@
   padding: var(--al-space-1) var(--al-space-4);
   margin: 1em 0;
 }
+
+.al-reference-article {
+  container-type: inline-size;
+  display: grid;
+  min-width: 0;
+  gap: var(--al-space-6);
+}
+.al-reference-heading {
+  padding-block: 0 var(--al-space-4);
+  min-width: 0;
+}
+.al-reference-heading { display: grid; gap: var(--al-space-3); }
+.al-reference-heading .al-inline-code {
+  font: var(--al-type-caption)/var(--al-leading-caption) var(--al-mono);
+  color: var(--al-muted);
+  overflow-wrap: anywhere;
+}
+.al-reference-heading h1.al-type {
+  font: 650 clamp(2.75rem, 7cqi, 4.5rem)/var(--al-leading-display) var(--al-display);
+  font-optical-sizing: auto;
+  letter-spacing: var(--al-display-tracking);
+  line-height: var(--al-display-line);
+  line-height: round(nearest, var(--al-display-line), var(--al-unit));
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.al-reference-heading p { margin: 0; max-width: var(--al-measure); }
+.al-reference-article > .al-button-group { justify-self: start; }
+.al-prose > h1:first-child { margin-block-start: 0; }
+@media (max-width: 420px) {
+  .al-reference-article > .al-button-group { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; width: 100%; gap: 0; }
+  .al-reference-article > .al-button-group .al-button { padding-inline: .2rem; min-width: 0; min-height: 2.75rem; }
+}
+
+.al-code-sample { max-inline-size: 100%; overflow: auto; padding: var(--al-space-3); background: var(--al-soft); }
+.al-code-sample code { font-family: var(--al-mono); }

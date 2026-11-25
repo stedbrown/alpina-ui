@@ -1,3 +1,4 @@
+import { PageRegion } from 'alpina-ui'
 import { Grid, GridItem, SwissDate, Table, TableBody, TableCell, TableHead, TableHeader,
   TableRow, TextLink, Typography } from 'alpina-ui'
 import { Masthead, Footer, PageHeading } from './pages.js'
@@ -12,7 +13,7 @@ interface ComponentRecord {
 export function ComponentStatus({ records }: { records: ComponentRecord[] }) {
   return <>
     <Masthead current="components" />
-    <main id="content" tabIndex={-1}>
+    <PageRegion as="main" id="content" tabIndex={-1}>
       <PageHeading title="Component status" summary="Stable components have an established API. Beta components are available for use while their API develops." />
       <Grid as="section" width="site" space="compact" aria-label="Component release status">
         <GridItem medium={3} large={4}>
@@ -32,7 +33,7 @@ export function ComponentStatus({ records }: { records: ComponentRecord[] }) {
           </Table>
         </GridItem>
       </Grid>
-    </main>
+    </PageRegion>
     <Footer />
   </>
 }

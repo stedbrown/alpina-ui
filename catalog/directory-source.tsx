@@ -1,5 +1,5 @@
 import { useId, useState } from 'react'
-import { CodeBlock, Field, Select, Stack, TextLink, Typography } from 'alpina-ui'
+import { CodeBlock, Field, InlineCode, PageRegion, Select, Stack, TextLink, Typography } from 'alpina-ui'
 import { bilingualProject, guideHref } from './paths.js'
 
 export interface DirectoryFile {
@@ -11,7 +11,7 @@ export function DirectorySource({ files, hosted }: { files: readonly DirectoryFi
   const [selected, setSelected] = useState('src/app.tsx')
   const file = files.find((entry) => entry.path === selected) ?? files[0]
   return (
-    <section aria-labelledby={headingId}>
+    <PageRegion as="section" aria-labelledby={headingId}>
       <Stack gap={4}>
         <TextLink href={hosted ? bilingualProject : '#bilingual-address-book'}>Open the IT / DE address book</TextLink>
         <Typography as="h2" variant="heading" id={headingId}>
@@ -19,7 +19,7 @@ export function DirectorySource({ files, hosted }: { files: readonly DirectoryFi
         </Typography>
         <Typography>
           To build the project, save the <TextLink href={guideHref('start', hosted)}>Alpina package</TextLink>{' '}
-          in the address book’s <code>vendor/</code> directory.
+          in the address book’s <InlineCode>vendor/</InlineCode> directory.
         </Typography>
         <Field label="Project file">
           {(control) => (
@@ -34,6 +34,6 @@ export function DirectorySource({ files, hosted }: { files: readonly DirectoryFi
         </Field>
         <CodeBlock label={file.path} code={file.content} />
       </Stack>
-    </section>
+    </PageRegion>
   )
 }

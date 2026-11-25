@@ -1,7 +1,22 @@
+'use client'
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
-import { Label, Select } from 'alpina-ui'
+import { Label } from '../ui/label.js'
+import { Select } from '../ui/select.js'
+import './component-preview.internal.css'
 
-export function Preview({ visible, children }: { visible: boolean; children: ReactNode }) {
+export interface ComponentPreviewProps {
+  visible?: boolean
+  children: ReactNode
+  title?: string
+  widthLabel?: string
+  fitLabel?: string
+  widths?: readonly number[]
+  onDialogDismiss?: () => void
+}
+export function ComponentPreview({
+  visible = true, children, title = 'Interactive preview', widthLabel = 'Width', fitLabel = 'Fit',
+  widths = [320, 480, 768], onDialogDismiss,
+}: ComponentPreviewProps) {
   const [visited, setVisited] = useState(visible)
   const [width, setWidth] = useState('')
   const [measured, setMeasured] = useState(0)
@@ -13,11 +28,7 @@ export function Preview({ visible, children }: { visible: boolean; children: Rea
     if (!visible) {
       const dialogs = element.querySelectorAll<HTMLDialogElement>('dialog[open]')
       for (const dialog of dialogs) dialog.close()
-      if (dialogs.length)
-        element
-          .closest('article')
-          ?.querySelector<HTMLButtonElement>('.view-toggle [aria-pressed="true"]')
-          ?.focus()
+      if (dialogs.length) onDialogDismiss?.()
       return
     }
     setVisited(true)
@@ -26,26 +37,24 @@ export function Preview({ visible, children }: { visible: boolean; children: Rea
     const observer = new ResizeObserver(measure)
     observer.observe(element)
     return () => observer.disconnect()
-  }, [visible])
+  }, [visible, onDialogDismiss])
   return (
-    <section className="sample" aria-labelledby={id + '-title'} hidden={!visible}>
-      <div className="sample-toolbar">
-        <h2 id={id + '-title'}>Interactive preview</h2>
-        <div className="sample-size">
-          <Label htmlFor={id + '-width'}>Width</Label>
+    <section className="al-preview" aria-labelledby={id + '-title'} hidden={!visible}>
+      <div className="al-preview-toolbar">
+        <h2 id={id + '-title'}>{title}</h2>
+        <div className="al-preview-sizing">
+          <Label htmlFor={id + '-width'}>{widthLabel}</Label>
           <Select id={id + '-width'} value={width} onChange={(e) => setWidth(e.target.value)}>
-            <option value="">Fit</option>
-            <option value="320">320 px</option>
-            <option value="480">480 px</option>
-            <option value="768">768 px</option>
+            <option value="">{fitLabel}</option>
+            {widths.map(size => <option key={size} value={size}>{size} px</option>)}
           </Select>
           <span aria-label={measured ? 'Actual width ' + measured + ' pixels' : undefined}>{measured ? measured + ' px' : ''}</span>
         </div>
       </div>
-      <div className="preview-stage">
+      <div className="al-preview-stage">
         <div
           ref={ref}
-          className="preview-object"
+          className="al-preview-content"
           style={width ? { width: 'min(100%, ' + width + 'px)' } : undefined}
         >
           {(visible || visited) && children}

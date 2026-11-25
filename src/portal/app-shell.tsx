@@ -99,3 +99,6 @@ export function AppShell({
     </div>
   )
 }
+
+export { AppearanceButton, type AppearanceButtonProps } from './appearance-button.internal.js'
+export { ComponentPreview, type ComponentPreviewProps } from './component-preview.internal.js'

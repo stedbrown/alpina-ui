@@ -42,3 +42,5 @@ export function ExampleIntroduction({ title, description }: { title: string; des
     <Footer />
   </>
 }
+
+export { ApiReference as StaticApi } from '../catalog/api-reference.js'

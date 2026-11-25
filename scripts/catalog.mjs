@@ -49,7 +49,7 @@ const offlineGuides = Object.fromEntries(Object.entries(guides).map(([key, html]
 ]))
 
 // Export the source of the actual demo shown for each component, with the imports it uses.
-const exampleCss = await readFile('catalog/examples.css', 'utf8')
+const brandMark = 'data:image/svg+xml;base64,' + (await readFile('web/assets/logo.svg')).toString('base64')
 const sources = {}
 for (const file of [
   ...['elements-v3', 'actions-v3', 'workflows-v3', 'portal-v3'].map(
@@ -95,7 +95,6 @@ for (const file of [
         )
     }
     used.push('import "alpina-ui/styles.css"')
-    if (stmt.getText(source).includes('className=')) used.push('import "./example.css"')
     sources[stmt.name.text] = '"use client"\n\n' + used.join('\n') + '\n\n' + stmt.getText(source)
   }
 }
@@ -191,8 +190,8 @@ const catalogOptions = offline => ({
             JSON.stringify(Object.fromEntries(registry.items.map(({ name, usage }) => [name, usage]))) +
             ';export const sources=' +
             JSON.stringify(sources) +
-            ';export const exampleCss=' +
-            JSON.stringify(exampleCss) +
+            ';export const brandMark=' +
+            JSON.stringify(brandMark) +
             ';export const sourceFiles=' +
             JSON.stringify(Object.fromEntries(Object.entries(sourceFiles).filter(([file]) => !file.endsWith('postal-localities.data.ts')))) +
             ';export const loadPostalSource=()=>import("alpina:postal-source").then(module=>module.default)' +
@@ -247,7 +246,7 @@ const offlineFonts = await build({
 const html =
   '<!doctype html>\n<html lang="en" data-al-theme="auto"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffffff"><meta name="robots" content="noindex"><title>Alpina UI offline catalog</title>' + appearanceHead + '<style>' +
   css + offlineFonts.outputFiles[0].text +
-  '</style></head><body>' + siteGrid + '<div id="app"></div><noscript>Enable JavaScript to try the interactive components.</noscript><script>' +
+  '</style></head><body data-al-page>' + siteGrid + '<div id="app"></div><noscript>Enable JavaScript to try the interactive components.</noscript><script>' +
   script +
   '</script><script type="text/plain" id="third-party-notices">' +
   notices.join('\n\n') +

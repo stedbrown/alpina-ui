@@ -1,3 +1,4 @@
+import { PageRegion } from 'alpina-ui'
 import { AppearanceButton } from './appearance-button.js'
 import type { ReactNode } from 'react'
 import {
@@ -81,7 +82,7 @@ export function PageHeading({ title, summary, children }: { title: string; summa
 export function Landing({ version, count }: { version: string; count: number }) {
   return <>
     <Masthead current="home" />
-    <main id="content" tabIndex={-1}>
+    <PageRegion as="main" id="content" tabIndex={-1}>
       <Grid as="section" width="site" space="cover" align="end" aria-labelledby="home-title">
         <GridItem medium={4} large={7}>
           <Typography as="h1" variant="title" id="home-title"><Typography as="span" variant="inherit" tone="accent">Swiss UI</Typography><br /> for React.</Typography>
@@ -146,7 +147,7 @@ export function Landing({ version, count }: { version: string; count: number }) 
             caption="Alpina letterform study" />
         </GridItem>
       </Grid>
-    </main>
+    </PageRegion>
     <Footer version={version} />
   </>
 }
@@ -154,7 +155,7 @@ export function Landing({ version, count }: { version: string; count: number }) 
 export function Examples() {
   return <>
     <Masthead current="examples" />
-    <main id="content" tabIndex={-1}>
+    <PageRegion as="main" id="content" tabIndex={-1}>
       <PageHeading title="Example projects" summary="Try the complete workflows, then open the React source that runs each one." />
       {projects.map((project) =>
         <Grid as="article" width="site" key={project.slug} space="compact">
@@ -185,7 +186,7 @@ export function Examples() {
           </Stack>
         </GridItem>
       </Grid>
-    </main>
+    </PageRegion>
     <Footer />
   </>
 }

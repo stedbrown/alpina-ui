@@ -1,3 +1,4 @@
+import { PageRegion } from 'alpina-ui'
 import { Button, Field, Grid, GridItem, Input, Item, Separator, Stack, TextLink, Typography } from 'alpina-ui'
 import { inventory } from '../catalog/inventory.js'
 import { Masthead, Footer, PageHeading } from './pages.js'
@@ -6,7 +7,7 @@ export function ComponentDirectory() {
   const groups = [...new Set(inventory.map((entry) => entry[3]))]
   return <>
     <Masthead current="components" />
-    <main id="content" tabIndex={-1}>
+    <PageRegion as="main" id="content" tabIndex={-1}>
       <PageHeading title="Component index" summary={`Try ${inventory.length} React components, inspect their APIs and copy the source.`}>
           <template id="component-filter">
             <Stack gap={2}>
@@ -32,7 +33,7 @@ export function ComponentDirectory() {
           </GridItem>
         </Grid>
       ))}
-    </main>
+    </PageRegion>
     <Footer />
   </>
 }

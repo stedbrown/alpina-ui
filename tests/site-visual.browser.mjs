@@ -31,7 +31,7 @@ try {
       await page.clock.pauseAt(new Date('2026-11-25T10:01:00Z'))
       await page.goto(siteOrigin + route)
       await page.getByRole('heading', { level: 1 }).first().waitFor()
-      if (/^\/docs\/components\/.+\/$/.test(route)) await page.locator('.preview-object > *').first().waitFor()
+      if (/^\/docs\/components\/.+\/$/.test(route)) await page.locator('.al-preview-content > *').first().waitFor()
       await page.evaluate(async () => {
         const inter = [...document.fonts].filter(face => face.family.includes('Inter Variable'))
         if (!inter.length) throw Error('The portal must load its Inter font sheet')

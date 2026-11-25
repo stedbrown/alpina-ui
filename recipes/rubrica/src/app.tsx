@@ -2,6 +2,9 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import {
   AlertDialog,
   Button,
+  Card,
+  CardFooter,
+  CardTitle,
   DropdownMenu,
   Empty,
   Field,
@@ -10,6 +13,7 @@ import {
   Input,
   Item,
   Select,
+  Separator,
   Sheet,
   Stack,
   SwissAddressForm,
@@ -163,57 +167,58 @@ export function AtelierDirectory() {
     if (action === 'delete') setRemoval(contact)
   }
   return (
-    <main className="directory" aria-label={t.title} lang={locale}>
-      <Grid>
-        <GridItem>
-          <header className="mast">
-            <Stack
-              className="mast-line"
-              direction="row"
-              wrap
-              justify="space-between"
-              align="baseline"
-              gap={3}
-              columnGap={4}
-            >
-              <Typography as="span" variant="label">
-                {t.brand}
-              </Typography>
-              <LanguageSwitch language={language} onChange={setLanguage} />
-            </Stack>
-            <Stack
-              className="opening"
-              direction="row"
-              wrap
-              justify="space-between"
-              align="baseline"
-              gap={3}
-              columnGap={4}
-            >
-              <div>
-                <Typography as="h1" variant="display" className="directory-title">
-                  {t.title}
-                </Typography>
-                <Typography>{t.subtitle}</Typography>
-              </div>
-              <Button
-                ref={addTrigger}
-                size="lg"
-                onClick={() => {
-                  opener.current = addTrigger.current
-                  setNotice(null)
-                  setEditor({ kind: 'create' })
-                }}
+    <>
+      <Grid as="main" width="site" space="compact" aria-label={t.title} lang={locale}>
+        <GridItem asChild>
+          <header>
+            <Stack gap={6}>
+              <Separator weight="section" />
+              <Stack
+                direction="row"
+                wrap
+                justify="space-between"
+                align="baseline"
+                gap={3}
+                columnGap={4}
               >
-                {t.add}
-              </Button>
+                <Typography as="span" variant="label">
+                  {t.brand}
+                </Typography>
+                <LanguageSwitch language={language} onChange={setLanguage} />
+              </Stack>
+              <Stack
+                direction="row"
+                wrap
+                justify="space-between"
+                align="baseline"
+                gap={3}
+                columnGap={4}
+              >
+                <Stack gap={3}>
+                  <Typography as="h1" variant="title">
+                    {t.title}
+                  </Typography>
+                  <Typography>{t.subtitle}</Typography>
+                </Stack>
+                <Button
+                  ref={addTrigger}
+                  size="lg"
+                  onClick={() => {
+                    opener.current = addTrigger.current
+                    setNotice(null)
+                    setEditor({ kind: 'create' })
+                  }}
+                >
+                  {t.add}
+                </Button>
+              </Stack>
             </Stack>
           </header>
         </GridItem>
         <GridItem medium={8} large={8}>
-          <section aria-labelledby="index-heading" className="roster">
+          <Stack role="region" aria-labelledby="index-heading" gap={4}>
+            <Separator weight="section" />
             <Stack
-              className="section-line"
               direction="row"
               wrap
               justify="space-between"
@@ -228,7 +233,8 @@ export function AtelierDirectory() {
                 {visible.length} {visible.length === 1 ? t.contact : t.contacts}
               </Typography>
             </Stack>
-            <div className="search-tools">
+            <Separator />
+            <Stack direction="row" align="end" gap={3}>
               <Field label={t.search}>
                 {(attrs) => (
                   <Input
@@ -274,49 +280,47 @@ export function AtelierDirectory() {
                   </Select>
                 )}
               </Field>
-            </div>
+            </Stack>
             {visible.length > 0 ? (
-              <ul className="index-list" aria-labelledby="index-heading">
+              <Stack role="list" aria-labelledby="index-heading" gap={0}>
                 {visible.map((c) => (
-                  <li key={c.id}>
-                    <Item
-                      current={active?.id === c.id}
-                      leading={<span className="serial">{String(c.number).padStart(2, '0')}</span>}
-                      title={
-                        <TextLink
-                          href="#contact-card"
-                          aria-label={t.openCard + ' ' + c.recipient}
-                          aria-current={active?.id === c.id ? 'true' : undefined}
-                          onClick={(e) => {
-                            e.preventDefault()
-                            select(c)
-                          }}
-                        >
-                          {c.recipient}
-                        </TextLink>
-                      }
-                      description={c.locality + ' · ' + c.canton}
-                      trailing={
-                        <DropdownMenu
-                          label={t.actions}
-                          triggerLabel={t.actionFor + ' ' + c.recipient}
-                          size="compact"
-                          align="end"
-                          triggerRef={(node) => {
-                            if (node) actionTriggers.current.set(c.id, node)
-                            else actionTriggers.current.delete(c.id)
-                          }}
-                          items={[
-                            { value: 'edit', label: t.edit },
-                            { value: 'delete', label: t.remove, tone: 'danger', separatorBefore: true },
-                          ]}
-                          onValueSelect={(value) => openAction(c, value)}
-                        />
-                      }
-                    />
-                  </li>
+                  <Item key={c.id} role="listitem"
+                    current={active?.id === c.id}
+                    leading={<Typography as="span" variant="caption" numeric>{String(c.number).padStart(2, '0')}</Typography>}
+                    title={
+                      <TextLink
+                        href="#contact-card"
+                        aria-label={t.openCard + ' ' + c.recipient}
+                        aria-current={active?.id === c.id ? 'true' : undefined}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          select(c)
+                        }}
+                      >
+                        {c.recipient}
+                      </TextLink>
+                    }
+                    description={c.locality + ' · ' + c.canton}
+                    trailing={
+                      <DropdownMenu
+                        label={t.actions}
+                        triggerLabel={t.actionFor + ' ' + c.recipient}
+                        size="compact"
+                        align="end"
+                        triggerRef={(node) => {
+                          if (node) actionTriggers.current.set(c.id, node)
+                          else actionTriggers.current.delete(c.id)
+                        }}
+                        items={[
+                          { value: 'edit', label: t.edit },
+                          { value: 'delete', label: t.remove, tone: 'danger', separatorBefore: true },
+                        ]}
+                        onValueSelect={(value) => openAction(c, value)}
+                      />
+                    }
+                  />
                 ))}
-              </ul>
+              </Stack>
             ) : (
               <Empty
                 title={contacts.length ? t.empty : t.zero}
@@ -339,13 +343,13 @@ export function AtelierDirectory() {
                 }
               />
             )}
-          </section>
+          </Stack>
         </GridItem>
         <GridItem medium={8} large={4}>
           {active && (
-            <aside className="record" id="contact-card" aria-labelledby="record-title">
+            <Stack role="complementary" id="contact-card" aria-labelledby="record-title" gap={3}>
+              <Separator weight="section" />
               <Stack
-                className="section-line"
                 direction="row"
                 wrap
                 justify="space-between"
@@ -358,37 +362,42 @@ export function AtelierDirectory() {
                 </Typography>
                 <Typography variant="label">{active.canton}</Typography>
               </Stack>
-              <div className="record-body">
-                <div>
+              <Card>
+                <Stack gap={1}>
                   <Typography variant="caption">{t.id}</Typography>
-                  <Typography className="record-folio" variant="display" numeric>
+                  <Typography tone="accent" variant="display" numeric>
                     {String(active.number).padStart(2, '0')}
                   </Typography>
-                </div>
-                <h3 id="record-title" ref={detailTitle} tabIndex={-1}>
+                </Stack>
+                <CardTitle as="h3" id="record-title" ref={detailTitle} tabIndex={-1}>
                   {active.recipient}
-                </h3>
+                </CardTitle>
                 <address>
                   {active.street}
                   <br />
                   {active.postalCode} {active.locality}
                 </address>
-                <div className="record-canton">
-                  <Typography variant="caption">{t.canton}</Typography>
-                  <Typography variant="label">
-                    {cantons.find((c) => c.code === active.canton)?.names[locale]}
-                  </Typography>
-                </div>
-              </div>
-            </aside>
+                <CardFooter>
+                  <Stack gap={1}>
+                    <Typography variant="caption">{t.canton}</Typography>
+                    <Typography variant="label">
+                      {cantons.find((c) => c.code === active.canton)?.names[locale]}
+                    </Typography>
+                  </Stack>
+                </CardFooter>
+              </Card>
+            </Stack>
           )}
         </GridItem>
-        <GridItem>
-          <footer className="foot">
-            <Typography variant="caption">{t.foot}</Typography>
-            <Typography role="status" variant="label">
-              {notice ? t[notice] : ''}
-            </Typography>
+        <GridItem asChild>
+          <footer>
+            <Stack gap={3}>
+              <Separator />
+              <Typography variant="caption">{t.foot}</Typography>
+              <Typography role="status" variant="label">
+                {notice ? t[notice] : ''}
+              </Typography>
+            </Stack>
           </footer>
         </GridItem>
       </Grid>
@@ -424,6 +433,6 @@ export function AtelierDirectory() {
         confirmLabel={t.remove}
         onConfirm={remove}
       />
-    </main>
+    </>
   )
 }

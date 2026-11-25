@@ -16,7 +16,7 @@ try {
     for (let path; (path = remaining.shift());) {
       await page.goto(siteOrigin + path)
       await page.getByRole('main').waitFor()
-      if (/^\/docs\/components\/[^/]+\/$/.test(path)) await page.locator('.preview-object > *').first().waitFor()
+      if (/^\/docs\/components\/[^/]+\/$/.test(path)) await page.locator('.al-preview-content > *').first().waitFor()
       await page.evaluate(() => document.fonts.ready)
       await page.addScriptTag({ content: axe.source })
       const result = await page.evaluate(async () => {

@@ -22,7 +22,7 @@
   "app-shell": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "de8f1cb770466592ff47"
+    "source": "2afa560cb78312309e9e"
   },
   "aspect-ratio": {
     "stage": "Stable",
@@ -77,12 +77,12 @@
   "canton-combobox": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "14f62c8cab974d42face"
+    "source": "9743eec29e8691433615"
   },
   "canton-select": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "55643c70221237340afd"
+    "source": "6fc32dde906af73e9305"
   },
   "card": {
     "stage": "Stable",
@@ -112,7 +112,7 @@
   "code-block": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "f8ebb93f6da88eca4816"
+    "source": "210864d4f00cfd906a95"
   },
   "collapsible": {
     "stage": "Stable",
@@ -122,7 +122,7 @@
   "combobox": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "651d539a9162beaaa959"
+    "source": "62301f18cd87ba787a7e"
   },
   "command": {
     "stage": "Stable",
@@ -142,7 +142,7 @@
   "data-table": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "0bfc633c18a5af4ab5e3"
+    "source": "40af3bb5cb0dffffb8a0"
   },
   "date-picker": {
     "stage": "Stable",
@@ -152,7 +152,7 @@
   "description-list": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "3102e8e96c2a3cb57c5c"
+    "source": "dde0606a9f21e1376fb3"
   },
   "dialog": {
     "stage": "Stable",
@@ -182,7 +182,7 @@
   "field": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "6314c0f3e241b927df8f"
+    "source": "5b40cfbf7769b99d401a"
   },
   "figure": {
     "stage": "Stable",
@@ -197,12 +197,12 @@
   "grid": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "08b20971fa6a182e2ea3"
+    "source": "be9ee65b93c6806f0eea"
   },
   "grid-overlay": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "bcd320782202f5fd7ce2"
+    "source": "4ab0b016c56da7948d75"
   },
   "hover-card": {
     "stage": "Stable",
@@ -267,7 +267,7 @@
   "locale-select": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "e128f13338ee11cd7366"
+    "source": "5e5d0a75ddf78cb377c0"
   },
   "marker": {
     "stage": "Stable",
@@ -292,12 +292,12 @@
   "multilingual-field": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "d25a3b16c8f60e3e9b25"
+    "source": "481a367c0c8d2cf4c899"
   },
   "native-select": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "6d8c35e661e80fac956d"
+    "source": "2db48d048bbd5a2d6d78"
   },
   "navigation-menu": {
     "stage": "Stable",
@@ -327,12 +327,12 @@
   "prose": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "1b44e1338e1c683ed60b"
+    "source": "bdc1799dbb8623dd65f9"
   },
   "qr-bill-scanner": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "31fc57be9dcb47c4cea5"
+    "source": "88edc9a7751a48767cbc"
   },
   "questionnaire": {
     "stage": "Stable",
@@ -357,7 +357,7 @@
   "select": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "44704fcb599eedaf08d6"
+    "source": "482b1638ef810c6acf1d"
   },
   "separator": {
     "stage": "Stable",
@@ -397,7 +397,7 @@
   "stack": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "77b542dce4297d3b9992"
+    "source": "fc90fae64e1a5855f4ab"
   },
   "steps": {
     "stage": "Stable",
@@ -407,7 +407,7 @@
   "swiss-address-form": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "1d91ea4fdc3cfcbd8049"
+    "source": "1323b2e5412d1a934d66"
   },
   "swiss-date": {
     "stage": "Stable",
@@ -432,7 +432,7 @@
   "table": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "9c1609dcf7b845569d28"
+    "source": "de01cadc792e50d4472f"
   },
   "tabs": {
     "stage": "Stable",
@@ -442,7 +442,7 @@
   "text-link": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "6450f883be1e45e02b54"
+    "source": "3925a6dd8be1a2d77124"
   },
   "textarea": {
     "stage": "Stable",
@@ -477,7 +477,7 @@
   "typography": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "5111ae366a1893bc890f"
+    "source": "3af60f461dd5f0b0e830"
   },
   "uid-input": {
     "stage": "Beta",

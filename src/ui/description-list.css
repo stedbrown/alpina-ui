@@ -17,3 +17,16 @@
 @container al-description (min-width: 25rem) {
   .al-description-list > div { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
 }
+
+.al-description-list[data-layout='columns'] {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(6rem, 100%), 1fr));
+  gap: var(--al-space-3);
+}
+.al-description-list[data-layout='columns'] > div {
+  display: block;
+  border: 0;
+  padding: 0;
+}
+.al-description-list[data-layout='columns'] dt { font-size: var(--al-type-caption); font-weight: 400; }
+.al-description-list[data-layout='columns'] dd { margin-block-start: var(--al-space-1); font-weight: 600; }

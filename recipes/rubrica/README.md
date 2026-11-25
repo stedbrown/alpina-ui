@@ -19,4 +19,4 @@ npm test
 
 The build writes `dist/rubrica-bilingue.html` with JavaScript and CSS embedded. Browser tests require Chrome or Chromium. Set `CHROME_PATH` to choose an executable.
 
-The `AtelierDirectory` component lives in `src/app.tsx`. Its standalone entry point, `src/main.tsx`, imports the library and application stylesheets. Run `node scripts/css-count.mjs` from this example’s directory to measure its custom CSS. The adoption report explains which changes reduced the stylesheet from 56 declarations to 43 and which layout choices remain specific to the directory. [Adoption report](PROVA.md)
+The `AtelierDirectory` component lives in `src/app.tsx`. Its standalone entry imports `alpina-ui/styles.css`. The layout, type, controls and contact detail panel use public Alpina components. Run `node scripts/css-count.mjs` in this directory to check the recipe’s application stylesheet count. [Adoption report](PROVA.md)

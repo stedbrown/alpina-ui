@@ -1,3 +1,3 @@
-import { installSelectPicker } from '../src/ui/select-picker.internal.js'
+import { installSelectPicker } from 'alpina-ui/ui/select'
 
 installSelectPicker(document)

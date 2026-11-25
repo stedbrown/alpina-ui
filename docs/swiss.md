@@ -108,7 +108,7 @@ For a person, `recipient` is the family name and `firstName` is optional. For an
 }} />
 ```
 
-`UidInput` accepts the CHE prefix and nine digits in grouped or compact form. The final digit follows the modulo-11 check in eCH-0108. A check digit of 10 is unassignable. An exact multiple of 11 yields 0. For example, `CHE109322551` displays as <code class="al-swiss-figures">CHE-109.322.551</code>. Verifying assignment to an enterprise requires a UID register lookup. [eCH-0108 v6.0.0](https://www.ech.ch/de/ech/ech-0108/6.0.0) · [Federal Statistical Office UID register](https://www.bfs.admin.ch/de/unternehmensidentifikation-uid)
+`UidInput` accepts the CHE prefix and nine digits in grouped or compact form. The final digit follows the modulo-11 check in eCH-0108. A check digit of 10 is unassignable. An exact multiple of 11 yields 0. For example, `CHE109322551` displays as `CHE-109.322.551`. Verifying assignment to an enterprise requires a UID register lookup. [eCH-0108 v6.0.0](https://www.ech.ch/de/ech/ech-0108/6.0.0) · [Federal Statistical Office UID register](https://www.bfs.admin.ch/de/unternehmensidentifikation-uid)
 
 ## Compose individual fields
 

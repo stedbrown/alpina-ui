@@ -1,28 +1,16 @@
 import { useEffect } from 'react'
-import { TextLink } from 'alpina-ui'
-import { directorySources } from 'alpina:content'
+import { Icon, Stack, TextLink } from 'alpina-ui'
 import { AtelierDirectory } from 'alpina:atelier'
-
-const style = directorySources.find((file) => file.path === 'src/rubrica.css')!.content
 
 export function DirectoryLive({ standalone = false }: { standalone?: boolean }) {
   useEffect(() => {
     window.scrollTo(0, 0)
-    return () => {
-      document.documentElement.lang = 'en'
-    }
+    return () => { document.documentElement.lang = 'en' }
   }, [])
-  return (
-    <>
-      <style>{style}</style>
-      {!standalone && (
-        <nav lang="en" aria-label="Alpina UI" className="directory-return">
-          <TextLink href="#guide/directory">
-            <span aria-hidden="true">← </span>Alpina UI
-          </TextLink>
-        </nav>
-      )}
-      <AtelierDirectory />
-    </>
-  )
+  return <>
+    {!standalone && <Stack role="navigation" lang="en" aria-label="Alpina UI" align="start" inset={4}>
+      <TextLink href="#guide/directory"><Icon name="arrow-left" /> Alpina UI</TextLink>
+    </Stack>}
+    <AtelierDirectory />
+  </>
 }

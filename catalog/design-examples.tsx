@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Card, Field, Grid, GridItem, GridOverlay, Select, Typography, Switch, Stack } from 'alpina-ui'
+import { Label, Card, Field, Grid, GridItem, GridOverlay, Select, Typography, Switch, Stack } from 'alpina-ui'
 
 export function GridExample() {
   const [guides, setGuides] = useState(true)
@@ -17,7 +17,7 @@ export function GridExample() {
             <option value="programme">Named programme fields</option>
           </Select>}
         </Field>
-        <label><Switch checked={guides} onChange={e => setGuides(e.target.checked)} /> Show grid</label>
+        <Label><Switch checked={guides} onChange={e => setGuides(e.target.checked)} /> Show grid</Label>
       </Stack>
       {fields === 'programme' ? (
         <Grid fields={['date title title', 'date venue .']} guides={guides}>
@@ -48,21 +48,19 @@ export function GridOverlayExample() {
   const [visible, setVisible] = useState(true)
   return (
     <Stack>
-      <label><Switch checked={visible} onChange={e => setVisible(e.target.checked)} /> Show overlay</label>
-      <div style={{ position: 'relative' }}>
-        <Grid space="section">
-          <GridItem><Typography variant="heading">Proof sheet</Typography></GridItem>
-          <GridItem><Typography>Inspect the columns, margins and baseline together.</Typography></GridItem>
-        </Grid>
+      <Label><Switch checked={visible} onChange={e => setVisible(e.target.checked)} /> Show overlay</Label>
+      <Grid space="section">
+        <GridItem><Typography variant="heading">Proof sheet</Typography></GridItem>
+        <GridItem><Typography>Inspect the columns, margins and baseline together.</Typography></GridItem>
         <GridOverlay placement="container" width="full" hidden={!visible} />
-      </div>
+      </Grid>
     </Stack>
   )
 }
 
 export function TypographyExample() {
   return (
-    <div style={{ display: 'grid', gap: 16 }}>
+    <Stack gap={4}>
       <Typography as="p" variant="caption">
         Caption · 12/16
       </Typography>
@@ -74,6 +72,6 @@ export function TypographyExample() {
       <Typography as="p" variant="display">
         Alpina · 48/48
       </Typography>
-    </div>
+    </Stack>
   )
 }

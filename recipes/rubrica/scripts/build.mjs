@@ -35,7 +35,7 @@ notices.push(
 const html =
   '<!doctype html><html lang="it-CH"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Rubrica degli atelier</title><style>' +
   css +
-  '</style></head><body><div id="root"></div><script>' +
+  '</style></head><body data-al-page><div id="root"></div><script>' +
   script +
   '</script><script type="text/plain" id="notices">' +
   notices.join('\n') +

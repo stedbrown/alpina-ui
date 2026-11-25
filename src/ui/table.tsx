@@ -4,6 +4,8 @@ import './table.css'
 export { TableAmount, type TableAmountProps, type AccountingValue, type AccountingNegativeStyle } from './table-amount.js'
 
 export interface TableProps extends ComponentPropsWithoutRef<'table'> {
+  /** Share available width evenly and wrap long values within their columns. */
+  layout?: 'auto' | 'fixed'
   stickyHeader?: boolean
   stickyFirstColumn?: boolean
 }
@@ -13,19 +15,25 @@ export interface TableFooterProps extends ComponentPropsWithoutRef<'tfoot'> {}
 export interface TableRowProps extends ComponentPropsWithoutRef<'tr'> {
   variant?: 'subtotal' | 'total'
 }
+type CellAlignment = 'start' | 'end' | 'left' | 'center' | 'right'
+
 export interface TableHeadProps extends ComponentPropsWithoutRef<'th'> {
   numeric?: boolean
+  /** Override the default text alignment independently of numeric formatting. */
+  textAlign?: CellAlignment
 }
 export interface TableCellProps extends ComponentPropsWithoutRef<'td'> {
   numeric?: boolean
+  /** Override the default text alignment independently of numeric formatting. */
+  textAlign?: CellAlignment
 }
 export interface TableCaptionProps extends ComponentPropsWithoutRef<'caption'> {}
 
 export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
-  { stickyHeader, stickyFirstColumn, className = '', ...props },
+  { layout, stickyHeader, stickyFirstColumn, className = '', ...props },
   ref,
 ) {
-  return <table ref={ref} {...props} data-sticky-header={stickyHeader || undefined} data-sticky-first={stickyFirstColumn || undefined} className={`al-table ${className}`.trim()} />
+  return <table ref={ref} {...props} data-layout={layout} data-sticky-header={stickyHeader || undefined} data-sticky-first={stickyFirstColumn || undefined} className={`al-table ${className}`.trim()} />
 })
 export const TableHeader = forwardRef<HTMLTableSectionElement, TableHeaderProps>(function TableHeader(
   props,
@@ -52,17 +60,17 @@ export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(function 
   return <tr ref={ref} {...props} data-summary={variant} />
 })
 export const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(function TableHead(
-  { scope = 'col', numeric = false, ...props },
+  { scope = 'col', numeric = false, textAlign, ...props },
   ref,
 ) {
-  return <th ref={ref} {...props} scope={scope} data-numeric={numeric || undefined} />
+  return <th ref={ref} {...props} scope={scope} data-numeric={numeric || undefined} data-text-align={textAlign} />
 })
 export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(function TableCell(
-  { numeric = false, children, ...props },
+  { numeric = false, textAlign, children, ...props },
   ref,
 ) {
   const plainValue = typeof children === 'string' || typeof children === 'number' || typeof children === 'bigint'
-  return <td ref={ref} {...props} data-numeric={numeric || undefined}>
+  return <td ref={ref} {...props} data-numeric={numeric || undefined} data-text-align={textAlign}>
     {plainValue ? (numeric ? <span className="al-table-value">{numberText(children)}</span> : numberText(children)) : children}
   </td>
 })

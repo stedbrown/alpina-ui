@@ -72,7 +72,7 @@ for (const language of ['de', 'fr']) {
     const routes = await publicRoutes()
     for (const route of routes) {
       await page.goto(siteOrigin + route)
-      if (/^\/docs\/components\/.+\/$/.test(route)) await page.locator('.preview-object > *').first().waitFor()
+      if (/^\/docs\/components\/.+\/$/.test(route)) await page.locator('.al-preview-content > *').first().waitFor()
       if (route.startsWith('/docs/') || route === '/catalog.html') {
         assert.equal(await page.locator('html').getAttribute('lang'), 'en', route)
       }
@@ -80,7 +80,7 @@ for (const language of ['de', 'fr']) {
     }
 
     await page.goto(siteOrigin + '/catalog.html#qr-bill-scanner')
-    await page.locator('.preview-object input[type=file]').first().waitFor({ state: 'attached' })
+    await page.locator('.al-preview-content input[type=file]').first().waitFor({ state: 'attached' })
     assert.deepEqual(await page.evaluate(browserChrome), [], language + ' · offline scanner')
     await page.goto(siteOrigin + '/themes/')
     const unit = page.getByLabel('Grid unit')
@@ -161,7 +161,7 @@ for (const language of ['de', 'fr']) {
     await cantons.press('End')
     await cantons.press('Enter')
     assert.equal(await canton.inputValue(), 'JU')
-    await page.locator('.preview-object output').filter({ hasText: /^Giura$/ }).waitFor()
+    await page.locator('.al-preview-content output').filter({ hasText: /^Giura$/ }).waitFor()
 
     // Raw HTML from an SSR page submits and resets with JavaScript disabled.
     const plain = await browser.newPage({ javaScriptEnabled: false })

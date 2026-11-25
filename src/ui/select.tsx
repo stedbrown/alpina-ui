@@ -1,6 +1,7 @@
 import { forwardRef, type ComponentPropsWithoutRef } from 'react'
 import { SelectEnhancement } from './select-enhancement.internal.js'
 import './select.css'
+export { installSelectPicker } from './select-picker.internal.js'
 
 export interface SelectProps extends ComponentPropsWithoutRef<'select'> {
   placeholder?: string

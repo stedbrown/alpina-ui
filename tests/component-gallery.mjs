@@ -18,7 +18,6 @@ const bundle = await build({
       import { inventory } from './catalog/inventory'
       import 'alpina-ui/styles.css'
       import 'alpina-ui/fonts.css'
-      import './catalog/examples.css'
       ${imports.join('\n')}
       const demos = { ${examples.flatMap(({ names }) => names).join(', ')} }
       createRoot(document.getElementById('gallery')).render(inventory.map(([id, name]) => {

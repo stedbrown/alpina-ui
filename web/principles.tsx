@@ -1,3 +1,4 @@
+import { PageRegion } from 'alpina-ui'
 import type { ReactNode } from 'react'
 import {
   Badge, CurrencyCHF, Grid, GridItem, Separator, Stack, Table,
@@ -102,7 +103,7 @@ const rules: Rule[] = [
 export function Principles() {
   return <>
     <Masthead current="principles" />
-    <main id="content" tabIndex={-1}>
+    <PageRegion as="main" id="content" tabIndex={-1}>
       <PageHeading title="Design principles" summary="Eight decisions from a working Swiss interface. Compare each pair using the same components and the same information." />
       {rules.map(({ id, title, note, source, sample }) => <Grid as="section" width="site" space="compact" aria-labelledby={id} key={id}>
         <GridItem><Separator weight="section" /></GridItem>
@@ -118,7 +119,7 @@ export function Principles() {
           </Stack>
         </GridItem>)}
       </Grid>)}
-    </main>
+    </PageRegion>
     <Footer />
   </>
 }

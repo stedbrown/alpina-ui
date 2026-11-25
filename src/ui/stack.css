@@ -12,3 +12,12 @@
 .al-stack > :where(*) {
   min-inline-size: 0;
 }
+
+:where(ol, ul).al-stack {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.al-stack[hidden] { display: none; }
+@media (scripting: none) { .al-stack[data-scripting='enabled'] { display: none; } }
+@media (scripting: enabled) { .al-stack[data-scripting='none'] { display: none; } }

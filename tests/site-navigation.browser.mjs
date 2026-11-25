@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { siteUrl } from '../scripts/site-config.mjs'
 import { readFile } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
@@ -64,7 +65,7 @@ try {
   assert.equal(await migration.getAttribute('href'), '/docs/guides/migration/')
   await migration.click()
   await main.getByRole('heading', { level: 1, name: 'From shadcn/ui to Alpina' }).waitFor()
-  assert.equal(await main.getByRole('link', { name: 'DataTable', exact: true }).getAttribute('href'), 'https://alpina-ui.vercel.app/docs/components/data-table/')
+  assert.equal(await main.getByRole('link', { name: 'DataTable', exact: true }).getAttribute('href'), siteUrl + '/docs/components/data-table/')
   assert.equal(await nav.getByRole('link', { name: 'Examples' }).getAttribute('href'), '/examples/')
   assert.equal(await nav.getByRole('link', { name: 'Agents' }).getAttribute('href'), '/agents/')
   assert.equal(await index.getByRole('link').count(), componentCount)

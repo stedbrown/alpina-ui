@@ -64,7 +64,7 @@ try {
   const width = main.getByLabel('Width', { exact: true })
   const gridButton = main.getByRole('button', { name: 'Show grid' })
   const guideLayer = main.locator('.al-grid-guides')
-  const metrics = main.locator('.sp-measures dd')
+  const metrics = main.locator('[aria-label="Measured specimen dimensions"] dd')
   assert.equal(await gridButton.getAttribute('aria-pressed'), 'false')
   assert.equal(await guideLayer.count(), 0)
   assert.ok(registry.items.some(item => item.name === 'grid-overlay'))
@@ -84,7 +84,7 @@ try {
   ]) {
     await width.selectOption(String(size))
     await page.waitForFunction(
-      (px) => document.querySelector('.sp-measures dd')?.textContent === px + ' px',
+      (px) => document.querySelector('[aria-label="Measured specimen dimensions"] dd')?.textContent === px + ' px',
       size,
     )
     assert.deepEqual(await metrics.allTextContents(), [
@@ -97,7 +97,7 @@ try {
     ])
     assert.equal(await guideLayer.locator('i:visible').count(), columns)
     assert.equal(
-      await main.locator('.sp-poster-title').evaluate((el) => getComputedStyle(el).fontSize),
+      await main.getByRole('heading', { name: 'Design talks' }).evaluate((el) => getComputedStyle(el).fontSize),
       titleSize + 'px',
     )
     await fits('Specimen ' + size + ' at viewport 390')
@@ -202,11 +202,11 @@ try {
       item.name,
     )
     const preview = main.getByRole('region', { name: 'Interactive preview' })
-    assert.ok(await preview.locator('.preview-object > *').count(), item.name)
+    assert.ok(await preview.locator('.al-preview-content > *').count(), item.name)
     assert.equal(await view('Preview').getAttribute('aria-pressed'), 'true')
     await view('Code').click()
-    const code = main.locator('.snippet code').first()
-    const demoName = (await main.locator('.component-path').textContent()) + 'Example'
+    const code = main.locator('[data-source-snippet] code').first()
+    const demoName = (await main.locator('.al-reference-heading code').textContent()) + 'Example'
     const demoCode = await code.textContent()
     assert.ok(examples.has(demoName), demoName)
     assert.ok(
@@ -234,7 +234,7 @@ try {
 
   await page.goto(url + '#overview')
   await main.getByRole('link', { name: 'Design guide' }).click()
-  const guide = main.locator('.guide-content')
+  const guide = main.locator('[data-guide-content]')
   await guide.getByRole('heading', { level: 1 }).waitFor()
   assert.match(await guide.innerText(), /Hofmann/)
   assert.match(await guide.innerText(), /Müller-Brockmann/)
@@ -275,10 +275,10 @@ try {
       'utf8',
     )
     const h1 = /^# (.+)$/m.exec(normalize(source))[1]
-    await main.locator('.guide-nav a[href="#guide/' + name + '"]').click()
+    await main.getByRole('navigation', { name: 'Guide sections' }).locator('a[href="#guide/' + name + '"]').click()
     await guide.getByRole('heading', { level: 1, name: h1 }).waitFor()
     assert.equal(
-      await main.locator('.guide-nav [aria-current="page"]').getAttribute('href'),
+      await main.getByRole('navigation', { name: 'Guide sections' }).locator('[aria-current="page"]').getAttribute('href'),
       '#guide/' + name,
     )
     assert.ok((await guide.innerText()).length > 400)

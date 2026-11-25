@@ -4,7 +4,7 @@ import './text-link.css'
 
 export interface TextLinkProps extends ComponentPropsWithoutRef<'a'> {
   asChild?: boolean
-  variant?: 'inline' | 'action' | 'quiet' | 'skip'
+  variant?: 'inline' | 'action' | 'quiet' | 'skip' | 'brand'
 }
 export const TextLink = forwardRef<HTMLAnchorElement, TextLinkProps>(function TextLink(
   { variant = 'inline', className = '', asChild = false, ...props },

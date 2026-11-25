@@ -23,11 +23,11 @@ function PrintEstimate() {
         <CardDescription>A2 on uncoated stock, 140 g/m²</CardDescription>
       </CardHeader>
       <Separator />
-      <Stack data-showcase-fallback="" gap={1}>
+      <Stack scripting="none" data-showcase-fallback="" gap={1}>
         <Typography variant="label">{initialCopies} copies · Black ink</Typography>
         <Typography variant="caption">CHF 24 setup + CHF 1.20 per copy</Typography>
       </Stack>
-      <Stack gap={3} data-showcase-live="">
+      <Stack gap={3} scripting="enabled" data-showcase-live="">
         <Stack gap={0}>
           <Stack direction="row" justify="space-between">
             <Label htmlFor="poster-copies">Edition size</Label>
@@ -68,16 +68,16 @@ function PressLog() {
         <Typography variant="label">Basel Print Room</Typography>
         <Icon name="clock" size={20} />
       </Stack>
-      <Stack gap={1} data-showcase-live="">
+      <Stack gap={1} scripting="enabled" data-showcase-live="">
         <Label htmlFor="press-week">Reporting week</Label>
         <Select id="press-week" defaultValue={printWeeks[0].week}>
           {printWeeks.map(({ week }) => <option key={week}>{week}</option>)}
         </Select>
       </Stack>
-      <Stack gap={0} data-print-weeks="" data-showcase-live="">
+      <Stack gap={0} data-print-weeks="" scripting="enabled" data-showcase-live="">
         {printWeeks.map(({ week, hours }, index) => <PressChart key={week} hours={hours} hidden={index !== 0} />)}
       </Stack>
-      <Stack data-showcase-fallback="" gap={0}>
+      <Stack scripting="none" data-showcase-fallback="" gap={0}>
         {printWeeks.map(({ week, hours }, index) => (
           <Collapsible key={week} summary={week} name="press-week" open={index === 0}>
             <PressChart hours={hours} />

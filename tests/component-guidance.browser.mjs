@@ -49,6 +49,15 @@ try {
       await page.getByRole('button', { name: 'API', exact: true }).click()
       await page.getByRole('heading', { name: 'API reference', exact: true }).waitFor()
       await page.getByRole('button', { name: 'Preview', exact: true }).click()
+    } else {
+      const fallback = page.getByRole('region', { name: 'API reference', exact: true })
+      await fallback.waitFor()
+      assert.equal(await fallback.getByRole('button', { name: 'Copy', exact: true }).count(), 0)
+      const duplicateIds = await page.locator('[id]').evaluateAll(elements => {
+        const ids = elements.map(element => element.id)
+        return ids.filter((id, i) => ids.indexOf(id) < i)
+      })
+      assert.deepEqual(duplicateIds, [], 'The standalone API and live preview need distinct IDs')
     }
     await checkView(page, 'button')
     assert.deepEqual(guidanceRequests, [], 'Canonical reference fetched data already in the document')

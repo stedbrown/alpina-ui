@@ -844,6 +844,17 @@ export interface AppShellProps {
     mainId?: string;
 }
 export declare function AppShell({ brand, sidebar, toolbar, children, open, onOpenChange, openLabel, closeLabel, skipLabel, mainId, navigationLabel, contentAs: Content, }: AppShellProps): ReactElement;
+export { AppearanceButton, type AppearanceButtonProps } from './appearance-button.internal.js';
+export { ComponentPreview, type ComponentPreviewProps } from './component-preview.internal.js';
+~~~
+
+## portal/appearance-button.internal.d.ts
+~~~ts
+import { type ComponentPropsWithoutRef } from 'react';
+export interface AppearanceButtonProps extends ComponentPropsWithoutRef<"button"> {
+    labels?: Readonly<Record<"auto" | "light" | "dark", string>>;
+}
+export declare const AppearanceButton: import("react").ForwardRefExoticComponent<AppearanceButtonProps & import("react").RefAttributes<HTMLButtonElement>>;
 ~~~
 
 ## portal/code-block.d.ts
@@ -858,6 +869,22 @@ export interface CodeBlockProps extends HTMLAttributes<HTMLElement> {
     manualLabel?: string;
 }
 export declare const CodeBlock: import("react").ForwardRefExoticComponent<CodeBlockProps & import("react").RefAttributes<HTMLElement>>;
+~~~
+
+## portal/component-preview.internal.d.ts
+Client entry.
+~~~ts
+import { type ReactNode } from 'react';
+export interface ComponentPreviewProps {
+    visible?: boolean;
+    children: ReactNode;
+    title?: string;
+    widthLabel?: string;
+    fitLabel?: string;
+    widths?: readonly number[];
+    onDialogDismiss?: () => void;
+}
+export declare function ComponentPreview({ visible, children, title, widthLabel, fitLabel, widths, onDialogDismiss, }: ComponentPreviewProps): import("react").JSX.Element;
 ~~~
 
 ## portal/navigation-menu.d.ts
@@ -887,10 +914,23 @@ export declare const NavigationMenu: import("react").ForwardRefExoticComponent<N
 
 ## portal/prose.d.ts
 ~~~ts
-import { type ComponentPropsWithoutRef } from 'react';
+import { type ReactNode, type ComponentPropsWithoutRef } from 'react';
 export interface ProseProps extends ComponentPropsWithoutRef<"article"> {
 }
 export declare const Prose: import("react").ForwardRefExoticComponent<ProseProps & import("react").RefAttributes<HTMLElement>>;
+export interface ReferenceArticleProps extends Omit<ComponentPropsWithoutRef<"article">, "title"> {
+    title: ReactNode;
+    headingId: string;
+    summary: ReactNode;
+    identifier?: ReactNode;
+    toolbar?: ReactNode;
+}
+export declare const ReferenceArticle: import("react").ForwardRefExoticComponent<ReferenceArticleProps & import("react").RefAttributes<HTMLElement>>;
+export interface CodeSampleProps extends Omit<ComponentPropsWithoutRef<"pre">, "children"> {
+    code: string;
+    language?: string;
+}
+export declare const CodeSample: import("react").ForwardRefExoticComponent<CodeSampleProps & import("react").RefAttributes<HTMLPreElement>>;
 ~~~
 
 ## portal/sidebar.d.ts
@@ -911,7 +951,7 @@ import { type ComponentPropsWithoutRef, type ForwardRefExoticComponent, type Ref
 import { type SlottedSignature } from '../ui/slot.js';
 export interface TextLinkProps extends ComponentPropsWithoutRef<"a"> {
     asChild?: boolean;
-    variant?: "inline" | "action" | "quiet" | "skip";
+    variant?: "inline" | "action" | "quiet" | "skip" | "brand";
 }
 export declare const TextLink: SlottedSignature<TextLinkProps> & ForwardRefExoticComponent<TextLinkProps & RefAttributes<HTMLAnchorElement>>;
 ~~~
@@ -2473,6 +2513,7 @@ export declare const DataTable: <Row>(props: DataTableProps<Row> & RefAttributes
 ~~~ts
 import { type ComponentPropsWithoutRef, type ReactNode } from 'react';
 export interface DescriptionListProps extends Omit<ComponentPropsWithoutRef<"dl">, "children"> {
+    layout?: "rows" | "columns";
     items: readonly {
         term: string;
         detail: ReactNode;
@@ -2519,6 +2560,10 @@ export interface FieldProps extends Omit<ComponentPropsWithoutRef<"div">, "child
     children: (control: FieldControlProps) => ReactNode;
 }
 export declare const Field: import("react").ForwardRefExoticComponent<FieldProps & import("react").RefAttributes<HTMLDivElement>>;
+export interface FieldSetProps extends ComponentPropsWithoutRef<"fieldset"> {
+    legend: ReactNode;
+}
+export declare const FieldSet: import("react").ForwardRefExoticComponent<FieldSetProps & import("react").RefAttributes<HTMLFieldSetElement>>;
 ~~~
 
 ## ui/figure.d.ts
@@ -2559,10 +2604,32 @@ export interface GridOverlayProps extends Omit<ComponentPropsWithoutRef<"div">, 
 export declare const GridOverlay: import("react").ForwardRefExoticComponent<GridOverlayProps & import("react").RefAttributes<HTMLDivElement>>;
 ~~~
 
+## ui/grid-specimen.d.ts
+~~~ts
+import { type ComponentPropsWithoutRef } from 'react';
+export interface GridSpecimenProps extends ComponentPropsWithoutRef<"div"> {
+    width?: number | "auto";
+    label: string;
+}
+export declare const GridSpecimen: import("react").ForwardRefExoticComponent<GridSpecimenProps & import("react").RefAttributes<HTMLDivElement>>;
+export interface GridMeasurements {
+    width: number;
+    columns: number;
+    margin: number;
+    gutter: number;
+    unit: number;
+    typeSize: number;
+    lineHeight: number;
+    scrollable: boolean;
+}
+export declare function observeGridSpecimen(viewport: HTMLElement, sample: HTMLElement, onMeasure: (metrics: GridMeasurements) => void): () => void;
+~~~
+
 ## ui/grid.d.ts
 ~~~ts
 import { type HTMLAttributes, type ReactNode, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 import { type SlottedSignature } from './slot.js';
+export { GridSpecimen, observeGridSpecimen, type GridMeasurements, type GridSpecimenProps } from './grid-specimen.js';
 export type GridFields = "thirds" | "five-seven" | readonly string[];
 export interface GridProps extends HTMLAttributes<HTMLDivElement> {
     guides?: boolean;
@@ -2596,7 +2663,10 @@ export interface GridItemProps extends HTMLAttributes<HTMLDivElement> {
     children?: ReactNode;
 }
 export declare const GridItem: SlottedSignature<GridItemProps> & ForwardRefExoticComponent<GridItemProps & RefAttributes<HTMLDivElement>>;
-export {};
+export interface PageRegionProps extends HTMLAttributes<HTMLElement> {
+    as?: "main" | "article" | "section" | "div" | "header" | "footer" | "aside";
+}
+export declare const PageRegion: ForwardRefExoticComponent<PageRegionProps & RefAttributes<HTMLElement>>;
 ~~~
 
 ## ui/icon.d.ts
@@ -2829,9 +2899,15 @@ export interface ScrollAreaProps extends ComponentPropsWithoutRef<"div"> {
 export declare const ScrollArea: import("react").ForwardRefExoticComponent<ScrollAreaProps & import("react").RefAttributes<HTMLDivElement>>;
 ~~~
 
+## ui/select-picker.internal.d.ts
+~~~ts
+export declare function installSelectPicker(root: Document): () => void;
+~~~
+
 ## ui/select.d.ts
 ~~~ts
 import { type ComponentPropsWithoutRef } from 'react';
+export { installSelectPicker } from './select-picker.internal.js';
 export interface SelectProps extends ComponentPropsWithoutRef<"select"> {
     placeholder?: string;
 }
@@ -2906,9 +2982,11 @@ export declare const Spinner: import("react").ForwardRefExoticComponent<SpinnerP
 
 ## ui/stack.d.ts
 ~~~ts
-import { type ComponentPropsWithoutRef } from 'react';
+import { type ComponentPropsWithoutRef, type ForwardRefExoticComponent, type RefAttributes } from 'react';
+import { type SlottedSignature } from './slot.js';
 type Space = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 12;
 export interface StackProps extends ComponentPropsWithoutRef<"div"> {
+    asChild?: boolean;
     direction?: "row" | "column";
     gap?: Space;
     columnGap?: Space;
@@ -2917,8 +2995,9 @@ export interface StackProps extends ComponentPropsWithoutRef<"div"> {
     align?: "start" | "center" | "end" | "stretch" | "baseline";
     justify?: "start" | "center" | "end" | "space-between";
     wrap?: boolean;
+    scripting?: "enabled" | "none";
 }
-export declare const Stack: import("react").ForwardRefExoticComponent<StackProps & import("react").RefAttributes<HTMLDivElement>>;
+export declare const Stack: SlottedSignature<StackProps> & ForwardRefExoticComponent<StackProps & RefAttributes<HTMLDivElement>>;
 export {};
 ~~~
 
@@ -2975,6 +3054,7 @@ export declare const TableAmount: import("react").ForwardRefExoticComponent<Tabl
 import { type ComponentPropsWithoutRef } from 'react';
 export { TableAmount, type TableAmountProps, type AccountingValue, type AccountingNegativeStyle } from './table-amount.js';
 export interface TableProps extends ComponentPropsWithoutRef<"table"> {
+    layout?: "auto" | "fixed";
     stickyHeader?: boolean;
     stickyFirstColumn?: boolean;
 }
@@ -2987,11 +3067,14 @@ export interface TableFooterProps extends ComponentPropsWithoutRef<"tfoot"> {
 export interface TableRowProps extends ComponentPropsWithoutRef<"tr"> {
     variant?: "subtotal" | "total";
 }
+type CellAlignment = "start" | "end" | "left" | "center" | "right";
 export interface TableHeadProps extends ComponentPropsWithoutRef<"th"> {
     numeric?: boolean;
+    textAlign?: CellAlignment;
 }
 export interface TableCellProps extends ComponentPropsWithoutRef<"td"> {
     numeric?: boolean;
+    textAlign?: CellAlignment;
 }
 export interface TableCaptionProps extends ComponentPropsWithoutRef<"caption"> {
 }
@@ -3031,11 +3114,17 @@ export declare const Toggle: import("react").ForwardRefExoticComponent<TogglePro
 import { type HTMLAttributes } from 'react';
 export type TypeRole = "inherit" | "caption" | "label" | "body" | "lead" | "heading" | "display" | "title" | "poster";
 export interface TypographyProps extends HTMLAttributes<HTMLElement> {
-    as?: "span" | "p" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "div";
+    as?: "span" | "p" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "div" | "output" | "address";
+    htmlFor?: string;
     variant?: TypeRole;
     measure?: "reading" | "narrow";
+    responsive?: boolean;
     numeric?: boolean;
     tone?: "ink" | "paper" | "accent";
 }
 export declare const Typography: import("react").ForwardRefExoticComponent<TypographyProps & import("react").RefAttributes<HTMLElement>>;
+export interface InlineCodeProps extends HTMLAttributes<HTMLElement> {
+    unbroken?: boolean;
+}
+export declare const InlineCode: import("react").ForwardRefExoticComponent<InlineCodeProps & import("react").RefAttributes<HTMLElement>>;
 ~~~

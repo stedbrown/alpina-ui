@@ -1,6 +1,6 @@
 import { useId } from 'react'
 import {
-  CodeBlock,
+  CodeBlock, DescriptionList, InlineCode, Stack,
   Collapsible,
   Table,
   TableBody,
@@ -10,7 +10,6 @@ import {
   TableRow,
   Typography,
 } from 'alpina-ui'
-import './api-reference.css'
 
 export interface ApiEntry {
   name: string
@@ -29,9 +28,9 @@ export interface ApiEntry {
 
 function ComponentContract({ entry }: { entry: ApiEntry }) {
   return (
-    <div className="api-contract">
+    <Stack gap={4}>
       {entry.props.length > 0 && (
-        <Table aria-label={'Props for ' + entry.name}>
+        <Table layout="fixed" aria-label={'Props for ' + entry.name}>
           <TableHeader>
             <TableRow>
               <TableHead scope="col">Prop</TableHead>
@@ -42,17 +41,17 @@ function ComponentContract({ entry }: { entry: ApiEntry }) {
             {entry.props.map((prop) => (
               <TableRow key={prop.name}>
                 <TableHead scope="row">
-                  <code>{prop.name}</code>
-                  <small>{prop.required ? 'Required' : 'Optional'}</small>
+                  <InlineCode>{prop.name}</InlineCode>
+                  <Typography variant="caption">{prop.required ? 'Required' : 'Optional'}</Typography>
                 </TableHead>
                 <TableCell>
-                  <code>{prop.type}</code>
+                  <InlineCode>{prop.type}</InlineCode>
                   {prop.defaultValue !== undefined && (
-                    <small>
-                      Default <code>{prop.defaultValue}</code>
-                    </small>
+                    <Typography variant="caption">
+                      Default <InlineCode>{prop.defaultValue}</InlineCode>
+                    </Typography>
                   )}
-                  {prop.description && <p>{prop.description}</p>}
+                  {prop.description && <Typography>{prop.description}</Typography>}
                 </TableCell>
               </TableRow>
             ))}
@@ -60,24 +59,10 @@ function ComponentContract({ entry }: { entry: ApiEntry }) {
         </Table>
       )}
       {(entry.native.length > 0 || entry.ref) && (
-        <dl className="api-native">
-          {entry.native.map((type) => (
-            <div key={type}>
-              <dt>Inherited HTML attributes</dt>
-              <dd>
-                <code>{type}</code>
-              </dd>
-            </div>
-          ))}
-          {entry.ref && (
-            <div>
-              <dt>React ref type</dt>
-              <dd>
-                <code>{entry.ref}</code>
-              </dd>
-            </div>
-          )}
-        </dl>
+        <DescriptionList items={[
+          ...(entry.native.length ? [{ term: 'Inherited HTML attributes', detail: <InlineCode>{entry.native.join(', ')}</InlineCode> }] : []),
+          ...(entry.ref ? [{ term: 'React ref type', detail: <InlineCode>{entry.ref}</InlineCode> }] : []),
+        ]} />
       )}
       {entry.types.length > 0 && (
         <Collapsible summary={'Types used by ' + entry.name}>
@@ -87,7 +72,7 @@ function ComponentContract({ entry }: { entry: ApiEntry }) {
           />
         </Collapsible>
       )}
-    </div>
+    </Stack>
   )
 }
 
@@ -95,7 +80,7 @@ export function ApiReference({ entries }: { entries: readonly ApiEntry[] }) {
   const titleId = useId()
   const [primary, ...parts] = entries
   return (
-    <section className="api-reference" aria-labelledby={titleId}>
+    <Stack gap={4} role="region" aria-labelledby={titleId}>
       <Typography as="h2" variant="heading" id={titleId}>
         API reference
       </Typography>
@@ -113,6 +98,6 @@ export function ApiReference({ entries }: { entries: readonly ApiEntry[] }) {
           <ComponentContract entry={entry} />
         </Collapsible>
       ))}
-    </section>
+    </Stack>
   )
 }

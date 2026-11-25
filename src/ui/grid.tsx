@@ -1,6 +1,7 @@
 import { createElement, forwardRef, type CSSProperties, type HTMLAttributes, type ReactNode, type ForwardRefExoticComponent, type RefAttributes } from 'react'
 import { Slot, type SlottedSignature } from './slot.js'
 import './grid.css'
+export { GridSpecimen, observeGridSpecimen, type GridMeasurements, type GridSpecimenProps } from './grid-specimen.js'
 
 export type GridFields = 'thirds' | 'five-seven' | readonly string[]
 function fieldName(name: string) {
@@ -158,3 +159,13 @@ export const GridItem = forwardRef<HTMLDivElement, GridItemProps>(function GridI
     />
   )
 }) as SlottedSignature<GridItemProps> & ForwardRefExoticComponent<GridItemProps & RefAttributes<HTMLDivElement>>
+
+/** A semantic page region for composition without additional grid tracks. */
+export interface PageRegionProps extends HTMLAttributes<HTMLElement> {
+  as?: 'main' | 'article' | 'section' | 'div' | 'header' | 'footer' | 'aside'
+}
+export const PageRegion = forwardRef<HTMLElement, PageRegionProps>(function PageRegion(
+  { as = 'div', ...props }, ref,
+) {
+  return createElement(as, { ...props, ref })
+})

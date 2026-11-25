@@ -2,7 +2,7 @@ import { AppearanceButton } from '../web/appearance-button.js'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 import {
-  AppShell,
+  AppShell, Avatar, Breadcrumb, ComponentPreview, InputGroup, ReferenceArticle,
   Sidebar,
   NavigationMenu,
   Prose,
@@ -38,7 +38,6 @@ import * as composition from './composition-examples.js'
 import { SwissAddressFormExample } from './address-example.js'
 import { ApiReference } from './api-reference.js'
 import { ReferenceGuidance } from './reference-guidance.js'
-import { Preview } from './preview.js'
 import { InstallGuide } from './install-guide.js'
 import { DirectoryLive } from './directory-live.js'
 import { DirectorySource } from './directory-source.js'
@@ -47,10 +46,9 @@ import { Overview } from './overview.js'
 import { InvoiceReview } from './invoice-review.js'
 import { WorkshopRegistration } from './workshop-registration.js'
 import {
-  apiReference,
+  apiReference, brandMark,
   componentFiles,
   directorySources,
-  exampleCss,
   guides,
   sourceFiles,
   loadPostalSource,
@@ -58,8 +56,6 @@ import {
   usageNotes,
   version,
 } from 'alpina:content'
-import './catalog.css'
-import './examples.css'
 
 const demos = {
   ...composition,
@@ -139,8 +135,8 @@ function useRoute() {
 
 function Brand({ hostedDocs }: { hostedDocs: boolean }) {
   return (
-    <TextLink className="brand" href={hostedDocs ? '/' : '#overview'} aria-label={hostedDocs ? 'Alpina UI home' : 'Alpina UI overview'}>
-      Alpina UI
+    <TextLink variant="brand" href={hostedDocs ? '/' : '#overview'} aria-label={hostedDocs ? 'Alpina UI home' : 'Alpina UI overview'}>
+      <Avatar decorative size="sm" name="Alpina" src={brandMark} />Alpina UI
     </TextLink>
   )
 }
@@ -154,8 +150,8 @@ function PostalDirectorySource({ file }: { file: string }) {
     loadPostalSource().then(text => { if (active) setCode(text) }, () => { if (active) setFailed(true) })
     return () => { active = false }
   }, [])
-  if (!code) return <p role="status">{failed ? 'The source file could not be loaded. Reopen Source to retry.' : 'Loading source…'}</p>
-  return <CodeBlock className="snippet" label={file} code={code} />
+  if (!code) return <Typography role="status">{failed ? 'The source file could not be loaded. Reopen Source to retry.' : 'Loading source…'}</Typography>
+  return <CodeBlock data-source-snippet="" label={file} code={code} />
 }
 function Workbench({
   item,
@@ -189,15 +185,9 @@ function Workbench({
                 ? 'core'
                 : files[0].split('/')[0]
   return (
-    <article className="bench" aria-labelledby="item-heading">
-      <header className="component-hero">
-        <Typography variant="display" as="h1" id="item-heading">
-          {hostedDocs ? name : title}
-        </Typography>
-        <Typography>{description}</Typography>
-        <code className="component-path">{hostedDocs ? 'alpina-ui/' + files[0].replace(/\.tsx$/, '') : name}</code>
-      </header>
-      <ButtonGroup label="Component view" className="view-toggle">
+    <ReferenceArticle title={hostedDocs ? name : title} headingId="item-heading"
+      summary={description} identifier={hostedDocs ? 'alpina-ui/' + files[0].replace(/\.tsx$/, '') : name}
+      toolbar={<ButtonGroup label="Component view" data-component-views="">
         {(Object.keys(views) as View[]).map((view) => {
           const destination = views[view] ? id + '/' + views[view] : id
           return <Button
@@ -211,10 +201,10 @@ function Workbench({
             {view}
           </Button>
         })}
-      </ButtonGroup>
-      <Preview visible={mode === 'Preview'}>
+      </ButtonGroup>}>
+      <ComponentPreview onDialogDismiss={() => document.querySelector<HTMLButtonElement>('[data-component-views] [aria-pressed="true"]')?.focus()} visible={mode === 'Preview'}>
         <Demo />
-      </Preview>
+      </ComponentPreview>
       {mode === 'Preview' && (
         <Stack gap={1}>
           <Typography as="h2" variant="heading">Usage notes</Typography>
@@ -225,17 +215,11 @@ function Workbench({
       {mode === 'API' && <ApiReference entries={apiReference[id]} />}
       {mode === 'Code' && (
         <>
-          <CodeBlock className="snippet" label="Example.tsx" code={source} />
-          {source.includes('./example.css') && (
-            <details>
-              <summary>Shared example stylesheet</summary>
-              <CodeBlock label="example.css" code={exampleCss} />
-            </details>
-          )}
+          <CodeBlock data-source-snippet="" label="Example.tsx" code={source} />
         </>
       )}
       {mode === 'Source' && (
-        <section className="source-view">
+        <Stack gap={2}>
           <Label htmlFor="source-file">Distributed files</Label>
           <Select id="source-file" value={file} onChange={(e) => setFile(e.target.value)}>
             {files.map((f) => (
@@ -244,19 +228,18 @@ function Workbench({
           </Select>
           {file === 'swiss/postal-localities.data.ts'
             ? <PostalDirectorySource file={file} />
-            : <CodeBlock className="snippet" label={file} code={sourceFiles[file]} />}
-        </section>
+            : <CodeBlock data-source-snippet="" label={file} code={sourceFiles[file]} />}
+        </Stack>
       )}
       <CodeBlock
-        className="install"
         label="Add to your project"
         code={'npx --no-install alpina add ' + id}
       />
-      <div className="bench-bottom">
+      <Stack direction="row" gap={4}>
         <TextLink href={guideHref('start', hostedDocs)}>Installation</TextLink>
         <TextLink href={guideHref(guide, hostedDocs)}>Usage guide</TextLink>
-      </div>
-    </article>
+      </Stack>
+    </ReferenceArticle>
   )
 }
 export function App({ pathname }: { pathname: string }) {
@@ -371,11 +354,11 @@ export function App({ pathname }: { pathname: string }) {
       masthead={
         <>
           <Brand hostedDocs={hostedDocs} />
-          <span className="version">v{version}</span>
+          <Typography as="span" variant="caption">v{version}</Typography>
         </>
       }
       tools={
-        <div className="search-field">
+        <InputGroup trailing={<Kbd aria-hidden="true">/</Kbd>}>
           <Input
             ref={search}
             type="search"
@@ -390,8 +373,7 @@ export function App({ pathname }: { pathname: string }) {
               }
             }}
           />
-          <Kbd aria-hidden="true">/</Kbd>
-        </div>
+        </InputGroup>
       }
       footer={
         <>
@@ -469,13 +451,9 @@ export function App({ pathname }: { pathname: string }) {
       toolbar={
         <>
           {hostedDocs ? (
-            <NavigationMenu label="Site navigation" className="site-nav" orientation="horizontal" collapseLabel="Menu" sections={[{ links: siteLinks }]} />
+            <NavigationMenu label="Site navigation" data-site-nav="" orientation="horizontal" collapseLabel="Menu" sections={[{ links: siteLinks }]} />
           ) : (
-            <div className="bread">
-              <TextLink href="#overview">Library</TextLink>
-              <span aria-hidden="true">/</span>
-              <span>{area}</span>
-            </div>
+            <Breadcrumb label="Current section" items={[{ href: '#overview', label: 'Library' }, { label: area }]} />
           )}
           <AppearanceButton />
         </>
@@ -487,7 +465,6 @@ export function App({ pathname }: { pathname: string }) {
         <>
           {!hostedDocs && (
             <NavigationMenu
-              className="guide-nav"
               label="Guide sections"
               orientation="horizontal"
               sections={[
@@ -504,7 +481,7 @@ export function App({ pathname }: { pathname: string }) {
           {guide === 'start' ? (
             <InstallGuide html={guides.start} />
           ) : (
-            <Prose className="guide-content" dangerouslySetInnerHTML={{ __html: guides[guide] }} />
+            <Prose data-guide-content="" dangerouslySetInnerHTML={{ __html: guides[guide] }} />
           )}
           {guide === 'directory' && <DirectorySource files={directorySources} hosted={hostedDocs} />}
         </>
@@ -525,7 +502,7 @@ function Project({ bilingual }: { bilingual: boolean }) {
       <Grid as="header" width="site" space="compact"><GridItem><NavigationMenu
         lang="en"
         label="Example navigation"
-        className="project-nav"
+        data-project-nav=""
         orientation="horizontal"
         collapseLabel="Menu"
         sections={[{ links: [
@@ -535,7 +512,7 @@ function Project({ bilingual }: { bilingual: boolean }) {
         ] }]}
       /></GridItem></Grid>
       {bilingual ? <DirectoryLive standalone /> : (
-        <main className="client-project"><Overview hosted /></main>
+        <Grid as="main" width="site" space="section"><GridItem><Overview hosted /></GridItem></Grid>
       )}
     </>
   )

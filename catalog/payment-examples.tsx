@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import {
+  Typography,
   InvoiceDocument, Letter, NativeSelect, localeNames, swissLocales, type SwissQrBillLocale, printSwissDocument, MultilingualField, AhvInput, Button, Field, IbanInput, PhoneInput, QrBillScanner, Stack, SwissQrBill, UidInput, printSwissQrBill,
 } from 'alpina-ui'
 
@@ -55,8 +56,8 @@ export function LetterExample() {
     <Letter ref={letter} sender={['Atelier Nord', 'Rue du Lac 8', '2000 Neuchâtel']}
       recipient={['Clara Meier', 'Aarbergergasse 7', '3011 Bern']} subject="Your first proof"
       date="2026-11-25" place="Neuchâtel" windowPosition="left">
-      <p>Dear Clara,</p><p>The printed proofs are ready for review. Please return the marked sheets by Friday.</p>
-      <p>Sincerely,<br />Atelier Nord</p>
+      <Typography>Dear Clara,</Typography><Typography>The printed proofs are ready for review. Please return the marked sheets by Friday.</Typography>
+      <Typography>Sincerely,<br />Atelier Nord</Typography>
     </Letter>
   </Stack>
 }

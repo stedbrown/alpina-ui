@@ -39,3 +39,6 @@
   padding: var(--al-space-2) var(--al-space-4);
   font-size: 0.8rem;
 }
+@media (scripting: none) {
+  .al-code-block figcaption > button { display: none; }
+}

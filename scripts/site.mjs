@@ -5,21 +5,41 @@ import { build } from 'esbuild'
 import { createElement } from 'react'
 import { renderToStaticMarkup, renderToString } from 'react-dom/server'
 import { Marked, marked } from 'marked'
-import { GridOverlay, parseCivilDate } from 'alpina-ui'
+import {
+  CodeSample, GridOverlay, InlineCode, NavigationMenu, PageRegion, Table, TableBody, TableCell,
+  TableHead, TableHeader, TableRow, TextLink, Typography, parseCivilDate,
+} from 'alpina-ui'
 import { deploymentLinks, siteMetadata, siteUrl } from './site-config.mjs'
 import { buildDesignerKit } from './designer-kit.mjs'
 
+const render = (component, props) => renderToStaticMarkup(createElement(component, props))
 const guideMarkdown = new Marked({ renderer: {
+  code({ text, lang }) { return render(CodeSample, { code: text, language: lang }) },
   codespan({ text }) {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(text)) return false
-    try { parseCivilDate(text) } catch { return false }
-    return '<code class="al-swiss-figures"><time datetime="' + text + '">' + text + '</time></code>'
+    if (/^\d{4}-\d{2}-\d{2}$/.test(text)) {
+      try {
+        parseCivilDate(text)
+        return render(InlineCode, { children: createElement('time', { dateTime: text }, text) })
+      } catch { /* A non-date example is still valid inline code. */ }
+    }
+    return render(InlineCode, { children: text, unbroken: /^CHE-\d{3}\.\d{3}\.\d{3}$/.test(text) })
+  },
+  link({ href, title, tokens }) {
+    return render(TextLink, { href, title, dangerouslySetInnerHTML: { __html: this.parser.parseInline(tokens) } })
+  },
+  table({ header, rows }) {
+    const cells = (entries, Cell) => entries.map((cell, index) => createElement(Cell, {
+      key: index, scope: Cell === TableHead ? 'col' : undefined, textAlign: cell.align ?? undefined,
+      dangerouslySetInnerHTML: { __html: this.parser.parseInline(cell.tokens) },
+    }))
+    return render(Table, { children: [
+      createElement(TableHeader, { key: 'head' }, createElement(TableRow, null, cells(header, TableHead))),
+      createElement(TableBody, { key: 'body' }, rows.map((row, index) =>
+        createElement(TableRow, { key: index }, cells(row, TableCell)))),
+    ] })
   },
 } })
-
-export async function renderGuide(markdown) {
-  return (await guideMarkdown.parse(deploymentLinks(markdown))).replace(/<pre>/g, '<pre tabindex="0">')
-}
+export function renderGuide(markdown) { return guideMarkdown.parse(deploymentLinks(markdown)) }
 
 // Apply the saved catalog appearance before the first paint on every public page.
 function initializeAppearance() {
@@ -39,14 +59,10 @@ function initializeAppearance() {
     if (event.key === key || event.key === null) apply(event.newValue)
   })
 }
-export const appearanceHead = '<script>(' + initializeAppearance.toString() + ')()</script>' +
-  '<style>[data-site-appearance]{flex-shrink:0}[data-site-appearance] span{display:none}' +
-  ['auto', 'light', 'dark'].map(mode => 'html[data-al-theme="' + mode + '"] [data-site-appearance] [data-mode="' + mode + '"]{display:block;position:absolute;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}').join('') +
-  '</style><noscript><style>[data-site-appearance]{display:none}</style></noscript>'
+export const appearanceHead = '<script>(' + initializeAppearance.toString() + ')()</script>'
 
 const escape = (text) => String(text).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
 const sha = (text) => createHash('sha256').update(text).digest('hex').slice(0, 16)
-const render = (component, props) => renderToStaticMarkup(createElement(component, props))
 
 // Remember actions on the prerendered catalog until its React listeners are ready.
 function rememberCatalogIntent() {
@@ -111,7 +127,7 @@ async function loadPages() {
 }
 
 export async function buildWebsite({ outputDir, guides, guideFiles, apiReference, componentGuidance, registry, script, css, notices, renderComponent }) {
-  const { Landing, Examples, DesignerKit, Icons, Themes, Principles, Blocks, BlockPage, blockDemos, blocks, ComponentDirectory, ComponentStatus, ReferencePage, ExampleIntroduction, inventory, projects } = await loadPages()
+  const { Landing, Examples, DesignerKit, StaticApi, Icons, Themes, Principles, Blocks, BlockPage, blockDemos, blocks, ComponentDirectory, ComponentStatus, ReferencePage, ExampleIntroduction, inventory, projects } = await loadPages()
   async function output(name, data) {
     const target = path.join(outputDir, name)
     await mkdir(path.dirname(target), { recursive: true })
@@ -206,8 +222,6 @@ export async function buildWebsite({ outputDir, guides, guideFiles, apiReference
     }
     if (options.redirect) tags.push('<script>' + options.redirect + '</script>')
     if (options.showcase) tags.push(
-      '<script>document.documentElement.dataset.showcaseJs=""</script>',
-      '<style>html[data-showcase-js] [data-showcase-fallback],html:not([data-showcase-js]) [data-showcase-live]{display:none!important}</style>',
       '<script type="module" src="' + showcaseJS + '"></script>')
     if (options.showcase || options.icons || options.theme) tags.push(
       '<script type="module">if (!CSS.supports("appearance", "base-select")) import(' + JSON.stringify(pickerJS) + ')</script>')
@@ -215,7 +229,7 @@ export async function buildWebsite({ outputDir, guides, guideFiles, apiReference
     if (options.theme) tags.push('<script type="module" src="' + themeJS + '"></script>')
     if (options.block) tags.push('<script type="module" src="' + blockJS + '"></script>')
     if (options.filter) tags.push('<script type="module" src="' + filterJS + '"></script>')
-    const content = options.app ? '<div id="app"' + (options.prerender ? ' data-prerendered' : '') + '>' + body + '</div>' + (options.noScript ?? '') + (options.prerender ? indexIntentScript : '') + '<script type="module" src="' + appJS + '"></script>' : body
+    const content = options.app ? render(PageRegion, { id: 'app', 'data-prerendered': options.prerender ? '' : undefined, dangerouslySetInnerHTML: { __html: body } }) + (options.noScript ?? '') + (options.prerender ? indexIntentScript : '') + '<script type="module" src="' + appJS + '"></script>' : body
     await output(route + 'index.html', '<!doctype html>\n<html lang="' + siteMetadata.language + '" data-al-theme="auto"><head>' + tags.join('\n') + '</head><body data-al-page>' + siteGrid + content + '</body></html>')
     paths.push(url)
   }
@@ -256,17 +270,16 @@ export async function buildWebsite({ outputDir, guides, guideFiles, apiReference
   await page('/agents/', 'Agent tools', 'Install the Alpina UI skill or connect a read-only local MCP server to search components, inspect source, and read guides.', render(ReferencePage, { agents: true, html: agentsHTML }))
   await output('reference/agents.md', agentsMarkdown)
 
-  const packageLink = '<p><a href="/alpina-ui-' + registry.version + '.tgz" download>Download Alpina UI ' + registry.version + '</a></p>'
+  const packageLink = render(Typography, { children: createElement(TextLink, {
+    href: '/alpina-ui-' + registry.version + '.tgz', download: true,
+  }, 'Download Alpina UI ' + registry.version) })
   const quickStart = guides.start.replace('<!-- alpina-download -->', packageLink)
-  const componentLinks = inventory.map(([slug, name]) =>
-    '<li><a href="/docs/components/' + slug + '/">' + escape(name) + '</a></li>',
-  )
-  const guideIndex = Object.entries(guides).map(([key, html]) => {
-    const heading = html.match(/<h1>(.*?)<\/h1>/)?.[1] ?? escape(key)
-    return '<li><a href="/docs/guides/' + key + '/">' + heading + '</a></li>'
-  })
-  const docsIndex = quickStart + '<h2>Guides</h2><ul>' + guideIndex.join('') +
-    '</ul><h2>Components</h2><ul>' + componentLinks.join('') + '</ul>'
+  const componentLinks = inventory.map(([slug, label]) => ({ href: '/docs/components/' + slug + '/', label }))
+  const guideLinksForIndex = await Promise.all(Object.entries(guideFiles).map(async ([key, file]) => ({
+    href: '/docs/guides/' + key + '/', label: (await readFile(file, 'utf8')).match(/^#\s+(.+)$/m)[1],
+  })))
+  const docsIndex = quickStart + render(NavigationMenu, { label: 'Documentation directory',
+    sections: [{ title: 'Guides', links: guideLinksForIndex }, { title: 'Components', links: componentLinks }] })
   await page('/docs/', 'Documentation', 'Install Alpina UI and browse component APIs, accessibility guidance, design research, and the Swiss localization guides.', render(ReferencePage, { html: docsIndex }), { app: true })
   for (const project of projects) {
     await page('/examples/' + project.slug + '/', project.title, project.description, render(ExampleIntroduction, project), { app: true })
@@ -285,17 +298,16 @@ export async function buildWebsite({ outputDir, guides, guideFiles, apiReference
   }
 
   for (const [slug, name, title, , description] of inventory) {
-    const contracts = apiReference[slug].map((part) => {
-      const props = part.props.map((p) => '<li><code>' + escape(p.name) + '</code> — ' + (p.required ? 'required' : 'optional') + ', <code>' + escape(p.type) + '</code></li>').join('')
-      return '<h2>' + escape(part.name) + '</h2>' + (props ? '<ul>' + props + '</ul>' : '<p>Accepts the documented native element attributes.</p>')
-    }).join('')
+    const contracts = renderToStaticMarkup(createElement(StaticApi, { entries: apiReference[slug] }), {
+      identifierPrefix: 'static-api-',
+    })
     const entry = componentGuidance[slug]
     if (!entry) throw new Error('Missing editorial guidance for ' + slug)
     const guidance = { slug, entry }
     await output('reference/components/' + slug + '.json', JSON.stringify(entry))
     const route = '/docs/components/' + slug
     const body = renderComponent(route)
-    await page(route + '/', name + ' — ' + title, description, body, { app: true, prerender: true, guidance, noScript: '<noscript><section aria-label="Component API">' + contracts + '</section></noscript>' })
+    await page(route + '/', name + ' — ' + title, description, body, { app: true, prerender: true, guidance, noScript: '<noscript>' + contracts + '</noscript>' })
   }
   const index = [
     '# Alpina UI', '', '> React components for Swiss typography and multilingual interfaces. The current release is ' + registry.version + '.', '',

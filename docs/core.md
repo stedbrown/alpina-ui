@@ -101,7 +101,7 @@ export function ContactForm({ onSave }: { onSave: (data: FormData) => void }) {
 | `Alert` | Native `div` props, `title?: ReactNode`, and `children`. `tone` accepts `info` (default), `success`, `warning`, or `danger`. | Use `role="status"` for a dynamic update and reserve `role="alert"` for urgent messages. |
 | `Table`, `TableCaption` | Native `table` and `caption` props. | A caption describes the purpose of the table. |
 | `TableHeader`, `TableBody`, `TableFooter`, `TableRow` | Native `thead`, `tbody`, `tfoot`, and `tr` props. | Preserve the native HTML hierarchy of sections and rows. |
-| `TableHead`, `TableCell` | Native `th` and `td` props. `TableHead` defaults to `scope="col"`. | Use `scope="row"` for a row heading. |
+| `TableHead`, `TableCell` | Native `th` and `td` props. `TableHead` defaults to `scope="col"`. Set `textAlign` to `start`, `end`, `left`, `center` or `right` for either text or numbers. | Use `scope="row"` for a row heading. |
 | `DataTable<Row>` | `rows`, `columns`, `rowKey`, `caption`, `empty`, `sort?`, `defaultSort?`, and `onSortChange?`. | Builds a table from data and sorts columns that provide comparators. |
 | `Separator` | Native `div` props except `children` and `role`. `orientation` accepts `horizontal` (default) or `vertical`. `decorative` defaults to `true`. | Set `decorative={false}` when the separation should be announced. |
 | `Progress` | `label: string`, `value?: number`, `max?: number` (default 100), and other `progress` props. | Omit `value` when duration is unknown. Finite values are clamped between zero and `max`. |

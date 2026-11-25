@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Field, SwissAddressForm, LocaleSelect, type SwissLocale } from 'alpina-ui'
+import { Stack, Typography, Field, SwissAddressForm, LocaleSelect, type SwissLocale } from 'alpina-ui'
 
 export function SwissAddressFormExample() {
   const [locale, setLocale] = useState<SwissLocale>('it-CH')
@@ -11,16 +11,16 @@ export function SwissAddressFormExample() {
     'rm-CH': 'Adressa confermada.',
   }
   return (
-    <div style={{ display: 'grid', gap: '1rem' }}>
+    <Stack gap={4}>
       <Field label="Form language">
         {(control) => <LocaleSelect {...control} value={locale} onLocaleChange={setLocale} />}
       </Field>
-      <div onChange={() => setSaved(false)}>
+      <Stack gap={0} onChange={() => setSaved(false)}>
         <SwissAddressForm locale={locale} format="ech-organisation" onSave={() => setSaved(true)} />
-      </div>
-      <output aria-live="polite" lang={locale}>
+      </Stack>
+      <Typography as="output" aria-live="polite" lang={locale}>
         {saved ? confirmation[locale] : ''}
-      </output>
-    </div>
+      </Typography>
+    </Stack>
   )
 }

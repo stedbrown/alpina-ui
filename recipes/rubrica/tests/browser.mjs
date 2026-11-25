@@ -101,10 +101,13 @@ try {
   await page.getByText('La rubrica è vuota').waitFor()
   await page.reload()
   assert.equal(await rows.count(), 7)
-  for (const width of [320, 390, 768, 1440]) {
+  for (const width of [320, 390, 768, 800, 1440]) {
     await page.setViewportSize({ width, height: 900 })
     for (const language of ['Deutsch', 'Italiano']) {
       await button(language).click()
+      const heading = page.getByRole('heading', { level: 1 })
+      assert.ok(await heading.isVisible())
+      assert.equal(await rows.count(), 7)
       assert.ok(
         await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
         language + ' · ' + width,

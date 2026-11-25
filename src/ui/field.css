@@ -34,3 +34,14 @@
   padding-inline-start: var(--al-space-2);
   border-inline-start: 2px solid var(--al-danger);
 }
+
+.al-field-set {
+  margin: 0;
+  min-inline-size: 0;
+  border: 1px solid var(--al-line);
+  padding: var(--al-space-3);
+}
+.al-field-set > legend {
+  padding-inline: var(--al-space-1);
+  font: 650 var(--al-type-label)/var(--al-leading-label) var(--al-font);
+}

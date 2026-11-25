@@ -20,9 +20,9 @@
     "css": 1728
   },
   "app-shell": {
-    "js": 1792,
+    "js": 4352,
     "lazy": 0,
-    "css": 1472
+    "css": 2624
   },
   "aspect-ratio": {
     "js": 320,
@@ -152,7 +152,7 @@
   "description-list": {
     "js": 320,
     "lazy": 0,
-    "css": 448
+    "css": 512
   },
   "dialog": {
     "js": 1280,
@@ -195,14 +195,14 @@
     "css": 1344
   },
   "grid": {
-    "js": 2176,
+    "js": 2752,
     "lazy": 0,
-    "css": 1408
+    "css": 1600
   },
   "grid-overlay": {
     "js": 2304,
     "lazy": 0,
-    "css": 1536
+    "css": 1728
   },
   "hover-card": {
     "js": 1856,
@@ -325,14 +325,14 @@
     "css": 448
   },
   "prose": {
-    "js": 192,
+    "js": 768,
     "lazy": 0,
-    "css": 832
+    "css": 1664
   },
   "qr-bill-scanner": {
-    "js": 17152,
+    "js": 17792,
     "lazy": 770560,
-    "css": 2496
+    "css": 2816
   },
   "questionnaire": {
     "js": 2368,
@@ -395,9 +395,9 @@
     "css": 768
   },
   "stack": {
-    "js": 448,
+    "js": 1280,
     "lazy": 0,
-    "css": 192
+    "css": 320
   },
   "steps": {
     "js": 320,
@@ -475,7 +475,7 @@
     "css": 512
   },
   "typography": {
-    "js": 384,
+    "js": 512,
     "lazy": 0,
     "css": 896
   },

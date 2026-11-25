@@ -12,7 +12,7 @@ export function resolveSiteUrl(value) {
   return parsed.origin
 }
 
-export const siteUrl = resolveSiteUrl(process.env.SITE_URL ?? packageOrigin)
+export const siteUrl = resolveSiteUrl(process.env.SITE_URL || packageOrigin)
 export const siteMetadata = {
   name: 'Alpina UI',
   title: 'Alpina UI — Swiss React components for forms and payments',

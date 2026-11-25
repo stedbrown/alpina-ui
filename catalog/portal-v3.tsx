@@ -17,7 +17,7 @@ export function AppShellExample() {
       <Typography as="h2" variant="heading">
         Available editions
       </Typography>
-      <p>Typesetting notebooks, 1960–1965 series.</p>
+      <Typography>Typesetting notebooks, 1960–1965 series.</Typography>
     </AppShell>
   )
 }
@@ -70,19 +70,19 @@ export function CodeBlockExample() {
 }
 export function TextLinkExample() {
   return (
-    <p>
+    <Typography>
       See the <TextLink href="#guide/research">Swiss graphic design research</TextLink> for the sources behind this project.
-    </p>
+    </Typography>
   )
 }
 export function ProseExample() {
   return (
     <Prose>
-      <h2>Theatre publications</h2>
-      <p>The programme changes each week. The first column always shows the date and time.</p>
-      <p>
+      <Typography as="h2" variant="heading">Theatre publications</Typography>
+      <Typography>The programme changes each week. The first column always shows the date and time.</Typography>
+      <Typography>
         <TextLink href="#guide/research">Read the research</TextLink>
-      </p>
+      </Typography>
     </Prose>
   )
 }

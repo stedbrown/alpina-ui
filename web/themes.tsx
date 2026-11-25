@@ -1,3 +1,4 @@
+import { PageRegion } from 'alpina-ui'
 import { Badge, Button, CurrencyCHF, Field, Grid, GridItem, Icon, Input, Select, Separator, Stack, Textarea, TextLink, Typography } from 'alpina-ui'
 import { Footer, Masthead, PageHeading } from './pages.js'
 import { defaultTheme, themeValues } from './theme-values.js'
@@ -7,7 +8,7 @@ const initial = themeValues(defaultTheme)
 export function Themes() {
   return <>
     <Masthead current="themes" />
-    <main id="content" tabIndex={-1}>
+    <PageRegion as="main" id="content" tabIndex={-1}>
       <PageHeading title="Theme builder" summary="Set the accent and grid unit. Check the invoice contrast and copy the CSS." />
       <Grid width="site" space="compact" align="start">
         <GridItem medium={3} large={4}>
@@ -68,7 +69,7 @@ export function Themes() {
           </Stack>
         </GridItem>
       </Grid>
-    </main>
+    </PageRegion>
     <Footer />
   </>
 }

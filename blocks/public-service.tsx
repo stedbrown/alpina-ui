@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react'
 import {
-  AhvInput, Alert, Button, DescriptionList, Field, FileInput, Grid, GridItem, Input,
+  AhvInput, Alert, Button, DescriptionList, Field, FileInput, Grid, GridItem, Input, PageRegion,
   Select, Separator, Stack, Steps, SwissPostalCodeInput, TextLink, ToggleGroup, Typography,
   ahvSchema, echAddressSchema, formatAhvNumber, localeNames, swissLocales, swissValidationMessage,
   type EchMailAddress, type SwissMessageLocale,
@@ -42,8 +42,8 @@ type Notice = 'saved' | 'deleted' | 'conflict' | 'saveError' | 'readError' | 'de
 function ServiceNavigationRow({ children, compact, layoutKey }: {
   children: ReactNode; compact: ReactNode; layoutKey: string
 }) {
-  const full = useRef<HTMLDivElement>(null)
-  const short = useRef<HTMLDivElement>(null)
+  const full = useRef<HTMLElement>(null)
+  const short = useRef<HTMLElement>(null)
   useEffect(() => {
     const row = full.current!, fallback = short.current!
     const column = row.parentElement!
@@ -84,7 +84,7 @@ function ServiceNavigationRow({ children, compact, layoutKey }: {
       document.fonts.removeEventListener('loadingdone', measure)
     }
   }, [layoutKey])
-  return <div><div ref={full} hidden>{children}</div><div ref={short}>{compact}</div></div>
+  return <PageRegion><PageRegion ref={full} hidden>{children}</PageRegion><PageRegion ref={short}>{compact}</PageRegion></PageRegion>
 }
 
 function addressOf(details: Details, country: string): EchMailAddress {

@@ -1,20 +1,20 @@
 import { useState } from 'react'
-import { BarChart, ChartTable, LineChart, Sparkline, CantonCombobox, type CantonCode, DataTable } from 'alpina-ui'
+import { Stack, Typography, BarChart, ChartTable, LineChart, Sparkline, CantonCombobox, type CantonCode, DataTable } from 'alpina-ui'
 
 export function CantonComboboxExample() {
   const [code, setCode] = useState<CantonCode | ''>('')
   return (
-    <div style={{ display: 'grid', gap: '1rem' }}>
-      <p>Search for the same canton using Genève, Genf, or Ginevra.</p>
+    <Stack gap={4}>
+      <Typography>Search for the same canton using Genève, Genf, or Ginevra.</Typography>
       <CantonCombobox
         locale="it-CH"
         value={code}
         onCantonChange={setCode}
       />
-      <output aria-live="polite">
+      <Typography as="output" aria-live="polite">
         {code ? 'Selected code · ' + code : 'No canton selected'}
-      </output>
-    </div>
+      </Typography>
+    </Stack>
   )
 }
 

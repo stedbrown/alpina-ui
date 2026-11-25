@@ -4,9 +4,13 @@ import './typography.css'
 
 export type TypeRole = 'inherit' | 'caption' | 'label' | 'body' | 'lead' | 'heading' | 'display' | 'title' | 'poster'
 export interface TypographyProps extends HTMLAttributes<HTMLElement> {
-  as?: 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div'
+  as?: 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div' | 'output' | 'address'
+  /** IDs of the controls contributing to a calculated output. */
+  htmlFor?: string
   variant?: TypeRole
   measure?: 'reading' | 'narrow'
+  /** Adjust display type to the active 4/8/12-column grid. */
+  responsive?: boolean
   numeric?: boolean
   tone?: 'ink' | 'paper' | 'accent'
 }
@@ -16,6 +20,7 @@ export const Typography = forwardRef<HTMLElement, TypographyProps>(function Typo
     variant = 'body',
     measure,
     numeric = false,
+    responsive = false,
     tone,
     className = '',
     ...props
@@ -31,6 +36,17 @@ export const Typography = forwardRef<HTMLElement, TypographyProps>(function Typo
     'data-role': variant,
     'data-tone': tone,
     'data-measure': measure,
+    'data-responsive': responsive || undefined,
     'data-numeric': numeric || undefined,
   })
+})
+
+export interface InlineCodeProps extends HTMLAttributes<HTMLElement> {
+  /** Keep short identifiers together, including at punctuation. */
+  unbroken?: boolean
+}
+export const InlineCode = forwardRef<HTMLElement, InlineCodeProps>(function InlineCode(
+  { className = '', unbroken, ...props }, ref,
+) {
+  return <code {...props} ref={ref} data-unbroken={unbroken || undefined} className={('al-inline-code ' + className).trim()} />
 })

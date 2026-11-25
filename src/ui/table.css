@@ -42,6 +42,11 @@
   text-align: end;
   font-variant-numeric: tabular-nums lining-nums;
 }
+.al-table :is(th, td)[data-text-align="start"] { text-align: start; }
+.al-table :is(th, td)[data-text-align="end"] { text-align: end; }
+.al-table :is(th, td)[data-text-align="left"] { text-align: left; }
+.al-table :is(th, td)[data-text-align="center"] { text-align: center; }
+.al-table :is(th, td)[data-text-align="right"] { text-align: right; }
 .al-table td[data-numeric] > :is(data, .al-table-value) {
   display: inline-block;
   inline-size: max-content;
@@ -82,3 +87,5 @@
   .al-table tr { break-inside: avoid; }
   .al-table td[data-numeric] > :is(data, .al-table-value) { overflow: visible; max-inline-size: none; }
 }
+
+.al-table[data-layout="fixed"] { table-layout: fixed; }

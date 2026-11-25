@@ -1,4 +1,4 @@
-import { Button, Input, Label, Stack } from 'alpina-ui'
+import { Typography, Button, Input, Label, Stack } from 'alpina-ui'
 import { useId, useState } from 'react'
 
 export function StackExample() {
@@ -16,7 +16,7 @@ export function StackExample() {
         <Button variant="outline" disabled={!query} onClick={() => setQuery('')}>
           Clear search
         </Button>
-        <output>{count} {count === 1 ? 'contact' : 'contacts'}</output>
+        <Typography as="output">{count} {count === 1 ? 'contact' : 'contacts'}</Typography>
       </Stack>
     </Stack>
   )

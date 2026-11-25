@@ -1,6 +1,8 @@
 'use client'
 import { useId, useState } from 'react'
 import {
+  Grid,
+  GridItem,
   AspectRatio,
   Attachment,
   Field,
@@ -29,19 +31,15 @@ import {
 
 export function AspectRatioExample() {
   return (
-    <AspectRatio
-      ratio={3 / 2}
-      style={{
-        maxWidth: '26rem',
-        background: 'var(--al-soft)',
-        display: 'grid',
-        alignItems: 'end',
-        padding: '1rem',
-        boxSizing: 'border-box',
-      }}
-    >
-      <Typography variant="display">3 ∶ 2</Typography>
-    </AspectRatio>
+    <Grid>
+      <GridItem medium={6} large={8}>
+        <Stack surface="soft" inset={4}>
+          <AspectRatio ratio={3 / 2}>
+            <Typography variant="display">3 ∶ 2</Typography>
+          </AspectRatio>
+        </Stack>
+      </GridItem>
+    </Grid>
   )
 }
 
@@ -76,10 +74,10 @@ export function AvatarExample() {
 
 export function BubbleExample() {
   return (
-    <div style={{ display: 'grid', gap: '1rem' }}>
+    <Stack gap={4}>
       <Bubble>Is the print proof ready?</Bubble>
       <Bubble side="end">Yes, you can pick it up at the studio.</Bubble>
-    </div>
+    </Stack>
   )
 }
 
@@ -125,14 +123,14 @@ export function CollapsibleExample() {
 
 export function DirectionExample() {
   return (
-    <div style={{ display: 'grid', gap: '.75rem' }}>
+    <Stack gap={3}>
       <Direction dir="ltr" lang="en">
         Design library
       </Direction>
       <Direction dir="rtl" lang="ar">
         مكتبة التصميم
       </Direction>
-    </div>
+    </Stack>
   )
 }
 
@@ -160,12 +158,12 @@ export function EmptyExample() {
 export function InputGroupExample() {
   const id = useId()
   return (
-    <div>
+    <Stack gap={1}>
       <Label htmlFor={id}>Column width</Label>
-      <InputGroup trailing={<span id={id + '-unit'}>mm</span>}>
+      <InputGroup trailing={<Typography as="span" variant="inherit" id={id + '-unit'}>mm</Typography>}>
         <Input id={id} type="number" min={1} defaultValue={56} aria-describedby={id + '-unit'} />
       </InputGroup>
-    </div>
+    </Stack>
   )
 }
 
@@ -174,49 +172,49 @@ export function ItemExample() {
     <Item
       title="Poster archive"
       description="Inventory updated in March"
-      trailing={<span>124 works</span>}
+      trailing={<Typography as="span" variant="inherit">124 works</Typography>}
     />
   )
 }
 
 export function KbdExample() {
   return (
-    <p>
+    <Typography>
       To print on Windows, press <Kbd>Ctrl</Kbd> + <Kbd>P</Kbd>.
-    </p>
+    </Typography>
   )
 }
 
 export function LabelExample() {
   const id = useId()
   return (
-    <div>
+    <Stack gap={1}>
       <Label htmlFor={id}>Publication title</Label>
       <Input id={id} defaultValue="Neue Grafik" />
-    </div>
+    </Stack>
   )
 }
 
 export function MarkerExample() {
   return (
-    <div style={{ display: 'grid', gap: '.5rem' }}>
+    <Stack gap={2} align="start">
       <Marker>In progress</Marker>
       <Marker variant="closed">Archived</Marker>
       <Marker variant="attention">Needs review</Marker>
-    </div>
+    </Stack>
   )
 }
 
 export function MessageExample() {
   return (
-    <div style={{ display: 'grid', gap: '1rem' }}>
+    <Stack gap={4}>
       <Message author="Marta" timestamp="09.12" dateTime="09:12">
         I’ve updated the index.
       </Message>
       <Message author="Nora" timestamp="09.24" dateTime="09:24" side="end">
         Thanks. I’ll prepare the new edition.
       </Message>
-    </div>
+    </Stack>
   )
 }
 
@@ -246,7 +244,7 @@ export function SliderExample() {
   const id = useId()
   const [size, setSize] = useState(16)
   return (
-    <div>
+    <Stack gap={1}>
       <Label htmlFor={id}>Body type size</Label>
       <Slider
         id={id}
@@ -256,8 +254,8 @@ export function SliderExample() {
         aria-valuetext={size + ' points'}
         onChange={(event) => setSize(event.currentTarget.valueAsNumber)}
       />
-      <output htmlFor={id}>{size} pt</output>
-    </div>
+      <Typography as="output" htmlFor={id}>{size} pt</Typography>
+    </Stack>
   )
 }
 

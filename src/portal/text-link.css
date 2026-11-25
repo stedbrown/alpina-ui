@@ -55,3 +55,14 @@
 }
 
 .al-text-link[href^="tel:"] { white-space: nowrap; }
+
+.al-text-link[data-variant='brand'] {
+  display: inline-flex;
+  gap: 0.58rem;
+  align-items: center;
+  text-decoration: none;
+  color: var(--al-ink);
+  font: 700 1.35rem/1 var(--al-font);
+  letter-spacing: -0.07em;
+  white-space: nowrap;
+}

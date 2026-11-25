@@ -33,7 +33,7 @@ const overlays = {
   popover: ['[aria-haspopup="dialog"]', 'Enter', '.al-popover-panel'],
   'hover-card': ['button', 'Enter', '.al-hover-panel'],
   tooltip: ['button[aria-describedby]', 'focus', '[role="tooltip"]'],
-  toast: ['footer button', 'Enter', '.al-toast-dismiss'],
+  toast: ['button:text-is("Save preferences")', 'Enter', '.al-toast-dismiss'],
 }
 
 const results = []

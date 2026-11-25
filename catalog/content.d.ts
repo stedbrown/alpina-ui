@@ -3,7 +3,7 @@ declare module 'alpina:content' {
   export const guides: Record<string, string>
   export const usageNotes: Record<string, string>
   export const sources: Record<string, string>
-  export const exampleCss: string
+  export const brandMark: string
   export const sourceFiles: Record<string, string>
   export const loadPostalSource: () => Promise<string>
   export const componentFiles: Record<string, string[]>

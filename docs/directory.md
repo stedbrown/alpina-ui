@@ -8,11 +8,11 @@ Keep contact data separate from interface labels. Switching languages changes he
 
 The heading and display roles of `Typography` support automatic hyphenation in the document language and can break a long word that has no available hyphenation point. A German compound can then fit at a viewport width of 320 px.
 
-The `locales` prop of `LocaleSelect` sets the available options and their order. With a controlled select, the current value must be one of those options. To keep both languages visible, use two buttons in a `ButtonGroup` so a single action switches languages.
+The `locales` prop of `LocaleSelect` sets the available options and their order. With a controlled select, the current value must be one of those options. To keep both languages visible, use the single-selection `ToggleGroup` so a single action switches languages.
 
 ## Layout
 
-`Grid` sets the page columns. `Stack` places a heading beside an action, or groups related controls with spacing from theme tokens. Children in a row wrap when the German translation takes more room. Use `columnGap` to set a different horizontal gap. `Item current={active}` keeps all rows aligned and marks the record whose details are visible. For a canton filter, `CantonSelect allLabel="All cantons"` supplies an empty option the user can select again. The native `onChange` value distinguishes all cantons from a single canton code. The application sets the maximum page width and its own editorial hierarchy.
+`Grid` sets the page columns. `Stack` places a heading beside an action, or groups related controls with spacing from theme tokens. Children in a row wrap when the German translation takes more room. Use `columnGap` to set a different horizontal gap. `Item current={active}` keeps all rows aligned and marks the record whose details are visible. For a canton filter, `CantonSelect allLabel="All cantons"` supplies an empty option the user can select again. The native `onChange` value distinguishes all cantons from a single canton code. Use the site width on the outer grid, separators for section rules, and a card for the selected address. The standalone page imports only the public Alpina stylesheet.
 
 ## Contact actions
 

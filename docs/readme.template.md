@@ -10,7 +10,7 @@ React components for Swiss software, from a multilingual address form to a print
 
 | Light | Dark |
 | --- | --- |
-| [![Alpina homepage in light appearance](docs/images/home-light.png)]({{SITE}}/) | [![Alpina homepage in dark appearance](docs/images/home-dark.png)]({{SITE}}/) |
+| [![Alpina homepage in light appearance](docs/images/home-light.png)](docs/images/home-light.png) | [![Alpina homepage in dark appearance](docs/images/home-dark.png)](docs/images/home-dark.png) |
 
 ## Install in 30 seconds
 
@@ -62,7 +62,7 @@ Teams already using shadcn/ui can migrate one component family at a time. API di
 
 ## Site domain
 
-Set the build environment variable `SITE_URL` to your HTTPS origin before running `npm run catalog`. Use the same value in the production deployment and when regenerating this README. Redeploy after a domain change so canonical links, the sharing card, sitemap, robots file and machine-readable index advertise the new address.
+Set `SITE_URL` to your HTTPS origin in the Vercel production environment and in the GitHub Actions repository variables. Use that value locally with `npm run catalog` and `node scripts/readme.mjs`, then commit the generated README. With the variable unset, the build uses the package homepage. Redeploy after a domain change so canonical links, the sharing card, sitemap, robots file and machine-readable index advertise the new address.
 
 ## License and data sources
 

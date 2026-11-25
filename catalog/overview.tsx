@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { componentHref, guideHref } from './paths.js'
 import {
-  Button,
+  Badge, Button, Card, CardContent, CardFooter, CardHeader, Empty, Grid, GridItem, Icon, Item, Separator, Stack, ToggleGroup, Typography,
   TextLink,
   CantonCombobox,
   cantons,
@@ -94,159 +94,97 @@ export function Overview({ hosted = false }: { hosted?: boolean }) {
     setNotice('Address updated.')
   }
   return (
-    <>
-      <section className="intro">
-        <div>
-          <h1>Client address book</h1>
-          <p>
-            Filter clients by canton, edit an address, or sort order totals. Any changes last for
-            this session.
-          </p>
-        </div>
-        <TextLink className="guide-cta" href={guideHref('start', hosted)}>
-          Quick start <span aria-hidden="true">↗</span>
-        </TextLink>
-      </section>
-      <section className="studio" aria-labelledby="studio-title">
-        <div className="studio-top">
-          <div>
-            <h2 id="studio-title">Contacts</h2>
-          </div>
-          <div className="languages" role="group" aria-label="Data language">
-            {locales.map((lang) => (
-              <Button
-                variant="ghost"
-                size="sm"
-                type="button"
-                lang={lang}
-                aria-pressed={locale === lang}
-                key={lang}
-                onClick={() => setLocale(lang)}
-              >
-                {localeNames[lang]}
-              </Button>
-            ))}
-          </div>
-        </div>
-        <div className="contacts-workspace">
-          <div className="contact-list">
-            <CantonCombobox
-              id="client-canton-filter"
-              locale={locale}
-              value={filter}
-              onCantonChange={(c) => {
-                setFilter(c)
-                setNotice('')
-              }}
-            />
-            <ul aria-label="Clients">
-              {visible.map((c) => (
-                <li key={c.id}>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    type="button"
-                    aria-pressed={active?.id === c.id}
-                    onClick={() => {
-                      setCurrent(c.id)
-                      setNotice('')
-                    }}
-                  >
-                    <span className="initials" aria-hidden="true">
-                      {c.id}
-                    </span>
-                    <span className="contact-name">
-                      <strong>{c.address.recipient}</strong>
-                      <small>
-                        {c.address.locality} · {c.address.canton}
-                      </small>
-                    </span>
-                    <span className="contact-arrow" aria-hidden="true">
-                      ›
-                    </span>
-                  </Button>
-                </li>
-              ))}
-            </ul>
-            {!visible.length && (
-              <div className="empty-list">
-                <p>No clients in this canton.</p>
-                <Button size="sm" variant="outline" onClick={() => setFilter('')}>
-                  Clear filter
-                </Button>
-              </div>
-            )}
-          </div>
-          <div className="contact-details">
-            {active ? (
-              <>
-                <div className="address-card">
-                  <div className="postal-data" lang={locale}>
-                    <div className="postal-label">
-                      <span>{labels.recipient}</span>
-                      <span>CH</span>
-                    </div>
-                    <address>
-                      <strong>{active.address.recipient}</strong>
-                      <span>{active.address.street}</span>
-                      <span>
-                        {active.address.postalCode} {active.address.locality}
-                      </span>
-                    </address>
-                    <div className="postal-place">
-                      {cantons.find((c) => c.code === active.address.canton)?.names[locale]}
-                      <span> / </span>
-                      {country[locale]}
-                    </div>
-                  </div>
-                </div>
-                <div className="editor-actions">
-                  <Button
-                    size="sm"
-                    onClick={() => {
-                      setNotice('')
-                      setOpen(true)
-                    }}
-                  >
-                    Edit address
-                  </Button>
-                  <TextLink href={componentHref('swiss-address-form', hosted)}>
-                    Component <span aria-hidden="true">↗</span>
-                  </TextLink>
-                </div>
-                <Sheet
-                  open={open}
-                  onOpenChange={setOpen}
-                  title={active.address.recipient}
-                  closeLabel="Close"
-                  className="address-drawer"
-                >
-                  {open && (
-                    <SwissAddressForm
-                      key={active.id}
-                      locale={locale}
-                      initialValue={active.address}
-                      onSave={save}
-                    />
-                  )}
-                </Sheet>
-              </>
-            ) : (
-              <span className="empty-detail">Select a client to see their address.</span>
-            )}
-          </div>
-        </div>
-        <span className="sr-only" role="status">
-          {notice}
-        </span>
-      </section>
-      <section className="orders-section" aria-label="Client orders">
-        <div className="section-lead">
-          <h2>Order register</h2>
-          <TextLink href={componentHref('data-table', hosted)}>
-            Sortable table <span aria-hidden="true">↗</span>
-          </TextLink>
-        </div>
+    <Stack gap={8}>
+      <Grid as="header" space="section" align="end">
+        <GridItem medium={6} large={9}>
+          <Stack gap={3}>
+            <Typography as="h1" variant="title">Client address book</Typography>
+            <Typography measure="narrow">Filter clients by canton, edit an address, or sort order totals.
+              Any changes last for this session.</Typography>
+          </Stack>
+        </GridItem>
+        <GridItem medium={2} large={3}><TextLink href={guideHref('start', hosted)}>
+          Quick start <Icon name="arrow-up-right" />
+        </TextLink></GridItem>
+      </Grid>
+      <Grid as="section" aria-labelledby="studio-title" align="start">
+        <GridItem>
+          <Stack direction="row" align="baseline" justify="space-between">
+            <Typography as="h2" variant="heading" id="studio-title">Contacts</Typography>
+            <ToggleGroup label="Data language" value={[locale]}
+              options={locales.map(lang => ({ value: lang, label: <Typography as="span" variant="inherit" lang={lang}>{localeNames[lang]}</Typography> }))}
+              onValueChange={([value]) => {
+                const selected = locales.find(lang => lang === value)
+                if (selected) setLocale(selected)
+              }} />
+          </Stack>
+          <Separator />
+        </GridItem>
+        <GridItem medium={3} large={5}>
+          <Stack gap={3}>
+            <CantonCombobox id="client-canton-filter" locale={locale} placeholder="TI" value={filter} onCantonChange={c => {
+              setFilter(c)
+              setNotice('')
+            }} />
+            <Stack role="list" aria-label="Clients" gap={0}>
+              {visible.map(c => <Item role="listitem" key={c.id} current={active?.id === c.id}
+                leading={<Badge aria-hidden="true">{c.id}</Badge>}
+                title={<Button variant="ghost" size="sm" aria-pressed={active?.id === c.id} onClick={() => {
+                  setCurrent(c.id)
+                  setNotice('')
+                }}>{c.address.recipient}</Button>}
+                description={c.address.locality + ' · ' + c.address.canton} />)}
+            </Stack>
+            {!visible.length && <Empty title="No clients in this canton." action={
+              <Button size="sm" variant="outline" onClick={() => setFilter('')}>Clear filter</Button>
+            } />}
+          </Stack>
+        </GridItem>
+        <GridItem medium={5} large={7}>
+          {active ? <>
+            <Card lang={locale}>
+              <CardHeader>
+                <Stack direction="row" justify="space-between">
+                  <Typography variant="caption">{labels.recipient}</Typography>
+                  <Typography variant="caption">CH</Typography>
+                </Stack>
+              </CardHeader>
+              <CardContent>
+                <Stack>
+                  <Typography as="address">
+                    <Stack gap={1}>
+                      <Typography as="span" variant="heading">{active.address.recipient}</Typography>
+                      <Typography as="span">{active.address.street}</Typography>
+                      <Typography as="span">{active.address.postalCode} {active.address.locality}</Typography>
+                    </Stack>
+                  </Typography>
+                  <Typography variant="caption">
+                    {cantons.find(c => c.code === active.address.canton)?.names[locale]} / {country[locale]}
+                  </Typography>
+                </Stack>
+              </CardContent>
+              <CardFooter lang="en">
+                <Stack direction="row" justify="space-between">
+                  <Button size="sm" onClick={() => { setNotice(''); setOpen(true) }}>Edit address</Button>
+                  <TextLink href={componentHref('swiss-address-form', hosted)}>Component <Icon name="arrow-up-right" /></TextLink>
+                </Stack>
+              </CardFooter>
+            </Card>
+            <Sheet open={open} onOpenChange={setOpen} title={active.address.recipient} closeLabel="Close">
+              {open && <SwissAddressForm key={active.id} locale={locale} initialValue={active.address} onSave={save} />}
+            </Sheet>
+          </> : <Typography>Select a client to see their address.</Typography>}
+        </GridItem>
+        <GridItem><Typography role="status" variant="label">{notice}</Typography></GridItem>
+      </Grid>
+      <Grid as="section" aria-label="Client orders">
+        <GridItem>
+          <Stack direction="row" align="baseline" justify="space-between">
+            <Typography as="h2" variant="heading">Order register</Typography>
+            <TextLink href={componentHref('data-table', hosted)}>Sortable table <Icon name="arrow-up-right" /></TextLink>
+          </Stack>
+        </GridItem>
+        <GridItem>
         <DataTable
           rows={visible}
           rowKey={(row) => row.id}
@@ -274,7 +212,8 @@ export function Overview({ hosted = false }: { hosted?: boolean }) {
             },
           ]}
         />
-      </section>
-    </>
+        </GridItem>
+      </Grid>
+    </Stack>
   )
 }

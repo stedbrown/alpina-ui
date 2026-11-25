@@ -59,7 +59,7 @@ import "alpina-ui/fonts.css"
 
 The optional sheet supplies `--al-font-family` to the existing `--al-font` token. This also sets the display typeface and works inside nested light or dark themes. Use `font-family: var(--al-font)` on your application's body to extend the choice to surrounding prose. The `data-al-page` page layout already sets this property.
 
-Both WOFF2 files are served by the application. CSS bundlers resolve their relative URLs automatically. If you copy the CSS manually, place `fonts/inter-latin-standard-normal.woff2` and `fonts/inter-latin-ext-standard-normal.woff2` next to it in a `fonts/` directory. The Latin file covers accents used in Italian, German, French and Romansh, including **città**, **Grüezi**, **œuvre** and **bainvgnü**. The extended subset loads for additional letters such as **Ā**. The package redistributes the unmodified normal-style subsets from `@fontsource-variable/inter@5.3.0` and their SIL Open Font License 1.1. Keep the accompanying license when redistributing the files. [Fontsource Inter](https://fontsource.org/fonts/inter) · [Bundled license](../src/fonts/OFL.txt)
+Both WOFF2 files are served by the application. CSS bundlers resolve their relative URLs automatically. If you copy the CSS manually, place `fonts/inter-latin-standard-normal.woff2` and `fonts/inter-latin-ext-standard-normal.woff2` next to it in a `fonts/` directory. The Latin file covers accents used in Italian, German, French and Romansh, including **città**, **Grüezi**, **œuvre** and **bainvgnü**. The extended subset loads for additional letters such as **Ā**. The package redistributes the unmodified normal-style subsets from `@fontsource-variable/inter@5.3.0` and their SIL Open Font License 1.1. Keep the accompanying license when redistributing the files. [Fontsource Inter](https://fontsource.org/fonts/inter) · [Bundled license](https://github.com/stedbrown/alpina-ui/blob/main/src/fonts/OFL.txt)
 
 ### Display spacing
 
@@ -160,3 +160,9 @@ Use `Grid` to allocate areas of the page and `Stack` to arrange elements inside 
   <Button onClick={openForm}>New contact</Button>
 </Stack>
 ```
+
+## Proof a layout at a fixed width
+
+Place a Grid inside `GridSpecimen` to inspect the same content at its available width or at a width in CSS pixels. A fixed proof scrolls inside its labelled region. `observeGridSpecimen(viewport, textSample, onMeasure)` reports the rendered width, column count, margin, gutter, grid unit, font size, line height and horizontal overflow after a resize. Call its returned cleanup function when the specimen unmounts.
+
+Use `Typography variant="display" responsive` for display text that follows the enclosing Alpina grid. Its size and line height are 40/40 px up to 19 rem, 48/48 px up to the 54 rem breakpoint and 64/64 px above it at the default grid unit. A `DescriptionList layout="columns"` can present those measurements as a compact row that wraps in reading order.

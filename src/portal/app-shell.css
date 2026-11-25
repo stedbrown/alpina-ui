@@ -103,3 +103,7 @@
     min-height: var(--al-space-11);
   }
 }
+
+.al-app-bar:has(> .al-navigation) { flex-wrap: nowrap; align-items: flex-start; }
+.al-app-bar > .al-navigation + .al-button { min-height: var(--al-space-11); white-space: nowrap; }
+@media (max-width: 650px) { .al-app-bar > .al-navigation[data-orientation='horizontal'] ul { gap: .15rem .75rem; } }

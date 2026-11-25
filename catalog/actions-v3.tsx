@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import {
+  Card,
+  Stack,
   AlertDialog,
   Button,
   Carousel,
@@ -19,7 +21,7 @@ import {
 export function AlertDialogExample() {
   const [archived, setArchived] = useState(false)
   return (
-    <div>
+    <Stack align="start" gap={3}>
       {archived ? (
         <Button variant="outline" onClick={() => setArchived(false)}>
           Restore draft
@@ -34,8 +36,8 @@ export function AlertDialogExample() {
           onConfirm={() => setArchived(true)}
         />
       )}
-      <p role="status">{archived ? 'Draft archived.' : 'Draft in print queue.'}</p>
-    </div>
+      <Typography role="status">{archived ? 'Draft archived.' : 'Draft in print queue.'}</Typography>
+    </Stack>
   )
 }
 export function CarouselExample() {
@@ -57,12 +59,12 @@ export function CarouselExample() {
       items={studies.map((study) => ({
         ...study,
         content: (
-          <div style={{ paddingBlock: '1.5rem' }}>
+          <Stack gap={1} inset={6}>
             <Typography as="p" variant="display">
               {study.word}
             </Typography>
             <Typography variant="label">{study.detail}</Typography>
-          </div>
+          </Stack>
         ),
       }))}
     />
@@ -89,7 +91,7 @@ export function ComboboxExample() {
 export function CommandExample() {
   const [view, setView] = useState('All drafts')
   return (
-    <div>
+    <Stack align="start" gap={3}>
       <Command
         title="Go to collection"
         trigger="Find a collection"
@@ -117,8 +119,8 @@ export function CommandExample() {
           },
         ]}
       />
-      <p role="status">Open collection · {view}</p>
-    </div>
+      <Typography role="status">Open collection · {view}</Typography>
+    </Stack>
   )
 }
 export function ContextMenuExample() {
@@ -136,13 +138,13 @@ export function ContextMenuExample() {
         },
       ]}
     >
-      <div style={{ padding: '1rem', outline: '1px solid currentColor', outlineOffset: '-1px' }}>
+      <Card>
         <Typography as="p" variant="heading">
           Cover proof
         </Typography>
-        <p>Right-click or press Shift + F10 to open the menu.</p>
-        <output aria-live="polite">Copies · {copies}</output>
-      </div>
+        <Typography>Right-click or press Shift + F10 to open the menu.</Typography>
+        <Typography as="output" aria-live="polite">Copies · {copies}</Typography>
+      </Card>
     </ContextMenu>
   )
 }
@@ -151,7 +153,7 @@ export function DrawerExample() {
     [saved, setSaved] = useState('Draft 01'),
     [draft, setDraft] = useState(saved)
   return (
-    <div>
+    <Stack align="start" gap={3}>
       <Drawer
         title="Draft name"
         description="This name appears in the review queue."
@@ -178,24 +180,24 @@ export function DrawerExample() {
           {(props) => <Input {...props} value={draft} onChange={(e) => setDraft(e.target.value)} />}
         </Field>
       </Drawer>
-      <p role="status">{saved}</p>
-    </div>
+      <Typography role="status">{saved}</Typography>
+    </Stack>
   )
 }
 export function HoverCardExample() {
   return (
     <HoverCard trigger="Type size" title="Type size">
-      <p>
+      <Typography>
         Type size is measured in points. Leading is the distance between two consecutive baselines.
-      </p>
-      <p>Sample setting · 10/14 pt</p>
+      </Typography>
+      <Typography>Sample setting · 10/14 pt</Typography>
     </HoverCard>
   )
 }
 export function MenubarExample() {
   const [scale, setScale] = useState(100)
   return (
-    <div>
+    <Stack align="start" gap={3}>
       <Menubar
         label="Proof controls"
         menus={[
@@ -227,8 +229,8 @@ export function MenubarExample() {
           },
         ]}
       />
-      <p role="status">Preview scale · {scale}%</p>
-    </div>
+      <Typography role="status">Preview scale · {scale}%</Typography>
+    </Stack>
   )
 }
 export function PopoverExample() {
@@ -269,13 +271,7 @@ export function ResizableExample() {
           <Typography as="h3" variant="label">
             Index
           </Typography>
-          <p>
-            01　Format
-            <br />
-            02　Grid
-            <br />
-            03　Colour
-          </p>
+          <Stack gap={0}>{['01　Format', '02　Grid', '03　Colour'].map(entry => <Typography key={entry}>{entry}</Typography>)}</Stack>
         </>
       }
       second={
@@ -283,9 +279,9 @@ export function ResizableExample() {
           <Typography as="h3" variant="heading">
             Format
           </Typography>
-          <p>
+          <Typography>
             An A3 sheet measures 297 × 420 mm. Both columns share a baseline.
-          </p>
+          </Typography>
         </>
       }
     />

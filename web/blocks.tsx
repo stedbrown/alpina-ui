@@ -1,3 +1,4 @@
+import { PageRegion, InlineCode } from 'alpina-ui'
 import { Grid, GridItem, Icon, Separator, Stack, TextLink, Typography } from 'alpina-ui'
 import { Footer, Masthead, PageHeading } from './pages.js'
 
@@ -14,7 +15,7 @@ const source = (slug: string) => 'https://github.com/stedbrown/alpina-ui/blob/ma
 export function Blocks() {
   return <>
     <Masthead current="blocks" />
-    <main id="content" tabIndex={-1}>
+    <PageRegion as="main" id="content" tabIndex={-1}>
       <PageHeading title="Page blocks" summary="Five complete React pages. Try a page, then copy its source with the CLI." />
       {blocks.map(block => <Grid key={block.slug} as="article" width="site" space="compact">
         <GridItem><Separator /></GridItem>
@@ -27,7 +28,7 @@ export function Blocks() {
           </Stack>
         </GridItem>
       </Grid>)}
-    </main><Footer />
+    </PageRegion><Footer />
   </>
 }
 
@@ -37,14 +38,14 @@ export function BlockPage({ block, preview }: {block: Block; preview: string}) {
     <Grid width="site" space="compact" surface="ink"><GridItem>
       <Stack direction="row" justify="space-between">
         <TextLink href="/blocks/"><Icon name="arrow-left" size={16} /> All blocks</TextLink>
-        <Typography as="span" variant="label"><code>alpina add block/{block.slug}</code></Typography>
+        <Typography as="span" variant="label"><InlineCode>alpina add block/{block.slug}</InlineCode></Typography>
         <TextLink href={source(block.slug)}>React source</TextLink>
       </Stack>
     </GridItem></Grid>
     {block.slug === 'login' && <Grid width="site" space="compact"><GridItem><Typography variant="caption">
       Sign in with <strong>demo@example.org</strong> and the password <strong>atelier-demo</strong>. The preview checks these sample credentials locally.
     </Typography></GridItem></Grid>}
-    <div id="content" tabIndex={-1} data-block-preview={block.slug} dangerouslySetInnerHTML={{ __html: preview }} />
+    <PageRegion id="content" tabIndex={-1} data-block-preview={block.slug} dangerouslySetInnerHTML={{ __html: preview }} />
     <Footer />
   </>
 }

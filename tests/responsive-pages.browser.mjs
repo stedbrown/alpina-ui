@@ -9,7 +9,7 @@ function layoutIssues() {
   const errors = new Set()
   const canvas = document.createElement('canvas').getContext('2d')
   if (document.documentElement.scrollWidth > innerWidth + 1) errors.add('Page scrolls horizontally')
-  for (const nav of document.querySelectorAll('header nav, nav.project-nav, nav.al-app-mobile')) {
+  for (const nav of document.querySelectorAll('header nav, nav[data-project-nav], nav.al-app-mobile')) {
     if (!nav.checkVisibility({ contentVisibilityAuto: true })) continue
     const menu = nav.querySelector('summary')
     if (menu?.checkVisibility()) continue
@@ -54,15 +54,15 @@ function layoutIssues() {
     if (line && range.getBoundingClientRect().right > line.getBoundingClientRect().right + tolerance)
       errors.add('Numeric value overflows: ' + value.textContent.trim())
   }
-  const nav = document.querySelector('.al-app-bar > .site-nav')
+  const nav = document.querySelector('.al-app-bar > [data-site-nav]')
   for (const button of document.querySelectorAll('header [data-site-appearance]')) {
     const header = button.closest('header')
     const menu = header.querySelector('summary')
     if (menu?.checkVisibility() && menu.getBoundingClientRect().right > button.getBoundingClientRect().left + tolerance)
       errors.add('Appearance control overlaps the menu')
   }
-  const heading = document.querySelector('.component-hero h1')
-  const preview = document.querySelector('.sample:not([hidden]) .preview-object')
+  const heading = document.querySelector('.al-reference-heading h1')
+  const preview = document.querySelector('.al-preview:not([hidden]) .al-preview-content')
   if (heading && preview && Math.abs(heading.getBoundingClientRect().left - preview.getBoundingClientRect().left) > tolerance)
     errors.add('Live example is off the component heading column')
   if (nav) {
@@ -134,7 +134,7 @@ function layoutIssues() {
       }
     }
   }
-  const bill = document.querySelector('.preview-object .al-qr-bill')
+  const bill = document.querySelector('.al-preview-content .al-qr-bill')
   if (bill) {
     const box = bill.getBoundingClientRect(), slip = bill.firstElementChild.getBoundingClientRect()
     if (Math.abs(slip.width - box.width) > tolerance || Math.abs(slip.height - box.height) > tolerance ||
@@ -158,7 +158,7 @@ try {
       const route = routes[i]
       await page.goto(siteOrigin + route)
       await page.getByRole('heading', { level: 1 }).first().waitFor()
-      if (/^\/docs\/components\/.+\/$/.test(route)) await page.locator('.preview-object').waitFor()
+      if (/^\/docs\/components\/.+\/$/.test(route)) await page.locator('.al-preview-content').waitFor()
       await page.evaluate(() => document.fonts.ready)
       for (const width of widths) {
         await page.setViewportSize({ width, height: 900 })

@@ -1,3 +1,4 @@
+import { PageRegion } from 'alpina-ui'
 import {
   Button, Field, Grid, GridItem, Icon, iconNames, Input, Select, Separator, Stack,
   TextLink, Typography, type IconName,
@@ -23,7 +24,7 @@ const searchTerms: Partial<Record<IconName, string>> = {
 export function Icons() {
   return <>
     <Masthead current="icons" />
-    <main id="content" tabIndex={-1}>
+    <PageRegion as="main" id="content" tabIndex={-1}>
       <PageHeading title="Alpina icons" summary={`${iconNames.length} original pictograms drawn on a 24-unit grid. Choose a size and copy the JSX.`}>
         <Stack align="start"><TextLink href="/docs/components/icon/">Icon usage and API <Icon name="arrow-right" size={16} /></TextLink></Stack>
       </PageHeading>
@@ -67,7 +68,7 @@ export function Icons() {
           )}
         </Grid>
       )}
-    </main>
+    </PageRegion>
     <Footer />
   </>
 }

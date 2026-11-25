@@ -1,9 +1,12 @@
-import { forwardRef, type ComponentPropsWithoutRef, type CSSProperties } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef, type CSSProperties, type ForwardRefExoticComponent, type RefAttributes } from 'react'
+import { Slot, type SlottedSignature } from './slot.js'
 import './stack.css'
 
 type Space = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 12
 
 export interface StackProps extends ComponentPropsWithoutRef<'div'> {
+  /** Apply spacing and layout to a single semantic child, including a list or form. */
+  asChild?: boolean
   /** Arranges children in a row or column. */
   direction?: 'row' | 'column'
   /** Spacing in multiples of Alpina’s typographic unit. */
@@ -18,10 +21,13 @@ export interface StackProps extends ComponentPropsWithoutRef<'div'> {
   justify?: 'start' | 'center' | 'end' | 'space-between'
   /** Allows controls to wrap onto additional lines. */
   wrap?: boolean
+  /** Show this presentation according to the browser's scripting capability. */
+  scripting?: 'enabled' | 'none'
 }
 
 export const Stack = forwardRef<HTMLDivElement, StackProps>(function Stack(
   {
+    asChild = false,
     direction = 'column',
     gap = 4,
     columnGap,
@@ -30,6 +36,7 @@ export const Stack = forwardRef<HTMLDivElement, StackProps>(function Stack(
     align,
     justify = 'start',
     wrap,
+    scripting,
     className = '',
     style,
     ...props
@@ -47,6 +54,7 @@ export const Stack = forwardRef<HTMLDivElement, StackProps>(function Stack(
     ...style,
   } as CSSProperties
   const theme = surface === 'ink' ? 'dark' : surface === 'paper' ? 'light' : undefined
-  return <div data-al-theme={theme} data-surface={surface} {...props} ref={ref}
+  const Root = asChild ? Slot : 'div'
+  return <Root data-scripting={scripting} data-al-theme={theme} data-surface={surface} {...props} ref={ref}
     className={('al-stack ' + className).trim()} style={layout} />
-})
+}) as SlottedSignature<StackProps> & ForwardRefExoticComponent<StackProps & RefAttributes<HTMLDivElement>>

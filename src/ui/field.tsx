@@ -61,3 +61,17 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(function Field(
     </div>
   )
 })
+
+export interface FieldSetProps extends ComponentPropsWithoutRef<'fieldset'> {
+  legend: ReactNode
+}
+
+/** Group related choices under a visible accessible name. */
+export const FieldSet = forwardRef<HTMLFieldSetElement, FieldSetProps>(function FieldSet(
+  { legend, children, className = '', ...props }, ref,
+) {
+  return <fieldset ref={ref} className={('al-field-set ' + className).trim()} {...props}>
+    <legend>{legend}</legend>
+    {children}
+  </fieldset>
+})

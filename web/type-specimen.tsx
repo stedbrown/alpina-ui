@@ -31,11 +31,11 @@ export function TypeSpecimen() {
         <Typography as="h2" variant="heading" id="invoice-title">Invoice {invoice.id}</Typography>
       </Stack>
       <Typography>Switch the language to compare local date and currency formats.</Typography>
-      <Stack gap={0} data-showcase-live="">
+      <Stack gap={0} scripting="enabled" data-showcase-live="">
         <Tabs label="Invoice language" defaultValue="de-CH"
           items={languages.map(entry => ({ value: entry.locale, label: <abbr title={entry.language} aria-label={entry.language}>{entry.locale.slice(0, 2).toUpperCase()}</abbr>, content: <InvoiceSample entry={entry} /> }))} />
       </Stack>
-      <Stack data-showcase-fallback="" gap={0}>
+      <Stack scripting="none" data-showcase-fallback="" gap={0}>
         {languages.map(entry => (
           <Collapsible key={entry.locale} name="invoice-language" summary={entry.language} open={entry.locale === 'de-CH'}>
             <InvoiceSample entry={entry} />

@@ -6,19 +6,21 @@
       "name": "grid",
       "group": "ui",
       "entry": "ui/grid.tsx",
-      "usage": "Use width=\"site\" for a centered 100rem frame. Column spans follow the container width. Use fields with rows to compose rectangular areas, or select thirds or five-seven for lead/detail pairs. Give each GridItem a field name and use subgrid=\"rows\" to align content across cards.",
+      "usage": "Use width=\"site\" for a centered 100rem frame. Column spans follow the container width. Use fields with rows to compose rectangular areas, or select thirds or five-seven for lead/detail pairs. Give each GridItem a field name and use subgrid=\"rows\" to align content across cards. PageRegion provides a semantic landmark when the content already supplies its own grids.",
       "files": [
         "theme.css",
         "ui/grid.tsx",
         "ui/slot.tsx",
-        "ui/grid.css"
+        "ui/grid.css",
+        "ui/grid-specimen.tsx",
+        "ui/grid-specimen.css"
       ]
     },
     {
       "name": "typography",
       "group": "ui",
       "entry": "ui/typography.tsx",
-      "usage": "Choose the semantic heading level with as and its visual size with variant. The title role scales with the container and wraps long multilingual headings.",
+      "usage": "Choose the semantic heading level with as and its visual size with variant. The title role scales with the container and wraps long multilingual headings. InlineCode marks code inside a sentence or table cell.",
       "files": [
         "theme.css",
         "ui/typography.tsx",
@@ -584,6 +586,8 @@
         "ui/grid.tsx",
         "ui/slot.tsx",
         "ui/grid.css",
+        "ui/grid-specimen.tsx",
+        "ui/grid-specimen.css",
         "ui/grid-overlay.css"
       ]
     },
@@ -613,10 +617,11 @@
       "name": "stack",
       "group": "ui",
       "entry": "ui/stack.tsx",
-      "usage": "Use inset for padding in multiples of the spacing unit. The ink and paper surfaces establish matching themes for the controls they contain.",
+      "usage": "Use inset for padding in multiples of the spacing unit. The ink and paper surfaces establish matching themes for the controls they contain. Use scripting=\"enabled\" or \"none\" for alternate interactive and static presentations.",
       "files": [
         "theme.css",
         "ui/stack.tsx",
+        "ui/slot.tsx",
         "ui/stack.css"
       ]
     },
@@ -1374,14 +1379,24 @@
       "name": "app-shell",
       "group": "portal",
       "entry": "portal/app-shell.tsx",
-      "usage": "On small screens, Escape closes the open index when focus is inside the shell and returns focus to its trigger. Toolbar controls wrap as labels grow.",
+      "usage": "On small screens, Escape closes the open index when focus is inside the shell and returns focus to its trigger. Toolbar controls wrap as labels grow. AppearanceButton supplies labels for the three appearance modes. Use ComponentPreview to resize an embedded example and preserve its state across views.",
       "files": [
         "theme.css",
         "portal/app-shell.tsx",
         "ui/button.tsx",
         "ui/slot.tsx",
         "ui/button.css",
-        "portal/app-shell.css"
+        "portal/app-shell.css",
+        "portal/appearance-button.internal.tsx",
+        "portal/appearance-button.internal.css",
+        "portal/component-preview.internal.tsx",
+        "ui/label.tsx",
+        "ui/label.css",
+        "ui/select.tsx",
+        "ui/select-enhancement.internal.tsx",
+        "ui/select-picker.internal.ts",
+        "ui/select.css",
+        "portal/component-preview.internal.css"
       ]
     },
     {
@@ -1437,10 +1452,13 @@
       "name": "prose",
       "group": "portal",
       "entry": "portal/prose.tsx",
-      "usage": "Use semantic headings, paragraphs, figures and links inside the reading column. Media scales to the column and quotation rules follow the writing direction.",
+      "usage": "Use semantic headings, paragraphs, figures and links inside the reading column. Media scales to the column and quotation rules follow the writing direction. For component references, ReferenceArticle groups the heading, optional identifier and view controls. CodeSample renders keyboard-scrollable code in static articles.",
       "files": [
         "theme.css",
         "portal/prose.tsx",
+        "ui/typography.tsx",
+        "ui/number-text.ts",
+        "ui/typography.css",
         "portal/prose.css"
       ]
     }

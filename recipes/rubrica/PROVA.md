@@ -39,7 +39,7 @@ I downloaded the new package from the portal, read the Stack, Item, Typography, 
 
 The compact menu aligns to the end of the trigger. A separator and destructive styling distinguish Delete from Edit. AlertDialog handles confirmation, and `triggerRef` restores focus to the correct button. The address book still uses Select to filter to cantons present in its data. For a filter that includes all 26 cantons, CantonSelect also offers `allLabel`.
 
-### Where custom CSS remains
+### CSS still required in 0.5
 
 Four declarations lay out the three filters, including their vertical spacing. Three remove default list markers and indentation while preserving list semantics. The other 36 set the page width, margins, rules, title and detail hierarchy, record number, and postal address treatment. The library styles cover text inputs, validation states, the menu, and the confirmation dialog.
 
@@ -50,3 +50,7 @@ The repository includes the original stylesheet and the selector-level counts fo
 Run `npm test` in the example directory after building. It covers accent-insensitive search, filtering, sorting, selection, validation, creation, editing, cancellation, and deletion. It also checks the page language, draft preservation, keyboard focus, and that contact details stay out of localStorage. The standalone HTML was opened offline. Run `node scripts/css-count.mjs` for a count by selector.
 
 Both languages were checked at widths of 320, 390, 768, and 1440 px. In 0.4, automated accessibility checks covered the list, open menu, edit panel, and confirmation dialog in both languages at 320 and 1440 px. No violations were reported across those 16 states. The functional tests passed in 0.5, and the same 16 accessibility checks again reported no violations. At a viewport width of 320 px, the tested menu measured 192 px wide with its left edge at 96 px, keeping both actions in view.
+
+## Release candidate
+
+The recipe now measures **zero application stylesheets and zero declarations**. The site-width grid sets its measure, Stack arranges filters and record lists, Separator supplies the rules, and Card and Typography set the detail hierarchy. The library theme initializes the standalone document through `body[data-al-page]`. The Italian and German versions still share one contact draft and restore keyboard focus after an edit or a deletion.

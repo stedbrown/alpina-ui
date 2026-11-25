@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Calendar, DatePicker, Field, InputOTP, MessageScroller, NativeSelect, Questionnaire, ToggleGroup, Trace } from 'alpina-ui'
+import { Stack, Typography, Button, Calendar, DatePicker, Field, InputOTP, MessageScroller, NativeSelect, Questionnaire, ToggleGroup, Trace } from 'alpina-ui'
 
 export function CalendarExample() {
   return <Calendar defaultValue="2026-04-09" canton="TI" locale="it-CH" />
@@ -33,14 +33,14 @@ export function QuestionnaireExample() {
   return <><Questionnaire label="Reading room request" onComplete={(answers) => setSummary(answers.collection + ' · ' + answers.room)} questions={[
     { id: 'collection', label: 'Which collection would you like to consult?', options: [{ value: 'Posters', label: 'Posters' }, { value: 'Periodicals', label: 'Periodicals' }] },
     { id: 'room', label: 'Which reading room?', options: [{ value: 'Lugano', label: 'Lugano' }, { value: 'Bellinzona', label: 'Bellinzona' }] },
-  ]} />{summary && <p><output>{summary}</output></p>}</>
+  ]} />{summary && <Typography as="output">{summary}</Typography>}</>
 }
 
 export function MessageScrollerExample() {
   const [runs, setRuns] = useState(1)
-  return <div><MessageScroller label="Print run log">
-    {Array.from({ length: runs }, (_, i) => <p key={i}><strong>Print run {i + 1}.</strong> Print proof recorded.</p>)}
-  </MessageScroller><Button variant="outline" onClick={() => setRuns((n) => n + 1)}>Record a proof</Button></div>
+  return <Stack align="start" gap={3}><MessageScroller label="Print run log">
+    {Array.from({ length: runs }, (_, i) => <Typography key={i}><strong>Print run {i + 1}.</strong> Print proof recorded.</Typography>)}
+  </MessageScroller><Button variant="outline" onClick={() => setRuns((n) => n + 1)}>Record a proof</Button></Stack>
 }
 
 export function TraceExample() {

@@ -32,6 +32,7 @@ function update() {
   if (useDefaultAccent) accent.value = theme.values['--al-accent']
   preview.dataset.alTheme = mode.value
   for (const [key, value] of Object.entries(theme.values)) {
+    if (!key.startsWith('--al-')) throw Error('Expected an Alpina design token')
     if (forcedColors.matches) preview.style.removeProperty(key)
     else preview.style.setProperty(key, value)
   }

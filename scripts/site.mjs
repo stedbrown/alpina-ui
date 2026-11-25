@@ -36,7 +36,7 @@ async function loadPages() {
 }
 
 export async function buildWebsite({ guides, guideFiles, apiReference, registry, script, css, notices }) {
-  const { Landing, Examples, Icons, Themes, ComponentDirectory, ReferencePage, ExampleIntroduction, inventory, projects } = await loadPages()
+  const { Landing, Examples, Icons, Themes, Blocks, BlockPage, blocks, ComponentDirectory, ReferencePage, ExampleIntroduction, inventory, projects } = await loadPages()
   const paths = []
   const appJS = '/assets/catalog-' + sha(script) + '.js'
   const appCSS = '/assets/catalog-' + sha(css) + '.css'
@@ -59,6 +59,12 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
   const themeBuild = await build({ entryPoints: ['web/theme-controls.ts'], bundle: true, format: 'esm', target: 'es2022', write: false, minify: true })
   const theme = themeBuild.outputFiles[0].text
   const themeJS = '/assets/themes-' + sha(theme) + '.js'
+  const blockBuild = await build({
+    entryPoints: ['web/block-preview.tsx'], bundle: true, splitting: true, format: 'esm',
+    target: 'es2022', jsx: 'automatic', define: { 'process.env.NODE_ENV': '"production"' }, minify: true,
+    outdir: 'assets', entryNames: '[name]-[hash]', chunkNames: 'block-[hash]', write: false,
+  })
+  const blockJS = '/assets/' + path.basename(blockBuild.outputFiles.find(file => path.basename(file.path).startsWith('block-preview-')).path)
   const filter = await readFile('web/directory-filter.js', 'utf8')
   const filterJS = '/assets/component-filter-' + sha(filter) + '.js'
   const preview = await readFile('web/assets/alpina-preview.png')
@@ -69,6 +75,7 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
     ...fontBuild.outputFiles.filter(file => file.path.endsWith('.woff2')).map(file => output('assets/' + path.basename(file.path), file.contents)),
     output(showcaseJS, showcase), output(iconsJS, icons),
     output(themeJS, theme),
+    ...blockBuild.outputFiles.map(file => output('assets/' + path.basename(file.path), file.contents)),
     output(filterJS, filter),
     output('third-party-notices.txt', notices.join('\n\n')),
     output('registry.json', JSON.stringify(registry)), output('reference/api.json', JSON.stringify(apiReference)),
@@ -97,6 +104,7 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
     if (options.showcase) tags.push('<script type="module" src="' + showcaseJS + '"></script>')
     if (options.icons) tags.push('<script type="module" src="' + iconsJS + '"></script>')
     if (options.theme) tags.push('<script type="module" src="' + themeJS + '"></script>')
+    if (options.block) tags.push('<script type="module" src="' + blockJS + '"></script>')
     if (options.filter) tags.push('<script type="module" src="' + filterJS + '"></script>')
     const content = options.app ? '<div id="app">' + body + '</div><script defer src="' + appJS + '"></script>' : body
     await output(route + 'index.html', '<!doctype html>\n<html lang="en"><head>' + tags.join('\n') + '</head><body data-al-page>' + content + '</body></html>')
@@ -110,6 +118,10 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
     render(Landing, { version: registry.version, count: inventory.length }), { redirect: legacy, showcase: true })
   await page('/icons/', 'Alpina icons', 'Browse original SVG icons for navigation, actions, content and Git workflows. Preview sizes and copy React code.', render(Icons), { icons: true })
   await page('/themes/', 'Theme builder', 'Preview your accent, grid and light or dark appearance on Alpina components. Check text contrast and copy CSS variables.', render(Themes), { theme: true })
+  await page('/blocks/', 'Page blocks', 'Copy complete login, dashboard, account settings and CHF pricing pages with the Alpina CLI.', render(Blocks))
+  for (const block of blocks) {
+    await page('/blocks/' + block.slug + '/', block.title + ' block', block.detail, render(BlockPage, { block }), { block: true })
+  }
   await page('/examples/', 'Example projects', 'Try workshop registration, invoice review, a bilingual studio address book and a client directory built with Alpina UI.', render(Examples))
   await page('/docs/components/', 'Component index', 'Find a React component by name, task or category and open its preview, source code and API.', render(ComponentDirectory), { filter: true })
   const agentsMarkdown = await readFile('docs/agents.md', 'utf8')
@@ -158,7 +170,8 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
     '# Alpina UI', '', '> React components for Swiss typography and multilingual interfaces. The current release is ' + registry.version + '.', '',
     '## Agent tools', '', '- [Agent setup](' + origin + '/reference/agents.md)', '- [Project skill](' + origin + '/skills/alpina-ui/SKILL.md)',
     '- [Component registry](' + origin + '/registry.json)', '- [TypeScript API reference](' + origin + '/reference/api.json)', '- [Icon directory](' + origin + '/icons/)',
-    '', '## Guides', '', ...guideLinks, '', '## Examples', '', ...projects.map((p) => '- [' + p.title + '](' + origin + '/examples/' + p.slug + '/): ' + p.description), '',
+    '', '## Guides', '', ...guideLinks, '', '## Blocks', '', ...blocks.map(b => '- [' + b.title + '](' + origin + '/blocks/' + b.slug + '/) — alpina add block/' + b.slug),
+    '', '## Examples', '', ...projects.map((p) => '- [' + p.title + '](' + origin + '/examples/' + p.slug + '/): ' + p.description), '',
   ]
   await Promise.all([
     output('llms.txt', index.join('\n')),

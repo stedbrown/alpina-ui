@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { spawnSync } from 'node:child_process'
-import { lstat, mkdir, readFile, unlink, writeFile } from 'node:fs/promises'
+import { lstat, mkdir, readdir, readFile, unlink, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -8,13 +8,22 @@ const usage = [
   'alpina list',
   'alpina mcp',
   'alpina init [--dir components/alpina] [--dry-run]',
-  'alpina add button dialog … [--dir components/alpina] [--dry-run]',
+  'alpina add button block/login … [--dir components/alpina] [--dry-run]',
   'alpina add --all [--dir components/alpina] [--dry-run]',
-  'alpina diff [component names | --all] [--dir components/alpina] [--patch]',
+  'alpina diff [components and blocks | --all] [--dir components/alpina] [--patch]',
 ].join('\n')
 const root = fileURLToPath(new URL('../', import.meta.url))
 const licenseFile = 'ALPINA-LICENSE.txt'
 const registry = JSON.parse(await readFile(path.join(root, 'registry.json'), 'utf8'))
+
+async function blockEntries() {
+  const files = await readdir(path.join(root, 'blocks'), { withFileTypes: true })
+  return files.filter(file => file.isFile() && /^[a-z0-9]+(?:-[a-z0-9]+)*\.tsx$/.test(file.name))
+    .map(file => file.name).sort().map(filename => {
+      const entry = 'blocks/' + filename
+      return { group: 'blocks', name: 'block/' + filename.slice(0, -4), entry, files: [entry] }
+    })
+}
 
 async function stat(file) {
   try {
@@ -70,12 +79,13 @@ async function run([command, ...args]) {
     const { serveCatalog } = await import('./mcp.mjs')
     return serveCatalog(root, registry)
   }
+  const entries = [...registry.items, ...await blockEntries()]
   if (command === 'list' && !args.length) {
-    for (const group of new Set(registry.items.map((item) => item.group))) {
+    for (const group of new Set(entries.map((item) => item.group))) {
       console.log(
         group +
           '\n  ' +
-          registry.items
+          entries
             .filter((i) => i.group === group)
             .map((i) => i.name)
             .join(', '),
@@ -102,8 +112,8 @@ async function run([command, ...args]) {
   if (command === 'add' && !names.length && !all) throw new Error(usage)
   if (command === 'diff' && all && names.length) throw new Error(usage)
   for (const name of names)
-    if (!registry.items.some((item) => item.name === name))
-      throw new Error('Unknown component: ' + name)
+    if (!entries.some((item) => item.name === name))
+      throw new Error('Unknown component or block: ' + name)
   const cwd = process.cwd()
   const target = path.resolve(cwd, dir)
   const relative = path.relative(cwd, target)
@@ -115,20 +125,22 @@ async function run([command, ...args]) {
   ) {
     throw new Error('Choose a project subdirectory for --dir.')
   }
-  const files = new Set(['theme.css'])
   const detect = command === 'diff' && !all && !names.length
-  for (const item of registry.items) {
+  const files = new Set()
+  if (command === 'init' || (detect && await checkPath(cwd, path.join(target, 'theme.css'))))
+    files.add('theme.css')
+  for (const item of entries) {
     if (
-      all ||
+      (all && item.group !== 'blocks') ||
       names.includes(item.name) ||
       (detect && (await checkPath(cwd, path.join(target, item.entry))))
     ) {
       for (const file of item.files) files.add(file)
     }
   }
-  if (detect && files.size === 1 && !(await checkPath(cwd, path.join(target, 'theme.css')))) {
+  if (detect && !files.size) {
     console.log(
-      'No Alpina source files found in ' + relative + '. Specify a component name to compare its files.',
+      'No Alpina source files found in ' + relative + '. Specify a component or block name to compare its files.',
     )
     return
   }
@@ -139,7 +151,8 @@ async function run([command, ...args]) {
   for (const file of files) {
     const dest = path.join(target, file)
     const exists = await checkPath(cwd, dest)
-    const source = file === licenseFile ? path.join(root, 'LICENSE') : path.join(root, 'src', file)
+    const sourceDirectory = file.startsWith('blocks/') ? root : path.join(root, 'src')
+    const source = file === licenseFile ? path.join(root, 'LICENSE') : path.join(sourceDirectory, file)
     const content = await readFile(source)
     const same = exists && (await readFile(dest)).equals(content)
     const displayPath = path.relative(cwd, dest)

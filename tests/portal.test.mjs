@@ -11,6 +11,11 @@ test('the homepage and new projects compose public controls without local presen
   }
 })
 test('the portal and all examples use the same public entry points as a consumer', async () => {
+  for (const file of await readdir(new URL('blocks/', root))) {
+    const source = await readFile(new URL('blocks/' + file, root), 'utf8')
+    assert.match(source, /from 'alpina-ui'/, file)
+    assert.doesNotMatch(source, /['"]\.\.\/src\/|\b(?:style|className)=|import\s+['"][^'"]+\.css['"]/, file)
+  }
   for (const file of (await readdir(new URL('catalog/', root))).filter((name) =>
     name.endsWith('.tsx'),
   )) {

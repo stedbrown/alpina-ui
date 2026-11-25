@@ -39,7 +39,7 @@ async function assertCopies(directory, files) {
   assert.deepEqual(await listFiles(directory), [licenseFile, ...files].sort())
   assert.deepEqual(await readFile(path.join(directory, licenseFile)), await readFile(path.join(root, 'LICENSE')))
   for (const file of files) {
-    const original = await readFile(path.join(root, 'src', file))
+    const original = await readFile(path.join(root, file.startsWith('blocks/') ? '' : 'src', file))
     const copy = await readFile(path.join(directory, file))
     assert.deepEqual(copy, original, file)
   }
@@ -97,6 +97,51 @@ test('add --all copies the union of all registry entries once', async (t) => {
     second.stdout.split(/\r?\n/).filter((line) => line.startsWith('present')).length,
     files.size + 1,
   )
+})
+
+test('list exposes the four editable blocks and a block-only add copies the source and notice', async (t) => {
+  const { run, destination } = await fixture(t)
+  const names = ['account-settings', 'dashboard', 'login', 'pricing']
+  const blockNames = names.map(name => 'block/' + name)
+  const { stdout } = await run('list')
+  assert.ok(stdout.includes('blocks\n  ' + blockNames.join(', ')))
+  await run('add', ...blockNames)
+  await assertCopies(destination, names.map(name => 'blocks/' + name + '.tsx'))
+})
+
+test('mixed dry run, copy, detection and comparison preserve local block edits', async (t) => {
+  const { run, cwd } = await fixture(t)
+  const dir = 'src/design'
+  const selection = ['button', 'block/login', '--dir', dir]
+  const preview = await run('add', ...selection, '--dry-run')
+  assert.match(preview.stdout, /planned\s+.*blocks[\\/]login\.tsx/)
+  assert.deepEqual(await readdir(cwd), [])
+  await run('add', ...selection)
+  const files = registry.items.find(item => item.name === 'button').files
+  const destination = path.join(cwd, dir)
+  await assertCopies(destination, [...files, 'blocks/login.tsx'])
+
+  const file = path.join(destination, 'blocks', 'login.tsx')
+  const edit = (await readFile(file, 'utf8')) + '\n// Local sign-in action.\n'
+  await writeFile(file, edit)
+  assert.match((await run('add', ...selection)).stdout, /keep\s+.*blocks[\\/]login\.tsx/)
+  const detected = await run('diff', '--dir', dir)
+  assert.match(detected.stdout, /modified\s+.*blocks[\\/]login\.tsx/)
+  assert.match(detected.stdout, /aligned\s+.*ui[\\/]button\.tsx/)
+  assert.doesNotMatch(detected.stdout, /dashboard\.tsx/)
+  const named = await run('diff', 'block/login', 'block/dashboard', '--dir', dir)
+  assert.match(named.stdout, /missing\s+.*blocks[\\/]dashboard\.tsx/)
+  assert.match(named.stdout, /Files aligned 1 · modified 1 · missing 1/)
+  assert.equal(await readFile(file, 'utf8'), edit)
+})
+
+test('a block destination conflict leaves a mixed installation untouched', async (t) => {
+  const { run, destination } = await fixture(t)
+  await mkdir(destination, { recursive: true })
+  await writeFile(path.join(destination, 'blocks'), 'Existing project file')
+  await assert.rejects(run('add', 'button', 'block/login'), /Path already in use/)
+  assert.deepEqual(await listFiles(destination), ['blocks'])
+  assert.equal(await readFile(path.join(destination, 'blocks'), 'utf8'), 'Existing project file')
 })
 
 test('dry runs describe files without creating directories or changing edited sources', async (t) => {
@@ -204,6 +249,8 @@ test('invalid arguments fail before any file is written', async (t) => {
   for (const args of [
     ['add'],
     ['add', 'button', 'missing-component'],
+    ['add', 'button', 'block/unknown'],
+    ['add', 'button', 'block/../theme.css'],
     ['add', 'button', '--unknown'],
     ['init', 'button'],
     ['init', '--dir'],

@@ -112,6 +112,7 @@ const siteLinks = [
   { href: '/', label: 'Home' },
   { href: '/docs/', label: 'Docs', current: pageType !== 'components' },
   { href: '/docs/components/', label: 'Components', current: pageType === 'components' },
+  { href: '/blocks/', label: 'Blocks' },
   { href: '/icons/', label: 'Icons' },
   { href: '/themes/', label: 'Themes' },
   { href: '/examples/', label: 'Examples' },

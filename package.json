@@ -48,6 +48,7 @@
     "dist",
     "src",
     "cli",
+    "blocks",
     "registry.json",
     "docs",
     "skills"

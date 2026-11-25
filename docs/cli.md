@@ -2,6 +2,19 @@
 
 `alpina add` copies editable source and the MIT notice, `ALPINA-LICENSE.txt`, to your component directory. After installing another package version, run `alpina diff` to compare the files in your project with the sources shipped in that version. The comparison reads local files and preserves your edits.
 
+## Copy a block
+
+Use `alpina list` to see the component groups and four blocks. Their CLI names are `block/login`, `block/dashboard`, `block/account-settings` and `block/pricing`.
+
+```sh
+npx --no-install alpina add block/login
+npx --no-install alpina add block/account-settings button --dir src/design --dry-run
+```
+
+The first command creates `components/alpina/blocks/login.tsx` and the MIT notice. Import the copied block from that path and load `alpina-ui/styles.css` once in your app. Blocks import their controls from the installed `alpina-ui` package. Open the copied file to change copy, data or event handlers. [Block gallery](https://alpina-ui.vercel.app/blocks/)
+
+The second command previews a mixed selection. Its destination contains the block, the editable Button source and Button’s dependencies. Run the command again without `--dry-run` to write the missing files. The CLI reports locally edited files as `keep`. For source-only projects, `add --all` selects all standalone component entries. Add a block by name when your project also uses the package.
+
 ## Find differences
 
 Run the command from your project directory. If you originally used `--dir`, pass the same directory to the comparison.
@@ -9,15 +22,16 @@ Run the command from your project directory. If you originally used `--dir`, pas
 ```sh
 npx --no-install alpina diff
 npx --no-install alpina diff swiss-address-form --dir src/components/alpina
+npx --no-install alpina diff block/login --patch
 ```
 
-With no names, the CLI identifies installed registry entries by their entry files. It includes the theme, MIT notice, and dependencies of those entries. Shared paths appear once. After `init`, it checks the theme and MIT notice. To check a component whose entry file is missing, name it explicitly. Use `diff --all` to compare every registry entry with the project.
+With no names, the CLI detects copied component and block entry files. It checks the MIT notice, the component dependencies and an installed theme. Shared paths appear once. After `init`, it checks the theme and MIT notice. To check a component or block whose entry file is missing, name it explicitly. Use `diff --all` to compare every standalone component entry with the project.
 
 | Status | Meaning |
 | --- | --- |
 | `aligned` | The local file and the package source match byte for byte. |
 | `modified` | The contents differ. Common causes include local edits, an updated package, or different line endings. |
-| `missing` | The selected component uses this file, and the destination path is available. |
+| `missing` | The selected component or block uses this file, and the destination path is available. |
 
 The first line identifies the installed version. The last line gives the count for each status. The CLI compares files known to the registry and can inspect copies installed with Alpina 0.3. It uses the current package as the reference, so it needs no installation history.
 

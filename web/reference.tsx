@@ -6,6 +6,7 @@ export { Landing, Examples } from './pages.js'
 export { ComponentDirectory } from './component-directory.js'
 export { Icons } from './icons.js'
 export { Themes } from './themes.js'
+export { Blocks, BlockPage, blocks } from './blocks.js'
 export { projects } from './projects.js'
 export { inventory }
 

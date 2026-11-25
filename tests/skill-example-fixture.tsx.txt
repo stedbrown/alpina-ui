@@ -1,0 +1,19 @@
+import { createRoot } from 'react-dom/client'
+import { AlpinaProvider } from 'alpina-ui'
+import 'alpina-ui/styles.css'
+
+const payment = {
+  iban: 'CH5800791123000889012',
+  creditor: { name: 'Atelier', street: 'Via Nassa', buildingNumber: '4', postalCode: '6900', town: 'Lugano', country: 'CH' },
+  debtor: { name: 'Studio', street: 'Via Vela', buildingNumber: '8', postalCode: '6600', town: 'Locarno', country: 'CH' },
+}
+const examples = {
+  Invoice: <Invoice payment={payment} />,
+  ContactEmail: <ContactEmail error="Check the email address." />,
+  ResidenceForm: <ResidenceForm />,
+  Accounts: <Accounts />,
+  Appointments: <Appointments choose={() => {}} />,
+}
+createRoot(document.getElementById('app')!).render(<AlpinaProvider locale="it-CH">
+  {Object.entries(examples).map(([name, example]) => <section key={name} data-example={name}>{example}</section>)}
+</AlpinaProvider>)

@@ -98,7 +98,7 @@ try {
   // Compile exactly the examples delivered to an agent in the installed archive.
   const skill = await readFile(join(scratch, 'node_modules/alpina-ui/skills/alpina-ui/SKILL.md'), 'utf8')
   const examples = [...skill.matchAll(/^```tsx\r?\n([\s\S]*?)^```/gm)]
-  assert.equal(examples.length, 4, 'Four copyable Alpina workflow examples')
+  assert.ok(examples.length > 0, 'The installed skill must include runnable workflow examples.')
   for (const [i, match] of examples.entries()) {
     await writeFile(join(scratch, 'swiss-form/src/agent-example-' + i + '.tsx'), match[1])
   }

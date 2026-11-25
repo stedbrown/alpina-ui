@@ -33,7 +33,7 @@ try {
   await summary.focus()
   await page.keyboard.press('Enter')
   assert.equal(await chart.getByRole('row').count(), 4)
-  assert.equal(await chart.getByRole('cell', { name: '-10', exact: true }).count(), 1)
+  assert.equal(await chart.getByRole('cell', { name: '−10', exact: true }).count(), 1)
   assert.equal(await chart.getByText('Missing').count(), 0)
   const bars = await chart
     .locator('.al-chart-track i')

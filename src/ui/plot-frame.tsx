@@ -1,3 +1,4 @@
+import { numberText } from './number-text.js'
 import { useId, type ComponentPropsWithoutRef, type ReactNode, type Ref } from 'react'
 import type { ChartDatum } from './chart-datum.js'
 import './plots.css'
@@ -56,6 +57,7 @@ interface FrameProps extends PlotProps {
 export function PlotFrame({ title, description, data, formatValue = String, categoryLabel = 'Category',
   valueLabel = 'Value', tableLabel = 'Data table', emptyLabel = 'No observations', loading = false,
   loadingLabel = 'Loading data…', elementRef, renderPlot, isTable, className = '', ...props }: FrameProps) {
+  const format = (value: number) => numberText(formatValue(value))
   const id = useId()
   const rows = data.filter(row => Number.isFinite(row.value))
   return <figure {...props} ref={elementRef} className={('al-series ' + className).trim()}
@@ -63,9 +65,9 @@ export function PlotFrame({ title, description, data, formatValue = String, cate
     <figcaption id={id}>{title}</figcaption>
     {description && <p id={id + '-description'}>{description}</p>}
     {loading ? <p role="status">{loadingLabel}</p> : rows.length === 0 ? <p>{emptyLabel}</p> : <>
-      {renderPlot(rows, formatValue)}
+      {renderPlot(rows, format)}
       {!isTable && <details><summary>{tableLabel}</summary>
-        <SeriesTable rows={rows} category={categoryLabel} value={valueLabel} format={formatValue} />
+        <SeriesTable rows={rows} category={categoryLabel} value={valueLabel} format={format} />
       </details>}
     </>}
   </figure>

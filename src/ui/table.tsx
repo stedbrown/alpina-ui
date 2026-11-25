@@ -1,3 +1,4 @@
+import { numberText } from './number-text.js'
 import { forwardRef, type ComponentPropsWithoutRef } from 'react'
 import './table.css'
 
@@ -56,7 +57,7 @@ export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(functi
 ) {
   const plainValue = typeof children === 'string' || typeof children === 'number' || typeof children === 'bigint'
   return <td ref={ref} {...props} data-numeric={numeric || undefined}>
-    {numeric && plainValue ? <span className="al-table-value">{children}</span> : children}
+    {plainValue ? (numeric ? <span className="al-table-value">{numberText(children)}</span> : numberText(children)) : children}
   </td>
 })
 export const TableCaption = forwardRef<HTMLTableCaptionElement, TableCaptionProps>(function TableCaption(

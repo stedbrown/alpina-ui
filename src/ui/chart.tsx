@@ -1,3 +1,4 @@
+import { numberText } from './number-text.js'
 import { forwardRef, useId, type ComponentPropsWithoutRef, type CSSProperties } from 'react'
 import './chart.css'
 import type { ChartDatum } from './chart-datum.js'
@@ -56,7 +57,7 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
                       style={{ insetInlineStart: start + '%', inlineSize: extent + '%' }}
                     />
                   </span>
-                  <span className="al-chart-value">{formatValue(row.value)}</span>
+                  <span className="al-chart-value">{numberText(formatValue(row.value))}</span>
                 </li>
               )
             })}
@@ -75,7 +76,7 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
                   {rows.map((row, index) => (
                     <tr key={index}>
                       <th scope="row">{row.label}</th>
-                      <td>{formatValue(row.value)}</td>
+                      <td>{numberText(formatValue(row.value))}</td>
                     </tr>
                   ))}
                 </tbody>

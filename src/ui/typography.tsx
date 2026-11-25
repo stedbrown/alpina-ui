@@ -1,3 +1,4 @@
+import { numberText } from './number-text.js'
 import { createElement, forwardRef, type HTMLAttributes } from 'react'
 import './typography.css'
 
@@ -24,6 +25,8 @@ export const Typography = forwardRef<HTMLElement, TypographyProps>(function Typo
   return createElement(Element, {
     ...props,
     ref,
+    children: numeric && (typeof props.children === 'string' || typeof props.children === 'number' || typeof props.children === 'bigint')
+      ? numberText(props.children) : props.children,
     className: ('al-type ' + className).trim(),
     'data-role': variant,
     'data-tone': tone,

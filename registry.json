@@ -22,6 +22,7 @@
       "files": [
         "theme.css",
         "ui/typography.tsx",
+        "ui/number-text.ts",
         "ui/typography.css"
       ]
     },
@@ -156,6 +157,7 @@
       "files": [
         "theme.css",
         "ui/table.tsx",
+        "ui/number-text.ts",
         "ui/table.css"
       ]
     },
@@ -168,6 +170,7 @@
         "theme.css",
         "ui/data-table.tsx",
         "ui/table.tsx",
+        "ui/number-text.ts",
         "ui/table.css",
         "ui/scroll-area.tsx",
         "ui/scroll-area.css",
@@ -250,6 +253,7 @@
         "theme.css",
         "ui/bar-chart.tsx",
         "ui/plot-frame.tsx",
+        "ui/number-text.ts",
         "ui/chart-datum.ts",
         "ui/plots.css"
       ]
@@ -263,6 +267,7 @@
         "theme.css",
         "ui/line-chart.tsx",
         "ui/plot-frame.tsx",
+        "ui/number-text.ts",
         "ui/chart-datum.ts",
         "ui/plots.css",
         "ui/line-plot.tsx"
@@ -277,6 +282,7 @@
         "theme.css",
         "ui/sparkline.tsx",
         "ui/plot-frame.tsx",
+        "ui/number-text.ts",
         "ui/chart-datum.ts",
         "ui/plots.css",
         "ui/line-plot.tsx"
@@ -291,6 +297,7 @@
         "theme.css",
         "ui/chart-table.tsx",
         "ui/plot-frame.tsx",
+        "ui/number-text.ts",
         "ui/chart-datum.ts",
         "ui/plots.css"
       ]
@@ -358,6 +365,7 @@
       "files": [
         "theme.css",
         "ui/chart.tsx",
+        "ui/number-text.ts",
         "ui/chart.css",
         "ui/chart-datum.ts"
       ]
@@ -931,6 +939,7 @@
         "ui/input.tsx",
         "ui/input.css",
         "ui/typography.tsx",
+        "ui/number-text.ts",
         "ui/typography.css",
         "portal/text-link.tsx",
         "portal/text-link.css",

@@ -34,7 +34,7 @@ test('every requested locale has an endonym and Swiss alternatives', () => {
 test("CHF uses the runtime's Swiss locale, two decimals and exact BigInt inputs", () => {
   for (const locale of swissLocales) {
     if (locale === 'rm-CH' && !Intl.NumberFormat.supportedLocalesOf(locale).length) {
-      assert.equal(formatCHF(-1234.56, locale), '-CHF\u00a01\u202f234,56')
+      assert.equal(formatCHF(-1234.56, locale), 'CHF\u00a0−1\u202f234,56')
       continue
     }
     const reference = new Intl.NumberFormat(swissLocalePreferences(locale), {
@@ -44,11 +44,18 @@ test("CHF uses the runtime's Swiss locale, two decimals and exact BigInt inputs"
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     })
-    for (const amount of [0, -45.16, 22.999, 9007199254740993123n]) {
+    for (const amount of [0, 22.999, 9007199254740993123n]) {
       const group = ['fr-CH', 'rm-CH'].includes(locale) ? '\u202f' : '’'
       assert.equal(formatCHF(amount, locale), reference.formatToParts(amount).map(part => part.type === 'group' ? group : part.value).join(''))
     }
   }
+  for (const [locale, expected] of Object.entries({
+    'de-CH': 'CHF\u00a0−1.05', 'it-CH': 'CHF\u00a0−1.05',
+    'rm-CH': 'CHF\u00a0−1,05', 'fr-CH': '−1.05\u00a0CHF',
+  })) assert.equal(formatCHF(-1.05, locale), expected)
+  const spoken = renderToStaticMarkup(createElement(CurrencyCHF, { amount: -1.05, locale: 'it-CH' }))
+  assert.match(spoken, /CHF\u00a0meno 1.05/)
+  assert.match(spoken, /aria-hidden="true">CHF\u00a0−1.05/)
   assert.equal(formatCHF(1), formatCHF(1, 'it-CH'))
   for (const amount of [NaN, Infinity, -Infinity]) assert.throws(() => formatCHF(amount), RangeError)
 })
@@ -118,10 +125,10 @@ test('Romansh CHF and dates render in Romansh on a runtime without Romansh data'
   const { formatCHF: francs } = await import('../dist/swiss/format-chf.js?missing-rm')
   const { formatSwissDate: date } = await import('../dist/swiss/format-swiss-date.js?missing-rm')
   assert.equal(francs(1234.555, 'rm-CH'), 'CHF\u00a01\u202f234,56')
-  assert.equal(francs(-0, 'rm-CH'), '-CHF\u00a00,00')
+  assert.equal(francs(-0, 'rm-CH'), 'CHF\u00a0−0,00')
   assert.equal(
     francs(-9007199254740993123n, 'rm-CH'),
-    '-CHF\u00a09\u202f007\u202f199\u202f254\u202f740\u202f993\u202f123,00',
+    'CHF\u00a0−9\u202f007\u202f199\u202f254\u202f740\u202f993\u202f123,00',
   )
   const samples = [
     ['short', '05.04.2026'],

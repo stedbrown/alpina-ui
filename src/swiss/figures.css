@@ -1,3 +1,11 @@
 .al-swiss-figures {
   font-variant-numeric: tabular-nums lining-nums;
 }
+.al-currency-spoken {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

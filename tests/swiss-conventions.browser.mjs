@@ -15,13 +15,11 @@ try {
   await page.addStyleTag({ content: await readFile('src/theme.css', 'utf8') })
   await page.addScriptTag({ content: script.outputFiles[0].text })
   for (const locale of ['de-CH', 'it-CH', 'fr-CH', 'rm-CH']) {
-    // ICU versions can differ in currency placement, so compare the specified numeric conventions.
     const [money, date, time] = await page.evaluate(locale => [
       swiss.formatCHF(-1234567.025, locale, { cashRounding: true }),
       swiss.formatSwissDate('2028-02-29', locale), swiss.formatSwissTime(new Date('2026-12-31T23:00Z')),
     ], locale)
-    const digits = /1[’\u202f]234[’\u202f]567[.,]05/
-    assert.equal(money.match(digits)?.[0], formatCHF(-1234567.025, locale, { cashRounding: true }).match(digits)[0])
+    assert.equal(money, formatCHF(-1234567.025, locale, { cashRounding: true }))
     assert.equal(date, '29.02.2028')
     assert.equal(time, '00:00')
   }

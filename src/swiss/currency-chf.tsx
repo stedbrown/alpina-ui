@@ -12,9 +12,13 @@ export const CurrencyCHF = forwardRef<HTMLDataElement, CurrencyCHFProps>(functio
   { amount, locale = defaultSwissLocale, cashRounding, className = '', ...props },
   ref,
 ) {
+  const formatted = formatCHF(amount, locale, { cashRounding })
+  const minus = { 'de-CH': 'minus', 'fr-CH': 'moins', 'it-CH': 'meno', 'rm-CH': 'minus' }
+  const negative = formatted.includes('−')
   return (
     <data ref={ref} lang={locale} {...props} value={String(amount)} className={('al-swiss-figures ' + className).trim()}>
-      <bdi dir="ltr">{formatCHF(amount, locale, { cashRounding })}</bdi>
+      {negative && <span className="al-currency-spoken">{formatted.replace('−', minus[locale] + ' ')}</span>}
+      <bdi dir="ltr" aria-hidden={negative || undefined}>{formatted}</bdi>
     </data>
   )
 })

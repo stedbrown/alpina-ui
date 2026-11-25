@@ -48,9 +48,10 @@ export function formatCHF(
     if (part.type === 'group') return group
     if (part.type === 'fraction' && rounded !== undefined) return String(rounded % 100n).padStart(2, '0')
     if (romanshFallback && part.type === 'decimal') return ','
-    if (romanshFallback && part.type === 'minusSign') return ''
+    if (['minusSign', 'literal', 'currency'].includes(part.type)) return ''
     return part.value
   }).join('')
   // CLDR 48 common/main/rm.xml. Unicode-3.0, see UNICODE-LICENSE.txt.
-  return romanshFallback ? (negative ? '-' : '') + 'CHF\u00a0' + number : number
+  const signed = (negative ? '−' : '') + number
+  return locale === 'fr-CH' ? signed + '\u00a0CHF' : 'CHF\u00a0' + signed
 }

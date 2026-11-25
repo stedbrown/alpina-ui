@@ -17,11 +17,37 @@ The second command previews a mixed selection. Its destination contains the bloc
 
 ## Copy the public service form
 
-`alpina add block/public-service` copies one TSX file containing the React form, its five translations and its IndexedDB draft store. The page collects personal details and a Swiss postal address for a residence certificate. Residents can attach files, go back to edit any step and review the complete request before confirming. The hosted example runs locally with fictional details. [Try the public service form](https://alpina-ui.vercel.app/blocks/public-service/)
+`alpina add block/public-service` copies a service definition and the workflow, translated copy and draft storage it uses. The default definition collects personal details and a Swiss postal address for a residence certificate. Residents can attach files, revisit any step and review the complete request. [Try the public service form](https://alpina-ui.vercel.app/blocks/public-service/)
 
 Set `initialLocale` to `de-CH`, `fr-CH`, `it-CH`, `rm-CH` or `en`. Pass an `onSubmit` callback to receive a normalized AHV number, a structured eCH-0010 mail address, the original files, the selected locale and a request ID. Return the case number issued by your service. Use the request ID for idempotent retries and validate the data again at the server boundary.
 
 The form keeps edits in memory until the resident chooses **Save draft**. A saved draft includes the current step and file contents. On returning to the same browser, the resident can resume it or delete it. Completion removes the saved draft. Supply a service- and account-specific `draftKey` when embedding the block in an authenticated application.
+
+To configure a different service, supply steps, field definitions and copy. A title or label can be a string or a map with an English fallback and Swiss translations. The optional `validate(values, locale)` returns messages keyed by field ID. An application callback can also return `{ fieldErrors }`. The summary links each error to its step, places focus on the field and preserves the current URL.
+
+```tsx
+import { PublicServiceBlock, type PublicServiceDefinition } from './components/alpina/blocks/public-service'
+
+const appointment: PublicServiceDefinition = {
+  id: 'appointment', title: 'Book a visit', introduction: 'Tell us who will attend.',
+  steps: [
+    { id: 'contact', title: 'Contact', fields: [{ id: 'visitor', label: 'Visitor name', required: true }] },
+    { id: 'review', title: 'Review the request', content: 'review' },
+  ],
+}
+
+export function AppointmentPage() {
+  return <PublicServiceBlock service={appointment} onSubmit={async request => {
+    const response = await fetch('/appointments', { method: 'POST', body: JSON.stringify(request.values),
+      headers: { 'Content-Type': 'application/json', 'Idempotency-Key': request.requestId } })
+    if (response.status === 422) return { fieldErrors: (await response.json()).fieldErrors }
+    if (!response.ok) throw new Error('Booking failed')
+    return (await response.json()).caseNumber
+  }} />
+}
+```
+
+`FormSteps` and `LanguageSwitcher` are available from `alpina-ui` for other forms. Give `FormSteps` a stable current step ID, a list of `{ id, label }` items and a localized `compactLabel`, such as `Passo {current} di {total}`. Pass a controlled locale and `onLocaleChange` to `LanguageSwitcher`. Both measure their own column and preserve keyboard focus when switching presentation.
 
 ## Find differences
 

@@ -101,6 +101,9 @@
   box-sizing: border-box;
   white-space: nowrap;
 }
+@container al-navigation (max-width: 5rem) {
+  .al-navigation[data-collapsible] summary { padding-inline: var(--al-space-2); gap: var(--al-space-1); }
+}
 @supports selector(details::details-content) {
   @container al-navigation (min-width: 42rem) {
     .al-navigation[data-collapsible] summary { display: none; }

@@ -610,7 +610,13 @@
       "files": [
         "theme.css",
         "ui/steps.tsx",
-        "ui/steps.css"
+        "ui/steps.css",
+        "ui/form-steps.tsx",
+        "interactive/responsive-navigation.tsx",
+        "interactive/responsive-navigation.css",
+        "ui/typography.tsx",
+        "ui/number-text.ts",
+        "ui/typography.css"
       ]
     },
     {
@@ -1061,7 +1067,19 @@
         "ui/select-picker.internal.ts",
         "ui/select.css",
         "interactive/native-select.css",
-        "swiss/locales.ts"
+        "swiss/locales.ts",
+        "swiss/language-switcher.tsx",
+        "interactive/responsive-navigation.tsx",
+        "interactive/responsive-navigation.css",
+        "interactive/toggle-group.tsx",
+        "ui/button.tsx",
+        "ui/slot.tsx",
+        "ui/button.css",
+        "interactive/roving.ts",
+        "interactive/navigation.ts",
+        "interactive/toggle-group.css",
+        "ui/field.tsx",
+        "ui/field.css"
       ]
     },
     {

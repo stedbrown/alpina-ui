@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import { spawnSync } from 'node:child_process'
+import { existsSync } from 'node:fs'
 import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -10,8 +11,11 @@ const packed = join(here, '.alpina')
 const { items } = JSON.parse(await readFile(join(packed, 'registry.json')))
 const barrel = await readFile(join(packed, 'dist/index.js'), 'utf8')
 const entries = new Map(items.map(item => [item.group + '/' + item.name, item.entry]))
-for (const [, specifier] of barrel.matchAll(/export \* from ['"]\.\/(swiss\/[^'"]+)\.js['"]/g)) {
-  if (!entries.has(specifier)) entries.set(specifier, specifier + '.ts')
+for (const [, specifier] of barrel.matchAll(/export \* from ['"]\.\/([^'"]+)\.js['"]/g)) {
+  if (entries.has(specifier)) continue
+  const sources = ['.ts', '.tsx'].map(ext => specifier + ext).filter(file => existsSync(join(packed, 'src', file)))
+  assert.equal(sources.length, 1, 'Expected one source module for ' + specifier)
+  entries.set(specifier, sources[0])
 }
 const project = await mkdtemp(join(here, '.rsc-check-'))
 const imports = []

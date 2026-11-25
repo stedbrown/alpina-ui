@@ -108,7 +108,8 @@ test('list exposes the editable blocks and a block-only add copies the source an
   const { stdout } = await run('list')
   assert.ok(stdout.includes('blocks\n  ' + blockNames.join(', ')))
   await run('add', ...blockNames)
-  await assertCopies(destination, names.map(name => 'blocks/' + name + '.tsx'))
+  await assertCopies(destination, [...names.map(name => 'blocks/' + name + '.tsx'),
+    ...['definition.ts', 'draft.ts', 'form.tsx', 'messages.ts'].map(name => 'blocks/public-service/' + name)])
 })
 
 test('mixed dry run, copy, detection and comparison preserve local block edits', async (t) => {

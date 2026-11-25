@@ -58,6 +58,12 @@ try {
   await languageSelect.focus()
   await page.setViewportSize({ width: 1600, height: 900 })
   await button('English').waitFor()
+  assert.match(await page.evaluate(() => getComputedStyle(document.documentElement).scrollbarGutter), /stable/)
+  const widthBeforeScrollbar = await main.evaluate(el => el.clientWidth)
+  await page.evaluate(() => { document.documentElement.style.overflowY = 'scroll' })
+  await button('English').waitFor()
+  assert.equal(await main.evaluate(el => el.clientWidth), widthBeforeScrollbar)
+  await page.evaluate(() => { document.documentElement.style.overflowY = '' })
   assert.ok(await button('English').evaluate(node => node === document.activeElement))
   await main.getByRole('list', { name: 'Application steps' }).waitFor()
   await page.setViewportSize({ width: 390, height: 844 })
@@ -68,7 +74,9 @@ try {
   const summary = main.getByRole('alert')
   assert.equal(await summary.getByRole('link').count(), 3)
   assert.ok(await summary.evaluate(node => node === document.activeElement))
+  const beforeCorrection = page.url()
   await summary.getByRole('link', { name: /AHV/ }).click()
+  assert.equal(page.url(), beforeCorrection)
   assert.ok(await input('ahv').evaluate(node => node === document.activeElement))
   await input('ahv').fill('756.1234.5678.90')
   await proceed()
@@ -171,12 +179,18 @@ try {
       '  if (window.requests.length === 1) throw new Error("Simulated temporary failure")',
       '  return "CASE-2042"',
       '}',
-      'createRoot(document.querySelector("#app")).render(React.createElement(PublicServiceBlock, {onSubmit: submit, draftKey: "application"}))',
+      'const service = {id:"visitor-pass",title:"Visitor pass",introduction:"Apply for a pass.",',
+      '  steps:[{id:"contact",title:"Contact",fields:[{id:"email",label:"Contact email",required:true}]},',
+      '    {id:"visit",title:"Visit",fields:[{id:"host",label:"Host name",required:true}]},{id:"review",title:"Check",content:"review"}],',
+      '  copy:{en:{confirm:"Request pass"}}}',
+      'const props = location.search ? {service,onSubmit: async ({values}) => values.host === "Roth" ? "PASS-1" :',
+      '  {fieldErrors:{email:"Confirm your email address.",host:"Choose a registered host."}}} : {onSubmit:submit,draftKey:"application"}',
+      'createRoot(document.querySelector("#app")).render(React.createElement(PublicServiceBlock, props))',
     ].join('\n'), resolveDir: process.cwd() },
     bundle: true, write: false, format: 'iife', logLevel: 'silent',
     define: { 'process.env.NODE_ENV': '"production"' },
   })
-  await page.route(siteOrigin + '/service-test', response => response.fulfill({
+  await page.route(url => url.origin === siteOrigin && url.pathname === '/service-test', response => response.fulfill({
     contentType: 'text/html', body: '<!doctype html><html lang="en"><title>Form test</title><div id="app"></div><script src="/service-test.js"></script></html>',
   }))
   await page.route(siteOrigin + '/service-test.js', response => response.fulfill({
@@ -205,6 +219,28 @@ try {
     files: [attachment.buffer.toString()],
   })
   assert.deepEqual(errors, [])
+  await page.goto(siteOrigin + '/service-test?custom')
+  await heading('Visitor pass')
+  await input('email').fill('me@example.ch')
+  await proceed()
+  await input('host').fill('Unknown')
+  await proceed()
+  await button('Request pass').click()
+  assert.equal(await summary.getByRole('link').count(), 2)
+  assert.ok(await summary.evaluate(node => node === document.activeElement))
+  const reviewUrl = page.url()
+  await summary.getByRole('link', { name: /Choose a registered host/ }).click()
+  await heading('Visit')
+  assert.ok(await input('host').evaluate(node => node === document.activeElement))
+  assert.equal(page.url(), reviewUrl)
+  await input('host').fill('Roth')
+  await summary.getByRole('link', { name: /Confirm your email/ }).click()
+  await input('email').fill('corrected@example.ch')
+  await proceed()
+  await proceed()
+  await button('Request pass').click()
+  await heading('Request confirmed')
+  assert.equal(await main.locator('dd').innerText(), 'PASS-1')
   console.log('Public service form passed five locales, validation, draft and file restoration, review, cleanup and idempotent submission.')
 } finally {
   await browser.close()

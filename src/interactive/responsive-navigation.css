@@ -1,0 +1,4 @@
+/* Keep the measured column width stable when a long step adds a page scrollbar. */
+:root:has(.al-responsive-navigation) { scrollbar-gutter: stable; }
+.al-responsive-navigation { min-inline-size: 0; }
+.al-responsive-navigation > [hidden] { display: none; }

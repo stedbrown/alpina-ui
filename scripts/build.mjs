@@ -47,11 +47,13 @@ const registry = {
   items: [],
 }
 const usageNotes = JSON.parse(await readFile('scripts/component-usage.json', 'utf8'))
+const publicCompanions = { steps: 'ui/form-steps.tsx', 'locale-select': 'swiss/language-switcher.tsx' }
 for (const [group, names] of Object.entries(groups)) {
   for (const name of names) {
     const entry = group + '/' + name + '.tsx'
     await access('src/' + entry)
     const files = dependencies(entry)
+    if (publicCompanions[name]) dependencies(publicCompanions[name], files)
     if (files.has('swiss/format-chf.ts') || files.has('swiss/format-swiss-date.ts') || files.has('swiss/format-swiss-number.ts'))
       files.add('swiss/UNICODE-LICENSE.txt')
     const usage = usageNotes[name]
@@ -62,7 +64,8 @@ for (const [group, names] of Object.entries(groups)) {
 await writeFile('registry.json', JSON.stringify(registry, null, 2) + '\n')
 // Re-export public entries and Swiss data/formatting helpers. Internal overlay helpers stay internal.
 const publicFiles = modules.filter(
-  (f) => registry.items.some((i) => i.entry === f) || (f.startsWith('swiss/') && f.endsWith('.ts') && !f.endsWith('.data.ts') && !f.endsWith('.internal.ts')),
+  (f) => registry.items.some((i) => i.entry === f) || Object.values(publicCompanions).includes(f) ||
+    (f.startsWith('swiss/') && f.endsWith('.ts') && !f.endsWith('.data.ts') && !f.endsWith('.internal.ts')),
 )
 await writeFile(
   'src/index.ts',

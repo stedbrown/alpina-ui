@@ -1,7 +1,7 @@
 import jsqr from 'jsqr'
 
-// The CommonJS distribution is callable directly; NodeNext types describe a default property.
-type Decode = typeof jsqr.default
+// Bundler resolution exposes the callable, while NodeNext exposes the CommonJS default.
+type Decode = typeof jsqr extends { default: infer Fn } ? Fn : typeof jsqr
 const decode = jsqr as unknown as Decode
 
 /** Decode and mask unrelated QR symbols so a nearby web link cannot hide the payment code. */

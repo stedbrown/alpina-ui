@@ -18,11 +18,18 @@ const registry = JSON.parse(await readFile(path.join(root, 'registry.json'), 'ut
 
 async function blockEntries() {
   const files = await readdir(path.join(root, 'blocks'), { withFileTypes: true })
-  return files.filter(file => file.isFile() && /^[a-z0-9]+(?:-[a-z0-9]+)*\.tsx$/.test(file.name))
-    .map(file => file.name).sort().map(filename => {
+  const entries = files.filter(file => file.isFile() && /^[a-z0-9]+(?:-[a-z0-9]+)*\.tsx$/.test(file.name))
+    .map(file => file.name).sort()
+  return Promise.all(entries.map(async filename => {
+      const name = filename.slice(0, -4)
       const entry = 'blocks/' + filename
-      return { group: 'blocks', name: 'block/' + filename.slice(0, -4), entry, files: [entry] }
-    })
+      const directory = 'blocks/' + name
+      const companions = files.some(file => file.isDirectory() && file.name === name)
+        ? (await readdir(path.join(root, directory), { withFileTypes: true }))
+          .filter(file => file.isFile() && /^[a-z0-9-]+\.tsx?$/.test(file.name)).map(file => directory + '/' + file.name).sort()
+        : []
+      return { group: 'blocks', name: 'block/' + name, entry, files: [entry, ...companions] }
+    }))
 }
 
 async function stat(file) {

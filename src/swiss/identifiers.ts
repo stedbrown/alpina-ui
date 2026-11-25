@@ -2,6 +2,13 @@ import { ahvIssue, compactIban, ibanIssue, uidIssue } from './identifier-checks.
 
 export { compactIban } from './identifier-checks.internal.js'
 
+export interface SwissInputValueDetails {
+  /** Standard Schema representation of a complete valid identifier, or null for empty and invalid input. */
+  normalized: string | null
+  /** Includes the component's required, format and checksum checks. */
+  valid: boolean
+}
+
 export function isSwissIban(value: string): boolean {
   return ibanIssue(value) === undefined
 }

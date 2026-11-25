@@ -1,7 +1,7 @@
 'use client'
 
 import { forwardRef, type ComponentPropsWithoutRef } from 'react'
-import { IdentifierField } from './identifier-field.js'
+import { IdentifierField, type SwissIdentifierInputProps } from './identifier-field.js'
 import { postalCodeMessages } from './input-messages.internal.js'
 import { isSwissPostalCode, swissPostalCodePattern } from './postal-code.js'
 import type { SwissMessageLocale } from './locales.js'
@@ -14,6 +14,7 @@ export interface SwissPostalCodeInputProps extends Omit<
 > {
   value?: string
   defaultValue?: string
+  onValueChange?: SwissIdentifierInputProps['onValueChange']
   locale?: SwissMessageLocale
   validationMessage?: string
 }

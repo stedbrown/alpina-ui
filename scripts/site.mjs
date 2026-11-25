@@ -22,7 +22,7 @@ const guideMarkdown = new Marked({ renderer: {
         return render(InlineCode, { children: createElement('time', { dateTime: text }, text) })
       } catch { /* A non-date example is still valid inline code. */ }
     }
-    return render(InlineCode, { children: text, unbroken: /^CHE-\d{3}\.\d{3}\.\d{3}$/.test(text) })
+    return render(InlineCode, { children: text, unbroken: /^(?:CHE-\d{3}\.\d{3}\.\d{3}|\+41(?:[ \u00a0]?\d){9})$/.test(text) })
   },
   link({ href, title, tokens }) {
     return render(TextLink, { href, title, dangerouslySetInnerHTML: { __html: this.parser.parseInline(tokens) } })

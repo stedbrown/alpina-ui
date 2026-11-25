@@ -1,6 +1,7 @@
 'use client'
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState, type ComponentPropsWithoutRef } from 'react'
 import type { IdentifierIssue } from './identifier-checks.internal.js'
+import type { SwissInputValueDetails } from './identifiers.js'
 import { requiredMessages } from './input-messages.internal.js'
 import type { SwissMessageLocale } from './locales.js'
 import { Input } from '../ui/input.js'
@@ -8,6 +9,8 @@ import { Input } from '../ui/input.js'
 export interface SwissIdentifierInputProps extends Omit<ComponentPropsWithoutRef<'input'>, 'type' | 'value' | 'defaultValue' | 'children'> {
   value?: string
   defaultValue?: string
+  /** Fires while editing and when blur changes the displayed value. */
+  onValueChange?: (value: string, details: SwissInputValueDetails) => void
   /** Native constraint validation message for a nonempty invalid value. */
   validationMessage?: string
   /** Language used for native validation feedback. */
@@ -22,7 +25,8 @@ interface IdentifierFieldProps extends SwissIdentifierInputProps {
 }
 
 export const IdentifierField = forwardRef<HTMLInputElement, IdentifierFieldProps>(function IdentifierField(
-  { value, defaultValue = '', validate, format, messages, checksumMessages = messages, locale, validationMessage, onChange, onBlur, ...props }, ref,
+  { value, defaultValue = '', validate, format, messages, checksumMessages = messages, locale, validationMessage,
+    onChange, onBlur, onValueChange, ...props }, ref,
 ) {
   const node = useRef<HTMLInputElement>(null)
   useImperativeHandle(ref, () => node.current!, [])
@@ -36,6 +40,11 @@ export const IdentifierField = forwardRef<HTMLInputElement, IdentifierFieldProps
     const invalid = result === false || result === 'format' || result === 'checksum'
     const translated = result === 'checksum' ? checksumMessages : messages
     input.setCustomValidity(missing ? requiredMessages[locale ?? 'en'] : invalid ? validationMessage ?? translated[locale ?? 'en'] : '')
+    return !missing && !invalid
+  }
+  function report(displayed: string, valid: boolean) {
+    // Valid IBANs and phone numbers use grouping spaces only in their display form.
+    onValueChange?.(displayed, { normalized: displayed && valid ? format(displayed).replaceAll(' ', '') : null, valid })
   }
   useEffect(() => {
     if (node.current) validateInput(node.current)
@@ -60,14 +69,19 @@ export const IdentifierField = forwardRef<HTMLInputElement, IdentifierFieldProps
   return <Input lang={locale} {...props} ref={node} dir={props.dir ?? 'ltr'} spellCheck={false} value={display}
     onChange={event => {
       setEditing(true)
-      validateInput(event.currentTarget)
-      if (value === undefined) setLocal(event.currentTarget.value)
+      const edited = event.currentTarget.value
+      const valid = validateInput(event.currentTarget)
+      if (value === undefined) setLocal(edited)
       onChange?.(event)
+      report(edited, valid)
     }}
     onBlur={event => {
       setEditing(false)
-      validateInput(event.currentTarget)
+      const edited = event.currentTarget.value
+      const formatted = format(edited)
+      const valid = validateInput(event.currentTarget)
       onBlur?.(event)
+      if (formatted !== edited) report(formatted, valid)
     }}
   />
 })

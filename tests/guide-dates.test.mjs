@@ -39,3 +39,8 @@ test('Markdown headers and body cells preserve authored column alignment and inl
   assert.ok(html.includes('<em>Two</em>'))
   assert.ok(html.includes('<code class="al-inline-code">1.25 m²</code>'))
 })
+
+test('formatted Swiss phone examples stay on one line and keep ordinary spaces for copying', async () => {
+  const html = await renderGuide('Call `+41 79 123 45 67` on arrival.')
+  assert.match(html, /<code data-unbroken="true" class="al-inline-code">\+41 79 123 45 67<\/code>/)
+})

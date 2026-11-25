@@ -1020,6 +1020,7 @@
         "swiss/swiss-postal-code-input.tsx",
         "swiss/identifier-field.tsx",
         "swiss/identifier-checks.internal.ts",
+        "swiss/identifiers.ts",
         "swiss/input-messages.internal.ts",
         "swiss/swiss-address-form.css"
       ]
@@ -1131,6 +1132,7 @@
         "swiss/swiss-postal-code-input.tsx",
         "swiss/identifier-field.tsx",
         "swiss/identifier-checks.internal.ts",
+        "swiss/identifiers.ts",
         "swiss/input-messages.internal.ts",
         "swiss/locales.ts",
         "ui/input.tsx",
@@ -1178,9 +1180,9 @@
         "swiss/input-messages.internal.ts",
         "swiss/locales.ts",
         "swiss/identifier-field.tsx",
+        "swiss/identifiers.ts",
         "ui/input.tsx",
-        "ui/input.css",
-        "swiss/identifiers.ts"
+        "ui/input.css"
       ]
     },
     {
@@ -1195,9 +1197,9 @@
         "swiss/input-messages.internal.ts",
         "swiss/locales.ts",
         "swiss/identifier-field.tsx",
+        "swiss/identifiers.ts",
         "ui/input.tsx",
-        "ui/input.css",
-        "swiss/identifiers.ts"
+        "ui/input.css"
       ]
     },
     {
@@ -1212,9 +1214,9 @@
         "swiss/locales.ts",
         "swiss/identifier-field.tsx",
         "swiss/identifier-checks.internal.ts",
+        "swiss/identifiers.ts",
         "ui/input.tsx",
-        "ui/input.css",
-        "swiss/identifiers.ts"
+        "ui/input.css"
       ]
     },
     {
@@ -1229,9 +1231,9 @@
         "swiss/input-messages.internal.ts",
         "swiss/locales.ts",
         "swiss/identifier-field.tsx",
+        "swiss/identifiers.ts",
         "ui/input.tsx",
-        "ui/input.css",
-        "swiss/identifiers.ts"
+        "ui/input.css"
       ]
     },
     {

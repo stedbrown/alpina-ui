@@ -13,6 +13,7 @@ try {
   const main = page.getByRole('main')
   const input = name => main.locator('input[name="' + name + '"]')
   const button = name => main.getByRole('button', { name, exact: true })
+  const languageSelect = main.getByRole('combobox')
   const proceed = () => main.locator('button[type=submit]').click()
   const heading = name => main.getByRole('heading', { name, exact: true }).waitFor()
   const attachment = { name: 'residence.txt', mimeType: 'text/plain', buffer: Buffer.from('Fictional supporting document.') }
@@ -33,19 +34,34 @@ try {
 
   await page.goto(route)
   await heading('Residence certificate')
-  for (const [language, tag, title, step] of [
-    ['Deutsch', 'de-CH', 'Wohnsitzbestätigung', 'Personalien'],
-    ['Français', 'fr-CH', 'Attestation de domicile', 'Données personnelles'],
-    ['Italiano', 'it-CH', 'Certificato di domicilio', 'Dati personali'],
-    ['Rumantsch', 'rm-CH', 'Attest da domicil', 'Indicaziuns persunalas'],
-    ['English', 'en', 'Residence certificate', 'Personal details'],
+  await page.setViewportSize({ width: 800, height: 900 })
+  for (const [tag, title, step, count] of [
+    ['de-CH', 'Wohnsitzbestätigung', 'Personalien', 'Schritt 1 von 4'],
+    ['fr-CH', 'Attestation de domicile', 'Données personnelles', 'Étape 1 sur 4'],
+    ['it-CH', 'Certificato di domicilio', 'Dati personali', 'Passo 1 di 4'],
+    ['rm-CH', 'Attest da domicil', 'Indicaziuns persunalas', 'Pass 1 da 4'],
+    ['en', 'Residence certificate', 'Personal details', 'Step 1 of 4'],
   ]) {
-    await button(language).click()
+    await languageSelect.selectOption(tag)
     await heading(title)
     await heading(step)
     assert.equal(await main.getAttribute('lang'), tag)
+    const status = main.locator('[aria-current=step]:visible')
+    assert.equal(await status.count(), 1)
+    // Shorter translations can use their full list if all four labels fit.
+    if (await status.evaluate(el => el.tagName !== 'LI')) assert.equal(await status.innerText(), count)
+    else assert.match(await status.innerText(), new RegExp(step))
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth))
   }
+  await main.getByText('Step 1 of 4', { exact: true }).waitFor()
+  await languageSelect.focus()
+  await page.setViewportSize({ width: 1600, height: 900 })
+  await button('English').waitFor()
+  assert.ok(await button('English').evaluate(node => node === document.activeElement))
+  await main.getByRole('list', { name: 'Application steps' }).waitFor()
+  await page.setViewportSize({ width: 390, height: 844 })
+  await languageSelect.waitFor()
+  assert.ok(await languageSelect.evaluate(node => node === document.activeElement))
 
   await proceed()
   const summary = main.getByRole('alert')
@@ -61,11 +77,13 @@ try {
   assert.equal(await input('firstName').inputValue(), '')
 
   await fillPerson()
+  await main.getByText('Step 2 of 4', { exact: true }).waitFor()
   await proceed()
   assert.equal(await summary.getByRole('link').count(), 3)
   await fillAddress()
   await input('attachments').setInputFiles(attachment)
-  await button('Rumantsch').click()
+  await languageSelect.selectOption('rm-CH')
+  await main.getByText('Pass 3 da 4', { exact: true }).waitFor()
   await button('Memorisar il sboz').click()
   await main.getByText('Il sboz è memorisà sin quest apparat.', { exact: true }).waitFor()
   await page.reload()
@@ -81,9 +99,10 @@ try {
   assert.deepEqual(restored, [attachment.name, attachment.mimeType, attachment.buffer.toString()])
   await proceed()
   await heading('Controllar la dumonda')
+  await main.getByText('Pass 4 da 4', { exact: true }).waitFor()
   for (const text of ['Ada Roth', '756.1234.5678.97', 'Testweg 12a', '3000 Bern', 'Svizra', attachment.name])
     assert.ok((await main.locator('dl').allTextContents()).join(' ').includes(text), text)
-  await button('English').click()
+  await languageSelect.selectOption('en')
   await button('Edit · Postal address').click()
   assert.equal(await input('town').inputValue(), 'Bern')
   await input('town').fill('Berne')

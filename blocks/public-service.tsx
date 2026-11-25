@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useId, useRef, useState, type ChangeEvent, type FormEvent } from 'react'
+import { useEffect, useId, useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react'
 import {
   AhvInput, Alert, Button, DescriptionList, Field, FileInput, Grid, GridItem, Input,
-  Separator, Stack, Steps, SwissPostalCodeInput, TextLink, ToggleGroup, Typography,
+  Select, Separator, Stack, Steps, SwissPostalCodeInput, TextLink, ToggleGroup, Typography,
   ahvSchema, echAddressSchema, formatAhvNumber, localeNames, swissLocales, swissValidationMessage,
   type EchMailAddress, type SwissMessageLocale,
 } from 'alpina-ui'
@@ -36,6 +36,56 @@ const languageOptions = languages.map(value => ({
   value, label: <span lang={value}>{value === 'en' ? 'English' : localeNames[value]}</span>,
 }))
 type Notice = 'saved' | 'deleted' | 'conflict' | 'saveError' | 'readError' | 'deleteError' | 'sendError'
+
+// Both presentations use the same state. The server renders the compact version,
+// which fits even before the column and its final font can be measured.
+function ServiceNavigationRow({ children, compact, layoutKey }: {
+  children: ReactNode; compact: ReactNode; layoutKey: string
+}) {
+  const full = useRef<HTMLDivElement>(null)
+  const short = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const row = full.current!, fallback = short.current!
+    const column = row.parentElement!
+    function measure() {
+      const active = document.activeElement
+      row.hidden = false
+      const items = [...row.querySelectorAll<HTMLElement>('button, li')]
+      const top = items[0]?.getBoundingClientRect().top
+      const range = document.createRange()
+      const fits = items.length > 0 && items.every(item => {
+        range.selectNodeContents(item)
+        return item.getBoundingClientRect().top === top &&
+          range.getBoundingClientRect().height <= parseFloat(getComputedStyle(item).lineHeight) + 1
+      })
+      row.hidden = !fits
+      fallback.hidden = fits
+      const disappearing = fits ? fallback : row
+      if (active && disappearing.contains(active)) {
+        const appearing = fits ? row : fallback
+        appearing.querySelector<HTMLElement>('button[aria-pressed=true], select')?.focus({ preventScroll: true })
+      }
+    }
+    measure()
+    // Resizing a grid column, loading a different font and increasing text
+    // spacing can each change how many labels fit without changing the viewport.
+    let frame = 0
+    const observer = new ResizeObserver(() => {
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(measure)
+    })
+    observer.observe(column)
+    window.addEventListener('resize', measure)
+    document.fonts.addEventListener('loadingdone', measure)
+    return () => {
+      cancelAnimationFrame(frame)
+      observer.disconnect()
+      window.removeEventListener('resize', measure)
+      document.fonts.removeEventListener('loadingdone', measure)
+    }
+  }, [layoutKey])
+  return <div><div ref={full} hidden>{children}</div><div ref={short}>{compact}</div></div>
+}
 
 function addressOf(details: Details, country: string): EchMailAddress {
   return {
@@ -198,6 +248,11 @@ function ServiceForm({ initialLocale, draftKey, onSubmit }: Required<Pick<Public
     setNotice(undefined)
   }
 
+  function changeLanguage(value: string | undefined) {
+    const language = languages.find(tag => tag === value)
+    if (language) setLocale(language)
+  }
+
   function field(name: keyof Details) {
     return <Field key={name} id={prefix + '-' + name} label={t[name]} error={errors[name]}>{control => {
       const props = { ...control, name, value: details[name], required: name !== 'houseNumber', disabled: busy,
@@ -216,12 +271,25 @@ function ServiceForm({ initialLocale, draftKey, onSubmit }: Required<Pick<Public
   ]
 
   return <Grid as="main" lang={locale} width="site" space="section" align="start">
-    <GridItem medium={4} large={5}><Stack gap={5}>
+    <GridItem medium={4} large={6}><Stack gap={5}>
       <Typography as="h1" variant="title">{t.title}</Typography>
       <Typography measure="narrow">{onSubmit ? t.introduction : t.demo}</Typography>
-      <ToggleGroup label={t.language} options={languageOptions} value={[locale]} disabled={busy}
-        onValueChange={([value]) => { if (languages.includes(value as SwissMessageLocale)) setLocale(value as SwissMessageLocale) }} />
-      {!reference && !offered && <Steps label={t.progress} current={steps[step]} items={steps.map(id => ({ id, label: t[id] }))} />}
+      <ServiceNavigationRow layoutKey={locale} compact={
+        <Field label={t.language}>{control => <Select {...control} value={locale} disabled={busy}
+          onChange={event => changeLanguage(event.currentTarget.value)}>
+          {languages.map(tag => <option key={tag} value={tag} lang={tag}>{tag === 'en' ? 'English' : localeNames[tag]}</option>)}
+        </Select>}</Field>
+      }>
+        <ToggleGroup label={t.language} options={languageOptions} value={[locale]} disabled={busy}
+          onValueChange={([value]) => changeLanguage(value)} />
+      </ServiceNavigationRow>
+      {!reference && !offered && <ServiceNavigationRow layoutKey={locale + step} compact={
+        <Typography variant="label" numeric aria-current="step">
+          {t.stepCount.replace('{current}', String(step + 1)).replace('{total}', String(steps.length))}
+        </Typography>
+      }>
+        <Steps label={t.progress} current={steps[step]} items={steps.map(id => ({ id, label: t[id] }))} />
+      </ServiceNavigationRow>}
     </Stack></GridItem>
     <GridItem medium={4} large={6} start={{ large: 7 }}><Stack gap={4}>
       <Separator weight="section" />
@@ -317,6 +385,7 @@ function accessDraft(key: string, change?: { previous: string | undefined; next?
 }
 
 const english = {
+  stepCount: 'Step {current} of {total}',
   title: 'Residence certificate', language: 'Form language', progress: 'Application steps',
   demo: 'Try this service with fictional details. The demo creates a local case number.',
   introduction: 'Enter your details to request a residence certificate.',
@@ -340,6 +409,7 @@ type Messages = Record<keyof typeof english, string>
 const serviceMessages: Record<SwissMessageLocale, Messages> = {
   en: english,
   'de-CH': {
+    stepCount: 'Schritt {current} von {total}',
     title: 'Wohnsitzbestätigung', language: 'Formularsprache', progress: 'Schritte des Gesuchs',
     demo: 'Testen Sie das Formular mit fiktiven Angaben. Die Demo erstellt eine lokale Geschäftsnummer.',
     introduction: 'Geben Sie Ihre Daten ein, um eine Wohnsitzbestätigung zu beantragen.',
@@ -359,6 +429,7 @@ const serviceMessages: Record<SwissMessageLocale, Messages> = {
     done: 'Gesuch bestätigt', demoDone: 'Demo abgeschlossen', reference: 'Geschäftsnummer', again: 'Neues Gesuch beginnen',
   },
   'fr-CH': {
+    stepCount: 'Étape {current} sur {total}',
     title: 'Attestation de domicile', language: 'Langue du formulaire', progress: 'Étapes de la demande',
     demo: 'Essayez ce service avec des données fictives. La démo génère un numéro de dossier local.',
     introduction: 'Saisissez vos coordonnées pour demander une attestation de domicile.',
@@ -378,6 +449,7 @@ const serviceMessages: Record<SwissMessageLocale, Messages> = {
     done: 'Demande confirmée', demoDone: 'Démo terminée', reference: 'Numéro de dossier', again: 'Commencer une autre demande',
   },
   'it-CH': {
+    stepCount: 'Passo {current} di {total}',
     title: 'Certificato di domicilio', language: 'Lingua del modulo', progress: 'Fasi della richiesta',
     demo: 'Prova il servizio con dati fittizi. La demo genera un numero di pratica locale.',
     introduction: 'Inserisci i tuoi dati per richiedere un certificato di domicilio.',
@@ -397,6 +469,7 @@ const serviceMessages: Record<SwissMessageLocale, Messages> = {
     done: 'Richiesta confermata', demoDone: 'Demo completata', reference: 'Numero di pratica', again: 'Inizia una nuova richiesta',
   },
   'rm-CH': {
+    stepCount: 'Pass {current} da {total}',
     title: 'Attest da domicil', language: 'Lingua dal formular', progress: 'Pass da la dumonda',
     demo: 'Empruvai quest servetsch cun indicaziuns fictivas. La demonstraziun generescha in numer da dossier local.',
     introduction: 'Endatai Vossas indicaziuns per dumandar in attest da domicil.',

@@ -25,6 +25,26 @@ function layoutIssues() {
     const runs = [...range.getClientRects()].filter(rect => rect.width > 0 && rect.height > 0)
     if (runs.some(rect => rect.top > (runs[0]?.top ?? rect.top) + tolerance)) errors.add('Split value: ' + label)
   }
+  if (location.pathname === '/blocks/public-service/') {
+    const visible = selector => [...document.querySelectorAll(selector)].filter(el => el.checkVisibility())
+    const buttons = visible('main button[aria-pressed]')
+    const steps = visible('main ol[aria-label] > li')
+    const compactLanguage = visible('main select').length
+    const compactProgress = visible('main p[aria-current=step]').length
+    if (!(buttons.length === 5 && !compactLanguage || !buttons.length && compactLanguage === 1))
+      errors.add('Expected one usable language picker')
+    if (!(steps.length === 4 && !compactProgress || !steps.length && compactProgress === 1))
+      errors.add('Expected one progress indicator')
+    for (const row of [buttons, steps]) {
+      for (const item of row) {
+        if (item.offsetTop !== row[0].offsetTop) errors.add('Service navigation breaks into rows')
+        const text = document.createRange()
+        text.selectNodeContents(item)
+        checkLines(text, item.textContent)
+      }
+    }
+    if (innerWidth === 800 && !(compactLanguage && compactProgress)) errors.add('Expected compact English navigation at 800px')
+  }
   for (const value of document.querySelectorAll('time, .al-swiss-figures bdi, .al-type[data-numeric], .al-table-value, .al-bill-number, a[href^="tel:"], .al-chart-value, .al-series-bars li > :last-child, .al-series-scale span, .al-series-table td:last-child')) {
     if (!value.checkVisibility() || value.matches(':has(.al-swiss-figures)')) continue
     const range = document.createRange()
@@ -124,7 +144,9 @@ function layoutIssues() {
 }
 
 const widths = [320, 360, 640, 768, 800, 960, 1024, 1440]
-const routes = await publicRoutes()
+const selected = process.argv.find(arg => arg.startsWith('--route='))?.slice('--route='.length)
+const routes = (await publicRoutes()).filter(route => !selected || selected === route)
+assert.ok(routes.length, 'Unknown public route ' + selected)
 const executablePath = process.env.CHROME_PATH ?? process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
 const browser = await chromium.launch(executablePath ? { executablePath }
   : existsSync(chromium.executablePath()) ? {} : { channel: 'chrome' })
@@ -140,6 +162,8 @@ try {
       await page.evaluate(() => document.fonts.ready)
       for (const width of widths) {
         await page.setViewportSize({ width, height: 900 })
+        if (route === '/blocks/public-service/')
+          await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))))
         const issues = await page.evaluate(layoutIssues)
         if (issues.length) failures.push(route + ' ' + width + 'px: ' + issues.join(', '))
         const menu = page.locator('nav[data-collapsible] summary:visible').first()

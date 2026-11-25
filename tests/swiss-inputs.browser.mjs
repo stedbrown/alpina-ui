@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import { existsSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { build } from 'esbuild'
+import { ahvSchema } from 'alpina-ui/swiss/schemas'
 import { chromium } from 'playwright-core'
 
 const bundle = await build({
@@ -101,6 +102,13 @@ try {
   assert.equal(await insurance.inputValue(), '7560')
   assert.match((await state(insurance)).message, /AHV-Nummer/)
   assert.match((await state(localizedPostal)).message, /Postleitzahl/)
+  await edit(insurance, '756.1234.5678.90')
+  for (const tag of ['de-CH', 'fr-CH', 'it-CH', 'rm-CH']) {
+    await language.selectOption(tag)
+    assert.equal((await state(insurance)).message, ahvSchema(tag)['~standard'].validate('756.1234.5678.90').issues[0].message)
+  }
+  await edit(insurance, '756.1234.5678.97')
+  assert.ok((await state(insurance)).valid)
   await edit(localizedPostal, '7500')
   assert.ok((await state(localizedPostal)).valid)
   assert.deepEqual(errors, [])

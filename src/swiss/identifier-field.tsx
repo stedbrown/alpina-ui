@@ -1,5 +1,6 @@
 'use client'
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState, type ComponentPropsWithoutRef } from 'react'
+import type { IdentifierIssue } from './identifier-checks.internal.js'
 import { requiredMessages } from './input-messages.internal.js'
 import type { SwissMessageLocale } from './locales.js'
 import { Input } from '../ui/input.js'
@@ -15,12 +16,13 @@ export interface SwissIdentifierInputProps extends Omit<ComponentPropsWithoutRef
 interface IdentifierFieldProps extends SwissIdentifierInputProps {
   type?: 'text' | 'tel'
   messages: Readonly<Record<SwissMessageLocale, string>>
-  validate: (value: string) => boolean
+  validate: (value: string) => IdentifierIssue | boolean
+  checksumMessages?: Readonly<Record<SwissMessageLocale, string>>
   format: (value: string) => string
 }
 
 export const IdentifierField = forwardRef<HTMLInputElement, IdentifierFieldProps>(function IdentifierField(
-  { value, defaultValue = '', validate, format, messages, locale, validationMessage = messages[locale ?? 'en'], onChange, onBlur, ...props }, ref,
+  { value, defaultValue = '', validate, format, messages, checksumMessages = messages, locale, validationMessage, onChange, onBlur, ...props }, ref,
 ) {
   const node = useRef<HTMLInputElement>(null)
   useImperativeHandle(ref, () => node.current!, [])
@@ -30,11 +32,14 @@ export const IdentifierField = forwardRef<HTMLInputElement, IdentifierFieldProps
   const display = editing ? source : format(source)
   function validateInput(input: HTMLInputElement) {
     const missing = input.required && !input.value
-    input.setCustomValidity(missing ? requiredMessages[locale ?? 'en'] : input.value && !validate(input.value) ? validationMessage : '')
+    const result = input.value ? validate(input.value) : true
+    const invalid = result === false || result === 'format' || result === 'checksum'
+    const translated = result === 'checksum' ? checksumMessages : messages
+    input.setCustomValidity(missing ? requiredMessages[locale ?? 'en'] : invalid ? validationMessage ?? translated[locale ?? 'en'] : '')
   }
   useEffect(() => {
     if (node.current) validateInput(node.current)
-  }, [display, validate, validationMessage, locale, props.required])
+  }, [display, validate, messages, checksumMessages, validationMessage, locale, props.required])
   useEffect(() => {
     const form = node.current?.form
     function reset(event: Event) {
@@ -51,7 +56,7 @@ export const IdentifierField = forwardRef<HTMLInputElement, IdentifierFieldProps
     }
     form?.addEventListener('reset', reset)
     return () => form?.removeEventListener('reset', reset)
-  }, [value, defaultValue, format, validate, validationMessage, locale, props.required, props.form])
+  }, [value, defaultValue, format, validate, messages, checksumMessages, validationMessage, locale, props.required, props.form])
   return <Input lang={locale} {...props} ref={node} dir={props.dir ?? 'ltr'} spellCheck={false} value={display}
     onChange={event => {
       setEditing(true)

@@ -1,52 +1,46 @@
 import type { SwissMessageLocale } from './locales.js'
-import { compactIban, formatAhvNumber, formatSwissPhone, formatSwissUid, isAhvNumber, isQrIban, isSwissIban, isSwissPhone, isSwissUid } from './identifiers.js'
+import { compactIban, formatAhvNumber, formatSwissPhone, formatSwissUid, isSwissPhone } from './identifiers.js'
 import { isSwissPostalCode } from './postal-code.js'
-import { isCreditorReference, isQrReference } from './qr-payment.js'
-import { swissValidationMessage } from './validation-messages.js'
+import { ahvIssue, ibanIssue, qrrIssue, scorIssue, uidIssue, type IdentifierIssue } from './identifier-checks.internal.js'
+import { swissValidationMessage, type SwissValidationField } from './validation-messages.js'
 import { standardSchema, type SwissStandardSchema } from './standard-schema.internal.js'
 
 export type { SwissSchemaIssue, SwissSchemaResult, SwissStandardSchema } from './standard-schema.internal.js'
 export { echAddressSchema, type EchMailAddress } from './ech-address-schema.internal.js'
 
-const referenceErrors = {
-  en: ['Enter a CH or LI QR-IBAN with a QR institution identifier.', 'Enter a valid 27-digit QR reference.', 'Enter a valid RF creditor reference.'],
-  'de-CH': ['Geben Sie eine CH- oder LI-QR-IBAN mit QR-IID ein.', 'Geben Sie eine gültige 27-stellige QR-Referenz ein.', 'Geben Sie eine gültige RF-Gläubigerreferenz ein.'],
-  'fr-CH': ['Saisissez un QR-IBAN suisse ou liechtensteinois avec un QR-IID.', 'Saisissez une référence QR valide de 27 chiffres.', 'Saisissez une référence créancier RF valide.'],
-  'it-CH': ['Inserisci un QR-IBAN svizzero o del Liechtenstein con un QR-IID.', 'Inserisci un riferimento QR valido di 27 cifre.', 'Inserisci un riferimento del creditore RF valido.'],
-  'rm-CH': ['Endatai in QR-IBAN svizzer u liechtensteinais cun in QR-IID.', 'Endatai ina referenza QR valaivla da 27 cifras.', 'Endatai ina referenza RF valaivla dal creditur.'],
-} as const
-
-function textSchema(locale: SwissMessageLocale, message: string, valid: (text: string) => boolean, canonical: (text: string) => string): SwissStandardSchema<string> {
+function textSchema(locale: SwissMessageLocale, field: SwissValidationField, issueFor: (text: string) => IdentifierIssue, canonical: (text: string) => string): SwissStandardSchema<string> {
   return standardSchema<string, string>(value => {
     if (value == null || (typeof value === 'string' && !value.trim()))
       return { issues: [{ message: swissValidationMessage('required', locale) }] }
-    if (typeof value !== 'string' || !valid(value)) return { issues: [{ message }] }
+    if (typeof value !== 'string') return { issues: [{ message: swissValidationMessage(field, locale) }] }
+    const issue = issueFor(value)
+    if (issue) return { issues: [{ message: swissValidationMessage(field, locale, issue) }] }
     return { value: canonical(value) }
   })
 }
 
 export function ibanSchema(locale: SwissMessageLocale = 'en') {
-  return textSchema(locale, swissValidationMessage('iban', locale), isSwissIban, compactIban)
+  return textSchema(locale, 'iban', ibanIssue, compactIban)
 }
 export function qrIbanSchema(locale: SwissMessageLocale = 'en') {
-  return textSchema(locale, referenceErrors[locale][0], isQrIban, compactIban)
+  return textSchema(locale, 'qrIban', value => ibanIssue(value, true), compactIban)
 }
 export function ahvSchema(locale: SwissMessageLocale = 'en') {
-  return textSchema(locale, swissValidationMessage('ahv', locale), isAhvNumber, formatAhvNumber)
+  return textSchema(locale, 'ahv', ahvIssue, formatAhvNumber)
 }
 export function uidSchema(locale: SwissMessageLocale = 'en') {
-  return textSchema(locale, swissValidationMessage('uid', locale), isSwissUid, formatSwissUid)
+  return textSchema(locale, 'uid', uidIssue, formatSwissUid)
 }
 export function phoneSchema(locale: SwissMessageLocale = 'en') {
-  return textSchema(locale, swissValidationMessage('phone', locale), isSwissPhone, value => formatSwissPhone(value).replaceAll(' ', ''))
+  return textSchema(locale, 'phone', value => isSwissPhone(value) ? undefined : 'format', value => formatSwissPhone(value).replaceAll(' ', ''))
 }
 /** Four-digit postal-code syntax, shared with SwissPostalCodeInput. Directory membership is a separate lookup. */
 export function postalCodeSchema(locale: SwissMessageLocale = 'en') {
-  return textSchema(locale, swissValidationMessage('postalCode', locale), isSwissPostalCode, value => value)
+  return textSchema(locale, 'postalCode', value => isSwissPostalCode(value) ? undefined : 'format', value => value)
 }
 export function qrrSchema(locale: SwissMessageLocale = 'en') {
-  return textSchema(locale, referenceErrors[locale][1], isQrReference, value => value.replaceAll(' ', ''))
+  return textSchema(locale, 'qrr', qrrIssue, value => value.replaceAll(' ', ''))
 }
 export function scorSchema(locale: SwissMessageLocale = 'en') {
-  return textSchema(locale, referenceErrors[locale][2], isCreditorReference, value => value.replaceAll(' ', '').toUpperCase())
+  return textSchema(locale, 'scor', scorIssue, value => value.replaceAll(' ', '').toUpperCase())
 }

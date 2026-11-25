@@ -24,6 +24,12 @@ if (result.issues) return { error: result.issues[0].message }
 return { lastFour: result.value.slice(-4) }
 ```
 
+## Format and check digits
+
+The AHV, UID, IBAN, QR-IBAN, QRR and SCOR schemas check the structure first. An incomplete AHV number gets the expected prefix and length. The complete entry `756.1234.5678.90` gets a different correction in Italian, “Il formato è corretto. La cifra di controllo non corrisponde. Ricontrolla i dati sul documento originale.” Compare the entire entry with the source document because an error in any digit can cause a mismatch.
+
+Alpina inputs, Server Actions using the schemas, and QR-bill validation use the same localized checksum wording. For a server that already distinguishes the cause, `swissValidationMessage('qrr', 'fr-CH', 'checksum')` returns the French correction. Omitting the third argument returns the format instruction. QR-bill errors retain their field codes and scanned-payload line numbers.
+
 ## Forms and Server Actions
 
 The Next.js billing example validates on blur for immediate feedback, then calls the same IBAN schema in a Server Action. The action reads a supported locale from the saved preference, checks the submitted FormData and returns the account suffix on success. The server performs this check on every submission. [Server Action](https://github.com/stedbrown/alpina-ui/blob/main/integrations/next-app-router/app/actions.ts) · [Client form](https://github.com/stedbrown/alpina-ui/blob/main/integrations/next-app-router/app/payment-form.tsx)

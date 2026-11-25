@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { buildSwissQrPayload, parseSwissQrPayload, SwissQrPayloadError } from 'alpina-ui'
+import { buildSwissQrPayload, parseSwissQrPayload, SwissQrPayloadError, SwissQrValidationError, swissValidationMessage, swissLocales } from 'alpina-ui'
 
 // SIX IG 2.4 Annex A uses this QR-IBAN, structured address and QRR combination.
 const base = { iban: 'CH4431999123000889012', currency: 'CHF', amount: '1949.75',
@@ -18,6 +18,27 @@ test('all payment fields round-trip across LF and CRLF including alternative pro
       assert.equal(buildSwissQrPayload(parseSwissQrPayload(data.replaceAll('\n', separator) + trailing)), data)
   }
 })
+test('encoding and decoding report the same localized check-digit correction and original field code', () => {
+  const scorBill = { ...base, iban: 'CH5800791123000889012', reference: { type: 'SCOR', value: 'RF18539007547034' } }
+  for (const [bill, code, line, value] of [
+    [base, 'iban', 4, 'CH4531999123000889012'],
+    [base, 'qrr', 29, '210000000003139471430009018'],
+    [scorBill, 'scor', 29, 'RF19539007547034'],
+  ]) {
+    const lines = buildSwissQrPayload(bill).split('\n')
+    lines[line - 1] = value
+    const invalid = line === 4 ? { ...bill, iban: value } : { ...bill, reference: { ...bill.reference, value } }
+    const field = line === 4 ? 'iban' : 'reference.value'
+    for (const locale of [...swissLocales, 'en']) {
+      const message = swissValidationMessage(code, locale, 'checksum')
+      assert.throws(() => buildSwissQrPayload(invalid, locale), error => error instanceof SwissQrValidationError &&
+        error.code === code && error.field === field && error.message === message)
+      assert.throws(() => parseSwissQrPayload(lines.join('\n'), { locale }), error => error instanceof SwissQrPayloadError &&
+        error.code === code && error.field === field && error.line === line && error.message.includes(message))
+    }
+  }
+})
+
 test('wire framing, reserved positions, checksum, account pairing, lengths and transaction rules report the precise SIX field', () => {
   const invalid = [
     [1, 'SPX', 'header'], [2, '0300', 'version'], [3, '2', 'encoding'], [4, 'CH4431999123000889013', 'iban'],

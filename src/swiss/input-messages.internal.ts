@@ -47,3 +47,19 @@ export const requiredMessages = {
   'it-CH': 'Compila questo campo.',
   'rm-CH': 'Empleni quest champ.',
 } satisfies Record<SwissMessageLocale, string>
+
+export const checkDigitMessages = {
+  'en': 'The format is correct. The check digit does not match. Check the entry against the original document.',
+  'de-CH': 'Das Format ist korrekt. Die Prüfziffer stimmt nicht überein. Vergleichen Sie die Eingabe mit dem Originaldokument.',
+  'fr-CH': 'Le format est correct. Le chiffre de contrôle ne correspond pas. Vérifiez la saisie sur le document original.',
+  'it-CH': 'Il formato è corretto. La cifra di controllo non corrisponde. Ricontrolla i dati sul documento originale.',
+  'rm-CH': 'Il format è correct. La cifra da controlla na correspunda betg. Cumparegliai las datas cun il document original.',
+} satisfies Record<SwissMessageLocale, string>
+
+export const checkDigitPairMessages = {
+  'en': 'The format is correct. The check digits do not match. Check the entry against the original document.',
+  'de-CH': 'Das Format ist korrekt. Die Prüfziffern stimmen nicht überein. Vergleichen Sie die Eingabe mit dem Originaldokument.',
+  'fr-CH': 'Le format est correct. Les chiffres de contrôle ne correspondent pas. Vérifiez la saisie sur le document original.',
+  'it-CH': 'Il formato è corretto. Le cifre di controllo non corrispondono. Ricontrolla i dati sul documento originale.',
+  'rm-CH': 'Il format è correct. Las cifras da controlla na correspundan betg. Cumparegliai las datas cun il document original.',
+} satisfies Record<SwissMessageLocale, string>

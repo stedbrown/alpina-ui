@@ -78,6 +78,12 @@ try {
     await check.click()
     await invalid
     assert.equal(await account.getAttribute('aria-invalid'), 'true')
+    await account.fill('CH9400762011623852957')
+    // Submit from the input so the Server Action supplies the error without a blur handler.
+    const checksum = page.waitForResponse(r => r.request().method() === 'POST' && r.status() === 200)
+    await account.press('Enter')
+    await checksum
+    await page.getByText(/Les chiffres de contrôle ne correspondent pas.*document original/).waitFor()
     await account.fill('ch93 0076 2011 6238 5295 7')
     await check.click()
     await page.getByText('Account verified · 2957').waitFor()
@@ -111,8 +117,8 @@ try {
     await uid.fill('CHE109322552')
     await iban.fill('CH9300762011623852950')
     await submit.click()
-    await page.getByText('Enter a valid nine-digit Swiss business identifier beginning with CHE.').waitFor()
-    await page.getByText('Enter a valid Swiss or Liechtenstein IBAN.').waitFor()
+    await page.getByText(/The check digit does not match.*original document/).waitFor()
+    await page.getByText(/The check digits do not match.*original document/).waitFor()
     assert.equal(await uid.getAttribute('aria-invalid'), 'true')
     assert.equal(await uid.evaluate(node => node === document.activeElement), true)
     await uid.fill('che109322551')

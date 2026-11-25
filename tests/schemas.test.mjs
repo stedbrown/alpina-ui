@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { ahvSchema, echAddressSchema, ibanSchema, phoneSchema, postalCodeSchema, qrIbanSchema, qrrSchema, scorSchema, uidSchema } from 'alpina-ui/swiss/schemas'
-import { swissLocales, toEchMailAddress } from 'alpina-ui'
+import { swissLocales, swissValidationMessage, toEchMailAddress } from 'alpina-ui'
 
 const examples = [
   [ibanSchema, 'ch93 0076 2011 6238 5295 7', 'CH9300762011623852957'],
@@ -30,6 +30,34 @@ test('each Swiss string schema accepts unknown input, returns a canonical value 
     assert.equal(messages.size, 5)
   }
   assert.ok(qrIbanSchema()['~standard'].validate(examples[0][1]).issues)
+})
+
+test('malformed identifiers and incorrect check digits have different localized corrections', () => {
+  const checksumWording = {
+    'en': /check digits? (?:does|do) not match.*original document/i,
+    'de-CH': /Prüfziffern? stimm.*Originaldokument/,
+    'fr-CH': /chiffres? de contrôle.*document original/,
+    'it-CH': /cifr[ae] di controllo.*documento originale/,
+    'rm-CH': /cifras? da controlla.*document original/,
+  }
+  for (const [field, factory, malformed, mistyped] of [
+    ['ahv', ahvSchema, '756.1234.5678', '756.1234.5678.90'],
+    ['iban', ibanSchema, 'DE9300762011623852957', 'CH00 0076 2011 6238 5295 7'],
+    ['qrIban', qrIbanSchema, 'CH9300762011623852957', 'CH45 3199 9123 0008 8901 2'],
+    ['uid', uidSchema, 'CHE-109.322.55A', 'CHE-109.322.552'],
+    ['qrr', qrrSchema, '000000000000000000000000000', '21 00000 00003 13947 14300 09018'],
+    ['scor', scorSchema, 'RFAB 5390 0754 7034', 'RF19 5390 0754 7034'],
+  ]) {
+    for (const locale of [...swissLocales, 'en']) {
+      const validate = factory(locale)['~standard'].validate
+      const checksum = validate(mistyped).issues[0].message
+      assert.match(checksum, checksumWording[locale], field + ' ' + locale)
+      assert.equal(checksum, swissValidationMessage(field, locale, 'checksum'))
+      assert.equal(validate(malformed).issues[0].message, swissValidationMessage(field, locale))
+      assert.notEqual(validate(malformed).issues[0].message, checksum)
+      assert.equal(validate('').issues[0].message, swissValidationMessage('required', locale))
+    }
+  }
 })
 
 test('eCH schema accepts form exports, Swiss post boxes and foreign organisation addresses', () => {

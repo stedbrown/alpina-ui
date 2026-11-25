@@ -1,6 +1,8 @@
 import { qrErrorMessage, type SwissQrErrorCode } from './qr-messages.internal.js'
 import type { SwissMessageLocale } from './locales.js'
-import { compactIban, isQrIban, isSwissIban } from './identifiers.js'
+import { compactIban, isQrIban } from './identifiers.js'
+import { ibanIssue, qrrIssue, scorIssue, type IdentifierIssue } from './identifier-checks.internal.js'
+import { checkDigitMessages, checkDigitPairMessages } from './input-messages.internal.js'
 
 /** A structured address in the Swiss Payments Code (SIX QR-bill IG 2.4). */
 export interface SwissQrAddress {
@@ -36,6 +38,13 @@ export class SwissQrValidationError extends RangeError {
     super(qrErrorMessage(locale, code, field, max))
     this.name = 'SwissQrValidationError'
   }
+}
+
+function assertIdentifier(issue: IdentifierIssue, field: string, code: 'iban' | 'qrr' | 'scor', locale: SwissMessageLocale) {
+  if (!issue) return
+  const error = new SwissQrValidationError(field, code, locale)
+  if (issue === 'checksum') error.message = (code === 'qrr' ? checkDigitMessages : checkDigitPairMessages)[locale]
+  throw error
 }
 
 const countryCodes = new Set(('AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW BY BZ ' +
@@ -77,27 +86,12 @@ function addressLines(value?: SwissQrAddress): string[] {
 
 /** Validates a 27-digit QR reference, including its recursive modulo-10 check digit. */
 export function isQrReference(input: string): boolean {
-  const value = input.replace(/ /g, '')
-  if (!/^\d{27}$/.test(value) || /^0+$/.test(value)) return false
-  const next = [0, 9, 4, 6, 8, 2, 7, 1, 3, 5]
-  let carry = 0
-  for (const digit of value) carry = next[(carry + Number(digit)) % 10]
-  return carry === 0
+  return qrrIssue(input) === undefined
 }
 
 /** Validates an ISO 11649 creditor reference with the ISO 7064 MOD 97-10 check. */
 export function isCreditorReference(input: string): boolean {
-  if (/[^a-zA-Z0-9 ]/.test(input)) return false
-  const value = input.replace(/ /g, '').toUpperCase()
-  if (!/^RF\d{2}[A-Z0-9]{1,21}$/.test(value)) return false
-  const digits = Number(value.slice(2, 4))
-  if (digits < 2 || digits > 98) return false
-  let remainder = 0
-  for (const char of value.slice(4) + value.slice(0, 4)) {
-    const number = char >= 'A' ? char.charCodeAt(0) - 55 : Number(char)
-    remainder = (remainder * (number < 10 ? 10 : 100) + number) % 97
-  }
-  return remainder === 1
+  return scorIssue(input) === undefined
 }
 
 // IG 2.4 §4.4 permits a zero amount only for these exact non-payable notifications.
@@ -122,7 +116,7 @@ function fixedAmount(input: string | number | undefined, message: string, locale
 export function prepareSwissQrBill(bill: SwissQrBillData, locale: SwissMessageLocale = 'en') {
   const { currency } = bill
   if (currency !== 'CHF' && currency !== 'EUR') throw new SwissQrValidationError('currency', 'currency', locale)
-  if (!/^[A-Za-z0-9 ]+$/.test(bill.iban) || !isSwissIban(bill.iban)) throw new SwissQrValidationError('iban', 'iban', locale)
+  assertIdentifier(/^[A-Za-z0-9 ]+$/.test(bill.iban) ? ibanIssue(bill.iban) : 'format', 'iban', 'iban', locale)
   const iban = compactIban(bill.iban)
   const type = bill.reference?.type ?? 'NON'
   const rawReference = bill.reference?.value ?? ''
@@ -131,8 +125,8 @@ export function prepareSwissQrBill(bill: SwissQrBillData, locale: SwissMessageLo
   if (!['NON', 'QRR', 'SCOR'].includes(type)) throw new SwissQrValidationError('reference.type', 'referenceType', locale)
   if (isQrIban(iban) !== (type === 'QRR')) throw new SwissQrValidationError('reference.type', 'referencePair', locale)
   if (type === 'QRR' && currency !== 'CHF') throw new SwissQrValidationError('currency', 'qrr', locale)
-  if (type === 'QRR' && !isQrReference(reference)) throw new SwissQrValidationError('reference.value', 'qrr', locale)
-  if (type === 'SCOR' && !isCreditorReference(reference)) throw new SwissQrValidationError('reference.value', 'scor', locale)
+  if (type === 'QRR') assertIdentifier(qrrIssue(reference), 'reference.value', 'qrr', locale)
+  if (type === 'SCOR') assertIdentifier(scorIssue(reference), 'reference.value', 'scor', locale)
   if (type === 'NON' && reference) throw new SwissQrValidationError('reference.value', 'non', locale)
   const message = field(bill.message, 'message', locale, 140)
   const amount = fixedAmount(bill.amount, message, locale)

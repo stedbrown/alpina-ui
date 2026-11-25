@@ -1657,10 +1657,22 @@ export interface IbanInputProps extends SwissIdentifierInputProps {
 export declare const IbanInput: import("react").ForwardRefExoticComponent<IbanInputProps & import("react").RefAttributes<HTMLInputElement>>;
 ~~~
 
+## swiss/identifier-checks.internal.d.ts
+~~~ts
+export type IdentifierIssue = "format" | "checksum" | undefined;
+export declare const compactIban: (value: string) => string;
+export declare function ibanIssue(value: string, requireQr?: boolean): IdentifierIssue;
+export declare function ahvIssue(value: string): IdentifierIssue;
+export declare function uidIssue(value: string): IdentifierIssue;
+export declare function qrrIssue(input: string): IdentifierIssue;
+export declare function scorIssue(input: string): IdentifierIssue;
+~~~
+
 ## swiss/identifier-field.d.ts
 Client entry.
 ~~~ts
 import { type ComponentPropsWithoutRef } from 'react';
+import type { IdentifierIssue } from './identifier-checks.internal.js';
 import type { SwissMessageLocale } from './locales.js';
 export interface SwissIdentifierInputProps extends Omit<ComponentPropsWithoutRef<"input">, "type" | "value" | "defaultValue" | "children"> {
     value?: string;
@@ -1671,7 +1683,8 @@ export interface SwissIdentifierInputProps extends Omit<ComponentPropsWithoutRef
 interface IdentifierFieldProps extends SwissIdentifierInputProps {
     type?: "text" | "tel";
     messages: Readonly<Record<SwissMessageLocale, string>>;
-    validate: (value: string) => boolean;
+    validate: (value: string) => IdentifierIssue | boolean;
+    checksumMessages?: Readonly<Record<SwissMessageLocale, string>>;
     format: (value: string) => string;
 }
 export declare const IdentifierField: import("react").ForwardRefExoticComponent<IdentifierFieldProps & import("react").RefAttributes<HTMLInputElement>>;
@@ -1680,7 +1693,7 @@ export {};
 
 ## swiss/identifiers.d.ts
 ~~~ts
-export declare const compactIban: (value: string) => string;
+export { compactIban } from './identifier-checks.internal.js';
 export declare function isSwissIban(value: string): boolean;
 export declare function isQrIban(value: string): boolean;
 export declare function formatSwissIban(value: string): string;
@@ -2193,8 +2206,8 @@ export declare const UidInput: import("react").ForwardRefExoticComponent<UidInpu
 ~~~ts
 import type { SwissMessageLocale } from './locales.js';
 export type { SwissMessageLocale } from './locales.js';
-export type SwissValidationField = "iban" | "ahv" | "uid" | "phone" | "postalCode" | "required";
-export declare function swissValidationMessage(field: SwissValidationField, locale?: SwissMessageLocale): string;
+export type SwissValidationField = "iban" | "ahv" | "uid" | "phone" | "postalCode" | "required" | "qrIban" | "qrr" | "scor";
+export declare function swissValidationMessage(field: SwissValidationField, locale?: SwissMessageLocale, reason?: "format" | "checksum"): string;
 ~~~
 
 ## ui/accounting-values.d.ts

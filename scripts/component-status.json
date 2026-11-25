@@ -7,7 +7,7 @@
   "ahv-input": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "c75d5c30d2d7df9c85c8"
+    "source": "2a03a4059a06e0d7575d"
   },
   "alert": {
     "stage": "Stable",
@@ -212,7 +212,7 @@
   "iban-input": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "6d9a05547b1b4c275da5"
+    "source": "23f69632817aaaf34451"
   },
   "icon": {
     "stage": "Stable",
@@ -237,7 +237,7 @@
   "invoice-document": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "387dc869d651146fdaf9"
+    "source": "36b83e5931a6b3104f6b"
   },
   "item": {
     "stage": "Stable",
@@ -312,7 +312,7 @@
   "phone-input": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "c325beff55b4360da2fe"
+    "source": "3aa69e36bc94191048e0"
   },
   "popover": {
     "stage": "Stable",
@@ -332,7 +332,7 @@
   "qr-bill-scanner": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "22c75fe9985cf8703943"
+    "source": "31fc57be9dcb47c4cea5"
   },
   "questionnaire": {
     "stage": "Stable",
@@ -407,7 +407,7 @@
   "swiss-address-form": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "01536651ad12e24d0366"
+    "source": "1d91ea4fdc3cfcbd8049"
   },
   "swiss-date": {
     "stage": "Stable",
@@ -417,12 +417,12 @@
   "swiss-postal-code-input": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "800635ee4f5d7b1486ae"
+    "source": "72145dc807c39bbe487c"
   },
   "swiss-qr-bill": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "a119ffc55c9ae08e9ea0"
+    "source": "3d1207808276782e4212"
   },
   "switch": {
     "stage": "Stable",
@@ -482,6 +482,6 @@
   "uid-input": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "d0af718eebeb9d3e1f74"
+    "source": "9dac82bcb957485f543b"
   }
 }

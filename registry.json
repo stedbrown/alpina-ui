@@ -1008,6 +1008,7 @@
         "swiss/postal-address.ts",
         "swiss/swiss-postal-code-input.tsx",
         "swiss/identifier-field.tsx",
+        "swiss/identifier-checks.internal.ts",
         "swiss/input-messages.internal.ts",
         "swiss/swiss-address-form.css"
       ]
@@ -1106,6 +1107,7 @@
         "theme.css",
         "swiss/swiss-postal-code-input.tsx",
         "swiss/identifier-field.tsx",
+        "swiss/identifier-checks.internal.ts",
         "swiss/input-messages.internal.ts",
         "swiss/locales.ts",
         "ui/input.tsx",
@@ -1149,6 +1151,7 @@
       "files": [
         "theme.css",
         "swiss/iban-input.tsx",
+        "swiss/identifier-checks.internal.ts",
         "swiss/input-messages.internal.ts",
         "swiss/locales.ts",
         "swiss/identifier-field.tsx",
@@ -1165,6 +1168,7 @@
       "files": [
         "theme.css",
         "swiss/ahv-input.tsx",
+        "swiss/identifier-checks.internal.ts",
         "swiss/input-messages.internal.ts",
         "swiss/locales.ts",
         "swiss/identifier-field.tsx",
@@ -1184,6 +1188,7 @@
         "swiss/input-messages.internal.ts",
         "swiss/locales.ts",
         "swiss/identifier-field.tsx",
+        "swiss/identifier-checks.internal.ts",
         "ui/input.tsx",
         "ui/input.css",
         "swiss/identifiers.ts"
@@ -1197,6 +1202,7 @@
       "files": [
         "theme.css",
         "swiss/uid-input.tsx",
+        "swiss/identifier-checks.internal.ts",
         "swiss/input-messages.internal.ts",
         "swiss/locales.ts",
         "swiss/identifier-field.tsx",
@@ -1237,6 +1243,8 @@
         "swiss/qr-messages.internal.ts",
         "swiss/locales.ts",
         "swiss/identifiers.ts",
+        "swiss/identifier-checks.internal.ts",
+        "swiss/input-messages.internal.ts",
         "swiss/qr-matrix.ts",
         "swiss/swiss-qr-bill.css",
         "swiss/invoice-totals.ts",
@@ -1281,6 +1289,8 @@
         "swiss/qr-payment.ts",
         "swiss/qr-messages.internal.ts",
         "swiss/identifiers.ts",
+        "swiss/identifier-checks.internal.ts",
+        "swiss/input-messages.internal.ts",
         "swiss/parse-swiss-qr-payload.ts",
         "swiss/qr-reader.internal.ts",
         "swiss/qr-reader-loader.internal.ts",
@@ -1303,6 +1313,8 @@
         "swiss/qr-messages.internal.ts",
         "swiss/locales.ts",
         "swiss/identifiers.ts",
+        "swiss/identifier-checks.internal.ts",
+        "swiss/input-messages.internal.ts",
         "swiss/qr-matrix.ts",
         "swiss/swiss-qr-bill.css"
       ]

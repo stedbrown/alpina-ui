@@ -1,23 +1,13 @@
-/** Normalize conventional spacing and letter case without discarding invalid characters. */
-export const compactIban = (value: string): string => value.replace(/\s/gu, '').toUpperCase()
+import { ahvIssue, compactIban, ibanIssue, uidIssue } from './identifier-checks.internal.js'
+
+export { compactIban } from './identifier-checks.internal.js'
 
 export function isSwissIban(value: string): boolean {
-  const iban = compactIban(value)
-  if (!/^(?:CH|LI)\d{7}[A-Z0-9]{12}$/.test(iban)) return false
-  const check = Number(iban.slice(2, 4))
-  if (check < 2 || check > 98) return false
-  let remainder = 0
-  for (const char of iban.slice(4) + iban.slice(0, 4)) {
-    const digit = parseInt(char, 36)
-    remainder = (remainder * (digit < 10 ? 10 : 100) + digit) % 97
-  }
-  return remainder === 1
+  return ibanIssue(value) === undefined
 }
 
 export function isQrIban(value: string): boolean {
-  const iban = compactIban(value)
-  const iid = Number(iban.slice(4, 9))
-  return isSwissIban(iban) && iid >= 30000 && iid <= 31999
+  return ibanIssue(value, true) === undefined
 }
 
 export function formatSwissIban(value: string): string {
@@ -25,9 +15,7 @@ export function formatSwissIban(value: string): string {
 }
 
 export function isAhvNumber(value: string): boolean {
-  const digits = value.replace(/[.\s]/gu, '')
-  if (!/^756\d{10}$/.test(digits)) return false
-  return [...digits].reduce((sum, d, index) => sum + Number(d) * (index % 2 ? 3 : 1), 0) % 10 === 0
+  return ahvIssue(value) === undefined
 }
 
 export function formatAhvNumber(value: string): string {
@@ -38,12 +26,7 @@ export function formatAhvNumber(value: string): string {
 
 /** Validate the nine digits of a CHE identifier according to eCH-0108. */
 export function isSwissUid(value: string): boolean {
-  const match = /^CHE-?([1-9]\d{2})\.?(\d{3})\.?(\d{3})$/i.exec(value.trim())
-  if (!match) return false
-  const digits = match.slice(1).join('')
-  const weights = [5, 4, 3, 2, 7, 6, 5, 4]
-  const sum = weights.reduce((total, weight, index) => total + Number(digits[index]) * weight, 0)
-  return (11 - sum % 11) % 11 === Number(digits[8])
+  return uidIssue(value) === undefined
 }
 
 export function formatSwissUid(value: string): string {

@@ -16,6 +16,7 @@ process.chdir(fileURLToPath(new URL('../', import.meta.url)))
 const guides = {}
 const componentGuidance = JSON.parse(await readFile('docs/component-guidance.json', 'utf8'))
 const guideFiles = {
+  'beta-review': 'docs/beta-review.md',
   coverage: 'docs/coverage.md',
   'migrate-1-0': 'docs/migrate-1-0.md',
   migration: 'docs/migration.md',

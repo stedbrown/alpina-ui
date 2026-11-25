@@ -76,6 +76,7 @@ const demos = {
   IconExample,
 }
 const guideNames: Record<string, string> = {
+  'beta-review': 'Beta review for 1.0',
   research: 'Research and sources',
   design: 'Measurements and grids',
   start: 'Quick start',
@@ -97,7 +98,7 @@ const guideNames: Record<string, string> = {
   coverage: 'Comparison with shadcn/ui',
 }
 const guideGroups = [
-  { title: 'Get started', keys: ['start', 'migration', 'cli', 'release', 'migrate-1-0', 'api-stability'] },
+  { title: 'Get started', keys: ['start', 'migration', 'cli', 'release', 'migrate-1-0', 'api-stability', 'beta-review'] },
   { title: 'Design', keys: ['design', 'research'] },
   {
     title: 'Guides',

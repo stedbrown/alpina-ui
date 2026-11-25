@@ -17,6 +17,7 @@ export function ComponentStatus({ records }: { records: ComponentRecord[] }) {
       <Grid as="section" width="site" space="compact" aria-label="Component release status">
         <GridItem medium={3} large={4}>
           <Typography measure="reading">Dates track changes to the component, its styles or its implementation dependencies.</Typography>
+          <TextLink href="/docs/guides/beta-review/">Read the 1.0 Beta recommendations</TextLink>
         </GridItem>
         <GridItem medium={5} large={8}>
           <Table aria-label="Component release status">

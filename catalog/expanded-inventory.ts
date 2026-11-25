@@ -1,5 +1,33 @@
 export const expanded = [
   [
+    "iban-input",
+    "IbanInput",
+    "Swiss bank account",
+    "Swiss localization",
+    "Validate CH and LI accounts and group the IBAN in fours."
+  ],
+  [
+    "ahv-input",
+    "AhvInput",
+    "AHV number",
+    "Swiss localization",
+    "Check the Swiss social insurance number and its EAN-13 checksum."
+  ],
+  [
+    "phone-input",
+    "PhoneInput",
+    "Swiss telephone number",
+    "Swiss localization",
+    "Accept domestic and international input and display a Swiss +41 number."
+  ],
+  [
+    "swiss-qr-bill",
+    "SwissQrBill",
+    "QR payment slip",
+    "Swiss localization",
+    "Prepare a SIX QR-bill payment part and receipt with a scannable Swiss QR Code."
+  ],
+  [
     "aspect-ratio",
     "AspectRatio",
     "Aspect ratio",

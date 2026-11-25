@@ -1,0 +1,136 @@
+.al-qr-bill {
+  max-inline-size: 100%;
+  overflow-x: auto;
+  color-scheme: light;
+}
+.al-qr-bill:focus-visible { outline: 2px solid var(--al-focus); outline-offset: -2px; }
+
+/* SIX QR-bill 2.4, sections 3.1–3.6. All coordinates are physical print units. */
+.al-bill-slip {
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  width: 210mm;
+  height: 105mm;
+  display: grid;
+  grid-template-columns: 62mm 148mm;
+  color: #000;
+  background: #fff;
+  font: normal 10pt/1.12 Arial, Helvetica, 'Liberation Sans', sans-serif;
+  text-align: left;
+  text-transform: none;
+  letter-spacing: normal;
+  word-spacing: normal;
+  font-variant-numeric: tabular-nums;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+.al-bill-slip :is(h2, dl, dt, dd) { margin: 0; padding: 0; }
+.al-bill-slip :is(section, dl, .al-bill-entry, dd) { min-width: 0; }
+.al-bill-slip > section { position: relative; }
+.al-bill-slip h2 {
+  position: absolute;
+  top: 5mm;
+  left: 5mm;
+  font: bold 11pt/1.1 Arial, Helvetica, 'Liberation Sans', sans-serif;
+}
+.al-bill-slip::before,
+.al-bill-receipt::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}
+.al-bill-slip::before { inset: 0 0 auto; border-top: .2mm dashed #000; }
+.al-bill-receipt::after { inset: 0 0 0 auto; border-right: .2mm dashed #000; }
+.al-bill-slip::after,
+.al-bill-receipt::before {
+  content: '✂︎';
+  position: absolute;
+  z-index: 2;
+  background: #fff;
+  color: #000;
+  line-height: 1;
+  font-size: 9pt;
+}
+.al-bill-slip::after { top: 0; left: 3mm; }
+.al-bill-receipt::before { top: 5mm; right: 0; transform: translateX(50%) rotate(90deg); }
+.al-bill-slip dt, .al-bill-accept { font-weight: 700; }
+.al-bill-slip dd { overflow-wrap: anywhere; }
+.al-bill-entry dd > span { display: block; }
+.al-bill-details {
+  position: absolute;
+  display: grid;
+  align-content: start;
+  gap: 2mm;
+}
+.al-bill-receipt {
+  --al-bill-label: 6pt;
+  font-size: 8pt;
+  box-sizing: border-box;
+  padding: 5mm;
+  display: grid;
+  grid-template-rows: 7mm minmax(56mm, max-content) minmax(14mm, max-content) 1fr;
+}
+.al-bill-receipt h2, .al-bill-receipt .al-bill-details { position: static; }
+.al-bill-receipt .al-bill-details { gap: 1mm; line-height: 1; }
+.al-bill-payment { --al-bill-label: 8pt; }
+.al-bill-payment[data-dense] { --al-bill-label: 6pt; font-size: 8pt; line-height: 1; }
+.al-bill-payment[data-dense] .al-bill-details { gap: .75mm; }
+.al-bill-payment .al-bill-details { top: 5mm; left: 56mm; right: 5mm; }
+.al-bill-slip dt { font-size: var(--al-bill-label); line-height: 1.1; }
+.al-bill-slip .al-bill-qr {
+  position: absolute;
+  left: 5mm;
+  top: 17mm;
+  width: 46mm;
+  height: 46mm;
+  display: block;
+}
+.al-bill-blank { display: block; max-width: none; }
+.al-bill-slip .al-bill-amount {
+  position: absolute;
+  left: 5mm;
+  top: 68mm;
+  display: flex;
+  align-items: flex-start;
+  gap: 2mm;
+}
+.al-bill-amount dd { white-space: nowrap; }
+.al-bill-receipt .al-bill-amount { position: static; align-self: start; }
+.al-bill-accept { text-align: right; font-size: 6pt; }
+.al-bill-procedures { position: absolute; left: 5mm; right: 5mm; top: 90mm; font-size: 7pt; }
+.al-bill-procedures > div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+@page alpina-qr-sheet { size: A4 portrait; margin: 0; }
+@media print {
+  body:has(.al-qr-bill[data-print-layout='page']) { margin: 0; }
+  [data-al-qr-print-path] > :not([data-al-qr-print-path], [data-al-qr-print-target]),
+  [data-al-qr-print-path]::before, [data-al-qr-print-path]::after { display: none !important; }
+  body [data-al-qr-print-path] { display: contents !important; }
+  :is(html, body)[data-al-qr-print-path] {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .al-qr-bill {
+    overflow: visible;
+    max-inline-size: none;
+    width: 210mm;
+    break-inside: avoid;
+    outline: 0;
+  }
+  .al-qr-bill:is([data-print-layout='page'], [data-al-qr-print-target]) {
+    page: alpina-qr-sheet;
+    height: 297mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    break-before: page;
+    break-after: page;
+  }
+  .al-bill-slip { flex: none; }
+}

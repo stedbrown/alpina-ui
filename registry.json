@@ -971,6 +971,63 @@
       ]
     },
     {
+      "name": "iban-input",
+      "group": "swiss",
+      "entry": "swiss/iban-input.tsx",
+      "usage": "Use for Swiss and Liechtenstein accounts. Valid accounts are grouped on blur. Use isSwissIban and compactIban on submitted values.",
+      "files": [
+        "theme.css",
+        "swiss/iban-input.tsx",
+        "swiss/identifier-field.tsx",
+        "ui/input.tsx",
+        "ui/input.css",
+        "swiss/identifiers.ts"
+      ]
+    },
+    {
+      "name": "ahv-input",
+      "group": "swiss",
+      "entry": "swiss/ahv-input.tsx",
+      "usage": "Accept 13 digits beginning with 756. The component validates the EAN-13 check digit and groups a valid number on blur. Pass validationMessage to localize native form errors.",
+      "files": [
+        "theme.css",
+        "swiss/ahv-input.tsx",
+        "swiss/identifier-field.tsx",
+        "ui/input.tsx",
+        "ui/input.css",
+        "swiss/identifiers.ts"
+      ]
+    },
+    {
+      "name": "phone-input",
+      "group": "swiss",
+      "entry": "swiss/phone-input.tsx",
+      "usage": "Accept ordinary nine-digit Swiss national numbers, domestic trunk prefixes and international +41 or 0041 input. Format valid entries on blur. Short service codes use a separate field.",
+      "files": [
+        "theme.css",
+        "swiss/phone-input.tsx",
+        "swiss/identifier-field.tsx",
+        "ui/input.tsx",
+        "ui/input.css",
+        "swiss/identifiers.ts"
+      ]
+    },
+    {
+      "name": "swiss-qr-bill",
+      "group": "swiss",
+      "entry": "swiss/swiss-qr-bill.tsx",
+      "usage": "Supply a structured creditor address, a Swiss or Liechtenstein IBAN and a compatible reference. Use printSwissQrBill with the component ref to print one payment slip on A4 at actual size.",
+      "files": [
+        "theme.css",
+        "swiss/swiss-qr-bill.tsx",
+        "swiss/qr-payment.ts",
+        "swiss/identifiers.ts",
+        "swiss/qr-matrix.ts",
+        "swiss/locales.ts",
+        "swiss/swiss-qr-bill.css"
+      ]
+    },
+    {
       "name": "calendar",
       "group": "swiss",
       "entry": "swiss/calendar.tsx",

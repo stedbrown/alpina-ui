@@ -76,8 +76,8 @@ const names = [
   "Typography"
 ]
 const supplemental = [
-  'app-shell', 'canton-combobox', 'canton-select', 'currency-chf', 'description-list', 'figure', 'grid', 'icon',
-  'locale-select', 'prose', 'stack', 'steps', 'swiss-address-form', 'swiss-date', 'swiss-postal-code-input', 'text-link',
+  'ahv-input', 'app-shell', 'canton-combobox', 'canton-select', 'currency-chf', 'description-list', 'figure', 'grid', 'iban-input', 'icon',
+  'locale-select', 'phone-input', 'prose', 'stack', 'steps', 'swiss-address-form', 'swiss-date', 'swiss-postal-code-input', 'swiss-qr-bill', 'text-link',
 ]
 
 test('the 66 documented names resolve to published entries and public React exports', () => {
@@ -98,5 +98,5 @@ test('the 66 documented names resolve to published entries and public React expo
   }
   const covered = new Set(rows.map(([, , slug]) => slug))
   assert.deepEqual([...installed.keys()].filter((slug) => !covered.has(slug)).sort(), supplemental)
-  assert.equal(registry.items.length, 82)
+  assert.equal(registry.items.length, 86)
 })

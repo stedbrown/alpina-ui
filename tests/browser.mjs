@@ -76,7 +76,7 @@ try {
   const metrics = main.locator('.sp-measures dd')
   assert.equal(await gridButton.getAttribute('aria-pressed'), 'false')
   assert.equal(await guideLayer.count(), 0)
-  assert.equal(registry.items.length, 82)
+  assert.equal(registry.items.length, 86)
   assert.equal(await page.locator('#index-list a').count(), registry.items.length)
 
   for (const screen of [1440, 768, 390]) {
@@ -256,6 +256,7 @@ try {
     'core',
     'interactive',
     'swiss',
+    'qr-bill',
     'design',
     'research',
     'portal',
@@ -293,7 +294,7 @@ try {
   console.log(
     'Offline catalog passed: ' + registry.items.length + ' previews, ' +
       inspected.size +
-      ' source files, 15 guides, the 4/8/12-column specimen and the address book.',
+      ' source files, 16 guides, the 4/8/12-column specimen and the address book.',
   )
 } finally {
   await browser.close()

@@ -27,6 +27,7 @@ const guideFiles = {
   design: 'docs/design.md',
   interactive: 'docs/interactive.md',
   swiss: 'docs/swiss.md',
+  'qr-bill': 'docs/qr-bill.md',
 }
 for (const [key, file] of Object.entries(guideFiles)) {
   guides[key] = (await marked.parse(await readFile(file, 'utf8'))).replace(
@@ -44,6 +45,7 @@ for (const file of [
   ),
   'catalog/stack-example.tsx',
   'catalog/icon-example.tsx',
+  'catalog/payment-examples.tsx',
   'catalog/composition-examples.tsx',
   'catalog/demos.tsx',
   'catalog/address-example.tsx',

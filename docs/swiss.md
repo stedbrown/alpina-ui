@@ -116,3 +116,10 @@ When a runtime lacks Romansh data, Alpina uses Unicode CLDR 48 patterns for CHF 
 ## Filter across all cantons
 
 Use `CantonSelect allLabel="All cantons"` to let users return to the initial choice after selecting one canton. For a German page, pass a label such as “Alle Kantone.” Read `event.currentTarget.value` in `onChange` for the abbreviation or the empty string. `onCantonChange` still reports only canton codes. `allLabel` takes precedence over `placeholder`. When you omit `allLabel`, the ordinary form placeholder retains its behavior.
+## Bank accounts, insurance numbers and telephone numbers
+
+Use `IbanInput` for 21-character CH and LI accounts. `isSwissIban` checks the country, account structure and modulo-97 check digits. `compactIban` prepares a validated value for storage. A valid checksum establishes the structure of the identifier. Account ownership requires a separate verification process. [SIX IBAN guidance](https://www.six-group.com/en/products-services/banking-services/payment-standardization/standards/iban.html)
+
+`AhvInput` validates the 756 prefix and EAN-13 check digit, then groups the 13 digits for reading. `PhoneInput` accepts a nine-digit national number, its domestic trunk prefix or the international +41 or 0041 prefix. Both format valid entries on blur. Invalid drafts stay visible for correction. Use `validationMessage` for translated native form errors and the exported validation helpers when processing submissions. [Central Compensation Office](https://www.zas.admin.ch/de/ahv-nummer-identifikator) · [OFCOM telephone numbering](https://www.bakom.admin.ch/de/telefonnummern)
+
+`SwissQrBill` renders a payment part and receipt. The QR-bill guide describes reference types, structured addresses and printing. [Swiss QR-bill guide](https://alpina-ui.vercel.app/docs/guides/qr-bill/)

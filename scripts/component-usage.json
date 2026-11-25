@@ -1,4 +1,8 @@
 {
+  "iban-input": "Use for Swiss and Liechtenstein accounts. Valid accounts are grouped on blur. Use isSwissIban and compactIban on submitted values.",
+  "ahv-input": "Accept 13 digits beginning with 756. The component validates the EAN-13 check digit and groups a valid number on blur. Pass validationMessage to localize native form errors.",
+  "phone-input": "Accept ordinary nine-digit Swiss national numbers, domestic trunk prefixes and international +41 or 0041 input. Format valid entries on blur. Short service codes use a separate field.",
+  "swiss-qr-bill": "Supply a structured creditor address, a Swiss or Liechtenstein IBAN and a compatible reference. Use printSwissQrBill with the component ref to print one payment slip on A4 at actual size.",
   "accordion": "Use a question or section name as each trigger. The full header is clickable, long labels wrap, and arrow keys move between headers without opening them.",
   "alert": "Choose a heading level that fits the surrounding page. Reserve a live announcement for information that appears after an action. The visible symbol and text also communicate the tone.",
   "alert-dialog": "Give the confirmation a specific action label. Initial focus goes to Cancel. Clicking the backdrop leaves the decision open.",

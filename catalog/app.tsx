@@ -24,6 +24,7 @@ import 'alpina-ui/styles.css'
 import { inventory, type Item } from './inventory.js'
 import { bilingualProject, clientProject, componentHref, guideHref, workflowProjects, type WorkflowProject } from './paths.js'
 import * as baseExamples from './demos.js'
+import * as paymentExamples from './payment-examples.js'
 import * as dataExamples from './data-examples.js'
 import * as designExamples from './design-examples.js'
 import * as elements from './elements-v3.js'
@@ -60,6 +61,7 @@ import './examples.css'
 const demos = {
   ...composition,
   ...baseExamples,
+  ...paymentExamples,
   ...dataExamples,
   ...designExamples,
   ...elements,
@@ -85,6 +87,7 @@ const guideNames: Record<string, string> = {
   actions: 'Menus and dialogs',
   workflows: 'Forms and workflows',
   swiss: 'Swiss formats',
+  'qr-bill': 'Swiss QR-bill',
   coverage: 'Comparison with shadcn/ui',
 }
 const guideGroups = [
@@ -92,7 +95,7 @@ const guideGroups = [
   { title: 'Design', keys: ['design', 'research'] },
   {
     title: 'Guides',
-    keys: ['core', 'elements', 'interactive', 'actions', 'workflows', 'swiss', 'portal', 'directory', 'coverage'],
+    keys: ['core', 'elements', 'interactive', 'actions', 'workflows', 'swiss', 'qr-bill', 'portal', 'directory', 'coverage'],
   },
 ]
 // Keep links to bundled guides and component previews inside the single-file catalog.
@@ -173,7 +176,7 @@ function Workbench({
   const Demo = demos[key]
   const source = sources[key]
   const guide =
-    key in elements
+    id === 'swiss-qr-bill' ? 'qr-bill' : key in elements
       ? 'elements'
       : key in actions
         ? 'actions'

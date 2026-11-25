@@ -5,6 +5,7 @@ import * as api from '../dist/index.js'
 
 const registry = JSON.parse(await readFile(new URL('../registry.json', import.meta.url), 'utf8'))
 const guide = await readFile(new URL('../docs/coverage.md', import.meta.url), 'utf8')
+const migration = await readFile(new URL('../docs/migration.md', import.meta.url), 'utf8')
 // Snapshot of the official All Components section, read on 2026-11-24.
 const names = [
   "Accordion",
@@ -82,6 +83,9 @@ const supplemental = [
 test('the 66 documented names resolve to published entries and public React exports', () => {
   const rows = [...guide.matchAll(/^\| ([^|]+?) \| `([a-z-]+)` \| `(\w+)` \| (\w+) \|$/gm)]
   assert.deepEqual(rows.map(([, name]) => name), names)
+  const mappings = [...migration.matchAll(/^\| ([^|]+?) \| \[(\w+)\]\(https:\/\/alpina-ui\.vercel\.app\/docs\/components\/([\w-]+)\/\) \| (.+?) \|$/gm)]
+  assert.deepEqual(mappings.map(([, name, component, slug]) => [name, slug, component]),
+    rows.map(([, name, slug, component]) => [name, slug, component]))
   const installed = new Map(registry.items.map((entry) => [entry.name, entry]))
   for (const [, name, slug, component, group] of rows) {
     assert.equal(slug, name.toLowerCase().replaceAll(' ', '-'))

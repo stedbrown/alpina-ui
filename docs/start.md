@@ -8,6 +8,8 @@ Find a component by name or task, or try a complete workflow before installing. 
 
 ## Install the package
 
+If your application uses shadcn/ui, the migration guide shows how to keep both libraries in one project, connect Tailwind v4, and port each component family. [From shadcn/ui to Alpina](https://alpina-ui.vercel.app/docs/guides/migration/)
+
 In a React 18.2 or 19 project with Node.js 20 or later, download the package from the portal, move `alpina-ui-0.8.0.tgz` to the project root, and install it.
 
 ```sh

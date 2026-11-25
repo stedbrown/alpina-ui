@@ -28,8 +28,9 @@ test('stdio client can discover and read the installed registry, types, source a
     call(5, 'get_component', { name: 'dropdown-menu', file: 'interactive/action-list.tsx' }),
     call(6, 'get_guide', {}), call(7, 'get_guide', { slug: 'directory' }),
     call(8, 'search_components', {}),
+    call(9, 'get_guide', { slug: 'migration' }),
   ])
-  assert.deepEqual(replies.map((r) => r.id), [1, 2, 3, 4, 5, 6, 7, 8])
+  assert.deepEqual(replies.map((r) => r.id), [1, 2, 3, 4, 5, 6, 7, 8, 9])
   const result = replies.map((r) => r.result)
   assert.equal(result[0].protocolVersion, hello.params.protocolVersion)
   assert.equal(result[0].serverInfo.version, JSON.parse(read('registry.json')).version)
@@ -41,6 +42,8 @@ test('stdio client can discover and read the installed registry, types, source a
   assert.ok(result[5].content[0].text.split('\n').includes('agents'))
   assert.equal(result[6].content[0].text, read('docs/directory.md'))
   assert.equal(result[7].content[0].text.split('\n').length, JSON.parse(read('registry.json')).items.length)
+  assert.ok(result[5].content[0].text.split('\n').includes('migration'))
+  assert.equal(result[8].content[0].text, read('docs/migration.md'))
 })
 
 test('modern stdio discovery and tool calls work without a handshake', () => {

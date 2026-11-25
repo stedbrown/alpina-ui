@@ -23,6 +23,7 @@
     },
     "./styles.css": "./dist/styles.css",
     "./fonts.css": "./src/fonts.css",
+    "./tailwind.css": "./src/tailwind.css",
     "./styles/*": "./dist/styles/*",
     "./theme.css": "./src/theme.css",
     "./registry.json": "./registry.json",
@@ -69,6 +70,7 @@
     "playwright-core": "^1.55.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "tailwindcss": "^4.3.5",
     "typescript": "~5.9.0"
   },
   "scripts": {

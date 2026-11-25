@@ -75,7 +75,8 @@ const guideNames: Record<string, string> = {
   design: 'Measurements and grids',
   start: 'Quick start',
   cli: 'Compare source files',
-  release: 'Migration notes',
+  release: 'Alpina upgrade notes',
+  migration: 'From shadcn/ui to Alpina',
   directory: 'Bilingual address book',
   portal: 'Build the portal',
   core: 'Foundations',
@@ -87,13 +88,19 @@ const guideNames: Record<string, string> = {
   coverage: 'Comparison with shadcn/ui',
 }
 const guideGroups = [
-  { title: 'Get started', keys: ['start', 'cli', 'release'] },
+  { title: 'Get started', keys: ['start', 'migration', 'cli', 'release'] },
   { title: 'Design', keys: ['design', 'research'] },
   {
     title: 'Guides',
     keys: ['core', 'elements', 'interactive', 'actions', 'workflows', 'swiss', 'portal', 'directory', 'coverage'],
   },
 ]
+// Keep links to bundled guides and component previews inside the single-file catalog.
+function guideContent(html: string, hosted: boolean) {
+  if (hosted) return html
+  return html.replace(/href="https:\/\/alpina-ui\.vercel\.app\/docs\/(components|guides)\/([\w-]+)\/"/g,
+    (_, section, slug) => 'href="' + (section === 'guides' ? guideHref(slug, false) : componentHref(slug, false)) + '"')
+}
 const pathname = location.pathname.replace(/(?:\/index\.html)?\/?$/, '')
 const [, pageType, pageId] = /^\/docs\/(guides|components)\/([\w-]+)$/.exec(pathname) ?? []
 const hostedDocs = pathname === '/docs' || !!pageId
@@ -480,9 +487,9 @@ function App() {
             />
           )}
           {guide === 'start' ? (
-            <InstallGuide html={guides.start} />
+            <InstallGuide html={guideContent(guides.start, hostedDocs)} />
           ) : (
-            <Prose className="guide-content" dangerouslySetInnerHTML={{ __html: guides[guide] }} />
+            <Prose className="guide-content" dangerouslySetInnerHTML={{ __html: guideContent(guides[guide], hostedDocs) }} />
           )}
           {guide === 'directory' && <DirectorySource files={directorySources} hosted={hostedDocs} />}
         </>

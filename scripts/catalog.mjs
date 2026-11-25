@@ -13,6 +13,7 @@ process.chdir(fileURLToPath(new URL('../', import.meta.url)))
 const guides = {}
 const guideFiles = {
   coverage: 'docs/coverage.md',
+  migration: 'docs/migration.md',
   research: 'docs/research.md',
   portal: 'docs/portal.md',
   elements: 'docs/elements-v3.md',

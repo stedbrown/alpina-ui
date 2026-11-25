@@ -263,6 +263,7 @@ try {
     'actions',
     'workflows',
     'coverage',
+    'migration',
     'cli',
     'release',
     'directory',
@@ -282,13 +283,17 @@ try {
       '#guide/' + name,
     )
     assert.ok((await guide.innerText()).length > 400)
+    if (name === 'migration') {
+      assert.equal(await guide.getByRole('link', { name: 'DataTable', exact: true }).getAttribute('href'), '#data-table')
+      assert.equal(await guide.locator('table a[href^="#"]').count(), 66)
+    }
     await fits('Guide ' + name)
   }
   assert.deepEqual(errors, [])
   console.log(
     'Offline catalog passed: ' + registry.items.length + ' previews, ' +
       inspected.size +
-      ' source files, 14 guides, the 4/8/12-column specimen and the address book.',
+      ' source files, 15 guides, the 4/8/12-column specimen and the address book.',
   )
 } finally {
   await browser.close()

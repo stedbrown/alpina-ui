@@ -8,7 +8,13 @@ license: MIT
 
 Start with the version used by the application. Package imports and editable component copies are both supported. Follow the convention already present in the project.
 
-For a project that has yet to install Alpina, the public agent index links to the installation guide, component registry and Markdown guides. [Alpina agent index](https://alpinaui.com/llms.txt)
+For a new project install the publicly hosted release archive. The URL pins the version in the application's lockfile.
+
+```sh
+npm install https://alpinaui.com/alpina-ui-1.0.0-rc.5.tgz
+```
+
+The public index links to the installation guide, component registry and Markdown guides. [Alpina agent index](https://alpinaui.com/llms.txt)
 
 ## Find the actual API
 

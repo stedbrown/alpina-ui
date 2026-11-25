@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import { spawn } from 'node:child_process'
 import { once } from 'node:events'
 import { createServer } from 'node:net'
+import { join } from 'node:path'
 import { setTimeout as delay } from 'node:timers/promises'
 import { fileURLToPath } from 'node:url'
 import { launchBrowser } from '../tests/launch-browser.mjs'
@@ -15,13 +16,14 @@ async function openPort() {
   return port
 }
 
+const [workspace = fileURLToPath(new URL('./', import.meta.url)), expectedRuntime] = process.argv.slice(2)
 const browser = await launchBrowser()
 
-async function exercise(project, executable, args, test) {
+async function exercise(project, executable, args, test, initialPath = '/') {
   const port = await openPort()
   const url = 'http://127.0.0.1:' + port
-  const cwd = fileURLToPath(new URL('./' + project + '/', import.meta.url))
-  const cli = fileURLToPath(new URL('./node_modules/' + executable, import.meta.url))
+  const cwd = join(workspace, project)
+  const cli = join(workspace, 'node_modules', executable)
   const child = spawn(process.execPath, [cli, ...args, '--port', String(port)], {
     cwd, windowsHide: true, env: { ...process.env, NEXT_TELEMETRY_DISABLED: '1' },
     stdio: ['ignore', 'pipe', 'pipe'],
@@ -36,7 +38,7 @@ async function exercise(project, executable, args, test) {
     const deadline = Date.now() + 45_000
     while (true) {
       if (child.exitCode !== null || Date.now() > deadline) throw Error('Server startup failed. ' + output)
-      const response = await fetch(url).catch(() => null)
+      const response = await fetch(url + initialPath).catch(() => null)
       if (response) {
         await response.body?.cancel()
         assert.equal(response.status, 200, output)
@@ -44,7 +46,11 @@ async function exercise(project, executable, args, test) {
       }
       await delay(125)
     }
-    await page.goto(url)
+    await page.goto(url + initialPath)
+    if (expectedRuntime) {
+      await page.waitForFunction(() => document.documentElement.dataset.reactPeers)
+      assert.equal(await page.locator('html').getAttribute('data-react-peers'), expectedRuntime, project + ' browser runtime')
+    }
     await test(page, url)
     assert.deepEqual(errors, [], project)
     console.log(project + ' passed against its production build.')
@@ -56,7 +62,15 @@ async function exercise(project, executable, args, test) {
 }
 
 try {
-  await exercise('next-app-router', 'next/dist/bin/next', ['start', '--hostname', '127.0.0.1'], async page => {
+  await exercise('next-app-router', 'next/dist/bin/next', ['start', '--hostname', '127.0.0.1'], async (page, url) => {
+    if (expectedRuntime) {
+      const response = await fetch(url + '/peer')
+      assert.ok(response.ok)
+      assert.ok((await response.text()).includes('data-server-peers="' + expectedRuntime + '"'), 'Next SSR peer versions')
+      await page.getByRole('button', { name: 'Record payment' }).click()
+      await page.getByRole('status').filter({ hasText: 'Payment recorded.' }).waitFor()
+      await page.goto(url)
+    }
     const locale = page.getByLabel('Billing language')
     assert.equal(await locale.inputValue(), 'de-CH')
     await locale.selectOption('fr-CH')
@@ -93,7 +107,7 @@ try {
     await page.getByText('Choose one of the four billing languages.').waitFor()
     await page.reload()
     assert.equal(await locale.inputValue(), 'fr-CH')
-  })
+  }, expectedRuntime ? '/peer' : '/')
   const preview = ['preview', '--host', '127.0.0.1', '--strictPort']
   await exercise('vite-react-router', 'vite/bin/vite.js', preview, async (page, url) => {
     await page.evaluate(() => { window.navigationProbe = 'same document' })

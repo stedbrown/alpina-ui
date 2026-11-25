@@ -32,3 +32,23 @@ The invoice register uses real URLs and route parameters. Both `TextLink asChild
 ## React Hook Form and Zod
 
 The supplier form connects controlled `UidInput` and `IbanInput` components to React Hook Form through `Controller`. The Zod schema uses Alpina's checksum validators and transforms accepted values into a formatted UID and compact IBAN. The form uses associated labels and error messages, focuses the first invalid field and shows only the account’s final four characters after validation. The browser test exercises the invalid and successful paths. [React Hook Form Controller](https://react-hook-form.com/docs/usecontroller/controller) · [Zod schemas](https://zod.dev/basics)
+
+## React peer compatibility
+
+Run either CI row locally after building the library and installing Chromium.
+
+```sh
+npm run test:react-matrix -- minimum
+npm run test:react-matrix -- latest
+```
+
+Each row queries npm for the first or last stable version shared by React and React DOM in Alpina's declared peer range. It logs the exact version and package integrity, installs the tarball into a temporary copy of the three projects with strict peer resolution, and builds production bundles. Tests check that Alpina and its consumers resolve the same peer instances and read the running browser versions before exercising each application.
+
+| Production scenario | Minimum (18.2.0) | Latest supported stable (19.x) |
+| --- | --- | --- |
+| Next Pages Router | Request-time SSR and hydrated payment interaction | Same |
+| Next App Router | Server Components and Server Actions with Next's managed runtime | Same |
+| Vite and React Router | Router 7.18.7, navigation and refresh | Router 8, navigation and refresh |
+| React Hook Form and Zod | Field errors, focus and valid submission | Same |
+
+The Next project includes a Pages Router payment route at `/peer`. The server response and hydrated page report the installed React and React DOM versions independently. The App Router uses a framework-managed React build, and the billing form uses `useActionState`. Both rows exercise its server-action tests in addition to the version-checked Pages Router scenario. React Router 8 requires React 19.2.7 or newer. The minimum row therefore installs the React 18-compatible router and React 18 type definitions. [Next.js React support](https://nextjs.org/blog/next-15#react-19) · [React Router 8 package requirements](https://registry.npmjs.org/react-router/8.5.3)

@@ -108,3 +108,25 @@ jobs:
           test -s components/alpina/blocks/login.tsx
           echo "archive=$archive" >> "$GITHUB_OUTPUT"
           echo "sha512=$(sha512sum "$download" | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
+
+  react-matrix:
+    name: Packed consumers / React ${{ matrix.endpoint }}
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        endpoint: [minimum, latest]
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - run: npm ci
+      - run: npm run build
+      - run: npx --no-install playwright-core install --with-deps chromium
+      - run: npm run test:react-matrix -- ${{ matrix.endpoint }}
+        env:
+          NEXT_TELEMETRY_DISABLED: '1'

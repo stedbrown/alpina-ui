@@ -1,7 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "trailingSlash": true,
   "installCommand": "npm ci --include=dev",
   "buildCommand": "npm run build && npm run catalog -- --release-package",
   "outputDirectory": "site",
@@ -105,6 +104,16 @@
       "source": "/releases/0.11",
       "destination": "/docs/guides/design/",
       "statusCode": 301
+    },
+    {
+      "source": "/:page([a-z0-9-]+(?:/[a-z0-9-]+)*)",
+      "destination": "/:page/",
+      "statusCode": 308
+    },
+    {
+      "source": "/:file((?:[^/]+/)*[^/]+\\.\\w+)/",
+      "destination": "/:file",
+      "statusCode": 308
     }
   ]
 }

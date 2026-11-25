@@ -3,7 +3,11 @@ import { readFile } from 'node:fs/promises'
 import { siteUrl } from '../scripts/site-config.mjs'
 import { publicRoutes } from './public-pages.mjs'
 
-const { redirects } = JSON.parse(await readFile('vercel.json', 'utf8'))
+const config = JSON.parse(await readFile('vercel.json', 'utf8'))
+// Vercel runs its global slash normalizer before custom redirects. It treats 0.11 as a file.
+assert.equal(config.trailingSlash, undefined, 'A global slash rule preempts the dotted release URL')
+const redirects = config.redirects.filter(rule => rule.statusCode === 301)
+assert.deepEqual(config.redirects.slice(0, redirects.length), redirects, 'Retired URLs must match before slash normalization')
 const paths = new Set(await publicRoutes())
 const retired = new Set(redirects.map(rule => rule.source.replace(/\/$/, '')))
 const expected = { core: 'build', interactive: 'build', actions: 'build', elements: 'build', workflows: 'build', research: 'design', coverage: 'migration', portal: 'build', directory: '/examples/' }
@@ -21,7 +25,9 @@ for (const [slug, successor] of Object.entries(expected)) {
     else await readFile('site' + destination, 'utf8')
   }
 }
-assert.ok(redirects.some(r => r.source === '/releases/0.11/' && r.statusCode === 301 && paths.has(r.destination)))
+for (const source of ['/releases/0.11/', '/releases/0.11']) {
+  assert.ok(redirects.some(r => r.source === source && r.destination === '/docs/guides/design/'), source)
+}
 const failures = []
 function check(route, href) {
   const url = new URL(href.replaceAll('&amp;', '&'), siteUrl + route)
@@ -37,3 +43,19 @@ const index = await readFile('site/llms.txt', 'utf8')
 for (const [, href] of index.matchAll(/\]\(([^)]+)\)/g)) check('/llms.txt', href)
 assert.deepEqual(failures, [], 'Published links must use canonical destinations')
 console.log('Verified permanent guide redirects and canonical links on ' + paths.size + ' public pages.')
+
+if (process.argv.includes('--deployed')) {
+  const requests = [
+    ...redirects,
+    { source: '/docs/guides/start', destination: '/docs/guides/start/', statusCode: 308 },
+    { source: '/favicon.svg/', destination: '/favicon.svg', statusCode: 308 },
+    { source: '/docs/guides/design/', statusCode: 200 },
+    { source: '/favicon.svg', statusCode: 200 },
+  ]
+  for (const { source, destination, statusCode } of requests) {
+    const response = await fetch(new URL(source, siteUrl), { method: 'HEAD', redirect: 'manual', signal: AbortSignal.timeout(30000) })
+    assert.equal(response.status, statusCode, source + ' returned ' + response.status)
+    if (destination) assert.equal(new URL(response.headers.get('location'), siteUrl).href, new URL(destination, siteUrl).href, source)
+  }
+  console.log('Verified the first HTTP response for all retired URLs and representative canonical routes on ' + siteUrl)
+}

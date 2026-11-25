@@ -1,6 +1,6 @@
 # Alpina UI
 
-Alpina UI brings Swiss typographic design to React. Its 96 components share a responsive grid, left-aligned type, square corners, and a black, white, and red palette. Use them to build a form, format a CHF amount, or print the payment section of a Swiss QR-bill. Address, date, and currency components support Switzerland’s four national languages.
+Alpina UI brings Swiss typographic design to React. Its 97 components share a responsive grid, left-aligned type, square corners, and a black, white, and red palette. Use them to build a form, format a CHF amount, or print the payment section of a Swiss QR-bill. Address, date, and currency components support Switzerland’s four national languages.
 
 ## Explore Alpina
 
@@ -10,14 +10,14 @@ Change the size of a poster edition, switch an invoice between four languages or
 
 Open the offline catalog in a browser to try every component, inspect its TypeScript API, and copy its source. Start with the typography specimen. Switch between 4, 8, and 12 columns to see how margins, gutters, and type sizes change with the available width. The portal uses the same public imports as any other Alpina application. [Offline catalog](https://alpina-ui.vercel.app/catalog.html) · [Design and measurements](docs/design.md)
 
-The catalog covers all 66 families in the shadcn/ui index reviewed on November 24, 2026. Its 30 additional entries include layout primitives, interface icons, Swiss payment and identity fields, and documentation components. The migration table maps each family to its Alpina equivalent and explains differences in the APIs. [Migration guide](https://alpina-ui.vercel.app/docs/guides/migration/) · [Component coverage](docs/coverage.md) · [Swiss graphic design research](docs/research.md)
+The catalog covers all 66 families in the shadcn/ui index reviewed on November 24, 2026. Its 31 additional entries include layout primitives, interface icons, Swiss payment and identity fields, and documentation components. The migration table maps each family to its Alpina equivalent and explains differences in the APIs. [Migration guide](https://alpina-ui.vercel.app/docs/guides/migration/) · [Component coverage](docs/coverage.md) · [Swiss graphic design research](docs/research.md)
 
 ## Install
 
 For a project using React and React DOM 18.2 or 19, install the versioned package archive served by the portal.
 
 ```sh
-npm install https://alpina-ui.vercel.app/alpina-ui-0.13.0.tgz
+npm install https://alpina-ui.vercel.app/alpina-ui-0.14.0.tgz
 ```
 
 Import the stylesheet once at your application entry point and use components by name. You can also copy the TypeScript and CSS into your project with `npx --no-install alpina add button`. [Quick start](docs/start.md)
@@ -46,6 +46,7 @@ npx --no-install alpina add block/login
 npx --no-install alpina add block/dashboard
 npx --no-install alpina add block/account-settings
 npx --no-install alpina add block/pricing
+npx --no-install alpina add block/public-service
 ```
 
 ## Swiss forms and payments
@@ -90,7 +91,7 @@ Serve `site/` with a static HTTP server to browse the website from its homepage.
 | `src/swiss` | 18 Swiss components, plus datasets, validators, and formatters |
 | `src/portal` | 6 components for navigation, page structure, code samples, and documentation |
 | `src/theme.css` | Tokens for the light and dark themes |
-| `blocks` | Four complete page templates copied by the CLI |
+| `blocks` | Five complete page templates copied by the CLI |
 | `cli` and `registry.json` | Commands for copying source files and a record of their dependencies |
 | `dist` | Generated ESM, TypeScript declarations, and CSS |
 | `web`, `catalog`, and `site` | Public pages, interactive documentation, and the generated website and offline catalog |
@@ -110,6 +111,8 @@ After upgrading the package, run `npx --no-install alpina diff` to compare copie
 
 ### Try a complete workflow
 
+Copy the residence certificate application with `alpina add block/public-service`. It collects an AHV number and structured address, restores a locally saved draft with its original files and presents a summary before submission. The example issues a local demo reference. Connect the supplied callback to your service to issue a real case number. [Public service form](https://alpina-ui.vercel.app/blocks/public-service/)
+
 - Register for a print workshop, correct an invalid field and return from review to edit a choice. [Workshop registration](https://alpina-ui.vercel.app/examples/workshop-registration/)
 - Compare an invoice with a purchase order, request a correction with a note and reopen the decision. [Invoice review](https://alpina-ui.vercel.app/examples/invoice-review/)
 
@@ -125,19 +128,19 @@ Run `npm run size` after building to measure individual imports. The benchmark u
 
 | Import | Gzipped bytes |
 | --- | ---: |
-| Button JavaScript | 1,017 |
+| Button JavaScript | 1,014 |
 | CurrencyCHF JavaScript | 1,042 |
 | Dialog JavaScript | 1,155 |
 | Icon JavaScript, all 32 drawings | 1,245 |
-| All JavaScript exports in a single bundle | 797,961 |
-| Full stylesheet including the theme | 18,462 |
+| All JavaScript exports in a single bundle | 802,657 |
+| Full stylesheet including the theme | 19,290 |
 | Button CSS without the theme | 763 |
 
 The single-bundle figure includes the image and PDF decoders. In a split Vite or Next application, the scanner loads a decoder when a file needs it. The production Vite Button example loads one JavaScript asset. The package quality guide documents the checks for root imports and subpaths, including esbuild’s split-output behavior. [Package quality](docs/package-quality.md)
 
 ## Releases
 
-Version 0.13.0 adds local QR-bill scanning, shared validation, accounting tables and Rumantsch Grischun payment workflows. Every component reference includes a Keys table. CI checks light and dark contrast modes, doubled text and WCAG text spacing. [Changelog](CHANGELOG.md) · [Before and after](https://alpina-ui.vercel.app/releases/0.11/) · [Swiss forms](docs/swiss.md) · [Visual testing](docs/visual-testing.md)
+Version 0.14.0 adds a localized file dropzone, a five-language public-service form with resumable attachments, and optical Inter display typography. The CI checks the public API and exercises the English catalog with German and French browser controls. [API stability](docs/api-stability.md) · [Changelog](CHANGELOG.md) · [Before and after](https://alpina-ui.vercel.app/releases/0.11/) · [Swiss forms](docs/swiss.md) · [Visual testing](docs/visual-testing.md)
 
 Pushes run CI. A maintainer can publish a verified package archive with provenance by starting the separate release workflow. [Maintainer guide](docs/npm-release.md)
 

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.14.0 · 25 November 2026
+
+- **Public API** FileInput and its Dropzone alias expose the actual input ref, localized labels and file changes. Attachment accepts upload mode and keeps its existing download-link API. QrBillScanner uses the shared picker for images and PDFs.
+- Catalog date, color and validation examples use authored controls and messages. The select picker and numeric fields retain keyboard and form behavior. German and French Chromium runs check for platform-drawn labels and validation bubbles.
+- Heading tracking and leading now follow the actual font size. The optional self-hosted Inter files include optical sizes. [Display spacing](https://alpina-ui.vercel.app/docs/guides/design/)
+- Copy the multilingual residence certificate application with `alpina add block/public-service`. Drafts preserve attachment bytes in IndexedDB. The submission callback receives a request ID for retries and returns the case number.
+- The new public API report, stability policy and 1.0 checklist describe compatibility, deprecations and release review. [API stability](https://github.com/stedbrown/alpina-ui/blob/main/docs/api-stability.md)
+
 ## 0.13.0 · 25 November 2026
 
 - InvoiceDocument shows two decimal places for every CHF unit and net price. Fractional quantities can carry a unit, such as 2.5 h or 1.25 m². Sub-cent prices retain their arithmetic precision.

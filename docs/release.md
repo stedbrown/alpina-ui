@@ -1,5 +1,9 @@
 # Upgrading Alpina UI
 
+## Version 0.14.0
+
+Install the [0.14.0 archive](https://alpina-ui.vercel.app/alpina-ui-0.14.0.tgz). When upgrading local component copies, include the file picker sources returned by the CLI. Applications hosting Inter themselves should copy the two new optical-size WOFF2 files alongside the matching stylesheet. Existing attachment links still accept their original props. [File input](https://alpina-ui.vercel.app/docs/components/file-input/) · [Public service block](https://alpina-ui.vercel.app/blocks/public-service/) · [API policy](https://github.com/stedbrown/alpina-ui/blob/main/docs/api-stability.md)
+
 ## Version 0.13.0
 
 Install the [0.13.0 archive](https://alpina-ui.vercel.app/alpina-ui-0.13.0.tgz). Existing DataTable render columns continue to work. Numeric column definitions opt into accounting layout and exact sums. Invoice snapshots should now expect two decimals in the unit-price column. For incoming bills, review the local parser result before recording a payment. [Accounting table](https://alpina-ui.vercel.app/docs/components/data-table/) · [Shared validators](https://alpina-ui.vercel.app/docs/guides/validation/) · [QR reader](https://alpina-ui.vercel.app/docs/components/qr-bill-scanner/)

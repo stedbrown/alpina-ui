@@ -3,6 +3,9 @@ import { useId, useState } from 'react'
 import {
   AspectRatio,
   Attachment,
+  Field,
+  FileInput,
+  Stack,
   Avatar,
   Bubble,
   ButtonGroup,
@@ -46,8 +49,19 @@ export function AttachmentExample() {
   const file =
     'data:text/plain;charset=utf-8,' + encodeURIComponent('Atelier\nFriday, 14:00\nRoom 3\n')
   return (
-    <Attachment filename="Programme.txt" href={file} download="Programme.txt" detail="Text · UTF-8" />
+    <Stack gap={3}>
+      <Attachment filename="Programme.txt" href={file} download="Programme.txt" detail="Text · UTF-8" />
+      <Field label="Supplementary material">{control =>
+        <Attachment mode="upload" {...control} name="supplements" multiple locale="en" />
+      }</Field>
+    </Stack>
   )
+}
+
+export function FileInputExample() {
+  return <Field label="Proofs" description="Attach the PDF or image proofs for this edition.">{control =>
+    <FileInput {...control} name="proofs" accept="application/pdf,image/*,.pdf" locale="en" multiple />
+  }</Field>
 }
 
 export function AvatarExample() {

@@ -3,7 +3,7 @@ import { forwardRef, useEffect, useRef, useState, type ComponentPropsWithoutRef 
 import { Button } from '../ui/button.js'
 import { DescriptionList } from '../ui/description-list.js'
 import { Field } from '../ui/field.js'
-import { Input } from '../ui/input.js'
+import { FileInput } from '../ui/file-input.js'
 import { Stack } from '../ui/stack.js'
 import { Typography } from '../ui/typography.js'
 import { formatSwissNumber } from './format-swiss-number.js'
@@ -36,6 +36,7 @@ export const QrBillScanner = forwardRef<HTMLElement, QrBillScannerProps>(functio
   const operation = useRef<AbortController | null>(null)
   const video = useRef<HTMLVideoElement>(null)
   const fileInput = useRef<HTMLInputElement>(null)
+  const [files, setFiles] = useState<File[]>([])
   const review = useRef<HTMLHeadingElement>(null)
   const nextSlip = useRef<HTMLButtonElement>(null)
   const confirmed = useRef(false)
@@ -89,6 +90,7 @@ export const QrBillScanner = forwardRef<HTMLElement, QrBillScannerProps>(functio
     }
   }
   async function openCamera() {
+    setFiles([])
     const controller = begin('camera')
     const { signal } = controller
     const leave = () => { if (!signal.aborted) reset() }
@@ -125,6 +127,7 @@ export const QrBillScanner = forwardRef<HTMLElement, QrBillScannerProps>(functio
     } catch { failure(controller, t.denied) }
   }
   function cancel() {
+    setFiles([])
     reset()
     fileInput.current?.focus()
   }
@@ -153,11 +156,12 @@ export const QrBillScanner = forwardRef<HTMLElement, QrBillScannerProps>(functio
     }}>
     <Stack gap={4}>
       <Field label={t.file} description={t.hint}>
-        {control => <Input {...control} ref={fileInput} type="file" accept="image/png,image/jpeg,image/webp,application/pdf,.pdf"
-          onChange={event => {
-            const file = event.currentTarget.files?.[0]
-            event.currentTarget.value = ''
-            if (file) void openFile(file)
+        {control => <FileInput {...control} ref={fileInput} locale={locale} files={files}
+          accept="image/png,image/jpeg,image/webp,application/pdf,.png,.jpg,.jpeg,.webp,.pdf"
+          onFilesChange={next => {
+            setFiles(next)
+            if (next[0]) void openFile(next[0])
+            else reset()
           }} />}
       </Field>
       <Stack direction="row" gap={2}>
@@ -165,7 +169,7 @@ export const QrBillScanner = forwardRef<HTMLElement, QrBillScannerProps>(functio
           <Button variant="outline" onClick={() => void openCamera()}>{t.camera}</Button>}
       </Stack>
       <video ref={video} hidden={stage !== 'camera'} muted playsInline aria-label={t.aiming} />
-      <div role="status">{busy ? (stage === 'camera' ? t.aiming : t.reading) : stage === 'confirmed' ? t.done : ''}</div>
+      <div className="al-qr-progress" role="status">{busy ? (stage === 'camera' ? t.aiming : t.reading) : stage === 'confirmed' ? t.done : ''}</div>
       {error && <div role="alert">{error}</div>}
       {bill && <Stack gap={3}>
         <h3 ref={review} tabIndex={-1}>{t.preview}</h3>

@@ -102,7 +102,7 @@ export const expanded = [
     "Attachment",
     "Attachment",
     "Content",
-    "Show a downloadable file with its name, format, and size."
+    "Link to a downloadable file or collect a local attachment."
   ],
   [
     "avatar",
@@ -152,6 +152,13 @@ export const expanded = [
     "Empty state",
     "Feedback",
     "Explain why a collection is empty and offer a next action."
+  ],
+  [
+    "file-input",
+    "FileInput",
+    "File input",
+    "Forms",
+    "Choose, drop or paste files using the language of the form."
   ],
   [
     "input-group",

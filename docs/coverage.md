@@ -6,7 +6,7 @@ Alpina UI 0.13.0 has 96 installable component entries. The table below maps 66 o
 
 | Family | Documented behavior |
 | --- | --- |
-| Attachment | Alpina links to a file and displays its name and metadata. shadcn/ui also composes media previews, upload progress, and independent actions. [shadcn/ui Attachment](https://ui.shadcn.com/docs/components/base/attachment) |
+| Attachment | Alpina links to a file with its metadata or collects a local attachment in upload mode. shadcn/ui also composes media previews, upload progress, and independent actions. [shadcn/ui Attachment](https://ui.shadcn.com/docs/components/base/attachment) |
 | Bubble | Alpina places content at the start or end of a conversation row. shadcn/ui also documents bubble groups, reactions, and collapsible text. [shadcn/ui Bubble](https://ui.shadcn.com/docs/components/base/bubble) |
 | Marker | Alpina places a sign beside text to distinguish three states. shadcn/ui also uses this family for system notes, bordered rows, and labeled separators in a conversation. [shadcn/ui Marker](https://ui.shadcn.com/docs/components/base/marker) |
 | Message | Alpina composes an article with an author, optional time, and bubble. shadcn/ui provides dedicated parts for the avatar, header, footer, and alignment. [shadcn/ui Message](https://ui.shadcn.com/docs/components/base/message) |
@@ -104,6 +104,7 @@ The table records one documented implementation for each family. To estimate mig
 | Interface symbols | `icon` |
 | Read-only summaries and workflows | `description-list`, `steps` |
 | Language, cantons, and addresses | `canton-combobox`, `canton-select`, `locale-select`, `multilingual-field`, `swiss-address-form`, `swiss-postal-code-input` |
+| File selection | `file-input` |
 | Formatting | `currency-chf`, `swiss-date` |
 | Printable documents | `letter`, `invoice-document` |
 | Payments and identifiers | `swiss-qr-bill`, `qr-bill-scanner`, `iban-input`, `ahv-input`, `phone-input`, `uid-input` |

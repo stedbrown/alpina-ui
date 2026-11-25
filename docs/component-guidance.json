@@ -182,6 +182,10 @@
       [
         "Enter",
         "Open or download the file according to the link and browser settings."
+      ],
+      [
+        "Ctrl+V / ⌘V",
+        "Paste clipboard files when the upload field has focus."
       ]
     ]
   },
@@ -2584,6 +2588,36 @@
       [
         "Escape",
         "Cancel reading or review and return focus to the file picker."
+      ]
+    ]
+  },
+  "file-input": {
+    "use": "Collect documents or images that belong to a specific application or submission.",
+    "avoid": "Use an Attachment link to offer a file that is already available for download.",
+    "access": "Connect a visible field label. The picker, clipboard paste and remove controls all work with a keyboard. Selection changes are announced.",
+    "content": "Name the supporting material and specify accepted formats or size limits beside the field in its own language.",
+    "example": {
+      "good": "Attach your PDF proof of residence.",
+      "poor": "Upload something here."
+    },
+    "copy": {
+      "de-CH": "Wohnsitzbestätigung beilegen",
+      "fr-CH": "Joindre une attestation de domicile",
+      "it-CH": "Allega l’attestazione di domicilio",
+      "rm-CH": "Agiuntar la conferma da domicil"
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Focus the picker or a selected file’s remove button."
+      ],
+      [
+        "Enter / Space",
+        "Open the device picker or remove the focused file."
+      ],
+      [
+        "Ctrl+V / ⌘V",
+        "Paste files from the clipboard while focus is in the field."
       ]
     ]
   }

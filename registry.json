@@ -335,11 +335,20 @@
       "name": "attachment",
       "group": "ui",
       "entry": "ui/attachment.tsx",
-      "usage": "Use the file name as the link and include size or format alongside it. The name can wrap and is isolated from metadata written in another direction.",
+      "usage": "Link to a downloadable file by name and format. Use upload mode to collect local files with a localized FileInput.",
       "files": [
         "theme.css",
         "ui/attachment.tsx",
-        "ui/attachment.css"
+        "ui/file-input.tsx",
+        "swiss/locales.ts",
+        "swiss/format-swiss-number.ts",
+        "ui/button.tsx",
+        "ui/slot.tsx",
+        "ui/button.css",
+        "ui/file-input-labels.internal.ts",
+        "ui/file-input.css",
+        "ui/attachment.css",
+        "swiss/UNICODE-LICENSE.txt"
       ]
     },
     {
@@ -419,6 +428,24 @@
         "theme.css",
         "ui/empty.tsx",
         "ui/empty.css"
+      ]
+    },
+    {
+      "name": "file-input",
+      "group": "ui",
+      "entry": "ui/file-input.tsx",
+      "usage": "Present file types and purpose beside the field. Choose, drop or paste files, review names and sizes, then submit the native multipart form.",
+      "files": [
+        "theme.css",
+        "ui/file-input.tsx",
+        "swiss/locales.ts",
+        "swiss/format-swiss-number.ts",
+        "ui/button.tsx",
+        "ui/slot.tsx",
+        "ui/button.css",
+        "ui/file-input-labels.internal.ts",
+        "ui/file-input.css",
+        "swiss/UNICODE-LICENSE.txt"
       ]
     },
     {
@@ -1231,15 +1258,16 @@
         "ui/description-list.css",
         "ui/field.tsx",
         "ui/field.css",
-        "ui/input.tsx",
-        "ui/input.css",
+        "ui/file-input.tsx",
+        "swiss/locales.ts",
+        "swiss/format-swiss-number.ts",
+        "ui/file-input-labels.internal.ts",
+        "ui/file-input.css",
         "ui/stack.tsx",
         "ui/stack.css",
         "ui/typography.tsx",
         "ui/number-text.ts",
         "ui/typography.css",
-        "swiss/format-swiss-number.ts",
-        "swiss/locales.ts",
         "swiss/qr-payment.ts",
         "swiss/qr-messages.internal.ts",
         "swiss/identifiers.ts",

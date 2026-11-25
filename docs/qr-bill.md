@@ -95,7 +95,7 @@ export function InvoiceIntake({ accept }: { accept: (bill: SwissQrBillData) => v
 }
 ```
 
-Choose a PNG, JPEG, WebP or PDF up to 64 MiB. PDF pages are rasterised locally, starting at the last page where an invoice usually places the slip. The review shows the first recognised Swiss payment code and its PDF page number. A password-protected PDF needs an unlocked local copy. Open amounts remain marked for completion and non-payable notifications retain their notice. Confirming returns the details to the application.
+Choose, drop or paste one PNG, JPEG, WebP or PDF up to 64 MiB. The file button, selection details and remove action use the scanner’s locale. Removing a file cancels its scan and clears the payment review. PDF pages are rasterised locally, starting at the last page where an invoice usually places the slip. The review shows the first recognised Swiss payment code and its PDF page number. A password-protected PDF needs an unlocked local copy. Open amounts remain marked for completion and non-payable notifications retain their notice. Confirming returns the details to the application.
 
 By default, the parser reports an invalid field as an error. Supply `onAdditionalError(issue)` to process an incoming payment with malformed billing information or alternative procedures. The invalid additional field is omitted and the callback receives its original wire line. The scanner uses this mode and lists the omissions in the review before confirmation. Errors in the payment itself still block confirmation. [SIX IG 2.4, table 7](https://www.six-group.com/dam/download/banking-services/standardization/qr-bill/ig-qr-bill-v2.4-en.pdf#page=32)
 

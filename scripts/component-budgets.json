@@ -30,9 +30,9 @@
     "css": 256
   },
   "attachment": {
-    "js": 448,
+    "js": 4672,
     "lazy": 0,
-    "css": 384
+    "css": 1408
   },
   "avatar": {
     "js": 576,
@@ -189,6 +189,11 @@
     "lazy": 0,
     "css": 256
   },
+  "file-input": {
+    "js": 4416,
+    "lazy": 0,
+    "css": 1344
+  },
   "grid": {
     "js": 2176,
     "lazy": 0,
@@ -325,9 +330,9 @@
     "css": 832
   },
   "qr-bill-scanner": {
-    "js": 14656,
+    "js": 17152,
     "lazy": 770560,
-    "css": 2368
+    "css": 2496
   },
   "questionnaire": {
     "js": 2368,

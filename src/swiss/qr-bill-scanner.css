@@ -1,6 +1,6 @@
 .al-qr-scanner { min-inline-size: 0; }
 .al-qr-scanner video { inline-size: min(100%, 32rem); aspect-ratio: 4/3; background: #000; object-fit: contain; }
-.al-qr-scanner [role=status]:empty { display: none; }
+.al-qr-progress:empty { display: none; }
 .al-qr-scanner [role=alert] { padding-inline-start: var(--al-space-3); border-inline-start: 2px solid var(--al-accent); }
 .al-qr-scanner h3 { margin: 0; font: 700 var(--al-type-heading)/var(--al-leading-heading) var(--al-font); }
 .al-qr-value { display: block; max-inline-size: 100%; overflow-x: auto; white-space: nowrap; font-variant-numeric: tabular-nums; font-size: clamp(var(--al-type-caption), 5cqi, var(--al-type-body)); }

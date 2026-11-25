@@ -13,7 +13,7 @@ export const additions = [
     'Attachment',
     'Attachment',
     'Content',
-    'Show a downloadable file with its name, format, and size.',
+    'Link to a downloadable file or collect a local attachment.',
   ],
   [
     'ui',
@@ -70,6 +70,14 @@ export const additions = [
     'Empty state',
     'Feedback',
     'Explain why a collection is empty and offer a next action.',
+  ],
+  [
+    'ui',
+    'file-input',
+    'FileInput',
+    'File input',
+    'Forms',
+    'Choose, drop or paste files using the language of the form.',
   ],
   [
     'ui',

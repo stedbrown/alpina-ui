@@ -217,3 +217,18 @@ export function Reservations() {
 - Use Field or an associated HTML `label` for an individual control. Use the group legend for radio buttons. Translate labels, messages, and navigation region names into the interface language.
 - Spinner and Skeleton respect `prefers-reduced-motion`. Provide readable text for the outcome of an operation.
 - If you customize the theme colors, check the contrast of text, borders, and focus indicators. Test the entire form using only the keyboard, including error correction.
+
+## Collecting files
+
+`FileInput` accepts a local file by keyboard, pointer, drop or clipboard paste. Use `multiple` to collect several files across selections. Each row shows its filename, localized size and remove action. The component announces changes and validates `accept` for all three input methods. A rejected selection preserves the existing files. Validate the file contents again in your receiving application.
+
+```tsx
+<form method="post" action="/evidence" encType="multipart/form-data">
+  <Field label="Supporting documents" description="PDF files">
+    {control => <FileInput {...control} name="proofs" accept="application/pdf,.pdf" multiple locale="en" />}
+  </Field>
+  <Button type="submit">Send documents</Button>
+</form>
+```
+
+The visible picker label activates a genuine file control even when JavaScript is disabled. A required field shows when a selection is ready even without scripts. CSS cannot read the filenames, sizes or selection state of an optional file control. The detailed file list, clipboard, drop and individual removal need JavaScript. Give it a `name` so the browser includes file contents in the form submission. With JavaScript, `files` and `onFilesChange` can control the selection using actual `File` objects, including files restored from a draft. A forwarded ref targets the native input. `Dropzone` is the same component. Use `<Attachment mode="upload" … />` to collect a file and `<Attachment href="…" filename="…" />` to link to an existing download. The `locale` prop controls English, German, French, Italian and Romansh wording independently of the browser language.

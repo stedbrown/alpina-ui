@@ -32,7 +32,7 @@
   "attachment": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "722d6cda193175f5236f"
+    "source": "63606427a8c107b70b41"
   },
   "avatar": {
     "stage": "Stable",
@@ -189,6 +189,11 @@
     "changed": "2026-11-25",
     "source": "9fc8d40ac5a910be0665"
   },
+  "file-input": {
+    "stage": "Beta",
+    "changed": "2026-11-25",
+    "source": "45d872aa1838e1a18f2c"
+  },
   "grid": {
     "stage": "Stable",
     "changed": "2026-11-25",
@@ -327,7 +332,7 @@
   "qr-bill-scanner": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "b9891ed8df0506205362"
+    "source": "9f841ade52f869bf828f"
   },
   "questionnaire": {
     "stage": "Stable",

@@ -1,149 +1,79 @@
+<!-- Generated from docs/readme.template.md and the public catalog by scripts/readme.mjs. -->
+<img src="web/assets/logo.svg" alt="" width="64" height="64">
+
 # Alpina UI
 
-Alpina UI brings Swiss typographic design to React. Its 97 components share a responsive grid, left-aligned type, square corners, and a black, white, and red palette. Use them to build a form, format a CHF amount, or print the payment section of a Swiss QR-bill. Address, date, and currency components support Switzerland’s four national languages.
+React components for Swiss software, from a multilingual address form to a printable QR-bill.
 
-## Explore Alpina
+[![CI](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml) [![MIT license](https://img.shields.io/badge/license-MIT-222222)](LICENSE) [![Package version](https://img.shields.io/badge/version-0.14.0-eb0000)](CHANGELOG.md)
 
-Use the grid overlay to inspect an interface at its actual width. Press Ctrl+Shift+G on the portal to see margins, columns and the four-pixel module. The principles gallery shows how the same timetable, price list or bilingual instruction reads under two different arrangements. [Design principles](https://alpina-ui.vercel.app/principles/) · [Grid reference](https://alpina-ui.vercel.app/docs/components/grid/)
+[Live site](https://alpina-ui.vercel.app/) · [Documentation](https://alpina-ui.vercel.app/docs/) · [Designer kit](https://alpina-ui.vercel.app/kit/) · [Design principles](https://alpina-ui.vercel.app/principles/) · [Changelog](CHANGELOG.md) · [API stability](docs/api-stability.md)
 
-Change the size of a poster edition, switch an invoice between four languages or read the press hours as a table on the homepage. Follow a component link to inspect its types and copy the source. The icon gallery shows the original Alpina symbols used for navigation, actions and status. [Homepage](https://alpina-ui.vercel.app/) · [Component index](https://alpina-ui.vercel.app/docs/components/) · [Icon gallery](https://alpina-ui.vercel.app/icons/) · [Installation](https://alpina-ui.vercel.app/docs/)
+| Light | Dark |
+| --- | --- |
+| [![Alpina homepage in light appearance](docs/images/home-light.png)](https://alpina-ui.vercel.app/) | [![Alpina homepage in dark appearance](docs/images/home-dark.png)](https://alpina-ui.vercel.app/) |
 
-Open the offline catalog in a browser to try every component, inspect its TypeScript API, and copy its source. Start with the typography specimen. Switch between 4, 8, and 12 columns to see how margins, gutters, and type sizes change with the available width. The portal uses the same public imports as any other Alpina application. [Offline catalog](https://alpina-ui.vercel.app/catalog.html) · [Design and measurements](docs/design.md)
+## Install in 30 seconds
 
-The catalog covers all 66 families in the shadcn/ui index reviewed on November 24, 2026. Its 31 additional entries include layout primitives, interface icons, Swiss payment and identity fields, and documentation components. The migration table maps each family to its Alpina equivalent and explains differences in the APIs. [Migration guide](https://alpina-ui.vercel.app/docs/guides/migration/) · [Component coverage](docs/coverage.md) · [Swiss graphic design research](docs/research.md)
-
-## Install
-
-For a project using React and React DOM 18.2 or 19, install the versioned package archive served by the portal.
+In an existing React 18.2 or 19 app, install the versioned archive and import the stylesheet once.
 
 ```sh
 npm install https://alpina-ui.vercel.app/alpina-ui-0.14.0.tgz
 ```
 
-Import the stylesheet once at your application entry point and use components by name. You can also copy the TypeScript and CSS into your project with `npx --no-install alpina add button`. [Quick start](docs/start.md)
-
 ```tsx
-import "alpina-ui/styles.css"
-import { Button } from "alpina-ui"
+import { Button, CurrencyCHF } from 'alpina-ui'
+import 'alpina-ui/styles.css'
 
-export function SaveButton() {
-  return <Button type="submit">Save changes</Button>
+export function Checkout() {
+  return <Button type="submit">Pay <CurrencyCHF amount={24} locale="de-CH" /></Button>
 }
 ```
 
-Use `<Button asChild><a href="/invoices">Invoices</a></Button>` to style a link while retaining its native navigation and keyboard behavior. The same pattern works with router links, badges, text links, menu items, and breadcrumb links.
+To own the source, run `npx --no-install alpina add button`. To copy a complete page, use `npx --no-install alpina add block/dashboard`. Optional imports include self-hosted Inter and a Tailwind v4 token bridge. [Installation guide](https://alpina-ui.vercel.app/docs/) · [CLI commands](https://alpina-ui.vercel.app/docs/guides/cli/)
 
-Import `alpina-ui/fonts.css` to self-host Inter. For Tailwind v4, add `@import "alpina-ui/tailwind.css";` after importing Tailwind in your stylesheet. The theme builder previews your accent, grid unit and color scheme, reports text contrast, and exports CSS variables. [Typography](docs/design.md) · [Theme builder](https://alpina-ui.vercel.app/themes/)
+## What comes with Alpina
 
-Designers can download both appearances as typed DTCG 2025.10 JSON or a standalone Style Dictionary configuration. The editable SVG and print-ready A4 PDF include 4-, 8- and 12-column grids, the baseline and six type sizes. [Designer kit](https://alpina-ui.vercel.app/kit/)
+- Issue a Swiss QR-bill with a SIX payment section, or read an incoming slip locally from a file or camera and confirm the parsed data. Print an invoice with itemized VAT and totals. [QR-bill guide](https://alpina-ui.vercel.app/docs/guides/qr-bill/)
+- Collect an eCH-0010 postal address with offline postcode suggestions. Use the same field and checksum rules for AHV, UID, IBAN and payment references in the browser and on the server. [Shared validation](https://alpina-ui.vercel.app/docs/guides/validation/)
+- Edit translations in German, French, Italian and Romansh side by side. English is also available in the public-service workflow and validation messages. Apply statutory or common holiday calendars by canton when calculating business days. [Language fields](https://alpina-ui.vercel.app/docs/components/multilingual-field/) · [Swiss formats](https://alpina-ui.vercel.app/docs/guides/swiss/)
+- Lay out a page on four, eight or twelve columns. Inter’s optical sizes, tabular figures and a four-pixel baseline carry through to tables, print and dark mode. Export the tokens and printable sheets for design work. [Principles](https://alpina-ui.vercel.app/principles/) · [Kit](https://alpina-ui.vercel.app/kit/) · [Theme builder](https://alpina-ui.vercel.app/themes/)
+- Inspect a component’s keyboard behavior and screen-reader guidance alongside its source. CI checks interactions, automated accessibility, forced colors and visual regressions. [Reference](https://alpina-ui.vercel.app/docs/components/) · [Testing](docs/visual-testing.md)
 
-## Copy a page
+## Component directory
 
-Run one of these commands in a project with Alpina installed. Each block uses public components and ships as editable TSX. The dashboard includes a chart and data table. The pricing page switches between monthly and annual CHF prices. [Block previews](https://alpina-ui.vercel.app/blocks/)
+97 installable component entries and 5 copyable page blocks.
 
-```sh
-npx --no-install alpina add block/login
-npx --no-install alpina add block/dashboard
-npx --no-install alpina add block/account-settings
-npx --no-install alpina add block/pricing
-npx --no-install alpina add block/public-service
-```
-
-## Swiss forms and payments
-
-Edit one title in German, French, Italian and Romansh with `MultilingualField`. The postal address form offers locality and canton suggestions after the fourth postcode digit. Calendar and DatePicker can mark public holidays for a canton and its supported regions. Use `addBusinessDays` to schedule across weekends and public holidays. [Multilingual field](https://alpina-ui.vercel.app/docs/components/multilingual-field/) · [Holiday and postcode sources](docs/swiss.md)
-
-`IbanInput`, `AhvInput`, `UidInput` and `PhoneInput` format Swiss bank accounts, social insurance numbers, business identifiers and phone numbers. Use `SwissAddressForm` with `format="ech-person"` or `format="ech-organisation"` for structured Swiss street addresses. `SwissQrBill` validates account and reference combinations, encodes the payment data, and prints a 210 × 105 mm payment section and receipt. [Interactive payment slip](https://alpina-ui.vercel.app/docs/components/swiss-qr-bill/) · [QR-bill guide](docs/qr-bill.md)
-
-Choose statutory or common observance for a cantonal work calendar. The common schedule adds documented office closures and marks them as customary. [Scope and sources](https://alpina-ui.vercel.app/docs/guides/swiss/)
-
-Place a letter address for a left- or right-window envelope with the historical SN 010130 profiles. For an itemized invoice, enter VAT-exclusive CHF prices and quantities. Alpina calculates VAT per rate, can round a cash total to five centimes and prints a payment section with the same payable amount on the last page. [Letter](https://alpina-ui.vercel.app/docs/components/letter/) · [InvoiceDocument](https://alpina-ui.vercel.app/docs/components/invoice-document/)
-
-Read an incoming payment slip with the device camera, a local image or a PDF. Review the creditor, account, reference and amount before confirming. The offline catalog includes the file decoders. [Scan a QR-bill](https://alpina-ui.vercel.app/docs/components/qr-bill-scanner/)
-
-Use the same localized Standard Schema validator in a form and a Next.js Server Action. For a ledger, choose CHF or decimal columns, sort Swiss dates, print repeated headings, and reconcile group subtotals with the final total. [Validation and Server Actions](https://alpina-ui.vercel.app/docs/guides/validation/) · [Accounting table](https://alpina-ui.vercel.app/docs/components/data-table/)
-
-## Charts and framework examples
-
-Use `BarChart`, `LineChart`, `Sparkline` or `ChartTable` for SVG graphics with directly labelled observations and a semantic data table. Three working applications demonstrate App Router server actions, React Router links, and Swiss input validation with React Hook Form and Zod. [Chart examples](https://alpina-ui.vercel.app/docs/components/bar-chart/) · [Integration projects](integrations/) · [Component status](https://alpina-ui.vercel.app/status/)
-
-## Build from source
-
-CI uses Node.js 24 and npm. Run the build first. It generates the registry, ESM modules, declarations, and styles used by the catalog and tests.
-
-```sh
-npm ci
-npm run build
-npm run typecheck
-npm test
-npm run catalog
-npm run test:browser
-npm run test:integrations
-npm pack
-```
-
-Serve `site/` with a static HTTP server to browse the website from its homepage. Open `site/catalog.html` directly for the self-contained offline catalog. Browser tests use Chrome or Chromium. Set `CHROME_PATH` to select a specific executable.
-
-| Path | Contents |
+| Category | Entries |
 | --- | --- |
-| `src/ui` | 49 foundational components including Grid, Typography, Icon, and DataTable |
-| `src/interactive` | 23 interactive components and their shared behavior |
-| `src/swiss` | 18 Swiss components, plus datasets, validators, and formatters |
-| `src/portal` | 6 components for navigation, page structure, code samples, and documentation |
-| `src/theme.css` | Tokens for the light and dark themes |
-| `blocks` | Five complete page templates copied by the CLI |
-| `cli` and `registry.json` | Commands for copying source files and a record of their dependencies |
-| `dist` | Generated ESM, TypeScript declarations, and CSS |
-| `web`, `catalog`, and `site` | Public pages, interactive documentation, and the generated website and offline catalog |
-| `skills/alpina-ui` | Agent skill distributed with the package |
-| `tests` | Packaging, CLI, localization, and interaction tests |
-| `docs` | Component guides, design research, and Swiss data sources |
+| Base (51) | [Alert](https://alpina-ui.vercel.app/docs/components/alert/) · [AppShell](https://alpina-ui.vercel.app/docs/components/app-shell/) · [AspectRatio](https://alpina-ui.vercel.app/docs/components/aspect-ratio/) · [Attachment](https://alpina-ui.vercel.app/docs/components/attachment/) · [Avatar](https://alpina-ui.vercel.app/docs/components/avatar/) · [Badge](https://alpina-ui.vercel.app/docs/components/badge/) · [Breadcrumb](https://alpina-ui.vercel.app/docs/components/breadcrumb/) · [Bubble](https://alpina-ui.vercel.app/docs/components/bubble/) · [ButtonGroup](https://alpina-ui.vercel.app/docs/components/button-group/) · [Button](https://alpina-ui.vercel.app/docs/components/button/) · [Card](https://alpina-ui.vercel.app/docs/components/card/) · [Checkbox](https://alpina-ui.vercel.app/docs/components/checkbox/) · [CodeBlock](https://alpina-ui.vercel.app/docs/components/code-block/) · [Collapsible](https://alpina-ui.vercel.app/docs/components/collapsible/) · [DataTable](https://alpina-ui.vercel.app/docs/components/data-table/) · [DescriptionList](https://alpina-ui.vercel.app/docs/components/description-list/) · [Direction](https://alpina-ui.vercel.app/docs/components/direction/) · [Empty](https://alpina-ui.vercel.app/docs/components/empty/) · [Field](https://alpina-ui.vercel.app/docs/components/field/) · [Figure](https://alpina-ui.vercel.app/docs/components/figure/) · [FileInput](https://alpina-ui.vercel.app/docs/components/file-input/) · [GridOverlay](https://alpina-ui.vercel.app/docs/components/grid-overlay/) · [Grid](https://alpina-ui.vercel.app/docs/components/grid/) · [Icon](https://alpina-ui.vercel.app/docs/components/icon/) · [InputGroup](https://alpina-ui.vercel.app/docs/components/input-group/) · [Input](https://alpina-ui.vercel.app/docs/components/input/) · [Item](https://alpina-ui.vercel.app/docs/components/item/) · [Kbd](https://alpina-ui.vercel.app/docs/components/kbd/) · [Label](https://alpina-ui.vercel.app/docs/components/label/) · [Marker](https://alpina-ui.vercel.app/docs/components/marker/) · [Message](https://alpina-ui.vercel.app/docs/components/message/) · [NavigationMenu](https://alpina-ui.vercel.app/docs/components/navigation-menu/) · [Pagination](https://alpina-ui.vercel.app/docs/components/pagination/) · [Progress](https://alpina-ui.vercel.app/docs/components/progress/) · [Prose](https://alpina-ui.vercel.app/docs/components/prose/) · [RadioGroup](https://alpina-ui.vercel.app/docs/components/radio-group/) · [ScrollArea](https://alpina-ui.vercel.app/docs/components/scroll-area/) · [Select](https://alpina-ui.vercel.app/docs/components/select/) · [Separator](https://alpina-ui.vercel.app/docs/components/separator/) · [Sidebar](https://alpina-ui.vercel.app/docs/components/sidebar/) · [Skeleton](https://alpina-ui.vercel.app/docs/components/skeleton/) · [Slider](https://alpina-ui.vercel.app/docs/components/slider/) · [Spinner](https://alpina-ui.vercel.app/docs/components/spinner/) · [Stack](https://alpina-ui.vercel.app/docs/components/stack/) · [Steps](https://alpina-ui.vercel.app/docs/components/steps/) · [Switch](https://alpina-ui.vercel.app/docs/components/switch/) · [Table](https://alpina-ui.vercel.app/docs/components/table/) · [TextLink](https://alpina-ui.vercel.app/docs/components/text-link/) · [Textarea](https://alpina-ui.vercel.app/docs/components/textarea/) · [Toggle](https://alpina-ui.vercel.app/docs/components/toggle/) · [Typography](https://alpina-ui.vercel.app/docs/components/typography/) |
+| Interactive (23) | [Accordion](https://alpina-ui.vercel.app/docs/components/accordion/) · [AlertDialog](https://alpina-ui.vercel.app/docs/components/alert-dialog/) · [Carousel](https://alpina-ui.vercel.app/docs/components/carousel/) · [Combobox](https://alpina-ui.vercel.app/docs/components/combobox/) · [Command](https://alpina-ui.vercel.app/docs/components/command/) · [ContextMenu](https://alpina-ui.vercel.app/docs/components/context-menu/) · [Dialog](https://alpina-ui.vercel.app/docs/components/dialog/) · [Drawer](https://alpina-ui.vercel.app/docs/components/drawer/) · [DropdownMenu](https://alpina-ui.vercel.app/docs/components/dropdown-menu/) · [HoverCard](https://alpina-ui.vercel.app/docs/components/hover-card/) · [InputOTP](https://alpina-ui.vercel.app/docs/components/input-otp/) · [Menubar](https://alpina-ui.vercel.app/docs/components/menubar/) · [MessageScroller](https://alpina-ui.vercel.app/docs/components/message-scroller/) · [NativeSelect](https://alpina-ui.vercel.app/docs/components/native-select/) · [Popover](https://alpina-ui.vercel.app/docs/components/popover/) · [Questionnaire](https://alpina-ui.vercel.app/docs/components/questionnaire/) · [Resizable](https://alpina-ui.vercel.app/docs/components/resizable/) · [Sheet](https://alpina-ui.vercel.app/docs/components/sheet/) · [Tabs](https://alpina-ui.vercel.app/docs/components/tabs/) · [Toast](https://alpina-ui.vercel.app/docs/components/toast/) · [ToggleGroup](https://alpina-ui.vercel.app/docs/components/toggle-group/) · [Tooltip](https://alpina-ui.vercel.app/docs/components/tooltip/) · [Trace](https://alpina-ui.vercel.app/docs/components/trace/) |
+| Swiss (15) | [AhvInput](https://alpina-ui.vercel.app/docs/components/ahv-input/) · [Calendar](https://alpina-ui.vercel.app/docs/components/calendar/) · [CantonCombobox](https://alpina-ui.vercel.app/docs/components/canton-combobox/) · [CantonSelect](https://alpina-ui.vercel.app/docs/components/canton-select/) · [CurrencyCHF](https://alpina-ui.vercel.app/docs/components/currency-chf/) · [DatePicker](https://alpina-ui.vercel.app/docs/components/date-picker/) · [IbanInput](https://alpina-ui.vercel.app/docs/components/iban-input/) · [LocaleSelect](https://alpina-ui.vercel.app/docs/components/locale-select/) · [MultilingualField](https://alpina-ui.vercel.app/docs/components/multilingual-field/) · [PhoneInput](https://alpina-ui.vercel.app/docs/components/phone-input/) · [QrBillScanner](https://alpina-ui.vercel.app/docs/components/qr-bill-scanner/) · [SwissAddressForm](https://alpina-ui.vercel.app/docs/components/swiss-address-form/) · [SwissDate](https://alpina-ui.vercel.app/docs/components/swiss-date/) · [SwissPostalCodeInput](https://alpina-ui.vercel.app/docs/components/swiss-postal-code-input/) · [UidInput](https://alpina-ui.vercel.app/docs/components/uid-input/) |
+| Documents (3) | [InvoiceDocument](https://alpina-ui.vercel.app/docs/components/invoice-document/) · [Letter](https://alpina-ui.vercel.app/docs/components/letter/) · [SwissQrBill](https://alpina-ui.vercel.app/docs/components/swiss-qr-bill/) |
+| Charts (5) | [BarChart](https://alpina-ui.vercel.app/docs/components/bar-chart/) · [ChartTable](https://alpina-ui.vercel.app/docs/components/chart-table/) · [Chart](https://alpina-ui.vercel.app/docs/components/chart/) · [LineChart](https://alpina-ui.vercel.app/docs/components/line-chart/) · [Sparkline](https://alpina-ui.vercel.app/docs/components/sparkline/) |
+| Page blocks (5) | [Account settings](https://alpina-ui.vercel.app/blocks/account-settings/) · [Dashboard](https://alpina-ui.vercel.app/blocks/dashboard/) · [Login](https://alpina-ui.vercel.app/blocks/login/) · [Pricing](https://alpina-ui.vercel.app/blocks/pricing/) · [Public service](https://alpina-ui.vercel.app/blocks/public-service/) |
 
-## Try the bilingual address book
+## Alpina and shadcn/ui
 
-Search seven fictional design studios, switch between Italian and German, and edit an address without losing your draft. The adoption report tracks the CSS needed to build the example using only the portal. Moving layout, current-row styling, and long-word handling into Alpina reduced the application stylesheet from 56 declarations to 43. [Try the address book](https://alpina-ui.vercel.app/examples/bilingual-address-book/) · [Example source and offline build](recipes/rubrica) · [Adoption report](recipes/rubrica/PROVA.md)
+| When choosing a library | Alpina UI | shadcn/ui |
+| --- | --- | --- |
+| Distribution | Versioned React package or editable TypeScript and CSS through the Alpina CLI. | Open component source installed through a CLI, with a registry ecosystem for sharing code. |
+| Design starting point | A Swiss editorial grid, square corners and a restrained red, white and black palette. | Customizable styles and themes for building your own design system. |
+| Application fit | Swiss address, identity, holiday and payment rules are part of the package. | A general-purpose starting point for teams choosing their own domain components and rules. |
 
-## Inspect and update a component
+Teams already using shadcn/ui can migrate one component family at a time. API differences and equivalents are documented. [Alpina migration table](https://alpina-ui.vercel.app/docs/guides/migration/) · [shadcn/ui documentation](https://ui.shadcn.com/docs) · [shadcn registries](https://ui.shadcn.com/docs/registry)
 
-Each component page covers appropriate uses, alternatives, accessibility and wording, with examples in German, French, Italian and Romansh. Each page has four views. The preview keeps your input when you switch to the example code, API reference, or distributed source. Adjust the preview width to see how a component behaves in a narrow container. A link such as `#swiss-address-form/api` opens the reference directly.
+## Build with Alpina
 
-After upgrading the package, run `npx --no-install alpina diff` to compare copied components with the installed version. [CLI guide](docs/cli.md) · [Migration notes](docs/release.md)
+- [Interactive examples](https://alpina-ui.vercel.app/examples/) and [framework integrations](integrations) cover Next.js, React Router and React Hook Form. The [offline catalog](https://alpina-ui.vercel.app/catalog.html) includes source, API references and working previews.
+- [Agent tools](https://alpina-ui.vercel.app/agents/) include a local read-only MCP server and an installable skill. [Machine-readable site index](https://alpina-ui.vercel.app/llms.txt)
+- [Component status](https://alpina-ui.vercel.app/status/), [Beta review](docs/beta-review.md), [0.x migration](docs/migrate-1-0.md) and the [1.0 checklist](docs/1.0-checklist.md) describe the contracts and remaining decisions.
+- Run `npm ci`, `npm run build`, `npm run typecheck`, `npm test` and `npm run catalog` for a local build. Browser, bundle and performance checks are documented in the [quality guide](docs/package-quality.md). Maintainers can regenerate this README with `node scripts/readme.mjs`.
 
-### Try a complete workflow
+## Site domain
 
-Copy the residence certificate application with `alpina add block/public-service`. It collects an AHV number and structured address, restores a locally saved draft with its original files and presents a summary before submission. The example issues a local demo reference. Connect the supplied callback to your service to issue a real case number. [Public service form](https://alpina-ui.vercel.app/blocks/public-service/)
+Set the build environment variable `SITE_URL` to your HTTPS origin before running `npm run catalog`. Use the same value in the production deployment and when regenerating this README. Redeploy after a domain change so canonical links, the sharing card, sitemap, robots file and machine-readable index advertise the new address.
 
-- Register for a print workshop, correct an invalid field and return from review to edit a choice. [Workshop registration](https://alpina-ui.vercel.app/examples/workshop-registration/)
-- Compare an invoice with a purchase order, request a correction with a note and reopen the decision. [Invoice review](https://alpina-ui.vercel.app/examples/invoice-review/)
+## License and data sources
 
-Both projects use the library’s public components and ship without an application stylesheet. [All examples](https://alpina-ui.vercel.app/examples/)
-
-## Use Alpina with a coding agent
-
-Run `npx skills add stedbrown/alpina-ui --skill alpina-ui` to give a coding agent instructions for composing Alpina interfaces. The optional local MCP server lets it search the installed registry and read version-matched TypeScript declarations, source files, and guides. [Agent setup](https://alpina-ui.vercel.app/agents/) · [Machine-readable index](https://alpina-ui.vercel.app/llms.txt)
-
-## Bundle sizes
-
-Run `npm run size` after building to measure individual imports. The benchmark uses esbuild to minify ES2022 output and then applies gzip. React and React DOM are external peer dependencies. The full offline catalog also contains source files, interactive examples, and React itself.
-
-| Import | Gzipped bytes |
-| --- | ---: |
-| Button JavaScript | 1,014 |
-| CurrencyCHF JavaScript | 1,042 |
-| Dialog JavaScript | 1,155 |
-| Icon JavaScript, all 32 drawings | 1,245 |
-| All JavaScript exports in a single bundle | 802,657 |
-| Full stylesheet including the theme | 19,290 |
-| Button CSS without the theme | 763 |
-
-The single-bundle figure includes the image and PDF decoders. In a split Vite or Next application, the scanner loads a decoder when a file needs it. The production Vite Button example loads one JavaScript asset. The package quality guide documents the checks for root imports and subpaths, including esbuild’s split-output behavior. [Package quality](docs/package-quality.md)
-
-## Releases
-
-Version 0.14.0 adds a localized file dropzone, a five-language public-service form with resumable attachments, and optical Inter display typography. The CI checks the public API and exercises the English catalog with German and French browser controls. [API stability](docs/api-stability.md) · [Changelog](CHANGELOG.md) · [Before and after](https://alpina-ui.vercel.app/releases/0.11/) · [Swiss forms](docs/swiss.md) · [Visual testing](docs/visual-testing.md)
-
-Pushes run CI. A maintainer can publish a verified package archive with provenance by starting the separate release workflow. [Maintainer guide](docs/npm-release.md)
-
-## License
-
-Alpina’s original code is available under the MIT license. Data derived from Unicode CLDR uses the Unicode license. The optional Inter fonts use the SIL Open Font License 1.1. The scanner package includes jsQR, Mozilla PDF.js and their decoder license notices in `dist/swiss/`. The residential postcode directory is adapted from ©swisstopo open geodata and carries its source attribution. [swisstopo terms](https://www.swisstopo.admin.ch/en/terms-of-use-free-geodata-and-geoservices) [MIT license](LICENSE) · [Unicode license](docs/UNICODE-LICENSE.txt) · [Inter font license](src/fonts/OFL.txt)
+Alpina’s original code and artwork use the MIT license. Inter is distributed under the SIL Open Font License. Locale data includes Unicode CLDR, postal localities are derived from ©swisstopo, and the local scanner includes jsQR and Mozilla PDF.js with their decoder notices. [MIT](LICENSE) · [Inter license](src/fonts/OFL.txt) · [Unicode license](docs/UNICODE-LICENSE.txt) · [swisstopo terms](https://www.swisstopo.admin.ch/en/terms-of-use-free-geodata-and-geoservices)

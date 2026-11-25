@@ -35,4 +35,10 @@ jobs:
         run: |
           tarball="recipes/rubrica/vendor/$ARCHIVE"
           printf '%s  %s\n' "$SHA512" "$tarball" | sha512sum --check
-          npm publish "$tarball" --access public --provenance --ignore-scripts
+          version="$(node -p "require('./package.json').version")"
+          case "$version" in
+            *-*) tag=next ;;
+            *) tag=latest ;;
+          esac
+          echo "Publishing alpina-ui@$version with the dist-tag $tag"
+          npm publish "$tarball" --access public --provenance --ignore-scripts --tag "$tag"

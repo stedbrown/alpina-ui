@@ -1,5 +1,6 @@
 export const swissLocales = ['de-CH', 'fr-CH', 'it-CH', 'rm-CH'] as const
 export type SwissLocale = (typeof swissLocales)[number]
+export type SwissMessageLocale = SwissLocale | 'en'
 
 export const localeNames: Readonly<Record<SwissLocale, string>> = {
   'de-CH': 'Deutsch',

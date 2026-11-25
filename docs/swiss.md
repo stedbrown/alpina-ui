@@ -17,6 +17,27 @@ Alpina ships React components and pure functions for Swiss data. Set the locale 
 
 The native locale select, canton select, and postal code field forward `ref`, `id`, `name`, `disabled`, `required`, ARIA attributes, and native events. Give each a visible label. For a controlled select, supply `value` and the typed callback. With `defaultValue`, the browser manages the selection.
 
+## Rumantsch grischun
+
+Use `rm-CH` for the standardized written language used in federal publications. The language menu names it *Rumantsch*. A reader can select it for addresses, cantons, dates, holidays, amounts and QR payment slips. The four translation fields keep the names `title[de]`, `title[fr]`, `title[it]` and `title[rm]` on submission. Set `<MultilingualField locale="rm-CH" … />` to give the editor Romansh completion states, character counts and copy actions. The interface language and the language being edited can differ. [Lia Rumantscha on Rumantsch grischun](https://www.liarumantscha.ch/de/raetoromanisch/rumantsch-grischun) · [Federal Chancellery language resources and Pledari Grond](https://www.bk.admin.ch/rm/rumantsch)
+
+Pass `locale="rm-CH"` to `IbanInput`, `AhvInput`, `UidInput`, `PhoneInput` and `SwissPostalCodeInput` for native validation messages. A language change preserves the value and updates the correction. `validationMessage` overrides the message for an invalid value. On the server, `swissValidationMessage('postalCode', 'rm-CH')` returns the same wording. [Address form example](https://alpina-ui.vercel.app/docs/components/swiss-address-form/)
+
+| Example | Romansh display |
+| --- | --- |
+| Quantity | 1 234,50 |
+| Negative amount | CHF −1 234,50 |
+| Full date | venderdi, ils 19 da favrer 2027 |
+
+```ts
+const locale = 'rm-CH'
+formatSwissNumber('1234.50', locale, { minimumFractionDigits: 2 })
+formatCHF(-1234.5, locale)
+formatSwissDate('2027-02-19', locale, { dateStyle: 'full' })
+```
+
+The JavaScript engine decides which ICU locales it includes. A valid BCP 47 tag may silently resolve to another language. Check `Intl.NumberFormat.supportedLocalesOf(['rm-CH'], { localeMatcher: 'lookup' })` and `Intl.DateTimeFormat.supportedLocalesOf(…)` separately. Alpina supplies CLDR 48 Romansh date forms, month and weekday names and numeric separators for its formatters. The runtime still provides time-zone conversion and currency rounding. Generic application calls to `Intl.DisplayNames`, relative time, or number spell-out need their own locale data where required. [Unicode CLDR 48, Romansh](https://github.com/unicode-org/cldr/blob/release-48/common/main/rm.xml) · [ECMA-402 locale matching](https://tc39.es/ecma402/#sec-supportedlocales)
+
 ## Collect a postal address
 
 ```tsx

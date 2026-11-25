@@ -1,9 +1,12 @@
 'use client'
 
 import { forwardRef, type ComponentPropsWithoutRef } from 'react'
-import { Input } from '../ui/input.js'
-import { swissPostalCodePattern } from './postal-code.js'
-import type { SwissLocale } from './locales.js'
+import { IdentifierField } from './identifier-field.js'
+import { postalCodeMessages } from './input-messages.internal.js'
+import { isSwissPostalCode, swissPostalCodePattern } from './postal-code.js'
+import type { SwissMessageLocale } from './locales.js'
+
+const keepPostalCode = (value: string) => value
 
 export interface SwissPostalCodeInputProps extends Omit<
   ComponentPropsWithoutRef<'input'>,
@@ -11,15 +14,19 @@ export interface SwissPostalCodeInputProps extends Omit<
 > {
   value?: string
   defaultValue?: string
-  locale?: SwissLocale
+  locale?: SwissMessageLocale
+  validationMessage?: string
 }
 
 export const SwissPostalCodeInput = forwardRef<HTMLInputElement, SwissPostalCodeInputProps>(
   function SwissPostalCodeInput({ locale, onPaste, ...props }, ref) {
     return (
-      <Input
+      <IdentifierField
+        validate={isSwissPostalCode}
+        format={keepPostalCode}
+        messages={postalCodeMessages}
         autoComplete="postal-code"
-        lang={locale}
+        locale={locale}
         dir="ltr"
         spellCheck={false}
         {...props}

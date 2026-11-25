@@ -62,7 +62,9 @@ function grouped(value: string, width: number): string {
   return parts.join(' ')
 }
 
-function QrCode({ payload }: { payload: string }) {
+const qrNames = { en: 'Swiss QR Code', 'de-CH': 'Swiss QR Code', 'fr-CH': 'Code QR suisse', 'it-CH': 'Codice QR svizzero', 'rm-CH': 'Code QR svizzer' }
+
+function QrCode({ payload, label }: { payload: string; label: string }) {
   const matrix = qrMatrix(payload)
   const path = matrix.flatMap((row, y) => {
     const runs = []
@@ -76,7 +78,7 @@ function QrCode({ payload }: { payload: string }) {
     return runs
   }).join('')
   return (
-    <svg viewBox="0 0 46 46" className="al-bill-qr" role="img" aria-label="Swiss QR Code">
+    <svg viewBox="0 0 46 46" className="al-bill-qr" role="img" aria-label={label}>
       <svg viewBox={'0 0 ' + matrix.length + ' ' + matrix.length} width="46" height="46">
         <rect width="100%" height="100%" fill="white" />
         <path d={path} fill="black" shapeRendering="crispEdges" />
@@ -143,7 +145,7 @@ function Amount({ bill, words, receipt = false }: { bill: Payment; words: BillLa
 export const SwissQrBill = forwardRef<HTMLDivElement, SwissQrBillProps>(function SwissQrBill(
   { bill, locale = 'de-CH', printLayout = 'page', fit = false, className = '', ...props }, ref,
 ) {
-  const payment = prepareSwissQrBill(bill)
+  const payment = prepareSwissQrBill(bill, locale)
   const words = headings[locale]
   const dense = !payment.amount || [payment.creditor, payment.debtor].some(party => party &&
     (party.name.length > 36 || (party.street?.length ?? 0) > 42 || party.town.length > 24)) ||
@@ -160,7 +162,7 @@ export const SwissQrBill = forwardRef<HTMLDivElement, SwissQrBillProps>(function
         </section>
         <section className="al-bill-payment" aria-label={words.payment} data-dense={dense || undefined}>
           <h2>{words.payment}</h2>
-          <QrCode payload={payment.payload} />
+          <QrCode payload={payment.payload} label={qrNames[locale]} />
           <Amount bill={payment} words={words} />
           <Details bill={payment} words={words} />
           {payment.alternatives.length > 0 && <div className="al-bill-procedures">

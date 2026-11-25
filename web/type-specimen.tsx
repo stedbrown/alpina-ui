@@ -5,6 +5,7 @@ const languages = [
   { locale: 'de-CH', language: 'German', total: 'Rechnungsbetrag', due: 'Fällig am' },
   { locale: 'fr-CH', language: 'French', total: 'Montant total', due: 'Échéance' },
   { locale: 'it-CH', language: 'Italian', total: 'Totale fattura', due: 'Scadenza' },
+  { locale: 'rm-CH', language: 'Romansh', total: 'Import dal quint', due: 'Scadenza' },
 ] as const
 
 function InvoiceSample({ entry }: { entry: typeof languages[number] }) {
@@ -32,7 +33,7 @@ export function TypeSpecimen() {
       <Typography>Switch the language to compare local date and currency formats.</Typography>
       <Stack gap={0} data-showcase-live="">
         <Tabs label="Invoice language" defaultValue="de-CH"
-          items={languages.map(entry => ({ value: entry.locale, label: entry.language, content: <InvoiceSample entry={entry} /> }))} />
+          items={languages.map(entry => ({ value: entry.locale, label: <abbr title={entry.language} aria-label={entry.language}>{entry.locale.slice(0, 2).toUpperCase()}</abbr>, content: <InvoiceSample entry={entry} /> }))} />
       </Stack>
       <Stack data-showcase-fallback="" gap={0}>
         {languages.map(entry => (

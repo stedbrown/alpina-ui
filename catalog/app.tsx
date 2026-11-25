@@ -115,7 +115,7 @@ const searchTerms: Record<string, string> = {
   'canton-combobox': 'canton filter search location',
   input: 'search contacts filter',
   'data-table': 'sort contacts list',
-  'locale-select': 'language selector bilingual German Italian',
+  'locale-select': 'language selector Deutsch Français Italiano Rumantsch grischun German French Italian Romansh',
 }
 const fold = (text: string) => text.normalize('NFD').replace(/\p{M}/gu, '').toLocaleLowerCase('en')
 const searchIndex = inventory.map((row) => ({

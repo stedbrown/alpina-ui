@@ -67,7 +67,9 @@ export function PrintableSlip({ bill }: { bill: SwissQrBillData }) {
 
 The default print layout places the 210 × 105 mm slip at the foot of its own A4 sheet. Use actual size (100%), zero margins, and disable browser headers and footers. For a print template that already positions the slip, set `printLayout="inline"` and reserve exactly 210 × 105 mm at the bottom edge. Put the bill outside columns or ancestors with print padding or scaling. The receipt occupies the left 62 mm, the payment part the right 148 mm. Test a physical print with the grid sheet and your bank's validation process before issuing bills. [SIX print grid and validation resources](https://www.six-group.com/en/products-services/banking-services/payment-standardization/standards/qr-bill.html)
 
-Set `locale` to `de-CH`, `fr-CH`, `it-CH`, `rm-CH`, or `en` for the prescribed headings. The encoded payment data stays the same. The payment slip uses the permitted document fonts and prints in black on white independently of the application theme.
+Set `locale` to `de-CH`, `fr-CH`, `it-CH`, `rm-CH`, or `en` for the prescribed headings. In Romansh, the two sections are headed *Quittanza* and *Part da pajament*. SIX IG 2.4 introduced the Romansh correspondence headings on 1 January 2026. Annex C, table 23 specifies the printed terms. The encoded payment data stays the same in every language. [SIX implementation guide, annex C](https://www.six-group.com/dam/download/banking-services/standardization/qr-bill/ig-qr-bill-v2.4-en.pdf#page=62) · [SIX effective dates](https://www.six-group.com/fr/products-services/banking-services/payment-standardization/standards/qr-bill.html)
+
+Pass a locale as the second argument to `buildSwissQrPayload(bill, 'rm-CH')` or `prepareSwissQrBill(bill, 'rm-CH')` for localized validation. The default for the pure functions is English. A rejected bill throws a `SwissQrValidationError`, a `RangeError` with a stable `code`, a field path such as `debtor.postalCode`, and a localized `message`. The payment slip uses the permitted document fonts and prints in black on white independently of the application theme.
 
 ## Printing a complete VAT invoice
 

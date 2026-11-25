@@ -6,6 +6,7 @@ import { Input } from '../ui/input.js'
 import { Stack } from '../ui/stack.js'
 import { Textarea } from '../ui/textarea.js'
 import { Tabs } from '../interactive/tabs.js'
+import type { SwissMessageLocale } from './locales.js'
 import { localeNames } from './locales.js'
 import './multilingual-field.css'
 
@@ -28,10 +29,20 @@ const english: MultilingualFieldLabels = {
   copyFrom: source => 'Copy from ' + source,
 }
 
+const labelsByLocale: Record<SwissMessageLocale, MultilingualFieldLabels> = {
+  en: english,
+  'de-CH': { complete: 'Vollständig', empty: 'Leer', count: n => n + ' Zeichen', copyFrom: source => 'Aus ' + source + ' kopieren' },
+  'fr-CH': { complete: 'Complet', empty: 'Vide', count: n => n + (n > 1 ? ' caractères' : ' caractère'), copyFrom: source => 'Copier depuis « ' + source + ' »' },
+  'it-CH': { complete: 'Completo', empty: 'Vuoto', count: n => n + (n === 1 ? ' carattere' : ' caratteri'), copyFrom: source => 'Copia da ' + source },
+  'rm-CH': { complete: 'Cumplet', empty: 'Vid', count: n => n + (n === 1 ? ' segn' : ' segns'), copyFrom: source => 'Copiar la versiun «' + source + '»' },
+}
+
 export interface MultilingualFieldProps extends Omit<ComponentPropsWithoutRef<'fieldset'>, 'name' | 'children' | 'defaultValue'> {
   name: string
   label: string
   includeEnglish?: boolean
+  /** Language of status, character counts and copy actions, independent of the text being edited. */
+  locale?: SwissMessageLocale
   layout?: 'tabs' | 'columns'
   variant?: 'input' | 'textarea'
   sourceLanguage?: TranslationLanguage
@@ -43,7 +54,7 @@ export interface MultilingualFieldProps extends Omit<ComponentPropsWithoutRef<'f
 
 export const MultilingualField = forwardRef<HTMLFieldSetElement, MultilingualFieldProps>(function MultilingualField(
   { name, label, includeEnglish = false, layout = 'tabs', variant = 'input', sourceLanguage = 'de',
-    value, defaultValue, onValueChange, labels, className = '', form, ...props }, ref,
+    value, defaultValue, onValueChange, labels, locale = 'en', className = '', form, ...props }, ref,
 ) {
   const group = useRef<HTMLFieldSetElement>(null)
   useImperativeHandle(ref, () => group.current!, [])
@@ -51,7 +62,7 @@ export const MultilingualField = forwardRef<HTMLFieldSetElement, MultilingualFie
   const values = value ?? local
   const visible = includeEnglish ? languages : national
   const source = sourceLanguage === 'en' && !includeEnglish ? 'de' : sourceLanguage
-  const messages = { ...english, ...labels }
+  const messages = { ...labelsByLocale[locale], ...labels }
   useEffect(() => {
     const owner = group.current?.form
     if (!owner || value !== undefined) return
@@ -88,10 +99,10 @@ export const MultilingualField = forwardRef<HTMLFieldSetElement, MultilingualFie
     </Stack>
     return { value: language, label: <span>
       <span aria-hidden="true">{language.toUpperCase()} {complete ? '✓' : '–'}</span>
-      <span className="al-translations-status">{names[language]} · {status}</span>
+      <span className="al-translations-status"><span lang={tag}>{names[language]}</span> · {status}</span>
     </span>, content }
   })
-  return <fieldset {...props} form={form} ref={group} className={('al-translations ' + className).trim()}>
+  return <fieldset lang={locale} {...props} form={form} ref={group} className={('al-translations ' + className).trim()}>
     <legend>{label}</legend>
     {layout === 'tabs' ? <Tabs label={label} items={items} defaultValue={source} />
       : <div className="al-translations-columns">{items.map(item => item.content)}</div>}

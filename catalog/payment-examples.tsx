@@ -1,6 +1,6 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import {
-  InvoiceDocument, Letter, printSwissDocument, MultilingualField, AhvInput, Button, Field, IbanInput, PhoneInput, Stack, SwissQrBill, Typography, UidInput, printSwissQrBill,
+  InvoiceDocument, Letter, NativeSelect, localeNames, swissLocales, type SwissQrBillLocale, printSwissDocument, MultilingualField, AhvInput, Button, Field, IbanInput, PhoneInput, Stack, SwissQrBill, UidInput, printSwissQrBill,
 } from 'alpina-ui'
 
 export function IbanInputExample() {
@@ -25,12 +25,17 @@ export function UidInputExample() {
 }
 export function SwissQrBillExample() {
   const slip = useRef<HTMLDivElement>(null)
+  const [locale, setLocale] = useState<SwissQrBillLocale>('en')
   return <Stack gap={4}>
     <Stack direction="row" justify="space-between">
-      <Typography variant="label">Sample payment slip</Typography>
+      <Field label="Payment slip language">{props => <NativeSelect {...props} value={locale}
+        onChange={event => setLocale(event.currentTarget.value as SwissQrBillLocale)}>
+        <option value="en" lang="en">English</option>
+        {swissLocales.map(tag => <option key={tag} value={tag} lang={tag}>{localeNames[tag]}</option>)}
+      </NativeSelect>}</Field>
       <Button variant="outline" onClick={() => { if (slip.current) printSwissQrBill(slip.current) }}>Print payment slip</Button>
     </Stack>
-    <SwissQrBill ref={slip} fit locale="en" bill={{
+    <SwissQrBill ref={slip} fit locale={locale} bill={{
       iban: 'CH58 0079 1123 0008 8901 2', currency: 'CHF', amount: '211.00',
       creditor: { name: 'Muster Krankenkasse', street: 'Musterstrasse', buildingNumber: '12', postalCode: '8000', town: 'Seldwyla', country: 'CH' },
       debtor: { name: 'Sarah Beispiel', street: 'Musterstrasse', buildingNumber: '1', postalCode: '8000', town: 'Seldwyla', country: 'CH' },

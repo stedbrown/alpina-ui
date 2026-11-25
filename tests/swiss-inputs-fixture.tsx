@@ -3,10 +3,12 @@ import { createRoot } from 'react-dom/client'
 import { IbanInput } from '../src/swiss/iban-input.js'
 import { AhvInput } from '../src/swiss/ahv-input.js'
 import { PhoneInput } from '../src/swiss/phone-input.js'
+import { LocaleSelect, type SwissLocale, SwissPostalCodeInput } from 'alpina-ui'
 import { UidInput } from '../src/swiss/uid-input.js'
 
 function Fixture() {
   const [phone, setPhone] = useState('0791234567')
+  const [locale, setLocale] = useState<SwissLocale>('it-CH')
   const [changes, setChanges] = useState(0)
   const iban = useRef<HTMLInputElement>(null)
   return <>
@@ -28,6 +30,11 @@ function Fixture() {
     <button onClick={() => setPhone('')}>Clear saved phone</button>
     <label htmlFor="uid">Business identifier</label>
     <UidInput id="uid" defaultValue="CHE109322551" validationMessage="Check the business identifier." />
+    <section aria-label="Localized validation">
+      <label>Language <LocaleSelect value={locale} onLocaleChange={setLocale} /></label>
+      <label>Postal code <SwissPostalCodeInput locale={locale} required /></label>
+      <label>Social insurance number <AhvInput locale={locale} required /></label>
+    </section>
     <output id="events">{changes}</output>
   </>
 }

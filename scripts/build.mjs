@@ -51,7 +51,7 @@ for (const [group, names] of Object.entries(groups)) {
     const entry = group + '/' + name + '.tsx'
     await access('src/' + entry)
     const files = dependencies(entry)
-    if (files.has('swiss/format-chf.ts') || files.has('swiss/format-swiss-date.ts'))
+    if (files.has('swiss/format-chf.ts') || files.has('swiss/format-swiss-date.ts') || files.has('swiss/format-swiss-number.ts'))
       files.add('swiss/UNICODE-LICENSE.txt')
     const usage = usageNotes[name]
     if (typeof usage !== 'string' || !usage.trim()) throw new Error('Missing usage notes for ' + name)

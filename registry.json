@@ -956,6 +956,8 @@
         "swiss/postal-localities.data.ts",
         "swiss/postal-address.ts",
         "swiss/swiss-postal-code-input.tsx",
+        "swiss/identifier-field.tsx",
+        "swiss/input-messages.internal.ts",
         "swiss/swiss-address-form.css"
       ]
     },
@@ -1047,10 +1049,12 @@
       "files": [
         "theme.css",
         "swiss/swiss-postal-code-input.tsx",
+        "swiss/identifier-field.tsx",
+        "swiss/input-messages.internal.ts",
+        "swiss/locales.ts",
         "ui/input.tsx",
         "ui/input.css",
-        "swiss/postal-code.ts",
-        "swiss/locales.ts"
+        "swiss/postal-code.ts"
       ]
     },
     {
@@ -1089,6 +1093,8 @@
       "files": [
         "theme.css",
         "swiss/iban-input.tsx",
+        "swiss/input-messages.internal.ts",
+        "swiss/locales.ts",
         "swiss/identifier-field.tsx",
         "ui/input.tsx",
         "ui/input.css",
@@ -1099,10 +1105,12 @@
       "name": "ahv-input",
       "group": "swiss",
       "entry": "swiss/ahv-input.tsx",
-      "usage": "Accept 13 digits beginning with 756. The component validates the EAN‑13 check digit and groups a valid number on blur. Pass validationMessage to localize native form errors.",
+      "usage": "Accept 13 digits beginning with 756. The component validates the EAN‑13 check digit and groups a valid number on blur. Set locale for validation in any Swiss national language or supply validationMessage.",
       "files": [
         "theme.css",
         "swiss/ahv-input.tsx",
+        "swiss/input-messages.internal.ts",
+        "swiss/locales.ts",
         "swiss/identifier-field.tsx",
         "ui/input.tsx",
         "ui/input.css",
@@ -1117,6 +1125,8 @@
       "files": [
         "theme.css",
         "swiss/phone-input.tsx",
+        "swiss/input-messages.internal.ts",
+        "swiss/locales.ts",
         "swiss/identifier-field.tsx",
         "ui/input.tsx",
         "ui/input.css",
@@ -1131,6 +1141,8 @@
       "files": [
         "theme.css",
         "swiss/uid-input.tsx",
+        "swiss/input-messages.internal.ts",
+        "swiss/locales.ts",
         "swiss/identifier-field.tsx",
         "ui/input.tsx",
         "ui/input.css",
@@ -1165,9 +1177,10 @@
         "swiss/invoice-document.tsx",
         "swiss/swiss-qr-bill.tsx",
         "swiss/qr-payment.ts",
+        "swiss/qr-messages.internal.ts",
+        "swiss/locales.ts",
         "swiss/identifiers.ts",
         "swiss/qr-matrix.ts",
-        "swiss/locales.ts",
         "swiss/swiss-qr-bill.css",
         "swiss/invoice-totals.ts",
         "swiss/format-chf.ts",
@@ -1189,9 +1202,10 @@
         "theme.css",
         "swiss/swiss-qr-bill.tsx",
         "swiss/qr-payment.ts",
+        "swiss/qr-messages.internal.ts",
+        "swiss/locales.ts",
         "swiss/identifiers.ts",
         "swiss/qr-matrix.ts",
-        "swiss/locales.ts",
         "swiss/swiss-qr-bill.css"
       ]
     },

@@ -2,7 +2,7 @@
   "multilingual-field": "Use name to submit translations as title[de], title[fr], title[it] and title[rm]. includeEnglish adds English. Select variant=textarea for long copy or layout=columns to compare translations. Copy fills an empty language from sourceLanguage.",
   "uid-input": "Collect a CHE business identifier with its modulo-11 check digit. A valid entry is grouped on blur. Pass validationMessage to localize the native validation error.",
   "iban-input": "Use for Swiss and Liechtenstein accounts. Valid accounts are grouped on blur. Use isSwissIban and compactIban on submitted values.",
-  "ahv-input": "Accept 13 digits beginning with 756. The component validates the EAN‑13 check digit and groups a valid number on blur. Pass validationMessage to localize native form errors.",
+  "ahv-input": "Accept 13 digits beginning with 756. The component validates the EAN‑13 check digit and groups a valid number on blur. Set locale for validation in any Swiss national language or supply validationMessage.",
   "phone-input": "Accept ordinary nine-digit Swiss national numbers, domestic trunk prefixes and international +41 or 0041 input. Format valid entries on blur. Short service codes use a separate field.",
   "letter": "Supply sender and recipient lines, a civil date and the subject. Select the window used by your envelope and use printSwissDocument with the article ref.",
   "invoice-document": "Supply the creditor and debtor, VAT UID, issue, supply and due dates and VAT-exclusive line items. The same centime total drives the summary and the QR payment. Use printSwissDocument for a complete A4 invoice.",

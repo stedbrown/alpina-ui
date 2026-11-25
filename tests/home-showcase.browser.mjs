@@ -88,7 +88,7 @@ try {
   await page.evaluate(() => document.fonts.ready)
   for (const width of [320, 360, 640, 768, 800, 960, 1024, 1440]) {
     await page.setViewportSize({ width, height: 900 })
-    for (const name of ['German', 'French', 'Italian']) {
+    for (const name of ['German', 'French', 'Italian', 'Romansh']) {
       await invoice.getByRole('tab', { name }).click()
       const problems = await invoice.getByRole('tabpanel').locator('bdi').evaluateAll(values => values.filter(value => {
         const range = document.createRange()

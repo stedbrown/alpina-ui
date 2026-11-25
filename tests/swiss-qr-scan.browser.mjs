@@ -31,7 +31,7 @@ try {
   const markup = renderToStaticMarkup(createElement(SwissQrBill, { bill, locale: 'it-CH' }))
   await page.setContent('<!doctype html><html><head><style>' + stylesheet + '</style></head><body>' + markup + '</body></html>')
   await page.addScriptTag({ path: createRequire(import.meta.url).resolve('jsqr') })
-  const mark = page.getByRole('img', { name: 'Swiss QR Code' })
+  const mark = page.getByRole('img', { name: 'Codice QR svizzero', exact: true })
   const box = await mark.boundingBox()
   assert.ok(box)
   const pxPerMm = box.width / 46

@@ -1,4 +1,5 @@
 import { forwardRef, type ComponentPropsWithoutRef } from 'react'
+import { LetterBody } from './document-body.internal.js'
 import { SwissDate } from './swiss-date.js'
 import type { SwissLocale } from './locales.js'
 import './letter.css'
@@ -29,6 +30,6 @@ export const Letter = forwardRef<HTMLElement, LetterProps>(function Letter({
     </header>
     <p className="al-letter-dateline">{place && place + ', '}<SwissDate value={date} locale={locale} /></p>
     <h2>{subject}</h2>
-    <div className="al-letter-body">{children}</div>
+    <LetterBody>{children}</LetterBody>
   </article>
 })

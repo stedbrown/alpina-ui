@@ -10,5 +10,15 @@
     height: auto !important;
     overflow: visible !important;
   }
-  body:has(.al-letter, .al-invoice-document) { margin: 0; }
+  /* Static markup uses native visibility semantics. Hydrated documents register a
+     beforeprint listener so custom CSS-hidden views retain their screen visibility. */
+  body:not([data-al-document-managed], [data-al-document-path], [data-al-qr-print-path])
+    :is(.al-letter, .al-invoice-document):is([hidden], [hidden] *, [aria-hidden="true"], [aria-hidden="true"] *, dialog:not([open]) *, details:not([open]) *) { display: none !important; }
+  body:not([data-al-document-managed], [data-al-document-path], [data-al-qr-print-path]):has(
+    :is(.al-letter, .al-invoice-document):not([hidden], [hidden] *, [aria-hidden="true"], [aria-hidden="true"] *, dialog:not([open]) *, details:not([open]) *)
+  ) {
+    margin: 0; padding: 0;
+    & :not(.al-letter, .al-invoice-document, .al-letter *, .al-invoice-document *):not(:has(.al-letter, .al-invoice-document)) { display: none !important; }
+    & :not(.al-letter, .al-invoice-document, [hidden], [hidden] *, [aria-hidden="true"], [aria-hidden="true"] *, dialog:not([open]), dialog:not([open]) *, details:not([open]), details:not([open]) *):has(.al-letter, .al-invoice-document) { display: contents !important; }
+  }
 }

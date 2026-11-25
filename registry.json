@@ -1224,6 +1224,8 @@
       "files": [
         "theme.css",
         "swiss/letter.tsx",
+        "swiss/document-body.internal.tsx",
+        "swiss/document-print-scope.internal.ts",
         "swiss/swiss-date.tsx",
         "swiss/format-swiss-date.ts",
         "swiss/locales.ts",
@@ -1232,6 +1234,7 @@
         "swiss/letter.css",
         "swiss/document-print.css",
         "swiss/print-document.ts",
+        "swiss/invoice-print.internal.ts",
         "swiss/UNICODE-LICENSE.txt"
       ]
     },
@@ -1256,6 +1259,10 @@
         "swiss/format-centimes.internal.ts",
         "swiss/format-chf.ts",
         "swiss/format-swiss-number.ts",
+        "swiss/invoice-paper.internal.tsx",
+        "swiss/document-body.internal.tsx",
+        "swiss/document-print-scope.internal.ts",
+        "swiss/invoice-print.internal.ts",
         "swiss/swiss-date.tsx",
         "swiss/format-swiss-date.ts",
         "swiss/figures.css",

@@ -4,6 +4,7 @@ import type { SwissQrAddress, SwissQrBillData } from './qr-payment.js'
 import { calculateInvoiceTotals, invoiceUnitPriceCents, type InvoiceLine } from './invoice-totals.js'
 import { formatCentimes } from './format-centimes.internal.js'
 import { formatSwissNumber } from './format-swiss-number.js'
+import { InvoicePaper } from './invoice-paper.internal.js'
 import { SwissDate } from './swiss-date.js'
 import { formatSwissUid, isSwissUid } from './identifiers.js'
 import './invoice-document.css'
@@ -61,12 +62,6 @@ export const InvoiceDocument = forwardRef<HTMLElement, InvoiceDocumentProps>(fun
   const columnAmount = (cents: number) => amount(cents).replace('CHF', '').trim()
   const rate = (value: number) => number(value) + '\u00a0%'
   const bill = { ...payment, currency: 'CHF' as const, amount: (result.totalCents / 100).toFixed(2) }
-  // Keep the final sheet bounded. Longer itemizations flow across ordinary A4 pages.
-  const shortAddress = (party: SwissQrAddress) => party.name.length <= 32 && (party.street?.length ?? 0) <= 32 &&
-    (party.buildingNumber?.length ?? 0) <= 8 && party.town.length <= 24 && party.postalCode.length <= 8
-  const compact = invoiceNumber.length <= 24 && shortAddress(payment.creditor) && shortAddress(payment.debtor) &&
-    lines.length <= 3 && lines.every(line => line.description.length <= 32 && String(line.quantity).length + (line.unit?.length ?? 0) <= 7 &&
-      String(line.unitPrice).length <= 8) && result.lineNetCents.every(value => Math.abs(value) < 100_000_000)
   const statement = <div className="al-invoice-statement">
     <h2>{l.invoice} <bdi>{invoiceNumber}</bdi></h2>
     <div className="al-invoice-parties">
@@ -87,19 +82,22 @@ export const InvoiceDocument = forwardRef<HTMLElement, InvoiceDocumentProps>(fun
       </table>
     </div>
   </div>
-  return <article ref={ref} lang={locale} {...props} className={('al-invoice-document ' + className).trim()} data-compact={compact || undefined}>
-    {!compact && statement}
-    <div className="al-invoice-final">
-      {compact && statement}
-      <div className="al-invoice-summary">
-        {!compact && <h2>{l.invoice}{invoiceNumber.length <= 64 && <> <bdi>{invoiceNumber}</bdi></>}</h2>}
-        <dl>
-          <div><dt>{l.net}</dt><dd>{amount(result.netCents)}</dd></div>
-          {result.vat.map(bucket => <div key={bucket.rate}><dt>{l.vat} {rate(bucket.rate)} · {amount(bucket.baseCents)}</dt><dd>{amount(bucket.taxCents)}</dd></div>)}
-          {result.roundingCents !== 0 && <div><dt>{l.adjustment}</dt><dd>{amount(result.roundingCents)}</dd></div>}
-          <div className="al-invoice-total"><dt>{l.total}</dt><dd>{amount(result.totalCents)}</dd></div>
-        </dl>
+  return <article ref={ref} lang={locale} {...props} className={('al-invoice-document ' + className).trim()}>
+    <InvoicePaper>
+      <div className="al-invoice-pages">
+        <div className="al-invoice-running" aria-hidden="true"><strong>{l.invoice} {invoiceNumber}</strong></div>
+        {statement}
+        <div className="al-invoice-summary">
+          <dl>
+            <div><dt>{l.net}</dt><dd>{amount(result.netCents)}</dd></div>
+            {result.vat.map(bucket => <div key={bucket.rate}><dt>{l.vat} {rate(bucket.rate)} · {amount(bucket.baseCents)}</dt><dd>{amount(bucket.taxCents)}</dd></div>)}
+            {result.roundingCents !== 0 && <div><dt>{l.adjustment}</dt><dd>{amount(result.roundingCents)}</dd></div>}
+            <div className="al-invoice-total"><dt>{l.total}</dt><dd>{amount(result.totalCents)}</dd></div>
+          </dl>
+        </div>
       </div>
+    </InvoicePaper>
+    <div className="al-invoice-final">
       <div className="al-invoice-cut">{cutLabel[locale]}</div>
       <SwissQrBill fit bill={bill} locale={locale} printLayout="inline" />
     </div>

@@ -187,7 +187,7 @@ function DataTableView<Row>({
             <TableHead id={hintId + '-group-' + index} scope="rowgroup" colSpan={columns.length}>{name}</TableHead>
           </TableRow>}
           {records.map(entry => <TableRow key={rowKey(entry.row)}>{columns.map(col =>
-            <TableCell key={col.id} data-align={alignment(col)} {...(!('format' in col) && col.nowrap && { 'data-unbroken': true })}
+            <TableCell key={col.id} data-align={alignment(col)} {...(!('format' in col) && col.nowrap !== undefined && { 'data-unbroken': col.nowrap || undefined })}
               numeric={alignment(col) === 'end'}>{content(col, entry)}</TableCell>
           )}</TableRow>)}
           {groupBy && summary(subtotalLabel?.(name) ?? name, records, 'subtotal')}

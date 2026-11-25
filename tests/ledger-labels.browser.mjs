@@ -12,7 +12,7 @@ const fixture = renderToStaticMarkup(h(Stack, { align: 'start' },
     caption: 'Fatture', empty: 'Nessuna fattura', rows: [{ id: '2026-0158' }, { id: '2026-0141' }], rowKey: r => r.id,
     columns: [
       { id: 'id', header: 'Numero', cell: r => r.id, compare: () => 0 },
-      { id: 'document', header: 'Link', nowrap: true, cell: r => h(TextLink, { href: '#invoice-' + r.id }, r.id) },
+      { id: 'document', header: 'Link', cell: r => h(TextLink, { href: '#invoice-' + r.id }, r.id) },
       { id: 'client', header: 'Cliente', cell: () => 'Falegnameria di quartiere' },
       { id: 'date', header: 'Data', format: 'swiss-date', value: () => '2026-03-14' },
       { id: 'amount', header: 'Totale', format: 'chf', value: () => 1285.15 },
@@ -44,6 +44,24 @@ try {
     assert.deepEqual(split, [], 'Split ledger controls or reference at ' + width + 'px')
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth))
   }
+  const custom = (content, nowrap) => h(DataTable, {
+    caption: 'References', empty: 'No records', rows: ['2026-0141'], rowKey: id => id,
+    columns: [{ id: 'reference', header: 'Document', cell: content, nowrap }],
+  })
+  const column = page.getByRole('cell')
+  const RouterLink = ({ to, children }) => h('a', { href: to }, children)
+  for (const [content, nowrap, expected] of [
+    [id => h('a', { href: '#' + id }, id), undefined, 'nowrap'],
+    [id => h(RouterLink, { to: '#' + id }, 'Open invoice'), undefined, 'nowrap'],
+    [id => h('code', null, id), undefined, 'nowrap'],
+    [id => h(TextLink, { href: '#' + id }, id), false, 'normal'],
+    [id => h('a', { href: '#' + id }, 'Read the illustrated history of this invoice'), undefined, 'normal'],
+    [id => h('a', { href: '#' + id }, h('strong', null, id)), true, 'nowrap'],
+  ]) {
+    await page.setContent('<style>' + css + '</style>' + renderToStaticMarkup(custom(content, nowrap)))
+    assert.equal(await column.evaluate(el => getComputedStyle(el).whiteSpace), expected)
+  }
+  await page.setContent('<style>' + css + '</style>' + fixture)
   await page.setViewportSize({ width: 320, height: 900 })
   const token = page.getByText('Atelier'.repeat(12), { exact: true })
   await token.focus()

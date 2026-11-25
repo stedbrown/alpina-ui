@@ -196,7 +196,7 @@
       "group": "ui",
       "entry": "ui/data-table.tsx",
       "summary": "Sort dates and amounts, reconcile subtotals and print an accounting ledger.",
-      "usage": "Use typed CHF, decimal and Swiss date columns to sort financial records. Mark additive columns with aggregate=\"sum\" and supply totalLabel. Use groupBy for subtotals and translate sortHint in localized applications.",
+      "usage": "An invoice link labelled 2026-0141 stays on one line automatically. Set nowrap: true on the column for a custom link containing nested markup, or nowrap: false to allow wrapping. Use typed CHF, decimal and Swiss date columns to sort records. Use aggregate=\"sum\", groupBy and totalLabel for totals and subtotals.",
       "files": [
         "theme.css",
         "ui/data-table.tsx",

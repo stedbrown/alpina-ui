@@ -1,5 +1,5 @@
 import { numberText } from './number-text.js'
-import { Children, forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import { Children, forwardRef, isValidElement, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import './table.css'
 export { TableAmount, type TableAmountProps, type AccountingValue, type AccountingNegativeStyle } from './table-amount.js'
 
@@ -72,15 +72,23 @@ function fitTableToken(child: ReactNode) {
   return <span className="al-table-token" tabIndex={0}>{child}</span>
 }
 
+// A hyphen in a document number belongs to its identifier, including inside a router link.
+function unbrokenCellLabel(child: ReactNode): boolean {
+  const element = isValidElement<{ children?: ReactNode; href?: unknown; to?: unknown }>(child) ? child : undefined
+  const text = element ? element.props.children : child
+  if (typeof text !== 'string' || (element && text.length > 24)) return false
+  if (/^(?=[\w.-]*\d)[\w]+(?:[.-][\w]+)+$/u.test(text)) return true
+  return !!element && (element.props.href != null || element.props.to != null) && !/[\r\n]/.test(text)
+}
+
 export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(function TableCell(
   { numeric = false, textAlign, children, ...props },
   ref,
 ) {
   const plainValue = typeof children === 'string' || typeof children === 'number' || typeof children === 'bigint'
-  // A hyphen in an invoice number or ISO date is part of its identifier.
-  const identifier = typeof children === 'string' && /^(?=[\w.-]*\d)[\w]+(?:[.-][\w]+)+$/u.test(children)
+  const unbroken = unbrokenCellLabel(children)
   const content = plainValue ? numberText(children) : children
-  return <td data-unbroken={identifier || undefined} ref={ref} {...props} data-numeric={numeric || undefined} data-text-align={textAlign}>
+  return <td data-unbroken={unbroken || undefined} ref={ref} {...props} data-numeric={numeric || undefined} data-text-align={textAlign}>
     {plainValue && numeric ? <span className="al-table-value">{content}</span>
       : Array.isArray(content) ? Children.map(content, fitTableToken) : fitTableToken(content)}
   </td>

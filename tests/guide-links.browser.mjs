@@ -25,9 +25,11 @@ for (const [slug, successor] of Object.entries(expected)) {
     else await readFile('site' + destination, 'utf8')
   }
 }
+const changelogEntry = 'https://github.com/stedbrown/alpina-ui/blob/main/CHANGELOG.md#release-0-11-0'
 for (const source of ['/releases/0.11/', '/releases/0.11']) {
-  assert.ok(redirects.some(r => r.source === source && r.destination === '/docs/guides/design/'), source)
+  assert.ok(redirects.some(r => r.source === source && r.destination === changelogEntry), source + ' must link to its changelog entry')
 }
+assert.match(await readFile('CHANGELOG.md', 'utf8'), /<a name="release-0-11-0"><\/a>\s*## 0\.11\.0\b/)
 const failures = []
 function check(route, href) {
   const url = new URL(href.replaceAll('&amp;', '&'), siteUrl + route)

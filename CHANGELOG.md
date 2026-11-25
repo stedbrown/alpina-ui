@@ -54,6 +54,8 @@
 - The portal preloads Inter and prerenders component previews and blocks. Continuous integration checks homepage, component and block performance, accessibility and cumulative layout shift.
 - Every component has guidance on when to use it, alternatives, accessibility, and wording in Switzerland’s four national languages, with paired examples. [Component reference](https://alpina-ui.vercel.app/docs/components/)
 
+<a name="release-0-11-0"></a>
+
 ## 0.11.0 · 25 November 2026
 
 ### Forms and scheduling

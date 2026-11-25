@@ -97,12 +97,12 @@
     },
     {
       "source": "/releases/0.11/",
-      "destination": "/docs/guides/design/",
+      "destination": "https://github.com/stedbrown/alpina-ui/blob/main/CHANGELOG.md#release-0-11-0",
       "statusCode": 301
     },
     {
       "source": "/releases/0.11",
-      "destination": "/docs/guides/design/",
+      "destination": "https://github.com/stedbrown/alpina-ui/blob/main/CHANGELOG.md#release-0-11-0",
       "statusCode": 301
     },
     {

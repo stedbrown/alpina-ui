@@ -169,7 +169,8 @@ export async function buildWebsite({ guides, guideFiles, apiReference, component
     output('skills/alpina-ui/SKILL.md', await readFile('skills/alpina-ui/SKILL.md')),
     output('assets/alpina-preview.png', preview),
     output('assets/alpina-type-specimen.webp', await readFile('web/assets/alpina-type-specimen.webp')),
-    output('assets/alpina-mark.png', await readFile('web/assets/alpina-mark.png')),
+    ...['logo.svg', 'logo-mono.svg', 'icon-192.png', 'icon-512.png'].map(async name => output('assets/' + name, await readFile('web/assets/' + name))),
+    ...['favicon.svg', 'favicon.ico', 'apple-touch-icon.png', 'site.webmanifest'].map(async name => output(name, await readFile('web/assets/' + name))),
   ])
 
   async function page(route, title, description, body, options = {}) {
@@ -178,7 +179,7 @@ export async function buildWebsite({ guides, guideFiles, apiReference, component
     const tags = [
       '<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffffff">',
       '<title>' + escape(caption) + '</title><meta name="description" content="' + escape(description) + '">',
-      '<link rel="canonical" href="' + escape(url) + '"><link rel="icon" type="image/png" sizes="64x64" href="/assets/alpina-mark.png">',
+      '<link rel="canonical" href="' + escape(url) + '"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">',
       '<meta property="og:type" content="website"><meta property="og:site_name" content="Alpina UI">',
       '<meta property="og:title" content="' + escape(caption) + '"><meta property="og:description" content="' + escape(description) + '">',
       '<meta property="og:url" content="' + escape(url) + '"><meta property="og:image" content="' + previewURL + '">',

@@ -39,7 +39,7 @@ try {
     await page.goto(origin)
     const header = page.getByRole('banner')
     await page.getByRole('heading', { level: 1, name: 'Swiss UI for React.' }).waitFor()
-    assert.ok(await header.locator('a[href="/"] img[src="/assets/alpina-mark.png"]').isVisible())
+    assert.ok(await header.locator('a[href="/"] img[src="/assets/logo.svg"]').isVisible())
     const repo = header.getByRole('link', { name: 'GitHub', exact: true })
     assert.equal((await repo.innerText()).trim(), 'GitHub')
     assert.equal(await repo.getAttribute('href'), 'https://github.com/stedbrown/alpina-ui')

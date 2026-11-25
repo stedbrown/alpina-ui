@@ -33,7 +33,7 @@ export function Masthead({ current }: { current: Section }) {
           <Stack direction="row" gap={1} wrap={false}>
             <TextLink variant="quiet" href="/" aria-label="Alpina UI" aria-current={current === 'home' ? 'page' : undefined}>
               <Stack direction="row" gap={1} wrap={false}>
-                <Avatar decorative size="sm" name="Alpina" src="/assets/alpina-mark.png" />
+                <Avatar decorative size="sm" name="Alpina" src="/assets/logo.svg" />
                 <Typography as="span" variant="label">Alpina</Typography>
               </Stack>
             </TextLink>

@@ -1,3 +1,4 @@
+import { AppearanceButton } from '../web/appearance-button.js'
 import { useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import {
@@ -277,16 +278,6 @@ function App() {
   const overview = !guide && !item && !directory
   const [query, setQuery] = useState('')
   const [mobile, setMobile] = useState(false)
-  const [appearance, setAppearance] = useState<'auto' | 'light' | 'dark'>(() => {
-    try {
-      const saved = localStorage.getItem('alpina-catalog-theme')
-      return saved === 'dark' || saved === 'light' ? saved : 'auto'
-    } catch {
-      return 'auto'
-    }
-  })
-  const [deviceDark, setDeviceDark] = useState(() => matchMedia('(prefers-color-scheme: dark)').matches)
-  const dark = appearance === 'auto' ? deviceDark : appearance === 'dark'
   const search = useRef<HTMLInputElement>(null)
   const list = useRef<HTMLDivElement>(null)
   const first = useRef(true)
@@ -304,21 +295,6 @@ function App() {
       location.replace(liveDirectory ? bilingualProject : clientProject)
     else if (hostedDocs && workflow) location.replace('/examples/' + workflow.slug + '/')
   }, [directory, liveDirectory, workflow])
-  useEffect(() => {
-    const media = matchMedia('(prefers-color-scheme: dark)')
-    function update() { setDeviceDark(media.matches) }
-    update()
-    media.addEventListener('change', update)
-    return () => media.removeEventListener('change', update)
-  }, [])
-  useEffect(() => {
-    document.documentElement.dataset.alTheme = appearance
-    try {
-      localStorage.setItem('alpina-catalog-theme', appearance)
-    } catch {
-      /* Optional preference */
-    }
-  }, [appearance])
   useEffect(() => {
     if (liveDirectory) return
     const title = item ? (hostedDocs ? item[1] : item[2]) : (guide && guideNames[guide]) || workflow?.title || area
@@ -469,16 +445,7 @@ function App() {
               <span>{area}</span>
             </div>
           )}
-          <Button
-            variant="ghost"
-            size="sm"
-            aria-label="Dark theme"
-            aria-pressed={dark}
-            onClick={() => setAppearance(dark ? 'light' : 'dark')}
-          >
-            <i className="theme-disc" aria-hidden="true" />
-            <span className="theme-name">Dark theme</span>
-          </Button>
+          <AppearanceButton />
         </>
       }
     >

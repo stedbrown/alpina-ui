@@ -51,7 +51,7 @@ try {
   const main = page.getByRole('main')
   const search = page.getByRole('searchbox', { name: 'Search components' })
   const openIndex = page.getByRole('button', { name: 'Browse components' })
-  const theme = page.getByRole('button', { name: 'Dark theme' })
+  const theme = page.locator('[data-site-appearance]')
   const view = (label) => main.getByRole('button', { name: label, exact: true })
   const fits = async (label) =>
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), label)
@@ -134,10 +134,12 @@ try {
   assert.ok(await openIndex.evaluate((el) => el === document.activeElement))
 
   await theme.click()
+  assert.equal(await page.locator('html').getAttribute('data-al-theme'), 'light')
+  await theme.click()
   assert.equal(await page.locator('html').getAttribute('data-al-theme'), 'dark')
   await shot('catalog-dark-mobile')
   await page.reload()
-  assert.equal(await theme.getAttribute('aria-pressed'), 'true')
+  assert.match(await theme.innerText(), /Dark theme/)
   await theme.click()
   await page.setViewportSize({ width: 1440, height: 940 })
 

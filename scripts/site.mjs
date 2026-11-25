@@ -12,7 +12,27 @@ export async function renderGuide(markdown) {
 import { GridOverlay } from 'alpina-ui'
 
 // Apply the saved catalog appearance before the first paint on every public page.
-export const appearanceHead = '<script>try{const t=localStorage.getItem("alpina-catalog-theme");if(t==="dark"||t==="light")document.documentElement.dataset.alTheme=t}catch{}</script>'
+function initializeAppearance() {
+  const key = 'alpina-catalog-theme'
+  const root = document.documentElement
+  function apply(mode) {
+    root.dataset.alTheme = mode === 'dark' || mode === 'light' ? mode : 'auto'
+  }
+  try { apply(localStorage.getItem(key)) } catch { apply('auto') }
+  document.addEventListener('click', event => {
+    if (!event.target.closest?.('[data-site-appearance]')) return
+    const next = { auto: 'light', light: 'dark', dark: 'auto' }[root.dataset.alTheme]
+    apply(next)
+    try { localStorage.setItem(key, next) } catch { /* Storage can be disabled. */ }
+  })
+  window.addEventListener('storage', event => {
+    if (event.key === key || event.key === null) apply(event.newValue)
+  })
+}
+export const appearanceHead = '<script>(' + initializeAppearance.toString() + ')()</script>' +
+  '<style>[data-site-appearance]{flex-shrink:0}[data-site-appearance] span{display:none}' +
+  ['auto', 'light', 'dark'].map(mode => 'html[data-al-theme="' + mode + '"] [data-site-appearance] [data-mode="' + mode + '"]{display:block;position:absolute;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}').join('') +
+  '</style><noscript><style>[data-site-appearance]{display:none}</style></noscript>'
 
 const origin = 'https://alpina-ui.vercel.app'
 const siteName = 'Alpina UI'

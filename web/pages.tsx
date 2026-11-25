@@ -1,3 +1,4 @@
+import { AppearanceButton } from './appearance-button.js'
 import {
   Avatar, Figure, Grid, GridItem, Icon, iconNames, NavigationMenu, Separator,
   Stack, TextLink, Typography, type IconName,
@@ -38,6 +39,7 @@ export function Masthead({ current }: { current: Section }) {
             <NavigationMenu label="Repository" orientation="horizontal" sections={[{ links: [{ href: repository, label: <GitHubLabel /> }] }]} />
           </Stack>
           <NavigationMenu label="Main navigation" orientation="horizontal" align="end" collapseLabel="Menu" sections={[{ links }]} />
+          <AppearanceButton />
         </Stack>
       </GridItem>
     </Grid>

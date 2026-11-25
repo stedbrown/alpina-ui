@@ -1,8 +1,9 @@
 import { PageRegion, Prose } from 'alpina-ui'
-import { AppearanceButton } from './appearance-button.js'
+import { Masthead, repository } from './masthead.js'
+export { Masthead } from './masthead.js'
 import type { ReactNode } from 'react'
 import {
-  Avatar, Grid, GridItem, Icon, Label, NavigationMenu, Separator, Switch,
+  Avatar, Grid, GridItem, Icon, Label, Separator, Switch,
   Stack, TextLink, Typography,
 } from 'alpina-ui'
 import { AccessStudy, AppearanceStudy, GridStudy, Installation, MigrationStudy, SwissStudy, TypeStudy } from './landing-sections.js'
@@ -10,45 +11,8 @@ import type { ComparisonForm } from './landing-sections.js'
 import { HomeShowcase } from './home-showcase.js'
 import { projects } from './projects.js'
 
-const repository = 'https://github.com/stedbrown/alpina-ui'
-type Section = 'home' | 'kit' | 'docs' | 'components' | 'icons' | 'themes' | 'blocks' | 'examples' | 'agents' | 'principles'
-
 function GitHubLabel() {
-  return <><Icon name="git-branch" size={18} />{' GitHub'}</>
-}
-
-export function Masthead({ current }: { current: Section }) {
-  const links = [
-    { href: '/docs/', label: 'Docs', current: current === 'docs' },
-    { href: '/docs/components/', label: 'Components', current: current === 'components' },
-    { href: '/blocks/', label: 'Blocks', current: current === 'blocks' },
-    { href: '/icons/', label: 'Icons', current: current === 'icons' },
-    { href: '/themes/', label: 'Themes', current: current === 'themes' },
-    { href: '/principles/', label: 'Principles', current: current === 'principles' },
-    { href: '/examples/', label: 'Examples', current: current === 'examples' },
-    { href: '/agents/', label: 'Agents', current: current === 'agents' },
-  ]
-  return (
-    <Grid as="header" width="site" space="compact">
-      <GridItem>
-        <TextLink variant="skip" href="#content">Skip to content</TextLink>
-        <Stack direction="row" justify="space-between" align="start" gap={1} wrap={false}>
-          <Stack direction="row" gap={1} wrap={false}>
-            <TextLink variant="quiet" href="/" aria-label="Alpina UI" aria-current={current === 'home' ? 'page' : undefined}>
-              <Stack direction="row" gap={1} wrap={false}>
-                <Avatar decorative size="sm" name="Alpina" src="/assets/logo.svg" />
-                <Typography as="span" variant="label">Alpina</Typography>
-              </Stack>
-            </TextLink>
-            <TextLink href={repository} variant="quiet" aria-label="GitHub" title="GitHub repository"><Typography as="span" variant="label"><GitHubLabel /></Typography></TextLink>
-          </Stack>
-          <NavigationMenu label="Main navigation" orientation="horizontal" align="end" collapseLabel="Menu" sections={[{ links }]} />
-          <AppearanceButton />
-        </Stack>
-      </GridItem>
-      <GridItem><Separator /></GridItem>
-    </Grid>
-  )
+  return <><Icon name="github" size={18} />{' GitHub'}</>
 }
 
 export function Footer({ version }: { version?: string } = {}) {

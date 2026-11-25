@@ -1,6 +1,6 @@
 ---
 name: alpina-ui
-description: Build or update React interfaces with Alpina UI. Use this skill to choose components, check their installed TypeScript contracts, compose the Swiss typographic grid, and localize Swiss forms and formats.
+description: Build React interfaces with Alpina UI or migrate from shadcn/ui. Use for Swiss typographic design, CHF accounting, a SIX QR-bill, Swiss AVS/AHV and address forms, cantonal holidays, and multilingual services in Swiss cantons.
 license: MIT
 ---
 

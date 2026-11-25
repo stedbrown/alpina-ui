@@ -17,7 +17,7 @@ process.chdir(fileURLToPath(new URL('../', import.meta.url)))
 const outputDir = path.resolve(process.env.ALPINA_SITE_OUTPUT ?? 'site')
 const guides = {}
 const componentGuidance = JSON.parse(await readFile('docs/component-guidance.json', 'utf8'))
-const guideManifest = JSON.parse(await readFile('cli/public-guides.json', 'utf8'))
+const guideManifest = JSON.parse(await readFile('cli/public-guides.json', 'utf8')).filter(guide => !guide.route)
 const redirects = JSON.parse(await readFile('vercel.json', 'utf8')).redirects
 // An incremental build may still contain the HTML and Markdown from an older release.
 for (const { source } of redirects) {

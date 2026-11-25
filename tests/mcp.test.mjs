@@ -26,7 +26,7 @@ test('stdio client can discover and read the installed registry, types, source a
     rpc(2, 'tools/list'), call(3, 'search_components', { query: 'DropdownMenu' }),
     call(4, 'get_component', { name: 'dropdown-menu' }),
     call(5, 'get_component', { name: 'dropdown-menu', file: 'interactive/action-list.tsx' }),
-    call(6, 'get_guide', {}), call(7, 'get_guide', { slug: 'directory' }),
+    call(6, 'get_guide', {}), call(7, 'get_guide', { slug: 'build' }),
     call(8, 'search_components', {}),
     call(9, 'get_guide', { slug: 'migration' }),
   ])
@@ -39,8 +39,12 @@ test('stdio client can discover and read the installed registry, types, source a
   assert.ok(result[3].content[0].text.includes(read('dist/interactive/dropdown-menu.d.ts').trim()))
   assert.ok(result[3].content[0].text.includes(JSON.parse(read('registry.json')).items.find(entry => entry.name === 'dropdown-menu').usage))
   assert.equal(result[4].content[0].text, read('src/interactive/action-list.tsx'))
-  assert.ok(result[5].content[0].text.split('\n').includes('agents'))
-  assert.equal(result[6].content[0].text, read('docs/directory.md'))
+  const expectedGuides = JSON.parse(read('cli/public-guides.json')).filter(entry => entry.mcp !== false).map(entry => entry.id)
+  assert.deepEqual(result[5].content[0].text.split('\n'), expectedGuides)
+  assert.ok(expectedGuides.includes('agents'))
+  for (const name of ['readme.template', 'npm-release', 'package-quality', '1.0-checklist', 'visual-testing', 'portal', 'beta-review'])
+    assert.ok(!expectedGuides.includes(name), name)
+  assert.equal(result[6].content[0].text, read('docs/build.md'))
   assert.equal(result[7].content[0].text.split('\n').length, JSON.parse(read('registry.json')).items.length)
   assert.ok(result[5].content[0].text.split('\n').includes('migration'))
   assert.equal(result[8].content[0].text, read('docs/migration.md'))

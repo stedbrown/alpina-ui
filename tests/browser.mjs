@@ -245,7 +245,7 @@ try {
   await page.goForward()
   await guide.getByRole('heading', { level: 1 }).waitFor()
   await page.setViewportSize({ width: 390, height: 844 })
-  const manifest = JSON.parse(await readFile(new URL('cli/public-guides.json', root), 'utf8'))
+  const manifest = JSON.parse(await readFile(new URL('cli/public-guides.json', root), 'utf8')).filter(guide => !guide.route)
   for (const { id: name, file } of manifest) {
     const source = await readFile(new URL('docs/' + file, root), 'utf8')
     const h1 = /^# (.+)$/m.exec(normalize(source))[1]

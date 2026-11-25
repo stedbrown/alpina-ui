@@ -1,5 +1,5 @@
 import { once } from 'node:events'
-import { readdir, readFile } from 'node:fs/promises'
+import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { createInterface } from 'node:readline'
 
@@ -77,9 +77,8 @@ async function callTool(root, registry, guides, name, args) {
 }
 
 export async function serveCatalog(root, registry) {
-  const docs = await readdir(path.join(root, 'docs'), { withFileTypes: true })
-  const guides = new Map(docs.filter((file) => file.isFile() && file.name.endsWith('.md'))
-    .map((file) => file.name).sort().map((file) => [file.slice(0, -3), file]))
+  const published = JSON.parse(await readFile(path.join(root, 'cli/public-guides.json'), 'utf8'))
+  const guides = new Map(published.filter(guide => guide.mcp !== false).map(guide => [guide.id, guide.file]))
   const serverInfo = { name: 'alpina-ui', version: registry.version }
   const versions = [modernVersion, ...handshakeVersions]
   let initialized = false

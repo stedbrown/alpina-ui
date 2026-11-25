@@ -71,5 +71,11 @@
     "file": "beta-status.md",
     "navigation": "candidate",
     "mcp": false
+  },
+  {
+    "id": "agents",
+    "title": "Agent tools",
+    "file": "agents.md",
+    "route": "/agents/"
   }
 ]

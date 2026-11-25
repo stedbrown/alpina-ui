@@ -2,11 +2,11 @@ import { useState } from 'react'
 import { Button, Calendar, DatePicker, Field, InputOTP, MessageScroller, NativeSelect, Questionnaire, ToggleGroup, Trace } from 'alpina-ui'
 
 export function CalendarExample() {
-  return <Calendar defaultValue="2026-04-09" locale="it-CH" />
+  return <Calendar defaultValue="2026-04-09" canton="TI" locale="it-CH" />
 }
 
 export function DatePickerExample() {
-  return <DatePicker locale="it-CH" name="collection" defaultValue="2026-04-09" />
+  return <DatePicker locale="it-CH" canton="TI" name="collection" defaultValue="2026-04-09" />
 }
 
 export function InputOTPExample() {

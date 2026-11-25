@@ -6,6 +6,8 @@ import { useControllable } from '../interactive/controllable.js'
 import { addDays, addMonths, calendarLabels, calendarText, calendarWeekNames, clampDay, firstCivilDay, isoWeek, lastCivilDay, mondayIndex, monthLength, zurichToday } from './calendar-dates.js'
 import { formatSwissDate, parseCivilDate } from './format-swiss-date.js'
 import { defaultSwissLocale, type SwissLocale } from './locales.js'
+import type { CantonCode } from './cantons.js'
+import { swissHolidays, type SwissHolidayRegion } from './holidays.js'
 import './calendar.css'
 
 export interface CalendarProps {
@@ -17,11 +19,15 @@ export interface CalendarProps {
   max?: string
   locale?: SwissLocale
   showWeekNumbers?: boolean
+  /** Highlight official holidays for this canton. Dates remain selectable. */
+  canton?: CantonCode
+  /** Apply the named local holiday schedule within the canton. */
+  holidayRegion?: SwissHolidayRegion
   className?: string
 }
 
 export const Calendar = forwardRef<HTMLElement, CalendarProps>(function Calendar(
-  { value, defaultValue = '', onValueChange, defaultMonth, min = firstCivilDay, max = lastCivilDay, locale = defaultSwissLocale, showWeekNumbers = true, className = '' },
+  { value, defaultValue = '', onValueChange, defaultMonth, min = firstCivilDay, max = lastCivilDay, locale = defaultSwissLocale, showWeekNumbers = true, canton, holidayRegion, className = '' },
   ref,
 ) {
   const [selection, select] = useControllable(value, defaultValue, onValueChange)
@@ -45,6 +51,9 @@ export const Calendar = forwardRef<HTMLElement, CalendarProps>(function Calendar
   const month = current.slice(0, 7)
   const first = month + '-01'
   const labels = useMemo(() => calendarLabels(first, locale), [first, locale])
+  const year = Number(month.slice(0, 4))
+  const holidays = useMemo(() => canton ? swissHolidays(year, canton, { locale, region: holidayRegion }) : [], [year, canton, locale, holidayRegion])
+  const monthHolidays = holidays.filter(holiday => holiday.date.startsWith(month))
   const id = useId()
   const grid = useRef<HTMLTableElement>(null)
   const pendingFocus = useRef(false)
@@ -103,9 +112,12 @@ export const Calendar = forwardRef<HTMLElement, CalendarProps>(function Calendar
             const n = row * 7 + column - start + 1
             if (n < 1 || n > count) return <td key={column} />
             const day = month + '-' + String(n).padStart(2, '0')
+            const holidayNames = monthHolidays.filter(holiday => holiday.date === day)
+              .map(holiday => holiday.name + (holiday.duration === 'afternoon' ? ' (' + text.afternoon + ')' : '')).join(', ')
             return <td key={column} aria-selected={day === selection}>
-              <button type="button" data-day={day} tabIndex={day === current ? 0 : -1}
-                aria-label={formatSwissDate(day, locale, { dateStyle: 'full' })}
+              <button type="button" data-day={day} data-holiday={holidayNames ? '' : undefined} tabIndex={day === current ? 0 : -1}
+                title={holidayNames || undefined}
+                aria-label={[formatSwissDate(day, locale, { dateStyle: 'full' }), holidayNames].filter(Boolean).join(', ')}
                 aria-current={day === today ? 'date' : undefined}
                 disabled={day < min || day > max}
                 onKeyDown={(event) => navigate(event, day)}
@@ -118,6 +130,10 @@ export const Calendar = forwardRef<HTMLElement, CalendarProps>(function Calendar
           })}</tr>
         ))}</tbody>
       </table>
+      {monthHolidays.length > 0 && <ul className="al-calendar-holidays" aria-label={text.holidays}>
+        {monthHolidays.map(holiday => <li key={holiday.id}><time dateTime={holiday.date}>{Number(holiday.date.slice(-2))}</time>
+          <span>{holiday.name}{holiday.duration === 'afternoon' && ' (' + text.afternoon + ')'}</span></li>)}
+      </ul>}
     </section>
   )
 })

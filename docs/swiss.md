@@ -134,6 +134,59 @@ By default, amounts round to the nearest centime. Set `cashRounding` on `Currenc
 
 The Calendar starts on Monday and shows the ISO week in each row. Pass `showWeekNumbers={false}` to hide this column. `isoWeek(day)` returns the week number and ISO week year, which can differ from the civil year in late December and early January.
 
+## Schedule work around public holidays
+
+`swissHolidays(year, canton, options?)` returns dates in chronological order. It uses the public rest-day rules for all 26 cantons reviewed in November 2026. The rules project onto the requested Gregorian year. Historical legislation, payroll entitlements, school breaks and individual employers’ closing dates require their own calendars. Only 1 August has federal holiday status. Easter Sunday, Whit Sunday and the Federal Day of Thanksgiving appear as named Sundays, with Geneva’s local fast in September. [SECO overview and regional schedules](https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf) · [Federal Department of Foreign Affairs on the September observances](https://www.aboutswitzerland.eda.admin.ch/en/summer-festivals-and-customs)
+
+```tsx
+import { Calendar, DatePicker, addBusinessDays, swissHolidays } from 'alpina-ui'
+
+const holidays = swissHolidays(2026, 'FR', { region: 'FR-reformed', locale: 'fr-CH' })
+const collection = addBusinessDays('2026-04-02', 1, 'FR', { region: 'FR-reformed' })
+// collection is '2026-04-07', after Good Friday, the weekend and Easter Monday.
+
+export function CollectionForm() {
+  return <form>
+    <Calendar canton="FR" holidayRegion="FR-reformed" locale="fr-CH" />
+    <DatePicker canton="FR" holidayRegion="FR-reformed" locale="fr-CH" name="collection" defaultValue={collection} />
+  </form>
+}
+```
+
+Each entry has a stable `id`, ISO civil `date`, localized `name`, `scope` and `duration`. The calendar marks each date, announces the holiday with the day and displays names below the month. Holidays remain selectable. Different holidays can share one date.
+
+`addBusinessDays(start, amount, canton, options?)` counts Monday through Friday beginning on the day after the start. Negative amounts count backwards from the previous day. Zero preserves the start. Whole-day holidays are skipped. Solothurn’s 1 May afternoon still counts as a working day. Geneva’s special Sunday substitution for employers outside the federal Labour Act falls outside this standard business calendar. [Solothurn labour inspectorate](https://so.ch/verwaltung/volkswirtschaftsdepartement/amt-fuer-wirtschaft-und-arbeit/arbeitsbedingungen/arbeitsinspektorat/feiertage) · [Geneva holiday law, article 1](https://silgeneve.ch/legis/data/rsg_j1_45.htm)
+
+### Choose the workplace region
+
+With just a canton code, the result includes dates shared throughout that canton. Select a profile for these official local schedules. A profile for another canton raises a `RangeError`.
+
+| Profile | Territory |
+| --- | --- |
+| `AG-aarau` | Aarau, Brugg, Kulm, Lenzburg, Zofingen and the municipality of Bergdietikon |
+| `AG-baden` | Baden district outside Bergdietikon |
+| `AG-bremgarten` | Bremgarten district |
+| `AG-laufenburg` | Laufenburg and Muri districts, plus Hellikon, Mumpf, Obermumpf, Schupfart, Stein and Wegenstetten |
+| `AG-rheinfelden` | Kaiseraugst, Magden, Möhlin, Olsberg, Rheinfelden, Wallbach, Zeiningen and Zuzgen |
+| `AG-zurzach` | Zurzach district |
+| `FR-catholic`, `FR-reformed` | The workplace’s statutory area as listed by the canton, independent of personal religion |
+| `SO-outside-bucheggberg` | Solothurn outside Bucheggberg. Bucheggberg uses the canton-only result |
+| `NE-le-landeron` | Le Landeron adds Corpus Christi |
+| `AI-inner` | Innerrhoden’s inner territory adds Saint Maurice |
+| `OW-engelberg` | Engelberg adds Saint Benedict |
+
+The geographic definitions come from the [Aargau employment law, §6](https://gesetzessammlungen.ag.ch/app/de/texts_of_law/961.200), [Fribourg employment service](https://www.fr.ch/travail-et-entreprises/employes/jours-feries), [Neuchâtel’s implementing order](https://rsn.ne.ch/DATA/program/books/rsne/pdf/941.020.pdf), [Appenzell Innerrhoden](https://ai.ch/themen/wirtschaft-und-arbeit/feiertage-ruhetage/) and [Obwalden](https://www.ow.ch/_docn/6325/Feiertage.pdf).
+
+### Check the scope of a holiday
+
+Ticino and Jura designate additional official rest days, including 29 June and 23 June respectively. A holiday can be a cantonal rest day even where federal working-time law treats it as a weekday. Knabenschiessen is an employer-dependent local closure in Zürich. [Ticino calendar](https://www4.ti.ch/dfe/de/uil/legge-lavoro/giorni-festivi-in-ticino-1) · [Jura holiday law](https://rsju.jura.ch/fr/viewdocument.html?Download=1&id=38948&idn=9554&v=2) · [Zürich labour authority](https://www.zh.ch/de/wirtschaft-arbeit/arbeitsbedingungen/arbeitsssicherheit-gesundheitsschutz/arbeits-ruhezeiten/feiertage.html)
+
+Glarus moves the Näfelser Fahrt forward a week when it would fall on Maundy Thursday. Neuchâtel marks 2 January and 26 December only when they fall on a Monday. Vaud’s fast falls on the Monday after the third Sunday in September. [Glarus](https://www.gl.ch/portrait/naefelser-fahrt.html/207) · [Neuchâtel](https://www.ne.ch/themes/economie-et-emploi/jours-feries-officiels) · [Vaud](https://www.vd.ch/formation/jours-feries-et-vacances-scolaires/jours-feries-et-vacances-scolaires-2026)
+
+Cantonal rest-day schedules also cover differences between neighbouring cantons. [Lucerne](https://srl.lu.ch/app/de/texts_of_law/855) · [Uri](https://www.ur.ch/_docn/404812/%C3%9Cbersicht_Feiertage_Kanton_Uri_gem._ArG_und_LSG.pdf) · [Schwyz](https://www.sz.ch/public/upload/assets/71606/Kantonale_lokale_und_nationale_Feiertage.pdf) · [Nidwalden](https://gesetze.nw.ch/app/de/texts_of_law/921.1) · [Zug](https://zg.ch/de/migration-integration/neu-in-zug/gut-zu-wissen) · [Thurgau](https://www.rechtsbuch.tg.ch/app/de/change_documents/80) · [Graubünden](https://www.gr-lex.gr.ch/api/de/versions/2604/pdf_file)
+
+## Date and currency language data
+
 The browser and server formatters use `Intl` and are reused. For German, French, and Italian, the library requests the chosen language first, followed by the available Swiss alternatives. Language data versions in different runtimes can affect punctuation. Canton and language names come from the bundled dataset. [ECMAScript Internationalization API](https://tc39.es/ecma402/2026/#locale-and-parameter-negotiation)
 
 When a runtime lacks Romansh data, Alpina uses Unicode CLDR 48 patterns for CHF and Gregorian dates in Romansh. For example, `2026-04-05` in `full` format reads *dumengia, ils 5 d’avrigl 2026*. The fallback still uses `Intl` for number rounding and to obtain the day, month, and year in the requested time zone. Importing only the CHF formatter leaves month and weekday names out of your bundle. These data ship under the Unicode-3.0 license in `UNICODE-LICENSE.txt`. [CLDR 48 Romansh data](https://github.com/unicode-org/cldr/blob/release-48/common/main/rm.xml) · [Unicode license](https://github.com/unicode-org/cldr/blob/release-48/LICENSE)

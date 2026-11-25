@@ -1,5 +1,6 @@
 'use client'
-import { Fragment, useRef, type ReactElement, type KeyboardEvent, type RefObject } from 'react'
+import { Fragment, useRef, type ReactElement, type ReactNode, type KeyboardEvent, type RefObject } from 'react'
+import { Slot } from '../ui/slot.js'
 import { navigationIndex } from './navigation.js'
 import { foldText } from './search-options.js'
 import { useBrowserLayoutEffect, useFloating } from './floating.js'
@@ -7,7 +8,11 @@ import './dropdown-menu.css'
 
 export interface ActionItem {
   value: string
-  label: string
+  label: ReactNode
+  /** Use a single element supplied as label as the interactive menu item. */
+  asChild?: boolean
+  /** Text used for typeahead when the rendered label contains other content. */
+  textValue?: string
   /** Visible key combination for a shortcut already implemented by the application. */
   shortcut?: string
   disabled?: boolean
@@ -43,7 +48,7 @@ export function ActionList({
   const initialFocus = useRef(initial)
   const search = useRef({ term: '', time: 0 })
   useFloating(true, anchor, menu, 'menu', align)
-  function focusAction(target: HTMLButtonElement | undefined) {
+  function focusAction(target: HTMLElement | undefined) {
     const panel = menu.current
     if (!target || !panel) return
     target.focus({ preventScroll: true })
@@ -55,7 +60,7 @@ export function ActionList({
     else if (item.top < top) panel.scrollTop -= top - item.top
   }
   useBrowserLayoutEffect(() => {
-    const targets = menu.current?.querySelectorAll<HTMLButtonElement>('[role=menuitem]')
+    const targets = menu.current?.querySelectorAll<HTMLElement>('[role=menuitem]')
     if (targets) focusAction(targets[initialFocus.current === 'last' ? targets.length - 1 : 0])
   }, [])
   function navigate(event: KeyboardEvent<HTMLDivElement>) {
@@ -74,9 +79,14 @@ export function ActionList({
       return
     }
     const targets = Array.from(
-      event.currentTarget.querySelectorAll<HTMLButtonElement>('[role=menuitem]'),
+      event.currentTarget.querySelectorAll<HTMLElement>('[role=menuitem]'),
     )
-    const current = targets.indexOf(event.target as HTMLButtonElement)
+    const current = targets.indexOf(event.target as HTMLElement)
+    if (event.key === ' ' && targets[current]?.tagName === 'A') {
+      event.preventDefault()
+      targets[current].click()
+      return
+    }
     const next = navigationIndex(event.key, current, targets.length, 'vertical')
     if (next !== undefined) {
       event.preventDefault()
@@ -91,7 +101,8 @@ export function ActionList({
     const term = [...query].every((c) => c === query[0]) ? query[0]! : query
     for (let step = 1; step <= targets.length; step++) {
       const index = (current + step) % targets.length
-      if (foldText(items[index]!.label).startsWith(term)) {
+      const label = items[index].textValue ?? targets[index].getAttribute('aria-label') ?? targets[index].textContent ?? ''
+      if (foldText(label).startsWith(term)) {
         focusAction(targets[index])
         break
       }
@@ -106,40 +117,43 @@ export function ActionList({
       aria-labelledby={labelledBy}
       onKeyDown={navigate}
     >
-      {items.map((item, i) => (
-        <Fragment key={item.value}>
-          {i > 0 && item.separatorBefore && <div role="separator" className="al-dropdown-rule" />}
-          <button
-            type="button"
-            role="menuitem"
-            className="al-dropdown-item"
-            tabIndex={-1}
-            data-tone={item.tone === 'danger' ? 'danger' : undefined}
-            onPointerMove={(event) => {
-              if (
-                event.pointerType === 'mouse' &&
-                event.currentTarget !== event.currentTarget.ownerDocument.activeElement
-              )
-                event.currentTarget.focus({ preventScroll: true })
-            }}
-            aria-disabled={item.disabled || undefined}
-            onClick={() => {
-              if (item.disabled) return
-              dismiss()
-              item.onSelect?.()
-              onSelect?.(item.value)
-            }}
-          >
-            <span>{item.label}</span>
-            {item.shortcut && <kbd className="al-dropdown-shortcut">{item.shortcut}</kbd>}
-            {item.tone === 'danger' && (
-              <span className="al-dropdown-danger-mark" aria-hidden="true">
-                −
-              </span>
-            )}
-          </button>
-        </Fragment>
-      ))}
+      {items.map((item, i) => {
+        const Item = item.asChild ? Slot : 'button'
+        const decoration = <>
+          {item.shortcut && <kbd className="al-dropdown-shortcut">{item.shortcut}</kbd>}
+          {item.tone === 'danger' && <span className="al-dropdown-danger-mark" aria-hidden="true">−</span>}
+        </>
+        return (
+          <Fragment key={item.value}>
+            {i > 0 && item.separatorBefore && <div role="separator" className="al-dropdown-rule" />}
+            <Item
+              {...(item.asChild
+                ? { inactive: item.disabled, after: item.shortcut || item.tone === 'danger' ? decoration : undefined }
+                : { type: 'button' as const })}
+              role="menuitem"
+              className="al-dropdown-item"
+              tabIndex={-1}
+              data-tone={item.tone === 'danger' ? 'danger' : undefined}
+              onPointerMove={(event) => {
+                if (
+                  event.pointerType === 'mouse' &&
+                  event.currentTarget !== event.currentTarget.ownerDocument.activeElement
+                )
+                  event.currentTarget.focus({ preventScroll: true })
+              }}
+              aria-disabled={item.disabled || undefined}
+              onClick={() => {
+                if (item.disabled) return
+                dismiss()
+                item.onSelect?.()
+                onSelect?.(item.value)
+              }}
+            >
+              {item.asChild ? item.label : <><span>{item.label}</span>{decoration}</>}
+            </Item>
+          </Fragment>
+        )
+      })}
     </div>
   )
 }

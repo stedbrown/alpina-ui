@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import { Bubble } from './bubble.js'
 import './message.css'
 export interface MessageProps extends ComponentPropsWithoutRef<'article'> {
@@ -7,17 +7,20 @@ export interface MessageProps extends ComponentPropsWithoutRef<'article'> {
   dateTime?: string
   side?: 'start' | 'end'
 }
-export function Message({
-  author,
-  timestamp,
-  dateTime,
-  side = 'start',
-  children,
-  className = '',
-  ...props
-}: MessageProps): ReactElement {
+export const Message = forwardRef<HTMLElement, MessageProps>(function Message(
+  {
+    author,
+    timestamp,
+    dateTime,
+    side = 'start',
+    children,
+    className = '',
+    ...props
+  },
+  ref,
+) {
   return (
-    <article {...props} data-side={side} className={('al-message ' + className).trim()}>
+    <article ref={ref} {...props} data-side={side} className={('al-message ' + className).trim()}>
       <header>
         <strong><bdi>{author}</bdi></strong>
         {timestamp != null &&
@@ -26,4 +29,4 @@ export function Message({
       <Bubble side={side}>{children}</Bubble>
     </article>
   )
-}
+})

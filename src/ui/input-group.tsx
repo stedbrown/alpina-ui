@@ -1,21 +1,24 @@
-import type { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import './input-group.css'
 export interface InputGroupProps extends ComponentPropsWithoutRef<'div'> {
   leading?: ReactNode
   trailing?: ReactNode
 }
-export function InputGroup({
-  leading,
-  trailing,
-  children,
-  className = '',
-  ...props
-}: InputGroupProps): ReactElement {
+export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(function InputGroup(
+  {
+    leading,
+    trailing,
+    children,
+    className = '',
+    ...props
+  },
+  ref,
+) {
   return (
-    <div {...props} className={('al-input-group ' + className).trim()}>
+    <div ref={ref} {...props} className={('al-input-group ' + className).trim()}>
       {leading != null && <span className="al-input-group-addon">{leading}</span>}
       {children}
       {trailing != null && <span className="al-input-group-addon">{trailing}</span>}
     </div>
   )
-}
+})

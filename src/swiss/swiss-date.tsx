@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactElement } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef } from 'react'
 import { formatSwissDate, type SwissDateOptions } from './format-swiss-date.js'
 import { defaultSwissLocale, type SwissLocale } from './locales.js'
 
@@ -8,17 +8,20 @@ export interface SwissDateProps
   locale?: SwissLocale
 }
 
-export function SwissDate({
-  value,
-  locale = defaultSwissLocale,
-  dateStyle,
-  timeZone,
-  ...props
-}: SwissDateProps): ReactElement {
+export const SwissDate = forwardRef<HTMLTimeElement, SwissDateProps>(function SwissDate(
+  {
+    value,
+    locale = defaultSwissLocale,
+    dateStyle,
+    timeZone,
+    ...props
+  },
+  ref,
+) {
   const formatted = formatSwissDate(value, locale, { dateStyle, timeZone })
   return (
-    <time lang={locale} {...props} dateTime={typeof value === 'string' ? value : value.toISOString()}>
+    <time ref={ref} lang={locale} {...props} dateTime={typeof value === 'string' ? value : value.toISOString()}>
       <bdi dir="ltr">{formatted}</bdi>
     </time>
   )
-}
+})

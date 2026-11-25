@@ -28,6 +28,10 @@ test('delegated DOM attributes are summarized and native ref types and exclusion
   assert.match(api['native-select'][0].native[0], /ComponentPropsWithoutRef<'select'>/)
   assert.equal(api['text-link'][0].ref, 'HTMLAnchorElement')
   assert.equal(api.label[0].native[0], "ComponentPropsWithoutRef<'label'>")
+  assert.equal(api.label[0].ref, 'HTMLLabelElement')
+  assert.equal(api['swiss-date'][0].ref, 'HTMLTimeElement')
+  assert.equal(api['currency-chf'][0].ref, 'HTMLDataElement')
+  assert.equal(api.table.find(part => part.name === 'TableCell').ref, 'HTMLTableCellElement')
 })
 test('inherited API, controlled state, generic data shapes and transport types survive extraction', () => {
   const [alert] = api['alert-dialog']
@@ -38,6 +42,8 @@ test('inherited API, controlled state, generic data shapes and transport types s
   assert.equal(property(alert, 'onOpenChange').type, '(open: boolean) => void')
   const [table] = api['data-table']
   assert.equal(table.generic, 'Row')
+  assert.equal(table.ref, 'HTMLDivElement')
+  assert.match(property(table, 'sortHint').defaultValue, /column headings/)
   assert.equal(property(table, 'columns').type, 'readonly DataColumn<Row>[]')
   assert.match(
     table.types.find((t) => t.name === 'DataColumn').definition,

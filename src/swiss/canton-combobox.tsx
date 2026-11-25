@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useId, useRef, useState, type KeyboardEvent, type ReactElement } from 'react'
+import { forwardRef, useImperativeHandle, useEffect, useId, useRef, useState, type KeyboardEvent } from 'react'
 import { useBrowserLayoutEffect, useFloating } from '../interactive/floating.js'
 import { Field } from '../ui/field.js'
 import { Button } from '../ui/button.js'
@@ -84,29 +84,33 @@ export interface CantonComboboxProps {
   className?: string
 }
 
-export function CantonCombobox({
-  locale = defaultSwissLocale,
-  value,
-  defaultValue = '',
-  onCantonChange,
-  id,
-  name,
-  label,
-  description,
-  error,
-  placeholder,
-  noResults,
-  clearLabel,
-  requiredMessage,
-  disabled = false,
-  required = false,
-  className,
-}: CantonComboboxProps): ReactElement {
+export const CantonCombobox = forwardRef<HTMLInputElement, CantonComboboxProps>(function CantonCombobox(
+  {
+    locale = defaultSwissLocale,
+    value,
+    defaultValue = '',
+    onCantonChange,
+    id,
+    name,
+    label,
+    description,
+    error,
+    placeholder,
+    noResults,
+    clearLabel,
+    requiredMessage,
+    disabled = false,
+    required = false,
+    className,
+  },
+  forwardedRef,
+) {
   const [nativeLabel, nativePlaceholder, emptyMessage, clearMessage, missingMessage] = strings[locale]
   const generated = useId()
   const inputId = id ?? generated
   const listId = inputId + '-options'
   const input = useRef<HTMLInputElement>(null)
+  useImperativeHandle(forwardedRef, () => input.current!, [])
   const panel = useRef<HTMLDivElement>(null)
   const options = useRef<HTMLUListElement>(null)
   const anchor = useRef<HTMLDivElement>(null)
@@ -297,4 +301,4 @@ export function CantonCombobox({
       )}
     </Field>
   )
-}
+})

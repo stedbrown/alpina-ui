@@ -1,5 +1,5 @@
 'use client'
-import { useId, useRef, useState, type ReactNode, type ReactElement } from 'react'
+import { forwardRef, useImperativeHandle, useId, useRef, useState, type ReactNode } from 'react'
 import { ActionList, type ActionItem } from './action-list.js'
 import { useOutside } from './dismiss.js'
 import './context-menu.css'
@@ -8,17 +8,23 @@ export interface ContextMenuProps {
   items: readonly ActionItem[]
   children: ReactNode
   onValueSelect?: (value: string) => void
+  className?: string
 }
-export function ContextMenu({
-  label,
-  items,
-  children,
-  onValueSelect,
-}: ContextMenuProps): ReactElement {
+export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(function ContextMenu(
+  {
+    label,
+    items,
+    children,
+    onValueSelect,
+    className = '',
+  },
+  forwardedRef,
+) {
   const id = useId()
   const root = useRef<HTMLDivElement>(null),
     anchor = useRef<HTMLSpanElement>(null),
     origin = useRef<HTMLElement | null>(null)
+  useImperativeHandle(forwardedRef, () => root.current!, [])
   const [point, setPoint] = useState<{ x: number; y: number; key: number } | null>(null)
   const serial = useRef(0)
   useOutside(!!point, root, () => setPoint(null))
@@ -34,7 +40,7 @@ export function ContextMenu({
       tabIndex={0}
       role="group"
       aria-label={label}
-      className="al-context"
+      className={('al-context ' + className).trim()}
       id={id}
       aria-haspopup="menu"
       aria-controls={point ? id + '-menu' : undefined}
@@ -78,4 +84,4 @@ export function ContextMenu({
       )}
     </div>
   )
-}
+})

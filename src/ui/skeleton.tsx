@@ -1,16 +1,20 @@
-import type { ComponentPropsWithoutRef, ReactElement } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef } from 'react'
 import './skeleton.css'
 
 export interface SkeletonProps extends Omit<ComponentPropsWithoutRef<'div'>, 'children'> {
   variant?: 'block' | 'text' | 'avatar'
 }
-export function Skeleton({ variant = 'block', className = '', ...props }: SkeletonProps): ReactElement {
+export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(function Skeleton(
+  { variant = 'block', className = '', ...props },
+  ref,
+) {
   return (
     <div
+      ref={ref}
       {...props}
       data-variant={variant}
       aria-hidden="true"
       className={`al-skeleton ${className}`.trim()}
     />
   )
-}
+})

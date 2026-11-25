@@ -1,4 +1,4 @@
-import { useId, type ReactElement, type ReactNode } from 'react'
+import { forwardRef, useId, type ReactNode } from 'react'
 import './trace.css'
 
 export interface TraceEvent {
@@ -14,10 +14,13 @@ export interface TraceProps {
   className?: string
 }
 
-export function Trace({ label, events, className = '' }: TraceProps): ReactElement {
+export const Trace = forwardRef<HTMLElement, TraceProps>(function Trace(
+  { label, events, className = '' },
+  ref,
+) {
   const id = useId()
   return (
-    <section className={('al-trace ' + className).trim()} aria-labelledby={id}>
+    <section ref={ref} className={('al-trace ' + className).trim()} aria-labelledby={id}>
       <h3 id={id}>{label}</h3>
       <ol>
         {events.map((event) => (
@@ -43,4 +46,4 @@ export function Trace({ label, events, className = '' }: TraceProps): ReactEleme
       </ol>
     </section>
   )
-}
+})

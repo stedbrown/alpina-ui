@@ -1,6 +1,6 @@
 'use client'
 
-import { useId, type ComponentPropsWithoutRef, type ReactNode, type ReactElement } from 'react'
+import { forwardRef, useId, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import './radio-group.css'
 
 export interface RadioOption {
@@ -21,22 +21,26 @@ export interface RadioGroupProps extends Omit<
   required?: boolean
 }
 
-export function RadioGroup({
-  name,
-  form,
-  label,
-  options,
-  value,
-  defaultValue,
-  onValueChange,
-  required,
-  orientation = 'vertical',
-  className = '',
-  ...props
-}: RadioGroupProps): ReactElement {
+export const RadioGroup = forwardRef<HTMLFieldSetElement, RadioGroupProps>(function RadioGroup(
+  {
+    name,
+    form,
+    label,
+    options,
+    value,
+    defaultValue,
+    onValueChange,
+    required,
+    orientation = 'vertical',
+    className = '',
+    ...props
+  },
+  ref,
+) {
   const generatedName = useId()
   return (
     <fieldset
+      ref={ref}
       {...props}
       data-orientation={orientation}
       name={name}
@@ -66,4 +70,4 @@ export function RadioGroup({
       ))}
     </fieldset>
   )
-}
+})

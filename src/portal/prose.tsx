@@ -1,7 +1,10 @@
-import type { ReactElement } from 'react'
-import { type ComponentPropsWithoutRef } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef } from 'react'
 import './prose.css'
 
-export function Prose({ className = '', ...props }: ComponentPropsWithoutRef<'article'>): ReactElement {
-  return <article {...props} className={'al-prose ' + className} />
-}
+export interface ProseProps extends ComponentPropsWithoutRef<'article'> {}
+export const Prose = forwardRef<HTMLElement, ProseProps>(function Prose(
+  { className = '', ...props },
+  ref,
+) {
+  return <article ref={ref} {...props} className={'al-prose ' + className} />
+})

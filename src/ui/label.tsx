@@ -1,5 +1,9 @@
-import type { ComponentPropsWithoutRef, ReactElement } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef } from 'react'
 import './label.css'
-export function Label({ className = '', ...props }: ComponentPropsWithoutRef<'label'>): ReactElement {
-  return <label {...props} className={('al-label ' + className).trim()} />
-}
+export interface LabelProps extends ComponentPropsWithoutRef<'label'> {}
+export const Label = forwardRef<HTMLLabelElement, LabelProps>(function Label(
+  { className = '', ...props },
+  ref,
+) {
+  return <label ref={ref} {...props} className={('al-label ' + className).trim()} />
+})

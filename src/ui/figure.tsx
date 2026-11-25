@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import './figure.css'
 
 export interface FigureProps extends ComponentPropsWithoutRef<'figure'> {
@@ -8,9 +8,12 @@ export interface FigureProps extends ComponentPropsWithoutRef<'figure'> {
   credit?: ReactNode
 }
 
-export function Figure({ image, caption, credit, children, className = '', ...props }: FigureProps): ReactElement {
+export const Figure = forwardRef<HTMLElement, FigureProps>(function Figure(
+  { image, caption, credit, children, className = '', ...props },
+  ref,
+) {
   return (
-    <figure {...props} className={('al-figure ' + className).trim()}>
+    <figure ref={ref} {...props} className={('al-figure ' + className).trim()}>
       {image && <img {...image} />}
       {children}
       {(caption != null || credit != null) && (
@@ -21,4 +24,4 @@ export function Figure({ image, caption, credit, children, className = '', ...pr
       )}
     </figure>
   )
-}
+})

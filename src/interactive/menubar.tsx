@@ -1,5 +1,5 @@
 'use client'
-import { useId, useRef, useState, type ReactElement } from 'react'
+import { forwardRef, useImperativeHandle, useId, useRef, useState } from 'react'
 import { ActionList, type ActionItem } from './action-list.js'
 import { useOutside } from './dismiss.js'
 import { navigationIndex } from './navigation.js'
@@ -13,10 +13,15 @@ export interface MenubarProps {
   label: string
   menus: readonly MenubarGroup[]
   onValueSelect?: (value: string) => void
+  className?: string
 }
-export function Menubar({ label, menus, onValueSelect }: MenubarProps): ReactElement {
+export const Menubar = forwardRef<HTMLDivElement, MenubarProps>(function Menubar(
+  { label, menus, onValueSelect, className = '' },
+  forwardedRef,
+) {
   const id = useId(),
     root = useRef<HTMLDivElement>(null)
+  useImperativeHandle(forwardedRef, () => root.current!, [])
   const [focus, setFocus] = useState(0)
   const [open, setOpen] = useState<string | null>(null)
   const initial = useRef<'first' | 'last'>('first')
@@ -39,7 +44,7 @@ export function Menubar({ label, menus, onValueSelect }: MenubarProps): ReactEle
     }
   }
   return (
-    <div ref={root} role="menubar" aria-label={label} className="al-menubar">
+    <div ref={root} role="menubar" aria-label={label} className={('al-menubar ' + className).trim()}>
       {menus.map((group, i) => {
         const expanded = open === group.value && !!group.items.length
         function reveal(where: 'first' | 'last') {
@@ -94,4 +99,4 @@ export function Menubar({ label, menus, onValueSelect }: MenubarProps): ReactEle
       })}
     </div>
   )
-}
+})

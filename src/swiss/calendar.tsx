@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type ReactElement } from 'react'
+import { forwardRef, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import { Button } from '../ui/button.js'
 import { useControllable } from '../interactive/controllable.js'
 import { addDays, addMonths, calendarLabels, calendarText, clampDay, firstCivilDay, lastCivilDay, mondayIndex, monthLength, zurichToday } from './calendar-dates.js'
@@ -19,7 +19,10 @@ export interface CalendarProps {
   className?: string
 }
 
-export function Calendar({ value, defaultValue = '', onValueChange, defaultMonth, min = firstCivilDay, max = lastCivilDay, locale = defaultSwissLocale, className = '' }: CalendarProps): ReactElement {
+export const Calendar = forwardRef<HTMLElement, CalendarProps>(function Calendar(
+  { value, defaultValue = '', onValueChange, defaultMonth, min = firstCivilDay, max = lastCivilDay, locale = defaultSwissLocale, className = '' },
+  ref,
+) {
   const [selection, select] = useControllable(value, defaultValue, onValueChange)
   const today = zurichToday()
   parseCivilDate(min)
@@ -85,7 +88,7 @@ export function Calendar({ value, defaultValue = '', onValueChange, defaultMonth
   }
 
   return (
-    <section className={('al-calendar ' + className).trim()} lang={locale} aria-labelledby={id}>
+    <section ref={ref} className={('al-calendar ' + className).trim()} lang={locale} aria-labelledby={id}>
       <div className="al-calendar-head">
         <strong id={id} aria-live="polite" aria-atomic="true">{labels.month}</strong>
         <Button size="sm" variant="ghost" aria-label={text.prev} disabled={month <= min.slice(0, 7)} onClick={() => moveMonth(-1)}>‹</Button>
@@ -115,4 +118,4 @@ export function Calendar({ value, defaultValue = '', onValueChange, defaultMonth
       </table>
     </section>
   )
-}
+})

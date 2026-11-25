@@ -1,4 +1,4 @@
-import type { CSSProperties, HTMLAttributes, ReactElement, ReactNode } from 'react'
+import { createElement, forwardRef, type CSSProperties, type HTMLAttributes, type ReactNode } from 'react'
 import './grid.css'
 
 export interface GridProps extends HTMLAttributes<HTMLDivElement> {
@@ -14,38 +14,41 @@ export interface GridProps extends HTMLAttributes<HTMLDivElement> {
   /** Prints the column numbers and gutters of the active responsive grid. */
   ruler?: boolean
 }
-export function Grid({
-  as: Element = 'div',
-  guides = false,
-  ruler = false,
-  space,
-  width,
-  align,
-  surface,
-  children,
-  className = '',
-  ...props
-}: GridProps): ReactElement {
-  return (
-    <Element {...props} data-space={space} data-surface={surface} className={('al-layout ' + className).trim()}>
-      <div className="al-grid" data-width={width} data-align={align} data-guides={guides || undefined}>
-        {children}
-        {ruler && (
-          <div className="al-grid-ruler" aria-hidden="true">
-            {Array.from({ length: 12 }, (_, i) => <span key={i}>{i + 1}</span>)}
-          </div>
-        )}
-        {guides && (
-          <div className="al-grid-guides" aria-hidden="true">
-            {Array.from({ length: 12 }, (_, i) => (
-              <i key={i} />
-            ))}
-          </div>
-        )}
-      </div>
-    </Element>
+export const Grid = forwardRef<HTMLElement, GridProps>(function Grid(
+  {
+    as: Element = 'div',
+    guides = false,
+    ruler = false,
+    space,
+    width,
+    align,
+    surface,
+    children,
+    className = '',
+    ...props
+  },
+  ref,
+) {
+  return createElement(
+    Element,
+    { ...props, ref, 'data-space': space, 'data-surface': surface, className: ('al-layout ' + className).trim() },
+    <div className="al-grid" data-width={width} data-align={align} data-guides={guides || undefined}>
+      {children}
+      {ruler && (
+        <div className="al-grid-ruler" aria-hidden="true">
+          {Array.from({ length: 12 }, (_, i) => <span key={i}>{i + 1}</span>)}
+        </div>
+      )}
+      {guides && (
+        <div className="al-grid-guides" aria-hidden="true">
+          {Array.from({ length: 12 }, (_, i) => (
+            <i key={i} />
+          ))}
+        </div>
+      )}
+    </div>,
   )
-}
+})
 type Span4 = 1 | 2 | 3 | 4
 type Span8 = Span4 | 5 | 6 | 7 | 8
 type Span12 = Span8 | 9 | 10 | 11 | 12
@@ -56,17 +59,21 @@ export interface GridItemProps extends HTMLAttributes<HTMLDivElement> {
   start?: { small?: Span4; medium?: Span8; large?: Span12 }
   children?: ReactNode
 }
-export function GridItem({
-  start,
-  small = 4,
-  medium = 8,
-  large = 12,
-  className = '',
-  style,
-  ...props
-}: GridItemProps): ReactElement {
+export const GridItem = forwardRef<HTMLDivElement, GridItemProps>(function GridItem(
+  {
+    start,
+    small = 4,
+    medium = 8,
+    large = 12,
+    className = '',
+    style,
+    ...props
+  },
+  ref,
+) {
   return (
     <div
+      ref={ref}
       {...props}
       className={('al-grid-item ' + className).trim()}
       style={
@@ -82,4 +89,4 @@ export function GridItem({
       }
     />
   )
-}
+})

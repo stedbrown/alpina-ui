@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useId, useRef, useState, type FormEvent, type ReactElement } from 'react'
+import { forwardRef, useImperativeHandle, useEffect, useId, useRef, useState, type FormEvent } from 'react'
 import { Button } from '../ui/button.js'
 import { Field } from '../ui/field.js'
 import { Input } from '../ui/input.js'
@@ -141,16 +141,20 @@ function fieldIssue(key: AddressField, value: string): Issue | undefined {
   if (key === 'canton' && !cantons.some(({ code }) => code === value)) return 'requiredError'
 }
 
-export function SwissAddressForm({
-  locale = defaultSwissLocale,
-  initialValue,
-  onSave,
-  labels,
-  className,
-}: SwissAddressFormProps): ReactElement {
+export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProps>(function SwissAddressForm(
+  {
+    locale = defaultSwissLocale,
+    initialValue,
+    onSave,
+    labels,
+    className,
+  },
+  forwardedRef,
+) {
   const prefix = useId()
   const text = { ...swissAddressLabels[locale], ...labels }
   const form = useRef<HTMLFormElement>(null)
+  useImperativeHandle(forwardedRef, () => form.current!, [])
   const pendingFocus = useRef<AddressField | null>(null)
   const submitButton = useRef<HTMLButtonElement>(null)
   const validationStarted = useRef(false)
@@ -392,4 +396,4 @@ export function SwissAddressForm({
       </div>
     </form>
   )
-}
+})

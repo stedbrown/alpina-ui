@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useId, useRef, useState, type ReactElement } from 'react'
+import { forwardRef, useImperativeHandle, useEffect, useId, useRef, useState } from 'react'
 import { Field } from '../ui/field.js'
 import { Input } from '../ui/input.js'
 import { Button } from '../ui/button.js'
@@ -29,24 +29,27 @@ export interface ComboboxProps {
   onValueChange?: (value: string) => void
   className?: string
 }
-export function Combobox({
-  label,
-  options,
-  empty,
-  placeholder,
-  description,
-  error,
-  id,
-  name,
-  required,
-  requiredMessage = 'Choose an option.',
-  clearLabel,
-  disabled,
-  value,
-  defaultValue = '',
-  onValueChange,
-  className,
-}: ComboboxProps): ReactElement {
+export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(
+  {
+    label,
+    options,
+    empty,
+    placeholder,
+    description,
+    error,
+    id,
+    name,
+    required,
+    requiredMessage = 'Choose an option.',
+    clearLabel,
+    disabled,
+    value,
+    defaultValue = '',
+    onValueChange,
+    className,
+  },
+  forwardedRef,
+) {
   const [selected, choose] = useControllable(value, defaultValue, onValueChange)
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState<string | null>(null)
@@ -57,6 +60,7 @@ export function Combobox({
   const listId = inputId + '-list'
   const wrapper = useRef<HTMLDivElement>(null)
   const input = useRef<HTMLInputElement>(null)
+  useImperativeHandle(forwardedRef, () => input.current!, [])
   const panel = useRef<HTMLDivElement>(null)
   const chosen = options.find((item) => item.value === selected && !item.disabled)
   const results = filterOptions(options, query ?? '')
@@ -210,4 +214,4 @@ export function Combobox({
       )}
     </Field>
   )
-}
+})

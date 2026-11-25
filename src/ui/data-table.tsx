@@ -1,6 +1,6 @@
 'use client'
 
-import { useId, useMemo, useState, type Key, type ReactElement, type ReactNode } from 'react'
+import { forwardRef, useId, useMemo, useState, type ForwardedRef, type Key, type ReactElement, type ReactNode, type RefAttributes } from 'react'
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption } from './table.js'
 import { ScrollArea } from './scroll-area.js'
 import './data-table.css'
@@ -27,8 +27,9 @@ export interface DataTableProps<Row> {
   onSortChange?: (sort: DataSort) => void
   /** Instructions announced with the scroll region when at least one column is sortable. */
   sortHint?: string
+  className?: string
 }
-export function DataTable<Row>({
+function DataTableView<Row>({
   rows,
   columns,
   rowKey,
@@ -38,7 +39,8 @@ export function DataTable<Row>({
   defaultSort,
   onSortChange,
   sortHint = 'Use the buttons in the column headings to sort the rows.',
-}: DataTableProps<Row>): ReactElement {
+  className = '',
+}: DataTableProps<Row>, ref: ForwardedRef<HTMLDivElement>): ReactElement {
   const hintId = useId()
   const hasSortHint = Boolean(sortHint) && columns.some((column) => column.compare)
   const [internal, setInternal] = useState<DataSort | null>(defaultSort ?? null)
@@ -59,7 +61,7 @@ export function DataTable<Row>({
     onSortChange?.(next)
   }
   return (
-    <ScrollArea className="al-data-table" label={caption} aria-describedby={hasSortHint ? hintId : undefined}>
+    <ScrollArea ref={ref} className={('al-data-table ' + className).trim()} label={caption} aria-describedby={hasSortHint ? hintId : undefined}>
       {hasSortHint && <span hidden id={hintId}>{sortHint}</span>}
       <Table>
         <TableCaption>{caption}</TableCaption>
@@ -110,3 +112,7 @@ export function DataTable<Row>({
     </ScrollArea>
   )
 }
+
+export const DataTable = forwardRef(DataTableView) as <Row>(
+  props: DataTableProps<Row> & RefAttributes<HTMLDivElement>,
+) => ReactElement

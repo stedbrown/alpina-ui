@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import './empty.css'
 export interface EmptyProps extends Omit<ComponentPropsWithoutRef<'div'>, 'title'> {
   title: ReactNode
@@ -6,21 +6,24 @@ export interface EmptyProps extends Omit<ComponentPropsWithoutRef<'div'>, 'title
   description?: ReactNode
   action?: ReactNode
 }
-export function Empty({
-  title,
-  titleAs: Title = 'div',
-  description,
-  action,
-  children,
-  className = '',
-  ...props
-}: EmptyProps): ReactElement {
+export const Empty = forwardRef<HTMLDivElement, EmptyProps>(function Empty(
+  {
+    title,
+    titleAs: Title = 'div',
+    description,
+    action,
+    children,
+    className = '',
+    ...props
+  },
+  ref,
+) {
   return (
-    <div {...props} className={('al-empty ' + className).trim()}>
+    <div ref={ref} {...props} className={('al-empty ' + className).trim()}>
       <Title className="al-empty-title">{title}</Title>
       {description != null && <div className="al-empty-description">{description}</div>}
       {children}
       {action != null && <div className="al-empty-action">{action}</div>}
     </div>
   )
-}
+})

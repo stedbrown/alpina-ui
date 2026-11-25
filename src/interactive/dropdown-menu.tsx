@@ -1,13 +1,5 @@
 'use client'
-import {
-  useEffect,
-  useId,
-  useImperativeHandle,
-  useRef,
-  type Ref,
-  type ReactElement,
-  type ReactNode,
-} from 'react'
+import { forwardRef, useEffect, useId, useImperativeHandle, useRef, type Ref, type ReactNode } from 'react'
 import { useControllable } from './controllable.js'
 import { ActionList, type ActionItem } from './action-list.js'
 import { useOutside } from './dismiss.js'
@@ -29,24 +21,28 @@ export interface DropdownMenuProps {
   onValueSelect?: (value: string) => void
   className?: string
 }
-export function DropdownMenu({
-  label,
-  triggerLabel,
-  triggerRef,
-  align = 'start',
-  size = 'regular',
-  items,
-  open,
-  defaultOpen = false,
-  onOpenChange,
-  onValueSelect,
-  className,
-}: DropdownMenuProps): ReactElement {
+export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(function DropdownMenu(
+  {
+    label,
+    triggerLabel,
+    triggerRef,
+    align = 'start',
+    size = 'regular',
+    items,
+    open,
+    defaultOpen = false,
+    onOpenChange,
+    onValueSelect,
+    className,
+  },
+  forwardedRef,
+) {
   const [requested, change] = useControllable(open, defaultOpen, onOpenChange)
   const visible = requested && items.length > 0
   const id = useId(),
     root = useRef<HTMLDivElement>(null),
     trigger = useRef<HTMLButtonElement>(null)
+  useImperativeHandle(forwardedRef, () => root.current!, [])
   useImperativeHandle(triggerRef, () => trigger.current!, [])
   const initial = useRef<'first' | 'last'>('first')
   useOutside(visible, root, () => change(false))
@@ -109,4 +105,4 @@ export function DropdownMenu({
       )}
     </div>
   )
-}
+})

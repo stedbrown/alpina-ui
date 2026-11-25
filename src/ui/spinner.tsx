@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactElement } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef } from 'react'
 import './spinner.css'
 
 export interface SpinnerProps extends Omit<ComponentPropsWithoutRef<'span'>, 'children'> {
@@ -7,9 +7,13 @@ export interface SpinnerProps extends Omit<ComponentPropsWithoutRef<'span'>, 'ch
   showLabel?: boolean
   size?: 'sm' | 'md' | 'lg'
 }
-export function Spinner({ label, showLabel = false, size = 'md', className = '', ...props }: SpinnerProps): ReactElement {
+export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(function Spinner(
+  { label, showLabel = false, size = 'md', className = '', ...props },
+  ref,
+) {
   return (
     <span
+      ref={ref}
       {...props}
       className={`al-spinner ${className}`.trim()}
       data-size={size}
@@ -20,4 +24,4 @@ export function Spinner({ label, showLabel = false, size = 'md', className = '',
       {label && <span className={showLabel ? 'al-spinner-text' : 'al-spinner-label'}>{label}</span>}
     </span>
   )
-}
+})

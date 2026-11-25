@@ -1,17 +1,21 @@
-import type { ComponentPropsWithoutRef, ReactElement } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef } from 'react'
 import './button-group.css'
 export interface ButtonGroupProps extends ComponentPropsWithoutRef<'div'> {
   label: string
   orientation?: 'horizontal' | 'vertical'
 }
-export function ButtonGroup({
-  label,
-  orientation = 'horizontal',
-  className = '',
-  ...props
-}: ButtonGroupProps): ReactElement {
+export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(function ButtonGroup(
+  {
+    label,
+    orientation = 'horizontal',
+    className = '',
+    ...props
+  },
+  ref,
+) {
   return (
     <div
+      ref={ref}
       {...props}
       role="group"
       aria-label={label}
@@ -19,4 +23,4 @@ export function ButtonGroup({
       className={('al-button-group ' + className).trim()}
     />
   )
-}
+})

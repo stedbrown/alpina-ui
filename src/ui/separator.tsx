@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactElement } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef } from 'react'
 import './separator.css'
 
 export interface SeparatorProps extends Omit<ComponentPropsWithoutRef<'div'>, 'children' | 'role'> {
@@ -6,15 +6,19 @@ export interface SeparatorProps extends Omit<ComponentPropsWithoutRef<'div'>, 'c
   decorative?: boolean
   weight?: 'hairline' | 'section'
 }
-export function Separator({
-  orientation = 'horizontal',
-  decorative = true,
-  weight = 'hairline',
-  className = '',
-  ...props
-}: SeparatorProps): ReactElement {
+export const Separator = forwardRef<HTMLDivElement, SeparatorProps>(function Separator(
+  {
+    orientation = 'horizontal',
+    decorative = true,
+    weight = 'hairline',
+    className = '',
+    ...props
+  },
+  ref,
+) {
   return (
     <div
+      ref={ref}
       {...props}
       data-weight={weight}
       data-orientation={orientation}
@@ -24,4 +28,4 @@ export function Separator({
       className={`al-separator ${className}`.trim()}
     />
   )
-}
+})

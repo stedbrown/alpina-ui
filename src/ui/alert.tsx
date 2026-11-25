@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactNode, ReactElement } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import './alert.css'
 
 export interface AlertProps extends Omit<ComponentPropsWithoutRef<'div'>, 'title'> {
@@ -7,16 +7,19 @@ export interface AlertProps extends Omit<ComponentPropsWithoutRef<'div'>, 'title
   /** Choose a heading level for a notice that starts a section. */
   titleAs?: 'strong' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 }
-export function Alert({
-  tone = 'info',
-  title,
-  titleAs: Title = 'strong',
-  children,
-  className = '',
-  ...props
-}: AlertProps): ReactElement {
+export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  {
+    tone = 'info',
+    title,
+    titleAs: Title = 'strong',
+    children,
+    className = '',
+    ...props
+  },
+  ref,
+) {
   return (
-    <div {...props} data-tone={tone} className={`al-alert ${className}`.trim()}>
+    <div ref={ref} {...props} data-tone={tone} className={`al-alert ${className}`.trim()}>
       <span className="al-alert-sign" aria-hidden="true">
         {{ info: 'i', success: '✓', warning: '△', danger: '!' }[tone]}
       </span>
@@ -26,4 +29,4 @@ export function Alert({
       </div>
     </div>
   )
-}
+})

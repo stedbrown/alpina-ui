@@ -1,6 +1,5 @@
 'use client'
-import type { ReactElement } from 'react'
-import { useState, useRef, type HTMLAttributes } from 'react'
+import { forwardRef, useState, useRef, type HTMLAttributes } from 'react'
 import { Button } from '../ui/button.js'
 import './code-block.css'
 
@@ -11,15 +10,18 @@ export interface CodeBlockProps extends HTMLAttributes<HTMLElement> {
   copiedLabel?: string
   manualLabel?: string
 }
-export function CodeBlock({
-  code,
-  label,
-  copyLabel = 'Copy',
-  copiedLabel = 'Copied',
-  manualLabel = 'Text selected. Use your browser’s copy command.',
-  className = '',
-  ...props
-}: CodeBlockProps): ReactElement {
+export const CodeBlock = forwardRef<HTMLElement, CodeBlockProps>(function CodeBlock(
+  {
+    code,
+    label,
+    copyLabel = 'Copy',
+    copiedLabel = 'Copied',
+    manualLabel = 'Text selected. Use your browser’s copy command.',
+    className = '',
+    ...props
+  },
+  forwardedRef,
+) {
   const ref = useRef<HTMLElement>(null)
   const [result, setResult] = useState<{ value: string; message: string }>()
   async function copy() {
@@ -50,7 +52,7 @@ export function CodeBlock({
     }
   }
   return (
-    <figure {...props} className={'al-code-block ' + className}>
+    <figure ref={forwardedRef} {...props} className={'al-code-block ' + className}>
       <figcaption>
         <span>{label}</span>
         <Button variant="ghost" size="sm" onClick={copy}>
@@ -63,4 +65,4 @@ export function CodeBlock({
       <span role="status">{result?.value === code ? result.message : ''}</span>
     </figure>
   )
-}
+})

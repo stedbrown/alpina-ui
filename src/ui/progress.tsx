@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactElement } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef } from 'react'
 import './progress.css'
 
 export interface ProgressProps extends Omit<ComponentPropsWithoutRef<'progress'>, 'value' | 'max'> {
@@ -7,19 +7,23 @@ export interface ProgressProps extends Omit<ComponentPropsWithoutRef<'progress'>
   max?: number
   formatValue?: (value: number, max: number) => string
 }
-export function Progress({
-  label,
-  value,
-  max = 100,
-  formatValue,
-  className = '',
-  ...props
-}: ProgressProps): ReactElement {
+export const Progress = forwardRef<HTMLProgressElement, ProgressProps>(function Progress(
+  {
+    label,
+    value,
+    max = 100,
+    formatValue,
+    className = '',
+    ...props
+  },
+  ref,
+) {
   const limit = Number.isFinite(max) && max > 0 ? max : 100
   const current =
     value !== undefined && Number.isFinite(value) ? Math.min(limit, Math.max(0, value)) : undefined
   return (
     <progress
+      ref={ref}
       {...props}
       max={limit}
       value={current}
@@ -32,4 +36,4 @@ export function Progress({
       className={`al-progress ${className}`.trim()}
     />
   )
-}
+})

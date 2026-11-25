@@ -53,10 +53,12 @@ function componentDefaults(source) {
     }
     if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name)) {
       name = node.name.text
-      const value = node.initializer
-      if (value && ts.isCallExpression(value) && value.expression.getText() === 'forwardRef')
+      let value = node.initializer
+      while (value && ts.isAsExpression(value)) value = value.expression
+      if (value && ts.isCallExpression(value) && value.expression.getText() === 'forwardRef') {
         impl = value.arguments[0]
-      else if (value && ts.isArrowFunction(value)) impl = value
+        if (impl && ts.isIdentifier(impl) && all.has(impl.text)) all.set(name, all.get(impl.text))
+      } else if (value && ts.isArrowFunction(value)) impl = value
     }
     if (name && impl?.parameters?.[0] && ts.isObjectBindingPattern(impl.parameters[0].name)) {
       const defaults = new Map()
@@ -170,7 +172,8 @@ export async function buildApiReference() {
     for (const symbol of checker.getExportsOfModule(checker.getSymbolAtLocation(module))) {
       if (!/^[A-Z]/.test(symbol.name) || !(symbol.flags & ts.SymbolFlags.Value)) continue
       const decl = symbol.valueDeclaration
-      const call = checker.getTypeOfSymbolAtLocation(symbol, decl).getCallSignatures()[0]
+      // The final overload describes the default element, also used by React.ComponentProps.
+      const call = checker.getTypeOfSymbolAtLocation(symbol, decl).getCallSignatures().at(-1)
       if (!call?.parameters[0]) continue
       const props = checker.getTypeOfSymbolAtLocation(call.parameters[0], decl)
       const fields = []
@@ -204,7 +207,7 @@ export async function buildApiReference() {
         props: fields,
         native: nativeContracts(syntax, checker, local),
         ref,
-        generic: decl.typeParameters?.map(concise).join(', '),
+        generic: (decl.typeParameters ?? syntax.typeParameters)?.map(concise).join(', '),
         types: relatedTypes(propertyTypes, checker, local),
       })
     }

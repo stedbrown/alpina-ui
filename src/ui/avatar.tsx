@@ -1,5 +1,5 @@
 'use client'
-import { useState, type ComponentPropsWithoutRef, type ReactElement } from 'react'
+import { forwardRef, useState, type ComponentPropsWithoutRef } from 'react'
 import './avatar.css'
 let graphemes: Intl.Segmenter | undefined
 function initial(word: string) {
@@ -14,14 +14,17 @@ export interface AvatarProps extends ComponentPropsWithoutRef<'span'> {
   size?: 'sm' | 'md' | 'lg'
   decorative?: boolean
 }
-export function Avatar({
-  name,
-  src,
-  size = 'md',
-  decorative = false,
-  className = '',
-  ...props
-}: AvatarProps): ReactElement {
+export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(function Avatar(
+  {
+    name,
+    src,
+    size = 'md',
+    decorative = false,
+    className = '',
+    ...props
+  },
+  ref,
+) {
   const [failed, setFailed] = useState<string>()
   const words = name.trim().split(/\s+/u).filter(Boolean)
   const initials =
@@ -31,6 +34,7 @@ export function Avatar({
       .toUpperCase() || '·'
   return (
     <span
+      ref={ref}
       {...props}
       role={decorative ? undefined : 'img'}
       aria-label={decorative ? undefined : name}
@@ -45,4 +49,4 @@ export function Avatar({
       )}
     </span>
   )
-}
+})

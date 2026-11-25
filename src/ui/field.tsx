@@ -1,4 +1,4 @@
-import { useId, type ComponentPropsWithoutRef, type ReactNode, type ReactElement } from 'react'
+import { forwardRef, useId, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import './field.css'
 
 export interface FieldControlProps {
@@ -14,16 +14,19 @@ export interface FieldProps extends Omit<ComponentPropsWithoutRef<'div'>, 'child
   children: (control: FieldControlProps) => ReactNode
 }
 
-export function Field({
-  id,
-  label,
-  description,
-  error,
-  describedBy,
-  children,
-  className = '',
-  ...props
-}: FieldProps): ReactElement {
+export const Field = forwardRef<HTMLDivElement, FieldProps>(function Field(
+  {
+    id,
+    label,
+    description,
+    error,
+    describedBy,
+    children,
+    className = '',
+    ...props
+  },
+  ref,
+) {
   const generatedId = useId()
   const controlId = id ?? generatedId
   const hasDescription =
@@ -36,7 +39,7 @@ export function Field({
   ].join(' ')
 
   return (
-    <div {...props} data-invalid={hasError || undefined} className={`al-field ${className}`.trim()}>
+    <div ref={ref} {...props} data-invalid={hasError || undefined} className={`al-field ${className}`.trim()}>
       <label className="al-field-label" htmlFor={controlId}>
         {label}
       </label>
@@ -57,4 +60,4 @@ export function Field({
       })}
     </div>
   )
-}
+})

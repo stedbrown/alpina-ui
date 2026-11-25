@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import './item.css'
 export interface ItemProps extends Omit<ComponentPropsWithoutRef<'div'>, 'title'> {
   title: ReactNode
@@ -8,18 +8,22 @@ export interface ItemProps extends Omit<ComponentPropsWithoutRef<'div'>, 'title'
   leading?: ReactNode
   trailing?: ReactNode
 }
-export function Item({
-  title,
-  description,
-  current,
-  leading,
-  trailing,
-  children,
-  className = '',
-  ...props
-}: ItemProps): ReactElement {
+export const Item = forwardRef<HTMLDivElement, ItemProps>(function Item(
+  {
+    title,
+    description,
+    current,
+    leading,
+    trailing,
+    children,
+    className = '',
+    ...props
+  },
+  ref,
+) {
   return (
     <div
+      ref={ref}
       aria-current={current || undefined}
       {...props}
       data-current={current}
@@ -34,4 +38,4 @@ export function Item({
       {trailing != null && <div className="al-item-trailing">{trailing}</div>}
     </div>
   )
-}
+})

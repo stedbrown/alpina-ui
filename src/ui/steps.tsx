@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import './steps.css'
 
 export interface StepsProps extends Omit<ComponentPropsWithoutRef<'ol'>, 'children'> {
@@ -8,9 +8,12 @@ export interface StepsProps extends Omit<ComponentPropsWithoutRef<'ol'>, 'childr
   items: readonly { id: string; label: ReactNode }[]
 }
 
-export function Steps({ label, items, current, className = '', ...props }: StepsProps): ReactElement {
+export const Steps = forwardRef<HTMLOListElement, StepsProps>(function Steps(
+  { label, items, current, className = '', ...props },
+  ref,
+) {
   return (
-    <ol {...props} aria-label={label} role="list" className={('al-steps ' + className).trim()}>
+    <ol ref={ref} {...props} aria-label={label} role="list" className={('al-steps ' + className).trim()}>
       {items.map((item, index) => (
         <li key={item.id} aria-current={item.id === current ? 'step' : undefined}>
           <span aria-hidden="true">{index + 1}.</span> {item.label}
@@ -18,4 +21,4 @@ export function Steps({ label, items, current, className = '', ...props }: Steps
       ))}
     </ol>
   )
-}
+})

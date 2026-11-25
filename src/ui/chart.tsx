@@ -1,4 +1,4 @@
-import { useId, type ComponentPropsWithoutRef, type CSSProperties, type ReactElement } from 'react'
+import { forwardRef, useId, type ComponentPropsWithoutRef, type CSSProperties } from 'react'
 import './chart.css'
 export interface ChartDatum {
   label: string
@@ -13,17 +13,20 @@ export interface ChartProps extends Omit<ComponentPropsWithoutRef<'figure'>, 'ti
   valueLabel?: string
   emptyLabel?: string
 }
-export function Chart({
-  title,
-  data,
-  formatValue = String,
-  tableLabel = 'Data table',
-  categoryLabel = 'Category',
-  valueLabel = 'Value',
-  emptyLabel = 'No data',
-  className = '',
-  ...props
-}: ChartProps): ReactElement {
+export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
+  {
+    title,
+    data,
+    formatValue = String,
+    tableLabel = 'Data table',
+    categoryLabel = 'Category',
+    valueLabel = 'Value',
+    emptyLabel = 'No data',
+    className = '',
+    ...props
+  },
+  ref,
+) {
   const titleId = useId()
   const rows = data.filter((row) => Number.isFinite(row.value))
   const magnitude = rows.reduce((n, row) => Math.max(n, Math.abs(row.value)), 0) || 1
@@ -32,7 +35,7 @@ export function Chart({
   const range = maximum - minimum || 1
   const origin = (-minimum / range) * 100
   return (
-    <figure {...props} aria-labelledby={titleId} className={('al-chart ' + className).trim()}>
+    <figure ref={ref} {...props} aria-labelledby={titleId} className={('al-chart ' + className).trim()}>
       <figcaption id={titleId}>{title}</figcaption>
       {rows.length === 0 ? (
         <p>{emptyLabel}</p>
@@ -85,4 +88,4 @@ export function Chart({
       )}
     </figure>
   )
-}
+})

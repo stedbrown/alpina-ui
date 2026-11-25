@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, type ReactElement, type ReactNode } from 'react'
+import { forwardRef, useImperativeHandle, useEffect, useRef, useState, type ReactNode } from 'react'
 import { Button } from '../ui/button.js'
 import { moveButton } from './roving.js'
 import './toggle-group.css'
@@ -24,18 +24,21 @@ export interface ToggleGroupProps {
   className?: string
 }
 
-export function ToggleGroup({
-  label,
-  options,
-  multiple = false,
-  layout = 'row',
-  value,
-  defaultValue,
-  onValueChange,
-  name,
-  disabled,
-  className = '',
-}: ToggleGroupProps): ReactElement {
+export const ToggleGroup = forwardRef<HTMLDivElement, ToggleGroupProps>(function ToggleGroup(
+  {
+    label,
+    options,
+    multiple = false,
+    layout = 'row',
+    value,
+    defaultValue,
+    onValueChange,
+    name,
+    disabled,
+    className = '',
+  },
+  forwardedRef,
+) {
   const [local, setLocal] = useState<readonly string[]>(defaultValue ?? [])
   const selected = value ?? local
   const [focused, setFocused] = useState<string | null>(null)
@@ -44,6 +47,7 @@ export function ToggleGroup({
     ?? enabled.find((option) => selected.includes(option.value))
     ?? enabled[0]
   const root = useRef<HTMLDivElement>(null)
+  useImperativeHandle(forwardedRef, () => root.current!, [])
   useEffect(() => {
     const form = root.current?.closest('form')
     function reset(event: Event) {
@@ -124,4 +128,4 @@ export function ToggleGroup({
           ))}
     </div>
   )
-}
+})

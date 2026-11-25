@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactNode, ReactElement } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import './pagination.css'
 
 export interface PaginationItem {
@@ -14,16 +14,19 @@ export interface PaginationProps extends Omit<ComponentPropsWithoutRef<'nav'>, '
   /** Accessible name for number-only links. An item's accessibleLabel takes precedence. */
   pageLabel?: (page: number) => string
 }
-export function Pagination({
-  label,
-  items,
-  currentPage,
-  pageLabel = (page) => 'Page ' + page,
-  className = '',
-  ...props
-}: PaginationProps): ReactElement {
+export const Pagination = forwardRef<HTMLElement, PaginationProps>(function Pagination(
+  {
+    label,
+    items,
+    currentPage,
+    pageLabel = (page) => 'Page ' + page,
+    className = '',
+    ...props
+  },
+  ref,
+) {
   return (
-    <nav {...props} aria-label={label} className={`al-pagination ${className}`.trim()}>
+    <nav ref={ref} {...props} aria-label={label} className={`al-pagination ${className}`.trim()}>
       <ul>
         {items.map((item) => (
           <li key={item.page}>
@@ -46,4 +49,4 @@ export function Pagination({
       </ul>
     </nav>
   )
-}
+})

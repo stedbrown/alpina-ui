@@ -22,6 +22,23 @@ At a 16 px root, the standard button and input fields are at least 44 px high. C
 
 ## Controls and forms
 
+### Compose a link with Alpina
+
+`asChild` places the component's styling, attributes and ref on one child element. Use a link to navigate and a native button to perform an action. A custom link must pass its received props and ref to its anchor.
+
+```tsx
+import Link from 'next/link'
+import { Button, TextLink } from 'alpina-ui'
+import { Link as RouterLink } from 'react-router'
+
+<Button asChild><Link href="/invoices">View invoices</Link></Button>
+<TextLink asChild><RouterLink to="/account">Account settings</RouterLink></TextLink>
+```
+
+`Badge` also accepts `asChild`. The child keeps its classes alongside the Alpina class. Child and parent event handlers can both participate in the interaction. Put navigation attributes such as `to` or `href` on the child.
+
+For a breadcrumb or navigation entry, set `asChild: true` and supply the link as its `label`. Keep the navigation entry's `href` for identification. A dropdown, context menu or menubar action can use the same pattern. Give a complex action label a `textValue` for keyboard typeahead.
+
 The HTML props below belong to the underlying element and include ARIA attributes, events, and `className`. Text and select controls support native `value`/`onChange` or `defaultValue`. Checkboxes and switches use `checked`/`onChange` or `defaultChecked`. Button, Input, Textarea, Select, Checkbox, and Switch forward their `ref` to the HTML node.
 
 | Export | Props and defaults | Use |

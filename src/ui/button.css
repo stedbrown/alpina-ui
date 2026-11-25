@@ -15,6 +15,7 @@
   font: 600 var(--al-type-label)/var(--al-leading-label) var(--al-font);
   letter-spacing: 0.005em;
   text-align: center;
+  text-decoration: none;
   cursor: pointer;
 }
 .al-button[data-variant='secondary'] {
@@ -48,7 +49,7 @@
   line-height: var(--al-leading-body);
 }
 @media (hover: hover) {
-  .al-button[data-variant='primary']:hover:enabled {
+  .al-button[data-variant='primary']:hover:not(:disabled, [aria-disabled='true']) {
     background: var(--al-accent-hover);
     border-color: var(--al-ink);
   }
@@ -56,22 +57,22 @@
       [data-variant='secondary'],
       [data-variant='outline'],
       [data-variant='ghost']
-    ):hover:enabled {
+    ):hover:not(:disabled, [aria-disabled='true']) {
     background: var(--al-hover);
     border-color: var(--al-control);
   }
-  .al-button[data-variant='danger']:hover:enabled {
+  .al-button[data-variant='danger']:hover:not(:disabled, [aria-disabled='true']) {
     box-shadow: inset 0 0 0 2px currentColor;
   }
 }
-.al-button:active:enabled {
+.al-button:active:not(:disabled, [aria-disabled='true']) {
   box-shadow: inset 0 2px 3px rgb(0 0 0 / 20%);
 }
 .al-button:focus-visible {
   outline: 2px solid var(--al-focus);
   outline-offset: 2px;
 }
-.al-button:disabled {
+.al-button:is(:disabled, [aria-disabled='true']) {
   opacity: 0.55;
   box-shadow: none;
   cursor: not-allowed;
@@ -85,7 +86,7 @@
   .al-button {
     border-color: ButtonText;
   }
-  .al-button:disabled {
+  .al-button:is(:disabled, [aria-disabled='true']) {
     color: GrayText;
     border-color: GrayText;
     opacity: 1;

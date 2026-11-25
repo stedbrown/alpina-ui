@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, type ReactElement } from 'react'
+import { forwardRef, useImperativeHandle, useEffect, useRef, useState } from 'react'
 import { Dialog } from '../interactive/dialog.js'
 import { Button } from '../ui/button.js'
 import { Calendar, type CalendarProps } from './calendar.js'
@@ -18,11 +18,15 @@ export interface DatePickerProps extends CalendarProps {
   clearable?: boolean
 }
 
-export function DatePicker({ value, defaultValue = '', onValueChange, name, label, locale = defaultSwissLocale, disabled = false, clearable = false, className = '', ...calendar }: DatePickerProps): ReactElement {
+export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(function DatePicker(
+  { value, defaultValue = '', onValueChange, name, label, locale = defaultSwissLocale, disabled = false, clearable = false, className = '', ...calendar },
+  forwardedRef,
+) {
   const [local, setLocal] = useState(defaultValue)
   const selection = value ?? local
   const [open, setOpen] = useState(false)
   const root = useRef<HTMLDivElement>(null)
+  useImperativeHandle(forwardedRef, () => root.current!, [])
   const text = calendarText[locale]
 
   useEffect(() => {
@@ -58,4 +62,4 @@ export function DatePicker({ value, defaultValue = '', onValueChange, name, labe
         {open && <Calendar {...calendar} value={selection} defaultMonth={selection || calendar.defaultMonth} locale={locale} onValueChange={choose} />}
       </Dialog>}
   </div>
-}
+})

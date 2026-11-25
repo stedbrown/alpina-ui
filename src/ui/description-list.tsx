@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import './description-list.css'
 
 export interface DescriptionListProps extends Omit<ComponentPropsWithoutRef<'dl'>, 'children'> {
@@ -6,9 +6,12 @@ export interface DescriptionListProps extends Omit<ComponentPropsWithoutRef<'dl'
   items: readonly { term: string; detail: ReactNode }[]
 }
 
-export function DescriptionList({ items, className = '', ...props }: DescriptionListProps): ReactElement {
+export const DescriptionList = forwardRef<HTMLDListElement, DescriptionListProps>(function DescriptionList(
+  { items, className = '', ...props },
+  ref,
+) {
   return (
-    <dl {...props} className={('al-description-list ' + className).trim()}>
+    <dl ref={ref} {...props} className={('al-description-list ' + className).trim()}>
       {items.map(({ term, detail }) => (
         <div key={term}>
           <dt>{term}</dt>
@@ -17,4 +20,4 @@ export function DescriptionList({ items, className = '', ...props }: Description
       ))}
     </dl>
   )
-}
+})

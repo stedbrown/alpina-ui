@@ -1,11 +1,13 @@
 'use client'
-import type { ReactElement } from 'react'
-import { type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import { Slot } from '../ui/slot.js'
 import './navigation-menu.css'
 
 export interface NavigationLink {
   href: string
   label: ReactNode
+  /** Use the element in label as the link. href identifies the route for onNavigate. */
+  asChild?: boolean
   current?: boolean
 }
 export interface NavigationSection {
@@ -18,17 +20,18 @@ export interface NavigationMenuProps extends Omit<ComponentPropsWithoutRef<'nav'
   orientation?: 'vertical' | 'horizontal'
   onNavigate?: (href: string) => void
 }
-export function NavigationMenu({
+export const NavigationMenu = forwardRef<HTMLElement, NavigationMenuProps>(function NavigationMenu({
   label,
   sections,
   orientation = 'vertical',
   onNavigate,
   className = '',
   ...props
-}: NavigationMenuProps): ReactElement {
+}, ref) {
   return (
     <nav
       {...props}
+      ref={ref}
       aria-label={label}
       className={'al-navigation ' + className}
       data-orientation={orientation}
@@ -39,23 +42,26 @@ export function NavigationMenu({
           <div key={section.title ?? section.links[0].href}>
             {section.title && <h2>{section.title}</h2>}
             <ul>
-              {section.links.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    aria-current={link.current ? 'page' : undefined}
-                    onClick={(e) => {
-                      if (!e.defaultPrevented && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey)
-                        onNavigate?.(link.href)
-                    }}
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
+              {section.links.map((link) => {
+                const Link = link.asChild ? Slot : 'a'
+                return (
+                  <li key={link.href}>
+                    <Link
+                      {...(!link.asChild && { href: link.href })}
+                      aria-current={link.current ? 'page' : undefined}
+                      onClick={(e) => {
+                        if (!e.defaultPrevented && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey)
+                          onNavigate?.(link.href)
+                      }}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                )
+              })}
             </ul>
           </div>
         ))}
     </nav>
   )
-}
+})

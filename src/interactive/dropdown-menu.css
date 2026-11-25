@@ -70,6 +70,8 @@
   font: 400 var(--al-type-label)/var(--al-leading-label) var(--al-font);
 }
 .al-dropdown-item {
+  box-sizing: border-box;
+  text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: space-between;

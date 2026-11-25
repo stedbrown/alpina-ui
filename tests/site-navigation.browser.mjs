@@ -16,7 +16,7 @@ try {
   const page = await browser.newPage({ viewport: { width: 1140, height: 800 } })
   await page.route(origin + '/**', async (route) => {
     const { pathname } = new URL(route.request().url())
-    const file = pathname.endsWith('/') || !pathname.split('/').pop().includes('.')
+    const file = pathname.endsWith('/') || pathname === '/releases/0.11' || !pathname.split('/').pop().includes('.')
       ? pathname.replace(/\/?$/, '/index.html')
       : pathname
     await route.fulfill({ path: fileURLToPath(new URL('.' + file, site)) })
@@ -24,6 +24,16 @@ try {
   const main = page.getByRole('main')
   const nav = page.getByRole('navigation', { name: 'Site navigation' })
   const index = page.getByRole('navigation', { name: 'Component index' })
+  for (const path of ['/releases/0.11', '/releases/0.11/']) {
+    const response = await page.goto(origin + path)
+    assert.equal(response.status(), 200)
+    const widths = await main.locator('img').evaluateAll(async pictures => Promise.all(pictures.map(async picture => {
+      await picture.decode()
+      return picture.naturalWidth
+    })))
+    assert.deepEqual(widths, Array(6).fill(1280))
+    assert.equal(await main.locator('a[href^="/releases/0.11/images/"]').count(), 6)
+  }
   await page.goto(origin + '/')
   const specimen = main.getByRole('region', { name: 'Invoice AP-104' })
   await specimen.getByRole('tab', { name: 'German' }).press('End')

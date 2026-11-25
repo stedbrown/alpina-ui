@@ -163,7 +163,9 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
   await page('/themes/', 'Theme builder', 'Preview your accent, grid and light or dark appearance on Alpina components. Check text contrast and copy CSS variables.', render(Themes), { theme: true })
   await page('/principles/', 'Design principles', 'Eight Swiss design decisions demonstrated with working Alpina components and paired examples.', render(Principles))
   const reviewRoute = '/releases/0.11/'
-  const review = await renderGuide(await readFile('docs/release-0.11-design.md', 'utf8'))
+  // Vercel may serve a dotted version path with its trailing slash removed.
+  const review = (await renderGuide(await readFile('docs/release-0.11-design.md', 'utf8')))
+    .replace(/(src|href)="images\//g, '$1="' + reviewRoute + 'images/')
   for (const surface of ['home', 'index', 'reference']) {
     for (const edition of ['before', 'after']) {
       const file = 'images/' + surface + '-' + edition + '.jpg'

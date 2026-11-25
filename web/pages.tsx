@@ -6,6 +6,7 @@ import {
   Stack, TextLink, Typography,
 } from 'alpina-ui'
 import { AccessStudy, AppearanceStudy, GridStudy, Installation, MigrationStudy, SwissStudy, TypeStudy } from './landing-sections.js'
+import type { ComparisonForm } from './landing-sections.js'
 import { HomeShowcase } from './home-showcase.js'
 import { projects } from './projects.js'
 
@@ -113,7 +114,7 @@ export function PageHeading({ title, summary, children }: { title: string; summa
   </Grid>
 }
 
-export function Landing({ version, count, queue, command, installation, access, typeProof }: { version: string; count: number; queue: string; command: string; installation: string; access: string; typeProof: string }) {
+export function Landing({ version, count, queue, command, installation, access, typeProof, migration }: { version: string; count: number; queue: string; command: string; installation: string; access: string; typeProof: string; migration: ComparisonForm[] }) {
   return <>
     <Masthead current="home" />
     <PageRegion as="main" id="content" tabIndex={-1}>
@@ -151,7 +152,7 @@ export function Landing({ version, count, queue, command, installation, access, 
       <AppearanceStudy />
       <AccessStudy html={access} />
       <SwissStudy />
-      <MigrationStudy />
+      <MigrationStudy forms={migration} />
       <Installation html={installation} command={command} />
     </PageRegion>
     <Footer version={version} />

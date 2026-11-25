@@ -23,6 +23,14 @@
   block-size: 1px;
   inset: 0 auto auto 0;
 }
+.al-grid-document {
+  display: block;
+  width: 100%;
+  height: 12rem;
+  box-sizing: border-box;
+  border: 0;
+  background: white;
+}
 
 /* Use the reader's system palette for a local contrast proof. */
 .al-grid-proof[data-palette='system'] {

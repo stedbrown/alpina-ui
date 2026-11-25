@@ -2,6 +2,8 @@
 
 Start with one screen that already has a keyboard or form-submission test. A button, a labeled field and a table of amounts make a good first slice. Port their behavior while keeping the rest of the application on its existing components.
 
+The edition-label comparison on the homepage runs the same form in both libraries. Edit the name, submit it and compare the resulting label. Each code panel copies the source used to render its own preview. The shadcn example uses the New York registry's default native Button and Input. [Try the two forms](https://alpinaui.com/#migration-title) · [Upstream source](https://github.com/shadcn-ui/ui/tree/055aa6b7837b1808456a24beb4c97a677864aa82/apps/v4/registry/new-york-v4/ui).
+
 ## Install alongside shadcn/ui
 
 Install Alpina UI 1.0.0-rc.5 from the portal's versioned package archive in your React project. To upgrade later, install the archive for the version you want to use. If your team edits component source, the CLI can copy selected TypeScript, CSS and dependencies into `components/alpina`. Your existing shadcn/ui source can stay in `components/ui`. [Installation guide](https://alpinaui.com/docs/guides/start/)

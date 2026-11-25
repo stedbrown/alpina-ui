@@ -9,18 +9,20 @@ export interface GridSpecimenProps extends ComponentPropsWithoutRef<'div'> {
   zoom?: number
   /** Preview browser system colors without changing the rest of the page. */
   palette?: 'system'
+  /** Render an independent example with its own stylesheet and controls. */
+  document?: { src: string; title: string }
 }
 
 /** Keep a proof at its intended width inside a keyboard-scrollable region. */
 export const GridSpecimen = forwardRef<HTMLDivElement, GridSpecimenProps>(function GridSpecimen(
-  { width = 'auto', zoom = 1, palette, label, children, className = '', tabIndex = 0, ...props }, ref,
+  { width = 'auto', zoom = 1, palette, label, document, children, className = '', tabIndex = 0, ...props }, ref,
 ) {
   if (width !== 'auto' && (!Number.isFinite(width) || width <= 0)) throw new RangeError('A proof width must be positive.')
   if (!Number.isFinite(zoom) || zoom <= 0) throw new RangeError('Proof zoom must be positive.')
   return <div {...props} ref={ref} role="region" aria-label={label} tabIndex={tabIndex}
     className={('al-grid-specimen ' + className).trim()}>
     <div className="al-grid-proof" data-palette={palette} style={{ inlineSize: width === 'auto' ? '100%' : width, zoom: zoom === 1 ? undefined : zoom }}>
-      {children}
+      {document ? <iframe className="al-grid-document" loading="lazy" src={document.src} title={document.title} /> : children}
       <span aria-hidden="true" className="al-grid-proof-unit" />
     </div>
   </div>

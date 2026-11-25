@@ -4,6 +4,7 @@ import { TypeProof } from './type-proof.js'
 import { AccessProof } from './access-proof.js'
 import { PrintDesk } from './print-desk.js'
 import { InstallCommand } from './landing-samples.js'
+import { ComparisonCode } from './comparison-code.js'
 
 export function hydrateLandingSample(node: HTMLElement) {
   const name = node.dataset.landingIsland
@@ -12,6 +13,7 @@ export function hydrateLandingSample(node: HTMLElement) {
     queue: <PrintDesk />,
     access: <AccessProof />,
     type: <TypeProof />,
+    'comparison-code': <ComparisonCode library={node.dataset.name!} code={node.querySelector('code')?.textContent ?? ''} />,
   }
   const sample = samples[name ?? '']
   if (!sample) return

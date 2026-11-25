@@ -1,8 +1,9 @@
 import type { ReactNode } from 'react'
 import {
-  Collapsible, Grid, GridItem, GridOverlay, GridSpecimen, InlineCode, Label,
+  Grid, GridItem, GridOverlay, GridSpecimen, InlineCode, Label, Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
   Separator, Stack, Switch, TextLink, Typography,
 } from 'alpina-ui'
+import { ComparisonCode } from './comparison-code.js'
 import { AppearancePair } from './appearance-pair.js'
 import { TypeProof } from './type-proof.js'
 import { AccessProof } from './access-proof.js'
@@ -84,13 +85,27 @@ export function SwissStudy() {
   </Grid>
 }
 
-export function MigrationStudy() {
+export interface ComparisonForm { library: string; name: string; code: string; url: string }
+
+export function MigrationStudy({ forms }: { forms: ComparisonForm[] }) {
   return <Grid as="section" width="site" space="chapter" surface="accent" data-al-theme="light" aria-labelledby="migration-title">
-    <GridItem medium={3} large={4}><SectionIntro id="migration-title" title="From shadcn/ui" text="Start with a familiar component and compare its API. Migrate a single screen at a time." /></GridItem>
-    <GridItem medium={5} large={7} start={{ large: 6 }}><Stack align="start" gap={4}>
-      <Collapsible summary="Compare Button"><Typography>Both libraries accept <InlineCode>asChild</InlineCode> so a link can take button styling. Alpina supplies the square corners and focus ring in its stylesheet.</Typography></Collapsible>
-      <TextLink href="/docs/guides/migration/">Compare components in the migration guide →</TextLink>
+    <GridItem medium={4} large={5}><SectionIntro id="migration-title" title="From shadcn/ui" text="Set an edition label in both forms. The same React handler runs behind each set of controls.">
+      <TextLink href="/docs/guides/migration/">Open the migration guide →</TextLink>
+    </SectionIntro></GridItem>
+    <GridItem medium={4} large={5} start={{large:8}}><Stack surface="paper" inset={4}>
+      <Table layout="fixed" aria-label="Edition form equivalents">
+        <TableHeader><TableRow><TableHead scope="col">shadcn/ui</TableHead><TableHead scope="col">Alpina UI</TableHead></TableRow></TableHeader>
+        <TableBody>{[['label + Input', 'Field + Input'], ['Button', 'Button'], ['grid gap-4', 'Stack gap={4}'], ['output', 'Typography as="output"']].map(([before, after]) =>
+          <TableRow key={before}><TableCell>{before}</TableCell><TableCell>{after}</TableCell></TableRow>)}</TableBody>
+      </Table>
     </Stack></GridItem>
+    {forms.map(({ library, name, url, code }) => <GridItem key={library} medium={4} large={6}>
+      <Stack surface="paper" inset={4} gap={4}>
+        <Typography as="h3" variant="heading">{name}</Typography>
+        <GridSpecimen label={name + ' preview'} tabIndex={-1} document={{src: url, title: name + ' edition label'}} />
+        <Stack data-landing-island="comparison-code" data-name={name}><ComparisonCode library={name} code={code} /></Stack>
+      </Stack>
+    </GridItem>)}
   </Grid>
 }
 

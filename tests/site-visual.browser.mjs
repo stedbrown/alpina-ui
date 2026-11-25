@@ -43,6 +43,15 @@ try {
         // Capture the entire homepage, including images beyond the lazy-load distance.
         const images = [...document.images]
         if (fullPage) for (const image of images) image.loading = 'eager'
+        if (fullPage) await Promise.all([...document.querySelectorAll('iframe.al-grid-document')].map(async frame => {
+          if (frame.contentDocument?.URL !== frame.src || frame.contentDocument.readyState !== 'complete') {
+            await new Promise(resolve => {
+              frame.addEventListener('load', resolve, { once: true })
+              frame.loading = 'eager'
+            })
+          }
+          await frame.contentDocument.fonts.ready
+        }))
         await Promise.all(images.filter(image => image.loading !== 'lazy').map(async image => {
           try { await image.decode() }
           catch (error) { if (fullPage) throw error }

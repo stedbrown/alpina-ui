@@ -29,7 +29,7 @@ function dependencies(file, seen = new Set()) {
   if (seen.has(file)) return seen
   seen.add(file)
   if (file.endsWith('.css')) return seen
-  const imports = /(?:\bfrom\s*|^\s*import\s*)["'](\.[^"']+)["']/gm
+  const imports = /(?:\bfrom\s*|^\s*import\s*|\bimport\(\s*)["'](\.[^"']+)["']/gm
   for (const match of sources.get(file).matchAll(imports)) {
     const relative = path.posix.join(path.posix.dirname(file), match[1])
     const key = [relative, relative.replace(/\.js$/, '.tsx'), relative.replace(/\.js$/, '.ts')].find(
@@ -61,7 +61,7 @@ for (const [group, names] of Object.entries(groups)) {
 await writeFile('registry.json', JSON.stringify(registry, null, 2) + '\n')
 // Re-export public entries and Swiss data/formatting helpers. Internal overlay helpers stay internal.
 const publicFiles = modules.filter(
-  (f) => registry.items.some((i) => i.entry === f) || (f.startsWith('swiss/') && f.endsWith('.ts')),
+  (f) => registry.items.some((i) => i.entry === f) || (f.startsWith('swiss/') && f.endsWith('.ts') && !f.endsWith('.data.ts')),
 )
 await writeFile(
   'src/index.ts',

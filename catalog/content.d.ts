@@ -4,6 +4,7 @@ declare module 'alpina:content' {
   export const sources: Record<string, string>
   export const exampleCss: string
   export const sourceFiles: Record<string, string>
+  export const loadPostalSource: () => Promise<string>
   export const componentFiles: Record<string, string[]>
   export const directorySources: import('./directory-source.js').DirectoryFile[]
   export const apiReference: Record<string, import('./api-reference.js').ApiEntry[]>

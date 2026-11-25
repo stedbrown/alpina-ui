@@ -74,7 +74,7 @@
   "spinner": "Give the spinner a label when it conveys loading status. An unlabelled spinner is decorative. Its animation stops under reduced motion.",
   "stack": "Use inset for padding in multiples of the spacing unit. The ink and paper surfaces establish matching themes for the controls they contain.",
   "steps": "Give the sequence a name and pass a stable current step ID. The ordered list exposes the active step to assistive technology. In narrow layouts the steps run vertically.",
-  "swiss-address-form": "A successful save displays confirmation in the selected language. Field errors keep the draft intact and link to the controls that need attention.",
+  "swiss-address-form": "Enter 6900 to choose Lugano, Massagno or Paradiso from the local postcode directory. Accepting a suggestion sets both locality and canton. You can also enter both manually.",
   "swiss-date": "Pass a civil date for a specific calendar day. The time element keeps its machine-readable value and isolates the localized date in bidirectional text.",
   "swiss-postal-code-input": "A full-field paste accepts four digits, full-width digits or a CH-prefixed postal code. The submitted four-digit value preserves leading zeros.",
   "switch": "Use a switch for an immediate on/off setting. Keep its label meaningful in both states. Long state text wraps while the control keeps its shape.",

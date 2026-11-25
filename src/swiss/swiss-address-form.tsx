@@ -6,10 +6,12 @@ import { Field } from '../ui/field.js'
 import { Input } from '../ui/input.js'
 import { Typography } from '../ui/typography.js'
 import { TextLink } from '../portal/text-link.js'
+import { NativeSelect } from '../interactive/native-select.js'
 import { CantonSelect } from './canton-select.js'
 import { cantons, type CantonCode } from './cantons.js'
 import { defaultSwissLocale, type SwissLocale } from './locales.js'
 import { isSwissPostalCode } from './postal-code.js'
+import { lookupSwissPostalCode, type SwissPostalLocality } from './postal-localities.js'
 import { addressFieldLimit, isXmlAddressText, normalizeAddressText, type SwissAddress, type SwissAddressFormat } from './postal-address.js'
 import { SwissPostalCodeInput } from './swiss-postal-code-input.js'
 import './swiss-address-form.css'
@@ -26,6 +28,9 @@ const structuredLabels = {
     required: 'Optionale Felder sind gekennzeichnet.',
     lengthError: 'Höchstens {n} Zeichen eingeben.',
     codeError: 'Geben Sie eine PLZ von 1000 bis 9999 ein.',
+    chooseLocality: 'Ort und Kanton übernehmen',
+    suggestions: 'Vorschläge für {code}',
+    manualLocality: 'Kein Vorschlag. Ort und Kanton von Hand eingeben.',
   },
   'fr-CH': {
     firstName: 'Prénom (facultatif)',
@@ -36,6 +41,9 @@ const structuredLabels = {
     required: 'Les champs facultatifs sont indiqués.',
     lengthError: 'Saisissez au maximum {n} caractères.',
     codeError: 'Saisissez un NPA entre 1000 et 9999.',
+    chooseLocality: 'Utiliser une localité et un canton',
+    suggestions: 'Suggestions pour le NPA {code}',
+    manualLocality: 'Aucune suggestion. Saisissez la localité et le canton.',
   },
   'it-CH': {
     firstName: 'Nome (facoltativo)',
@@ -46,6 +54,9 @@ const structuredLabels = {
     required: 'I campi facoltativi sono indicati.',
     lengthError: 'Inserisci al massimo {n} caratteri.',
     codeError: 'Inserisci un NPA compreso tra 1000 e 9999.',
+    chooseLocality: 'Usa una località e un cantone',
+    suggestions: 'Suggerimenti per il NPA {code}',
+    manualLocality: 'Nessun suggerimento. Inserisci la località e il cantone.',
   },
   'rm-CH': {
     firstName: 'Prenum (facultativ)',
@@ -56,6 +67,9 @@ const structuredLabels = {
     required: 'Ils champs facultativs èn inditgads.',
     lengthError: 'Endatai maximalmain {n} segns.',
     codeError: 'Endatai in NP tranter 1000 e 9999.',
+    chooseLocality: 'Surpigliar in lieu ed in chantun',
+    suggestions: 'Propostas per il NP {code}',
+    manualLocality: 'Nagina proposta. Endatai il lieu ed il chantun.',
   },
 }
 
@@ -76,6 +90,9 @@ export interface SwissAddressLabels {
   saved?: string
   saveError: string
   errorSummary?: string
+  chooseLocality?: string
+  suggestions?: string
+  manualLocality?: string
 }
 
 export const swissAddressLabels: Readonly<Record<SwissLocale, Readonly<SwissAddressLabels>>> = {
@@ -209,13 +226,39 @@ export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProp
   useImperativeHandle(forwardedRef, () => form.current!, [])
   const pendingFocus = useRef<AddressField | null>(null)
   const submitButton = useRef<HTMLButtonElement>(null)
+  const placeChoice = useRef<HTMLSelectElement>(null)
   const validationStarted = useRef(false)
   const saving = useRef(false)
   const [status, setStatus] = useState<'idle' | 'saving' | 'saved' | 'failed'>('idle')
   const [errors, setErrors] = useState<AddressErrors>({})
   // Retain the initial snapshot across language changes and parent re-renders.
   const [defaults] = useState(() => ({ ...initialValue }))
+  const initialQuery = defaults.locality && defaults.canton ? '' : defaults.postalCode ?? ''
+  const [query, setQuery] = useState(initialQuery)
+  const [result, setResult] = useState<{ code: string; places: SwissPostalLocality[] }>()
+  const places = result?.code === query ? result.places : undefined
   const invalidFields = addressFields.filter((field) => errors[field])
+
+  useEffect(() => {
+    if (!/^[1-9][0-9]{3}$/.test(query)) return
+    let active = true
+    const show = (matches: SwissPostalLocality[]) => {
+      if (active) setResult({ code: query, places: matches })
+    }
+    lookupSwissPostalCode(query).then(show, () => show([]))
+    return () => { active = false }
+  }, [query])
+
+  function acceptLocality(place: SwissPostalLocality) {
+    const locality = form.current?.elements.namedItem('locality')
+    const canton = form.current?.elements.namedItem('canton')
+    if (!(locality instanceof HTMLInputElement) || !(canton instanceof HTMLSelectElement)) return
+    locality.value = place.locality
+    canton.value = place.canton
+    if (validationStarted.current) setErrors(current => ({ ...current,
+      locality: fieldIssue('locality', place.locality, format), canton: undefined }))
+    setStatus('idle')
+  }
 
   function focusField(name: AddressField) {
     const field = form.current?.elements.namedItem(name)
@@ -289,6 +332,8 @@ export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProp
     const target = event.target
     if (!(target instanceof HTMLInputElement || target instanceof HTMLSelectElement)) return
     const { name, value } = target
+    if (name === 'postalCode') setQuery(value)
+    if ((name === 'locality' || name === 'canton') && placeChoice.current) placeChoice.current.value = ''
     const key = name as AddressField
     if (validationStarted.current && addressFields.includes(key)) {
       const next = fieldIssue(key, normalizeAddressText(value), format)
@@ -325,6 +370,7 @@ export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProp
       noValidate
       onSubmit={submit}
       onChange={edit}
+      onReset={() => setQuery(initialQuery)}
     >
       <div className="al-address-heading">
         <Typography as="h2" variant="heading" id={prefix + '-title'}>
@@ -399,6 +445,7 @@ export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProp
         {structured && optionalField('houseNumber')}
         <Field
           id={prefix + '-postalCode'}
+          describedBy={places && prefix + '-postal-matches'}
           className="al-address-postcode"
           label={text.postalCode}
           description={text.postalCodeHint}
@@ -449,6 +496,23 @@ export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProp
             />
           )}
         </Field>
+        <div className="al-address-suggestions">
+          <span id={prefix + '-postal-matches'} aria-live="polite">
+            {places && (places.length
+              ? text.suggestions.replace('{code}', query) + ' (' + places.length + ') · ©swisstopo'
+              : text.manualLocality)}
+          </span>
+          {!!places?.length && <NativeSelect aria-labelledby={prefix + '-postal-matches'}
+              ref={placeChoice} appearance="outline" defaultValue="" key={query}
+              onChange={event => {
+                const place = places[Number(event.currentTarget.value)]
+                if (place) acceptLocality(place)
+              }}>
+              <option disabled value="">{text.chooseLocality}</option>
+              {places.map(({ locality, canton }, index) =>
+                <option key={locality + canton} value={index}>{locality} ({canton})</option>)}
+          </NativeSelect>}
+        </div>
       </fieldset>
       <div className="al-address-actions">
         <span role="status">{status === 'saved' ? text.saved : null}</span>

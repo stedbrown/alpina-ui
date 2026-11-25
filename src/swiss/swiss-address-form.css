@@ -70,6 +70,18 @@
 .al-address-postcode input {
   font-variant-numeric: tabular-nums;
 }
+.al-address-suggestions {
+  grid-column: 1 / -1;
+  font-size: var(--al-type-label);
+  line-height: var(--al-leading-label);
+}
+.al-address-suggestions:has(> span:empty) {
+  position: absolute;
+}
+.al-address-suggestions select {
+  display: block;
+  margin-block-start: var(--al-space-2);
+}
 .al-address-fields :is(input, select)[aria-invalid='true'] {
   border-block-end: 2px dashed var(--al-danger);
 }

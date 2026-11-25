@@ -33,6 +33,18 @@ When several fields need correction, the error summary lists them in form order.
 
 The callback can return nothing or return a promise. While saving, the form suspends editing and resubmission. If the callback throws or its promise rejects, the form displays a general error, preserves the values, and enables the button for another attempt. Your application chooses where to save the address. The form passes the five fields to `onSave` and keeps them in the DOM during correction.
 
+### Postal locality suggestions
+
+After four digits, `SwissAddressForm` offers the official locality and canton together. For example, 6900 offers Lugano, Massagno and Paradiso. For 1085 the locality Vulliens occurs in both FR and VD. Selecting an option fills the two fields. People can keep an existing address or enter either field manually, including administrative postcodes outside the residential directory.
+
+`await lookupSwissPostalCode('6900')` returns an array of `{ locality, canton }` pairs. An unknown or incomplete postcode returns an empty array. The first valid lookup imports the packaged dataset, so a code-splitting bundler can fetch it on demand. The hosted portal loads it from the same origin. No address is sent to a third party. The downloadable catalog includes the data for offline use.
+
+The 1 November 2026 edition contains 3,177 Swiss residential postcodes and 4,233 distinct locality/canton pairs. Alpina uses postal locality names, removes repeated municipality rows and preserves cantons across boundaries. Liechtenstein records are outside the Swiss canton selector. The publisher updates this directory monthly. [Official directory of towns and cities](https://www.swisstopo.admin.ch/en/official-directory-of-towns-and-cities)
+
+**Source ©swisstopo.** The federal OGD terms allow adaptation, redistribution and commercial use with attribution. Include the source credit when displaying or redistributing suggestions in a custom interface. [swisstopo terms of use](https://www.swisstopo.admin.ch/en/terms-of-use-free-geodata-and-geoservices)
+
+From the repository root, run `python3 scripts/generate-postal-localities.py` to rebuild the directory offline using the Python standard library. The script checks the archived ZIP's SHA-256 and produces deterministic UTF-8 output. To update the snapshot, download the new LV95 CSV archive, record its publisher date and hash, then regenerate and review the locality changes. [Official CSV download](https://data.geo.admin.ch/ch.swisstopo-vd.ortschaftenverzeichnis_plz/ortschaftenverzeichnis_plz/ortschaftenverzeichnis_plz_2056.csv.zip) · [Publisher’s STAC record](https://data.geo.admin.ch/api/stac/v1/collections/ch.swisstopo-vd.ortschaftenverzeichnis_plz/items/ortschaftenverzeichnis_plz)
+
 ### Connect validation errors from a service
 
 If your application detects errors on individual fields, return `{ fieldErrors }` from `onSave`, synchronously or asynchronously. Keys are `SwissAddress` field names. Values are messages in the current interface language. The form preserves the entered text and shows each message beside its field. Editing a field clears its own service error. Other errors stay visible. If someone moves focus outside the form while waiting, the response preserves their new focus position.

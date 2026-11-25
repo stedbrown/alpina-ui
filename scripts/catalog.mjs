@@ -1,6 +1,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises'
 import { createHash } from 'node:crypto'
 import { fileURLToPath } from 'node:url'
+import path from 'node:path'
 import { build } from 'esbuild'
 import ts from 'typescript'
 import { execSync } from 'node:child_process'
@@ -130,18 +131,20 @@ const release = {
   bytes: archive.length,
   data: 'data:application/gzip;base64,' + archive.toString('base64'),
 }
-const result = await build({
+const catalogOptions = offline => ({
   entryPoints: ['catalog/app.tsx'],
   // The portal and the independently installable recipe share one React dispatcher.
   alias: { react: fileURLToPath(new URL('../node_modules/react', import.meta.url)) },
-  outdir: 'site',
+  outdir: 'site/assets',
   bundle: true,
   jsx: 'automatic',
   write: false,
   minify: true,
   platform: 'browser',
   target: ['es2022'],
-  format: 'iife',
+  format: offline ? 'iife' : 'esm',
+  splitting: !offline,
+  chunkNames: '[name]-[hash]',
   legalComments: 'inline',
   charset: 'utf8',
   loader: { '.woff2': 'dataurl', '.webp': 'dataurl' },
@@ -158,6 +161,10 @@ const result = await build({
           path: fileURLToPath(import.meta.resolve('alpina-ui')),
         }))
         ctx.onResolve({ filter: /^alpina:content$/ }, () => ({ path: 'content', namespace: 'alpina' }))
+        ctx.onResolve({ filter: /^alpina:postal-source$/ }, () => ({ path: 'postal-source', namespace: 'raw-source' }))
+        ctx.onLoad({ filter: /.*/, namespace: 'raw-source' }, () => ({
+          contents: 'export default ' + JSON.stringify(sourceFiles['swiss/postal-localities.data.ts']),
+        }))
         ctx.onLoad({ filter: /.*/, namespace: 'alpina' }, () => ({
           contents:
             'export const guides=' +
@@ -169,13 +176,14 @@ const result = await build({
             ';export const exampleCss=' +
             JSON.stringify(exampleCss) +
             ';export const sourceFiles=' +
-            JSON.stringify(sourceFiles) +
+            JSON.stringify(Object.fromEntries(Object.entries(sourceFiles).filter(([file]) => !file.endsWith('postal-localities.data.ts')))) +
+            ';export const loadPostalSource=()=>import("alpina:postal-source").then(module=>module.default)' +
             ';export const componentFiles=' +
             JSON.stringify(componentFiles) +
             ';export const directorySources=' +
             JSON.stringify(directorySources) +
             ';export const release=' +
-            JSON.stringify(release) +
+            JSON.stringify(offline ? release : { ...release, data: '/' + archiveName }) +
             ';export const apiReference=' +
             JSON.stringify(apiReference) +
             ';export const version=' +
@@ -185,6 +193,7 @@ const result = await build({
     },
   ],
 })
+const [result, hosted] = await Promise.all([build(catalogOptions(true)), build(catalogOptions(false))])
 const script = result.outputFiles
   .find((f) => f.path.endsWith('.js'))
   .text.replace(/<\/script/gi, '<\\/script')
@@ -196,6 +205,7 @@ const notices = await Promise.all(
 )
 notices.unshift('Alpina UI\n' + license)
 notices.push(await readFile('src/swiss/UNICODE-LICENSE.txt', 'utf8'))
+notices.push('Postal localities ©swisstopo. https://www.swisstopo.admin.ch/en/terms-of-use-free-geodata-and-geoservices')
 notices.push('Inter\n' + await readFile('src/fonts/OFL.txt', 'utf8'))
 const offlineFonts = await build({
   entryPoints: ['src/fonts.css'], bundle: true, write: false, minify: true, loader: { '.woff2': 'dataurl' },
@@ -210,7 +220,12 @@ const html =
   '</script></body></html>'
 await mkdir('site', { recursive: true })
 await writeFile('site/catalog.html', html)
-await buildWebsite({ guides, guideFiles, apiReference, registry, script, css, notices })
+const hostedEntry = hosted.outputFiles.find(file => path.basename(file.path) === 'app.js')
+await mkdir('site/assets', { recursive: true })
+for (const file of hosted.outputFiles) {
+  if (file !== hostedEntry && file.path.endsWith('.js')) await writeFile(file.path, file.contents)
+}
+await buildWebsite({ guides, guideFiles, apiReference, registry, script: hostedEntry.text, css, notices })
 console.log(
   'Offline catalog: site/catalog.html (' + (Buffer.byteLength(html) / 1024).toFixed(0) + ' KiB)',
 )

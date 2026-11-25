@@ -52,6 +52,7 @@ import {
   exampleCss,
   guides,
   sourceFiles,
+  loadPostalSource,
   sources,
   usageNotes,
   version,
@@ -163,6 +164,17 @@ function Brand() {
 }
 const views = { Preview: '', Code: 'code', API: 'api', Source: 'source' } as const
 type View = keyof typeof views
+function PostalDirectorySource({ file }: { file: string }) {
+  const [code, setCode] = useState('')
+  const [failed, setFailed] = useState(false)
+  useEffect(() => {
+    let active = true
+    loadPostalSource().then(text => { if (active) setCode(text) }, () => { if (active) setFailed(true) })
+    return () => { active = false }
+  }, [])
+  if (!code) return <p role="status">{failed ? 'The source file could not be loaded. Reopen Source to retry.' : 'Loading source…'}</p>
+  return <CodeBlock className="snippet" label={file} code={code} />
+}
 function Workbench({
   item,
   mode,
@@ -245,7 +257,9 @@ function Workbench({
               <option key={f}>{f}</option>
             ))}
           </Select>
-          <CodeBlock className="snippet" label={file} code={sourceFiles[file]} />
+          {file === 'swiss/postal-localities.data.ts'
+            ? <PostalDirectorySource file={file} />
+            : <CodeBlock className="snippet" label={file} code={sourceFiles[file]} />}
         </section>
       )}
       <CodeBlock

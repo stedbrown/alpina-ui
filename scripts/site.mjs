@@ -149,7 +149,7 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
     if (options.theme) tags.push('<script type="module" src="' + themeJS + '"></script>')
     if (options.block) tags.push('<script type="module" src="' + blockJS + '"></script>')
     if (options.filter) tags.push('<script type="module" src="' + filterJS + '"></script>')
-    const content = options.app ? '<div id="app">' + body + '</div><script defer src="' + appJS + '"></script>' : body
+    const content = options.app ? '<div id="app">' + body + '</div><script type="module" src="' + appJS + '"></script>' : body
     await output(route + 'index.html', '<!doctype html>\n<html lang="en" data-al-theme="auto"><head>' + tags.join('\n') + '</head><body data-al-page>' + siteGrid + content + '</body></html>')
     paths.push(url)
   }

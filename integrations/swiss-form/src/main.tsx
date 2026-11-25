@@ -9,12 +9,23 @@ import { Field } from 'alpina-ui/ui/field'
 import { Stack } from 'alpina-ui/ui/stack'
 import { IbanInput } from 'alpina-ui/swiss/iban-input'
 import { UidInput } from 'alpina-ui/swiss/uid-input'
-import { compactIban, formatSwissUid, isSwissIban, isSwissUid } from 'alpina-ui/swiss/identifiers'
+import type { StandardSchemaV1 } from '@standard-schema/spec'
+import { ibanSchema, uidSchema, type SwissStandardSchema } from 'alpina-ui/swiss/schemas'
+
+function fieldSchema(schema: SwissStandardSchema<string>) {
+  const checked = schema satisfies StandardSchemaV1<string, string>
+  return z.string().transform((input, ctx) => {
+    const result = checked['~standard'].validate(input)
+    if (!result.issues) return result.value
+    ctx.addIssue({ code: 'custom', message: result.issues[0].message })
+    return z.NEVER
+  })
+}
 import 'alpina-ui/styles.css'
 
 const supplier = z.object({
-  uid: z.string().refine(isSwissUid, 'Enter a Swiss UID with a valid check digit.').transform(formatSwissUid),
-  iban: z.string().refine(isSwissIban, 'Enter a Swiss or Liechtenstein IBAN with a valid checksum.').transform(compactIban),
+  uid: fieldSchema(uidSchema()),
+  iban: fieldSchema(ibanSchema()),
 })
 
 function SupplierForm() {

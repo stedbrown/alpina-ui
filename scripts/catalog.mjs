@@ -30,6 +30,7 @@ const guideFiles = {
   design: 'docs/design.md',
   interactive: 'docs/interactive.md',
   swiss: 'docs/swiss.md',
+  validation: 'docs/validation.md',
   'qr-bill': 'docs/qr-bill.md',
 }
 for (const [key, file] of Object.entries(guideFiles)) {

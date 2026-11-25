@@ -99,7 +99,7 @@
     "test:visual": "node tests/visual-regression.browser.mjs",
     "test:visual:update": "node tests/visual-regression.browser.mjs --update",
     "prepare:integrations": "node integrations/prepare.mjs",
-    "test:integrations": "npm run prepare:integrations && npm ci --prefix integrations && npm run build --prefix integrations --workspaces && node integrations/test.mjs",
+    "test:integrations": "npm run prepare:integrations && npm ci --prefix integrations && npm run build --prefix integrations --workspaces && node integrations/test.mjs && node integrations/schema-consumers.mjs",
     "prepack": "npm run build",
     "test:performance": "node scripts/lighthouse.mjs"
   },

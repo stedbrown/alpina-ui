@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from 'alpin
 import { Stack } from 'alpina-ui/ui/stack'
 import { CurrencyCHF } from 'alpina-ui/swiss/currency-chf'
 import { localeNames } from 'alpina-ui/swiss/locales'
+import { PaymentForm } from './payment-form'
 import { BillingForm } from './billing-form'
 import { billingLocale, localeCookie } from './preferences'
 
@@ -22,6 +23,7 @@ export default async function BillingPreferences() {
               <p>Invoice language: <span lang={locale}>{localeNames[locale]}</span></p>
               <p>Annual subscription: <CurrencyCHF locale={locale} amount={1250} /></p>
               <BillingForm locale={locale} />
+              <PaymentForm locale={locale} />
             </Stack>
           </CardContent>
         </Card>

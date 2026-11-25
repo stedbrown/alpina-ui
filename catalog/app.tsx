@@ -90,6 +90,7 @@ const guideNames: Record<string, string> = {
   actions: 'Menus and dialogs',
   workflows: 'Forms and workflows',
   swiss: 'Swiss formats',
+  validation: 'Shared validation',
   'qr-bill': 'Swiss QR-bill',
   coverage: 'Comparison with shadcn/ui',
 }
@@ -98,7 +99,7 @@ const guideGroups = [
   { title: 'Design', keys: ['design', 'research'] },
   {
     title: 'Guides',
-    keys: ['core', 'elements', 'interactive', 'actions', 'workflows', 'swiss', 'qr-bill', 'portal', 'directory', 'coverage'],
+    keys: ['core', 'elements', 'interactive', 'actions', 'workflows', 'swiss', 'validation', 'qr-bill', 'portal', 'directory', 'coverage'],
   },
 ]
 // Keep links to bundled guides and component previews inside the single-file catalog.

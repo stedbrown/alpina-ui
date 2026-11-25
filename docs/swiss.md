@@ -290,3 +290,7 @@ Open the print dialog from a user action with `printSwissDocument(articleRef.cur
 ### Invoice quantities and CHF amounts
 
 Supply `quantity` and VAT-exclusive `unitPrice` as numbers or period-separated decimal strings with up to four fractional digits. An optional `unit` follows the localized quantity, for example `{ description: 'Proof review', quantity: '2.5', unit: 'h', unitPrice: '80.00', vatRate: 8.1 }`. Use `unit: 'm²'` for a measured area. Unit prices, line amounts and totals show two decimals. When the agreed unit price has additional digits, the underlying line calculation uses the full price and rounds the product once to centimes. The displayed unit price also retains its original decimal input in the HTML `data` value. [Live invoice](https://alpina-ui.vercel.app/docs/components/invoice-document/)
+
+## Validate on the server
+
+Alpina exposes nine dependency-free Standard Schema validators with localized issues and typed outputs. The shared validation guide includes framework integrations and a working Next.js Server Action. [Swiss validation guide](https://alpina-ui.vercel.app/docs/guides/validation/)

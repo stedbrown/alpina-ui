@@ -161,6 +161,19 @@ export function Examples() {
           </GridItem>
         </Grid>
       )}
+      <Grid as="section" width="site" space="section" aria-labelledby="integrations-title">
+        <GridItem medium={4} large={5}>
+          <Typography as="h2" variant="display" id="integrations-title">Framework integrations</Typography>
+        </GridItem>
+        <GridItem medium={4} large={6} start={{ large: 7 }}>
+          <Stack align="start">
+            <Typography measure="narrow">Build and run these projects locally. Each includes a browser test against its production build.</Typography>
+            <TextLink href={repository + '/tree/main/integrations/next-app-router'}>Next.js · Billing preferences</TextLink>
+            <TextLink href={repository + '/tree/main/integrations/vite-react-router'}>React Router · Invoice register</TextLink>
+            <TextLink href={repository + '/tree/main/integrations/swiss-form'}>React Hook Form and Zod · Supplier details</TextLink>
+          </Stack>
+        </GridItem>
+      </Grid>
     </main>
     <Footer />
   </>

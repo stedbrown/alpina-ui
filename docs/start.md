@@ -85,6 +85,8 @@ Library classes use the `al-` prefix. Apply the dark theme to an entire app or t
 
 ## Runtime and accessibility
 
+Three runnable projects exercise this package with a Next.js Server Action, React Router links and a React Hook Form backed by a Zod schema. Each includes a production build and a browser test. [Integration projects and setup](https://github.com/stedbrown/alpina-ui/tree/main/integrations)
+
 Form controls use native HTML elements. Interactive components use the browser after hydration. Modals use `HTMLDialogElement.showModal()`. In frameworks with React Server Components, place `"use client"` in application components that manage interactive state, callbacks, or render props. You can import `formatCHF` and `formatSwissDate` in server code.
 
 Test complete application flows with your labels, translations, and theme colors. The project includes automated keyboard and focus tests for interactive components.

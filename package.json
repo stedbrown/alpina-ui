@@ -93,6 +93,8 @@
     "test:browser": "node scripts/tests.mjs browser",
     "test:visual": "node tests/visual-regression.browser.mjs",
     "test:visual:update": "node tests/visual-regression.browser.mjs --update",
+    "prepare:integrations": "node integrations/prepare.mjs",
+    "test:integrations": "npm run prepare:integrations && npm ci --prefix integrations && npm run build --prefix integrations --workspaces && node integrations/test.mjs",
     "prepack": "npm run build"
   }
 }

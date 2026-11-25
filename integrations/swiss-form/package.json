@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "alpina-ui": "file:../.alpina",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "vite": "8.3.8",
+    "@hookform/resolvers": "7.0.9",
+    "react-hook-form": "7.92.0",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "typescript": "~5.9.0"
+  },
+  "name": "@alpina-example/swiss-form",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "start": "vite preview"
+  }
+}

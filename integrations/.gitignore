@@ -1,0 +1,4 @@
+.alpina/
+.next/
+*.tsbuildinfo
+next-env.d.ts

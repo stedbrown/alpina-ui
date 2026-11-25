@@ -1,0 +1,10 @@
+{
+  "name": "alpina-integration-examples",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "next-app-router",
+    "vite-react-router",
+    "swiss-form"
+  ]
+}

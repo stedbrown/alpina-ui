@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- **Public API** ComponentPreview accepts `defaultWidth` and `onWidthChange`. The documentation keeps the chosen preview width in the address, so `?width=320` opens a narrow case that can be shared in a pull request.
+- Centre the QR-bill scissors on the horizontal perforation and align them with the 5 mm margin.
+- Rebuild the homepage around working components: an invoice dashboard, a Swiss form with postcode, canton and holiday lookup, and a QR-bill that re-encodes as you type. Install from npm with `npm install alpina-ui@next`.
+
 ## 1.0.0-rc.6 · 25 November 2026
 
 - **Public API** NavigationMenu supports surface, brand and action composition with NavigationBrand, NavigationAction and ThemeToggle. Switch accepts children as an accessible label. GridSpecimen can host an isolated document for runnable comparisons. Existing call sites remain supported.

@@ -10,8 +10,7 @@ import { AccessProof } from './access-proof.js'
 import { TypeSpecimen } from './type-specimen.js'
 
 const folios: Record<string, string> = {
-  'grid-title': '02', 'type-title': '03', 'components-title': '04', 'appearance-title': '05',
-  'access-title': '06', 'swiss-title': '07', 'migration-title': '08', 'install-title': '09',
+  'grid-title': '05', 'migration-title': '07', 'install-title': '09',
 }
 
 export function SectionIntro({ id, title, text, children }: { id: string; title: string; text: string; children?: ReactNode }) {
@@ -113,7 +112,7 @@ export function MigrationStudy({ forms }: { forms: ComparisonForm[] }) {
 
 export function Installation({ html, command }: { html: string; command: string }) {
   return <Grid as="section" width="site" space="chapter" surface="paper" aria-labelledby="install-title">
-    <GridItem medium={3} large={4}><SectionIntro id="install-title" title="Install in 30 seconds" text="Install the release archive in a React project. Import alpina-ui/styles.css once in the application entry point.">
+    <GridItem medium={3} large={4}><SectionIntro id="install-title" title="Install in 30 seconds" text="Install from npm in any React 18 or 19 project. Import alpina-ui/styles.css once in the application entry point, then use any component.">
       <TextLink href="/docs/guides/start/">Read the setup guide →</TextLink>
     </SectionIntro></GridItem>
     <GridItem medium={5} large={7} start={{ large: 6 }}><Stack scripting="enabled" data-landing-island="install" data-command={command} dangerouslySetInnerHTML={{ __html: html }} />

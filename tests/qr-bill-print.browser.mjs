@@ -38,6 +38,33 @@ try {
   const bounds = await page.locator('#first .al-bill-slip').boundingBox()
   assert.ok(Math.abs(bounds.y/mm - 192) < .05)
   assert.ok(Math.abs(bounds.width/mm - 210) < .05 && Math.abs(bounds.height/mm - 105) < .05)
+  // Both scissors are centred on their perforation: the horizontal line along the top of the slip and
+  // the vertical line between the receipt and the payment part.
+  const scissors = await page.locator('#first .al-bill-slip').evaluate(slip => {
+    const receipt = slip.querySelector('.al-bill-receipt')
+    const box = (element, pseudo) => {
+      const style = getComputedStyle(element, pseudo), matrix = new DOMMatrix(style.transform)
+      const width = parseFloat(style.width), height = parseFloat(style.height)
+      return { style, matrix, width, height }
+    }
+    const top = box(slip, '::after'), side = box(receipt, '::before')
+    return {
+      content: [top.style.content, side.style.content],
+      square: [top.width === top.height, side.width === side.height],
+      centre: parseFloat(top.style.top) + top.matrix.f + top.height / 2,
+      left: parseFloat(top.style.left),
+      across: receipt.getBoundingClientRect().width - parseFloat(side.style.right) - side.width + side.matrix.e + side.width / 2 - receipt.getBoundingClientRect().width,
+      down: parseFloat(side.style.top),
+      quarter: Math.round(Math.atan2(side.matrix.b, side.matrix.a) * 180 / Math.PI),
+    }
+  })
+  assert.deepEqual(scissors.content, ['""', '""'], 'The scissors are drawn shapes, not font glyphs with uneven side bearings.')
+  assert.deepEqual(scissors.square, [true, true])
+  assert.ok(Math.abs(scissors.centre) < .5, 'The top scissors sit centred on the horizontal perforation.')
+  assert.ok(Math.abs(scissors.left / mm - 5) < .05, 'The top scissors align with the 5 mm margin.')
+  assert.ok(Math.abs(scissors.across) < .5, 'The receipt scissors sit centred on the vertical perforation.')
+  assert.ok(Math.abs(scissors.down / mm - 5) < .05, 'The receipt scissors sit 5 mm below the top edge.')
+  assert.equal(scissors.quarter, 90, 'The receipt scissors cut downwards along the vertical perforation.')
   for (const [part, width] of [['receipt',62],['payment',148],['qr',46]]) {
     const box = await page.locator('#first .al-bill-' + part).boundingBox()
     assert.ok(Math.abs(box.width/mm - width) < .05)

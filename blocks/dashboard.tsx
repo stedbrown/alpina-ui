@@ -55,9 +55,15 @@ function reportingMonths(lastDate: string, count: number) {
 
 export interface DashboardBlockProps {
   invoices?: readonly DashboardInvoice[]
+  /** Use `section` or `div` when the dashboard sits inside a page that already has a main landmark. */
+  as?: 'main' | 'section' | 'div'
+  /** Level of the dashboard title. Section headings follow one level below. */
+  headingLevel?: 1 | 2 | 3
 }
 
-export function DashboardBlock({ invoices = sampleInvoices }: DashboardBlockProps = {}) {
+export function DashboardBlock({ invoices = sampleInvoices, as = 'main', headingLevel = 1 }: DashboardBlockProps = {}) {
+  const title = ('h' + headingLevel) as 'h1' | 'h2' | 'h3'
+  const section = ('h' + (headingLevel + 1)) as 'h2' | 'h3' | 'h4'
   const [range, setRange] = useState(3)
   const [status, setStatus] = useState('All')
   const [search, setSearch] = useState('')
@@ -78,10 +84,10 @@ export function DashboardBlock({ invoices = sampleInvoices }: DashboardBlockProp
   const chartData = months.map(month => ({ label: month.label, value: totals.get(month.key)! / 100 }))
 
   return (
-    <Grid as="main" width="site" space="section" align="end">
+    <Grid as={as} width="site" space="section" align="end">
       <GridItem medium={5} large={8}>
         <Stack gap={2}>
-          <Typography as="h1" variant="title">Studio accounts</Typography>
+          <Typography as={title} variant="title">Studio accounts</Typography>
           <Typography>{months.length ? months[0].label + ' – ' + months[months.length - 1].label : 'No invoices recorded'}</Typography>
         </Stack>
       </GridItem>
@@ -93,7 +99,7 @@ export function DashboardBlock({ invoices = sampleInvoices }: DashboardBlockProp
       <GridItem><Separator weight="section" /></GridItem>
       <GridItem medium={4} large={5}>
         <Stack gap={4}>
-          <Typography as="h2" variant="heading">Invoice totals</Typography>
+          <Typography as={section} variant="heading">Invoice totals</Typography>
           <Typography variant="display" numeric><CurrencyCHF amount={(paid + open) / 100} /></Typography>
           <DescriptionList items={[
             { term: 'Paid', detail: <CurrencyCHF amount={paid / 100} /> },
@@ -108,7 +114,7 @@ export function DashboardBlock({ invoices = sampleInvoices }: DashboardBlockProp
       <GridItem><Separator /></GridItem>
       <GridItem medium={4} large={4}>
         <Stack gap={2}>
-          <Typography as="h2" variant="heading">Invoice register</Typography>
+          <Typography as={section} variant="heading">Invoice register</Typography>
           <Typography variant="caption" role="status">{rows.length} {rows.length === 1 ? 'matching invoice' : 'matching invoices'}</Typography>
         </Stack>
       </GridItem>

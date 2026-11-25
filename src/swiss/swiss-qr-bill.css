@@ -5,10 +5,14 @@
 }
 .al-qr-bill:focus-visible { outline: 2px solid var(--al-focus); outline-offset: -2px; }
 @media screen {
+  /* A scrolling slip clips everything above it: leave room for the upper half of the top scissors. */
+  .al-qr-bill:not([data-fit]) { padding-block-start: 2mm; }
   .al-qr-bill[data-fit] {
     inline-size: min(100%, 210mm);
     aspect-ratio: 2;
     overflow: clip;
+    /* The scissors sit centred on the top perforation, half above the slip. */
+    overflow-clip-margin: 2.5mm;
     container-type: inline-size;
     position: relative;
   }
@@ -102,15 +106,21 @@
 .al-bill-receipt::after { inset: 0 0 0 auto; border-right: .2mm dashed #000; }
 .al-bill-slip::after,
 .al-bill-receipt::before {
-  content: '✂︎';
+  /* A drawn symbol, not a font glyph: its centre is the exact centre of the box, so it sits on each perforation.
+     A white disc interrupts the dashed line and keeps the half above the slip legible on dark pages. */
+  content: '';
   position: absolute;
   z-index: 2;
-  background: #fff;
-  color: #000;
-  line-height: 1;
-  font-size: 9pt;
+  inline-size: 4mm;
+  block-size: 4mm;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'%3E%3Ccircle cx='5.5' cy='6.5' r='3'/%3E%3Ccircle cx='5.5' cy='17.5' r='3'/%3E%3Cpath d='M8.1 8.1 21.5 16.6M8.1 15.9 21.5 7.4'/%3E%3C/svg%3E") center / 80% no-repeat #fff;
+  border-radius: 50%;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
 }
-.al-bill-slip::after { top: 0; left: 3mm; }
+/* Horizontal perforation: 5 mm from the left edge, centred on the line, blades cutting to the right. */
+.al-bill-slip::after { top: 0; left: 5mm; transform: translateY(-50%); }
+/* Vertical perforation: 5 mm below the top edge, centred on the line, blades cutting downwards. */
 .al-bill-receipt::before { top: 5mm; right: 0; transform: translateX(50%) rotate(90deg); }
 .al-bill-slip dt, .al-bill-accept { font-weight: 700; }
 .al-bill-slip dd { overflow-wrap: anywhere; }

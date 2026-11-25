@@ -25,6 +25,7 @@ try {
   const width = main.getByLabel('Width', { exact: true })
   await width.selectOption('320')
   assert.equal(Math.round((await main.locator('.al-preview-content').boundingBox()).width), 320)
+  assert.equal(new URL(page.url()).searchParams.get('width'), '320', 'The chosen width stays in a shareable link.')
   await view('Code').click()
   assert.equal(new URL(page.url()).hash, '#swiss-address-form/code')
   await view('API').click()
@@ -82,6 +83,18 @@ try {
     await readFile(await result.path()),
     await readFile(new URL('site/' + archiveName, project)),
   )
+  await page.setViewportSize({ width: 1440, height: 940 })
+  await page.goto(new URL('site/catalog.html?width=320', project).href + '#swiss-qr-bill')
+  assert.equal(await main.getByLabel('Width', { exact: true }).inputValue(), '320')
+  await main.locator('.al-preview-content .al-bill-slip').waitFor()
+  await page.waitForFunction(() => Math.round(document.querySelector('.al-preview-content').getBoundingClientRect().width) === 320)
+  const slip = await main.locator('.al-preview-content').evaluate(stage => ({
+    stage: stage.getBoundingClientRect().width, slip: stage.querySelector('.al-bill-slip')?.getBoundingClientRect().right - stage.getBoundingClientRect().left,
+  }))
+  assert.equal(Math.round(slip.stage), 320, 'A shared ?width=320 link opens the QR-bill preview at 320 px.')
+  assert.ok(slip.slip <= 321, 'The fitted QR-bill stays inside the narrow preview.')
+  await main.getByLabel('Width', { exact: true }).selectOption('')
+  assert.equal(new URL(page.url()).searchParams.has('width'), false, 'Fit removes the width from the link.')
   console.log(
     'Verified ' + registry.items.length + ' API pages at 320 px, preview state across views, browser history and offline downloads.',
   )

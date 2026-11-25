@@ -11,14 +11,18 @@ export interface ComponentPreviewProps {
   widthLabel?: string
   fitLabel?: string
   widths?: readonly number[]
+  /** Width in pixels to open with. Values outside `widths` open at Fit. */
+  defaultWidth?: number
+  /** Called with the chosen width in pixels, or `undefined` for Fit, so a page can keep it in a shareable link. */
+  onWidthChange?: (width: number | undefined) => void
   onDialogDismiss?: () => void
 }
 export function ComponentPreview({
   visible = true, children, title = 'Interactive preview', widthLabel = 'Width', fitLabel = 'Fit',
-  widths = [320, 480, 768], onDialogDismiss,
+  widths = [320, 480, 768], defaultWidth, onWidthChange, onDialogDismiss,
 }: ComponentPreviewProps) {
   const [visited, setVisited] = useState(visible)
-  const [width, setWidth] = useState('')
+  const [width, setWidth] = useState(() => defaultWidth && widths.includes(defaultWidth) ? String(defaultWidth) : '')
   const [measured, setMeasured] = useState(0)
   const ref = useRef<HTMLDivElement>(null)
   const id = useId()
@@ -44,7 +48,10 @@ export function ComponentPreview({
         <h2 id={id + '-title'}>{title}</h2>
         <div className="al-preview-sizing">
           <Label htmlFor={id + '-width'}>{widthLabel}</Label>
-          <Select id={id + '-width'} value={width} onChange={(e) => setWidth(e.target.value)}>
+          <Select id={id + '-width'} value={width} onChange={(e) => {
+            setWidth(e.target.value)
+            onWidthChange?.(e.target.value ? Number(e.target.value) : undefined)
+          }}>
             <option value="">{fitLabel}</option>
             {widths.map(size => <option key={size} value={size}>{size} px</option>)}
           </Select>

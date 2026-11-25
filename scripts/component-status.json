@@ -22,7 +22,7 @@
   "app-shell": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "dfd7144c63252e5f5e59"
+    "source": "8ad53ebd5392dae99d87"
   },
   "aspect-ratio": {
     "stage": "Stable",
@@ -237,7 +237,7 @@
   "invoice-document": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "cb6aaa21186d28681629"
+    "source": "1623a2fee8d5577f717b"
   },
   "item": {
     "stage": "Stable",
@@ -422,7 +422,7 @@
   "swiss-qr-bill": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "a852329287a29c3ecb4e"
+    "source": "13e8aa0da4c83ce81bf3"
   },
   "switch": {
     "stage": "Stable",

@@ -115,6 +115,16 @@ function useRoute() {
 function CatalogBrand() {
   return <NavigationBrand href="#overview" logo={brandMark} aria-label="Alpina UI overview">Alpina UI</NavigationBrand>
 }
+// ?width=320 opens the preview at that width, so a narrow case can be shared as a link.
+function previewWidth() {
+  return typeof location === 'undefined' ? undefined : Number(new URLSearchParams(location.search).get('width')) || undefined
+}
+function sharePreviewWidth(width: number | undefined) {
+  const url = new URL(location.href)
+  if (width) url.searchParams.set('width', String(width))
+  else url.searchParams.delete('width')
+  history.replaceState(history.state, '', url)
+}
 const views = { Preview: '', Code: 'code', API: 'api', Source: 'source' } as const
 type View = keyof typeof views
 function PostalDirectorySource({ file }: { file: string }) {
@@ -166,7 +176,7 @@ function Workbench({
           </Button>
         })}
       </ButtonGroup>}>
-      <ComponentPreview onDialogDismiss={() => document.querySelector<HTMLButtonElement>('[data-component-views] [aria-pressed="true"]')?.focus()} visible={mode === 'Preview'}>
+      <ComponentPreview defaultWidth={previewWidth()} onWidthChange={sharePreviewWidth} onDialogDismiss={() => document.querySelector<HTMLButtonElement>('[data-component-views] [aria-pressed="true"]')?.focus()} visible={mode === 'Preview'}>
         <Demo />
       </ComponentPreview>
       {mode === 'Preview' && (

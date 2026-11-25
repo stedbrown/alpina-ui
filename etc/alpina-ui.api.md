@@ -902,9 +902,11 @@ export interface ComponentPreviewProps {
     widthLabel?: string;
     fitLabel?: string;
     widths?: readonly number[];
+    defaultWidth?: number;
+    onWidthChange?: (width: number | undefined) => void;
     onDialogDismiss?: () => void;
 }
-export declare function ComponentPreview({ visible, children, title, widthLabel, fitLabel, widths, onDialogDismiss, }: ComponentPreviewProps): import("react").JSX.Element;
+export declare function ComponentPreview({ visible, children, title, widthLabel, fitLabel, widths, defaultWidth, onWidthChange, onDialogDismiss, }: ComponentPreviewProps): import("react").JSX.Element;
 ~~~
 
 ## portal/navigation-menu.d.ts

@@ -7,18 +7,8 @@ const specimen = document.getElementById('type-specimen')
 if (specimen) enhanceSpecimen(specimen)
 
 const gridSwitch = document.getElementById('show-grid')
-gridSwitch.addEventListener('change', () => {
+gridSwitch?.addEventListener('change', () => {
   document.getElementById('programme-guides').hidden = !gridSwitch.checked
-})
-const themeSwitch = document.getElementById('proof-dark')
-themeSwitch.addEventListener('change', () => {
-  const sheets = document.querySelectorAll('[data-appearance-sheet]')
-  sheets.forEach((sheet, index) => {
-    const ink = index === (themeSwitch.checked ? 0 : 1)
-    sheet.dataset.alTheme = ink ? 'dark' : 'light'
-    sheet.dataset.surface = ink ? 'ink' : 'paper'
-    sheet.querySelector('[data-proof-name]').textContent = ink ? 'Ink' : 'Paper'
-  })
 })
 
 // The rest of the page is static. Load React only when a stateful sample is approached.

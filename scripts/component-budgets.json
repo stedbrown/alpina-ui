@@ -235,9 +235,9 @@
     "css": 704
   },
   "invoice-document": {
-    "js": 15552,
+    "js": 16576,
     "lazy": 0,
-    "css": 3776
+    "css": 4224
   },
   "item": {
     "js": 384,
@@ -420,9 +420,9 @@
     "css": 704
   },
   "swiss-qr-bill": {
-    "js": 11520,
+    "js": 11648,
     "lazy": 0,
-    "css": 2112
+    "css": 2560
   },
   "switch": {
     "js": 384,

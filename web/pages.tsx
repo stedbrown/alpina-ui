@@ -6,9 +6,9 @@ import {
   Avatar, Grid, GridItem, Icon, Label, Separator, Switch,
   Stack, TextLink, Typography,
 } from 'alpina-ui'
-import { AccessStudy, AppearanceStudy, GridStudy, Installation, MigrationStudy, SwissStudy, TypeStudy } from './landing-sections.js'
+import { GridStudy, Installation, MigrationStudy } from './landing-sections.js'
+import { AgentStudy, InterfaceStudy, QrStudy, QualityStudy, SwissToolkit } from './home-sections.js'
 import type { ComparisonForm } from './landing-sections.js'
-import { HomeShowcase } from './home-showcase.js'
 import { projects } from './projects.js'
 
 function GitHubLabel() {
@@ -78,7 +78,7 @@ export function PageHeading({ title, summary, children }: { title: string; summa
   </Grid>
 }
 
-export function Landing({ version, count, queue, command, installation, access, typeProof, migration }: { version: string; count: number; queue: string; command: string; installation: string; access: string; typeProof: string; migration: ComparisonForm[] }) {
+export function Landing({ version, count, command, islands, migration }: { version: string; count: number; command: string; islands: Record<string, string>; migration: ComparisonForm[] }) {
   return <>
     <Masthead current="home" />
     <PageRegion as="main" id="content" tabIndex={-1}>
@@ -105,19 +105,20 @@ export function Landing({ version, count, queue, command, installation, access, 
             <Typography variant="label">{label}</Typography>
           </Stack>
         </GridItem>)}
-        <GridItem medium={4} large={5} entranceStep={3}><Typography variant="lead" id="cover-intro">A precise grid, expressive type and accessible controls for the web.</Typography></GridItem>
+        <GridItem medium={4} large={5} entranceStep={3}><Typography variant="lead" id="cover-intro">A precise grid, expressive type and accessible controls. With QR-bill, AHV and cantons built in.</Typography></GridItem>
         <GridItem medium={4} large={5} entranceStep={3} start={{ large: 8 }}><Stack direction="row" gap={4} columnGap={6}>
           <TextLink href="/docs/components/">Browse components ({count})</TextLink>
+          <TextLink href="#qr-bill">Try the QR-bill</TextLink>
         </Stack></GridItem>
       </Grid>
+      <InterfaceStudy html={islands.dashboard} />
+      <SwissToolkit html={islands.swiss} />
+      <QrStudy html={islands.qr} />
       <GridStudy />
-      <TypeStudy html={typeProof} />
-      <HomeShowcase queue={queue} />
-      <AppearanceStudy />
-      <AccessStudy html={access} />
-      <SwissStudy />
+      <QualityStudy />
       <MigrationStudy forms={migration} />
-      <Installation html={installation} command={command} />
+      <AgentStudy skill={islands.skill} mcp={islands.mcp} />
+      <Installation html={islands.install} command={command} />
     </PageRegion>
     <Footer version={version} />
   </>

@@ -1,5 +1,12 @@
 export const expanded = [
   [
+    "multilingual-field",
+    "MultilingualField",
+    "Multilingual text",
+    "Swiss localization",
+    "Edit translations for all four national languages with character counts and per-language form values."
+  ],
+  [
     "iban-input",
     "IbanInput",
     "Swiss bank account",

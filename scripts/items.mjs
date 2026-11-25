@@ -3,6 +3,7 @@ import { additions as actions } from './additions-actions.mjs'
 import { additions as workflows } from './additions-workflows.mjs'
 import { additions as portal } from './additions-portal.mjs'
 export const additions = [
+  ['swiss', 'multilingual-field', 'MultilingualField', 'Multilingual text', 'Swiss localization', 'Edit translations for all four national languages with character counts and per-language form values.'],
   ['swiss', 'iban-input', 'IbanInput', 'Swiss bank account', 'Swiss localization', 'Validate CH and LI accounts and group the IBAN in fours.'],
   ['swiss', 'ahv-input', 'AhvInput', 'AHV number', 'Swiss localization', 'Check the Swiss social insurance number and its EAN-13 checksum.'],
   ['swiss', 'phone-input', 'PhoneInput', 'Swiss telephone number', 'Swiss localization', 'Accept domestic and international input and display a Swiss +41 number.'],

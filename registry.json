@@ -987,6 +987,34 @@
       ]
     },
     {
+      "name": "multilingual-field",
+      "group": "swiss",
+      "entry": "swiss/multilingual-field.tsx",
+      "usage": "Use name to submit translations as title[de], title[fr], title[it] and title[rm]. includeEnglish adds English. Select variant=textarea for long copy or layout=columns to compare translations. Copy fills an empty language from sourceLanguage.",
+      "files": [
+        "theme.css",
+        "swiss/multilingual-field.tsx",
+        "ui/button.tsx",
+        "ui/slot.tsx",
+        "ui/button.css",
+        "ui/field.tsx",
+        "ui/field.css",
+        "ui/input.tsx",
+        "ui/input.css",
+        "ui/stack.tsx",
+        "ui/stack.css",
+        "ui/textarea.tsx",
+        "ui/textarea.css",
+        "interactive/tabs.tsx",
+        "interactive/controllable.ts",
+        "interactive/roving.ts",
+        "interactive/navigation.ts",
+        "interactive/tabs.css",
+        "swiss/locales.ts",
+        "swiss/multilingual-field.css"
+      ]
+    },
+    {
       "name": "iban-input",
       "group": "swiss",
       "entry": "swiss/iban-input.tsx",

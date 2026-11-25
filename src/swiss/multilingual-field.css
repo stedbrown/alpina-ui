@@ -1,0 +1,27 @@
+.al-translations {
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: var(--al-ink);
+  font: 400 var(--al-type-body)/var(--al-leading-body) var(--al-font);
+}
+.al-translations legend {
+  padding: 0 0 var(--al-space-3);
+  font: 650 var(--al-type-heading)/var(--al-leading-heading) var(--al-font);
+}
+.al-translations-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  align-items: start;
+  gap: var(--al-space-4);
+}
+.al-translations .al-tab-list { flex-wrap: wrap; }
+.al-translations-status {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

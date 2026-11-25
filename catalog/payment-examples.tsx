@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import {
-  AhvInput, Button, Field, IbanInput, PhoneInput, Stack, SwissQrBill, Typography, UidInput, printSwissQrBill,
+  MultilingualField, AhvInput, Button, Field, IbanInput, PhoneInput, Stack, SwissQrBill, Typography, UidInput, printSwissQrBill,
 } from 'alpina-ui'
 
 export function IbanInputExample() {
@@ -37,4 +37,8 @@ export function SwissQrBillExample() {
       reference: { type: 'SCOR', value: 'RF18539007547034' },
     }} />
   </Stack>
+}
+
+export function MultilingualFieldExample() {
+  return <MultilingualField name="title" label="Exhibition title" defaultValue={{ de: 'Die neue Typografie', fr: 'La nouvelle typographie' }} />
 }

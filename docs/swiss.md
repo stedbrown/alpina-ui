@@ -156,3 +156,14 @@ Use `IbanInput` for 21-character CH and LI accounts. `isSwissIban` checks the co
 `AhvInput` validates the 756 prefix and EAN-13 check digit, then groups the 13 digits for reading. `PhoneInput` accepts a nine-digit national number, its domestic trunk prefix or the international +41 or 0041 prefix. Both format valid entries on blur. Invalid drafts stay visible for correction. Use `validationMessage` for translated native form errors and the exported validation helpers when processing submissions. [Central Compensation Office](https://www.zas.admin.ch/de/ahv-nummer-identifikator) · [OFCOM telephone numbering](https://www.bakom.admin.ch/de/telefonnummern)
 
 `SwissQrBill` renders a payment part and receipt. The QR-bill guide describes reference types, structured addresses and printing. [Swiss QR-bill guide](https://alpina-ui.vercel.app/docs/guides/qr-bill/)
+
+## Editing translations
+
+Use `MultilingualField` to keep all four national languages in one form. A translation counts as complete when it contains more than whitespace. Each editor carries its own language for spelling and pronunciation. The tabs remain mounted so a native form submission includes every translation, including empty ones.
+
+```tsx
+<MultilingualField name="title" label="Exhibition title" sourceLanguage="de"
+  defaultValue={{ de: 'Die neue Typografie' }} includeEnglish />
+```
+
+Read `formData.get('title[fr]')` in a submit handler or server action. Select `layout="columns"` to compare texts or `variant="textarea"` for longer passages. The copy action fills an empty destination. Use `value` and `onValueChange` for controlled forms, and `labels` to translate counts, status and copy actions. Character counts use grapheme clusters when supported by the runtime.

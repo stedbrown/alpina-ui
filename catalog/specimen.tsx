@@ -136,14 +136,12 @@ export function Specimen({ hosted }: { hosted: boolean }) {
                   Sample program
                 </Typography>
               </GridItem>
-              <GridItem small={1} medium={2} large={3} className="sp-date-cell">
+              <GridItem small={4} medium={2} large={3} className="sp-date-cell">
                 <time dateTime="2026-11-24" aria-label="24 November 2026" className="sp-date">
-                  <strong>24</strong>
-                  <span>Nov</span>
-                  <span>2026</span>
+                  24.11.2026
                 </time>
               </GridItem>
-              <GridItem small={3} medium={6} large={9} className="sp-title-cell">
+              <GridItem small={4} medium={6} large={9} className="sp-title-cell">
                 <Typography variant="display" as="h2" className="sp-poster-title">
                   <span>Design</span> <span>talks</span>
                 </Typography>

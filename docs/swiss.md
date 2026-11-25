@@ -43,7 +43,7 @@ The 1 November 2026 edition contains 3,177 Swiss residential postcodes and 4,233
 
 **Source ©swisstopo.** The federal OGD terms allow adaptation, redistribution and commercial use with attribution. Include the source credit when displaying or redistributing suggestions in a custom interface. [swisstopo terms of use](https://www.swisstopo.admin.ch/en/terms-of-use-free-geodata-and-geoservices)
 
-From the repository root, run `python3 scripts/generate-postal-localities.py` to rebuild the directory offline using the Python standard library. The script checks the archived ZIP's SHA-256 and produces deterministic UTF-8 output. To update the snapshot, download the new LV95 CSV archive, record its publisher date and hash, then regenerate and review the locality changes. [Official CSV download](https://data.geo.admin.ch/ch.swisstopo-vd.ortschaftenverzeichnis_plz/ortschaftenverzeichnis_plz/ortschaftenverzeichnis_plz_2056.csv.zip) · [Publisher’s STAC record](https://data.geo.admin.ch/api/stac/v1/collections/ch.swisstopo-vd.ortschaftenverzeichnis_plz/items/ortschaftenverzeichnis_plz)
+From the repository root, run `python3 scripts/generate-postal-localities.py` to rebuild the directory offline using the Python standard library. The script checks the archived ZIP's SHA‑256 and produces deterministic UTF-8 output. To update the snapshot, download the new LV95 CSV archive, record its publisher date and hash, then regenerate and review the locality changes. [Official CSV download](https://data.geo.admin.ch/ch.swisstopo-vd.ortschaftenverzeichnis_plz/ortschaftenverzeichnis_plz/ortschaftenverzeichnis_plz_2056.csv.zip) · [Publisher’s STAC record](https://data.geo.admin.ch/api/stac/v1/collections/ch.swisstopo-vd.ortschaftenverzeichnis_plz/items/ortschaftenverzeichnis_plz)
 
 ### Connect validation errors from a service
 
@@ -87,7 +87,7 @@ For a person, `recipient` is the family name and `firstName` is optional. For an
 }} />
 ```
 
-`UidInput` accepts the CHE prefix and nine digits in grouped or compact form. The final digit follows the modulo-11 check in eCH-0108. A check digit of 10 is unassignable. An exact multiple of 11 yields 0. For example, `CHE109322551` displays as `CHE-109.322.551`. Verifying assignment to an enterprise requires a UID register lookup. [eCH-0108 v6.0.0](https://www.ech.ch/de/ech/ech-0108/6.0.0) · [Federal Statistical Office UID register](https://www.bfs.admin.ch/de/unternehmensidentifikation-uid)
+`UidInput` accepts the CHE prefix and nine digits in grouped or compact form. The final digit follows the modulo-11 check in eCH-0108. A check digit of 10 is unassignable. An exact multiple of 11 yields 0. For example, `CHE109322551` displays as <code class="al-swiss-figures">CHE-109.322.551</code>. Verifying assignment to an enterprise requires a UID register lookup. [eCH-0108 v6.0.0](https://www.ech.ch/de/ech/ech-0108/6.0.0) · [Federal Statistical Office UID register](https://www.bfs.admin.ch/de/unternehmensidentifikation-uid)
 
 ## Compose individual fields
 
@@ -218,7 +218,7 @@ Use `CantonSelect allLabel="All cantons"` to let users return to the initial cho
 
 Use `IbanInput` for 21-character CH and LI accounts. `isSwissIban` checks the country, account structure and modulo-97 check digits. `compactIban` prepares a validated value for storage. A valid checksum establishes the structure of the identifier. Account ownership requires a separate verification process. [SIX IBAN guidance](https://www.six-group.com/en/products-services/banking-services/payment-standardization/standards/iban.html)
 
-`AhvInput` validates the 756 prefix and EAN-13 check digit, then groups the 13 digits for reading. `PhoneInput` accepts a nine-digit national number, its domestic trunk prefix or the international +41 or 0041 prefix. Both format valid entries on blur. Invalid drafts stay visible for correction. Use `validationMessage` for translated native form errors and the exported validation helpers when processing submissions. [Central Compensation Office](https://www.zas.admin.ch/de/ahv-nummer-identifikator) · [OFCOM telephone numbering](https://www.bakom.admin.ch/de/telefonnummern)
+`AhvInput` validates the 756 prefix and EAN‑13 check digit, then groups the 13 digits for reading. `PhoneInput` accepts a nine-digit national number, its domestic trunk prefix or the international +41 or 0041 prefix. Both format valid entries on blur. Invalid drafts stay visible for correction. Use `validationMessage` for translated native form errors and the exported validation helpers when processing submissions. [Central Compensation Office](https://www.zas.admin.ch/de/ahv-nummer-identifikator) · [OFCOM telephone numbering](https://www.bakom.admin.ch/de/telefonnummern)
 
 `SwissQrBill` renders a payment part and receipt. The QR-bill guide describes reference types, structured addresses and printing. [Swiss QR-bill guide](https://alpina-ui.vercel.app/docs/guides/qr-bill/)
 

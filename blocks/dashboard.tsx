@@ -27,7 +27,7 @@ const sampleInvoices: readonly DashboardInvoice[] = [
 ]
 
 const columns: readonly DataColumn<DashboardInvoice>[] = [
-  { id: 'id', header: 'Invoice', cell: row => row.id, compare: (a, b) => a.id.localeCompare(b.id) },
+  { id: 'id', header: 'Invoice', cell: row => <Typography as="span" variant="inherit" numeric>{row.id}</Typography>, compare: (a, b) => a.id.localeCompare(b.id) },
   { id: 'client', header: 'Client', cell: row => row.client, compare: (a, b) => a.client.localeCompare(b.client, 'en') },
   { id: 'date', header: 'Issued', cell: row => <SwissDate value={row.issuedOn} locale="de-CH" />,
     compare: (a, b) => a.issuedOn.localeCompare(b.issuedOn) },

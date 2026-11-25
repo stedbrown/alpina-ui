@@ -82,3 +82,15 @@ p.al-type { text-wrap: pretty; }
   hyphens: auto;
   text-wrap: balance;
 }
+
+.al-type[data-numeric] {
+  white-space: nowrap;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+.al-type[data-numeric]:is([data-role='heading'], [data-role='display']):not(span) {
+  container-type: inline-size;
+}
+.al-type[data-numeric]:is([data-role='heading'], [data-role='display']):not(span) > .al-swiss-figures > bdi {
+  font-size: clamp(.75rem, calc(150cqi / var(--al-figure-length, 10)), 1em);
+}

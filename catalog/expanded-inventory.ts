@@ -18,7 +18,7 @@ export const expanded = [
     "AhvInput",
     "AHV number",
     "Swiss localization",
-    "Check the Swiss social insurance number and its EAN-13 checksum."
+    "Check the Swiss social insurance number and its EAN‑13 checksum."
   ],
   [
     "phone-input",

@@ -46,3 +46,6 @@
 @media (forced-colors: active) {
   .al-value-bar rect, .al-series-trace circle { fill: CanvasText; }
 }
+
+.al-series-bars li > :last-child, .al-series-table td:last-child,
+.al-series-scale span, .al-series-spark > span { white-space: nowrap; }

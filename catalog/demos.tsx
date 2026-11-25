@@ -538,7 +538,7 @@ export function FieldExample() {
             {...props}
             value={name}
             onBlur={() => setTouched(true)}
-            placeholder="e.g. Neighbourhood wayfinding"
+            placeholder="e.g. Station signs"
             onChange={(e) => {
               setName(e.target.value)
               setSaved('')

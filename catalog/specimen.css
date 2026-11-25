@@ -116,19 +116,12 @@
 .sp-title-cell {
   padding-block: var(--al-space-6) var(--al-space-8);
 }
+.sp-date-cell { container-type: inline-size; }
 .sp-date {
-  display: grid;
-  gap: 0;
-  justify-items: start;
   color: var(--al-accent);
-}
-.sp-date strong {
-  font: 600 clamp(2rem, 5cqi, 3rem)/1 var(--al-font);
+  font: 650 clamp(.75rem, 16cqi, 2rem)/1 var(--al-font);
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.07em;
-}
-.sp-date span {
-  font: 600 var(--al-type-caption)/var(--al-leading-caption) var(--al-font);
+  white-space: nowrap;
 }
 .sp-title-cell .sp-poster-title {
   font-weight: 600;
@@ -327,10 +320,7 @@
 .sp-print i:last-child {
   background-size: 155% 100%;
 }
-.sp-sheet .sp-date strong {
-  font-size: clamp(2.7rem, 8cqi, 6.5rem);
-  line-height: 0.86;
-}
+
 .sp-head {
   border-top: 4px solid var(--al-ink);
   padding-top: 1rem;

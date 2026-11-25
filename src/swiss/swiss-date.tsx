@@ -1,4 +1,4 @@
-import { forwardRef, type ComponentPropsWithoutRef } from 'react'
+import { forwardRef, type CSSProperties, type ComponentPropsWithoutRef } from 'react'
 import { formatSwissDate, type SwissDateOptions } from './format-swiss-date.js'
 import { defaultSwissLocale, type SwissLocale } from './locales.js'
 import './figures.css'
@@ -24,7 +24,7 @@ export const SwissDate = forwardRef<HTMLTimeElement, SwissDateProps>(function Sw
   return (
     <time ref={ref} lang={locale} {...props} dateTime={typeof value === 'string' ? value : value.toISOString()}
       className={('al-swiss-figures ' + className).trim()}>
-      <bdi dir="ltr">{formatted}</bdi>
+      <bdi style={{ '--al-figure-length': formatted.length } as CSSProperties} dir="ltr">{formatted}</bdi>
     </time>
   )
 })

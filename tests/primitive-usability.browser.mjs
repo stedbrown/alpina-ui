@@ -71,6 +71,13 @@ try {
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'page overflow at ' + width)
   }
   const lineItems = page.getByRole('table', { name: 'Line items' })
+  const largeValue = lineItems.locator('.al-table-value').filter({ hasText: /^9{100}$/ })
+  assert.ok(await largeValue.evaluate(el => {
+    const range = document.createRange()
+    range.selectNodeContents(el)
+    el.scrollLeft = el.scrollWidth
+    return range.getClientRects().length === 1 && el.scrollLeft > 0
+  }), 'An oversized numeric cell keeps the full value on one horizontally scrollable line')
   assert.equal(await lineItems.locator('p').evaluate((el) => getComputedStyle(el).textAlign), 'start')
   assert.equal(await lineItems.locator('data').evaluate((el) => {
     const range = document.createRange()

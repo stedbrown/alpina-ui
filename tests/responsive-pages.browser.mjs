@@ -20,6 +20,20 @@ function layoutIssues() {
       errors.add(nav.ariaLabel + ' wraps')
     }
   }
+  // Inspect the painted text, including values that stay inside the page but wrap inside a card.
+  function checkLines(range, label) {
+    const runs = [...range.getClientRects()].filter(rect => rect.width > 0 && rect.height > 0)
+    if (runs.some(rect => rect.top > (runs[0]?.top ?? rect.top) + tolerance)) errors.add('Split value: ' + label)
+  }
+  for (const value of document.querySelectorAll('time, .al-swiss-figures bdi, .al-type[data-numeric], .al-table-value, .al-bill-number, a[href^="tel:"], .al-chart-value, .al-series-bars li > :last-child, .al-series-scale span, .al-series-table td:last-child')) {
+    if (!value.checkVisibility() || value.matches(':has(.al-swiss-figures)')) continue
+    const range = document.createRange()
+    range.selectNodeContents(value)
+    checkLines(range, value.textContent.trim())
+    const line = value.closest('.al-type[data-numeric]')
+    if (line && range.getBoundingClientRect().right > line.getBoundingClientRect().right + tolerance)
+      errors.add('Numeric value overflows: ' + value.textContent.trim())
+  }
   const nav = document.querySelector('.al-app-bar > .site-nav')
   for (const button of document.querySelectorAll('header [data-site-appearance]')) {
     const header = button.closest('header')
@@ -80,6 +94,15 @@ function layoutIssues() {
     const node = walker.currentNode
     if (!node.textContent.trim()) continue
     const el = node.parentElement
+    if (!el.closest('pre,script,style,template,textarea') && el.checkVisibility()) {
+      // Check tokens embedded in prose as well as semantically marked numeric fields.
+      const tokens = /(?:CHF[\s\u202f]*[−-]?\d[\d’'.,\u202f]*|[−-]?\d[\d’'.,\u202f]*[ \u00a0\u202f]+CHF|(?:CH|LI)\d{2}(?:[ \u00a0]?\d){17}|\+41(?:[ \u00a0]?\d){9}|\b(?:\d{1,2}\.\d{1,2}\.\d{4}|\d{4}-\d{2}-\d{2}|(?:[A-Z]{1,4}[-‑])\d{2,}(?:[.-]\d+)*|\d{2,}[.,]\d{2,})\b)/gu
+      for (const match of node.textContent.matchAll(tokens)) {
+        range.setStart(node, match.index)
+        range.setEnd(node, match.index + match[0].length)
+        checkLines(range, match[0])
+      }
+    }
     const clips = ancestors(el)
     if (!clips?.length || !el.checkVisibility()) continue
     range.selectNodeContents(node)
@@ -100,7 +123,7 @@ function layoutIssues() {
   return [...errors]
 }
 
-const widths = [360, 768, 800, 1024, 1440]
+const widths = [320, 360, 640, 768, 800, 960, 1024, 1440]
 const routes = await publicRoutes()
 const executablePath = process.env.CHROME_PATH ?? process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
 const browser = await chromium.launch(executablePath ? { executablePath }

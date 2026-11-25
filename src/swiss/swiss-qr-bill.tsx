@@ -120,8 +120,8 @@ function Details({ bill, words, receipt = false }: { bill: Payment; words: BillL
     (party.name.length > 22 || party.town.length + party.postalCode.length > 21 ||
      (party.street?.length ?? 0) + (party.buildingNumber?.length ?? 0) > 22))
   return <dl className="al-bill-details">
-    <Entry title={words.creditor}><span>{grouped(bill.iban, 4)}</span><Address address={bill.creditor} omitStreet={omitStreet} /></Entry>
-    {reference && <Entry title={words.reference}>{reference}</Entry>}
+    <Entry title={words.creditor}><span className="al-bill-number">{grouped(bill.iban, 4)}</span><Address address={bill.creditor} omitStreet={omitStreet} /></Entry>
+    {reference && <Entry title={words.reference}><span className="al-bill-number">{reference}</span></Entry>}
     {!receipt && (bill.message || bill.billingInformation) &&
       <Entry title={words.additional}><span>{bill.message}</span><span>{bill.billingInformation}</span></Entry>}
     <Entry title={bill.debtor ? words.debtor : words.openDebtor}>

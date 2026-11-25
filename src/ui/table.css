@@ -45,5 +45,8 @@
 .al-table td[data-numeric] > :is(data, .al-table-value) {
   display: inline-block;
   inline-size: max-content;
-  max-inline-size: min(18ch, 45vi);
+  max-inline-size: min(36ch, 45vi);
+  overflow-x: auto;
+  vertical-align: top;
+  white-space: nowrap;
 }

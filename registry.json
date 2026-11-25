@@ -1089,7 +1089,7 @@
       "name": "ahv-input",
       "group": "swiss",
       "entry": "swiss/ahv-input.tsx",
-      "usage": "Accept 13 digits beginning with 756. The component validates the EAN-13 check digit and groups a valid number on blur. Pass validationMessage to localize native form errors.",
+      "usage": "Accept 13 digits beginning with 756. The component validates the EAN‑13 check digit and groups a valid number on blur. Pass validationMessage to localize native form errors.",
       "files": [
         "theme.css",
         "swiss/ahv-input.tsx",

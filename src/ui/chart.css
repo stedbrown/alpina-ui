@@ -104,3 +104,5 @@
     background: Canvas;
   }
 }
+
+.al-chart-value, .al-chart td { white-space: nowrap; }

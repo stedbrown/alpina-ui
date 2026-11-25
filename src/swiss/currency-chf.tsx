@@ -1,4 +1,4 @@
-import { forwardRef, type ComponentPropsWithoutRef } from 'react'
+import { forwardRef, type CSSProperties, type ComponentPropsWithoutRef } from 'react'
 import { formatCHF, type SwissCurrencyOptions } from './format-chf.js'
 import { defaultSwissLocale, type SwissLocale } from './locales.js'
 import './figures.css'
@@ -18,7 +18,7 @@ export const CurrencyCHF = forwardRef<HTMLDataElement, CurrencyCHFProps>(functio
   return (
     <data ref={ref} lang={locale} {...props} value={String(amount)} className={('al-swiss-figures ' + className).trim()}>
       {negative && <span className="al-currency-spoken">{formatted.replace('−', minus[locale] + ' ')}</span>}
-      <bdi dir="ltr" aria-hidden={negative || undefined}>{formatted}</bdi>
+      <bdi style={{ '--al-figure-length': formatted.length } as CSSProperties} dir="ltr" aria-hidden={negative || undefined}>{formatted}</bdi>
     </data>
   )
 })

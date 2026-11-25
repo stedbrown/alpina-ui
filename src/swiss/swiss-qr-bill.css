@@ -149,3 +149,5 @@
   }
   .al-bill-slip { flex: none; }
 }
+
+.al-bill-number { white-space: nowrap; }

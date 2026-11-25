@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BarChart, ChartTable, LineChart, Sparkline, CantonCombobox, type CantonCode, CurrencyCHF, DataTable } from 'alpina-ui'
+import { BarChart, ChartTable, LineChart, Sparkline, CantonCombobox, type CantonCode, CurrencyCHF, DataTable, Typography } from 'alpina-ui'
 
 export function CantonComboboxExample() {
   const [code, setCode] = useState<CantonCode | ''>('')
@@ -34,7 +34,7 @@ export function DataTableExample() {
         {
           id: 'ref',
           header: 'Order',
-          cell: (r) => r.ref,
+          cell: (r) => <Typography as="span" variant="inherit" numeric>{r.ref}</Typography>,
           compare: (a, b) => a.ref.localeCompare(b.ref),
         },
         { id: 'item', header: 'Print job', cell: (r) => r.item },

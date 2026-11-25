@@ -27,3 +27,7 @@ The full `npm run test:browser` command includes these comparisons. Run `npm run
 The captures use the bundled Inter typeface, the pinned Chromium headless shell, CSS-pixel density, a fixed clock, Zurich time and reduced motion. Linux uses the DejaVu families for system fallback. Windows and Linux have separate references because their text renderers produce different glyph pixels and can wrap text differently at the same width.
 
 The comparison uses Pixelmatch with a per-pixel color threshold of 0.14 and ignores anti-aliased edge pixels. The differing pixel allowance is 0.1% of the canvas, bounded between 5 and 128 pixels. Ink, paper, spacing and line wrapping participate in the comparison.
+
+## Portal pages
+
+The screenshot harness waits for the bundled Inter faces before measuring the designed layout. Lighthouse exercises the production preload and optional-display policy on a cold cache. The site suite also captures the first viewport of every public route at 800 px. The homepage is captured in full, in both appearances at 320, 360, 640, 768, 800, 960, 1024 and 1440 px. After building the catalog, compare with `node tests/site-visual.browser.mjs` or record an intentional revision with `--update`. References are kept separately for Windows and Linux under `tests/site-reference/`. The responsive sweep also measures rendered number and identifier lines independently of the pixel comparisons.

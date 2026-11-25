@@ -53,3 +53,5 @@
   inset-inline-start: var(--al-space-2);
   z-index: 20;
 }
+
+.al-text-link[href^="tel:"] { white-space: nowrap; }

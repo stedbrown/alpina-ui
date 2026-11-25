@@ -46,6 +46,22 @@ try {
   await invoice.getByRole('tab', { name: 'German' }).press('ArrowRight')
   assert.ok(await invoice.getByRole('tabpanel').getByText('Montant total').isVisible())
 
+  await page.evaluate(() => document.fonts.ready)
+  for (const width of [320, 360, 640, 768, 800, 960, 1024, 1440]) {
+    await page.setViewportSize({ width, height: 900 })
+    for (const name of ['German', 'French', 'Italian']) {
+      await invoice.getByRole('tab', { name }).click()
+      const problems = await invoice.getByRole('tabpanel').locator('bdi').evaluateAll(values => values.filter(value => {
+        const range = document.createRange()
+        range.selectNodeContents(value)
+        const runs = [...range.getClientRects()].filter(r => r.width)
+        const parent = value.closest('[data-numeric]').getBoundingClientRect()
+        return runs.some(r => r.top !== runs[0].top || r.left < parent.left - 1 || r.right > parent.right + 1)
+      }).map(value => value.textContent))
+      assert.deepEqual(problems, [], name + ' invoice at ' + width + ' px')
+    }
+  }
+
   const staticPage = await homepage(false)
   const staticEstimate = staticPage.getByRole('region', { name: 'Poster estimate' })
   assert.ok(await staticEstimate.getByText('100 copies · Black ink').isVisible())

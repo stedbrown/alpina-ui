@@ -411,3 +411,8 @@
     font-size: 0.63rem;
   }
 }
+
+.apx .apx-money { min-inline-size: 0; container-type: inline-size; }
+.apx-currency .specimen-value bdi { font-size: clamp(.75rem, calc(150cqi / var(--al-figure-length)), 1em); }
+.apx .apx-datecard { min-inline-size: 0; flex-wrap: wrap; container-type: inline-size; }
+.apx .apx-datecard output { font-size: clamp(.75rem, 6cqi, 1.2rem); }

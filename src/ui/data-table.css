@@ -1,4 +1,6 @@
 .al-data-table {
+  container: al-data-table / inline-size;
+  inline-size: 100%;
   max-width: 100%;
   overflow: auto;
   color: var(--al-ink);
@@ -57,4 +59,13 @@
 .al-data-table:focus-visible {
   outline: 2px solid var(--al-focus);
   outline-offset: -2px;
+}
+
+@container al-data-table (max-width: 25rem) {
+  .al-data-table .al-table :is(td, th:not(:has(> button))),
+  .al-data-table th button {
+    padding-inline: var(--al-space-2);
+    overflow-wrap: normal;
+  }
+  .al-data-table th button { gap: var(--al-space-1); }
 }

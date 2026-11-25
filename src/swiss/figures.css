@@ -1,4 +1,7 @@
 .al-swiss-figures {
+  white-space: nowrap;
+  hyphens: none;
+  overflow-wrap: normal;
   font-variant-numeric: tabular-nums lining-nums;
 }
 .al-currency-spoken {

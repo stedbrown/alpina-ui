@@ -1,30 +1,7 @@
 import assert from 'node:assert/strict'
-import { spawnSync } from 'node:child_process'
-import { createRequire } from 'node:module'
-import { fileURLToPath } from 'node:url'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
-import { PNG } from 'pngjs'
-import pixelmatch from 'pixelmatch'
-import { chromium } from 'playwright-core'
+import { platform, difference, launchVisualBrowser } from './visual-tools.mjs'
 import { mountComponentGallery } from './component-gallery.mjs'
-
-// macOS uses the pinned Linux browser environment so native rasterizers do not
-// turn font substitution into an apparent design regression.
-if (process.platform === 'darwin' || process.argv.includes('--linux-container')) {
-  const { version } = createRequire(import.meta.url)('playwright-core/package.json')
-  const root = fileURLToPath(new URL('../', import.meta.url))
-  const args = process.argv.slice(2).filter(arg => arg !== '--linux-container')
-  const result = spawnSync('docker', [
-    'run', '--rm', '--init', '--platform', 'linux/amd64', '--shm-size', '1g',
-    '--mount', 'type=bind,source=' + root + ',target=/workspace',
-    '--mount', 'type=tmpfs,target=/workspace/node_modules', '--workdir', '/workspace',
-    'mcr.microsoft.com/playwright:v' + version + '-noble',
-    'sh', '-ec', 'npm ci --no-audit --no-fund && node tests/visual-regression.browser.mjs "$@"', 'visual', ...args,
-  ], { stdio: 'inherit' })
-  if (result.error) throw new Error('Start Docker to run the pinned Linux visual suite. See docs/visual-testing.md.', { cause: result.error })
-  process.exit(result.status ?? 1)
-}
-const platform = process.platform === 'win32' ? 'windows' : 'linux'
 const references = new URL('./visual-reference/' + platform + '/', import.meta.url)
 const diagnostics = new URL('../test-results/visual/', import.meta.url)
 const { items } = JSON.parse(await readFile(new URL('../registry.json', import.meta.url), 'utf8'))
@@ -52,28 +29,8 @@ const overlays = {
   toast: ['footer button', 'Enter', '.al-toast-dismiss'],
 }
 
-function difference(expectedBytes, actualBytes) {
-  if (expectedBytes.equals(actualBytes)) return
-  const expected = PNG.sync.read(expectedBytes), actual = PNG.sync.read(actualBytes)
-  if (actual.width !== expected.width || actual.height !== expected.height) {
-    return { reason: `expected ${expected.width}×${expected.height}, received ${actual.width}×${actual.height}` }
-  }
-  const { width, height } = actual
-  const diff = new PNG({ width, height })
-  const changed = pixelmatch(expected.data, actual.data, diff.data, width, height, {
-    threshold: 0.14, includeAA: false, alpha: 0.3,
-  })
-  const allowed = Math.max(5, Math.min(128, Math.floor(width * height * 0.001)))
-  if (changed > allowed) return { reason: `${changed} pixels differ (limit ${allowed})`, image: PNG.sync.write(diff) }
-}
-
 const results = []
-const browser = await chromium.launch({
-  args: ['--font-render-hinting=none', '--disable-lcd-text', '--force-color-profile=srgb'],
-  // Inter comes from Alpina itself. Limit native fallback to the same DejaVu
-  // families across Linux distributions, including the QR slip and mono code.
-  env: platform === 'linux' ? { ...process.env, FONTCONFIG_FILE: fileURLToPath(new URL('./visual-fonts.conf', import.meta.url)) } : process.env,
-})
+const browser = await launchVisualBrowser()
 try {
   const jobs = widths.flatMap(width => themes.map(theme => ({ width, theme })))
   async function capture() {

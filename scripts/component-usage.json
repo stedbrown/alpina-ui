@@ -2,7 +2,7 @@
   "multilingual-field": "Use name to submit translations as title[de], title[fr], title[it] and title[rm]. includeEnglish adds English. Select variant=textarea for long copy or layout=columns to compare translations. Copy fills an empty language from sourceLanguage.",
   "uid-input": "Collect a CHE business identifier with its modulo-11 check digit. A valid entry is grouped on blur. Pass validationMessage to localize the native validation error.",
   "iban-input": "Use for Swiss and Liechtenstein accounts. Valid accounts are grouped on blur. Use isSwissIban and compactIban on submitted values.",
-  "ahv-input": "Accept 13 digits beginning with 756. The component validates the EAN-13 check digit and groups a valid number on blur. Pass validationMessage to localize native form errors.",
+  "ahv-input": "Accept 13 digits beginning with 756. The component validates the EAN‑13 check digit and groups a valid number on blur. Pass validationMessage to localize native form errors.",
   "phone-input": "Accept ordinary nine-digit Swiss national numbers, domestic trunk prefixes and international +41 or 0041 input. Format valid entries on blur. Short service codes use a separate field.",
   "swiss-qr-bill": "Supply a structured creditor address, a Swiss or Liechtenstein IBAN and a compatible reference. Use printSwissQrBill with the component ref to print one payment slip on A4 at actual size.",
   "grid-overlay": "Mount the overlay alongside a page or inside a positioned container with placement set to container. Use hidden to toggle it. The portal shortcut is Ctrl+Shift+G.",

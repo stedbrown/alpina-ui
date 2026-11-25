@@ -49,7 +49,13 @@ document.getElementById('proof-scale').addEventListener('change', event => { typ
 document.getElementById('proof-spacing').addEventListener('change', event => { typeProof.dataset.tracking = event.target.value })
 const themeSwitch = document.getElementById('proof-dark')
 themeSwitch.addEventListener('change', () => {
-  document.getElementById('appearance-proof').dataset.alTheme = themeSwitch.checked ? 'dark' : 'light'
+  const sheets = document.querySelectorAll('[data-appearance-sheet]')
+  sheets.forEach((sheet, index) => {
+    const ink = index === (themeSwitch.checked ? 0 : 1)
+    sheet.dataset.alTheme = ink ? 'dark' : 'light'
+    sheet.dataset.surface = ink ? 'ink' : 'paper'
+    sheet.querySelector('[data-proof-name]').textContent = ink ? 'Ink' : 'Paper'
+  })
 })
 
 // The rest of the page is static. Load React only when a stateful sample is approached.

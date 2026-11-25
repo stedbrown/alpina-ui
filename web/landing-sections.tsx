@@ -1,8 +1,9 @@
 import type { ReactNode } from 'react'
 import {
-  Badge, Collapsible, DescriptionList, Field, Grid, GridItem, GridOverlay, GridSpecimen, InlineCode, Label,
+  Collapsible, Field, Grid, GridItem, GridOverlay, GridSpecimen, InlineCode, Label,
   Select, Separator, Stack, Switch, TextLink, Typography,
 } from 'alpina-ui'
+import { AppearancePair } from './appearance-pair.js'
 import { AccessProof } from './access-proof.js'
 import { TypeSpecimen } from './type-specimen.js'
 
@@ -63,16 +64,12 @@ export function TypeStudy() {
 
 export function AppearanceStudy() {
   return <Grid as="section" width="site" space="chapter" surface="accent" data-al-theme="light" aria-labelledby="appearance-title">
-    <GridItem medium={3} large={4}><SectionIntro id="appearance-title" title="Light and dark" text="Change the paper and ink of this reading-room notice. The rest of the page keeps its own appearance.">
-      <Stack direction="row" gap={2} scripting="enabled"><Switch id="proof-dark" defaultChecked aria-controls="appearance-proof" /><Label htmlFor="proof-dark">Dark preview</Label></Stack>
+    <GridItem medium={3} large={4}><SectionIntro id="appearance-title" title="Light and dark" text="Compare the same reading-room notice on paper and in reverse. Swap the proofs to judge both against either side of the page.">
+      <Stack surface="paper" inset={2} direction="row" gap={2} scripting="enabled"><Switch id="proof-dark" aria-controls="appearance-proof" /><Label htmlFor="proof-dark">Swap proofs</Label></Stack>
       <TextLink href="/themes/">Open the theme builder →</TextLink>
     </SectionIntro></GridItem>
     <GridItem medium={5} large={7} start={{ large: 6 }}>
-      <Stack surface="ink" inset={6} gap={5} id="appearance-proof">
-        <Stack direction="row" justify="space-between"><Typography variant="label">Library / Reading room</Typography><Badge>Open</Badge></Stack>
-        <Typography as="h3" variant="display">Reference desk</Typography><Separator />
-        <DescriptionList items={[{term:'Hours', detail:'09.00–17.00'},{term:'Location', detail:'Level 2'}]} />
-      </Stack>
+      <AppearancePair />
     </GridItem>
   </Grid>
 }

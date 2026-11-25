@@ -85,10 +85,22 @@ try {
   await page.getByLabel('Letter spacing').selectOption('normal')
   assert.notEqual(await type.evaluate(el => getComputedStyle(el).letterSpacing), beforeSpacing)
   assert.equal(await type.getAttribute('data-role'), 'display')
-  const appearance = page.locator('#appearance-proof')
-  const initialInk = await appearance.evaluate(el => getComputedStyle(el).color)
-  await page.getByRole('switch', {name:'Dark preview'}).press('Space')
-  assert.notEqual(await appearance.evaluate(el => getComputedStyle(el).color), initialInk)
+  const sheets = page.locator('#appearance-proof [data-appearance-sheet]')
+  const colors = () => sheets.evaluateAll(nodes => nodes.map(node => {
+    const style = getComputedStyle(node)
+    return [style.backgroundColor, style.color]
+  }))
+  const paper = ['rgb(255, 255, 255)', 'rgb(0, 0, 0)']
+  const inkColors = [...paper].reverse()
+  for (const colorScheme of ['light', 'dark']) {
+    await page.emulateMedia({ colorScheme })
+    assert.deepEqual(await colors(), [paper, inkColors])
+    const swap = page.getByRole('switch', {name:'Swap proofs'})
+    await swap.press('Space')
+    assert.deepEqual(await colors(), [inkColors, paper])
+    assert.deepEqual(await sheets.locator('[data-proof-name]').allTextContents(), ['Ink', 'Paper'])
+    await swap.press('Space')
+  }
   const access = page.locator('#access-proof')
   const zoom = access.getByRole('slider', { name: 'Preview zoom' })
   const contrast = access.getByRole('switch', { name: 'Simulate forced colors' })

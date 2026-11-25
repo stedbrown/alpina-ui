@@ -74,3 +74,24 @@ test('business days cross DST, weekends and years in either direction, respectin
     () => addBusinessDays('2024-01-01', 0.5, 'TI'), () => addBusinessDays('0001-01-01', -1, 'TI'),
     () => addBusinessDays('9999-12-31', 1, 'TI')]) assert.throws(fn, RangeError)
 })
+
+test('common observance supplements statutory and regional days without duplicate entries', () => {
+  for (const { code } of cantons) {
+    const statutory = swissHolidays(2027, code)
+    assert.deepEqual(swissHolidays(2027, code, { observance: 'statutory' }), statutory)
+    const common = swissHolidays(2027, code, { observance: 'common' })
+    assert.equal(new Set(common.map(h => h.id)).size, common.length)
+    assert.deepEqual(common.filter(h => h.scope !== 'customary'), statutory)
+  }
+  for (const year of [2025, 2026, 2027]) {
+    const common = swissHolidays(year, 'AG', { observance: 'common', region: 'AG-bremgarten' })
+    assert.equal(common.find(h => h.id === 'easterMonday').scope, 'customary')
+    assert.equal(common.find(h => h.id === 'stephen').scope, 'regional')
+    assert.ok(!swissHolidays(year, 'AG').some(h => h.id === 'whitMonday'))
+  }
+  assert.equal(addBusinessDays('2027-03-25', 1, 'AG', { observance: 'common' }), '2027-03-30')
+  assert.equal(addBusinessDays('2027-03-25', 1, 'AG'), '2027-03-29')
+  assert.equal(dates(2027, 'NE', { observance: 'common' }).fastMonday, '2027-09-20')
+  assert.equal(dates(2027, 'GE', { observance: 'common' }).stephen, undefined)
+  assert.throws(() => swissHolidays(2027, 'AG', { observance: 'other' }), RangeError)
+})

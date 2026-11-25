@@ -72,7 +72,7 @@
   "calendar": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "de9af1eef573efac17ae"
+    "source": "86ed0fde81a907eefdc9"
   },
   "canton-combobox": {
     "stage": "Stable",
@@ -147,7 +147,7 @@
   "date-picker": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "11aa452d10c9c1648f09"
+    "source": "4d786f512cf463478e75"
   },
   "description-list": {
     "stage": "Stable",

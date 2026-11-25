@@ -41,7 +41,7 @@ export interface SwissHoliday {
   id: SwissHolidayId
   date: string
   name: string
-  scope: 'federal' | 'cantonal' | 'regional' | 'sunday'
+  scope: 'federal' | 'cantonal' | 'regional' | 'sunday' | 'customary'
   duration: 'day' | 'afternoon'
 }
 
@@ -92,10 +92,21 @@ const regions = {
   'SO-outside-bucheggberg': ['corpus', 'assumption', 'allSaints'],
 } as const satisfies Record<string, readonly SwissHolidayId[]>
 
+// Full-day, recurring office closures with documented cantonal evidence. See docs/swiss.md.
+const officeDays = ['berchtold', 'easterMonday', 'whitMonday', 'stephen'] as const
+const customary: Partial<Record<CantonCode, readonly SwissHolidayId[]>> = {
+  AG: officeDays, FR: officeDays, LU: officeDays, NW: officeDays, OW: officeDays, SO: officeDays, ZG: officeDays,
+  NE: ['easterMonday', 'whitMonday', 'fastMonday'],
+  VS: ['goodFriday', 'easterMonday', 'whitMonday', 'stephen'],
+  ZH: ['berchtold'],
+}
+
+export type SwissHolidayObservance = 'statutory' | 'common'
 export type SwissHolidayRegion = keyof typeof regions
 export interface SwissHolidayOptions {
   locale?: SwissLocale
   region?: SwissHolidayRegion
+  observance?: SwissHolidayObservance
 }
 
 /** Western Easter in the Gregorian calendar (Meeus/Jones/Butcher computus). */
@@ -135,12 +146,13 @@ function holidayDates(year: number): Record<SwissHolidayId, string> {
 }
 
 /** Current rules projected onto a Gregorian year. Only canton-wide dates apply without a region. */
-export function swissHolidays(year: number, canton: CantonCode, { locale = defaultSwissLocale, region }: SwissHolidayOptions = {}): SwissHoliday[] {
+export function swissHolidays(year: number, canton: CantonCode, { locale = defaultSwissLocale, region, observance = 'statutory' }: SwissHolidayOptions = {}): SwissHoliday[] {
   if (!Number.isInteger(year) || year < 1 || year > 9999) throw new RangeError('Expected a year from 1 to 9999')
   if (!Object.hasOwn(schedules, canton)) throw new RangeError('Unknown Swiss canton')
   if (region !== undefined && (!Object.hasOwn(regions, region) || !region.startsWith(canton + '-'))) {
     throw new RangeError('Holiday region must belong to the selected canton')
   }
+  if (observance !== 'statutory' && observance !== 'common') throw new RangeError('Unknown holiday observance')
   const language = swissLocales.indexOf(locale)
   if (language < 0) throw new RangeError('Unknown Swiss locale')
   const dates = holidayDates(year)
@@ -159,6 +171,11 @@ export function swissHolidays(year: number, canton: CantonCode, { locale = defau
     include(id, 'cantonal')
   }
   if (region) for (const id of regions[region]) include(id, 'regional')
+  if (observance === 'common') {
+    for (const id of customary[canton] ?? []) {
+      if (!holidays.some(holiday => holiday.id === id)) include(id, 'customary')
+    }
+  }
   return holidays.sort((a, b) => a.date.localeCompare(b.date))
 }
 

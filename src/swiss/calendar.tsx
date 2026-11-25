@@ -7,7 +7,7 @@ import { addDays, addMonths, calendarLabels, calendarText, calendarWeekNames, cl
 import { formatSwissDate, parseCivilDate } from './format-swiss-date.js'
 import { defaultSwissLocale, type SwissLocale } from './locales.js'
 import type { CantonCode } from './cantons.js'
-import { swissHolidays, type SwissHolidayRegion } from './holidays.js'
+import { swissHolidays, type SwissHolidayRegion, type SwissHolidayObservance } from './holidays.js'
 import './calendar.css'
 
 export interface CalendarProps {
@@ -23,11 +23,13 @@ export interface CalendarProps {
   canton?: CantonCode
   /** Apply the named local holiday schedule within the canton. */
   holidayRegion?: SwissHolidayRegion
+  /** Add documented customary office closure days to the statutory schedule. */
+  observance?: SwissHolidayObservance
   className?: string
 }
 
 export const Calendar = forwardRef<HTMLElement, CalendarProps>(function Calendar(
-  { value, defaultValue = '', onValueChange, defaultMonth, min = firstCivilDay, max = lastCivilDay, locale = defaultSwissLocale, showWeekNumbers = true, canton, holidayRegion, className = '' },
+  { value, defaultValue = '', onValueChange, defaultMonth, min = firstCivilDay, max = lastCivilDay, locale = defaultSwissLocale, showWeekNumbers = true, canton, holidayRegion, observance, className = '' },
   ref,
 ) {
   const [selection, select] = useControllable(value, defaultValue, onValueChange)
@@ -52,7 +54,7 @@ export const Calendar = forwardRef<HTMLElement, CalendarProps>(function Calendar
   const first = month + '-01'
   const labels = useMemo(() => calendarLabels(first, locale), [first, locale])
   const year = Number(month.slice(0, 4))
-  const holidays = useMemo(() => canton ? swissHolidays(year, canton, { locale, region: holidayRegion }) : [], [year, canton, locale, holidayRegion])
+  const holidays = useMemo(() => canton ? swissHolidays(year, canton, { locale, region: holidayRegion, observance }) : [], [year, canton, locale, holidayRegion, observance])
   const monthHolidays = holidays.filter(holiday => holiday.date.startsWith(month))
   const id = useId()
   const grid = useRef<HTMLTableElement>(null)

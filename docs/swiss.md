@@ -169,6 +169,24 @@ Each entry has a stable `id`, ISO civil `date`, localized `name`, `scope` and `d
 
 `addBusinessDays(start, amount, canton, options?)` counts Monday through Friday beginning on the day after the start. Negative amounts count backwards from the previous day. Zero preserves the start. Whole-day holidays are skipped. Solothurn’s 1 May afternoon still counts as a working day. Geneva’s special Sunday substitution for employers outside the federal Labour Act falls outside this standard business calendar. [Solothurn labour inspectorate](https://so.ch/verwaltung/volkswirtschaftsdepartement/amt-fuer-wirtschaft-und-arbeit/arbeitsbedingungen/arbeitsinspektorat/feiertage) · [Geneva holiday law, article 1](https://silgeneve.ch/legis/data/rsg_j1_45.htm)
 
+### Choose statutory or common observance
+
+| Option | What the schedule contains | Example in Aargau |
+| --- | --- | --- |
+| `observance: 'statutory'` (default) | Canton-wide statutory dates, named Sundays and the selected region’s statutory dates. | Easter Monday appears for the Aarau profile. The Bremgarten profile leaves it open. |
+| `observance: 'common'` | The same schedule plus recurring, documented full-day closures used for office planning. Additions have `scope: 'customary'`. | Easter Monday, Whit Monday and St Stephen’s Day appear across the canton. A region’s statutory classification takes precedence. |
+
+Use the same option on `Calendar`, `DatePicker` and `addBusinessDays`. Common observance describes a planning convention. For a particular employer, the applicable contract and work calendar determine the actual day off. Regional festivals, discretionary bridge days, half-day concessions and employer-specific replacement days are outside the customary overlay.
+
+| Territory | Documented full-day additions when absent from the statutory profile |
+| --- | --- |
+| AG, FR | 2 January, Easter Monday, Whit Monday and 26 December. The Aargau administration publishes its working calendar. Fribourg identifies these four as its most common closure days. [Aargau work calendar](https://www.ag.ch/media/kanton-aargau/portal/jobs-karriere/anstellungsbedingungen-dokumente/sollarbeits-und-betriebszeit-2026.pdf) · [Fribourg labour authority](https://www.fr.ch/travail-et-entreprises/employes/jours-feries) |
+| LU, NW, OW, SO, ZG | The same four dates appear in cantonal working schedules or administrative rules. [Lucerne](https://personal.lu.ch/-/media/Personal/Dokumente/down_load/offentliche_dokumente/Anstellungsbedingungen_fuer_das_Staatspersonal.pdf) · [Nidwalden, Art. 28](https://gesetze.nw.ch/app/de/texts_of_law/171.1) · [Obwalden](https://www.ow.ch/_docn/6325/Feiertage.pdf) · [Solothurn](https://so.ch/fileadmin/internet/fd/fd-pa/Personalamt/03_Anstellungsbedingungen-GAV/20_Arbeitszeit/Sollarbeitszeit_2026_ohne_Vorholzeit.pdf) · [Zug, § 13](https://bgs.zg.ch/api/de/versions/62/pdf_file) |
+| NE | Easter Monday, Whit Monday and the Monday following the Federal Fast. The canton lists these as retail closing days, subject to exceptions. [Neuchâtel](https://www.ne.ch/themes/economie-et-emploi/jours-feries-officiels) |
+| VS | Good Friday, Easter Monday, Whit Monday and 26 December, drawn from the state personnel calendar. [Valais personnel law](https://lex.vs.ch/data/172.4/fr) |
+| ZH | 2 January (Berchtoldstag), observed by the cantonal administration. [Zürich personnel office](https://www.zh.ch/de/arbeiten-beim-kanton/fuer-hr-profis/handbuch-personalrecht/definition/arbeitszeit/grundlagen-zur-arbeitszeit.html) |
+| Remaining cantons | Both modes use the same documented statutory schedule. |
+
 ### Choose the workplace region
 
 With just a canton code, the result includes dates shared throughout that canton. Select a profile for these official local schedules. A profile for another canton raises a `RangeError`.

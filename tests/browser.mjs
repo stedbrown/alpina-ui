@@ -260,6 +260,7 @@ try {
     'actions',
     'workflows',
     'coverage',
+    'migrate-1-0',
     'migration',
     'cli',
     'release',
@@ -290,7 +291,7 @@ try {
   console.log(
     'Offline catalog passed: ' + registry.items.length + ' previews, ' +
       inspected.size +
-      ' source files, 18 guides, the 4/8/12-column specimen and the address book.',
+      ' source files, 19 guides, the 4/8/12-column specimen and the address book.',
   )
 } finally {
   await browser.close()

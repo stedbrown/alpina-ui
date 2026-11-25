@@ -17,6 +17,7 @@ const guides = {}
 const componentGuidance = JSON.parse(await readFile('docs/component-guidance.json', 'utf8'))
 const guideFiles = {
   coverage: 'docs/coverage.md',
+  'migrate-1-0': 'docs/migrate-1-0.md',
   migration: 'docs/migration.md',
   research: 'docs/research.md',
   portal: 'docs/portal.md',

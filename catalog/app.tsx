@@ -82,6 +82,7 @@ const guideNames: Record<string, string> = {
   cli: 'Compare source files',
   release: 'Alpina upgrade notes',
   'api-stability': 'Public API stability',
+  'migrate-1-0': 'Move from 0.x to 1.0',
   migration: 'From shadcn/ui to Alpina',
   directory: 'Bilingual address book',
   portal: 'Build the portal',
@@ -96,7 +97,7 @@ const guideNames: Record<string, string> = {
   coverage: 'Comparison with shadcn/ui',
 }
 const guideGroups = [
-  { title: 'Get started', keys: ['start', 'migration', 'cli', 'release', 'api-stability'] },
+  { title: 'Get started', keys: ['start', 'migration', 'cli', 'release', 'migrate-1-0', 'api-stability'] },
   { title: 'Design', keys: ['design', 'research'] },
   {
     title: 'Guides',

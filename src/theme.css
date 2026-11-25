@@ -59,7 +59,7 @@ body[data-al-page] > footer:last-child { margin-block-start: auto; }
   --al-leading-display: var(--al-space-12);
   --al-type-display-lg: var(--al-space-16);
   --al-leading-display-lg: var(--al-space-16);
-  --al-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --al-font: var(--al-font-family, 'Helvetica Neue', Helvetica, Arial, sans-serif);
   --al-display: var(--al-font);
   --al-mono: ui-monospace, 'SFMono-Regular', Consolas, monospace;
 }

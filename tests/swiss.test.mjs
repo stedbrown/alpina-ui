@@ -101,10 +101,10 @@ test('the postal-code shape covers exactly four ASCII digits', () => {
 test('currency and date components expose machine-readable values during server rendering', () => {
   assert.match(
     renderToStaticMarkup(createElement(CurrencyCHF, { amount: -12.5 })),
-    /<data lang="it-CH" value="-12.5">/,
+    /<data lang="it-CH" value="-12.5" class="al-swiss-figures">/,
   )
   const civil = renderToStaticMarkup(createElement(SwissDate, { value: '2024-02-29' }))
-  assert.match(civil, /<time lang="it-CH" dateTime="2024-02-29">/i)
+  assert.match(civil, /<time lang="it-CH" dateTime="2024-02-29" class="al-swiss-figures">/i)
   const instant = new Date('2024-02-29T23:45:00Z')
   const html = renderToStaticMarkup(createElement(SwissDate, { value: instant, locale: 'rm-CH' }))
   assert.ok(html.includes(instant.toISOString()))

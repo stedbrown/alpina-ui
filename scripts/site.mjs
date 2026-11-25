@@ -42,6 +42,12 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
   const appCSS = '/assets/catalog-' + sha(css) + '.css'
   const core = await readFile('dist/styles.css', 'utf8')
   const coreCSS = '/assets/alpina-' + sha(core) + '.css'
+  const fontBuild = await build({
+    entryPoints: ['src/fonts.css'], bundle: true, write: false, outdir: 'assets', minify: true,
+    assetNames: '[name]-[hash]', loader: { '.woff2': 'file' },
+  })
+  const fontCSS = fontBuild.outputFiles.find(file => file.path.endsWith('.css')).text
+  const fontsURL = '/assets/fonts-' + sha(fontCSS) + '.css'
   const showcaseBuild = await build({
     entryPoints: ['web/home-showcase-controls.js'], bundle: true, format: 'esm',
     target: 'es2022', write: false, minify: true,
@@ -56,6 +62,8 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
   const previewURL = origin + '/assets/alpina-preview.png?v=' + sha(preview)
   await Promise.all([
     output(appJS, script), output(appCSS, css), output(coreCSS, core),
+    output(fontsURL, fontCSS),
+    ...fontBuild.outputFiles.filter(file => file.path.endsWith('.woff2')).map(file => output('assets/' + path.basename(file.path), file.contents)),
     output(showcaseJS, showcase), output(iconsJS, icons),
     output(filterJS, filter),
     output('third-party-notices.txt', notices.join('\n\n')),
@@ -79,6 +87,7 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
       '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">',
       '<meta name="twitter:card" content="summary_large_image"><meta property="og:image:alt" content="Alpina UI homepage with a print estimate, a Swiss invoice and a press-hours chart">',
       '<link rel="license" href="/third-party-notices.txt"><link rel="stylesheet" href="' + (options.app ? appCSS : coreCSS) + '">',
+      '<link rel="stylesheet" href="' + fontsURL + '">',
     ]
     if (options.redirect) tags.push('<script>' + options.redirect + '</script>')
     if (options.showcase) tags.push('<script type="module" src="' + showcaseJS + '"></script>')

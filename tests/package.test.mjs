@@ -34,7 +34,7 @@ test('the ESM package server-renders UI, interactive and Swiss components with p
   assert.match(html, /<button[^>]*>Save<\/button>/)
   assert.match(html, /role="tablist"/)
   assert.match(html, /role="tabpanel"/)
-  assert.match(html, /<data lang="it-CH" value="47.5">/)
+  assert.match(html, /<data lang="it-CH" value="47.5" class="al-swiss-figures">/)
   assert.equal(html.includes('<style'), false)
 })
 

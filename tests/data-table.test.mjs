@@ -46,7 +46,7 @@ test('DataTable SSR sorts raw CHF stably without mutating the source or emitting
   assert.match(html, /<caption>Accounts<\/caption>/)
   assert.match(html, /aria-sort="descending"/)
   assert.equal((html.match(/aria-sort=/g) ?? []).length, 1)
-  assert.match(html, /<data lang="it-CH" value="8">/)
+  assert.match(html, /<data lang="it-CH" value="8"[\s>]/)
 })
 
 test('DataTable renders one full-width empty cell and retains the column headers', () => {

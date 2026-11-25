@@ -197,9 +197,13 @@ const notices = await Promise.all(
 )
 notices.unshift('Alpina UI\n' + license)
 notices.push(await readFile('src/swiss/UNICODE-LICENSE.txt', 'utf8'))
+notices.push('Inter\n' + await readFile('src/fonts/OFL.txt', 'utf8'))
+const offlineFonts = await build({
+  entryPoints: ['src/fonts.css'], bundle: true, write: false, minify: true, loader: { '.woff2': 'dataurl' },
+})
 const html =
   '<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffffff"><title>Alpina UI</title><style>' +
-  css +
+  css + offlineFonts.outputFiles[0].text +
   '</style></head><body><div id="app"></div><noscript>Enable JavaScript to try the interactive components.</noscript><script>' +
   script +
   '</script><script type="text/plain" id="third-party-notices">' +

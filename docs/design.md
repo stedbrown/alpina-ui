@@ -44,6 +44,21 @@ In a 952 px container, the largest grid allocates 64 px to the two margins and 2
 
 ## Use the grid in a project
 
+### Choose the typeface
+
+Alpina's default uses the installed Helvetica Neue, Helvetica or Arial. To use the same grotesque across Windows, Android and Apple devices, import the optional Inter font sheet alongside the component styles. Inter's tall lowercase letters stay legible at the 12 px caption size. Its variable weight axis covers the 400, 600 and 650 weights in Alpina's hierarchy. Table cells, CHF amounts and Swiss dates request tabular figures so changing a digit preserves its column width. [Inter project](https://rsms.me/inter/)
+
+```tsx
+import "alpina-ui/styles.css"
+import "alpina-ui/fonts.css"
+```
+
+The optional sheet supplies `--al-font-family` to the existing `--al-font` token. This also sets the display typeface and works inside nested light or dark themes. Use `font-family: var(--al-font)` on your application's body to extend the choice to surrounding prose. The `data-al-page` page layout already sets this property.
+
+Both WOFF2 files are served by the application. CSS bundlers resolve their relative URLs automatically. If you copy the CSS manually, place `fonts/inter-latin-wght-normal.woff2` and `fonts/inter-latin-ext-wght-normal.woff2` next to it in a `fonts/` directory. The Latin file covers accents used in Italian, German, French and Romansh, including **città**, **Grüezi**, **œuvre** and **bainvgnü**. The extended subset loads for additional letters such as **ẞ**. The package redistributes the unmodified normal-style subsets from `@fontsource-variable/inter@5.3.0` and their SIL Open Font License 1.1. Keep the accompanying license when redistributing the files. [Fontsource Inter](https://fontsource.org/fonts/inter) · [Bundled license](../src/fonts/OFL.txt)
+
+### Place the first elements
+
 ```tsx
 import { Grid, GridItem, Typography } from "alpina-ui"
 import "alpina-ui/styles.css"

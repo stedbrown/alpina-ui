@@ -886,6 +886,7 @@
         "swiss/currency-chf.tsx",
         "swiss/format-chf.ts",
         "swiss/locales.ts",
+        "swiss/figures.css",
         "swiss/UNICODE-LICENSE.txt"
       ]
     },
@@ -899,6 +900,7 @@
         "swiss/swiss-date.tsx",
         "swiss/format-swiss-date.ts",
         "swiss/locales.ts",
+        "swiss/figures.css",
         "swiss/UNICODE-LICENSE.txt"
       ]
     },
@@ -1009,6 +1011,7 @@
         "swiss/locales.ts",
         "swiss/calendar.css",
         "swiss/swiss-date.tsx",
+        "swiss/figures.css",
         "swiss/date-picker.css",
         "swiss/UNICODE-LICENSE.txt"
       ]

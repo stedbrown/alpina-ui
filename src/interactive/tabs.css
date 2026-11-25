@@ -69,3 +69,9 @@
   border-block-end: 0;
   border-inline-end: 3px solid var(--al-accent);
 }
+
+@media print {
+  .al-tab-list { display: none; }
+  .al-tabs[data-orientation='vertical'] { display: block; }
+  .al-tab-panel { padding-block: 0; }
+}

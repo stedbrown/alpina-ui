@@ -61,7 +61,7 @@ Give each item a unique, stable `value`. Panels stay mounted during navigation a
 | `Tabs` | `label: string`, `items: { value, label, content, disabled? }[]`, `value?: string`, `defaultValue?: string`, `onValueChange?(value: string)`, `orientation?: "horizontal" \| "vertical"`. Item `label` and `content` accept React nodes. |
 | `Accordion` | `items: { value, title, content, disabled? }[]`, `value?: string \| null`, `defaultValue?: string \| null`, `onValueChange?(value: string \| null)`, `headingLevel?: 2 \| 3 \| 4 \| 5 \| 6`. `title` and `content` accept React nodes. |
 
-`Tabs` activates the tab reached with the horizontal or vertical arrows, according to its orientation. Home and End reach the first and last enabled tabs. Tab enters through the selected tab and continues to the panel. If the selected value leaves the list, the first enabled tab is shown. [WAI-ARIA tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)
+`Tabs` activates the tab reached with the horizontal or vertical arrows, according to its orientation. Home and End reach the first and last enabled tabs. Tab enters through the selected tab and continues to the panel. Printing includes the active panel at full width and omits the tab controls. If the selected value leaves the list, the first enabled tab is shown. [WAI-ARIA tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)
 
 `Accordion` expands one section at a time. Enter or Space toggles a section. Up, Down, Home, and End move focus among headings. A `null` value collapses all sections. Match `headingLevel` to the page hierarchy.
 

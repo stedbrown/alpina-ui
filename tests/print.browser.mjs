@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import { createElement as h } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { Card, Prose, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'alpina-ui'
+import { Card, Prose, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Tabs } from 'alpina-ui'
 import { launchBrowser } from './launch-browser.mjs'
 
 const browser = await launchBrowser()
@@ -25,5 +25,25 @@ try {
   const pdf = (await page.pdf({ preferCSSPageSize: true })).toString('latin1')
   assert.ok((pdf.match(/\/Type\s*\/Page\b/g) ?? []).length > 1)
   assert.match(pdf, /\/MediaBox\s*\[0 0 59[45][\d.]* 84[12][\d.]*\]/)
+  for (const orientation of ['horizontal', 'vertical']) {
+    const tabs = h(Tabs, {
+      label: 'Statement views', orientation, defaultValue: 'summary',
+      items: ['details', 'summary'].map(value => ({
+        value, label: value, content: h('a', { href: 'https://statement.example/' + value }, 'Read ' + value),
+      })),
+    })
+    await page.locator('body').evaluate((body, markup) => { body.innerHTML = markup }, renderToStaticMarkup(tabs))
+    assert.ok(await page.getByRole('tablist', { includeHidden: true }).isHidden())
+    const panel = page.getByRole('tabpanel')
+    assert.equal(await panel.count(), 1)
+    assert.equal(await panel.innerText(), 'Read summary')
+    assert.equal(await panel.evaluate(el => el.offsetWidth), await page.locator('.al-tabs').evaluate(el => el.offsetWidth))
+    const printed = (await page.pdf({ preferCSSPageSize: true })).toString('latin1')
+    assert.ok(printed.includes('https://statement.example/summary'))
+    assert.ok(!printed.includes('https://statement.example/details'))
+    await page.emulateMedia({ media: 'screen' })
+    assert.equal(await page.getByRole('tab').count(), 2)
+    await page.emulateMedia({ media: 'print' })
+  }
   console.log('A4 document printing passed for navigation, link destinations, table rows and cards.')
 } finally { await browser.close() }

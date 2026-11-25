@@ -28,7 +28,15 @@ Use `Icon` for interface symbols. The installed `iconNames` export lists the sup
 
 ## Four common tasks
 
+Set `AlpinaProvider locale="it-CH"` at the application boundary so fields, validation and portals share a language. Use a component-level locale for an intentional bilingual preview. Set the document's `lang` and translate your own content separately.
+
+For a workspace with persistent navigation, pass a `SideNav` to the `sidebar` prop of `AppShell`, and supply its brand and mobile navigation labels. Mount one `Toaster` with a localized `closeLabel` and call `toast(message)` from the browser event that completes an action. A persistent field error belongs in the form.
+
+To compare periods in a chart, give `BarChart` or `LineChart` a `series` array. Each series has a `name` and `data` points with the same category labels. Supply a title, description and meaningful table labels so the same comparison reads well without the graphic.
+
 ### Print an invoice with a QR payment slip
+
+For a grouped invoice number, `createQrReference('2026-0141', { stripSeparators: true })` preserves its digits. For an alphanumeric identifier and an ordinary IBAN, use `createCreditorReference('INV-2026-0141', { stripSeparators: true })`. Keep long identifiers as strings.
 
 Pass structured creditor and debtor addresses in `payment`. Pair a QR-IBAN with a QRR reference. With an ordinary IBAN, supply a valid SCOR reference or omit the reference. The invoice derives the payable amount from the VAT-exclusive lines. Pass the mounted article to `printSwissDocument` to print this invoice from an application page.
 

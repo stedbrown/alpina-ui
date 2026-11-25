@@ -65,12 +65,10 @@ function ComponentContract({ entry }: { entry: ApiEntry }) {
         ]} />
       )}
       {entry.types.length > 0 && (
-        <Collapsible summary={'Types used by ' + entry.name}>
-          <CodeBlock
-            label="TypeScript definitions"
-            code={entry.types.map((type) => type.definition).join('\n\n')}
-          />
-        </Collapsible>
+        <Stack gap={3}>
+          <Typography as="h4" variant="heading">Types used by {entry.name}</Typography>
+          {entry.types.map(type => <CodeBlock key={type.name} label={type.name} code={type.definition} />)}
+        </Stack>
       )}
     </Stack>
   )

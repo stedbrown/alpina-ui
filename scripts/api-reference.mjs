@@ -100,6 +100,18 @@ const help = {
   'Field.children': 'Passes the control the attributes that associate its label, instructions, and error message.',
 }
 
+// Expand structural union branches so a reader can use the shape without following aliases.
+function objectBranch(type, checker, local, location) {
+  const fields = checker.getPropertiesOfType(type)
+  if (!fields.length || !fields.every(prop => prop.declarations?.some(d => local(d) && ts.isPropertySignature(d)))) return
+  return '{\n' + fields.map(prop => {
+    const optional = Boolean(prop.flags & ts.SymbolFlags.Optional)
+    const resolved = checker.getTypeOfPropertyOfType(type, prop.name)
+    const text = checker.typeToString(resolved, location, ts.TypeFormatFlags.NoTruncation)
+    return '  ' + prop.name + (optional ? '?' : '') + ': ' + text + ';'
+  }).join('\n') + '\n}'
+}
+
 function relatedTypes(declarations, checker, local) {
   const definitions = new Map()
   function collect(node) {
@@ -129,10 +141,12 @@ function relatedTypes(declarations, checker, local) {
           const type = checker.getTypeFromTypeNode(decl.type)
           const literals =
             type.isUnion() && type.types.every((t) => t.isStringLiteral() || t.isNumberLiteral())
+          const branches = type.isUnion() && !literals ? type.types.map(t => objectBranch(t, checker, local, decl)) : []
+          const parameters = decl.typeParameters ? '<' + decl.typeParameters.map(concise).join(', ') + '>' : ''
           const body = literals
             ? type.types.map((t) => checker.typeToString(t)).join(' | ')
-            : concise(decl.type)
-          definition = 'type ' + name + ' = ' + body
+            : branches.length && branches.every(Boolean) ? branches.join(' | ') : concise(decl.type)
+          definition = 'type ' + name + parameters + ' = ' + body
           if (!literals) collect(decl.type)
         }
         definitions.set(decl, { name, definition })

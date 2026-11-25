@@ -67,6 +67,18 @@ try {
       await page.goto(siteOrigin + '/docs/#multilingual-field')
       await checkView(page, 'multilingual-field')
     }
+    for (const [slug, name, type, fields] of [
+      ['invoice-document', 'InvoiceDocument', 'InvoiceLine', ['quantity:', 'unitPrice:']],
+      ['swiss-qr-bill', 'SwissQrBill', 'SwissQrAddress', ['postalCode:', 'country:']],
+      ['data-table', 'DataTable', 'DataTableColumn', ['format:', 'cell:', 'value:']],
+    ]) {
+      await page.goto(siteOrigin + '/docs/components/' + slug + '/')
+      if (javaScriptEnabled) await page.getByRole('button', { name: 'API', exact: true }).click()
+      await page.getByRole('heading', { name: 'Types used by ' + name, exact: true }).waitFor()
+      const listing = page.getByRole('region', { name: type, exact: true })
+      await listing.waitFor()
+      for (const field of fields) assert.ok((await listing.innerText()).includes(field), type + '.' + field)
+    }
     await page.close()
   }
 

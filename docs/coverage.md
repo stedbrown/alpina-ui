@@ -1,6 +1,6 @@
 # Component coverage compared with shadcn/ui
 
-Alpina UI 0.13.0 has 96 installable component entries. The table below maps 66 of them to the families in the shadcn/ui **All Components** index recorded on November 24, 2026. The other 30 cover Swiss forms, formatting, icons, layout and navigation. The four copyable pages in Alpina's block gallery have their own CLI names and are counted separately. [Official shadcn/ui component index](https://ui.shadcn.com/docs/components) · [Alpina block gallery](https://alpina-ui.vercel.app/blocks/)
+Alpina UI 0.13.0 has 96 installable component entries. The table below maps 66 of them to the families in the shadcn/ui **All Components** index recorded on November 24, 2026. The other 30 cover Swiss forms, formatting, icons, layout and navigation. The five copyable pages in Alpina's block gallery have their own CLI names and are counted separately. [Official shadcn/ui component index](https://ui.shadcn.com/docs/components) · [Alpina block gallery](https://alpina-ui.vercel.app/blocks/)
 
 ## Differences to consider
 

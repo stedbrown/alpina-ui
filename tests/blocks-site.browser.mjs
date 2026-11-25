@@ -90,7 +90,7 @@ try {
   assert.equal(quote.suggestedFilename(), 'studio-annual-quote.txt')
   assert.match(await readFile(await quote.path(), 'utf8'), /Billing interval: annual\nTotal per year: .*490/)
   assert.deepEqual(errors, [])
-  console.log('All four hosted blocks passed 390 px, landmarks, sign-in, settings, filtering, sorting and quote download checks.')
+  console.log('Login, dashboard, account settings and pricing passed 390 px, landmarks, sign-in, settings, filtering, sorting and quote download checks.')
 } finally {
   await browser.close()
 }

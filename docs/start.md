@@ -1,6 +1,6 @@
 # Getting started
 
-Alpina UI 0.13.0 includes 96 installable React component entries and four copyable pages. The package contains ESM modules, TypeScript declarations, stylesheets and editable source. The catalog and guides are in English. The address form provides field labels and error messages in all four Swiss national languages.
+Alpina UI 0.13.0 includes 96 installable React component entries and five copyable pages. The package contains ESM modules, TypeScript declarations, stylesheets and editable source. The catalog and guides are in English. The address form provides field labels and error messages in all four Swiss national languages.
 
 <!-- alpina-download -->
 

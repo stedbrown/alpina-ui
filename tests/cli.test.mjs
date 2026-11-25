@@ -101,9 +101,9 @@ test('add --all copies the union of all registry entries once', async (t) => {
   )
 })
 
-test('list exposes the four editable blocks and a block-only add copies the source and notice', async (t) => {
+test('list exposes the editable blocks and a block-only add copies the source and notice', async (t) => {
   const { run, destination } = await fixture(t)
-  const names = ['account-settings', 'dashboard', 'login', 'pricing']
+  const names = ['account-settings', 'dashboard', 'login', 'pricing', 'public-service']
   const blockNames = names.map(name => 'block/' + name)
   const { stdout } = await run('list')
   assert.ok(stdout.includes('blocks\n  ' + blockNames.join(', ')))

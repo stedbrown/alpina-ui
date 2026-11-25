@@ -1,6 +1,10 @@
 import type { ReactElement } from 'react'
 
 export const blockDemos: Record<string, () => Promise<ReactElement>> = {
+  async 'public-service'() {
+    const { PublicServiceBlock } = await import('../blocks/public-service.js')
+    return <PublicServiceBlock />
+  },
   async login() {
     const { LoginBlock } = await import('../blocks/login.js')
     return <LoginBlock workspaceName="Atelier" initialEmail="demo@example.org" continueHref="/blocks/dashboard/"

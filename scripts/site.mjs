@@ -230,7 +230,7 @@ export async function buildWebsite({ guides, guideFiles, apiReference, component
     }
   }
   await page(reviewRoute, 'Portal design review', 'Compare the Alpina homepage, component directory and reference before and after the 0.11 release.', render(ReferencePage, { html: review }))
-  await page('/blocks/', 'Page blocks', 'Copy complete login, dashboard, account settings and CHF pricing pages with the Alpina CLI.', render(Blocks))
+  await page('/blocks/', 'Page blocks', 'Copy login, dashboard, account settings, CHF pricing and public service pages with the Alpina CLI.', render(Blocks))
   for (const block of blocks) {
     await page('/blocks/' + block.slug + '/', block.title + ' block', block.detail, render(BlockPage, { block, preview: renderToString(await blockDemos[block.slug]()) }), { block: true })
   }

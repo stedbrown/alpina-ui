@@ -65,6 +65,15 @@ try {
     ' return <main data-verified="' + index + '">Component boundaries verified</main>',
     '}',
   ].join('\n'))
+  // Compile the same editable source a consumer gets from the packaged CLI.
+  const serviceRoute = join(project, 'app/public-service')
+  const copy = spawnSync(process.execPath, [join(packed, 'cli/alpina.mjs'), 'add', 'block/public-service',
+    '--dir', 'app/public-service/components'], { cwd: project, encoding: 'utf8' })
+  assert.equal(copy.status, 0, copy.stderr)
+  await writeFile(join(serviceRoute, 'page.jsx'), [
+    "import { PublicServiceBlock } from './components/blocks/public-service'",
+    'export default function Page() { return <PublicServiceBlock /> }',
+  ].join('\n'))
   const cli = join(here, 'node_modules/next/dist/bin/next')
   const run = spawnSync(process.execPath, [cli, 'build'], {
     cwd: project, env: { ...process.env, NEXT_TELEMETRY_DISABLED: '1' }, stdio: 'inherit',
@@ -72,6 +81,9 @@ try {
   assert.equal(run.status, 0, 'Next failed to prerender the package contract')
   const html = await readFile(join(project, '.next/server/app/index.html'), 'utf8')
   assert.ok(html.includes('data-verified="' + index + '"'), 'Next did not prerender the complete export check')
+  const service = await readFile(join(project, '.next/server/app/public-service.html'), 'utf8')
+  assert.match(service, /Residence certificate/)
+  await rm(serviceRoute, { recursive: true })
   // Build the same app again with a single client-side root import. Inspect the
   // complete deployment, including server chunks and detached browser assets.
   await writeFile(join(project, 'app/page.jsx'), [

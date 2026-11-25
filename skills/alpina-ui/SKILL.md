@@ -59,6 +59,18 @@ export function Invoice({ payment }: Pick<InvoiceDocumentProps, 'payment'>) {
 
 ### Collect an AHV number and a postal address
 
+Spread the object from the `Field` render function onto its input. It carries the control ID and the associations for its label, hint and error. Keep the submission name on the input.
+
+```tsx
+import { Field, Input } from 'alpina-ui'
+
+export function ContactEmail({ error }: { error?: string }) {
+  return <Field label="Email" description="We will send the receipt here." error={error}>
+    {control => <Input {...control} name="email" type="email" autoComplete="email" required />}
+  </Field>
+}
+```
+
 Use one form. `SwissAddressFields` supplies a fieldset and named controls. The server receives the formatted AHV string under `ahv` and can validate it with `ahvSchema('it-CH')['~standard'].validate(data.get('ahv'))`. Map the submitted address to the eCH format expected by the service and handle validation errors on the server. The `validation` guide documents the schema's output.
 
 ```tsx

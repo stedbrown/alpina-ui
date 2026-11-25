@@ -1,6 +1,9 @@
+import { enhanceCover } from './cover-controls.js'
 import { formatCHF } from 'alpina-ui/swiss/format-chf'
 import { posterEstimate } from './poster-estimate.js'
 import { enhanceSpecimen } from './type-specimen-controls.js'
+
+enhanceCover()
 
 function enhanceEstimate(card) {
   const total = card.querySelector('[data-estimate-total]')

@@ -7,7 +7,7 @@
       "group": "ui",
       "entry": "ui/grid.tsx",
       "summary": "Compose columns and rows, asymmetrical fields, and nested cards that share tracks.",
-      "usage": "Use width=\"site\" for a centered 100rem frame. Column spans follow the container width. Use fields with rows to compose rectangular areas, or select thirds or five-seven for lead/detail pairs. Give each GridItem a field name and use subgrid=\"rows\" to align content across cards. PageRegion provides a semantic landmark when the content already supplies its own grids. The optional entrance=\"sequence\" introduces an opening grid once and respects reduced motion.",
+      "usage": "Use width=\"site\" for a centered 100rem frame. Column spans follow the container width. Use fields with rows to compose rectangular areas, or select thirds or five-seven for lead/detail pairs. Give each GridItem a field name and use subgrid=\"rows\" to align content across cards. PageRegion provides a semantic landmark when the content already supplies its own grids. Use space=\"viewport\" for a full-height poster. An id on a grid with guides gives the lines a matching id ending in -guides. The optional entrance=\"sequence\" introduces an opening grid once and respects reduced motion.",
       "files": [
         "theme.css",
         "ui/grid.tsx",

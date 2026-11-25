@@ -119,5 +119,12 @@ address.al-type { font-style: normal; }
   text-wrap: wrap;
 }
 
+.al-grid-item:has(> .al-type[data-role='masthead'][data-responsive]) { container-type: inline-size; }
+.al-type[data-role='masthead'][data-responsive] {
+  font-size: clamp(2.75rem, min(17.9cqi, 31svh), 16.75rem);
+  font-weight: 680;
+  line-height: .86;
+  letter-spacing: -.052em;
+}
 .al-type[data-tracking='normal'] { letter-spacing: normal; }
 .al-type[data-tracking='optical'] { letter-spacing: var(--al-display-tracking); }

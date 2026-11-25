@@ -19,6 +19,23 @@
   gap: var(--al-gutter);
   padding-inline: var(--al-margin);
 }
+.al-layout[data-space='viewport'] > .al-grid {
+  box-sizing: border-box;
+  min-block-size: 100svh;
+  padding-block: clamp(1.5rem, 4svh, 4rem) clamp(4rem, 12svh, 8rem);
+  align-content: space-between;
+  row-gap: clamp(1rem, 3.2svh, 2.5rem);
+}
+.al-layout[data-space='viewport'] .al-grid-guides {
+  z-index: -1;
+  background: none;
+}
+.al-layout[data-space='viewport'] .al-grid-guides > i {
+  border: 0;
+  border-inline-start: 1px solid color-mix(in srgb, currentColor 19%, transparent);
+  background: transparent;
+}
+.al-grid-guides[hidden] { display: none; }
 .al-grid-item {
   grid-column: var(--al-start-s, auto) / span var(--al-span-s);
   min-width: 0;

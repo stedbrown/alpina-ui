@@ -153,7 +153,7 @@ try {
           const range = new Range(); range.selectNodeContents(n)
           return [...range.getClientRects()].filter(r => r.width).length
         })
-        const intro = section.querySelector('.al-grid-item:last-child p').firstChild
+        const intro = section.querySelector('#cover-intro').firstChild
         const broken = [...intro.textContent.matchAll(/[A-Za-z]+/g)].filter(match => {
           const range = new Range()
           range.setStart(intro, match.index)

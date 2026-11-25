@@ -39,8 +39,8 @@ export interface GridProps extends HTMLAttributes<HTMLDivElement> {
   /** Introduce the first three rows once. Respects the reader's reduced-motion setting. */
   entrance?: 'sequence'
   as?: 'div' | 'header' | 'main' | 'section' | 'article' | 'footer'
-  /** Block padding for a compact band, a content section, or a larger opening section. */
-  space?: 'compact' | 'section' | 'cover'
+  /** Block padding for a band or section. A viewport cover fills at least 100svh and grows with its content. */
+  space?: 'compact' | 'section' | 'cover' | 'viewport'
   /** Center the columns in the site's 100rem frame while the surface stays full width. */
   width?: 'site' | 'full'
   /** Align items within their grid row. The default is stretch. */
@@ -94,7 +94,7 @@ export const Grid = forwardRef<HTMLElement, GridProps>(function Grid(
         </div>
       )}
       {guides && (
-        <div className="al-grid-guides" aria-hidden="true">
+        <div className="al-grid-guides" id={props.id ? props.id + '-guides' : undefined} aria-hidden="true">
           {tracks.map(i => (
             <i key={i} data-field-track={fields !== undefined && i < columns || undefined} />
           ))}

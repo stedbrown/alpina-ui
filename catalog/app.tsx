@@ -146,20 +146,9 @@ function Workbench({
   const key = (name + 'Example') as keyof typeof demos
   const Demo = demos[key]
   const source = sources[key]
-  const guide =
-    ['swiss-qr-bill', 'qr-bill-scanner'].includes(id) ? 'qr-bill' : key in elements
-      ? 'elements'
-      : key in actions
-        ? 'actions'
-        : key in workflows
-          ? 'workflows'
-          : key in portal
-            ? 'portal'
-            : ['grid', 'typography', 'stack'].includes(id)
-              ? 'design'
-              : files[0].startsWith('ui/')
-                ? 'core'
-                : files[0].split('/')[0]
+  const guide = ['swiss-qr-bill', 'qr-bill-scanner'].includes(id) ? 'qr-bill'
+    : ['grid', 'typography', 'stack'].includes(id) ? 'design'
+    : files[0].startsWith('swiss/') ? 'swiss' : 'build'
   return (
     <ReferenceArticle title={hostedDocs ? name : title} headingId="item-heading"
       summary={description} identifier={hostedDocs ? 'alpina-ui/' + files[0].replace(/\.tsx$/, '') : name}

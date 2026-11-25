@@ -245,35 +245,9 @@ try {
   await page.goForward()
   await guide.getByRole('heading', { level: 1 }).waitFor()
   await page.setViewportSize({ width: 390, height: 844 })
-  for (const name of [
-    'start',
-    'core',
-    'interactive',
-    'swiss',
-    'qr-bill',
-    'validation',
-    'api-stability',
-    'design',
-    'research',
-    'portal',
-    'elements',
-    'actions',
-    'workflows',
-    'coverage',
-    'migrate-1-0',
-    'beta-review',
-    'migration',
-    'cli',
-    'release',
-    'directory',
-  ]) {
-    const source = await readFile(
-      new URL(
-        'docs/' + (['elements', 'actions', 'workflows'].includes(name) ? name + '-v3' : name) + '.md',
-        root,
-      ),
-      'utf8',
-    )
+  const manifest = JSON.parse(await readFile(new URL('cli/public-guides.json', root), 'utf8'))
+  for (const { id: name, file } of manifest) {
+    const source = await readFile(new URL('docs/' + file, root), 'utf8')
     const h1 = /^# (.+)$/m.exec(normalize(source))[1]
     await main.getByRole('navigation', { name: 'Guide sections' }).locator('a[href="#guide/' + name + '"]').click()
     await guide.getByRole('heading', { level: 1, name: h1 }).waitFor()
@@ -292,7 +266,7 @@ try {
   console.log(
     'Offline catalog passed: ' + registry.items.length + ' previews, ' +
       inspected.size +
-      ' source files, 20 guides, the 4/8/12-column specimen and the address book.',
+      ' source files, ' + manifest.length + ' guides, the 4/8/12-column specimen and the address book.',
   )
 } finally {
   await browser.close()

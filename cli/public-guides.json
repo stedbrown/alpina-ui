@@ -72,31 +72,6 @@
     "navigation": "candidate"
   },
   {
-    "id": "core",
-    "title": "Core",
-    "file": "core.md"
-  },
-  {
-    "id": "interactive",
-    "title": "Interactions",
-    "file": "interactive.md"
-  },
-  {
-    "id": "actions",
-    "title": "Actions",
-    "file": "actions-v3.md"
-  },
-  {
-    "id": "elements",
-    "title": "Elements",
-    "file": "elements-v3.md"
-  },
-  {
-    "id": "workflows",
-    "title": "Workflows",
-    "file": "workflows-v3.md"
-  },
-  {
     "id": "research",
     "title": "Research",
     "file": "research.md"

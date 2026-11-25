@@ -196,3 +196,26 @@ Timetable digits must be comparable row by row. Alpina uses tabular figures for 
 The 1978–80 Swiss Federal Railways (SBB) manual documents the construction of the symbol, pictograms, platform numbers, and sign dimensions. Hans Hartmann designed the mark in 1972. Müller-Brockmann and his collaborators later addressed the relationships among symbols, text, and sign surfaces. In an interface, a position can likewise retain its meaning across views. The selected entry, view title, and content form a route that can also be followed with a keyboard. [Museum für Gestaltung Zürich, SBB manual](https://old.eguide.ch/en/objekt/sbb/)
 
 Today's SBB digital design system publishes column counts, margins, and gutters for different available widths. Its visual design guidance also addresses zoom and interactive targets. This is a precedent for documenting the measurements of a product. In Alpina, breakpoints refer to a component's container so a grid inside a panel responds to the width of that panel. [SBB Lyne layout](https://digital.sbb.ch/en/design-system/lyne/design-tokens/layout/) · [SBB accessible visual design](https://digital.sbb.ch/en/accessibility/roles/visual-design/)
+
+## A typographic cover in React
+
+```tsx
+import { Grid, GridItem, Typography } from 'alpina-ui'
+
+export function ProgrammeCover() {
+  return (
+    <Grid as="section" surface="accent" space="cover" entrance="sequence" aria-labelledby="programme-title">
+      <GridItem medium={5} large={8}>
+        <Typography id="programme-title" as="h1" variant="masthead" tracking="optical">
+          Spring programme
+        </Typography>
+      </GridItem>
+      <GridItem medium={3} large={3} start={{ large: 10 }}>
+        <Typography>Print workshops and open studios.</Typography>
+      </GridItem>
+    </Grid>
+  )
+}
+```
+
+The masthead scales with its grid container from 44 to 148 CSS pixels at the default root size. Its 0.94 em line height rounds to the baseline unit. Optical tracking follows the display scale. Choose `tracking="normal"` to compare the font's original spacing. The optional entrance moves grid items eight pixels into place once, with the last group starting after 105 ms. Readers who prefer reduced motion see the finished layout immediately. [Typography reference](https://alpina-ui.vercel.app/docs/components/typography/) · [Grid reference](https://alpina-ui.vercel.app/docs/components/grid/)

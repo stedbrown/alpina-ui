@@ -4,6 +4,7 @@ import {
   Typography, formatCHF,
 } from 'alpina-ui'
 import { initialCopies, posterEstimate } from './poster-estimate.js'
+import { PressQueue } from './landing-samples.js'
 import { SectionIntro } from './landing-sections.js'
 
 const printWeeks = [
@@ -97,6 +98,7 @@ export function HomeShowcase({ queue }: { queue: string }) {
     </SectionIntro></GridItem>
     <GridItem medium={5} large={7} start={{ large: 6 }}><PrintEstimate /></GridItem>
     <GridItem medium={4} large={5}><PressLog /></GridItem>
-    <GridItem medium={4} large={7} start={{ large: 6 }}><Stack gap={4} data-landing-island="queue" dangerouslySetInnerHTML={{ __html: queue }} /></GridItem>
+    <GridItem medium={4} large={7} start={{ large: 6 }}><Stack scripting="enabled" gap={4} data-landing-island="queue" dangerouslySetInnerHTML={{ __html: queue }} />
+      <Stack scripting="none"><PressQueue interactive={false} /></Stack></GridItem>
   </Grid>
 }

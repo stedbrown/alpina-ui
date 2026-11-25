@@ -139,6 +139,10 @@ try {
   }
 
   const staticPage = await homepage(false)
+  const staticQueue = staticPage.getByRole('table', {name:'Print queue'})
+  assert.equal(await staticQueue.getByRole('button').count(), 0)
+  await staticPage.getByText('View job sheet', {exact:true}).filter({ visible: true }).press('Enter')
+  assert.ok(await staticPage.getByText('150 copies', {exact:true}).filter({visible:true}).isVisible())
   const staticEstimate = staticPage.getByRole('region', { name: 'Poster estimate' })
   assert.ok(await staticEstimate.getByText('100 copies · Black ink').isVisible())
   assert.match(await staticEstimate.getByRole('status').innerText(), /CHF\s*144\.00/)

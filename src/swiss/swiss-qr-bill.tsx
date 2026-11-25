@@ -2,6 +2,7 @@ import { LocalizedSwissQrBill } from './swiss-qr-bill-locale.internal.js'
 import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import { formatCreditorReference, formatQrReference, prepareSwissQrBill, type SwissQrAddress, type SwissQrBillData } from './qr-payment.js'
 import { qrMatrix } from './qr-matrix.js'
+import { formatSwissNumber } from './format-swiss-number.js'
 import type { SwissLocale } from './locales.js'
 import './swiss-qr-bill.css'
 
@@ -70,6 +71,14 @@ const readingLabels = {
   'it-CH': 'Leggi i dati di pagamento', 'rm-CH': 'Leger las indicaziuns da pajament',
 }
 
+const screenLabels = {
+  en: ['Account', 'Payable to', 'Enlarge payment slip'],
+  'de-CH': ['Konto', 'Zahlbar an', 'Zahlteil vergrössern'],
+  'fr-CH': ['Compte', 'Payable à', 'Agrandir la section paiement'],
+  'it-CH': ['Conto', 'Pagabile a', 'Ingrandisci la cedola'],
+  'rm-CH': ['Conto', 'Da pajar a', 'Engrondir la part da pajament'],
+} as const
+
 const blankLabels = {
   en: 'To be completed', 'de-CH': 'Auszufüllen', 'fr-CH': 'À compléter', 'it-CH': 'Da compilare', 'rm-CH': 'D’emplenir',
 }
@@ -124,10 +133,13 @@ function Entry({ title, children }: { title: string; children: ReactNode }) {
   return <div className="al-bill-entry"><dt>{title}</dt><dd>{children}</dd></div>
 }
 
-function Details({ bill, words, receipt = false, blankLabel }: { bill: Payment; words: BillLabels; receipt?: boolean; blankLabel?: string }) {
-  const reference = bill.type === 'QRR'
-    ? formatQrReference(bill.reference)
+function formattedReference(bill: Payment) {
+  return bill.type === 'QRR' ? formatQrReference(bill.reference)
     : bill.type === 'SCOR' ? formatCreditorReference(bill.reference) : ''
+}
+
+function Details({ bill, words, receipt = false, blankLabel }: { bill: Payment; words: BillLabels; receipt?: boolean; blankLabel?: string }) {
+  const reference = formattedReference(bill)
   const omitStreet = receipt && [bill.creditor, bill.debtor].some(party => party &&
     (party.name.length > 22 || party.town.length + party.postalCode.length > 21 ||
      (party.street?.length ?? 0) + (party.buildingNumber?.length ?? 0) > 22))
@@ -157,38 +169,51 @@ export const SwissQrBill = forwardRef<HTMLDivElement, SwissQrBillProps>(function
   const { bill, locale, printLayout = 'page', fit = false, className = '', ...props } = input
   const payment = prepareSwissQrBill(bill, locale)
   const words = headings[locale]
+  const [account, payee, enlarge] = screenLabels[locale]
+  const reference = formattedReference(payment)
+  const amount = payment.amount && formatSwissNumber(payment.amount, locale, { minimumFractionDigits: 2 })
+  const total = locale === 'fr-CH' ? amount + '\u00a0' + payment.currency : payment.currency + '\u00a0' + amount
   const dense = !payment.amount || [payment.creditor, payment.debtor].some(party => party &&
     (party.name.length > 36 || (party.street?.length ?? 0) > 42 || party.town.length > 24)) ||
     payment.message.length + payment.billingInformation.length > 60
   return (
-    <><div {...props} ref={ref} className={('al-qr-bill ' + className).trim()} data-print-layout={printLayout} data-fit={fit || undefined}
-      lang={locale} dir="ltr" role="region" aria-label={props['aria-label'] ?? words.receipt + ' / ' + words.payment} tabIndex={props.tabIndex ?? (fit ? undefined : 0)}>
-      <div className="al-bill-slip">
-        <section className="al-bill-receipt" aria-label={words.receipt}>
-          <h2>{words.receipt}</h2>
-          <Details bill={payment} words={words} receipt />
-          <Amount bill={payment} words={words} receipt />
-          <strong className="al-bill-accept">{words.acceptance}</strong>
-        </section>
-        <section className="al-bill-payment" aria-label={words.payment} data-dense={dense || undefined}>
-          <h2>{words.payment}</h2>
-          <QrCode payload={payment.payload} label={qrNames[locale]} />
-          <Amount bill={payment} words={words} />
-          <Details bill={payment} words={words} />
-          {payment.alternatives.length > 0 && <div className="al-bill-procedures">
-            {payment.alternatives.map((line, index) => {
-              const name = line.match(/^[A-Za-z0-9]+/)?.[0] ?? ''
-              return <div key={index}><b>{name}</b>{line.slice(name.length)}</div>
-            })}
-          </div>}
-        </section>
+    <div className="al-bill-presenter" lang={locale}>
+      <dl className="al-bill-highlights">
+        <Entry title={words.amount}>{amount ? total : blankLabels[locale]}</Entry>
+        <Entry title={payee}>{payment.creditor.name}</Entry>
+        <Entry title={account}><bdi>{grouped(payment.iban, 4)}</bdi></Entry>
+        {reference && <Entry title={words.reference}><bdi>{reference}</bdi></Entry>}
+      </dl>
+      <label className="al-bill-enlarge"><input type="checkbox" />{enlarge}</label>
+      <div {...props} ref={ref} className={('al-qr-bill ' + className).trim()} data-print-layout={printLayout} data-fit={fit || undefined}
+        lang={locale} dir="ltr" role="region" aria-label={props['aria-label'] ?? words.receipt + ' / ' + words.payment} tabIndex={props.tabIndex ?? 0}>
+        <div className="al-bill-slip">
+          <section className="al-bill-receipt" aria-label={words.receipt}>
+            <h2>{words.receipt}</h2>
+            <Details bill={payment} words={words} receipt />
+            <Amount bill={payment} words={words} receipt />
+            <strong className="al-bill-accept">{words.acceptance}</strong>
+          </section>
+          <section className="al-bill-payment" aria-label={words.payment} data-dense={dense || undefined}>
+            <h2>{words.payment}</h2>
+            <QrCode payload={payment.payload} label={qrNames[locale]} />
+            <Amount bill={payment} words={words} />
+            <Details bill={payment} words={words} />
+            {payment.alternatives.length > 0 && <div className="al-bill-procedures">
+              {payment.alternatives.map((line, index) => {
+                const name = line.match(/^[A-Za-z0-9]+/)?.[0] ?? ''
+                return <div key={index}><b>{name}</b>{line.slice(name.length)}</div>
+              })}
+            </div>}
+          </section>
+        </div>
       </div>
+      <details className="al-bill-reading" lang={locale}>
+        <summary>{readingLabels[locale]}</summary>
+        <Details bill={payment} words={words} blankLabel={blankLabels[locale]} />
+        <Amount bill={payment} words={words} blankLabel={blankLabels[locale]} />
+        {payment.alternatives.map((line, index) => <p key={index}>{line}</p>)}
+      </details>
     </div>
-    <details className="al-bill-reading" lang={locale}>
-      <summary>{readingLabels[locale]}</summary>
-      <Details bill={payment} words={words} blankLabel={blankLabels[locale]} />
-      <Amount bill={payment} words={words} blankLabel={blankLabels[locale]} />
-      {payment.alternatives.map((line, index) => <p key={index}>{line}</p>)}
-    </details></>
   )
 })

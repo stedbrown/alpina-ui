@@ -237,7 +237,7 @@
   "invoice-document": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "fb82315527b8959dc4ca"
+    "source": "f588bf3cf5d54896d1a9"
   },
   "item": {
     "stage": "Stable",
@@ -422,7 +422,7 @@
   "swiss-qr-bill": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "1f3232015e672d475226"
+    "source": "320c2fb7341ed9f6784b"
   },
   "switch": {
     "stage": "Stable",

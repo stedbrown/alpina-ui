@@ -24,6 +24,8 @@ export function PaymentSlip() {
 }
 ```
 
+On a narrow screen, the amount, beneficiary, account and payment reference appear above a miniature of the complete slip. Select **Enlarge payment slip** to inspect the original at actual size. Use Tab to focus the slip and the arrow keys to move across it. Printing always uses the physical dimensions.
+
 ## Generate a payment reference
 
 Keep the unformatted reference in the payment data. A QR-IBAN takes a QR reference (QRR). An ordinary IBAN can take an ISO 11649 creditor reference (SCOR). Pass a string to preserve leading zeroes or a long invoice number.

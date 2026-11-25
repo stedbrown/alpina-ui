@@ -2270,7 +2270,7 @@
   "swiss-qr-bill": {
     "use": "Place the Swiss QR payment part and its receipt together beneath a payable invoice.",
     "avoid": "Use InvoiceDocument when a customer also needs line items, the tax breakdown and the amount due.",
-    "access": "Keep the human-readable payee, account, reference and amount available alongside the QR code. Verify the physical print at actual size.",
+    "access": "On a phone, read the amount, payee, account and reference above the slip. Select Enlarge payment slip to inspect it at actual size, then focus it and use the arrow keys. The printed payment part stays 210 × 105 mm.",
     "content": "Use the supported payment-part language for prescribed headings. Translate the surrounding payment instructions separately and keep them outside the QR code’s clear area.",
     "example": {
       "good": "Account / Payable to",
@@ -2285,7 +2285,7 @@
     "keys": [
       [
         "Tab / Shift+Tab",
-        "Focus the reading-view summary or the scrollable slip when fit is disabled."
+        "Focus the enlargement control on narrow screens, the payment slip or the reading-view summary."
       ],
       [
         "Enter / Space",

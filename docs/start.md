@@ -85,6 +85,8 @@ Library classes use the `al-` prefix. Apply the dark theme to an entire app or t
 
 ## Runtime and accessibility
 
+The Next.js 16 example renders two public sample invoices at `/invoices/[id]` with Cache Components enabled. The page supplies IDs with `generateStaticParams()`, awaits the route params on the server and passes the matching data to `InvoiceDocument`. A small client component owns the print button. For private invoices, read and authorize the request on the server behind a Suspense boundary. [Invoice route](https://github.com/stedbrown/alpina-ui/tree/main/integrations/next-app-router/app/invoices) · [Next.js routing](https://nextjs.org/docs/app/api-reference/functions/generate-static-params)
+
 Three runnable projects exercise this package with a Next.js Server Action, React Router links and a React Hook Form backed by a Zod schema. Each includes a production build and a browser test. [Integration projects and setup](https://github.com/stedbrown/alpina-ui/tree/main/integrations)
 
 Form controls use native HTML elements. Interactive components use the browser after hydration. Modals use `HTMLDialogElement.showModal()`. In frameworks with React Server Components, place `"use client"` in application components that manage interactive state, callbacks, or render props. You can import `formatCHF` and `formatSwissDate` in server code.

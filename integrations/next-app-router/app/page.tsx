@@ -1,3 +1,5 @@
+import Link from 'next/link'
+import { TextLink } from 'alpina-ui'
 import { cookies } from 'next/headers'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from 'alpina-ui/ui/card'
 import { Stack } from 'alpina-ui/ui/stack'
@@ -22,6 +24,7 @@ export default async function BillingPreferences() {
             <Stack>
               <p>Invoice language: <span lang={locale}>{localeNames[locale]}</span></p>
               <p>Annual subscription: <CurrencyCHF locale={locale} amount={1250} /></p>
+              <TextLink asChild><Link href="/invoices/AP-104">Open sample invoice</Link></TextLink>
               <BillingForm locale={locale} />
               <PaymentForm locale={locale} />
             </Stack>

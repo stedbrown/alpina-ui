@@ -25,6 +25,12 @@ To copy a project out of the repository, change its `alpina-ui` dependency from 
 
 The billing page reads a language cookie and renders the invoice amount on the server. A small client form uses React’s `useActionState` and Alpina’s native language selector. Its Server Action validates the submitted locale and stores the choice in an HTTP-only cookie. The browser test checks both successful submission and rejection of an unsupported locale, then reloads the page to verify persistence. [Next.js Server Actions](https://nextjs.org/docs/app/getting-started/mutating-data)
 
+### A dynamic invoice with Cache Components
+
+Open `/invoices/AP-104` or `/invoices/AP-105`. The Server Component in `app/invoices/[id]/page.tsx` returns both fictional IDs from `generateStaticParams`, awaits `params`, and renders the matching lines and QR slip with `InvoiceDocument`. Only the print button needs a client boundary. The production test opens both URLs and checks the second invoice in the server HTML. The root loading boundary also covers the billing page while it reads the request cookie.
+
+Use prerendering for sample or otherwise public invoices. For private billing, authorize the request and load its invoice on the server inside a request-time Suspense boundary. Keep personal invoice data out of a shared static shell. [Next.js dynamic route parameters](https://nextjs.org/docs/app/api-reference/functions/generate-static-params) · [Cache Components](https://nextjs.org/docs/app/getting-started/caching)
+
 ## Vite and React Router
 
 The invoice register uses real URLs and route parameters. Both `TextLink asChild` and `Button asChild` compose with the router’s `Link`. The browser test follows a link without reloading, refreshes the detail URL, navigates back and opens an unknown invoice. A deployed static host needs a fallback to `index.html` for client-side routes. [React Router routing](https://reactrouter.com/start/declarative/routing)

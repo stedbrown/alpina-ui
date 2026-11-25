@@ -107,6 +107,17 @@ try {
     await page.getByText('Choose one of the four billing languages.').waitFor()
     await page.reload()
     assert.equal(await locale.inputValue(), 'fr-CH')
+    await page.getByRole('link', { name: 'Open sample invoice' }).click()
+    await page.getByRole('heading', { name: 'Invoice AP-104', exact: true }).waitFor()
+    const print = page.getByRole('button', { name: 'Print invoice' })
+    await page.evaluate(() => { window.print = () => { document.documentElement.dataset.printed = 'yes' } })
+    await print.click()
+    assert.equal(await page.locator('html').getAttribute('data-printed'), 'yes')
+    const invoice = await fetch(url + '/invoices/AP-105')
+    assert.equal(invoice.status, 200)
+    const html = await invoice.text()
+    assert.ok(html.includes('Bench repair') && html.includes('AP-105') && html.includes('al-bill-slip'), 'Invoice HTML must contain its lines and QR slip before hydration')
+    assert.ok(!html.includes('Oak shelving'), 'Each route renders its own invoice')
   }, expectedRuntime ? '/peer' : '/')
   const preview = ['preview', '--host', '127.0.0.1', '--strictPort']
   await exercise('vite-react-router', 'vite/bin/vite.js', preview, async (page, url) => {

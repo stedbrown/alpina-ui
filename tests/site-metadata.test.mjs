@@ -76,6 +76,15 @@ test('an alternate-domain build shares and indexes each hosted page on that doma
     assert.equal(source.codeRepository, 'https://github.com/stedbrown/alpina-ui')
     const agentLinks = [...index.matchAll(/\]\((https?:\/\/[^)]+)\)/g)].map(match => new URL(match[1]))
     assert.ok(agentLinks.length > 10 && agentLinks.every(url => url.origin === origin))
+    const agentGuide = await read('reference/agents.md')
+    const skill = await read('skills/alpina-ui/SKILL.md')
+    for (const guidance of ['AlpinaProvider', 'Field', 'Grid', 'one red accent', 'Tailwind', 'AppShell', 'SideNav', 'Toaster', 'stripSeparators']) {
+      for (const document of [skill, agentGuide, index]) assert.ok(document.includes(guidance), guidance)
+    }
+    for (const document of [agentGuide, index]) {
+      assert.ok(document.includes('npx skills add stedbrown/alpina-ui --skill alpina-ui'))
+      assert.ok(document.includes('npm install ' + origin + '/alpina-ui-' + pkg.version + '.tgz'))
+    }
     for (const file of [start, markdown]) {
       assert.ok(file.includes(origin + '/docs/guides/migration/'))
       assert.ok(!file.includes(new URL(pkg.homepage).origin + '/'))

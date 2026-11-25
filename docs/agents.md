@@ -14,6 +14,14 @@ For an unattended project-local Codex installation, append `--agent codex --yes`
 
 For a project-local installation from the package, copy `node_modules/alpina-ui/skills/alpina-ui/` into your agent’s project skills directory. For example, an agent that uses `.agents/skills/` should find `.agents/skills/alpina-ui/SKILL.md`. The skill includes its MIT license. [Read the skill on main](https://github.com/stedbrown/alpina-ui/blob/main/skills/alpina-ui/SKILL.md) · [Agent Skills specification](https://agentskills.io/specification)
 
+## Compose a Swiss interface
+
+Start from the installed declarations or MCP before choosing props. Import `alpina-ui/styles.css` at the application entry and set the locale with `AlpinaProvider`. In a form, pass the control object from `Field` to the input so labels, hints and errors stay associated.
+
+Align headings and reading text to the left edge of the grid. Use the type scale and whitespace to distinguish sections. Keep one red accent on paper and ink. Compose with `Grid` and `Stack`. Avoid gradients, nested cards and Tailwind utility overrides.
+
+For a workspace, compose `AppShell` with `SideNav`. For brief confirmations, call `toast` with a `Toaster` mounted at the application boundary. For charts with multiple series, supply direct labels and a table description. For grouped invoice identifiers, check the `stripSeparators` option on the reference builder.
+
 ## Connect the local MCP server
 
 Install the 1.0.0-rc.5 archive from the portal in your application using Node.js 20 or later. The package includes the reference data used by the server.

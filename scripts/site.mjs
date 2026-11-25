@@ -313,11 +313,16 @@ export async function buildWebsite({ outputDir, guides, guideFiles, guideManifes
     const body = renderComponent(route)
     await page(route + '/', name + ' — ' + title, description, body, { app: true, prerender: true, guidance, noScript: '<noscript>' + contracts + '</noscript>' })
   }
+  // Share the public composition guidance with agents that only load the text index.
+  const agentGuidance = agentsMarkdown.match(/^## Compose a Swiss interface\r?\n([\s\S]*?)(?=^## )/m)?.[0].trim()
+  if (!agentGuidance) throw new Error('The agent guide is missing its composition guidance.')
   const index = [
     '# Alpina UI', '', '> React components for Swiss typography and multilingual interfaces. The current release is ' + registry.version + '.', '',
     '## Agent tools', '', '- [Agent setup](' + siteUrl + '/reference/agents.md)', '- [Project skill](' + siteUrl + '/skills/alpina-ui/SKILL.md)',
+    '', 'Install the project skill: `npx skills add stedbrown/alpina-ui --skill alpina-ui`.',
+    'Install the matching React package: `npm install ' + siteUrl + '/alpina-ui-' + registry.version + '.tgz`.', '',
     '- [Component registry](' + siteUrl + '/registry.json)', '- [TypeScript API reference](' + siteUrl + '/reference/api.json)', '- [Icon directory](' + siteUrl + '/icons/)',
-    '', '## Guides', '', '- [Design principles](' + siteUrl + '/principles/)', ...guideLinks, '', '## Blocks', '', ...blocks.map(b => '- [' + b.title + '](' + siteUrl + '/blocks/' + b.slug + '/) — alpina add block/' + b.slug),
+    '', agentGuidance, '', '## Guides', '', '- [Design principles](' + siteUrl + '/principles/)', ...guideLinks, '', '## Blocks', '', ...blocks.map(b => '- [' + b.title + '](' + siteUrl + '/blocks/' + b.slug + '/) — alpina add block/' + b.slug),
     '', '## Examples', '', ...projects.map((p) => '- [' + p.title + '](' + siteUrl + '/examples/' + p.slug + '/): ' + p.description), '',
   ]
   await Promise.all([

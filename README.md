@@ -5,13 +5,13 @@
 
 Open-source React components built on the Swiss typographic grid. Compose forms, tables and charts with a four-pixel rhythm, a measured type scale and one red accent.
 
-[![CI](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml) [![MIT license](https://img.shields.io/badge/license-MIT-222222)](LICENSE) [![Package version](https://img.shields.io/badge/version-1.0.0--rc.5-eb0000)](CHANGELOG.md)
+[![CI](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml) [![MIT license](https://img.shields.io/badge/license-MIT-222222)](LICENSE) [![Package version](https://img.shields.io/badge/version-1.0.0--rc.6-eb0000)](CHANGELOG.md)
 
 [Live site](https://alpinaui.com/) · [Start here](https://alpinaui.com/start-here/) · [Documentation](https://alpinaui.com/docs/) · [Designer kit](https://alpinaui.com/kit/) · [Design principles](https://alpinaui.com/principles/) · [Changelog](CHANGELOG.md) · [API stability](docs/api-stability.md)
 
-| Light | Dark |
+| Poster · light appearance | Print desk · dark appearance |
 | --- | --- |
-| [![Alpina homepage in light appearance](docs/images/home-light.png)](docs/images/home-light.png) | [![Alpina homepage in dark appearance](docs/images/home-dark.png)](docs/images/home-dark.png) |
+| [![Alpina homepage in light appearance](docs/images/home-light.png)](docs/images/home-light.png) | [![Print estimate, press log and production queue on the Alpina homepage in dark appearance](docs/images/home-dark.png)](docs/images/home-dark.png) |
 
 The live poster lets you set type size and tracking, operate a print queue, compare paper and ink, and enlarge a keyboard-operated form to 400%. [Explore the specimens](https://alpinaui.com/)
 
@@ -20,7 +20,7 @@ The live poster lets you set type size and tracking, operate a print queue, comp
 In an existing React 18.2 or 19 app, install the versioned archive and import the stylesheet once.
 
 ```sh
-npm install https://alpinaui.com/alpina-ui-1.0.0-rc.5.tgz
+npm install https://alpinaui.com/alpina-ui-1.0.0-rc.6.tgz
 ```
 
 ```tsx
@@ -64,7 +64,7 @@ To own the source, run `npx --no-install alpina add button`. To copy a complete 
 | Design starting point | A Swiss editorial grid, square corners and a restrained red, white and black palette. | Customizable styles and themes for building your own design system. |
 | Application fit | Swiss address, identity, holiday and payment rules are part of the package. | A general-purpose starting point for teams choosing their own domain components and rules. |
 
-Teams already using shadcn/ui can migrate one component family at a time. API differences and equivalents are documented. [Alpina migration table](https://alpinaui.com/docs/guides/migration/) · [shadcn/ui documentation](https://ui.shadcn.com/docs) · [shadcn registries](https://ui.shadcn.com/docs/registry)
+Compare the same runnable form and its source in the [homepage migration example](https://alpinaui.com/#migration-title). Teams already using shadcn/ui can migrate one component family at a time. API differences and equivalents are documented. [Alpina migration table](https://alpinaui.com/docs/guides/migration/) · [shadcn/ui documentation](https://ui.shadcn.com/docs) · [shadcn registries](https://ui.shadcn.com/docs/registry)
 
 ## Build with Alpina
 
@@ -83,6 +83,8 @@ npx skills add stedbrown/alpina-ui --skill alpina-ui
 
 The skill covers composition, Swiss forms and payments. For exact prop names the companion MCP server reads the version installed in the application. [Agent setup](https://alpinaui.com/agents/)
 
+The [independent skill trial](docs/skill-trials/README.md) includes a Swiss invoice, municipal intake form, accounting ledger and bilingual exhibition page. Each submission runs against the packaged library in a browser at phone and desktop widths.
+
 ## Site domain
 
 `homepage` in `package.json` is the default public origin. The package build copies it into `registry.json`, which supplies the documentation URLs for the CLI and MCP server. The site build uses the same origin for canonical links, sharing cards, the sitemap, robots.txt, package downloads and the agent index.
@@ -91,4 +93,4 @@ Set `SITE_URL` to an HTTP(S) origin to build the site and its documentation link
 
 ## License and data sources
 
-Alpina’s original code and artwork use the MIT license. Inter is distributed under the SIL Open Font License. Locale data includes Unicode CLDR, postal localities are derived from ©swisstopo, and the local scanner includes jsQR and Mozilla PDF.js with their decoder notices. [MIT](LICENSE) · [Inter license](src/fonts/OFL.txt) · [Unicode license](docs/UNICODE-LICENSE.txt) · [swisstopo terms](https://www.swisstopo.admin.ch/en/terms-of-use-free-geodata-and-geoservices)
+Alpina’s original code and artwork use the MIT license. The homepage comparison includes [MIT-licensed shadcn/ui controls](fixtures/migration/ui/LICENSE.md). The GitHub mark is credited in the [Octicons notice](src/ui/OCTICONS-LICENSE.txt). Inter is distributed under the SIL Open Font License. Locale data includes Unicode CLDR, postal localities are derived from ©swisstopo, and the local scanner includes jsQR and Mozilla PDF.js with their decoder notices. [MIT](LICENSE) · [Inter license](src/fonts/OFL.txt) · [Unicode license](docs/UNICODE-LICENSE.txt) · [swisstopo terms](https://www.swisstopo.admin.ch/en/terms-of-use-free-geodata-and-geoservices)

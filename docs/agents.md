@@ -24,10 +24,10 @@ For a workspace, compose `AppShell` with `SideNav`. For brief confirmations, cal
 
 ## Connect the local MCP server
 
-Install the 1.0.0-rc.5 archive from the portal in your application using Node.js 20 or later. The package includes the reference data used by the server.
+Install the 1.0.0-rc.6 archive from the portal in your application using Node.js 20 or later. The package includes the reference data used by the server.
 
 ```sh
-npm install https://alpinaui.com/alpina-ui-1.0.0-rc.5.tgz
+npm install https://alpinaui.com/alpina-ui-1.0.0-rc.6.tgz
 ```
 
 Configure a local **stdio** server in your MCP client. Start `node` with the absolute path to the installed CLI and the argument `mcp`. For clients that use the `mcpServers` JSON format, replace the example path below with your own. On Windows, paths such as `C:/projects/store/node_modules/alpina-ui/cli/alpina.mjs` work in JSON.

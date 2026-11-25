@@ -1,6 +1,6 @@
 # Erste Schritte
 
-Alpina UI 1.0.0-rc.5 enthält 97 installierbare React-Komponenten und fünf kopierbare Seiten. Das Paket liefert ESM-Module, TypeScript-Deklarationen, Stylesheets und bearbeitbaren Quellcode. Die Einführung und der Leitfaden zur Schweiz sind auch auf Deutsch, Französisch und Italienisch verfügbar. Das Adressformular bietet Feldbezeichnungen und Fehlermeldungen in allen vier Landessprachen.
+Alpina UI 1.0.0-rc.6 enthält 97 installierbare React-Komponenten und fünf kopierbare Seiten. Das Paket liefert ESM-Module, TypeScript-Deklarationen, Stylesheets und bearbeitbaren Quellcode. Die Einführung und der Leitfaden zur Schweiz sind auch auf Deutsch, Französisch und Italienisch verfügbar. Das Adressformular bietet Feldbezeichnungen und Fehlermeldungen in allen vier Landessprachen.
 
 <!-- alpina-download -->
 
@@ -13,10 +13,10 @@ Wenn deine Anwendung shadcn/ui verwendet, zeigt der Leitfaden, wie beide Bibliot
 Installiere das versionsgebundene Paket direkt vom Portal in einem Projekt mit React 18.2 oder 19 und Node.js ab Version 20.
 
 ```sh
-npm install https://alpinaui.com/alpina-ui-1.0.0-rc.5.tgz
+npm install https://alpinaui.com/alpina-ui-1.0.0-rc.6.tgz
 ```
 
-Hast du das Archiv bereits heruntergeladen, führe `npm install ./alpina-ui-1.0.0-rc.5.tgz` in seinem Verzeichnis aus. Importiere das CSS einmal am Einstiegspunkt der Anwendung. Die JavaScript-Module lassen sich auch auf dem Server ausführen.
+Hast du das Archiv bereits heruntergeladen, führe `npm install ./alpina-ui-1.0.0-rc.6.tgz` in seinem Verzeichnis aus. Importiere das CSS einmal am Einstiegspunkt der Anwendung. Die JavaScript-Module lassen sich auch auf dem Server ausführen.
 
 ```tsx
 import "alpina-ui/styles.css"

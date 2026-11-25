@@ -97,7 +97,9 @@ p.al-type { text-wrap: pretty; }
   container-type: inline-size;
 }
 .al-type[data-numeric]:is([data-role='heading'], [data-role='display']):not(span) > .al-swiss-figures > bdi {
-  font-size: clamp(.75rem, calc(150cqi / var(--al-figure-length, 10)), 1em);
+  /* Reserve space for tabular digits and user-supplied word and letter spacing. */
+  font-size: clamp(.75rem, calc(130cqi / var(--al-figure-length, 10)), 1em);
+  vertical-align: top;
 }
 
 address.al-type { font-style: normal; }

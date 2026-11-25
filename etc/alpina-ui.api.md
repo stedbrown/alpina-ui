@@ -350,6 +350,7 @@ export * from './portal/navigation-menu.js';
 export * from './portal/prose.js';
 export * from './portal/sidebar.js';
 export * from './portal/text-link.js';
+export * from './portal/theme-initialization.js';
 ~~~
 
 ## interactive/accordion.d.ts
@@ -861,17 +862,19 @@ export interface AppShellProps {
     mainId?: string;
 }
 export declare function AppShell({ brand, sidebar, toolbar, children, open, onOpenChange, openLabel, closeLabel, skipLabel, mainId, navigationLabel, contentAs: Content, }: AppShellProps): ReactElement;
-export { AppearanceButton, type AppearanceButtonProps } from './appearance-button.internal.js';
+export { AppearanceButton, ThemeToggle, type AppearanceButtonProps } from './appearance-button.internal.js';
 export { ComponentPreview, type ComponentPreviewProps } from './component-preview.internal.js';
 ~~~
 
 ## portal/appearance-button.internal.d.ts
+Client entry.
 ~~~ts
 import { type ComponentPropsWithoutRef } from 'react';
 export interface AppearanceButtonProps extends ComponentPropsWithoutRef<"button"> {
     labels?: Readonly<Record<"auto" | "light" | "dark", string>>;
 }
 export declare const AppearanceButton: import("react").ForwardRefExoticComponent<AppearanceButtonProps & import("react").RefAttributes<HTMLButtonElement>>;
+export declare const ThemeToggle: import("react").ForwardRefExoticComponent<AppearanceButtonProps & import("react").RefAttributes<HTMLButtonElement>>;
 ~~~
 
 ## portal/code-block.d.ts
@@ -921,12 +924,23 @@ export interface NavigationSection {
 export interface NavigationMenuProps extends Omit<ComponentPropsWithoutRef<"nav">, "children"> {
     label: string;
     sections: readonly NavigationSection[];
+    brand?: ReactNode;
+    actions?: ReactNode;
     orientation?: "vertical" | "horizontal";
+    surface?: "paper" | "ink" | "accent";
     collapseLabel?: string;
     align?: "start" | "end";
     onNavigate?: (href: string) => void;
 }
 export declare const NavigationMenu: import("react").ForwardRefExoticComponent<NavigationMenuProps & import("react").RefAttributes<HTMLElement>>;
+export interface NavigationBrandProps extends ComponentPropsWithoutRef<"a"> {
+    logo?: string;
+}
+export declare const NavigationBrand: import("react").ForwardRefExoticComponent<NavigationBrandProps & import("react").RefAttributes<HTMLAnchorElement>>;
+export interface NavigationActionProps extends ComponentPropsWithoutRef<"a"> {
+    icon?: ReactNode;
+}
+export declare const NavigationAction: import("react").ForwardRefExoticComponent<NavigationActionProps & import("react").RefAttributes<HTMLAnchorElement>>;
 ~~~
 
 ## portal/prose.d.ts
@@ -981,6 +995,12 @@ export interface TextLinkProps extends ComponentPropsWithoutRef<"a"> {
     variant?: "inline" | "action" | "quiet" | "skip" | "brand";
 }
 export declare const TextLink: SlottedSignature<TextLinkProps> & ForwardRefExoticComponent<TextLinkProps & RefAttributes<HTMLAnchorElement>>;
+~~~
+
+## portal/theme-initialization.d.ts
+~~~ts
+export declare function initializeTheme(): void;
+export declare const themeInitializationScript: string;
 ~~~
 
 ## swiss/address-lines.d.ts
@@ -2775,6 +2795,10 @@ export interface GridSpecimenProps extends ComponentPropsWithoutRef<"div"> {
     label: string;
     zoom?: number;
     palette?: "system";
+    document?: {
+        src: string;
+        title: string;
+    };
 }
 export declare const GridSpecimen: import("react").ForwardRefExoticComponent<GridSpecimenProps & import("react").RefAttributes<HTMLDivElement>>;
 export interface GridMeasurements {
@@ -2866,6 +2890,10 @@ declare const paths: {
     folder: string;
     book: string;
     code: string;
+    "theme-auto": string;
+    sun: string;
+    moon: string;
+    github: string;
     "git-branch": string;
     "git-commit": string;
     repository: string;

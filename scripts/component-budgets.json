@@ -20,9 +20,9 @@
     "css": 1728
   },
   "app-shell": {
-    "js": 4352,
+    "js": 6592,
     "lazy": 0,
-    "css": 2624
+    "css": 2816
   },
   "aspect-ratio": {
     "js": 320,
@@ -215,7 +215,7 @@
     "css": 704
   },
   "icon": {
-    "js": 1408,
+    "js": 2048,
     "lazy": 0,
     "css": 128
   },
@@ -300,9 +300,9 @@
     "css": 1088
   },
   "navigation-menu": {
-    "js": 1472,
+    "js": 3712,
     "lazy": 0,
-    "css": 1088
+    "css": 2112
   },
   "pagination": {
     "js": 384,
@@ -325,14 +325,14 @@
     "css": 448
   },
   "prose": {
-    "js": 1024,
+    "js": 1408,
     "lazy": 0,
-    "css": 1920
+    "css": 2176
   },
   "qr-bill-scanner": {
-    "js": 17792,
+    "js": 18944,
     "lazy": 770560,
-    "css": 2816
+    "css": 3200
   },
   "questionnaire": {
     "js": 2368,
@@ -372,7 +372,7 @@
   "sidebar": {
     "js": 1280,
     "lazy": 0,
-    "css": 1408
+    "css": 2368
   },
   "skeleton": {
     "js": 256,
@@ -425,7 +425,7 @@
     "css": 2112
   },
   "switch": {
-    "js": 320,
+    "js": 384,
     "lazy": 0,
     "css": 768
   },
@@ -475,9 +475,9 @@
     "css": 512
   },
   "typography": {
-    "js": 704,
+    "js": 1152,
     "lazy": 0,
-    "css": 1280
+    "css": 1408
   },
   "uid-input": {
     "js": 1792,

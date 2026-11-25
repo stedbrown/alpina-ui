@@ -35,7 +35,9 @@ function inspect(root) {
     }
     if (screenReaderOnly) continue
     for (const run of runs) {
-      if (!xScrollable && (run.left < -1.5 || run.right > innerWidth + 1.5)) failures.add(id + ' outside viewport: ' + label)
+      if (!xScrollable && (run.left < -1.5 || run.right > innerWidth + 1.5)) {
+        failures.add(id + ' outside ' + innerWidth + 'px viewport (' + Math.round(run.left) + '–' + Math.round(run.right) + 'px): ' + label)
+      }
       if (clips.some(({box,x,y}) => (x && (run.left < box.left - 1.5 || run.right > box.right + 1.5)) ||
           (y && (run.top < box.top - 1.5 || run.bottom > box.bottom + 1.5)))) failures.add(id + ' clips: ' + label)
     }
@@ -138,9 +140,26 @@ try {
     await portal.goto(siteOrigin + route)
     await portal.locator('h1').first().waitFor()
     const enlarged = await portal.addStyleTag({ content: 'html { font-size: 200% !important } ' + spacing })
-    await portal.evaluate(() => document.fonts.ready)
+    await portal.evaluate(async () => {
+      // Apply the reader's overrides before waiting for the fonts and the resulting paint.
+      document.body.getBoundingClientRect()
+      await document.fonts.ready
+      await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))
+    })
     const { failures } = await portal.locator('body').evaluate(inspect)
     errors.push(...failures.map(issue => 'Portal at 200% with spacing: ' + issue))
+    if (route === '/') {
+      const amounts = portal.locator('.al-type[data-numeric][data-role="display"] > .al-swiss-figures > bdi:visible')
+      assert.ok(await amounts.count() > 0)
+      for (const amount of await amounts.all()) {
+        const fits = await amount.evaluate(el => {
+          const run = el.getBoundingClientRect()
+          const column = el.closest('.al-type').getBoundingClientRect()
+          return run.left >= column.left - 1 && run.right <= column.right + 1
+        })
+        assert.ok(fits, 'The enlarged currency must fit its column with custom text spacing.')
+      }
+    }
     await enlarged.evaluate(el => el.remove())
   }
   await portal.close()

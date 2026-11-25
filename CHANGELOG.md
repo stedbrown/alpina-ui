@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.0-rc.6 · 25 November 2026
+
+- **Public API** NavigationMenu supports surface, brand and action composition with NavigationBrand, NavigationAction and ThemeToggle. Switch accepts children as an accessible label. GridSpecimen can host an isolated document for runnable comparisons. Existing call sites remain supported.
+- Compare the same working form in shadcn/ui and Alpina, copy the source of each preview, and use a keyboard to explore form reflow at up to 400% zoom. The masthead joins the red cover and follows the current section throughout the portal.
+- Keep poster-sized words intact in narrow columns, contain the QR payment disclosure marker on phones, and scope offscreen currency labels to the scrollable accounting table.
+- Search for dialog and postcode phrases in German, French, Italian and Romansh. Install the project skill from GitHub and explore the four independently tested application briefs. [Agent tools](https://alpinaui.com/agents/)
+
 ## 1.0.0-rc.5 · 25 November 2026
 
 - **Public API** The component registry exposes `homepage`. CLI help links to the documentation, and MCP replies include the project website and the selected component’s documentation URL.

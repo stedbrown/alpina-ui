@@ -22,7 +22,7 @@
   "app-shell": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "1b111d4f5c2dcdb91eea"
+    "source": "dfd7144c63252e5f5e59"
   },
   "aspect-ratio": {
     "stage": "Stable",
@@ -117,7 +117,7 @@
   "collapsible": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "e07036ac69e3bf1366b3"
+    "source": "3f23a2514dff0eaf0efe"
   },
   "combobox": {
     "stage": "Stable",
@@ -142,7 +142,7 @@
   "data-table": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "2c055511cbc3bc8eeded"
+    "source": "d93d9645fc6ee4d8bbfb"
   },
   "date-picker": {
     "stage": "Stable",
@@ -197,12 +197,12 @@
   "grid": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "76e5cb1528847978cc1c"
+    "source": "b26f25eba07fb551bb16"
   },
   "grid-overlay": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "7275b15374c8365f55a0"
+    "source": "918534ad3572decd90a0"
   },
   "hover-card": {
     "stage": "Stable",
@@ -217,7 +217,7 @@
   "icon": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "39e0bdc705c36094fd84"
+    "source": "311f28265f938d0c5b37"
   },
   "input": {
     "stage": "Stable",
@@ -237,7 +237,7 @@
   "invoice-document": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "f588bf3cf5d54896d1a9"
+    "source": "cb6aaa21186d28681629"
   },
   "item": {
     "stage": "Stable",
@@ -302,7 +302,7 @@
   "navigation-menu": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "ac38b264268354594bcb"
+    "source": "d1afb1bf8898fa6cd7c1"
   },
   "pagination": {
     "stage": "Stable",
@@ -327,12 +327,12 @@
   "prose": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "83284faafc623c324624"
+    "source": "380613c0989d87e000d3"
   },
   "qr-bill-scanner": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "2262c3a8b20eed5a9d20"
+    "source": "3afd465e16bb2a337211"
   },
   "questionnaire": {
     "stage": "Stable",
@@ -372,7 +372,7 @@
   "sidebar": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "c6998ff928d035cb8e9b"
+    "source": "29c51559075e4064f710"
   },
   "skeleton": {
     "stage": "Stable",
@@ -402,12 +402,12 @@
   "steps": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "3bde09f288615b341f6f"
+    "source": "177734a955f5937620e8"
   },
   "swiss-address-form": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "988d6e4f47c740d4305a"
+    "source": "baeb53bca54e314de7b9"
   },
   "swiss-date": {
     "stage": "Stable",
@@ -422,12 +422,12 @@
   "swiss-qr-bill": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "320c2fb7341ed9f6784b"
+    "source": "a852329287a29c3ecb4e"
   },
   "switch": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "d8779abf28296d43830a"
+    "source": "13d1728d91d0e8d44589"
   },
   "table": {
     "stage": "Stable",
@@ -477,7 +477,7 @@
   "typography": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "ab3e9cddf7a4f53f39ca"
+    "source": "e3f47ca65799fff3ef18"
   },
   "uid-input": {
     "stage": "Beta",

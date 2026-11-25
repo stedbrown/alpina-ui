@@ -96,6 +96,12 @@ test('the registry lists the complete transitive source closure for each copied 
       if (file === 'swiss/locale-context.internal.ts') stack.push('swiss/alpina-provider.ts')
       stack.push(...(edges.get(file) ?? []))
     }
+    if (closure.has('ui/icon.tsx')) {
+      closure.add('ui/OCTICONS-LICENSE.txt')
+      const notice = await readFile(new URL('ui/OCTICONS-LICENSE.txt', source), 'utf8')
+      assert.match(notice, /GitHub mark from Primer Octicons/)
+      assert.match(notice, /MIT License/)
+    }
     if (closure.has('swiss/format-chf.ts') || closure.has('swiss/format-swiss-date.ts') || closure.has('swiss/format-swiss-number.ts')) {
       closure.add('swiss/UNICODE-LICENSE.txt')
       const shippedNotice = await readFile(new URL('swiss/UNICODE-LICENSE.txt', source), 'utf8')

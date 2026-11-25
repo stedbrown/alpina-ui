@@ -26,7 +26,7 @@ export function Masthead({ current, skipTo = '#content' }: { current: SiteSectio
         brand={<NavigationBrand href="/" logo="/assets/logo.svg" aria-label="Alpina UI home" aria-current={cover ? 'page' : undefined}>Alpina</NavigationBrand>}
         sections={[{ links: sections.map(([id, href, label]) => ({ href, label, current: current === id })) }]}
         actions={<>
-          <NavigationAction href="/docs/guides/release/" aria-label={'Release ' + version}>v{version}</NavigationAction>
+          <NavigationAction href="/docs/guides/release/" aria-label={'Release v' + version}>v{version}</NavigationAction>
           <NavigationAction href={repository} icon={<Icon name="github" size={18} />}>GitHub</NavigationAction>
           <AppearanceButton />
         </>}

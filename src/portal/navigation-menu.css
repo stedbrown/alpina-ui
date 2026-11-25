@@ -36,7 +36,14 @@
 }
 .al-navigation :is(a, button):focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
 .al-navigation[data-orientation='horizontal'] {
+  position: relative;
+}
+.al-navigation[data-orientation='horizontal']::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
   border-block-end: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+  pointer-events: none;
 }
 .al-navigation[data-orientation='horizontal'] ul {
   display: flex;
@@ -157,7 +164,7 @@
   min-block-size: var(--al-space-11);
 }
 .al-navigation-brand {
-  font: 750 clamp(1.125rem, 2cqi, 1.5rem)/1 var(--al-font);
+  font: 750 clamp(1.125rem, 2cqi, 1.5rem)/var(--al-leading-body) var(--al-font);
   letter-spacing: -.05em;
 }
 .al-navigation-brand img { inline-size: var(--al-space-8); block-size: var(--al-space-8); object-fit: contain; }

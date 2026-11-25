@@ -19,5 +19,6 @@ dist/
 !/recipes/rubrica/vendor/alpina-ui-1.0.0-rc.3.tgz
 !/recipes/rubrica/vendor/alpina-ui-1.0.0-rc.4.tgz
 !/recipes/rubrica/vendor/alpina-ui-1.0.0-rc.5.tgz
+!/recipes/rubrica/vendor/alpina-ui-1.0.0-rc.6.tgz
 /test-results/
 .vercel/

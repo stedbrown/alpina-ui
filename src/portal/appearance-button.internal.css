@@ -1,5 +1,5 @@
 .al-appearance { flex-shrink: 0; }
-.al-appearance > [data-mode] { display: none; }
+.al-appearance > [data-mode] { display: none; min-block-size: var(--al-space-5); align-items: center; }
 :root:not([data-al-theme]) .al-appearance [data-mode='auto'],
 :root[data-al-theme='auto'] .al-appearance [data-mode='auto'],
 :root[data-al-theme='light'] .al-appearance [data-mode='light'],

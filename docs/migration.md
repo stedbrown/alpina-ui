@@ -6,10 +6,10 @@ The edition-label comparison on the homepage runs the same form in both librarie
 
 ## Install alongside shadcn/ui
 
-Install Alpina UI 1.0.0-rc.5 from the portal's versioned package archive in your React project. To upgrade later, install the archive for the version you want to use. If your team edits component source, the CLI can copy selected TypeScript, CSS and dependencies into `components/alpina`. Your existing shadcn/ui source can stay in `components/ui`. [Installation guide](https://alpinaui.com/docs/guides/start/)
+Install Alpina UI 1.0.0-rc.6 from the portal's versioned package archive in your React project. To upgrade later, install the archive for the version you want to use. If your team edits component source, the CLI can copy selected TypeScript, CSS and dependencies into `components/alpina`. Your existing shadcn/ui source can stay in `components/ui`. [Installation guide](https://alpinaui.com/docs/guides/start/)
 
 ```sh
-npm install https://alpinaui.com/alpina-ui-1.0.0-rc.5.tgz
+npm install https://alpinaui.com/alpina-ui-1.0.0-rc.6.tgz
 # Optional editable source for the first screen
 npx --no-install alpina add button field input
 ```
@@ -145,7 +145,7 @@ These 66 families follow the project's recorded shadcn/ui component index. Each 
 | Select and Native Select | Both Alpina entries use an HTML `select` with a styled popup and native keyboard navigation. The shadcn/ui Select family describes a composite control with a trigger and list. [shadcn/ui Select](https://ui.shadcn.com/docs/components/base/select) |
 | Slider | Alpina uses a single-value HTML slider. shadcn/ui also documents a slider with multiple thumbs. [shadcn/ui Slider](https://ui.shadcn.com/docs/components/base/slider) |
 
-## The 31 additional entries in Alpina 1.0.0-rc.5
+## The 31 additional entries in Alpina 1.0.0-rc.6
 
 | Purpose | Alpina entries |
 | --- | --- |

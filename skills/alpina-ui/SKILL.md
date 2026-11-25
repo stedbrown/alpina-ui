@@ -11,7 +11,7 @@ Start with the version used by the application. Package imports and editable com
 For a new project install the publicly hosted release archive. The URL pins the version in the application's lockfile.
 
 ```sh
-npm install https://alpinaui.com/alpina-ui-1.0.0-rc.5.tgz
+npm install https://alpinaui.com/alpina-ui-1.0.0-rc.6.tgz
 ```
 
 The public index links to the installation guide, component registry and Markdown guides. [Alpina agent index](https://alpinaui.com/llms.txt)

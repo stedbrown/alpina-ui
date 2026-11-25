@@ -4,6 +4,10 @@
 }
 .al-layout[data-space='compact'] { padding-block: var(--al-space-3); }
 .al-layout[data-space='section'] { padding-block: var(--al-space-8); padding-block: round(nearest, clamp(var(--al-space-8), 5vw, 5rem), var(--al-unit)); }
+.al-layout[data-space='chapter'] {
+  padding-block: clamp(3.5rem, 7vw, 8rem);
+}
+.al-layout[data-space='chapter'] > .al-grid { row-gap: clamp(2rem, 4vw, 4rem); }
 .al-layout[data-space='cover'] { padding-block: var(--al-space-8); padding-block: round(nearest, clamp(var(--al-space-8), 4vw, 4rem), var(--al-unit)); }
 .al-layout[data-surface='paper'] { background: var(--al-bg); color: var(--al-ink); }
 .al-layout[data-surface='ink'] { background: var(--al-ink); color: var(--al-bg); }
@@ -25,6 +29,9 @@
   padding-block: clamp(1.5rem, 4svh, 4rem) clamp(4rem, 12svh, 8rem);
   align-content: space-between;
   row-gap: clamp(1rem, 3.2svh, 2.5rem);
+}
+.al-layout[data-space='viewport'] .al-type[data-role='folio'] {
+  font-size: clamp(2.75rem, 5.4cqi, 4.75rem);
 }
 .al-layout[data-space='viewport'] .al-grid-guides {
   z-index: -1;

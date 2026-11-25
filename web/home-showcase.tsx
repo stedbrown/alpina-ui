@@ -91,8 +91,7 @@ function PressLog() {
 }
 
 export function HomeShowcase({ queue }: { queue: string }) {
-  return <Grid as="section" id="component-showcase" aria-labelledby="components-title" width="site" space="section">
-    <GridItem><Separator weight="section" /></GridItem>
+  return <Grid as="section" id="component-showcase" aria-labelledby="components-title" width="site" space="chapter" surface="paper">
     <GridItem medium={3} large={4}><SectionIntro id="components-title" title="The components" text="Work the print desk. Estimate an edition, sort the queue, open a job sheet or inspect the hours on press.">
       <TextLink href="/examples/">Explore complete projects →</TextLink>
     </SectionIntro></GridItem>

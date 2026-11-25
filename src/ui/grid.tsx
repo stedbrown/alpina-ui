@@ -40,7 +40,7 @@ export interface GridProps extends HTMLAttributes<HTMLDivElement> {
   entrance?: 'sequence'
   as?: 'div' | 'header' | 'main' | 'section' | 'article' | 'footer'
   /** Block padding for a band or section. A viewport cover fills at least 100svh and grows with its content. */
-  space?: 'compact' | 'section' | 'cover' | 'viewport'
+  space?: 'compact' | 'section' | 'cover' | 'viewport' | 'chapter'
   /** Center the columns in the site's 100rem frame while the surface stays full width. */
   width?: 'site' | 'full'
   /** Align items within their grid row. The default is stretch. */

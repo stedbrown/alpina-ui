@@ -5,15 +5,21 @@ import {
 } from 'alpina-ui'
 import { TypeSpecimen } from './type-specimen.js'
 
+const folios: Record<string, string> = {
+  'grid-title': '02', 'type-title': '03', 'components-title': '04', 'appearance-title': '05',
+  'access-title': '06', 'swiss-title': '07', 'migration-title': '08', 'install-title': '09',
+}
+
 export function SectionIntro({ id, title, text, children }: { id: string; title: string; text: string; children?: ReactNode }) {
   return <Stack align="start" gap={4}>
+    <Typography variant="folio" numeric aria-hidden="true">{folios[id]}</Typography>
     <Typography as="h2" variant="display" id={id}>{title}</Typography>
     <Typography measure="narrow">{text}</Typography>{children}
   </Stack>
 }
 
 export function GridStudy() {
-  return <Grid as="section" id="grid" width="site" space="section" align="start" aria-labelledby="grid-title">
+  return <Grid as="section" id="grid" width="site" space="chapter" align="start" surface="paper" aria-labelledby="grid-title">
     <GridItem medium={3} large={4}><SectionIntro id="grid-title" title="The grid" text="Four, eight or twelve columns. Follow one edge from the time to the title, then switch off the guides.">
       <Stack direction="row" gap={2} scripting="enabled"><Switch id="show-grid" defaultChecked aria-controls="programme-guides" /><Label htmlFor="show-grid">Show grid</Label></Stack>
       <TextLink href="/docs/components/grid/">Explore Grid →</TextLink>
@@ -35,8 +41,7 @@ export function GridStudy() {
 }
 
 export function TypeStudy() {
-  return <Grid as="section" width="site" space="section" id="type" aria-labelledby="type-title">
-    <GridItem><Separator weight="section" /></GridItem>
+  return <Grid as="section" width="site" space="chapter" id="type" surface="ink" aria-labelledby="type-title">
     <GridItem medium={3} large={4}><SectionIntro id="type-title" title="The typography" text="Look at the space between the letters. Change the scale and spacing of the same word.">
       <TextLink href="/docs/components/typography/">Explore Typography →</TextLink>
     </SectionIntro></GridItem>
@@ -56,8 +61,7 @@ export function TypeStudy() {
 }
 
 export function AppearanceStudy() {
-  return <Grid as="section" width="site" space="section" aria-labelledby="appearance-title">
-    <GridItem><Separator weight="section" /></GridItem>
+  return <Grid as="section" width="site" space="chapter" surface="accent" data-al-theme="light" aria-labelledby="appearance-title">
     <GridItem medium={3} large={4}><SectionIntro id="appearance-title" title="Light and dark" text="Change the paper and ink of this reading-room notice. The rest of the page keeps its own appearance.">
       <Stack direction="row" gap={2} scripting="enabled"><Switch id="proof-dark" defaultChecked aria-controls="appearance-proof" /><Label htmlFor="proof-dark">Dark preview</Label></Stack>
       <TextLink href="/themes/">Open the theme builder →</TextLink>
@@ -80,8 +84,7 @@ const accessTopics = [
   { value: 'contrast', label: 'Contrast', content: <Stack gap={2} align="start"><Badge>Reserved</Badge><Typography>The label identifies a reservation when Windows replaces the palette with system colors.</Typography></Stack> },
 ]
 export function AccessStudy() {
-  return <Grid as="section" width="site" space="section" aria-labelledby="access-title">
-    <GridItem><Separator /></GridItem>
+  return <Grid as="section" width="site" space="chapter" surface="paper" aria-labelledby="access-title">
     <GridItem medium={3} large={4}><SectionIntro id="access-title" title="Accessible by design" text="Try keyboard navigation, the reading width of a phone at 200% zoom, and a label that keeps its meaning in high contrast." /></GridItem>
     <GridItem medium={5} large={7} start={{ large: 6 }}><Stack gap={3} id="access-proof" scripting="enabled"><Tabs label="Accessibility proofs" items={accessTopics} defaultValue="keys" /></Stack>
       <Stack scripting="none">{accessTopics.map(item => <Collapsible summary={item.label} key={item.value}>{item.content}</Collapsible>)}</Stack></GridItem>
@@ -89,8 +92,7 @@ export function AccessStudy() {
 }
 
 export function SwissStudy() {
-  return <Grid as="section" width="site" space="section" aria-labelledby="swiss-title">
-    <GridItem><Separator weight="section" /></GridItem>
+  return <Grid as="section" width="site" space="chapter" surface="ink" aria-labelledby="swiss-title">
     <GridItem medium={3} large={4}><SectionIntro id="swiss-title" title="Ready for Switzerland" text="Use the same components for Swiss work. Compare one invoice across the four national languages.">
       <TextLink href="/docs/components/swiss-qr-bill/">Print a QR-bill →</TextLink>
       <TextLink href="/docs/components/ahv-input/">Validate an AHV number →</TextLink>
@@ -101,8 +103,7 @@ export function SwissStudy() {
 }
 
 export function MigrationStudy() {
-  return <Grid as="section" width="site" space="section" aria-labelledby="migration-title">
-    <GridItem><Separator /></GridItem>
+  return <Grid as="section" width="site" space="chapter" surface="accent" data-al-theme="light" aria-labelledby="migration-title">
     <GridItem medium={3} large={4}><SectionIntro id="migration-title" title="From shadcn/ui" text="Start with a familiar component and compare its API. Migrate a single screen at a time." /></GridItem>
     <GridItem medium={5} large={7} start={{ large: 6 }}><Stack align="start" gap={4}>
       <Collapsible summary="Compare Button"><Typography>Both libraries accept <InlineCode>asChild</InlineCode> so a link can take button styling. Alpina supplies the square corners and focus ring in its stylesheet.</Typography></Collapsible>
@@ -112,8 +113,7 @@ export function MigrationStudy() {
 }
 
 export function Installation({ html, command }: { html: string; command: string }) {
-  return <Grid as="section" width="site" space="section" aria-labelledby="install-title">
-    <GridItem><Separator weight="section" /></GridItem>
+  return <Grid as="section" width="site" space="chapter" surface="paper" aria-labelledby="install-title">
     <GridItem medium={3} large={4}><SectionIntro id="install-title" title="Install in 30 seconds" text="Install the release archive in a React project. Import alpina-ui/styles.css once in the application entry point.">
       <TextLink href="/docs/guides/start/">Read the setup guide →</TextLink>
     </SectionIntro></GridItem>

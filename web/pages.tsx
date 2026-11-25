@@ -52,7 +52,8 @@ export function Masthead({ current }: { current: Section }) {
 
 export function Footer({ version }: { version?: string } = {}) {
   return (
-    <Grid as="footer" width="site" surface="ink" space="compact">
+    <Grid as="footer" width="site" surface="ink" space={version ? "chapter" : "compact"}>
+      {version && <GridItem><Typography variant="folio" numeric aria-hidden="true">10</Typography></GridItem>}
       <GridItem>
         <Stack direction="row" justify="space-between" align="baseline" gap={2} columnGap={6}>
           <TextLink href="/" variant="quiet"><Typography as="span" variant="label">Alpina UI{version && ' · v' + version}</Typography></TextLink>
@@ -85,10 +86,16 @@ export function Landing({ version, count, queue, command, installation }: { vers
     <PageRegion as="main" id="content" tabIndex={-1}>
       <Grid as="section" id="cover" width="site" space="viewport" align="end" surface="accent" data-al-theme="light" guides entrance="sequence" aria-labelledby="home-title">
         <GridItem><Stack direction="row" justify="space-between" gap={2}>
-          <Typography variant="label">Open-source React library</Typography>
-          <Stack direction="row" gap={2} inset={1} surface="paper" scripting="enabled">
-            <Switch id="cover-guides-toggle" aria-controls="cover-guides" defaultChecked />
-            <Label htmlFor="cover-guides-toggle">Column guides</Label>
+          <Stack direction="row" align="baseline" gap={3} wrap={false}>
+            <Typography variant="folio" numeric aria-hidden="true">01</Typography>
+            <Typography variant="label">Open-source React library</Typography>
+          </Stack>
+          <Stack direction="row" gap={3}>
+            <TextLink variant="action" href="/start-here/">Start here</TextLink>
+            <Stack direction="row" gap={2} inset={1} surface="paper" scripting="enabled">
+              <Switch id="cover-guides-toggle" aria-controls="cover-guides" defaultChecked />
+              <Label htmlFor="cover-guides-toggle">Column guides</Label>
+            </Stack>
           </Stack>
         </Stack></GridItem>
         <GridItem><Typography as="h1" variant="masthead" responsive id="home-title">Swiss design<br /> for React.</Typography></GridItem>
@@ -102,7 +109,6 @@ export function Landing({ version, count, queue, command, installation }: { vers
         </GridItem>)}
         <GridItem medium={4} large={5}><Typography variant="lead" id="cover-intro">A precise grid, expressive type and accessible controls for the web.</Typography></GridItem>
         <GridItem medium={4} large={5} start={{ large: 8 }}><Stack direction="row" gap={4} columnGap={6}>
-          <TextLink variant="action" href="/start-here/">Start here</TextLink>
           <TextLink href="/docs/components/">Browse components ({count})</TextLink>
         </Stack></GridItem>
       </Grid>

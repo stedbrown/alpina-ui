@@ -42,6 +42,20 @@ try {
     assert.ok(poster.fill >= .73 && poster.fill <= 1.01, 'Headline fills its grid at ' + width + ': ' + poster.fill)
     assert.ok(poster.ratio >= 2.5, 'Display and reading type keep a distinct scale at ' + width)
   }
+  const sections = page.locator('main > section, body > footer')
+  const numbers = await sections.locator('[data-role="folio"]').allTextContents()
+  assert.deepEqual(numbers, Array.from({length: 10}, (_, i) => String(i + 1).padStart(2, '0')))
+  for (const scheme of ['light', 'dark']) {
+    await page.emulateMedia({ colorScheme: scheme, reducedMotion: 'reduce' })
+    const fields = await sections.evaluateAll(nodes => nodes.map(section => ({
+      width: section.getBoundingClientRect().width, color: getComputedStyle(section).backgroundColor,
+    })))
+    assert.equal(fields.length, 10)
+    assert.ok(fields.every(field => field.width === 2560))
+    for (const [i, field] of fields.entries()) {
+      if (i > 0) assert.notEqual(field.color, fields[i - 1].color, 'Adjacent chapter fields ' + i + ' and ' + (i + 1) + ' in ' + scheme)
+    }
+  }
   await control.press('Space')
   assert.ok(await cover.locator('#cover-guides').isHidden())
   await control.press('Space')

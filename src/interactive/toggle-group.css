@@ -37,3 +37,7 @@
 .al-toggle-group[data-layout='grid'] > .al-button:hover:enabled {
   background: var(--al-hover);
 }
+
+@media (forced-colors: active) {
+  .al-toggle-group .al-button[aria-pressed='true'] { border-image: none; border-block-end: 3px solid Highlight; }
+}

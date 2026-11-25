@@ -64,6 +64,15 @@ function grouped(value: string, width: number): string {
 
 const qrNames = { en: 'Swiss QR Code', 'de-CH': 'Swiss QR Code', 'fr-CH': 'Code QR suisse', 'it-CH': 'Codice QR svizzero', 'rm-CH': 'Code QR svizzer' }
 
+const readingLabels = {
+  en: 'Read payment details', 'de-CH': 'Zahlungsangaben lesen', 'fr-CH': 'Lire les données de paiement',
+  'it-CH': 'Leggi i dati di pagamento', 'rm-CH': 'Leger las indicaziuns da pajament',
+}
+
+const blankLabels = {
+  en: 'To be completed', 'de-CH': 'Auszufüllen', 'fr-CH': 'À compléter', 'it-CH': 'Da compilare', 'rm-CH': 'D’emplenir',
+}
+
 function QrCode({ payload, label }: { payload: string; label: string }) {
   const matrix = qrMatrix(payload)
   const path = matrix.flatMap((row, y) => {
@@ -114,7 +123,7 @@ function Entry({ title, children }: { title: string; children: ReactNode }) {
   return <div className="al-bill-entry"><dt>{title}</dt><dd>{children}</dd></div>
 }
 
-function Details({ bill, words, receipt = false }: { bill: Payment; words: BillLabels; receipt?: boolean }) {
+function Details({ bill, words, receipt = false, blankLabel }: { bill: Payment; words: BillLabels; receipt?: boolean; blankLabel?: string }) {
   const reference = bill.type === 'QRR'
     ? bill.reference.slice(0, 2) + ' ' + grouped(bill.reference.slice(2), 5)
     : grouped(bill.reference, 4)
@@ -128,17 +137,17 @@ function Details({ bill, words, receipt = false }: { bill: Payment; words: BillL
       <Entry title={words.additional}><span>{bill.message}</span><span>{bill.billingInformation}</span></Entry>}
     <Entry title={bill.debtor ? words.debtor : words.openDebtor}>
       {bill.debtor ? <Address address={bill.debtor} omitStreet={omitStreet} /> :
-        <Blank width={receipt ? 52 : 65} height={receipt ? 20 : 25} />}
+        blankLabel ?? <Blank width={receipt ? 52 : 65} height={receipt ? 20 : 25} />}
     </Entry>
   </dl>
 }
 
-function Amount({ bill, words, receipt = false }: { bill: Payment; words: BillLabels; receipt?: boolean }) {
+function Amount({ bill, words, receipt = false, blankLabel }: { bill: Payment; words: BillLabels; receipt?: boolean; blankLabel?: string }) {
   const [whole, cents] = bill.amount.split('.')
   const printed = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + '.' + cents
   return <dl className="al-bill-amount">
     <Entry title={words.currency}>{bill.currency}</Entry>
-    <Entry title={words.amount}>{bill.amount ? printed : <Blank width={receipt ? 30 : 40} height={receipt ? 10 : 15} />}</Entry>
+    <Entry title={words.amount}>{bill.amount ? printed : blankLabel ?? <Blank width={receipt ? 30 : 40} height={receipt ? 10 : 15} />}</Entry>
   </dl>
 }
 
@@ -151,7 +160,7 @@ export const SwissQrBill = forwardRef<HTMLDivElement, SwissQrBillProps>(function
     (party.name.length > 36 || (party.street?.length ?? 0) > 42 || party.town.length > 24)) ||
     payment.message.length + payment.billingInformation.length > 60
   return (
-    <div {...props} ref={ref} className={('al-qr-bill ' + className).trim()} data-print-layout={printLayout} data-fit={fit || undefined}
+    <><div {...props} ref={ref} className={('al-qr-bill ' + className).trim()} data-print-layout={printLayout} data-fit={fit || undefined}
       lang={locale} dir="ltr" role="region" aria-label={props['aria-label'] ?? words.receipt + ' / ' + words.payment} tabIndex={props.tabIndex ?? (fit ? undefined : 0)}>
       <div className="al-bill-slip">
         <section className="al-bill-receipt" aria-label={words.receipt}>
@@ -174,5 +183,11 @@ export const SwissQrBill = forwardRef<HTMLDivElement, SwissQrBillProps>(function
         </section>
       </div>
     </div>
+    <details className="al-bill-reading" lang={locale}>
+      <summary>{readingLabels[locale]}</summary>
+      <Details bill={payment} words={words} blankLabel={blankLabels[locale]} />
+      <Amount bill={payment} words={words} blankLabel={blankLabels[locale]} />
+      {payment.alternatives.map((line, index) => <p key={index}>{line}</p>)}
+    </details></>
   )
 })

@@ -1,6 +1,6 @@
 # Visual regression tests
 
-Every component in the registry has a live React example. Playwright renders each example at 320, 768, 1024 and 1440 CSS pixels in both light and dark themes. Overlays appear open so the reference captures the actual menu, tooltip, notification or dialog at its viewport position. Taller inline components are captured to their full height. The PNG references live under `tests/visual-reference/<platform>/<component>/`. They stay in the repository and are excluded from the npm package.
+Every component in the registry has a live React example. Playwright renders each example at 320, 768, 1024 and 1440 CSS pixels in both light and dark themes. At 768 px the same examples also run with forced colors and increased contrast, each with light and dark system colors. Overlays appear open so the reference captures the actual menu, tooltip, notification or dialog at its viewport position. Taller inline components are captured to their full height. The PNG references live under `tests/visual-reference/<platform>/<component>/`. They stay in the repository and are excluded from the npm package.
 
 ## Compare a build
 
@@ -31,3 +31,9 @@ The comparison uses Pixelmatch with a per-pixel color threshold of 0.14 and igno
 ## Portal pages
 
 The screenshot harness waits for the bundled Inter faces before measuring the designed layout. Lighthouse exercises the production preload and optional-display policy on a cold cache. The site suite also captures the first viewport of every public route at 800 px. The homepage is captured in full, in both appearances at 320, 360, 640, 768, 800, 960, 1024 and 1440 px. After building the catalog, compare with `node tests/site-visual.browser.mjs` or record an intentional revision with `--update`. References are kept separately for Windows and Linux under `tests/site-reference/`. The responsive sweep also measures rendered number and identifier lines independently of the pixel comparisons.
+
+## Reader preferences
+
+The high-contrast captures use the browser's actual media emulation. Inspect a specific combination with `npm run test:visual -- --component=combobox --appearance=forced-colors-dark`. Other names are `forced-colors`, `contrast-more`, and `contrast-more-dark`. Focus, highlighted choices and the payment code are checked separately in the browser.
+
+The text audit enlarges the root font to 200% and applies user styles with 1.5 line height, .12em letter spacing, .16em word spacing and 2em after paragraphs. It measures text geometry throughout the gallery at 320, 640 and 1280 CSS pixels and checks representative portal pages at 800 px. Data tables, long identifiers and calendar grids retain local scrolling where two-dimensional content requires it. The payment slip includes a reflowable reading view in the chosen correspondence language. Its fixed-size print layout remains available through the browser's print dialog. [WCAG text resizing](https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html) · [WCAG text spacing](https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html)

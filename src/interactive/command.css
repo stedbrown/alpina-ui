@@ -29,3 +29,7 @@
 .al-command p[role='status'] {
   font-size: var(--al-type-label);
 }
+
+@media (forced-colors: active) {
+  .al-command li[aria-selected='true'] { outline: 2px solid Highlight; outline-offset: -2px; }
+}

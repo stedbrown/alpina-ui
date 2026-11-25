@@ -40,7 +40,9 @@ test('the payable invoice and its receipt share one validated amount', () => {
   const html = renderToStaticMarkup(createElement(InvoiceDocument, props))
   assert.match(html, /CHE-109\.322\.551 IVA/)
   assert.match(html, /CHF 10\.80/)
-  assert.equal((html.match(/>10\.80<\/dd>/g) ?? []).length, 2)
+  const [printed, readingView] = html.split('<details class="al-bill-reading"')
+  assert.equal((printed.match(/>10\.80<\/dd>/g) ?? []).length, 2)
+  assert.match(readingView, />10\.80<\/dd>/)
   for (const invalid of [{ lines: [line(1, 0)] }, { lines: [line(1, '999999999.99')] }, { vatNumber: 'CHE-100.000.000' }]) {
     assert.throws(() => renderToStaticMarkup(createElement(InvoiceDocument, { ...props, ...invalid })), RangeError)
   }

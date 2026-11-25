@@ -48,11 +48,23 @@ try {
   await dialog.getByRole('combobox').selectOption('TI')
   await dialog.getByRole('button', { name: 'Italiano' }).click()
   assert.equal(await fields.first().inputValue(), 'Atelier Prova')
+  // Move focus as soon as the newly saved contact is interactive.
+  await page.evaluate(() => {
+    const observer = new MutationObserver(() => {
+      const trigger = document.querySelector('button[aria-label="Azioni per Atelier Prova"]')
+      if (!trigger) return
+      observer.disconnect()
+      trigger.focus()
+    })
+    observer.observe(document.body, { childList: true, subtree: true })
+  })
   await dialog.getByRole('button', { name: 'Salva contatto' }).click()
   await page.getByRole('complementary', { name: 'Atelier Prova' }).waitFor()
   assert.equal(await rows.count(), 3)
   assert.equal(await page.getByRole('combobox', { name: 'Cantone' }).inputValue(), 'TI')
-  await button('Azioni per Atelier Prova').focus()
+  await page.evaluate(() => new Promise(done => requestAnimationFrame(() => requestAnimationFrame(done))))
+  assert.equal(await button('Azioni per Atelier Prova').evaluate(el => el === document.activeElement), true,
+    'Closing the sheet must respect subsequent keyboard focus')
   await page.keyboard.press('Enter')
   await choice('Modifica').waitFor()
   await page.keyboard.press('Enter')

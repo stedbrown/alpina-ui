@@ -81,3 +81,7 @@
 @media (pointer: coarse) {
   .al-combo-popup li { box-sizing: border-box; min-block-size: var(--al-space-11); align-items: center; }
 }
+
+@media (forced-colors: active) {
+  .al-combo-popup li[data-active='true'] { outline: 2px solid Highlight; outline-offset: -2px; }
+}

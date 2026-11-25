@@ -14,9 +14,20 @@
   }
   .al-qr-bill[data-fit] > .al-bill-slip {
     position: absolute;
+    inset: 0 auto auto 0;
     transform-origin: top left;
     /* Convert available width / physical width to a unitless scale. */
     transform: scale(min(1, tan(atan2(100cqi, 210mm))));
+  }
+  /* Reserve the next screen baseline after the physical 2:1 payment section. */
+  @supports (padding-block-start: round(up, 50%, 4px)) {
+    .al-qr-bill[data-fit] { aspect-ratio: auto; }
+    .al-qr-bill[data-fit]::before {
+      content: '';
+      display: block;
+      padding-block-start: round(up, 50%, var(--al-unit));
+    }
+    .al-qr-bill:not([data-fit]) { min-block-size: round(up, 105mm, var(--al-unit)); }
   }
 }
 
@@ -151,3 +162,20 @@
 }
 
 .al-bill-number { white-space: nowrap; }
+
+@media (forced-colors: active) {
+  /* The machine-readable QR and its quiet zone need their original polarity. */
+  .al-bill-qr { forced-color-adjust: none; box-shadow: 0 0 0 5mm white; }
+}
+
+/* A reflowable reading view accompanies the fixed-dimension payment slip on screen. */
+.al-bill-reading { min-inline-size: 0; color: var(--al-ink); font: var(--al-type-body)/var(--al-leading-body) var(--al-font); }
+.al-bill-reading summary { cursor: pointer; padding-block: var(--al-space-2); font-weight: 600; }
+.al-bill-reading summary:focus-visible { outline: 2px solid var(--al-focus); outline-offset: -2px; }
+.al-bill-reading :is(.al-bill-details, .al-bill-amount) { position: static; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--al-space-3); margin: var(--al-space-3) 0; }
+.al-bill-reading .al-bill-entry { min-inline-size: 0; overflow-wrap: anywhere; }
+.al-bill-reading dt { font-weight: 600; }
+.al-bill-reading dd { margin: 0; overflow-wrap: anywhere; }
+.al-bill-reading .al-bill-number { max-inline-size: 100%; overflow-x: auto; }
+.al-bill-reading .al-bill-blank { max-inline-size: 100%; height: auto; }
+@media print { .al-bill-reading { display: none !important; } }

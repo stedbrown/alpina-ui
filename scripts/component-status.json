@@ -27,7 +27,7 @@
   "aspect-ratio": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "fe3b10fa73df63e2880b"
+    "source": "9672a10587959fbc3403"
   },
   "attachment": {
     "stage": "Stable",
@@ -47,7 +47,7 @@
   "bar-chart": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "4d1fc330e54013b876c3"
+    "source": "c2ce96f826ff90d88d7a"
   },
   "breadcrumb": {
     "stage": "Stable",
@@ -72,12 +72,12 @@
   "calendar": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "a50937b612b14458b917"
+    "source": "039ba012847e4bf071cb"
   },
   "canton-combobox": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "13cded47e3024ef39701"
+    "source": "5391581cb1d487ac9dd9"
   },
   "canton-select": {
     "stage": "Stable",
@@ -102,7 +102,7 @@
   "chart-table": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "397f1520e19e7a8eacd9"
+    "source": "584cb5fa7263072a3190"
   },
   "checkbox": {
     "stage": "Stable",
@@ -122,12 +122,12 @@
   "combobox": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "d1e2f86f60890b102eae"
+    "source": "d0a0f3448f294bea575c"
   },
   "command": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "f673444003066ec96689"
+    "source": "405f30817b94f7e297eb"
   },
   "context-menu": {
     "stage": "Stable",
@@ -147,7 +147,7 @@
   "date-picker": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "efad2e50aad67ffaafcc"
+    "source": "fa895f7f8d88fa161fbb"
   },
   "description-list": {
     "stage": "Stable",
@@ -232,7 +232,7 @@
   "invoice-document": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "6398504b23750c254653"
+    "source": "387dc869d651146fdaf9"
   },
   "item": {
     "stage": "Stable",
@@ -252,12 +252,12 @@
   "letter": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "2c6094dfcb7a02fc8a39"
+    "source": "ff330faead8f6c488376"
   },
   "line-chart": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "a2b066e8e89fe64e89a0"
+    "source": "6f763f172a0eff1cd22b"
   },
   "locale-select": {
     "stage": "Stable",
@@ -382,7 +382,7 @@
   "sparkline": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "f4020c6ba74e68a059af"
+    "source": "b5e4053fa6fc06d8e4a6"
   },
   "spinner": {
     "stage": "Stable",
@@ -407,7 +407,7 @@
   "swiss-date": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "0be1323df5386278f689"
+    "source": "ce60253696983d74153c"
   },
   "swiss-postal-code-input": {
     "stage": "Stable",
@@ -417,7 +417,7 @@
   "swiss-qr-bill": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "063b1bfbbd602663439f"
+    "source": "a119ffc55c9ae08e9ea0"
   },
   "switch": {
     "stage": "Stable",
@@ -457,7 +457,7 @@
   "toggle-group": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "0ccfc97f940b76f25336"
+    "source": "af6eef53d2041673dadb"
   },
   "tooltip": {
     "stage": "Stable",

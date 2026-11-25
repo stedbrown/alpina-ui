@@ -111,3 +111,18 @@ body[data-al-page] > footer:last-child { margin-block-start: auto; }
     --al-shadow-raised: none;
   }
 }
+
+@media (prefers-contrast: more) and (forced-colors: none) {
+  :root, [data-al-theme] {
+    --al-muted: var(--al-ink);
+    --al-placeholder: var(--al-ink);
+    --al-line: var(--al-ink);
+    --al-accent: #a90000;
+    --al-on-accent: #fff;
+  }
+  [data-al-theme='dark'], [data-al-theme='auto'] {
+    --al-accent: light-dark(#a90000, #ff9292);
+    --al-on-accent: light-dark(#fff, #000);
+  }
+  :where(button, a, input, select, textarea, summary, [tabindex]):focus-visible { outline-width: 3px; }
+}

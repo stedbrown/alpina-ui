@@ -49,3 +49,7 @@
 
 .al-series-bars li > :last-child, .al-series-table td:last-child,
 .al-series-scale span, .al-series-spark > span { white-space: nowrap; }
+
+@media (forced-colors: active) {
+  .al-series-table :is(th, td) { border-block-start: 1px solid CanvasText; }
+}

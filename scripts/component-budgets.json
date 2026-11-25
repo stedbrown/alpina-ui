@@ -232,7 +232,7 @@
   "invoice-document": {
     "js": 14080,
     "lazy": 0,
-    "css": 2560
+    "css": 2944
   },
   "item": {
     "js": 384,
@@ -407,7 +407,7 @@
   "swiss-date": {
     "js": 1344,
     "lazy": 0,
-    "css": 192
+    "css": 256
   },
   "swiss-postal-code-input": {
     "js": 1472,
@@ -415,9 +415,9 @@
     "css": 576
   },
   "swiss-qr-bill": {
-    "js": 9856,
+    "js": 10048,
     "lazy": 0,
-    "css": 1536
+    "css": 1728
   },
   "switch": {
     "js": 320,

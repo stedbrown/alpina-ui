@@ -62,3 +62,10 @@
   .al-invoice-summary dl { max-inline-size: 105mm; }
   .al-invoice-summary dl > div { padding: 1mm 0; }
 }
+
+@media screen and (forced-colors: active) {
+  .al-invoice-items :is(th, td) { border-block-end: 1px solid CanvasText; }
+  .al-invoice-summary .al-invoice-total { border-block-start: 3px double CanvasText; }
+}
+
+@media screen { .al-invoice-id { max-inline-size: 100%; overflow-x: auto; } }

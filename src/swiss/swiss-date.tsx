@@ -2,6 +2,7 @@ import { forwardRef, type CSSProperties, type ComponentPropsWithoutRef } from 'r
 import { formatSwissDate, type SwissDateOptions } from './format-swiss-date.js'
 import { defaultSwissLocale, type SwissLocale } from './locales.js'
 import './figures.css'
+import './swiss-date.css'
 
 export interface SwissDateProps
   extends Omit<ComponentPropsWithoutRef<'time'>, 'children' | 'dateTime'>, SwissDateOptions {

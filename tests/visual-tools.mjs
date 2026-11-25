@@ -2,6 +2,7 @@ import { spawnSync } from 'node:child_process'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import { PNG } from 'pngjs'
+import { forcedPaletteArgs } from './display-profile.mjs'
 import pixelmatch from 'pixelmatch'
 import { chromium } from 'playwright-core'
 
@@ -38,8 +39,8 @@ export function difference(expectedBytes, actualBytes) {
   if (changed > allowed) return { reason: `${changed} pixels differ (limit ${allowed})`, image: PNG.sync.write(diff) }
 }
 
-export const launchVisualBrowser = () => chromium.launch({
-  args: ['--font-render-hinting=none', '--disable-lcd-text', '--force-color-profile=srgb'],
+export const launchVisualBrowser = (forcedPalette) => chromium.launch({
+  args: ['--font-render-hinting=none', '--disable-lcd-text', '--force-color-profile=srgb', ...forcedPaletteArgs(forcedPalette)],
   // Inter comes from Alpina itself. Limit native fallback to the same DejaVu
   // families across Linux distributions, including the QR slip and mono code.
   env: platform === 'linux' ? { ...process.env, FONTCONFIG_FILE: fileURLToPath(new URL('./visual-fonts.conf', import.meta.url)) } : process.env,

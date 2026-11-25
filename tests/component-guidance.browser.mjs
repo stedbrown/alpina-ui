@@ -16,6 +16,7 @@ for (const { name } of items) {
   assert.deepEqual(JSON.parse(inline[1]), { slug: name, entry: entries[name] })
   assert.deepEqual(JSON.parse(await read('site/reference/components/' + name + '.json')), entries[name])
   assert.ok(html.includes('data-component-guidance="' + name + '"'), name + ' lacks initial content')
+  assert.ok(html.includes('<caption>Keys</caption>'), name + ': keyboard reference missing before hydration')
   for (const heading of headings) assert.ok(html.includes('>' + heading + '</h2>'), name + ': ' + heading)
 }
 
@@ -28,6 +29,9 @@ try {
     assert.deepEqual(await guide.getByRole('heading', { level: 2 }).allTextContents(), headings)
     const notes = guide.locator('h2 + p')
     assert.deepEqual(await notes.allTextContents(), [expected.use, expected.avoid, expected.access, expected.content])
+    const keys = guide.getByRole('table', { name: 'Keys', exact: true })
+    assert.deepEqual(await keys.getByRole('rowheader').allTextContents(), expected.keys.map(([key]) => key))
+    assert.deepEqual(await keys.getByRole('cell').allTextContents(), expected.keys.map(([, action]) => action))
     const examples = guide.locator('dl[aria-label="Editorial comparison"]')
     assert.deepEqual(await examples.locator('dt').allTextContents(), ['Use', 'Avoid'])
     assert.deepEqual(await examples.locator('dd').allTextContents(), [expected.example.good, expected.example.poor])

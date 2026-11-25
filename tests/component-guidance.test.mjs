@@ -17,6 +17,10 @@ test('each registry component has an individually written reference and four loc
     for (const paragraph of [use, avoid, access, content]) {
       assert.ok(paragraph.trim().split(/\s+/u).length >= 7, slug + ': incomplete explanation')
     }
+    const bindings = entries[slug].keys
+    assert.ok(Array.isArray(bindings) && bindings.length, slug + ': missing keyboard reference')
+    for (const [key, action] of bindings) assert.ok(key && action, slug + ': incomplete key action')
+    assert.equal(new Set(bindings.map(([key]) => key)).size, bindings.length, slug + ': duplicate key')
     assert.ok(example.good && example.poor && example.good !== example.poor, slug + ': editorial comparison')
     assert.deepEqual(Object.keys(copy).sort(), [...locales].sort(), slug + ': supported languages')
     for (const label of Object.values(copy)) assert.ok(label.trim(), slug + ': missing translated specimen')

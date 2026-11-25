@@ -1004,6 +1004,7 @@
         "swiss/format-swiss-date.ts",
         "swiss/locales.ts",
         "swiss/figures.css",
+        "swiss/swiss-date.css",
         "swiss/UNICODE-LICENSE.txt"
       ]
     },
@@ -1179,6 +1180,7 @@
         "swiss/format-swiss-date.ts",
         "swiss/locales.ts",
         "swiss/figures.css",
+        "swiss/swiss-date.css",
         "swiss/letter.css",
         "swiss/document-print.css",
         "swiss/print-document.ts",
@@ -1207,6 +1209,7 @@
         "swiss/swiss-date.tsx",
         "swiss/format-swiss-date.ts",
         "swiss/figures.css",
+        "swiss/swiss-date.css",
         "swiss/invoice-document.css",
         "swiss/document-print.css",
         "swiss/print-document.ts",
@@ -1312,6 +1315,7 @@
         "swiss/calendar.css",
         "swiss/swiss-date.tsx",
         "swiss/figures.css",
+        "swiss/swiss-date.css",
         "swiss/date-picker.css",
         "swiss/UNICODE-LICENSE.txt"
       ]

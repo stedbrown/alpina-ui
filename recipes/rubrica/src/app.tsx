@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import {
   AlertDialog,
   Button,
@@ -120,12 +120,12 @@ export function AtelierDirectory() {
     setRegion('')
     setQuery('')
   }
-  function restoreFocus() {
-    requestAnimationFrame(() => {
-      if (opener.current?.isConnected) opener.current.focus({ preventScroll: true })
-      else addTrigger.current?.focus({ preventScroll: true })
-    })
-  }
+  useLayoutEffect(() => {
+    if (editor || removal || !opener.current) return
+    const trigger = opener.current.isConnected ? opener.current : addTrigger.current
+    opener.current = null
+    trigger?.focus({ preventScroll: true })
+  }, [editor, removal])
   function save(address: SwissAddress) {
     if (!editor) return
     const contact: Contact =
@@ -139,7 +139,6 @@ export function AtelierDirectory() {
     if (!matches(contact)) resetFilters()
     setNotice(editor.kind === 'edit' ? 'updated' : 'added')
     setEditor(null)
-    restoreFocus()
   }
   function remove() {
     if (!removal) return
@@ -148,7 +147,6 @@ export function AtelierDirectory() {
     if (region && !remaining.some((c) => c.canton === region)) setRegion('')
     setRemoval(null)
     setNotice('deleted')
-    restoreFocus()
   }
   function select(contact: Contact) {
     setSelected(contact.id)
@@ -158,7 +156,7 @@ export function AtelierDirectory() {
     })
   }
   function openAction(contact: Contact, action: string) {
-    opener.current = actionTriggers.current.get(contact.id) ?? null
+    opener.current = actionTriggers.current.get(contact.id) ?? addTrigger.current
     setSelected(contact.id)
     setNotice(null)
     if (action === 'edit') setEditor({ kind: 'edit', contact })
@@ -397,10 +395,7 @@ export function AtelierDirectory() {
       <Sheet
         open={!!editor}
         onOpenChange={(open) => {
-          if (!open) {
-            setEditor(null)
-            restoreFocus()
-          }
+          if (!open) setEditor(null)
         }}
         title={editor?.kind === 'edit' ? t.editTitle : t.createTitle}
         closeLabel={t.close}
@@ -421,10 +416,7 @@ export function AtelierDirectory() {
       <AlertDialog
         open={!!removal}
         onOpenChange={(open) => {
-          if (!open) {
-            setRemoval(null)
-            restoreFocus()
-          }
+          if (!open) setRemoval(null)
         }}
         title={t.removeTitle}
         description={removal ? t.removeBody(removal.recipient) : ''}

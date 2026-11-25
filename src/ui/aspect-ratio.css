@@ -13,3 +13,8 @@
 .al-aspect-ratio[data-fit='contain'] > :is(img, video, canvas) {
   object-fit: contain;
 }
+
+.al-aspect-ratio:has(> :not(img, video, iframe, canvas)) {
+  min-block-size: min-content;
+  overflow: auto;
+}

@@ -3,7 +3,7 @@
   border-image: linear-gradient(var(--al-line) 0 0) 1 / 1px 0; padding-block: var(--al-space-2); }
 .al-calendar-head strong { margin-inline-end: auto; }
 .al-calendar-head .al-button { min-inline-size: 2.25rem; font-size: 1.25rem; }
-.al-calendar table { border-collapse: collapse; table-layout: fixed; width: 100%; text-align: center; }
+.al-calendar table { border-collapse: collapse; width: 100%; text-align: center; }
 .al-calendar th { font-size: var(--al-type-caption); line-height: var(--al-leading-caption); font-weight: 500; color: var(--al-muted); padding-block: var(--al-space-2); }
 .al-calendar td { padding: 0; }
 .al-calendar th[scope='row'] { font-variant-numeric: tabular-nums; border-inline-end: 1px solid var(--al-line); }
@@ -29,4 +29,12 @@
   .al-calendar td button,
   .al-calendar-head .al-button { min-block-size: var(--al-space-11); }
   .al-calendar-head .al-button { min-inline-size: var(--al-space-11); }
+}
+
+.al-calendar { min-inline-size: 0; max-inline-size: 100%; overflow-x: auto; }
+/* Seven weekdays and the optional ISO week share space until their labels need more. */
+.al-calendar th, .al-calendar td { inline-size: calc(100% / 8); white-space: nowrap; }
+
+@media (forced-colors: active) {
+  .al-calendar td[aria-selected='true'] button:enabled { outline: 2px solid Highlight; outline-offset: -2px; }
 }

@@ -13,7 +13,21 @@
       "fr-CH": "Quels documents faut-il fournir ?",
       "it-CH": "Quali documenti servono?",
       "rm-CH": "Tge documents dovri?"
-    }
+    },
+    "keys": [
+      [
+        "Enter / Space",
+        "Expand or collapse the focused section."
+      ],
+      [
+        "↑ / ↓",
+        "Move between enabled headings."
+      ],
+      [
+        "Home / End",
+        "Focus the first or last heading."
+      ]
+    ]
   },
   "ahv-input": {
     "use": "Collect a Swiss social insurance number in a workflow that requires the personal identifier and its check digit.",
@@ -29,7 +43,17 @@
       "fr-CH": "Numéro AVS",
       "it-CH": "Numero AVS",
       "rm-CH": "Numer AVS"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Enter or leave the field. A valid identifier is formatted when focus leaves."
+      ],
+      [
+        "Text editing",
+        "Type, select, paste and correct the value with the platform’s editing keys."
+      ]
+    ]
   },
   "alert": {
     "use": "Keep an explanation visible when an interruption changes what someone can do on the page.",
@@ -45,7 +69,13 @@
       "fr-CH": "Rendez-vous indisponible",
       "it-CH": "Appuntamento non disponibile",
       "rm-CH": "Termin betg disponibel"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "alert-dialog": {
     "use": "Ask for an explicit decision before deleting a record or discarding work that cannot be recovered.",
@@ -61,7 +91,21 @@
       "fr-CH": "Supprimer le brouillon",
       "it-CH": "Elimina bozza",
       "rm-CH": "Stizzar il sboz"
-    }
+    },
+    "keys": [
+      [
+        "Enter / Space",
+        "Open the confirmation from its trigger. Initial focus goes to Cancel."
+      ],
+      [
+        "Tab / Shift+Tab",
+        "Move between actions within the modal."
+      ],
+      [
+        "Escape",
+        "Cancel and return focus to the trigger."
+      ]
+    ]
   },
   "app-shell": {
     "use": "Give a workspace a consistent header, navigation area and main reading area across several routes.",
@@ -77,7 +121,21 @@
       "fr-CH": "Service des autorisations",
       "it-CH": "Ufficio autorizzazioni",
       "rm-CH": "Uffizi da permissiuns"
-    }
+    },
+    "keys": [
+      [
+        "Enter",
+        "Activate the skip link to focus the main content."
+      ],
+      [
+        "Enter / Space",
+        "Open or close the mobile index from its button."
+      ],
+      [
+        "Escape",
+        "Close the open mobile index and focus its button."
+      ]
+    ]
   },
   "aspect-ratio": {
     "use": "Reserve the final shape of a photo, film or diagram as its container changes width.",
@@ -93,7 +151,13 @@
       "fr-CH": "Entrée sud",
       "it-CH": "Ingresso sud",
       "rm-CH": "Entrada sid"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "attachment": {
     "use": "Link to a real file that someone can open or download, such as a meeting agenda.",
@@ -109,7 +173,17 @@
       "fr-CH": "Ordre du jour",
       "it-CH": "Ordine del giorno",
       "rm-CH": "Glista da tractandas"
-    }
+    },
+    "keys": [
+      [
+        "Tab",
+        "Focus the file link."
+      ],
+      [
+        "Enter",
+        "Open or download the file according to the link and browser settings."
+      ]
+    ]
   },
   "avatar": {
     "use": "Identify a sender or account visually when a portrait or initials aid recognition.",
@@ -125,7 +199,13 @@
       "fr-CH": "Secrétariat",
       "it-CH": "Segreteria",
       "rm-CH": "Secretariat"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "badge": {
     "use": "Put a brief state next to the record it describes, such as an invoice awaiting payment.",
@@ -141,7 +221,13 @@
       "fr-CH": "Payée",
       "it-CH": "Pagata",
       "rm-CH": "Pajà"
-    }
+    },
+    "keys": [
+      [
+        "Tab, then Enter",
+        "Follow the destination when composed as a link. A plain badge is read as text."
+      ]
+    ]
   },
   "bar-chart": {
     "use": "Compare the magnitude or signed change of independent categories against a shared zero baseline.",
@@ -157,7 +243,17 @@
       "fr-CH": "Variation des prêts",
       "it-CH": "Variazione dei prestiti",
       "rm-CH": "Midada dals emprests"
-    }
+    },
+    "keys": [
+      [
+        "Tab",
+        "Focus the data-table disclosure when readings are available."
+      ],
+      [
+        "Enter / Space",
+        "Show or hide the same values in the accessible table."
+      ]
+    ]
   },
   "breadcrumb": {
     "use": "Show where a page sits within a hierarchy that visitors can follow back up.",
@@ -173,7 +269,17 @@
       "fr-CH": "Permis de construire",
       "it-CH": "Licenza edilizia",
       "rm-CH": "Permiss da construcziun"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Move between links in document order."
+      ],
+      [
+        "Enter",
+        "Follow the focused link."
+      ]
+    ]
   },
   "bubble": {
     "use": "Separate individual utterances within a conversation whose speakers are already identified.",
@@ -189,7 +295,13 @@
       "fr-CH": "Le document est prêt.",
       "it-CH": "Il documento è pronto.",
       "rm-CH": "Il document è pront."
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "button": {
     "use": "Submit, save or change something in the current task. A payment instruction benefits from naming the object of the action.",
@@ -205,7 +317,13 @@
       "fr-CH": "Enregistrer l’adresse",
       "it-CH": "Salva indirizzo",
       "rm-CH": "Memorisar l’adressa"
-    }
+    },
+    "keys": [
+      [
+        "Enter / Space",
+        "Activate an enabled button. When composed as a link, use Enter to navigate."
+      ]
+    ]
   },
   "button-group": {
     "use": "Present closely related actions on the same object, such as printing or downloading its receipt.",
@@ -221,7 +339,17 @@
       "fr-CH": "Imprimer le reçu",
       "it-CH": "Stampa ricevuta",
       "rm-CH": "Stampar il quittament"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Move between enabled controls in the group."
+      ],
+      [
+        "Enter / Space",
+        "Activate the focused button."
+      ]
+    ]
   },
   "calendar": {
     "use": "Let people inspect a whole month or compare candidate appointment dates with neighbouring days and holidays.",
@@ -237,7 +365,29 @@
       "fr-CH": "Choisir une date de rendez-vous",
       "it-CH": "Scegliere la data dell’appuntamento",
       "rm-CH": "Tscherner la data dal termin"
-    }
+    },
+    "keys": [
+      [
+        "← / →",
+        "Move one day horizontally."
+      ],
+      [
+        "↑ / ↓",
+        "Move one week."
+      ],
+      [
+        "Home / End",
+        "Move to Monday or Sunday of the current week."
+      ],
+      [
+        "Page Up / Page Down",
+        "Move to the preceding or following month. Add Shift to move a year."
+      ],
+      [
+        "Enter / Space",
+        "Select the focused date."
+      ]
+    ]
   },
   "canton-combobox": {
     "use": "Find a canton from its name or abbreviation without stepping through all the cantons.",
@@ -253,7 +403,25 @@
       "fr-CH": "Rechercher un nom ou un sigle",
       "it-CH": "Cercare per nome o sigla",
       "rm-CH": "Tschertgar tenor num u abreviaziun"
-    }
+    },
+    "keys": [
+      [
+        "Type",
+        "Filter available choices."
+      ],
+      [
+        "↑ / ↓",
+        "Open the list and move the active option."
+      ],
+      [
+        "Enter",
+        "Commit the active option."
+      ],
+      [
+        "Escape / Tab",
+        "Close the list. Tab also moves focus out of the field."
+      ]
+    ]
   },
   "canton-select": {
     "use": "Ask for a Swiss canton from a fixed list when a native picker fits the form.",
@@ -269,7 +437,21 @@
       "fr-CH": "Canton de domicile",
       "it-CH": "Cantone di domicilio",
       "rm-CH": "Chantun da domicil"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Focus or leave the select."
+      ],
+      [
+        "↑ / ↓",
+        "Move between enabled options using the native picker."
+      ],
+      [
+        "Type",
+        "Use the browser’s option search."
+      ]
+    ]
   },
   "card": {
     "use": "Group the identity, details and available actions for one booking or case.",
@@ -285,7 +467,13 @@
       "fr-CH": "Inscription au cours",
       "it-CH": "Iscrizione al corso",
       "rm-CH": "Annunzia al curs"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Move through any links or controls supplied inside the component, in document order."
+      ]
+    ]
   },
   "carousel": {
     "use": "Let readers move between related visual examples that make sense one at a time.",
@@ -301,7 +489,21 @@
       "fr-CH": "Plan suivant",
       "it-CH": "Pianta successiva",
       "rm-CH": "Proxim plan"
-    }
+    },
+    "keys": [
+      [
+        "← / →",
+        "Show the previous or next slide while the carousel region has focus."
+      ],
+      [
+        "Home / End",
+        "Show the first or last slide."
+      ],
+      [
+        "Enter / Space",
+        "Activate a focused slide navigation button."
+      ]
+    ]
   },
   "chart": {
     "use": "Offer a quick, labelled comparison of values with the underlying data always available.",
@@ -317,7 +519,17 @@
       "fr-CH": "Heures d’ouverture",
       "it-CH": "Orari di apertura",
       "rm-CH": "Uras d’avertura"
-    }
+    },
+    "keys": [
+      [
+        "Tab",
+        "Focus the data-table disclosure when readings are available."
+      ],
+      [
+        "Enter / Space",
+        "Show or hide the same values in the accessible table."
+      ]
+    ]
   },
   "chart-table": {
     "use": "Let readers compare the size of a value and retrieve its exact number in the same row.",
@@ -333,7 +545,13 @@
       "fr-CH": "Exemplaires imprimés",
       "it-CH": "Copie stampate",
       "rm-CH": "Exemplars stampads"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read the values by row or column using the table navigation of your reading software."
+      ]
+    ]
   },
   "checkbox": {
     "use": "Let someone choose any number of independent options before submitting a form.",
@@ -349,7 +567,17 @@
       "fr-CH": "Envoyer une copie par courriel",
       "it-CH": "Invia una copia per e-mail",
       "rm-CH": "Trametter ina copia per e-mail"
-    }
+    },
+    "keys": [
+      [
+        "Space",
+        "Toggle the focused control."
+      ],
+      [
+        "Tab / Shift+Tab",
+        "Continue to the next or previous control."
+      ]
+    ]
   },
   "code-block": {
     "use": "Present a complete command, configuration fragment or code example that readers may copy intact.",
@@ -365,7 +593,17 @@
       "fr-CH": "Commande d’installation",
       "it-CH": "Comando di installazione",
       "rm-CH": "Cumond d’installaziun"
-    }
+    },
+    "keys": [
+      [
+        "Enter / Space",
+        "Activate Copy when the button has focus."
+      ],
+      [
+        "Ctrl+C / ⌘C",
+        "Copy the selected code when clipboard access requires manual copying."
+      ]
+    ]
   },
   "collapsible": {
     "use": "Hide a short, optional explanation such as how a reference number is assigned.",
@@ -381,7 +619,17 @@
       "fr-CH": "Calcul de la taxe",
       "it-CH": "Calcolo della tassa",
       "rm-CH": "Calculaziun da la taxa"
-    }
+    },
+    "keys": [
+      [
+        "Tab",
+        "Focus the disclosure summary."
+      ],
+      [
+        "Enter / Space",
+        "Open or close the details."
+      ]
+    ]
   },
   "combobox": {
     "use": "Search a long set of permitted values, especially when people know only part of a name.",
@@ -397,7 +645,25 @@
       "fr-CH": "Rechercher une commune",
       "it-CH": "Cerca un comune",
       "rm-CH": "Tschertgar ina vischnanca"
-    }
+    },
+    "keys": [
+      [
+        "Type",
+        "Filter available choices."
+      ],
+      [
+        "↑ / ↓",
+        "Open the list and move the active option."
+      ],
+      [
+        "Enter",
+        "Commit the active option."
+      ],
+      [
+        "Escape / Tab",
+        "Close the list. Tab also moves focus out of the field."
+      ]
+    ]
   },
   "command": {
     "use": "Search available commands when an experienced user wants to go straight to a known task.",
@@ -413,7 +679,29 @@
       "fr-CH": "Créer une facture",
       "it-CH": "Crea fattura",
       "rm-CH": "Crear in quint"
-    }
+    },
+    "keys": [
+      [
+        "Enter / Space",
+        "Open the command dialog from its trigger."
+      ],
+      [
+        "Type",
+        "Filter commands in the search field."
+      ],
+      [
+        "↑ / ↓",
+        "Move between available results."
+      ],
+      [
+        "Enter",
+        "Run the active command."
+      ],
+      [
+        "Escape",
+        "Close the dialog and restore focus."
+      ]
+    ]
   },
   "context-menu": {
     "use": "Offer shortcuts to actions on a particular document, row or selection.",
@@ -429,7 +717,33 @@
       "fr-CH": "Renommer le document",
       "it-CH": "Rinomina documento",
       "rm-CH": "Midar il num dal document"
-    }
+    },
+    "keys": [
+      [
+        "Shift+F10 / Menu",
+        "Open the context menu from its focusable target."
+      ],
+      [
+        "↑ / ↓",
+        "Move between menu items."
+      ],
+      [
+        "Home / End",
+        "Move to the first or last item."
+      ],
+      [
+        "Type",
+        "Focus an item by its label."
+      ],
+      [
+        "Enter / Space",
+        "Run the focused enabled action."
+      ],
+      [
+        "Escape",
+        "Close and restore focus to the invocation target."
+      ]
+    ]
   },
   "currency-chf": {
     "use": "Set Swiss franc amounts in a ledger, credit note or payment total so that amounts can be compared down a column.",
@@ -445,7 +759,13 @@
       "fr-CH": "Avoir",
       "it-CH": "Credito",
       "rm-CH": "Credit"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "data-table": {
     "use": "Let readers reorder comparable records, such as invoices by due date or amount.",
@@ -461,7 +781,21 @@
       "fr-CH": "Échéance",
       "it-CH": "Scadenza",
       "rm-CH": "Scadenza"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Move to sortable column headings and other controls."
+      ],
+      [
+        "Enter / Space",
+        "Sort by the focused column. Activate again to reverse the order."
+      ],
+      [
+        "← / →",
+        "Scroll wide content while its scroll region has focus."
+      ]
+    ]
   },
   "date-picker": {
     "use": "Choose one nearby date in a form where opening a calendar helps people see weekdays and availability.",
@@ -477,7 +811,33 @@
       "fr-CH": "Date de livraison",
       "it-CH": "Data di consegna",
       "rm-CH": "Data da furniziun"
-    }
+    },
+    "keys": [
+      [
+        "Enter / Space",
+        "Open the picker. Activate a focused day to select it."
+      ],
+      [
+        "← / →",
+        "Move one day in the calendar grid."
+      ],
+      [
+        "↑ / ↓",
+        "Move one week."
+      ],
+      [
+        "Home / End",
+        "Move to the start or end of the week."
+      ],
+      [
+        "Page Up / Page Down",
+        "Move one month. Add Shift to move a year."
+      ],
+      [
+        "Escape",
+        "Dismiss the calendar and return focus to its trigger."
+      ]
+    ]
   },
   "description-list": {
     "use": "Pair distinct terms with their values in an address, receipt or read-only profile.",
@@ -493,7 +853,13 @@
       "fr-CH": "Siège",
       "it-CH": "Sede",
       "rm-CH": "Sedia"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "dialog": {
     "use": "Interrupt the current view for a focused edit that can be completed or cancelled without navigating away.",
@@ -509,7 +875,21 @@
       "fr-CH": "Modifier l’adresse de livraison",
       "it-CH": "Modifica indirizzo di consegna",
       "rm-CH": "Modifitgar l’adressa da furniziun"
-    }
+    },
+    "keys": [
+      [
+        "Enter / Space",
+        "Open from the trigger or activate a focused action."
+      ],
+      [
+        "Tab / Shift+Tab",
+        "Traverse focusable controls inside the open modal."
+      ],
+      [
+        "Escape",
+        "Close the modal and return focus to its opener."
+      ]
+    ]
   },
   "direction": {
     "use": "Establish the reading direction of an embedded passage whose script differs from the surrounding interface.",
@@ -525,7 +905,13 @@
       "fr-CH": "Message original",
       "it-CH": "Messaggio originale",
       "rm-CH": "Messadi original"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Move through any links or controls supplied inside the component, in document order."
+      ]
+    ]
   },
   "drawer": {
     "use": "Present a focused task from the edge of the screen, especially on a small device.",
@@ -541,7 +927,21 @@
       "fr-CH": "Choisir la date de retrait",
       "it-CH": "Scegli data di ritiro",
       "rm-CH": "Tscherner la data da retratga"
-    }
+    },
+    "keys": [
+      [
+        "Enter / Space",
+        "Open from the trigger or activate a focused action."
+      ],
+      [
+        "Tab / Shift+Tab",
+        "Traverse focusable controls inside the open modal."
+      ],
+      [
+        "Escape",
+        "Close the modal and return focus to its opener."
+      ]
+    ]
   },
   "dropdown-menu": {
     "use": "Collect secondary commands that act on the same selected record.",
@@ -557,7 +957,33 @@
       "fr-CH": "Télécharger la facture",
       "it-CH": "Scarica fattura",
       "rm-CH": "Telechargiar il quint"
-    }
+    },
+    "keys": [
+      [
+        "↓ / ↑",
+        "Open the menu at its first or last item, then move between items."
+      ],
+      [
+        "Home / End",
+        "Focus the first or last item."
+      ],
+      [
+        "Type",
+        "Find an item by the beginning of its label."
+      ],
+      [
+        "Enter / Space",
+        "Activate the focused enabled item."
+      ],
+      [
+        "Escape",
+        "Dismiss and return focus to the menu button."
+      ],
+      [
+        "Tab / Shift+Tab",
+        "Dismiss and continue in document order."
+      ]
+    ]
   },
   "empty": {
     "use": "Explain an empty collection and offer the next useful action, such as creating its first address.",
@@ -573,7 +999,13 @@
       "fr-CH": "Aucune facture pour le moment",
       "it-CH": "Nessuna fattura per ora",
       "rm-CH": "Anc nagins quints"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Move through any links or controls supplied inside the component, in document order."
+      ]
+    ]
   },
   "field": {
     "use": "Keep the label, format hint and error for one editor together across validation states.",
@@ -589,7 +1021,13 @@
       "fr-CH": "Numéro de référence",
       "it-CH": "Numero di riferimento",
       "rm-CH": "Numer da referenza"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Move through any links or controls supplied inside the component, in document order."
+      ]
+    ]
   },
   "figure": {
     "use": "Keep a photograph, diagram or map together with its caption and source.",
@@ -605,7 +1043,13 @@
       "fr-CH": "Entrée de la gare",
       "it-CH": "Ingresso della stazione",
       "rm-CH": "Entrada da la staziun"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "grid": {
     "use": "Give related blocks a shared edge, such as the name and contact details on an address card.",
@@ -621,7 +1065,13 @@
       "fr-CH": "Adresse de facturation",
       "it-CH": "Indirizzo di fatturazione",
       "rm-CH": "Adressa da quint"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Move through any links or controls supplied inside the component, in document order."
+      ]
+    ]
   },
   "grid-overlay": {
     "use": "Inspect the placement of columns and baselines while reviewing a layout at real viewport widths.",
@@ -637,7 +1087,13 @@
       "fr-CH": "Afficher la grille",
       "it-CH": "Mostra griglia",
       "rm-CH": "Mussar la rait"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "hover-card": {
     "use": "Offer an optional preview of a person or record next to a link to its full details.",
@@ -653,7 +1109,21 @@
       "fr-CH": "Voir le profil",
       "it-CH": "Vedi profilo",
       "rm-CH": "Guardar il profil"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Focus the trigger to show the card. Continue to links or controls it contains."
+      ],
+      [
+        "Enter / Space",
+        "Pin or unpin the card from its trigger."
+      ],
+      [
+        "Escape",
+        "Dismiss the card. If focus was inside, it returns to the trigger."
+      ]
+    ]
   },
   "iban-input": {
     "use": "Collect a Swiss account identifier on a payout form where grouping and a checksum help catch transcription errors.",
@@ -669,7 +1139,17 @@
       "fr-CH": "IBAN du compte",
       "it-CH": "IBAN del conto",
       "rm-CH": "IBAN dal conto"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Enter or leave the field. A valid identifier is formatted when focus leaves."
+      ],
+      [
+        "Text editing",
+        "Type, select, paste and correct the value with the platform’s editing keys."
+      ]
+    ]
   },
   "icon": {
     "use": "Identify a familiar action or destination when its compact shape helps people scan a toolbar.",
@@ -685,7 +1165,13 @@
       "fr-CH": "Rechercher dans le répertoire",
       "it-CH": "Cerca nella rubrica",
       "rm-CH": "Tschertgar en il register"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "input": {
     "use": "Collect one short value such as a family name that the person can type or paste.",
@@ -701,7 +1187,17 @@
       "fr-CH": "Nom de famille",
       "it-CH": "Cognome",
       "rm-CH": "Num da famiglia"
-    }
+    },
+    "keys": [
+      [
+        "Text editing",
+        "Type, select, paste or replace text with the platform’s editing keys."
+      ],
+      [
+        "Tab / Shift+Tab",
+        "Move to the following or preceding control."
+      ]
+    ]
   },
   "input-group": {
     "use": "Keep a prefix, unit or adjacent action visually attached to one editable value.",
@@ -717,7 +1213,13 @@
       "fr-CH": "Poids (kg)",
       "it-CH": "Peso (kg)",
       "rm-CH": "Paisa (kg)"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Move through any links or controls supplied inside the component, in document order."
+      ]
+    ]
   },
   "input-otp": {
     "use": "Collect a short verification code delivered through a separate channel when every position belongs to the same value.",
@@ -733,7 +1235,25 @@
       "fr-CH": "Saisir le code à six chiffres",
       "it-CH": "Inserire il codice a sei cifre",
       "rm-CH": "Endatar il code da sis cifras"
-    }
+    },
+    "keys": [
+      [
+        "Digits",
+        "Enter the code in one input. The visual boxes follow the same value."
+      ],
+      [
+        "← / →",
+        "Move the text caret."
+      ],
+      [
+        "Backspace / Delete",
+        "Remove digits using native text editing."
+      ],
+      [
+        "Ctrl+V / ⌘V",
+        "Paste the code into the field."
+      ]
+    ]
   },
   "invoice-document": {
     "use": "Issue a printable, itemised Swiss invoice with its VAT breakdown, total and QR payment section on the same document.",
@@ -749,7 +1269,13 @@
       "fr-CH": "Location de l’atelier",
       "it-CH": "Affitto dell’atelier",
       "rm-CH": "Locaziun da l’atelier"
-    }
+    },
+    "keys": [
+      [
+        "Ctrl+P / ⌘P",
+        "Open the browser print dialog. The document uses its A4 print layout."
+      ]
+    ]
   },
   "item": {
     "use": "Show the identity and short description of a record in a list, optionally with an action alongside it.",
@@ -765,7 +1291,13 @@
       "fr-CH": "Bureau régional de Lausanne",
       "it-CH": "Ufficio regionale di Losanna",
       "rm-CH": "Post regiunal da Losanna"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Move through any links or controls supplied inside the component, in document order."
+      ]
+    ]
   },
   "kbd": {
     "use": "Show the actual keyboard shortcut for an action already available on screen.",
@@ -781,7 +1313,13 @@
       "fr-CH": "Rechercher des documents",
       "it-CH": "Cerca documenti",
       "rm-CH": "Tschertgar documents"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "label": {
     "use": "Associate a short, visible name with a specific native control when composing a custom form row.",
@@ -797,7 +1335,13 @@
       "fr-CH": "Rue et numéro",
       "it-CH": "Via e numero civico",
       "rm-CH": "Via e numer da chasa"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "letter": {
     "use": "Compose a printable A4 letter with sender, recipient, date, subject and body aligned to an envelope window.",
@@ -813,7 +1357,13 @@
       "fr-CH": "Confirmation de votre rendez-vous",
       "it-CH": "Conferma del suo appuntamento",
       "rm-CH": "Conferma da Voss termin"
-    }
+    },
+    "keys": [
+      [
+        "Ctrl+P / ⌘P",
+        "Open the browser print dialog. The document uses its A4 print layout."
+      ]
+    ]
   },
   "line-chart": {
     "use": "Show observations in a meaningful sequence, such as passenger counts across weekdays.",
@@ -829,7 +1379,17 @@
       "fr-CH": "Voyageurs par jour ouvrable",
       "it-CH": "Passeggeri per giorno lavorativo",
       "rm-CH": "Passagiers per di da lavur"
-    }
+    },
+    "keys": [
+      [
+        "Tab",
+        "Focus the data-table disclosure when readings are available."
+      ],
+      [
+        "Enter / Space",
+        "Show or hide the same values in the accessible table."
+      ]
+    ]
   },
   "locale-select": {
     "use": "Let a person switch the language of an application or a specific form using language names in their own spelling.",
@@ -845,7 +1405,21 @@
       "fr-CH": "Langue du formulaire",
       "it-CH": "Lingua del modulo",
       "rm-CH": "Lingua dal formular"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Focus or leave the select."
+      ],
+      [
+        "↑ / ↓",
+        "Move between enabled options using the native picker."
+      ],
+      [
+        "Type",
+        "Use the browser’s option search."
+      ]
+    ]
   },
   "marker": {
     "use": "Place a state symbol beside a concise name in a schedule or task list.",
@@ -861,7 +1435,13 @@
       "fr-CH": "À vérifier",
       "it-CH": "Da verificare",
       "rm-CH": "Da controllar"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "menubar": {
     "use": "Organise repeated application commands into familiar groups in a workspace or editor.",
@@ -877,7 +1457,29 @@
       "fr-CH": "Fichier",
       "it-CH": "File",
       "rm-CH": "Datoteca"
-    }
+    },
+    "keys": [
+      [
+        "← / →",
+        "Focus the neighbouring menu or switch groups while a menu is open."
+      ],
+      [
+        "↓ / ↑",
+        "Open a group at the first or last item, then move through its actions."
+      ],
+      [
+        "Home / End",
+        "Focus the first or last item in the current menu."
+      ],
+      [
+        "Enter / Space",
+        "Open the focused menu or run the focused action."
+      ],
+      [
+        "Escape",
+        "Dismiss the menu and return to its trigger."
+      ]
+    ]
   },
   "message": {
     "use": "Identify one contribution to a conversation with a speaker and optional time.",
@@ -893,7 +1495,13 @@
       "fr-CH": "Réception",
       "it-CH": "Ricezione",
       "rm-CH": "Recepziun"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "message-scroller": {
     "use": "Keep the newest messages visible in a conversation while allowing someone to read older replies.",
@@ -909,7 +1517,21 @@
       "fr-CH": "Derniers messages",
       "it-CH": "Ultimi messaggi",
       "rm-CH": "Ultimas novitads"
-    }
+    },
+    "keys": [
+      [
+        "Tab",
+        "Focus the message log or its jump-to-latest button when available."
+      ],
+      [
+        "↑ / ↓",
+        "Scroll through a log that overflows."
+      ],
+      [
+        "Enter / Space",
+        "Jump to the latest entry from the button."
+      ]
+    ]
   },
   "multilingual-field": {
     "use": "Edit several translations of the same title or description and see which languages still need text.",
@@ -925,7 +1547,25 @@
       "fr-CH": "Titre de la publication",
       "it-CH": "Titolo della pubblicazione",
       "rm-CH": "Titel da la publicaziun"
-    }
+    },
+    "keys": [
+      [
+        "← / →",
+        "Switch the active language while a language tab has focus."
+      ],
+      [
+        "Home / End",
+        "Focus the first or last language tab."
+      ],
+      [
+        "Tab / Shift+Tab",
+        "Move between the editor and its available actions."
+      ],
+      [
+        "Enter / Space",
+        "Copy the source text using the button in an empty translation."
+      ]
+    ]
   },
   "native-select": {
     "use": "Offer one familiar value from a short list on a phone using the device’s own selection interface.",
@@ -941,7 +1581,21 @@
       "fr-CH": "Mode de livraison",
       "it-CH": "Modalità di consegna",
       "rm-CH": "Moda da spediziun"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Focus or leave the select."
+      ],
+      [
+        "↑ / ↓",
+        "Move between enabled options using the native picker."
+      ],
+      [
+        "Type",
+        "Use the browser’s option search."
+      ]
+    ]
   },
   "navigation-menu": {
     "use": "Move among the top-level sections of a site using links people can bookmark and open in another tab.",
@@ -957,7 +1611,25 @@
       "fr-CH": "Prestations",
       "it-CH": "Servizi",
       "rm-CH": "Servetschs"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Move between visible navigation links and the optional disclosure."
+      ],
+      [
+        "Enter",
+        "Follow the focused link."
+      ],
+      [
+        "Enter / Space",
+        "Open or close a collapsed menu from its summary."
+      ],
+      [
+        "Escape",
+        "Close a collapsed menu that is open and focus its summary."
+      ]
+    ]
   },
   "pagination": {
     "use": "Navigate between stable pages of records while retaining a shareable position in a list.",
@@ -973,7 +1645,17 @@
       "fr-CH": "Page 3",
       "it-CH": "Pagina 3",
       "rm-CH": "Pagina 3"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Move between links in document order."
+      ],
+      [
+        "Enter",
+        "Follow the focused link."
+      ]
+    ]
   },
   "phone-input": {
     "use": "Ask for a Swiss callback number and display it in international +41 format.",
@@ -989,7 +1671,17 @@
       "fr-CH": "Numéro de rappel",
       "it-CH": "Numero per essere richiamati",
       "rm-CH": "Numer per clamar enavos"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Enter or leave the field. A valid identifier is formatted when focus leaves."
+      ],
+      [
+        "Text editing",
+        "Type, select, paste and correct the value with the platform’s editing keys."
+      ]
+    ]
   },
   "popover": {
     "use": "Reveal optional contextual information or a small control near the element that opened it.",
@@ -1005,7 +1697,21 @@
       "fr-CH": "Calcul des frais de port",
       "it-CH": "Calcolo delle spese postali",
       "rm-CH": "Calculaziun dals custs da porto"
-    }
+    },
+    "keys": [
+      [
+        "Enter / Space",
+        "Open the panel from its trigger or activate a focused action."
+      ],
+      [
+        "Tab / Shift+Tab",
+        "Move through the panel and surrounding page."
+      ],
+      [
+        "Escape",
+        "Close the panel and restore trigger focus."
+      ]
+    ]
   },
   "progress": {
     "use": "Show how much of an operation has finished when the total can be measured, such as imported records.",
@@ -1021,7 +1727,13 @@
       "fr-CH": "Importer les adresses",
       "it-CH": "Importa indirizzi",
       "rm-CH": "Importar adressas"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "prose": {
     "use": "Set a guide, policy or long-form explanation with a readable measure, paragraphs, headings and lists.",
@@ -1037,7 +1749,13 @@
       "fr-CH": "Déposer une demande",
       "it-CH": "Presentare una domanda",
       "rm-CH": "Inoltrar ina dumonda"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Move through any links or controls supplied inside the component, in document order."
+      ]
+    ]
   },
   "questionnaire": {
     "use": "Guide someone through a sequence of short questions with one answer due at each step.",
@@ -1053,7 +1771,21 @@
       "fr-CH": "Comment vous contacter ?",
       "it-CH": "Come possiamo contattarla?",
       "rm-CH": "Co pudain nus contactar Vus?"
-    }
+    },
+    "keys": [
+      [
+        "↑ / ↓",
+        "Move through the answer options and select a radio."
+      ],
+      [
+        "Space",
+        "Select the focused answer."
+      ],
+      [
+        "Enter / Space",
+        "Activate Next, Back, Submit or Edit answers. Focus follows the current question."
+      ]
+    ]
   },
   "radio-group": {
     "use": "Show a small set of mutually exclusive choices together, for example two ways of receiving an invoice.",
@@ -1069,7 +1801,21 @@
       "fr-CH": "Envoi de la facture",
       "it-CH": "Invio della fattura",
       "rm-CH": "Spediziun dal quint"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Enter or leave the native radio group."
+      ],
+      [
+        "Arrow keys",
+        "Move selection between enabled options."
+      ],
+      [
+        "Space",
+        "Select the focused option."
+      ]
+    ]
   },
   "resizable": {
     "use": "Let a reviewer widen a document beside its annotations while keeping both panes visible.",
@@ -1085,7 +1831,21 @@
       "fr-CH": "Largeur du document",
       "it-CH": "Larghezza del documento",
       "rm-CH": "Ladezza dal document"
-    }
+    },
+    "keys": [
+      [
+        "Arrow keys",
+        "Move the divider along its resize axis. Add Shift for a larger step."
+      ],
+      [
+        "Home / End",
+        "Move to the minimum or maximum size."
+      ],
+      [
+        "Enter",
+        "Collapse or restore the first panel."
+      ]
+    ]
   },
   "scroll-area": {
     "use": "Constrain a genuinely long panel while keeping the rest of a workspace within reach.",
@@ -1101,7 +1861,21 @@
       "fr-CH": "Historique des modifications",
       "it-CH": "Cronologia delle modifiche",
       "rm-CH": "Istorgia da las modificaziuns"
-    }
+    },
+    "keys": [
+      [
+        "Tab",
+        "Focus the scrollable region."
+      ],
+      [
+        "Arrow keys",
+        "Scroll along the available axis."
+      ],
+      [
+        "Page Up / Page Down",
+        "Scroll a vertical region by a page."
+      ]
+    ]
   },
   "select": {
     "use": "Offer a short set of known values, such as a preferred delivery method, inside a form.",
@@ -1117,7 +1891,21 @@
       "fr-CH": "Mode d’envoi",
       "it-CH": "Modalità di invio",
       "rm-CH": "Moda da spediziun"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Focus or leave the select."
+      ],
+      [
+        "↑ / ↓",
+        "Move between enabled options using the native picker."
+      ],
+      [
+        "Type",
+        "Use the browser’s option search."
+      ]
+    ]
   },
   "separator": {
     "use": "Mark the boundary between two groups of information within the same task.",
@@ -1133,7 +1921,13 @@
       "fr-CH": "Mode de paiement",
       "it-CH": "Metodo di pagamento",
       "rm-CH": "Moda da pajament"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "sheet": {
     "use": "Edit related information in a modal side panel while retaining the context of the record behind it.",
@@ -1149,7 +1943,21 @@
       "fr-CH": "Modifier les données de facturation",
       "it-CH": "Modifica dati di fatturazione",
       "rm-CH": "Modifitgar las datas dal quint"
-    }
+    },
+    "keys": [
+      [
+        "Enter / Space",
+        "Open from the trigger or activate a focused action."
+      ],
+      [
+        "Tab / Shift+Tab",
+        "Traverse focusable controls inside the open modal."
+      ],
+      [
+        "Escape",
+        "Close the modal and return focus to its opener."
+      ]
+    ]
   },
   "sidebar": {
     "use": "Provide persistent section navigation beside a set of related workspaces or reference pages.",
@@ -1165,7 +1973,13 @@
       "fr-CH": "Facturation",
       "it-CH": "Fatturazione",
       "rm-CH": "Facturaziun"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Move through any links or controls supplied inside the component, in document order."
+      ]
+    ]
   },
   "skeleton": {
     "use": "Reserve space for a known heading, row or card while its data arrives.",
@@ -1181,7 +1995,13 @@
       "fr-CH": "Chargement des factures",
       "it-CH": "Caricamento fatture",
       "rm-CH": "Chargiar ils quints"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "slider": {
     "use": "Adjust a bounded quantity when exploring nearby values is part of the task.",
@@ -1197,7 +2017,17 @@
       "fr-CH": "Largeur d’impression (mm)",
       "it-CH": "Larghezza di stampa (mm)",
       "rm-CH": "Ladezza da stampa (mm)"
-    }
+    },
+    "keys": [
+      [
+        "Arrow keys",
+        "Change the value by one step."
+      ],
+      [
+        "Home / End",
+        "Set the minimum or maximum."
+      ]
+    ]
   },
   "sparkline": {
     "use": "Add a compact trend beside a current reading in a monitoring summary.",
@@ -1213,7 +2043,17 @@
       "fr-CH": "Niveau de l’eau",
       "it-CH": "Livello dell’acqua",
       "rm-CH": "Nivel da l’aua"
-    }
+    },
+    "keys": [
+      [
+        "Tab",
+        "Focus the data-table disclosure when readings are available."
+      ],
+      [
+        "Enter / Space",
+        "Show or hide the same values in the accessible table."
+      ]
+    ]
   },
   "spinner": {
     "use": "Show that a brief operation is still active while its result is unavailable.",
@@ -1229,7 +2069,13 @@
       "fr-CH": "Chargement des rendez-vous",
       "it-CH": "Caricamento appuntamenti",
       "rm-CH": "Chargiar ils termins"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "stack": {
     "use": "Space a sequence of controls or paragraphs consistently as their translations wrap.",
@@ -1245,7 +2091,13 @@
       "fr-CH": "Personne de contact",
       "it-CH": "Persona di contatto",
       "rm-CH": "Persuna da contact"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Move through any links or controls supplied inside the component, in document order."
+      ]
+    ]
   },
   "steps": {
     "use": "Show progress through a sequence with a defined order, such as submitting an application.",
@@ -1261,7 +2113,13 @@
       "fr-CH": "Coordonnées",
       "it-CH": "Dati di contatto",
       "rm-CH": "Datas da contact"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "swiss-address-form": {
     "use": "Collect a recipient and a Swiss delivery address, with a locality suggestion after the postal code is entered.",
@@ -1277,7 +2135,21 @@
       "fr-CH": "NPA",
       "it-CH": "NPA",
       "rm-CH": "Numer postal"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Move through address fields, locality suggestions and the save button."
+      ],
+      [
+        "Enter",
+        "Submit the form, or follow a focused error link to its field."
+      ],
+      [
+        "↑ / ↓",
+        "Choose a locality or canton in its native select."
+      ]
+    ]
   },
   "swiss-date": {
     "use": "Show a filing deadline or an issue date in the reader’s Swiss locale while retaining its machine-readable value.",
@@ -1293,7 +2165,13 @@
       "fr-CH": "Date d’émission",
       "it-CH": "Data di emissione",
       "rm-CH": "Data d’emissiun"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "swiss-postal-code-input": {
     "use": "Collect a Swiss four-digit postal code as a text identifier, including when another field will capture the locality.",
@@ -1309,7 +2187,17 @@
       "fr-CH": "NPA (quatre chiffres)",
       "it-CH": "NPA (quattro cifre)",
       "rm-CH": "Numer postal (quatter cifras)"
-    }
+    },
+    "keys": [
+      [
+        "Digits",
+        "Enter the four-digit postal code."
+      ],
+      [
+        "Ctrl+V / ⌘V",
+        "Paste the code. A full-field paste can include the CH prefix."
+      ]
+    ]
   },
   "swiss-qr-bill": {
     "use": "Place the Swiss QR payment part and its receipt together beneath a payable invoice.",
@@ -1325,7 +2213,25 @@
       "fr-CH": "Informations de paiement",
       "it-CH": "Informazioni di pagamento",
       "rm-CH": "Infurmaziuns da pajament"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Focus the reading-view summary or the scrollable slip when fit is disabled."
+      ],
+      [
+        "Enter / Space",
+        "Open or close the reading view from its summary."
+      ],
+      [
+        "Arrow keys",
+        "Scroll the focused slip when it exceeds the available space."
+      ],
+      [
+        "Ctrl+P / ⌘P",
+        "Open the browser print dialog."
+      ]
+    ]
   },
   "switch": {
     "use": "Apply a persistent on/off preference immediately, such as receiving appointment reminders.",
@@ -1341,7 +2247,17 @@
       "fr-CH": "Rappels de rendez-vous",
       "it-CH": "Promemoria appuntamenti",
       "rm-CH": "Promemorias per termins"
-    }
+    },
+    "keys": [
+      [
+        "Space",
+        "Toggle the focused control."
+      ],
+      [
+        "Tab / Shift+Tab",
+        "Continue to the next or previous control."
+      ]
+    ]
   },
   "table": {
     "use": "Present records with the same fields so readers can compare a value across rows.",
@@ -1357,7 +2273,17 @@
       "fr-CH": "Montant",
       "it-CH": "Importo",
       "rm-CH": "Import"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Use the reading software’s native table commands for rows, columns and headings."
+      ],
+      [
+        "Tab / Shift+Tab",
+        "Move between any controls supplied within cells."
+      ]
+    ]
   },
   "tabs": {
     "use": "Switch among peer views of the same object while preserving its context, such as a case and its documents.",
@@ -1373,7 +2299,25 @@
       "fr-CH": "Documents",
       "it-CH": "Documenti",
       "rm-CH": "Documents"
-    }
+    },
+    "keys": [
+      [
+        "Tab",
+        "Enter the tab list on its active tab. Continue to the panel."
+      ],
+      [
+        "Arrow keys",
+        "Move between enabled tabs along the list’s orientation."
+      ],
+      [
+        "Home / End",
+        "Move to the first or last enabled tab."
+      ],
+      [
+        "Enter / Space",
+        "In manual activation mode, display the focused tab’s panel."
+      ]
+    ]
   },
   "text-link": {
     "use": "Lead to a related document or a stable URL from a paragraph of running text.",
@@ -1389,7 +2333,17 @@
       "fr-CH": "Télécharger le tarif (PDF)",
       "it-CH": "Scaricare il tariffario (PDF)",
       "rm-CH": "Telechargiar il tariffari (PDF)"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Move between links in document order."
+      ],
+      [
+        "Enter",
+        "Follow the focused link."
+      ]
+    ]
   },
   "textarea": {
     "use": "Collect a delivery instruction or another response whose length and line breaks matter.",
@@ -1405,7 +2359,17 @@
       "fr-CH": "Instructions de livraison",
       "it-CH": "Istruzioni di consegna",
       "rm-CH": "Instrucziuns da furniziun"
-    }
+    },
+    "keys": [
+      [
+        "Text editing",
+        "Type, select, paste or replace text with the platform’s editing keys."
+      ],
+      [
+        "Tab / Shift+Tab",
+        "Move to the following or preceding control."
+      ]
+    ]
   },
   "toast": {
     "use": "Acknowledge a completed action without moving focus away from ongoing work.",
@@ -1421,7 +2385,21 @@
       "fr-CH": "Adresse enregistrée.",
       "it-CH": "Indirizzo salvato.",
       "rm-CH": "Adressa memorisada."
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Focus the dismiss button when supplied. Focus pauses the timer."
+      ],
+      [
+        "Enter / Space",
+        "Dismiss using the button."
+      ],
+      [
+        "Escape",
+        "Dismiss while focus is in the notification."
+      ]
+    ]
   },
   "toggle": {
     "use": "Turn a reversible tool or formatting choice on and off while the tool stays in place.",
@@ -1437,7 +2415,13 @@
       "fr-CH": "Gras",
       "it-CH": "Grassetto",
       "rm-CH": "Grass"
-    }
+    },
+    "keys": [
+      [
+        "Enter / Space",
+        "Switch the pressed state."
+      ]
+    ]
   },
   "toggle-group": {
     "use": "Keep two or three peer display modes within reach while the same data stays on screen.",
@@ -1453,7 +2437,25 @@
       "fr-CH": "Affichage",
       "it-CH": "Vista",
       "rm-CH": "Vista"
-    }
+    },
+    "keys": [
+      [
+        "← / →",
+        "Move focus between choices in a horizontal group."
+      ],
+      [
+        "↑ / ↓",
+        "Move through a vertical group or between rows in a grid."
+      ],
+      [
+        "Home / End",
+        "Move to the first or last enabled choice."
+      ],
+      [
+        "Enter / Space",
+        "Change the pressed state of the focused choice."
+      ]
+    ]
   },
   "tooltip": {
     "use": "Explain a familiar, focusable control or an abbreviation with a short supplementary hint.",
@@ -1469,7 +2471,17 @@
       "fr-CH": "Exporter les lignes filtrées",
       "it-CH": "Esporta le righe filtrate",
       "rm-CH": "Exportar las lingias filtradas"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Focus the trigger to display the description, then move away to dismiss it."
+      ],
+      [
+        "Escape",
+        "Hide the tooltip while keeping focus on the trigger."
+      ]
+    ]
   },
   "trace": {
     "use": "Expose the sequence of an import or delivery run and let a support engineer open details of individual events.",
@@ -1485,7 +2497,17 @@
       "fr-CH": "Liste d’adresses importée",
       "it-CH": "Elenco degli indirizzi importato",
       "rm-CH": "Glista d’adressas importada"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Focus the summary of an entry with details."
+      ],
+      [
+        "Enter / Space",
+        "Show or hide those details."
+      ]
+    ]
   },
   "typography": {
     "use": "Distinguish the page subject, section headings and running text in a programme or reference page.",
@@ -1501,7 +2523,13 @@
       "fr-CH": "Programme de printemps",
       "it-CH": "Programma primaverile",
       "rm-CH": "Program da primavaira"
-    }
+    },
+    "keys": [
+      [
+        "—",
+        "Read in document order. The component has no keyboard command of its own."
+      ]
+    ]
   },
   "uid-input": {
     "use": "Collect the Swiss enterprise identification number from a supplier’s registration details.",
@@ -1517,7 +2545,17 @@
       "fr-CH": "Numéro d’identification des entreprises",
       "it-CH": "Numero d’identificazione delle imprese",
       "rm-CH": "Numer d’identificaziun da las interpresas"
-    }
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Enter or leave the field. A valid identifier is formatted when focus leaves."
+      ],
+      [
+        "Text editing",
+        "Type, select, paste and correct the value with the platform’s editing keys."
+      ]
+    ]
   },
   "qr-bill-scanner": {
     "use": "Read a payment slip when someone needs to transfer invoice details into a local workflow.",

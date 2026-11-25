@@ -32,13 +32,25 @@ For an action menu followed by a confirmation dialog, keep the menu trigger refe
 
 Use `Icon` for interface symbols. The installed `iconNames` export lists the supported names. Keep the icon decorative next to visible text and put the accessible name on an icon-only button or link.
 
-## Four common tasks
+## Mistakes to avoid
+
+| Mistake | Use instead |
+| --- | --- |
+| Applying Tailwind utilities to restyle Alpina controls | Select a public variant and use `Grid` or `Stack` for layout. |
+| Loading fonts while omitting the component stylesheet | Import `alpina-ui/styles.css` once at the entry point. Add `alpina-ui/fonts.css` when using self-hosted Inter. |
+| Nesting cards or framing every section in an identical card | Group a task with a heading, a separator and whitespace. Reserve a card for a unit that belongs together. |
+| Adding decorative gradients | Choose a solid paper, ink or red field. |
+| Guessing props from shadcn/ui or another library | Read the installed declaration or the local MCP `get_component` result. |
+
+## Application structure
 
 Set `AlpinaProvider locale="it-CH"` at the application boundary so fields, validation and portals share a language. Use a component-level locale for an intentional bilingual preview. Set the document's `lang` and translate your own content separately.
 
 For a workspace with persistent navigation, pass a `SideNav` to the `sidebar` prop of `AppShell`, and supply its brand and mobile navigation labels. Mount one `Toaster` with a localized `closeLabel` and call `toast(message)` from the browser event that completes an action. A persistent field error belongs in the form.
 
 To compare periods in a chart, give `BarChart` or `LineChart` a `series` array. Each series has a `name` and `data` points with the same category labels. Supply a title, description and meaningful table labels so the same comparison reads well without the graphic.
+
+## Four common tasks
 
 ### Print an invoice with a QR payment slip
 

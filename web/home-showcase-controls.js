@@ -51,7 +51,6 @@ const themeSwitch = document.getElementById('proof-dark')
 themeSwitch.addEventListener('change', () => {
   document.getElementById('appearance-proof').dataset.alTheme = themeSwitch.checked ? 'dark' : 'light'
 })
-enhanceSpecimen(document.getElementById('access-proof'))
 
 // The rest of the page is static. Load React only when a stateful sample is approached.
 const loaded = new WeakSet()

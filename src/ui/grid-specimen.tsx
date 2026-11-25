@@ -5,16 +5,21 @@ export interface GridSpecimenProps extends ComponentPropsWithoutRef<'div'> {
   /** Width of the proof in CSS pixels. Automatic proofs fill their container. */
   width?: number | 'auto'
   label: string
+  /** Magnification factor. At 4, children lay out at one quarter of the available width. */
+  zoom?: number
+  /** Preview browser system colors without changing the rest of the page. */
+  palette?: 'system'
 }
 
 /** Keep a proof at its intended width inside a keyboard-scrollable region. */
 export const GridSpecimen = forwardRef<HTMLDivElement, GridSpecimenProps>(function GridSpecimen(
-  { width = 'auto', label, children, className = '', tabIndex = 0, ...props }, ref,
+  { width = 'auto', zoom = 1, palette, label, children, className = '', tabIndex = 0, ...props }, ref,
 ) {
   if (width !== 'auto' && (!Number.isFinite(width) || width <= 0)) throw new RangeError('A proof width must be positive.')
+  if (!Number.isFinite(zoom) || zoom <= 0) throw new RangeError('Proof zoom must be positive.')
   return <div {...props} ref={ref} role="region" aria-label={label} tabIndex={tabIndex}
     className={('al-grid-specimen ' + className).trim()}>
-    <div className="al-grid-proof" style={{ inlineSize: width === 'auto' ? '100%' : width }}>
+    <div className="al-grid-proof" data-palette={palette} style={{ inlineSize: width === 'auto' ? '100%' : width, zoom: zoom === 1 ? undefined : zoom }}>
       {children}
       <span aria-hidden="true" className="al-grid-proof-unit" />
     </div>

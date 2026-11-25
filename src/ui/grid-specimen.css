@@ -23,3 +23,20 @@
   block-size: 1px;
   inset: 0 auto auto 0;
 }
+
+/* Use the reader's system palette for a local contrast proof. */
+.al-grid-proof[data-palette='system'] {
+  --al-bg: Canvas;
+  --al-surface: Canvas;
+  --al-soft: Canvas;
+  --al-ink: CanvasText;
+  --al-muted: CanvasText;
+  --al-line: ButtonText;
+  --al-control: ButtonText;
+  --al-accent: Highlight;
+  --al-on-accent: HighlightText;
+  --al-danger: CanvasText;
+  --al-focus: Highlight;
+  background: Canvas;
+  color: CanvasText;
+}

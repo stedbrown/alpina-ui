@@ -80,7 +80,7 @@ export function PageHeading({ title, summary, children }: { title: string; summa
   </Grid>
 }
 
-export function Landing({ version, count, queue, command, installation }: { version: string; count: number; queue: string; command: string; installation: string }) {
+export function Landing({ version, count, queue, command, installation, access }: { version: string; count: number; queue: string; command: string; installation: string; access: string }) {
   return <>
     <Masthead current="home" />
     <PageRegion as="main" id="content" tabIndex={-1}>
@@ -116,7 +116,7 @@ export function Landing({ version, count, queue, command, installation }: { vers
       <TypeStudy />
       <HomeShowcase queue={queue} />
       <AppearanceStudy />
-      <AccessStudy />
+      <AccessStudy html={access} />
       <SwissStudy />
       <MigrationStudy />
       <Installation html={installation} command={command} />

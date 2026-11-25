@@ -1,8 +1,9 @@
 import type { ReactNode } from 'react'
 import {
   Badge, Collapsible, DescriptionList, Field, Grid, GridItem, GridOverlay, GridSpecimen, InlineCode, Label,
-  Select, Separator, Stack, Switch, Tabs, TextLink, Typography,
+  Select, Separator, Stack, Switch, TextLink, Typography,
 } from 'alpina-ui'
+import { AccessProof } from './access-proof.js'
 import { TypeSpecimen } from './type-specimen.js'
 
 const folios: Record<string, string> = {
@@ -76,18 +77,11 @@ export function AppearanceStudy() {
   </Grid>
 }
 
-const accessTopics = [
-  { value: 'keys', label: 'Keyboard', content: <Typography>Use the arrow keys to move between these tabs. Home and End take you to the first and last tabs.</Typography> },
-  { value: 'zoom', label: 'Zoom', content: <GridSpecimen width={180} label="Narrow text proof at 180 CSS pixels"><Stack inset={3} gap={1}>
-      <Typography variant="label">Reading room</Typography><Typography>The desk opens at nine.</Typography>
-    </Stack></GridSpecimen> },
-  { value: 'contrast', label: 'Contrast', content: <Stack gap={2} align="start"><Badge>Reserved</Badge><Typography>The label identifies a reservation when Windows replaces the palette with system colors.</Typography></Stack> },
-]
-export function AccessStudy() {
+export function AccessStudy({ html }: { html: string }) {
   return <Grid as="section" width="site" space="chapter" surface="paper" aria-labelledby="access-title">
-    <GridItem medium={3} large={4}><SectionIntro id="access-title" title="Accessible by design" text="Try keyboard navigation, the reading width of a phone at 200% zoom, and a label that keeps its meaning in high contrast." /></GridItem>
-    <GridItem medium={5} large={7} start={{ large: 6 }}><Stack gap={3} id="access-proof" scripting="enabled"><Tabs label="Accessibility proofs" items={accessTopics} defaultValue="keys" /></Stack>
-      <Stack scripting="none">{accessTopics.map(item => <Collapsible summary={item.label} key={item.value}>{item.content}</Collapsible>)}</Stack></GridItem>
+    <GridItem medium={3} large={4}><SectionIntro id="access-title" title="Accessible by design" text="Tab to the name field, enter a name and hold a reading desk. Magnify the same form and compare the focus ring and status in system colors." /></GridItem>
+    <GridItem medium={5} large={7} start={{ large: 6 }}><Stack id="access-proof" scripting="enabled" data-landing-island="access" dangerouslySetInnerHTML={{ __html: html }} />
+      <Stack scripting="none"><AccessProof interactive={false} /></Stack></GridItem>
   </Grid>
 }
 

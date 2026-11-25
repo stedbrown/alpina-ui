@@ -7,6 +7,10 @@
   background: var(--al-soft);
 }
 .al-grid-specimen:focus-visible { outline: 2px solid var(--al-focus); outline-offset: 2px; }
+.al-grid-proof :is(input, textarea, button):focus-visible {
+  outline: 3px solid var(--al-focus);
+  outline-offset: 2px;
+}
 .al-grid-proof {
   position: relative;
   box-sizing: border-box;

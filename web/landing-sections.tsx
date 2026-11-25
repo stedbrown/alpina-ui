@@ -68,8 +68,10 @@ export function AppearanceStudy() {
 
 export function AccessStudy({ html }: { html: string }) {
   return <Grid as="section" width="site" space="chapter" surface="paper" aria-labelledby="access-title">
-    <GridItem medium={3} large={4}><SectionIntro id="access-title" title="Accessible by design" text="Tab to the name field, enter a name and hold a reading desk. Magnify the same form and compare the focus ring and status in system colors." /></GridItem>
-    <GridItem medium={5} large={7} start={{ large: 6 }}><Stack id="access-proof" scripting="enabled" data-landing-island="access" dangerouslySetInnerHTML={{ __html: html }} />
+    <GridItem medium={3} large={3}><SectionIntro id="access-title" title="Accessible by design" text="Reserve a reading desk with the keyboard. Increase the zoom to stack the fields, then follow the focus ring through the form.">
+      <TextLink href="/docs/components/field/">Explore accessible fields →</TextLink>
+    </SectionIntro></GridItem>
+    <GridItem medium={5} large={8} start={{ large: 5 }}><Stack id="access-proof" scripting="enabled" data-landing-island="access" dangerouslySetInnerHTML={{ __html: html }} />
       <Stack scripting="none"><AccessProof interactive={false} /></Stack></GridItem>
   </Grid>
 }

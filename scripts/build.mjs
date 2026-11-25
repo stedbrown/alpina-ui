@@ -3,6 +3,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { execFileSync } from 'node:child_process'
 import { transform } from 'esbuild'
+import { loadInventory } from './load-inventory.mjs'
 import { groups, additions } from './items.mjs'
 import { buildScannerCodecs } from './scanner-codecs.mjs'
 
@@ -46,6 +47,7 @@ const registry = {
   version: JSON.parse(await readFile('package.json')).version,
   items: [],
 }
+const summaries = new Map((await loadInventory()).map(([name, , , , summary]) => [name, summary]))
 const usageNotes = JSON.parse(await readFile('scripts/component-usage.json', 'utf8'))
 const publicCompanions = { steps: 'ui/form-steps.tsx', 'locale-select': 'swiss/language-switcher.tsx' }
 for (const [group, names] of Object.entries(groups)) {
@@ -59,7 +61,7 @@ for (const [group, names] of Object.entries(groups)) {
       files.add('swiss/UNICODE-LICENSE.txt')
     const usage = usageNotes[name]
     if (typeof usage !== 'string' || !usage.trim()) throw new Error('Missing usage notes for ' + name)
-    registry.items.push({ name, group, entry, usage, files: ['theme.css', ...files] })
+    registry.items.push({ name, group, entry, summary: summaries.get(name), usage, files: ['theme.css', ...files] })
   }
 }
 await writeFile('registry.json', JSON.stringify(registry, null, 2) + '\n')

@@ -1,14 +1,11 @@
 import assert from 'node:assert/strict'
 import { readFile, readdir, writeFile } from 'node:fs/promises'
-import { build } from 'esbuild'
+import { loadInventory } from './load-inventory.mjs'
 import { siteUrl as origin } from './site-config.mjs'
 
 const manifest = JSON.parse(await readFile('package.json', 'utf8'))
 const registry = JSON.parse(await readFile('registry.json', 'utf8'))
-const { outputFiles } = await build({
-  entryPoints: ['catalog/inventory.ts'], bundle: true, platform: 'node', format: 'esm', write: false,
-})
-const { inventory } = await import('data:text/javascript;base64,' + Buffer.from(outputFiles[0].contents).toString('base64'))
+const inventory = await loadInventory()
 assert.deepEqual(inventory.map(([slug]) => slug).sort(), registry.items.map(item => item.name).sort())
 const names = new Map(inventory.map(([slug, name]) => [slug, name]))
 const classes = new Map(['Base', 'Interactive', 'Swiss', 'Documents', 'Charts'].map(label => [label, []]))

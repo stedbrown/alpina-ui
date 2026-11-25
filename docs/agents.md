@@ -37,9 +37,9 @@ Restart or reconnect the client and open its tool list. It should show the three
 
 | Tool | Example arguments | Result |
 | --- | --- | --- |
-| `search_components` | `{"query":"canton"}` | Matching component identifiers and their groups. Use `{}` for the full registry. |
+| `search_components` | `{"query":"jours fériés"}` | Ranked identifiers, groups and one-line descriptions. Names, partial words and task terms in English, Italian, German and French work offline. Use `{}` for the full registry. |
 | `get_component` | `{"name":"dropdown-menu"}` | The import path, usage notes, TypeScript declaration and registered source paths. Add `"file":"interactive/action-list.tsx"` to read one listed file. |
-| `get_guide` | `{"slug":"directory"}` | The installed Markdown guide. Use `{}` to discover guide identifiers. |
+| `get_guide` | `{"slug":"build"}` | The installed Markdown guide. Use `{}` to discover guide identifiers. |
 
 Try asking, “Which Alpina component lets someone filter by canton? Check the installed API and show how to clear the filter.” The agent can look up both canton controls and inspect their props before choosing one. Your editor handles any changes to the application. [MCP tools](https://modelcontextprotocol.io/specification/2025-11-25/server/tools)
 

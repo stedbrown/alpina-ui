@@ -6,6 +6,7 @@
       "name": "grid",
       "group": "ui",
       "entry": "ui/grid.tsx",
+      "summary": "Compose columns and rows, asymmetrical fields, and nested cards that share tracks.",
       "usage": "Use width=\"site\" for a centered 100rem frame. Column spans follow the container width. Use fields with rows to compose rectangular areas, or select thirds or five-seven for lead/detail pairs. Give each GridItem a field name and use subgrid=\"rows\" to align content across cards. PageRegion provides a semantic landmark when the content already supplies its own grids.",
       "files": [
         "theme.css",
@@ -20,6 +21,7 @@
       "name": "typography",
       "group": "ui",
       "entry": "ui/typography.tsx",
+      "summary": "Choose a font size and line height for each text role.",
       "usage": "Choose the semantic heading level with as and its visual size with variant. The title role scales with the container and wraps long multilingual headings. InlineCode marks code inside a sentence or table cell.",
       "files": [
         "theme.css",
@@ -32,6 +34,7 @@
       "name": "button",
       "group": "ui",
       "entry": "ui/button.tsx",
+      "summary": "Give primary and secondary actions distinct visual weight.",
       "usage": "Give the action a verb. A busy button keeps its label visible and disables repeat activation while the action is pending.",
       "files": [
         "theme.css",
@@ -44,6 +47,7 @@
       "name": "badge",
       "group": "ui",
       "entry": "ui/badge.tsx",
+      "summary": "Identify a status or category with a short label.",
       "usage": "Use a short status name. The mark stays with the start of a wrapped label, and its shape remains distinct in forced colors.",
       "files": [
         "theme.css",
@@ -56,6 +60,7 @@
       "name": "card",
       "group": "ui",
       "entry": "ui/card.tsx",
+      "summary": "Keep a title, related content, and actions together.",
       "usage": "Keep the heading, content and actions for one object together. Footers align at the base of stretched cards and the padding adapts to narrow pages.",
       "files": [
         "theme.css",
@@ -67,6 +72,7 @@
       "name": "input",
       "group": "ui",
       "entry": "ui/input.tsx",
+      "summary": "Collect a value with a native HTML input.",
       "usage": "Use readOnly when a value is available to inspect or copy. Validation marks the logical leading edge of the control, including in right-to-left layouts.",
       "files": [
         "theme.css",
@@ -78,6 +84,7 @@
       "name": "textarea",
       "group": "ui",
       "entry": "ui/textarea.tsx",
+      "summary": "Enter text across multiple lines.",
       "usage": "Set rows for the starting height and enable auto-grow when appropriate. Read-only and validation states follow the same conventions as Input.",
       "files": [
         "theme.css",
@@ -89,6 +96,7 @@
       "name": "select",
       "group": "ui",
       "entry": "ui/select.tsx",
+      "summary": "Choose an option from a native list.",
       "usage": "Use native selection for a short, familiar set of options. The validation rule follows the logical start of the control in either writing direction.",
       "files": [
         "theme.css",
@@ -102,6 +110,7 @@
       "name": "checkbox",
       "group": "ui",
       "entry": "ui/checkbox.tsx",
+      "summary": "Turn an independent option on or off.",
       "usage": "Set indeterminate for a partially selected set. Clear that prop when the user chooses a definite checked or unchecked value.",
       "files": [
         "theme.css",
@@ -113,6 +122,7 @@
       "name": "radio-group",
       "group": "ui",
       "entry": "ui/radio-group.tsx",
+      "summary": "Choose one option from a set.",
       "usage": "Use a group label for a choice with one answer. Passing form associates each radio with that form even when the fieldset sits outside it.",
       "files": [
         "theme.css",
@@ -124,6 +134,7 @@
       "name": "switch",
       "group": "ui",
       "entry": "ui/switch.tsx",
+      "summary": "Turn a setting on or off.",
       "usage": "Use a switch for an immediate on/off setting. Keep its label meaningful in both states. Long state text wraps while the control keeps its shape.",
       "files": [
         "theme.css",
@@ -135,6 +146,7 @@
       "name": "field",
       "group": "ui",
       "entry": "ui/field.tsx",
+      "summary": "Associate a control with its label, instructions, and error message.",
       "usage": "Put the label, help and correction next to their control. The accessible description reads the error first and includes each referenced hint only once.",
       "files": [
         "theme.css",
@@ -146,6 +158,7 @@
       "name": "alert",
       "group": "ui",
       "entry": "ui/alert.tsx",
+      "summary": "Display a contextual message alongside the content it concerns.",
       "usage": "Choose a heading level that fits the surrounding page. Reserve a live announcement for information that appears after an action. The visible symbol and text also communicate the tone.",
       "files": [
         "theme.css",
@@ -157,6 +170,7 @@
       "name": "table",
       "group": "ui",
       "entry": "ui/table.tsx",
+      "summary": "Arrange comparable data in rows and columns.",
       "usage": "Use numeric cells and a shared TableAmount precision to align decimal separators. Place the currency in the header. TableRow supports subtotal and total rules, and Table can pin the column headings and first column inside a ScrollArea.",
       "files": [
         "theme.css",
@@ -173,6 +187,7 @@
         "swiss/figures.css",
         "ui/accounting-values.ts",
         "swiss/format-swiss-date.ts",
+        "swiss/alpina-provider.ts",
         "swiss/UNICODE-LICENSE.txt"
       ]
     },
@@ -180,6 +195,7 @@
       "name": "data-table",
       "group": "ui",
       "entry": "ui/data-table.tsx",
+      "summary": "Sort dates and amounts, reconcile subtotals and print an accounting ledger.",
       "usage": "Use typed CHF, decimal and Swiss date columns to sort financial records. Mark additive columns with aggregate=\"sum\" and supply totalLabel. Use groupBy for subtotals and translate sortHint in localized applications.",
       "files": [
         "theme.css",
@@ -200,6 +216,7 @@
         "ui/scroll-area.tsx",
         "ui/scroll-area.css",
         "ui/data-table.css",
+        "swiss/alpina-provider.ts",
         "swiss/UNICODE-LICENSE.txt"
       ]
     },
@@ -207,6 +224,7 @@
       "name": "separator",
       "group": "ui",
       "entry": "ui/separator.tsx",
+      "summary": "Divide related groups of content horizontally or vertically.",
       "usage": "Decorative separators stay hidden from assistive technology. Expose a semantic separator and orientation when the boundary conveys structure.",
       "files": [
         "theme.css",
@@ -218,6 +236,7 @@
       "name": "progress",
       "group": "ui",
       "entry": "ui/progress.tsx",
+      "summary": "Show how far an operation has advanced.",
       "usage": "Pass a value for measurable progress or omit it while the total is unknown. The indeterminate track stays visible with reduced motion.",
       "files": [
         "theme.css",
@@ -229,6 +248,7 @@
       "name": "spinner",
       "group": "ui",
       "entry": "ui/spinner.tsx",
+      "summary": "Indicate that an operation is in progress.",
       "usage": "Give the spinner a label when it conveys loading status. An unlabelled spinner is decorative. Its animation stops under reduced motion.",
       "files": [
         "theme.css",
@@ -240,6 +260,7 @@
       "name": "skeleton",
       "group": "ui",
       "entry": "ui/skeleton.tsx",
+      "summary": "Reserve space for content while it loads.",
       "usage": "Reserve the expected space while content loads. The placeholder stays silent for assistive technology and the animation stops under reduced motion.",
       "files": [
         "theme.css",
@@ -251,6 +272,7 @@
       "name": "breadcrumb",
       "group": "ui",
       "entry": "ui/breadcrumb.tsx",
+      "summary": "Show where a page sits in the navigation hierarchy.",
       "usage": "Give the trail a navigation label and identify the current page. The separator follows the writing direction, including when a long link wraps.",
       "files": [
         "theme.css",
@@ -263,6 +285,7 @@
       "name": "pagination",
       "group": "ui",
       "entry": "ui/pagination.tsx",
+      "summary": "Move between pages of results.",
       "usage": "Supply a localized page-name formatter for number-only links. An explicit accessible name takes precedence. Mark the current page so it can be identified without color.",
       "files": [
         "theme.css",
@@ -274,6 +297,7 @@
       "name": "bar-chart",
       "group": "ui",
       "entry": "ui/bar-chart.tsx",
+      "summary": "Compare signed values on a common scale with directly labelled bars.",
       "usage": "Compare signed values on a common scale with directly labelled bars. Pass title, description and data with label and value for each observation. Use loading while fetching data and formatValue for units.",
       "files": [
         "theme.css",
@@ -290,6 +314,7 @@
       "name": "line-chart",
       "group": "ui",
       "entry": "ui/line-chart.tsx",
+      "summary": "Plot an ordered series with a labelled scale and a readable data table.",
       "usage": "Plot an ordered series with a labelled scale and a readable data table. Pass title, description and data with label and value for each observation. Use loading while fetching data and formatValue for units.",
       "files": [
         "theme.css",
@@ -307,6 +332,7 @@
       "name": "sparkline",
       "group": "ui",
       "entry": "ui/sparkline.tsx",
+      "summary": "Show a short trend with its last observation and the underlying values.",
       "usage": "Show a short trend with its last observation and the underlying values. Pass title, description and data with label and value for each observation. Use loading while fetching data and formatValue for units.",
       "files": [
         "theme.css",
@@ -323,6 +349,7 @@
       "name": "chart-table",
       "group": "ui",
       "entry": "ui/chart-table.tsx",
+      "summary": "Compare magnitudes while reading precise values in a semantic table.",
       "usage": "Compare magnitudes while reading precise values in a semantic table. Pass title, description and data with label and value for each observation. Use loading while fetching data and formatValue for units.",
       "files": [
         "theme.css",
@@ -337,6 +364,7 @@
       "name": "aspect-ratio",
       "group": "ui",
       "entry": "ui/aspect-ratio.tsx",
+      "summary": "Preserve the proportions of images, videos, and illustrations.",
       "usage": "Use fit=\"contain\" for a screenshot or diagram whose edges must remain visible. The default cover fit fills the frame by cropping when needed.",
       "files": [
         "theme.css",
@@ -348,6 +376,7 @@
       "name": "attachment",
       "group": "ui",
       "entry": "ui/attachment.tsx",
+      "summary": "Link to a downloadable file or collect a local attachment.",
       "usage": "Link to a downloadable file by name and format. Use upload mode to collect local files with a localized FileInput.",
       "files": [
         "theme.css",
@@ -362,6 +391,7 @@
         "ui/file-input-labels.internal.ts",
         "ui/file-input.css",
         "ui/attachment.css",
+        "swiss/alpina-provider.ts",
         "swiss/UNICODE-LICENSE.txt"
       ]
     },
@@ -369,6 +399,7 @@
       "name": "avatar",
       "group": "ui",
       "entry": "ui/avatar.tsx",
+      "summary": "Identify a person with a photograph or initials.",
       "usage": "Provide the person’s name even when supplying a photo. If the image fails, initials include complete accented letters where the browser supports grapheme segmentation.",
       "files": [
         "theme.css",
@@ -380,6 +411,7 @@
       "name": "bubble",
       "group": "ui",
       "entry": "ui/bubble.tsx",
+      "summary": "Place each speaker’s message on their side of a conversation.",
       "usage": "Put a message in the start or end position to distinguish speakers. Long words wrap inside the available width, including in right-to-left conversations.",
       "files": [
         "theme.css",
@@ -391,6 +423,7 @@
       "name": "button-group",
       "group": "ui",
       "entry": "ui/button-group.tsx",
+      "summary": "Give related actions a shared accessible name.",
       "usage": "Give related actions a group name. Keep them in task order so keyboard users reach them in the same sequence in a narrow layout.",
       "files": [
         "theme.css",
@@ -402,6 +435,7 @@
       "name": "chart",
       "group": "ui",
       "entry": "ui/chart.tsx",
+      "summary": "Compare positive and negative values on a shared axis and provide the data in a table.",
       "usage": "Include readable category names and values in the accompanying table. Visitors can compare signed values or read a long category name without interpreting bar length.",
       "files": [
         "theme.css",
@@ -415,6 +449,7 @@
       "name": "collapsible",
       "group": "ui",
       "entry": "ui/collapsible.tsx",
+      "summary": "Expand details using the browser’s native disclosure control.",
       "usage": "Write a summary that identifies the content behind it. The native disclosure works with Enter or Space and gives touch users a full row to press.",
       "files": [
         "theme.css",
@@ -426,6 +461,7 @@
       "name": "direction",
       "group": "ui",
       "entry": "ui/direction.tsx",
+      "summary": "Set the reading direction of a block on a multilingual page.",
       "usage": "Set dir on the smallest region that changes writing direction. Logical alignment then follows the text direction in nested navigation and messages.",
       "files": [
         "theme.css",
@@ -437,6 +473,7 @@
       "name": "empty",
       "group": "ui",
       "entry": "ui/empty.tsx",
+      "summary": "Explain why a collection is empty and offer a next action.",
       "usage": "Explain why the view is empty and offer a recovery action, such as clearing a filter. Set the heading level to fit the page.",
       "files": [
         "theme.css",
@@ -448,6 +485,7 @@
       "name": "file-input",
       "group": "ui",
       "entry": "ui/file-input.tsx",
+      "summary": "Choose, drop or paste files using the language of the form.",
       "usage": "Present file types and purpose beside the field. Choose, drop or paste files, review names and sizes, then submit the native multipart form.",
       "files": [
         "theme.css",
@@ -460,6 +498,7 @@
         "ui/button.css",
         "ui/file-input-labels.internal.ts",
         "ui/file-input.css",
+        "swiss/alpina-provider.ts",
         "swiss/UNICODE-LICENSE.txt"
       ]
     },
@@ -467,6 +506,7 @@
       "name": "input-group",
       "group": "ui",
       "entry": "ui/input-group.tsx",
+      "summary": "Align units, prefixes, or actions with an input.",
       "usage": "Use an affix for a unit or prefix that belongs to the input. The group shares a visible focus and validation boundary, and long affixes can wrap.",
       "files": [
         "theme.css",
@@ -478,6 +518,7 @@
       "name": "item",
       "group": "ui",
       "entry": "ui/item.tsx",
+      "summary": "Align a title, description, and metadata on a common grid.",
       "usage": "Place the primary record name in the title and secondary actions at the trailing edge. Long identifiers reflow inside the row.",
       "files": [
         "theme.css",
@@ -489,6 +530,7 @@
       "name": "kbd",
       "group": "ui",
       "entry": "ui/kbd.tsx",
+      "summary": "Display readable shortcuts with native keyboard-input markup.",
       "usage": "Use short key names for most shortcuts. Longer translated names can wrap inside a narrow column without clipping.",
       "files": [
         "theme.css",
@@ -500,6 +542,7 @@
       "name": "label",
       "group": "ui",
       "entry": "ui/label.tsx",
+      "summary": "Associate a text label with its form control.",
       "usage": "Connect the label to its input with htmlFor and id. Activating the label focuses or activates the associated native control.",
       "files": [
         "theme.css",
@@ -511,6 +554,7 @@
       "name": "marker",
       "group": "ui",
       "entry": "ui/marker.tsx",
+      "summary": "Pair text with a symbol so status remains legible in monochrome.",
       "usage": "Pair the symbol with a status name. Its shape remains recognizable even when a translated label wraps over multiple lines.",
       "files": [
         "theme.css",
@@ -522,6 +566,7 @@
       "name": "message",
       "group": "ui",
       "entry": "ui/message.tsx",
+      "summary": "Group the author, time, and text of a message.",
       "usage": "Supply a readable author and a machine-readable timestamp. The author name is isolated from surrounding bidirectional message text.",
       "files": [
         "theme.css",
@@ -535,6 +580,7 @@
       "name": "scroll-area",
       "group": "ui",
       "entry": "ui/scroll-area.tsx",
+      "summary": "Give a scrollable region a name and keyboard access.",
       "usage": "Name a scrollable region so keyboard users can identify it. Horizontal overflow stays inside the region while vertical scrolling can continue on the page.",
       "files": [
         "theme.css",
@@ -546,6 +592,7 @@
       "name": "slider",
       "group": "ui",
       "entry": "ui/slider.tsx",
+      "summary": "Choose a value on a scale using native browser controls.",
       "usage": "Set min, max and step to meaningful values, and supply a label. Native arrow-key input then moves the value by the configured step.",
       "files": [
         "theme.css",
@@ -557,6 +604,7 @@
       "name": "toggle",
       "group": "ui",
       "entry": "ui/toggle.tsx",
+      "summary": "Switch a preference on or off while keeping its label stable.",
       "usage": "Keep the toggle’s label stable and communicate its on/off state with aria-pressed. The control supports Space and long labels can wrap.",
       "files": [
         "theme.css",
@@ -568,6 +616,7 @@
       "name": "description-list",
       "group": "ui",
       "entry": "ui/description-list.tsx",
+      "summary": "Pair labels with values in a responsive order, address or invoice summary.",
       "usage": "Use one distinct term per value. Narrow summaries stack each term above its detail. Wider containers align terms and values in two columns.",
       "files": [
         "theme.css",
@@ -579,6 +628,7 @@
       "name": "figure",
       "group": "ui",
       "entry": "ui/figure.tsx",
+      "summary": "Keep an image or specimen with its caption and source.",
       "usage": "Supply meaningful alternative text for informative images. The caption can identify the study and credit can link to its source. The image keeps its intrinsic proportions.",
       "files": [
         "theme.css",
@@ -590,6 +640,7 @@
       "name": "grid-overlay",
       "group": "ui",
       "entry": "ui/grid-overlay.tsx",
+      "summary": "Inspect responsive columns, margins, and the four-pixel baseline without changing the layout.",
       "usage": "Mount the overlay alongside a page or inside a positioned container with placement set to container. Use hidden to toggle it. The portal shortcut is Ctrl+Shift+G.",
       "files": [
         "theme.css",
@@ -606,6 +657,7 @@
       "name": "icon",
       "group": "ui",
       "entry": "ui/icon.tsx",
+      "summary": "Identify an action, destination or state with an original Alpina pictogram.",
       "usage": "Use a decorative icon beside visible action text. Give an icon-only button or link its own accessible name. Set the icon’s label when the graphic itself conveys meaning.",
       "files": [
         "theme.css",
@@ -617,6 +669,7 @@
       "name": "steps",
       "group": "ui",
       "entry": "ui/steps.tsx",
+      "summary": "Show the order of a workflow and identify the current step.",
       "usage": "Give the sequence a name and pass a stable current step ID. The ordered list exposes the active step to assistive technology. In narrow layouts the steps run vertically.",
       "files": [
         "theme.css",
@@ -634,6 +687,7 @@
       "name": "stack",
       "group": "ui",
       "entry": "ui/stack.tsx",
+      "summary": "Arrange controls and actions with consistent spacing, alignment, and wrapping.",
       "usage": "Use inset for padding in multiples of the spacing unit. The ink and paper surfaces establish matching themes for the controls they contain. Use scripting=\"enabled\" or \"none\" for alternate interactive and static presentations.",
       "files": [
         "theme.css",
@@ -646,6 +700,7 @@
       "name": "dialog",
       "group": "interactive",
       "entry": "interactive/dialog.tsx",
+      "summary": "Focus on a specific action or detail.",
       "usage": "Name the dialog and provide an explicit close action. Opening locks background scrolling. Escape closes it and restores focus to its trigger.",
       "files": [
         "theme.css",
@@ -660,6 +715,7 @@
       "name": "sheet",
       "group": "interactive",
       "entry": "interactive/sheet.tsx",
+      "summary": "Open a panel at the edge of the window.",
       "usage": "Place related editing controls inside the panel and name it. The sheet body scrolls independently while keyboard focus remains inside the open modal.",
       "files": [
         "theme.css",
@@ -674,6 +730,7 @@
       "name": "tabs",
       "group": "interactive",
       "entry": "interactive/tabs.tsx",
+      "summary": "Switch between related panels with a mouse or keyboard.",
       "usage": "Use automatic activation for immediate panels or manual activation when opening a panel is costly. Vertical tab labels wrap within a capped column.",
       "files": [
         "theme.css",
@@ -688,6 +745,7 @@
       "name": "accordion",
       "group": "interactive",
       "entry": "interactive/accordion.tsx",
+      "summary": "Expand or collapse sections to read more.",
       "usage": "Use a question or section name as each trigger. The full header is clickable, long labels wrap, and arrow keys move between headers without opening them.",
       "files": [
         "theme.css",
@@ -702,6 +760,7 @@
       "name": "dropdown-menu",
       "group": "interactive",
       "entry": "interactive/dropdown-menu.tsx",
+      "summary": "Group related actions in a keyboard-accessible menu.",
       "usage": "Keep item labels actionable. Use shortcut to show a keyboard binding that the application already implements. The popup follows the visible viewport when zoom or scrolling changes it.",
       "files": [
         "theme.css",
@@ -720,6 +779,7 @@
       "name": "toast",
       "group": "interactive",
       "entry": "interactive/toast.tsx",
+      "summary": "Announce the outcome of an action.",
       "usage": "A focused notification can be dismissed with Escape. Its dismiss button and Escape return focus to the control used to reach this notification.",
       "files": [
         "theme.css",
@@ -731,6 +791,7 @@
       "name": "tooltip",
       "group": "interactive",
       "entry": "interactive/tooltip.tsx",
+      "summary": "Show a short explanation on focus or hover.",
       "usage": "Attach a short description to an existing focusable control. Focus shows it immediately. Escape dismisses it and the popup stays within the visible viewport.",
       "files": [
         "theme.css",
@@ -744,6 +805,7 @@
       "name": "alert-dialog",
       "group": "interactive",
       "entry": "interactive/alert-dialog.tsx",
+      "summary": "Ask for an explicit decision and initially focus the safer action.",
       "usage": "Give the confirmation a specific action label. Initial focus goes to Cancel. Clicking the backdrop leaves the decision open.",
       "files": [
         "theme.css",
@@ -762,6 +824,7 @@
       "name": "carousel",
       "group": "interactive",
       "entry": "interactive/carousel.tsx",
+      "summary": "Browse a series of cards with manual controls and a position indicator.",
       "usage": "Start a swipe on slide content to navigate. Gestures that start on a nested control belong to that control. A single slide adds no carousel tab stop.",
       "files": [
         "theme.css",
@@ -778,6 +841,7 @@
       "name": "combobox",
       "group": "interactive",
       "entry": "interactive/combobox.tsx",
+      "summary": "Type to filter options and use the keyboard to confirm a choice.",
       "usage": "Provide a clearLabel to let visitors remove a committed choice and return to search. A required field can display an inline message until a valid option is chosen.",
       "files": [
         "theme.css",
@@ -799,6 +863,7 @@
       "name": "command",
       "group": "interactive",
       "entry": "interactive/command.tsx",
+      "summary": "Find an action by name or keyword and run it from the keyboard.",
       "usage": "Label each command by its action. Moving the pointer changes the active result while keyboard focus stays in the search field.",
       "files": [
         "theme.css",
@@ -818,6 +883,7 @@
       "name": "context-menu",
       "group": "interactive",
       "entry": "interactive/context-menu.tsx",
+      "summary": "Open actions for an item with a right-click or Shift + F10.",
       "usage": "The invoking region identifies the open menu through aria-controls. The menu uses visible-viewport positioning and restores focus to the invocation point.",
       "files": [
         "theme.css",
@@ -836,6 +902,7 @@
       "name": "drawer",
       "group": "interactive",
       "entry": "interactive/drawer.tsx",
+      "summary": "Open tools in a modal panel and swipe to dismiss it.",
       "usage": "The bottom drawer locks background scrolling while open, with a neutral scrim and a swipe handle separate from the scrollable content.",
       "files": [
         "theme.css",
@@ -851,6 +918,7 @@
       "name": "hover-card",
       "group": "interactive",
       "entry": "interactive/hover-card.tsx",
+      "summary": "Show more information on hover, focus, or tap.",
       "usage": "Touch users get a taller trigger. Long panel text wraps and the panel fits the visible viewport while remaining reachable by keyboard.",
       "files": [
         "theme.css",
@@ -864,6 +932,7 @@
       "name": "menubar",
       "group": "interactive",
       "entry": "interactive/menubar.tsx",
+      "summary": "Navigate command groups horizontally and their actions vertically.",
       "usage": "Coarse pointers get taller top-level actions. Menus accept shortcut hints, and horizontal arrow navigation transfers focus between groups.",
       "files": [
         "theme.css",
@@ -882,6 +951,7 @@
       "name": "popover",
       "group": "interactive",
       "entry": "interactive/popover.tsx",
+      "summary": "Open an interactive panel next to its trigger.",
       "usage": "The panel wraps long content and follows the visible viewport during zoom or resize. Escape restores trigger focus and outside clicks preserve the destination.",
       "files": [
         "theme.css",
@@ -899,6 +969,7 @@
       "name": "resizable",
       "group": "interactive",
       "entry": "interactive/resizable.tsx",
+      "summary": "Adjust the space between two panels with the pointer or arrow keys.",
       "usage": "The resize handle expands to 44 CSS pixels at the default root size on coarse pointers. Keyboard arrows adjust the split and Enter restores the previous size.",
       "files": [
         "theme.css",
@@ -911,6 +982,7 @@
       "name": "input-otp",
       "group": "interactive",
       "entry": "interactive/input-otp.tsx",
+      "summary": "Type or paste a numeric code and preserve leading zeros.",
       "usage": "Formatted-paste handling respects read-only and disabled fields. Editable inputs retain leading zeros and normalize full-width digits.",
       "files": [
         "theme.css",
@@ -924,6 +996,7 @@
       "name": "native-select",
       "group": "interactive",
       "entry": "interactive/native-select.tsx",
+      "summary": "Choose from labeled options in an underlined or outlined select.",
       "usage": "The line variant marks a disabled field with a dashed underline. Native selection, multiple values, reset and validation remain available.",
       "files": [
         "theme.css",
@@ -939,6 +1012,7 @@
       "name": "toggle-group",
       "group": "interactive",
       "entry": "interactive/toggle-group.tsx",
+      "summary": "Select one or more options and submit their state with a form.",
       "usage": "Tab enters a group once. Arrow keys move focus, Home and End reach its edges, and pressing Space changes the focused option. Use layout=\"grid\" for equal-width tiles with arrow navigation between rows. Provide disabledReason on unavailable options to show and announce why they cannot be selected.",
       "files": [
         "theme.css",
@@ -955,6 +1029,7 @@
       "name": "questionnaire",
       "group": "interactive",
       "entry": "interactive/questionnaire.tsx",
+      "summary": "Collect one answer per step and let people review their choices.",
       "usage": "An empty questionnaire can display a localized message. If a previous answer becomes unavailable before submission, the user returns to that question with the other answers intact.",
       "files": [
         "theme.css",
@@ -973,6 +1048,7 @@
       "name": "message-scroller",
       "group": "interactive",
       "entry": "interactive/message-scroller.tsx",
+      "summary": "Follow new messages while preserving the reading position in earlier entries.",
       "usage": "If the viewport grows or content shrinks until the latest message is visible, the log resumes following and removes the redundant jump button.",
       "files": [
         "theme.css",
@@ -987,6 +1063,7 @@
       "name": "trace",
       "group": "interactive",
       "entry": "interactive/trace.tsx",
+      "summary": "Read events in sequence and expand a step for more detail.",
       "usage": "Time and event text align to a consistent gutter. Long entries wrap, keyboard focus outlines the disclosure, and touch users get a taller summary.",
       "files": [
         "theme.css",
@@ -998,6 +1075,7 @@
       "name": "swiss-address-form",
       "group": "swiss",
       "entry": "swiss/swiss-address-form.tsx",
+      "summary": "Collect addresses in four languages with translated labels, validation messages, and canton names.",
       "usage": "Enter 6900 to choose Lugano, Massagno or Paradiso from the local postcode directory. Accepting a suggestion sets both locality and canton. You can also enter both manually.",
       "files": [
         "theme.css",
@@ -1034,13 +1112,15 @@
         "swiss/identifier-checks.internal.ts",
         "swiss/identifiers.ts",
         "swiss/input-messages.internal.ts",
-        "swiss/swiss-address-form.css"
+        "swiss/swiss-address-form.css",
+        "swiss/alpina-provider.ts"
       ]
     },
     {
       "name": "currency-chf",
       "group": "swiss",
       "entry": "swiss/currency-chf.tsx",
+      "summary": "Format Swiss franc amounts for the selected locale.",
       "usage": "Pass the unformatted amount and a Swiss locale. The data element keeps the raw value and isolates the formatted currency from surrounding right-to-left text.",
       "files": [
         "theme.css",
@@ -1050,6 +1130,7 @@
         "swiss/locales.ts",
         "swiss/format-chf.ts",
         "swiss/figures.css",
+        "swiss/alpina-provider.ts",
         "swiss/UNICODE-LICENSE.txt"
       ]
     },
@@ -1057,6 +1138,7 @@
       "name": "swiss-date",
       "group": "swiss",
       "entry": "swiss/swiss-date.tsx",
+      "summary": "Display calendar dates and format timestamps in the Zurich time zone.",
       "usage": "Pass a civil date for a specific calendar day. The time element keeps its machine-readable value and isolates the localized date in bidirectional text.",
       "files": [
         "theme.css",
@@ -1067,6 +1149,7 @@
         "swiss/format-swiss-date.ts",
         "swiss/figures.css",
         "swiss/swiss-date.css",
+        "swiss/alpina-provider.ts",
         "swiss/UNICODE-LICENSE.txt"
       ]
     },
@@ -1074,6 +1157,7 @@
       "name": "locale-select",
       "group": "swiss",
       "entry": "swiss/locale-select.tsx",
+      "summary": "Choose one of Switzerland’s four national languages.",
       "usage": "An empty language list disables the selector. Available languages retain caller-defined order, endonyms and language attributes.",
       "files": [
         "theme.css",
@@ -1086,6 +1170,7 @@
         "ui/select-picker.internal.ts",
         "ui/select.css",
         "interactive/native-select.css",
+        "swiss/alpina-provider.ts",
         "swiss/language-switcher.tsx",
         "interactive/responsive-navigation.tsx",
         "interactive/responsive-navigation.css",
@@ -1104,6 +1189,7 @@
       "name": "canton-select",
       "group": "swiss",
       "entry": "swiss/canton-select.tsx",
+      "summary": "Choose one of the 26 Swiss cantons.",
       "usage": "Set order=\"name\" to sort the cantons in the current language. The submitted abbreviation stays the same. The default order follows federal statistics.",
       "files": [
         "theme.css",
@@ -1116,13 +1202,15 @@
         "ui/select-picker.internal.ts",
         "ui/select.css",
         "interactive/native-select.css",
-        "swiss/cantons.ts"
+        "swiss/cantons.ts",
+        "swiss/alpina-provider.ts"
       ]
     },
     {
       "name": "canton-combobox",
       "group": "swiss",
       "entry": "swiss/canton-combobox.tsx",
+      "summary": "Find a canton by its abbreviation or its Italian, German, French, or Romansh name.",
       "usage": "Type a canton name in the active language. Alt+Down opens suggestions and Alt+Up dismisses them while preserving the committed canton.",
       "files": [
         "theme.css",
@@ -1138,13 +1226,15 @@
         "ui/input.tsx",
         "ui/input.css",
         "swiss/cantons.ts",
-        "swiss/canton-combobox.css"
+        "swiss/canton-combobox.css",
+        "swiss/alpina-provider.ts"
       ]
     },
     {
       "name": "swiss-postal-code-input",
       "group": "swiss",
       "entry": "swiss/swiss-postal-code-input.tsx",
+      "summary": "Enter a four-digit Swiss postal code.",
       "usage": "A full-field paste accepts four digits, full-width digits or a CH-prefixed postal code. The submitted four-digit value preserves leading zeros.",
       "files": [
         "theme.css",
@@ -1157,13 +1247,15 @@
         "swiss/input-messages.internal.ts",
         "ui/input.tsx",
         "ui/input.css",
-        "swiss/postal-code.ts"
+        "swiss/postal-code.ts",
+        "swiss/alpina-provider.ts"
       ]
     },
     {
       "name": "multilingual-field",
       "group": "swiss",
       "entry": "swiss/multilingual-field.tsx",
+      "summary": "Edit translations for all four national languages with character counts and per-language form values.",
       "usage": "Use name to submit translations as title[de], title[fr], title[it] and title[rm]. includeEnglish adds English. Select variant=textarea for long copy or layout=columns to compare translations. Copy fills an empty language from sourceLanguage.",
       "files": [
         "theme.css",
@@ -1186,13 +1278,15 @@
         "interactive/roving.ts",
         "interactive/navigation.ts",
         "interactive/tabs.css",
-        "swiss/multilingual-field.css"
+        "swiss/multilingual-field.css",
+        "swiss/alpina-provider.ts"
       ]
     },
     {
       "name": "iban-input",
       "group": "swiss",
       "entry": "swiss/iban-input.tsx",
+      "summary": "Validate CH and LI accounts and group the IBAN in fours.",
       "usage": "Use for Swiss and Liechtenstein accounts. Valid accounts are grouped on blur. Use isSwissIban and compactIban on submitted values.",
       "files": [
         "theme.css",
@@ -1204,13 +1298,15 @@
         "swiss/locale-context.internal.ts",
         "swiss/identifiers.ts",
         "ui/input.tsx",
-        "ui/input.css"
+        "ui/input.css",
+        "swiss/alpina-provider.ts"
       ]
     },
     {
       "name": "ahv-input",
       "group": "swiss",
       "entry": "swiss/ahv-input.tsx",
+      "summary": "Check the Swiss social insurance number and its EAN‑13 checksum.",
       "usage": "Accept 13 digits beginning with 756. The component validates the EAN‑13 check digit and groups a valid number on blur. Set locale for validation in any Swiss national language or supply validationMessage.",
       "files": [
         "theme.css",
@@ -1222,13 +1318,15 @@
         "swiss/locale-context.internal.ts",
         "swiss/identifiers.ts",
         "ui/input.tsx",
-        "ui/input.css"
+        "ui/input.css",
+        "swiss/alpina-provider.ts"
       ]
     },
     {
       "name": "phone-input",
       "group": "swiss",
       "entry": "swiss/phone-input.tsx",
+      "summary": "Accept domestic and international input and display a Swiss +41 number.",
       "usage": "Accept ordinary nine-digit Swiss national numbers, domestic trunk prefixes and international +41 or 0041 input. Format valid entries on blur. Short service codes use a separate field.",
       "files": [
         "theme.css",
@@ -1240,13 +1338,15 @@
         "swiss/identifier-checks.internal.ts",
         "swiss/identifiers.ts",
         "ui/input.tsx",
-        "ui/input.css"
+        "ui/input.css",
+        "swiss/alpina-provider.ts"
       ]
     },
     {
       "name": "uid-input",
       "group": "swiss",
       "entry": "swiss/uid-input.tsx",
+      "summary": "Validate and format the nine digits of a Swiss CHE business identifier.",
       "usage": "Collect a CHE business identifier with its modulo-11 check digit. A valid entry is grouped on blur. Pass validationMessage to localize the native validation error.",
       "files": [
         "theme.css",
@@ -1258,13 +1358,15 @@
         "swiss/locale-context.internal.ts",
         "swiss/identifiers.ts",
         "ui/input.tsx",
-        "ui/input.css"
+        "ui/input.css",
+        "swiss/alpina-provider.ts"
       ]
     },
     {
       "name": "letter",
       "group": "swiss",
       "entry": "swiss/letter.tsx",
+      "summary": "Print correspondence on A4 with the Swiss left or right address window and folding marks.",
       "usage": "Supply sender and recipient lines, a civil date and the subject. Select the window used by your envelope and use printSwissDocument with the article ref.",
       "files": [
         "theme.css",
@@ -1293,6 +1395,7 @@
         "swiss/document-print.css",
         "swiss/print-document.ts",
         "swiss/invoice-print.internal.ts",
+        "swiss/alpina-provider.ts",
         "swiss/UNICODE-LICENSE.txt"
       ]
     },
@@ -1300,6 +1403,7 @@
       "name": "invoice-document",
       "group": "swiss",
       "entry": "swiss/invoice-document.tsx",
+      "summary": "Itemize VAT-exclusive services and print the payable CHF total with a Swiss QR-bill.",
       "usage": "Supply the creditor and debtor, VAT UID, issue, supply and due dates and VAT-exclusive line items. The same centime total drives the summary and the QR payment. Use printSwissDocument for a complete A4 invoice.",
       "files": [
         "theme.css",
@@ -1332,6 +1436,7 @@
         "swiss/invoice-document.css",
         "swiss/document-print.css",
         "swiss/print-document.ts",
+        "swiss/alpina-provider.ts",
         "swiss/UNICODE-LICENSE.txt"
       ]
     },
@@ -1339,6 +1444,7 @@
       "name": "qr-bill-scanner",
       "group": "swiss",
       "entry": "swiss/qr-bill-scanner.tsx",
+      "summary": "Read a Swiss QR-bill from a local image, PDF or camera and review its payment details.",
       "usage": "Choose an on-device image or PDF, or request the camera after an explicit action. Review the decoded creditor, IBAN, amount and reference before confirming.",
       "files": [
         "theme.css",
@@ -1373,6 +1479,7 @@
         "swiss/qr-reader-pdf.internal.ts",
         "swiss/qr-scanner-labels.internal.ts",
         "swiss/qr-bill-scanner.css",
+        "swiss/alpina-provider.ts",
         "swiss/UNICODE-LICENSE.txt"
       ]
     },
@@ -1380,6 +1487,7 @@
       "name": "swiss-qr-bill",
       "group": "swiss",
       "entry": "swiss/swiss-qr-bill.tsx",
+      "summary": "Prepare a SIX QR-bill payment part and receipt with a scannable Swiss QR Code.",
       "usage": "Supply a structured creditor address, a Swiss or Liechtenstein IBAN and a compatible reference. Use printSwissQrBill with the component ref to print one payment slip on A4 at actual size.",
       "files": [
         "theme.css",
@@ -1393,13 +1501,15 @@
         "swiss/identifier-checks.internal.ts",
         "swiss/input-messages.internal.ts",
         "swiss/qr-matrix.ts",
-        "swiss/swiss-qr-bill.css"
+        "swiss/swiss-qr-bill.css",
+        "swiss/alpina-provider.ts"
       ]
     },
     {
       "name": "calendar",
       "group": "swiss",
       "entry": "swiss/calendar.tsx",
+      "summary": "Browse dates in the four national languages with weeks starting on Monday.",
       "usage": "Pass canton to mark public holidays in the grid and list their names below the month. Add holidayRegion for a local schedule. Arrow keys move the active day.",
       "files": [
         "theme.css",
@@ -1415,6 +1525,7 @@
         "swiss/cantons.ts",
         "swiss/holidays.ts",
         "swiss/calendar.css",
+        "swiss/alpina-provider.ts",
         "swiss/UNICODE-LICENSE.txt"
       ]
     },
@@ -1422,6 +1533,7 @@
       "name": "date-picker",
       "group": "swiss",
       "entry": "swiss/date-picker.tsx",
+      "summary": "Choose a date in a dialog and submit its ISO value with a form.",
       "usage": "Pass canton and an optional holidayRegion to highlight holidays in the dialog. All dates within min and max remain selectable. The clear action updates the submitted value and restores trigger focus.",
       "files": [
         "theme.css",
@@ -1447,6 +1559,7 @@
         "swiss/figures.css",
         "swiss/swiss-date.css",
         "swiss/date-picker.css",
+        "swiss/alpina-provider.ts",
         "swiss/UNICODE-LICENSE.txt"
       ]
     },
@@ -1454,6 +1567,7 @@
       "name": "app-shell",
       "group": "portal",
       "entry": "portal/app-shell.tsx",
+      "summary": "Arrange the index, toolbar, and content with a collapsible index on small screens.",
       "usage": "On small screens, Escape closes the open index when focus is inside the shell and returns focus to its trigger. Toolbar controls wrap as labels grow. The brand remains visible at desktop and mobile widths. Use SideNav and SideNavLink in the sidebar to mark the active route. AppearanceButton supplies labels for the three appearance modes. Use ComponentPreview to resize an embedded example and preserve its state across views.",
       "files": [
         "theme.css",
@@ -1478,6 +1592,7 @@
       "name": "sidebar",
       "group": "portal",
       "entry": "portal/sidebar.tsx",
+      "summary": "Keep the header and search in place while the list scrolls.",
       "usage": "Compose SideNav and SideNavLink for a list of routes. Set active on the current page and use asChild to supply your router link. Keep navigation labels meaningful on their own. The scrollable index leaves space around focused entries, and long masthead or footer text can wrap.",
       "files": [
         "theme.css",
@@ -1491,6 +1606,7 @@
       "name": "navigation-menu",
       "group": "portal",
       "entry": "portal/navigation-menu.tsx",
+      "summary": "Group links and identify the current page.",
       "usage": "Label the navigation and mark the current link. In touch layouts each link gets a 44px target and its padding follows the writing direction.",
       "files": [
         "theme.css",
@@ -1503,6 +1619,7 @@
       "name": "code-block",
       "group": "portal",
       "entry": "portal/code-block.tsx",
+      "summary": "Read, select, and copy an example with its file name.",
       "usage": "If automatic copying is unavailable, the control selects the code and focuses it. Use the browser’s copy command while the selection is active.",
       "files": [
         "theme.css",
@@ -1517,6 +1634,7 @@
       "name": "text-link",
       "group": "portal",
       "entry": "portal/text-link.tsx",
+      "summary": "Make a link distinguishable within running text.",
       "usage": "Use the action variant for a prominent navigation link. Inline focus rings follow the foreground color, including on inverse surfaces.",
       "files": [
         "theme.css",
@@ -1529,6 +1647,7 @@
       "name": "prose",
       "group": "portal",
       "entry": "portal/prose.tsx",
+      "summary": "Lay out guides with headings, paragraphs, tables, and code.",
       "usage": "Use semantic headings, paragraphs, figures and links inside the reading column. Media scales to the column and quotation rules follow the writing direction. For component references, ReferenceArticle groups the heading, optional identifier and view controls. CodeSample renders keyboard-scrollable code in static articles.",
       "files": [
         "theme.css",

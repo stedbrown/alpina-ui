@@ -35,7 +35,7 @@ test('stdio client can discover and read the installed registry, types, source a
   assert.equal(result[0].protocolVersion, hello.params.protocolVersion)
   assert.equal(result[0].serverInfo.version, JSON.parse(read('registry.json')).version)
   assert.deepEqual(result[1].tools.map((tool) => tool.name), ['search_components', 'get_component', 'get_guide'])
-  assert.equal(result[2].content[0].text, 'dropdown-menu (interactive)')
+  assert.match(result[2].content[0].text, /^dropdown-menu \(interactive\) — .+/)
   assert.ok(result[3].content[0].text.includes(read('dist/interactive/dropdown-menu.d.ts').trim()))
   assert.ok(result[3].content[0].text.includes(JSON.parse(read('registry.json')).items.find(entry => entry.name === 'dropdown-menu').usage))
   assert.equal(result[4].content[0].text, read('src/interactive/action-list.tsx'))
@@ -81,3 +81,17 @@ test('invalid requests and unregistered files do not prevent subsequent lookups'
   for (const response of [file, guide, args]) assert.equal(response.result.isError, true)
   assert.deepEqual(after, { jsonrpc: '2.0', id: 'after', result: {} })
 })
+
+for (const [queries, expected] of [
+  [['date'], ['date-picker', 'calendar', 'swiss-date']],
+  [['invoice', 'fattura', 'Rechnung', 'facture', 'fattur'], ['invoice-document', 'swiss-qr-bill', 'letter']],
+  [['address', 'indirizzo', 'Adresse', 'adresse'], ['swiss-address-form', 'swiss-postal-code-input']],
+  [['holidays', 'festivi', 'Feiertage', 'jours fériés', 'jours feri'], ['calendar', 'date-picker']],
+]) {
+  for (const query of queries) test('MCP ranks and describes components for ' + query, () => {
+    const [, reply] = exchange([hello, call(2, 'search_components', { query })])
+    const lines = reply.result.content[0].text.split('\n')
+    assert.deepEqual(lines.slice(0, expected.length).map(line => line.split(' ')[0]), expected)
+    for (const line of lines) assert.match(line, /^[a-z-]+ \([a-z]+\) — \S.+/)
+  })
+}

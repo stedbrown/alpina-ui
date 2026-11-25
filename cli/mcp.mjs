@@ -1,3 +1,4 @@
+import { searchComponents } from './search-components.mjs'
 import { once } from 'node:events'
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
@@ -18,8 +19,8 @@ function tool(name, description, properties, required = []) {
 }
 
 const tools = [
-  tool('search_components', 'Search installed component identifiers and groups. Omit query to list the entire registry.', {
-    query: string('A name or group, such as DropdownMenu, canton, or interactive.'),
+  tool('search_components', 'Find components by name, group or task in English, Italian, German and French. Omit query to list the entire registry.', {
+    query: string('A name, group or task such as DropdownMenu, facture, Adresse, or jours fériés.'),
   }),
   tool('get_component', 'Read an installed component’s usage notes, public TypeScript declaration, import path and list of source files. Request one listed file to read its source.', {
     name: string('Exact registry identifier, for example dropdown-menu.'),
@@ -46,13 +47,9 @@ function validateArguments(schema, args) {
 async function callTool(root, registry, guides, name, args) {
   const read = (directory, relative) => readFile(path.join(root, directory, relative), 'utf8')
   if (name === 'search_components') {
-    const words = (args.query ?? '').replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
-      .split(/[\s-]+/).filter(Boolean)
-    const matches = registry.items.filter((entry) =>
-      words.every((word) => (entry.name + ' ' + entry.group).includes(word)),
-    )
+    const matches = searchComponents(registry.items, args.query)
     return resultText(matches.length
-      ? matches.map((entry) => entry.name + ' (' + entry.group + ')').join('\n')
+      ? matches.map((entry) => entry.name + ' (' + entry.group + ') — ' + entry.summary).join('\n')
       : 'No matching components.')
   }
   if (name === 'get_guide') {

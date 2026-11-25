@@ -50,13 +50,21 @@ try {
   assert.equal(await table.locator('thead th:last-child').getAttribute('aria-sort'), 'ascending')
   await page.keyboard.press('Space')
   assert.equal(await table.locator('thead th:last-child').getAttribute('aria-sort'), 'descending')
+  for (const group of ['Paper', 'Binding']) {
+    const body = table.getByRole('rowgroup', { name: group })
+    const header = body.locator('tr').first().getByRole('rowheader', { name: group })
+    assert.equal(await header.getAttribute('scope'), 'rowgroup')
+    assert.equal(await header.evaluate(el => el.colSpan), 5)
+    assert.ok(await body.locator('tr').nth(1).locator('td').first().isVisible())
+    assert.equal(await body.locator('tr').last().getAttribute('data-summary'), 'subtotal')
+  }
   assert.equal(await heading.evaluate(el => el === document.activeElement), true)
   assert.equal(await table.locator('tfoot td:last-child').evaluate(el => getComputedStyle(el).borderBlockStartStyle), 'double')
 
   await page.setViewportSize({ width: 320, height: 670 })
   const region = page.getByRole('region', { name: 'Production account' })
   const pinned = await region.evaluate(el => {
-    const first = el.querySelector('tbody tr:first-child td'), header = el.querySelector('thead th')
+    const first = el.querySelector('tbody tr:has(td):not([data-summary]) td'), header = el.querySelector('thead th')
     const original = first.getBoundingClientRect().left
     el.scrollLeft = 145
     el.scrollTop = 180

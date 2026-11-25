@@ -71,6 +71,11 @@
   .al-data-table th button { gap: var(--al-space-1); }
 }
 
+.al-data-table .al-table tr[data-group-heading] > th {
+  background: var(--al-soft);
+  font-weight: 700;
+  text-align: start;
+}
 .al-table-print-label { display: none; }
 @media print {
   .al-data-table.al-scroll-area { container-type: normal; overflow: visible; max-block-size: none !important; scrollbar-gutter: auto; }
@@ -86,6 +91,7 @@
   }
   .al-data-table .al-table > thead > tr > th { font-size: 9pt; line-height: 12pt; }
   .al-data-table th .al-table-print-label { display: block; }
+  .al-data-table tr[data-group-heading] { break-after: avoid; }
   .al-data-table [data-summary] > th { white-space: normal; }
 
   /* Release screen-only grid tracks and flex fragmentation around a printed ledger. */

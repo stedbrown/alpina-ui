@@ -52,7 +52,7 @@ export interface DataTableProps<Row> {
   stickyHeader?: boolean
   stickyFirstColumn?: boolean
   maxHeight?: CSSProperties['maxBlockSize']
-  /** Keep groups in source order and sort rows within their group. */
+  /** Display a named row group before its records and sort only within each group. */
   groupBy?: (row: Row) => string
   /** Label each group's subtotal, using the group name when omitted. */
   subtotalLabel?: (group: string) => string
@@ -177,7 +177,11 @@ function DataTableView<Row>({
             </TableHead>
           })}</TableRow>
         </TableHeader>
-        {ordered.map(({ name, records }) => <TableBody key={name} aria-label={groupBy ? name : undefined}>
+        {ordered.map(({ name, records }, index) => <TableBody key={name}
+          aria-labelledby={groupBy && name ? hintId + '-group-' + index : undefined}>
+          {groupBy && name && <TableRow data-group-heading="">
+            <TableHead id={hintId + '-group-' + index} scope="rowgroup" colSpan={columns.length}>{name}</TableHead>
+          </TableRow>}
           {records.map(entry => <TableRow key={rowKey(entry.row)}>{columns.map(col =>
             <TableCell key={col.id} data-align={alignment(col)} numeric={alignment(col) === 'end'}>{content(col, entry)}</TableCell>
           )}</TableRow>)}

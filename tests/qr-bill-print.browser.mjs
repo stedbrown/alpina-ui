@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { build } from 'esbuild'
 import { chromium } from 'playwright-core'
+import { PNG } from 'pngjs'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { SwissQrBill } from 'alpina-ui'
@@ -106,6 +107,37 @@ try {
     await page.setViewportSize({ width: 1000, height: 900 })
     assert.equal(await highlights.isVisible(), false)
     assert.equal(await zoom.isVisible(), false)
+  }
+  for (const width of [320, 360]) {
+    await page.setViewportSize({ width, height: 800 })
+    for (const theme of ['light', 'dark']) {
+      await page.setContent(doc(print(bill, 'slip')))
+      await page.evaluate(theme => { document.documentElement.dataset.alTheme = theme }, theme)
+      const reader = page.locator('.al-bill-reading')
+      const summary = reader.getByText('Read payment details', { exact: true })
+      // The first glyph is a browser marker without a DOM box. Inspect its actual ink
+      // between the control's leading edge and the first letter of its text.
+      const textStart = await summary.evaluate(el => {
+        const range = document.createRange()
+        range.selectNodeContents(el)
+        return Math.floor(range.getBoundingClientRect().left - el.getBoundingClientRect().left)
+      })
+      const pixels = PNG.sync.read(await summary.screenshot())
+      const ink = []
+      for (let x = 0; x < textStart; x++) {
+        for (let y = 2; y < pixels.height - 2; y++) {
+          const red = pixels.data[(y * pixels.width + x) * 4]
+          if (theme === 'light' ? red < 90 : red > 165) { ink.push(x); break }
+        }
+      }
+      assert.ok(ink.length >= 4 && ink[0] >= 8, `${width}px ${theme}: disclosure marker inside the gutter, got ink at ${ink}`)
+      await summary.press('Enter')
+      assert.equal(await reader.getAttribute('open'), '')
+      assert.ok(await reader.getByText('Atelier', { exact: true }).isVisible())
+      assert.ok(await summary.evaluate(el => el.matches(':focus-visible') && getComputedStyle(el).outlineStyle !== 'none'))
+      await summary.press('Space')
+      assert.equal(await reader.getAttribute('open'), null)
+    }
   }
   console.log('Verified readable mobile payment details, keyboard enlargement and physical A4 output.')
 } finally {

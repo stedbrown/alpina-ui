@@ -1,4 +1,5 @@
 import { LocalizedSwissQrBill } from './swiss-qr-bill-locale.internal.js'
+import { Collapsible } from '../ui/collapsible.js'
 import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import { formatCreditorReference, formatQrReference, prepareSwissQrBill, type SwissQrAddress, type SwissQrBillData } from './qr-payment.js'
 import { qrMatrix } from './qr-matrix.js'
@@ -208,12 +209,11 @@ export const SwissQrBill = forwardRef<HTMLDivElement, SwissQrBillProps>(function
           </section>
         </div>
       </div>
-      <details className="al-bill-reading" lang={locale}>
-        <summary>{readingLabels[locale]}</summary>
+      <Collapsible className="al-bill-reading" lang={locale} summary={readingLabels[locale]}>
         <Details bill={payment} words={words} blankLabel={blankLabels[locale]} />
         <Amount bill={payment} words={words} blankLabel={blankLabels[locale]} />
         {payment.alternatives.map((line, index) => <p key={index}>{line}</p>)}
-      </details>
+      </Collapsible>
     </div>
   )
 })

@@ -4,7 +4,8 @@
   font-family: var(--al-font);
   color: var(--al-ink);
 }
-.al-collapsible summary {
+.al-collapsible > summary {
+  list-style-position: inside;
   overflow-wrap: anywhere;
   cursor: pointer;
   min-block-size: 2.75rem;

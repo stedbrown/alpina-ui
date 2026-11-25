@@ -201,8 +201,7 @@
 
 /* A reflowable reading view accompanies the fixed-dimension payment slip on screen. */
 .al-bill-reading { min-inline-size: 0; color: var(--al-ink); font: var(--al-type-body)/var(--al-leading-body) var(--al-font); }
-.al-bill-reading summary { cursor: pointer; padding-block: var(--al-space-2); font-weight: 600; }
-.al-bill-reading summary:focus-visible { outline: 2px solid var(--al-focus); outline-offset: -2px; }
+.al-bill-reading > summary { font-size: inherit; line-height: inherit; }
 .al-bill-reading :is(.al-bill-details, .al-bill-amount) { position: static; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--al-space-3); margin: var(--al-space-3) 0; }
 .al-bill-reading .al-bill-entry { min-inline-size: 0; overflow-wrap: anywhere; }
 .al-bill-reading dt { font-weight: 600; }

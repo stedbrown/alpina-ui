@@ -1,5 +1,9 @@
 # Upgrading Alpina UI
 
+## Version 0.7.1
+
+In `SwissAddressForm`, the postal code, locality and canton controls line up when they share a row, including when a hint or validation message wraps. [Swiss address form](https://alpina-ui.vercel.app/docs/components/swiss-address-form/)
+
 ## Version 0.7
 
 The library adds three entries. Use `Steps` to identify the current stage of a workflow, `DescriptionList` to pair terms with their values and `Figure` to keep a specimen with its caption. The component index includes usage guidance for each entry. [Component index](https://alpina-ui.vercel.app/docs/components/)

@@ -48,12 +48,18 @@
 .al-address-fields {
   display: grid;
   grid-template-columns: minmax(calc(var(--al-unit) * 20), 0.38fr) minmax(0, 1fr);
-  align-items: start;
   gap: var(--al-space-5) var(--al-space-3);
   min-inline-size: 0;
   margin: 0;
   padding: var(--al-space-6);
   border: 0;
+}
+.al-address-fields > .al-field {
+  display: flex;
+  flex-direction: column;
+}
+.al-address-fields > .al-field > :is(input, select) {
+  margin-block-start: auto;
 }
 .al-address-recipient,
 .al-address-street,

@@ -70,6 +70,34 @@ try {
   await page.evaluate(() => document.documentElement.style.removeProperty('--al-unit'))
   const field = (name) => form.locator('[name="' + name + '"]')
   const submit = form.getByRole('button')
+  async function checkAddressRow() {
+    for (const width of [640, 420, 230]) {
+      const { labels, controls, hint } = await form.evaluate((element, width) => {
+        element.style.inlineSize = width + 'px'
+        const fields = ['postalCode', 'locality', 'canton'].map(name => element.elements.namedItem(name))
+        return {
+          labels: fields.map(input => input.labels[0].getBoundingClientRect().top),
+          controls: fields.map(input => input.getBoundingClientRect().top),
+          hint: element.querySelector('.al-address-postcode .al-field-hint').getBoundingClientRect().bottom,
+        }
+      }, width)
+      assert.ok(hint <= controls[0], 'The postal hint precedes the input')
+      if (width > 230) {
+        assert.equal(labels[0], labels[1], 'Postal and locality labels at ' + width)
+        assert.equal(controls[0], controls[1], 'Postal and locality controls at ' + width)
+      } else {
+        assert.ok(controls[0] < labels[1], 'Locality stacks below the postal code')
+      }
+      if (width === 640) {
+        assert.equal(labels[1], labels[2], 'Canton label aligns with the row')
+        assert.equal(controls[1], controls[2], 'Canton control aligns with the row')
+      } else {
+        assert.ok(controls[1] < labels[2], 'Canton wraps to the following row')
+      }
+    }
+    await form.evaluate(element => element.style.removeProperty('inline-size'))
+  }
+  await checkAddressRow()
   await page.evaluate(() => {
     location.hash = 'swiss-address-form'
   })
@@ -95,6 +123,7 @@ try {
   ]) {
     await page.getByLabel('Lingua').selectOption(locale)
     assert.equal(await form.getByRole('group', { name }).getByRole('link').count(), 4)
+    await checkAddressRow()
   }
   await field('recipient').fill('  A & B  ')
   assert.equal(await field('recipient').getAttribute('aria-invalid'), null)

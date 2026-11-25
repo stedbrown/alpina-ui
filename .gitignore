@@ -5,4 +5,5 @@ dist/
 *.tgz
 !/recipes/rubrica/vendor/alpina-ui-0.6.0.tgz
 !/recipes/rubrica/vendor/alpina-ui-0.7.0.tgz
+!/recipes/rubrica/vendor/alpina-ui-0.7.1.tgz
 .vercel/

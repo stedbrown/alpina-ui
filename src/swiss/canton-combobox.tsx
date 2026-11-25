@@ -45,7 +45,7 @@ function normalize(text: string): string {
     .normalize('NFKD')
     .replace(/\p{M}/gu, '')
     .toLowerCase()
-    .replace(/ß/g, 'ss')
+    .replace(/\u00df/g, 'ss')
     .replace(/[^\p{L}\p{N}]+/gu, ' ')
     .trim()
 }

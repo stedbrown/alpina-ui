@@ -40,7 +40,7 @@ const columns: readonly DataColumn<DashboardInvoice>[] = [
 const monthName = new Intl.DateTimeFormat('en', { month: 'short', year: 'numeric', timeZone: 'UTC' })
 
 function searchText(value: string) {
-  return value.trim().normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase().replace(/ß/g, 'ss')
+  return value.trim().normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase().replace(/\u00df/g, 'ss')
 }
 
 function reportingMonths(lastDate: string, count: number) {

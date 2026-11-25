@@ -68,5 +68,5 @@ export const initialContacts: Contact[] = [
   },
 ]
 export function fold(text: string) {
-  return text.normalize('NFD').replace(/\p{M}/gu, '').toLocaleLowerCase().replaceAll('ß', 'ss').trim()
+  return text.normalize('NFD').replace(/\p{M}/gu, '').toLocaleLowerCase().replaceAll('\u00df', 'ss').trim()
 }

@@ -45,7 +45,8 @@ test("CHF uses the runtime's Swiss locale, two decimals and exact BigInt inputs"
       maximumFractionDigits: 2,
     })
     for (const amount of [0, -45.16, 22.999, 9007199254740993123n]) {
-      assert.equal(formatCHF(amount, locale), reference.format(amount))
+      const group = ['fr-CH', 'rm-CH'].includes(locale) ? '\u202f' : '’'
+      assert.equal(formatCHF(amount, locale), reference.formatToParts(amount).map(part => part.type === 'group' ? group : part.value).join(''))
     }
   }
   assert.equal(formatCHF(1), formatCHF(1, 'it-CH'))
@@ -123,7 +124,7 @@ test('Romansh CHF and dates render in Romansh on a runtime without Romansh data'
     '-CHF\u00a09\u202f007\u202f199\u202f254\u202f740\u202f993\u202f123,00',
   )
   const samples = [
-    ['short', '05-04-26'],
+    ['short', '05.04.2026'],
     ['medium', '05-04-2026'],
     ['long', '5 d’avrigl 2026'],
     ['full', 'dumengia, ils 5 d’avrigl 2026'],
@@ -131,7 +132,7 @@ test('Romansh CHF and dates render in Romansh on a runtime without Romansh data'
   for (const [dateStyle, expected] of samples) {
     assert.equal(date('2026-04-05', 'rm-CH', { dateStyle }), expected)
   }
-  assert.equal(date('0001-01-01', 'rm-CH', { dateStyle: 'short' }), '01-01-01')
+  assert.equal(date('0001-01-01', 'rm-CH', { dateStyle: 'short' }), '01.01.0001')
   assert.equal(
     date(new Date('2026-03-29T22:30:00Z'), 'rm-CH', { dateStyle: 'full' }),
     'glindesdi, ils 30 da mars 2026',

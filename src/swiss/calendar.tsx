@@ -3,7 +3,7 @@
 import { forwardRef, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import { Button } from '../ui/button.js'
 import { useControllable } from '../interactive/controllable.js'
-import { addDays, addMonths, calendarLabels, calendarText, clampDay, firstCivilDay, lastCivilDay, mondayIndex, monthLength, zurichToday } from './calendar-dates.js'
+import { addDays, addMonths, calendarLabels, calendarText, calendarWeekNames, clampDay, firstCivilDay, isoWeek, lastCivilDay, mondayIndex, monthLength, zurichToday } from './calendar-dates.js'
 import { formatSwissDate, parseCivilDate } from './format-swiss-date.js'
 import { defaultSwissLocale, type SwissLocale } from './locales.js'
 import './calendar.css'
@@ -16,11 +16,12 @@ export interface CalendarProps {
   min?: string
   max?: string
   locale?: SwissLocale
+  showWeekNumbers?: boolean
   className?: string
 }
 
 export const Calendar = forwardRef<HTMLElement, CalendarProps>(function Calendar(
-  { value, defaultValue = '', onValueChange, defaultMonth, min = firstCivilDay, max = lastCivilDay, locale = defaultSwissLocale, className = '' },
+  { value, defaultValue = '', onValueChange, defaultMonth, min = firstCivilDay, max = lastCivilDay, locale = defaultSwissLocale, showWeekNumbers = true, className = '' },
   ref,
 ) {
   const [selection, select] = useControllable(value, defaultValue, onValueChange)
@@ -57,6 +58,7 @@ export const Calendar = forwardRef<HTMLElement, CalendarProps>(function Calendar
   const count = monthLength(first)
   const rows = Math.ceil((start + count) / 7)
   const text = calendarText[locale]
+  const [weekShort, weekLabel] = calendarWeekNames[locale]
 
   function navigate(event: KeyboardEvent<HTMLButtonElement>, day: string) {
     if (event.altKey || event.metaKey || event.ctrlKey) return
@@ -95,9 +97,9 @@ export const Calendar = forwardRef<HTMLElement, CalendarProps>(function Calendar
         <Button size="sm" variant="ghost" aria-label={text.next} disabled={month >= max.slice(0, 7)} onClick={() => moveMonth(1)}>›</Button>
       </div>
       <table ref={grid} role="grid" aria-labelledby={id}>
-        <thead><tr>{labels.days.map(({ full, short }) => <th key={full} scope="col" aria-label={full}>{short}</th>)}</tr></thead>
+        <thead><tr>{showWeekNumbers && <th scope="col" aria-label={weekLabel}>{weekShort}</th>}{labels.days.map(({ full, short }) => <th key={full} scope="col" aria-label={full}>{short}</th>)}</tr></thead>
         <tbody>{Array.from({ length: rows }, (_, row) => (
-          <tr key={row}>{Array.from({ length: 7 }, (_, column) => {
+          <tr key={row}>{showWeekNumbers && <th scope="row">{isoWeek(addDays(first, row * 7 - start)).week}</th>}{Array.from({ length: 7 }, (_, column) => {
             const n = row * 7 + column - start + 1
             if (n < 1 || n > count) return <td key={column} />
             const day = month + '-' + String(n).padStart(2, '0')

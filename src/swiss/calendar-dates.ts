@@ -39,6 +39,20 @@ export function mondayIndex(day: string): number {
   return (parseCivilDate(day).getUTCDay() + 6) % 7
 }
 
+/** ISO 8601 assigns a week to the year containing its Thursday. */
+export function isoWeek(day: string): { year: number; week: number } {
+  const thursday = parseCivilDate(day)
+  thursday.setUTCDate(thursday.getUTCDate() + 3 - (thursday.getUTCDay() + 6) % 7)
+  const start = new Date(thursday)
+  start.setUTCMonth(0, 1)
+  return { year: thursday.getUTCFullYear(), week: 1 + Math.floor((thursday.getTime() - start.getTime()) / 604800000) }
+}
+
+export const calendarWeekNames = {
+  'de-CH': ['KW', 'Kalenderwoche'], 'fr-CH': ['Sem.', 'Semaine'],
+  'it-CH': ['Sett.', 'Settimana'], 'rm-CH': ['Emna', 'Emna'],
+} as const
+
 export function zurichToday(now = new Date()): string {
   const parts = new Intl.DateTimeFormat('en-GB', {
     timeZone: 'Europe/Zurich', year: 'numeric', month: '2-digit', day: '2-digit',

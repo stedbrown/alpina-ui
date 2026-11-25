@@ -1,51 +1,56 @@
 import { defaultSwissLocale, swissLocalePreferences, type SwissLocale } from './locales.js'
 
-type CurrencyFormatter = (value: number | bigint) => string
-const formatters = new Map<SwissLocale, CurrencyFormatter>()
-
-function currencyFormatter(locale: SwissLocale): CurrencyFormatter {
-  if (
-    locale === 'rm-CH' &&
-    !Intl.NumberFormat.supportedLocalesOf(locale, { localeMatcher: 'lookup' }).length
-  ) {
-    // CLDR 48, common/main/rm.xml. Unicode-3.0, see UNICODE-LICENSE.txt.
-    // Intl still performs decimal rounding and exact BigInt conversion.
-    const numeric = new Intl.NumberFormat('en', {
-      numberingSystem: 'latn',
-      useGrouping: false,
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    })
-    return (amount) => {
-      const parts = numeric.formatToParts(amount)
-      const integer = parts.find((part) => part.type === 'integer')!.value
-      const fraction = parts.find((part) => part.type === 'fraction')!.value
-      const sign = parts.some((part) => part.type === 'minusSign') ? '-' : ''
-      const groups = []
-      for (let end = integer.length; end > 0; end -= 3) {
-        groups.push(integer.slice(Math.max(0, end - 3), end))
-      }
-      return sign + 'CHF\u00a0' + groups.reverse().join('\u202f') + ',' + fraction
-    }
-  }
-  return new Intl.NumberFormat(swissLocalePreferences(locale), {
-    style: 'currency',
-    currency: 'CHF',
-    currencyDisplay: 'code',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format
+export interface SwissCurrencyOptions {
+  /** Round the displayed total to the nearest five centimes. Ties go away from zero. */
+  cashRounding?: boolean
 }
 
-/** Format an amount expressed in francs, using two decimal places. */
-export function formatCHF(amount: number | bigint, locale: SwissLocale = defaultSwissLocale): string {
-  if (typeof amount !== 'bigint' && !Number.isFinite(amount)) {
-    throw new RangeError('Expected a finite amount in CHF')
-  }
+const formatters = new Map<SwissLocale, Intl.NumberFormat>()
+
+// Use the number's decimal representation so 1.025 and its negative round symmetrically.
+// Keeping the quotient in BigInt also preserves large amounts and exponent notation.
+function cashCentimes(amount: number): bigint {
+  const [coefficient, exponent = '0'] = Math.abs(amount).toString().split('e')
+  const [integer, fraction = ''] = coefficient.split('.')
+  const shift = Number(exponent) - fraction.length + 2
+  const numerator = BigInt(integer + fraction) * 10n ** BigInt(Math.max(shift, 0))
+  const denominator = 5n * 10n ** BigInt(Math.max(-shift, 0))
+  return ((2n * numerator + denominator) / (2n * denominator)) * 5n
+}
+
+/** Format francs with Swiss digit grouping and two decimal places. */
+export function formatCHF(
+  amount: number | bigint,
+  locale: SwissLocale = defaultSwissLocale,
+  { cashRounding = false }: SwissCurrencyOptions = {},
+): string {
+  if (typeof amount !== 'bigint' && !Number.isFinite(amount)) throw new RangeError('Expected a finite amount in CHF')
+  const romanshFallback = locale === 'rm-CH' && !Intl.NumberFormat.supportedLocalesOf(locale, { localeMatcher: 'lookup' }).length
   let formatter = formatters.get(locale)
   if (!formatter) {
-    formatter = currencyFormatter(locale)
+    formatter = new Intl.NumberFormat(romanshFallback ? 'en' : swissLocalePreferences(locale), {
+      numberingSystem: 'latn', style: romanshFallback ? 'decimal' : 'currency',
+      currency: 'CHF', currencyDisplay: 'code', useGrouping: true,
+      minimumFractionDigits: 2, maximumFractionDigits: 2,
+    })
     formatters.set(locale, formatter)
   }
-  return formatter(amount)
+  const negative = amount < 0 || Object.is(amount, -0)
+  const rounded = cashRounding && typeof amount === 'number' ? cashCentimes(amount) : undefined
+  let value = amount
+  if (rounded !== undefined) {
+    const francs = rounded / 100n
+    value = negative ? francs === 0n ? -0 : -francs : francs
+  }
+  const group = locale === 'fr-CH' || locale === 'rm-CH' ? '\u202f' : '’'
+  const parts = formatter.formatToParts(value)
+  const number = parts.map(part => {
+    if (part.type === 'group') return group
+    if (part.type === 'fraction' && rounded !== undefined) return String(rounded % 100n).padStart(2, '0')
+    if (romanshFallback && part.type === 'decimal') return ','
+    if (romanshFallback && part.type === 'minusSign') return ''
+    return part.value
+  }).join('')
+  // CLDR 48 common/main/rm.xml. Unicode-3.0, see UNICODE-LICENSE.txt.
+  return romanshFallback ? (negative ? '-' : '') + 'CHF\u00a0' + number : number
 }

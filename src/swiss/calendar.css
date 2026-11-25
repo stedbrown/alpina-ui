@@ -6,6 +6,7 @@
 .al-calendar table { border-collapse: collapse; table-layout: fixed; width: 100%; text-align: center; }
 .al-calendar th { font-size: var(--al-type-caption); line-height: var(--al-leading-caption); font-weight: 500; color: var(--al-muted); padding-block: var(--al-space-2); }
 .al-calendar td { padding: 0; }
+.al-calendar th[scope='row'] { font-variant-numeric: tabular-nums; border-inline-end: 1px solid var(--al-line); }
 .al-calendar td button { appearance: none; box-sizing: border-box; width: 100%; min-height: var(--al-space-10); padding: 0; display: block; border: 1px solid transparent; border-radius: var(--al-radius); background: transparent; color: inherit; font: inherit; font-variant-numeric: tabular-nums; cursor: pointer; }
 .al-calendar td button[aria-current] { text-decoration: underline; text-underline-offset: .22em; }
 .al-calendar td button:enabled:hover { background: var(--al-hover); }

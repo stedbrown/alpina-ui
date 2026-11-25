@@ -45,7 +45,8 @@ try {
   assert.equal(await day('2025-01-10').locator('..').getAttribute('aria-selected'), 'true')
   for (const [locale, monday] of [['de-CH','Montag'],['fr-CH','lundi'],['rm-CH','glindesdi'],['it-CH','lunedì']]) {
     await page.getByRole('combobox', { name:'Language' }).selectOption(locale)
-    assert.equal(await calendar.getByRole('columnheader').first().getAttribute('aria-label'), monday)
+    assert.equal(await calendar.getByRole('columnheader').nth(1).getAttribute('aria-label'), monday)
+    assert.deepEqual(await calendar.getByRole('rowheader').allTextContents(), ['1', '2', '3', '4', '5'])
   }
   await page.getByRole('button', { name: /^Collection/ }).click()
   const dialog = page.getByRole('dialog')

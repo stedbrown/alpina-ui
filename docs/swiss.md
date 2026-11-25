@@ -1,6 +1,6 @@
 # Swiss interfaces
 
-Alpina ships nine React components and pure functions for Swiss data. Set the locale explicitly or use the default, `it-CH`. The other supported locales are `de-CH`, `fr-CH`, and `rm-CH`.
+Alpina ships React components and pure functions for Swiss data. Set the locale explicitly or use the default, `it-CH`. The other supported locales are `de-CH`, `fr-CH`, and `rm-CH`.
 
 | Component | Main props | HTML or output |
 | --- | --- | --- |
@@ -101,13 +101,21 @@ formatSwissDate("2026-11-24", "rm-CH", { dateStyle: "long" })
 formatSwissDate(new Date("2026-03-29T22:30:00Z"), "it-CH")  // March 30 in Zurich
 ```
 
-`formatCHF(amount, locale?)` accepts a finite amount in francs and displays two decimals with the code CHF. Spacing, separators, and the position of CHF follow the locale. Displayed amounts round to the nearest centime. Use `bigint` for whole-franc amounts beyond the integer precision of `number`.
+`formatCHF(amount, locale?)` accepts a finite amount in francs and displays two decimals with the code CHF. German and Italian group thousands with a right single quotation mark (U+2019). French uses a narrow no-break space (U+202F). The currency code follows the locale’s placement. Use `bigint` for whole-franc amounts beyond the integer precision of `number`.
 
-`formatSwissDate(value, locale?, options?)` accepts Gregorian civil dates in exact `YYYY-MM-DD` format (years 0001–9999) and `Date` objects. A civil date retains its day in every time zone. A `Date` represents an instant and defaults to `Europe/Zurich`, including seasonal clock changes. For instants, pass another IANA zone in `timeZone`. `dateStyle` accepts `short`, `medium` (default), `long`, and `full`. Invalid dates and infinite amounts produce a `RangeError`.
+By default, amounts round to the nearest centime. Set `cashRounding` on `CurrencyCHF`, or pass `{ cashRounding: true }` as the third argument to `formatCHF`, to round a cash total to the nearest five centimes. Exact half steps round away from zero. Apply this once to the payable total. The HTML data value preserves the original amount. [Unicode currency rounding data](https://github.com/unicode-org/cldr/blob/release-48/common/supplemental/supplementalData.xml)
+
+`formatSwissDate(value, locale?, options?)` accepts Gregorian civil dates in exact `YYYY-MM-DD` format (years 0001–9999) and `Date` objects. A civil date retains its day in every time zone. A `Date` represents an instant and defaults to `Europe/Zurich`, including seasonal clock changes. For instants, pass another IANA zone in `timeZone`. `dateStyle` accepts `short` (default, DD.MM.YYYY), `medium`, `long`, and `full`. Use `formatSwissTime(instant, timeZone?)` for a 24-hour clock. Midnight reads 00:00. Invalid dates and infinite amounts produce a `RangeError`.
+
+The Calendar starts on Monday and shows the ISO week in each row. Pass `showWeekNumbers={false}` to hide this column. `isoWeek(day)` returns the week number and ISO week year, which can differ from the civil year in late December and early January.
 
 The browser and server formatters use `Intl` and are reused. For German, French, and Italian, the library requests the chosen language first, followed by the available Swiss alternatives. Language data versions in different runtimes can affect punctuation. Canton and language names come from the bundled dataset. [ECMAScript Internationalization API](https://tc39.es/ecma402/2026/#locale-and-parameter-negotiation)
 
 When a runtime lacks Romansh data, Alpina uses Unicode CLDR 48 patterns for CHF and Gregorian dates in Romansh. For example, `2026-04-05` in `full` format reads *dumengia, ils 5 d’avrigl 2026*. The fallback still uses `Intl` for number rounding and to obtain the day, month, and year in the requested time zone. Importing only the CHF formatter leaves month and weekday names out of your bundle. These data ship under the Unicode-3.0 license in `UNICODE-LICENSE.txt`. [CLDR 48 Romansh data](https://github.com/unicode-org/cldr/blob/release-48/common/main/rm.xml) · [Unicode license](https://github.com/unicode-org/cldr/blob/release-48/LICENSE)
+
+## Quote Swiss text
+
+Set the language of quoted text on its nearest container, for example `<p lang="fr-CH"><q>Bonjour</q></p>`. The theme supplies double guillemets for the outer quotation and single guillemets for a nested `q`. French includes a narrow no-break space inside each mark. German, Italian and Romansh use unspaced marks. German copy follows Swiss spelling. [Federal Chancellery writing guidelines](https://www.bk.admin.ch/de/schreibweisungen)
 
 ## Limit a selector to two languages
 

@@ -44,7 +44,6 @@ function romanshDateFormatter(dateStyle: DateStyle, timeZone: string): DateForma
     const day = parts.find((part) => part.type === 'day')!.value
     const month = parts.find((part) => part.type === 'month')!.value
     const year = parts.find((part) => part.type === 'year')!.value
-    if (dateStyle === 'short') return day + '-' + month + '-' + year.padStart(2, '0').slice(-2)
     if (dateStyle === 'medium') return day + '-' + month + '-' + year
     const long = Number(day) + ' ' + romanshMonths[Number(month) - 1] + ' ' + year
     if (dateStyle === 'long') return long
@@ -75,7 +74,7 @@ export function parseCivilDate(value: string): Date {
 export function formatSwissDate(
   value: string | Date,
   locale: SwissLocale = defaultSwissLocale,
-  { dateStyle = 'medium', timeZone = 'Europe/Zurich' }: SwissDateOptions = {},
+  { dateStyle = 'short', timeZone = 'Europe/Zurich' }: SwissDateOptions = {},
 ): string {
   const civilDate = typeof value === 'string'
   const date = civilDate ? parseCivilDate(value) : value
@@ -87,7 +86,16 @@ export function formatSwissDate(
     const needsRomansh =
       locale === 'rm-CH' &&
       !Intl.DateTimeFormat.supportedLocalesOf(locale, { localeMatcher: 'lookup' }).length
-    formatter = needsRomansh
+    if (dateStyle === 'short') {
+      const numeric = new Intl.DateTimeFormat('de-CH', {
+        calendar: 'gregory', numberingSystem: 'latn', timeZone: zone, day: '2-digit', month: '2-digit', year: 'numeric',
+      })
+      formatter = instant => {
+        const parts = numeric.formatToParts(instant)
+        const field = (name: Intl.DateTimeFormatPartTypes) => parts.find(part => part.type === name)!.value
+        return field('day') + '.' + field('month') + '.' + field('year').padStart(4, '0')
+      }
+    } else formatter = needsRomansh
       ? romanshDateFormatter(dateStyle, zone)
       : new Intl.DateTimeFormat(swissLocalePreferences(locale), {
           dateStyle,
@@ -98,4 +106,11 @@ export function formatSwissDate(
     formatters.set(key, formatter)
   }
   return formatter(date)
+}
+
+/** Display a local 24-hour clock time, including midnight as 00:00. */
+export function formatSwissTime(instant: Date, timeZone = 'Europe/Zurich'): string {
+  return new Intl.DateTimeFormat('de-CH', {
+    timeZone, numberingSystem: 'latn', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+  }).format(instant)
 }

@@ -6,7 +6,7 @@ export interface SearchOption {
   disabled?: boolean
 }
 export function foldText(text: string) {
-  return text.normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase().replace(/ß/g, 'ss').trim()
+  return text.normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase().replace(/\u00df/g, 'ss').trim()
 }
 export function filterOptions<T extends SearchOption>(
   items: readonly T[],

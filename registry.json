@@ -1,6 +1,7 @@
 {
   "name": "alpina-ui",
-  "version": "1.0.0-rc.4",
+  "version": "1.0.0-rc.5",
+  "homepage": "https://alpinaui.com/",
   "items": [
     {
       "name": "grid",

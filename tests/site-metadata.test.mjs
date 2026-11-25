@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
 import { PNG } from 'pngjs'
 import { resolveSiteUrl, siteMetadata } from '../scripts/site-config.mjs'
+import { checkBuiltDomain, checkSourceDomain } from './domain-artifacts.mjs'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
 
@@ -31,6 +32,8 @@ test('an alternate-domain build shares and indexes each hosted page on that doma
       read('docs/guides/start/index.html'), read('reference/start.md'), read('catalog.html'),
       readFile(path.join(root, 'package.json'), 'utf8').then(JSON.parse),
     ])
+    await checkSourceDomain(root, pkg)
+    await checkBuiltDomain(root, dir, pkg)
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, url]) => url)
     assert.equal(new Set(urls).size, urls.length)
     assert.ok(urls.includes(origin + '/') && urls.includes(origin + '/docs/components/button/'))

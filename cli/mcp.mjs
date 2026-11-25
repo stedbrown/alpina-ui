@@ -72,6 +72,7 @@ async function callTool(root, registry, guides, name, args) {
   return resultText([
     'Alpina UI ' + registry.version + ' · ' + entry.name,
     'Import path: alpina-ui/' + entry.group + '/' + entry.name,
+    'Documentation: ' + new URL('docs/components/' + entry.name + '/', registry.homepage).href,
     '', 'Usage notes', entry.usage, '', 'Public declaration', signature.trim(), '', 'Source files', ...entry.files,
   ].join('\n'))
 }
@@ -79,7 +80,7 @@ async function callTool(root, registry, guides, name, args) {
 export async function serveCatalog(root, registry) {
   const published = JSON.parse(await readFile(path.join(root, 'cli/public-guides.json'), 'utf8'))
   const guides = new Map(published.filter(guide => guide.mcp !== false).map(guide => [guide.id, guide]))
-  const serverInfo = { name: 'alpina-ui', version: registry.version }
+  const serverInfo = { name: 'alpina-ui', version: registry.version, websiteUrl: registry.homepage }
   const versions = [modernVersion, ...handshakeVersions]
   let initialized = false
 

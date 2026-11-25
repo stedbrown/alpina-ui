@@ -21,7 +21,7 @@ I selettori nativi e il campo NPA inoltrano `ref`, `id`, `name`, `disabled`, `re
 
 Usa `rm-CH` per la lingua scritta standard delle pubblicazioni federali. Nel menu appare «Rumantsch» e vale per indirizzi, cantoni, date, festività, importi e cedole QR. All’invio le traduzioni conservano i nomi `title[de]`, `title[fr]`, `title[it]` e `title[rm]`. Con `<MultilingualField locale="rm-CH" … />` l’editor mostra completezza, conteggi e comandi di copia in romancio anche se stai modificando un’altra lingua. [Lia Rumantscha](https://www.liarumantscha.ch/de/raetoromanisch/rumantsch-grischun) · [Cancelleria federale e Pledari Grond](https://www.bk.admin.ch/rm/rumantsch)
 
-Passa `locale="rm-CH"` a `IbanInput`, `AhvInput`, `UidInput`, `PhoneInput` e `SwissPostalCodeInput` per ricevere errori localizzati. Cambiare lingua conserva il valore e aggiorna le indicazioni. `validationMessage` personalizza il messaggio. Sul server `swissValidationMessage('postalCode', 'rm-CH')` restituisce lo stesso testo. [Modulo indirizzo](https://alpina-ui.vercel.app/docs/components/swiss-address-form/)
+Passa `locale="rm-CH"` a `IbanInput`, `AhvInput`, `UidInput`, `PhoneInput` e `SwissPostalCodeInput` per ricevere errori localizzati. Cambiare lingua conserva il valore e aggiorna le indicazioni. `validationMessage` personalizza il messaggio. Sul server `swissValidationMessage('postalCode', 'rm-CH')` restituisce lo stesso testo. [Modulo indirizzo](https://alpinaui.com/docs/components/swiss-address-form/)
 
 | Esempio | Formato romancio |
 | --- | --- |
@@ -289,7 +289,7 @@ Usa `IbanInput` per i conti CH e LI di 21 caratteri. `isSwissIban` verifica Paes
 
 `AhvInput` verifica prefisso 756 e cifra EAN‑13, poi raggruppa le 13 cifre. `PhoneInput` accetta nove cifre nazionali, il prefisso nazionale oppure +41 o 0041. I due campi formattano i valori validi all’uscita e mantengono le bozze non valide per correggerle. Personalizza gli errori con `validationMessage` e usa i validatori esportati all’invio. [Ufficio centrale di compensazione](https://www.zas.admin.ch/de/ahv-nummer-identifikator) · [Numerazione UFCOM](https://www.bakom.admin.ch/de/telefonnummern)
 
-`SwissQrBill` mostra sezione pagamento e ricevuta. La guida tratta riferimenti, indirizzi strutturati e stampa. [Guida alla QR-fattura](https://alpina-ui.vercel.app/docs/guides/qr-bill/)
+`SwissQrBill` mostra sezione pagamento e ricevuta. La guida tratta riferimenti, indirizzi strutturati e stampa. [Guida alla QR-fattura](https://alpinaui.com/docs/guides/qr-bill/)
 
 ## Modificare le traduzioni
 
@@ -317,15 +317,15 @@ I segni di piega iniziano a 3,5 mm dal bordo sinistro, a 105 e 210 mm dall’alt
 
 SWITEC indica il ritiro di SN 010130:2010 il 12 dicembre 2016. SN 10130:2026-02 è un’edizione distinta. Le misure sopra identificano i profili storici implementati e verificati da Alpina. [Programma svizzero di normazione](https://www.switec.info/media/2025-08_swiss_national_workprogram.pdf) · [Norma attuale](https://www.dinmedia.de/en/standard/sn-10130/400500596)
 
-Apri la finestra di stampa da un’azione dell’utente con `printSwissDocument(articleRef.current)`. Il comando isola il documento montato e ripristina l’app dopo la chiusura. Stampa su A4 in dimensioni reali disattivando intestazioni e piè di pagina del browser. [Esempio di lettera](https://alpina-ui.vercel.app/docs/components/letter/)
+Apri la finestra di stampa da un’azione dell’utente con `printSwissDocument(articleRef.current)`. Il comando isola il documento montato e ripristina l’app dopo la chiusura. Stampa su A4 in dimensioni reali disattivando intestazioni e piè di pagina del browser. [Esempio di lettera](https://alpinaui.com/docs/components/letter/)
 
 ### Quantità e importi in CHF nella fattura
 
-Fornisci `quantity` e `unitPrice` al netto dell’IVA come numeri o stringhe decimali con punto, fino a quattro cifre decimali. `unit` segue la quantità localizzata, per esempio `{ description: 'Revisione della bozza', quantity: '2.5', unit: 'h', unitPrice: '80.00', vatRate: 8.1 }`. Per una superficie usa `unit: 'm²'`. Prezzi unitari, importi di riga e totali mostrano due decimali. Il calcolo usa l’intero prezzo concordato e arrotonda il prodotto una volta al centesimo. L’attributo HTML `data` del prezzo conserva i decimali iniziali. [Esempio di fattura](https://alpina-ui.vercel.app/docs/components/invoice-document/)
+Fornisci `quantity` e `unitPrice` al netto dell’IVA come numeri o stringhe decimali con punto, fino a quattro cifre decimali. `unit` segue la quantità localizzata, per esempio `{ description: 'Revisione della bozza', quantity: '2.5', unit: 'h', unitPrice: '80.00', vatRate: 8.1 }`. Per una superficie usa `unit: 'm²'`. Prezzi unitari, importi di riga e totali mostrano due decimali. Il calcolo usa l’intero prezzo concordato e arrotonda il prodotto una volta al centesimo. L’attributo HTML `data` del prezzo conserva i decimali iniziali. [Esempio di fattura](https://alpinaui.com/docs/components/invoice-document/)
 
 ## Validare sul server
 
-Alpina esporta nove validatori Standard Schema senza dipendenze, con errori localizzati e risultati tipizzati. La guida include le integrazioni e una Server Action Next.js eseguibile. [Validazione svizzera](https://alpina-ui.vercel.app/docs/guides/validation/)
+Alpina esporta nove validatori Standard Schema senza dipendenze, con errori localizzati e risultati tipizzati. La guida include le integrazioni e una Server Action Next.js eseguibile. [Validazione svizzera](https://alpinaui.com/docs/guides/validation/)
 
 ### Visualizzare i totali in centesimi
 

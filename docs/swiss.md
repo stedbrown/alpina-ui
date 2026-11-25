@@ -21,7 +21,7 @@ The native locale select, canton select, and postal code field forward `ref`, `i
 
 Use `rm-CH` for the standardized written language used in federal publications. The language menu names it *Rumantsch*. A reader can select it for addresses, cantons, dates, holidays, amounts and QR payment slips. The four translation fields keep the names `title[de]`, `title[fr]`, `title[it]` and `title[rm]` on submission. Set `<MultilingualField locale="rm-CH" … />` to give the editor Romansh completion states, character counts and copy actions. The interface language and the language being edited can differ. [Lia Rumantscha on Rumantsch grischun](https://www.liarumantscha.ch/de/raetoromanisch/rumantsch-grischun) · [Federal Chancellery language resources and Pledari Grond](https://www.bk.admin.ch/rm/rumantsch)
 
-Pass `locale="rm-CH"` to `IbanInput`, `AhvInput`, `UidInput`, `PhoneInput` and `SwissPostalCodeInput` for native validation messages. A language change preserves the value and updates the correction. `validationMessage` overrides the message for an invalid value. On the server, `swissValidationMessage('postalCode', 'rm-CH')` returns the same wording. [Address form example](https://alpina-ui.vercel.app/docs/components/swiss-address-form/)
+Pass `locale="rm-CH"` to `IbanInput`, `AhvInput`, `UidInput`, `PhoneInput` and `SwissPostalCodeInput` for native validation messages. A language change preserves the value and updates the correction. `validationMessage` overrides the message for an invalid value. On the server, `swissValidationMessage('postalCode', 'rm-CH')` returns the same wording. [Address form example](https://alpinaui.com/docs/components/swiss-address-form/)
 
 | Example | Romansh display |
 | --- | --- |
@@ -289,7 +289,7 @@ Use `IbanInput` for 21-character CH and LI accounts. `isSwissIban` checks the co
 
 `AhvInput` validates the 756 prefix and EAN‑13 check digit, then groups the 13 digits for reading. `PhoneInput` accepts a nine-digit national number, its domestic trunk prefix or the international +41 or 0041 prefix. Both format valid entries on blur. Invalid drafts stay visible for correction. Use `validationMessage` for translated native form errors and the exported validation helpers when processing submissions. [Central Compensation Office](https://www.zas.admin.ch/de/ahv-nummer-identifikator) · [OFCOM telephone numbering](https://www.bakom.admin.ch/de/telefonnummern)
 
-`SwissQrBill` renders a payment part and receipt. The QR-bill guide describes reference types, structured addresses and printing. [Swiss QR-bill guide](https://alpina-ui.vercel.app/docs/guides/qr-bill/)
+`SwissQrBill` renders a payment part and receipt. The QR-bill guide describes reference types, structured addresses and printing. [Swiss QR-bill guide](https://alpinaui.com/docs/guides/qr-bill/)
 
 ## Editing translations
 
@@ -317,15 +317,15 @@ Fold guides start 3.5 mm from the left edge at 105 and 210 mm from the top. Use 
 
 SWITEC records the withdrawal of SN 010130:2010 on 12 December 2016. The current SN 10130:2026-02 is a separately published edition. The measurements above identify the legacy profiles implemented and tested by Alpina. [Swiss national standardisation work programme](https://www.switec.info/media/2025-08_swiss_national_workprogram.pdf) · [Current business-letter standard](https://www.dinmedia.de/en/standard/sn-10130/400500596)
 
-Open the print dialog from a user action with `printSwissDocument(articleRef.current)`. The helper isolates the mounted document and restores the application after the dialog closes. Print at actual size on A4 with browser headers and footers disabled. [Live letter example](https://alpina-ui.vercel.app/docs/components/letter/)
+Open the print dialog from a user action with `printSwissDocument(articleRef.current)`. The helper isolates the mounted document and restores the application after the dialog closes. Print at actual size on A4 with browser headers and footers disabled. [Live letter example](https://alpinaui.com/docs/components/letter/)
 
 ### Invoice quantities and CHF amounts
 
-Supply `quantity` and VAT-exclusive `unitPrice` as numbers or period-separated decimal strings with up to four fractional digits. An optional `unit` follows the localized quantity, for example `{ description: 'Proof review', quantity: '2.5', unit: 'h', unitPrice: '80.00', vatRate: 8.1 }`. Use `unit: 'm²'` for a measured area. Unit prices, line amounts and totals show two decimals. When the agreed unit price has additional digits, the underlying line calculation uses the full price and rounds the product once to centimes. The displayed unit price also retains its original decimal input in the HTML `data` value. [Live invoice](https://alpina-ui.vercel.app/docs/components/invoice-document/)
+Supply `quantity` and VAT-exclusive `unitPrice` as numbers or period-separated decimal strings with up to four fractional digits. An optional `unit` follows the localized quantity, for example `{ description: 'Proof review', quantity: '2.5', unit: 'h', unitPrice: '80.00', vatRate: 8.1 }`. Use `unit: 'm²'` for a measured area. Unit prices, line amounts and totals show two decimals. When the agreed unit price has additional digits, the underlying line calculation uses the full price and rounds the product once to centimes. The displayed unit price also retains its original decimal input in the HTML `data` value. [Live invoice](https://alpinaui.com/docs/components/invoice-document/)
 
 ## Validate on the server
 
-Alpina exposes nine dependency-free Standard Schema validators with localized issues and typed outputs. The shared validation guide includes framework integrations and a working Next.js Server Action. [Swiss validation guide](https://alpina-ui.vercel.app/docs/guides/validation/)
+Alpina exposes nine dependency-free Standard Schema validators with localized issues and typed outputs. The shared validation guide includes framework integrations and a working Next.js Server Action. [Swiss validation guide](https://alpinaui.com/docs/guides/validation/)
 
 ### Display invoice totals in centimes
 

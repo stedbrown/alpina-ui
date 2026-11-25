@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0-rc.5 · 25 November 2026
+
+- **Public API** The component registry exposes `homepage`. CLI help links to the documentation, and MCP replies include the project website and the selected component’s documentation URL.
+- Move the portal, installation commands, component registry and assistant guides to [alpinaui.com](https://alpinaui.com/). Canonical URLs, language alternates, social cards and discovery files use the same origin.
+- Preserve old bookmarks with path- and query-preserving HTTP 308 redirects. Both addresses serve the original bytes for every previously published release archive, including RC4.
+
 ## 1.0.0-rc.4 · 25 November 2026
 
 - **Public API** Read the installed version from `alpina-ui/package.json`. Grid supports viewport covers and chapter spacing, GridItem can group entrance steps, and GridSpecimen can magnify its contents or use system colors. Typography adds folio and specimen roles, adjustable specimen size and numeric tracking. [Reviewed declarations](etc/alpina-ui.api.md)
@@ -30,7 +36,7 @@
 
 - **Public API** Swiss identifier validation distinguishes shape and prefix errors from check-digit errors across fields, Standard Schema, server actions and QR payloads. Existing validation booleans and signatures remain usable. TableHead and TableCell accept independent text alignment, and guide tables retain the alignment of the original Markdown. The shared message helper accepts an optional reason. Portal, text, field and layout modules now expose the composable parts used by the reference site. See the [declaration report](etc/alpina-ui.api.md) for signatures.
 - The residence application switches language navigation and progress independently when the actual row runs out of room. Keyboard focus follows the active representation.
-- The [0.x migration guide](https://alpina-ui.vercel.app/docs/guides/migrate-1-0/) includes executable examples. The [Beta review](docs/beta-review.md) recommends a disposition for every Beta entry and reserves decisions for the maintainer.
+- The [0.x migration guide](https://alpinaui.com/docs/guides/migrate-1-0/) includes executable examples. The [Beta review](docs/beta-review.md) recommends a disposition for every Beta entry and reserves decisions for the maintainer.
 - CI installs a packed tarball at the minimum and latest supported React/React DOM versions in Next.js, Vite with React Router, and the React Hook Form example. Next exercises App Router server actions and Pages Router hydration.
 - The generated GitHub directory lists every component and copyable block. New light and dark previews, the mountain A, share cards and machine-readable metadata use the same visual identity. SITE_URL configures the public origin.
 - The website and its examples use public Alpina component markup and styles. A dogfooding check guards interactive controls and layout against site-only implementations.
@@ -39,7 +45,7 @@
 
 - **Public API** FileInput and its Dropzone alias expose the actual input ref, localized labels and file changes. Attachment accepts upload mode and keeps its existing download-link API. QrBillScanner uses the shared picker for images and PDFs.
 - Catalog date, color and validation examples use authored controls and messages. The select picker and numeric fields retain keyboard and form behavior. German and French Chromium runs check for platform-drawn labels and validation bubbles.
-- Heading tracking and leading now follow the actual font size. The optional self-hosted Inter files include optical sizes. [Display spacing](https://alpina-ui.vercel.app/docs/guides/design/)
+- Heading tracking and leading now follow the actual font size. The optional self-hosted Inter files include optical sizes. [Display spacing](https://alpinaui.com/docs/guides/design/)
 - Copy the multilingual residence certificate application with `alpina add block/public-service`. Drafts preserve attachment bytes in IndexedDB. The submission callback receives a request ID for retries and returns the case number.
 - The new public API report, stability policy and 1.0 checklist describe compatibility, deprecations and release review. [API stability](https://github.com/stedbrown/alpina-ui/blob/main/docs/api-stability.md)
 
@@ -47,9 +53,9 @@
 
 - InvoiceDocument shows two decimal places for every CHF unit and net price. Fractional quantities can carry a unit, such as 2.5 h or 1.25 m². Sub-cent prices retain their arithmetic precision.
 - Use Rumantsch Grischun in Swiss forms, validations, payment references and correspondence. The portal demonstrates all four national languages and the number formatter preserves exact decimal strings on systems without Romansh ICU data.
-- Share nine localized Standard Schema v1 validators between browser and server. The Next.js example checks an IBAN again at submission. [Validation guide](https://alpina-ui.vercel.app/docs/guides/validation/)
-- Reconcile grouped CHF ledgers with decimal alignment, accounting negatives, subtotals, double-ruled totals, Swiss-date sorting and repeated A4 headings. [DataTable](https://alpina-ui.vercel.app/docs/components/data-table/)
-- Parse Swiss QR payment data with field and line errors. Scan on-device, read a local image or multipage PDF, and confirm the payment summary. [QrBillScanner](https://alpina-ui.vercel.app/docs/components/qr-bill-scanner/)
+- Share nine localized Standard Schema v1 validators between browser and server. The Next.js example checks an IBAN again at submission. [Validation guide](https://alpinaui.com/docs/guides/validation/)
+- Reconcile grouped CHF ledgers with decimal alignment, accounting negatives, subtotals, double-ruled totals, Swiss-date sorting and repeated A4 headings. [DataTable](https://alpinaui.com/docs/components/data-table/)
+- Parse Swiss QR payment data with field and line errors. Scan on-device, read a local image or multipage PDF, and confirm the payment summary. [QrBillScanner](https://alpinaui.com/docs/components/qr-bill-scanner/)
 - Every component reference documents its keys. Browser regressions cover forced colors and higher contrast in light and dark, 200% text size and WCAG text spacing. A reflowable payment transcription accompanies the print slip.
 
 ## 0.12.0 · 25 November 2026
@@ -58,10 +64,10 @@
 - Charts, sparklines, numeric typography and table cells use a mathematical minus sign in displayed negative numbers.
 - A named Button import from the package root drops postal and QR data in split esbuild, Vite and Next production builds. Raw esbuild address consumers can opt into a separate offline postcode chunk. [Bundling details](docs/package-quality.md)
 - Set holiday observance to statutory or common in Swiss scheduling helpers and calendars. The Swiss guide lists customary office closures with their geographic scope and sources. [Holiday schedules](docs/swiss.md)
-- Download light and dark design tokens, ready-to-build Style Dictionary configurations and an editable A4 grid and type sheet. [Designer kit](https://alpina-ui.vercel.app/kit/)
+- Download light and dark design tokens, ready-to-build Style Dictionary configurations and an editable A4 grid and type sheet. [Designer kit](https://alpinaui.com/kit/)
 - Print A4 letters for left- or right-window envelopes using historical SN 010130 layouts. Print itemized VAT invoices with exact decimal totals and a QR payment section on the last page. [Swiss documents](docs/swiss.md)
 - The portal preloads Inter and prerenders component previews and blocks. Continuous integration checks homepage, component and block performance, accessibility and cumulative layout shift.
-- Every component has guidance on when to use it, alternatives, accessibility, and wording in Switzerland’s four national languages, with paired examples. [Component reference](https://alpina-ui.vercel.app/docs/components/)
+- Every component has guidance on when to use it, alternatives, accessibility, and wording in Switzerland’s four national languages, with paired examples. [Component reference](https://alpinaui.com/docs/components/)
 
 <a name="release-0-11-0"></a>
 
@@ -82,7 +88,7 @@
 ### Packaging and adoption
 
 - Three production integration projects exercise a Next.js Server Action, React Router navigation and React Hook Form with Zod. CI builds each against the packed library.
-- Per-component size budgets and tree-shaking checks run alongside React Server Component compatibility checks. [Component status](https://alpina-ui.vercel.app/status/) records maturity and the latest source change.
+- Per-component size budgets and tree-shaking checks run alongside React Server Component compatibility checks. [Component status](https://alpinaui.com/status/) records maturity and the latest source change.
 
 ## 0.10.0 · 25 November 2026
 
@@ -90,7 +96,7 @@
 
 - Inspect columns, margins and the four-pixel baseline with `GridOverlay`. Press Ctrl+Shift+G on the portal to toggle the overlay. Modular grid rows, named field arrangements and subgrids let adjacent cards share label and value tracks.
 - Prose, descriptions and numeric roles now distinguish running text from data. The default reading measure is 66ch. Headings balance, paragraphs wrap with a ragged edge, and Swiss language tags select the appropriate hyphenation rules.
-- The portal’s [design principles](https://alpina-ui.vercel.app/principles/) compare eight design decisions with paired, live examples and source notes.
+- The portal’s [design principles](https://alpinaui.com/principles/) compare eight design decisions with paired, live examples and source notes.
 
 ### Swiss data and documents
 

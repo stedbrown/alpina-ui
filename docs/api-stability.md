@@ -1,6 +1,6 @@
 # Public API stability
 
-The component status directory records the maturity of each registry entry and the date its implementation last changed. A change of date alone does not require a migration. Check the release notes when upgrading a package or adopting new component source. [Component status](https://alpina-ui.vercel.app/status/) · [Upgrade guide](https://alpina-ui.vercel.app/docs/guides/release/)
+The component status directory records the maturity of each registry entry and the date its implementation last changed. A change of date alone does not require a migration. Check the release notes when upgrading a package or adopting new component source. [Component status](https://alpinaui.com/status/) · [Upgrade guide](https://alpinaui.com/docs/guides/release/)
 
 | Stage | What a consumer can depend on | Examples |
 | --- | --- | --- |

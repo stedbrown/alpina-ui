@@ -11,13 +11,13 @@ npx --no-install alpina add block/login
 npx --no-install alpina add block/account-settings button --dir src/design --dry-run
 ```
 
-The first command creates `components/alpina/blocks/login.tsx` and the MIT notice. Import the copied block from that path and load `alpina-ui/styles.css` once in your app. Blocks import their controls from the installed `alpina-ui` package. Open the copied file to change copy, data or event handlers. [Block gallery](https://alpina-ui.vercel.app/blocks/)
+The first command creates `components/alpina/blocks/login.tsx` and the MIT notice. Import the copied block from that path and load `alpina-ui/styles.css` once in your app. Blocks import their controls from the installed `alpina-ui` package. Open the copied file to change copy, data or event handlers. [Block gallery](https://alpinaui.com/blocks/)
 
 The second command previews a mixed selection. Its destination contains the block, the editable Button source and Button’s dependencies. Run the command again without `--dry-run` to write the missing files. The CLI reports locally edited files as `keep`. For source-only projects, `add --all` selects all standalone component entries. Add a block by name when your project also uses the package.
 
 ## Copy the public service form
 
-`alpina add block/public-service` copies a service definition and the workflow, translated copy and draft storage it uses. The default definition collects personal details and a Swiss postal address for a residence certificate. Residents can attach files, revisit any step and review the complete request. [Try the public service form](https://alpina-ui.vercel.app/blocks/public-service/)
+`alpina add block/public-service` copies a service definition and the workflow, translated copy and draft storage it uses. The default definition collects personal details and a Swiss postal address for a residence certificate. Residents can attach files, revisit any step and review the complete request. [Try the public service form](https://alpinaui.com/blocks/public-service/)
 
 Set `initialLocale` to `de-CH`, `fr-CH`, `it-CH`, `rm-CH` or `en`. Pass an `onSubmit` callback to receive a normalized AHV number, a structured eCH-0010 mail address, the original files, the selected locale and a request ID. Return the case number issued by your service. Use the request ID for idempotent retries and validate the data again at the server boundary.
 

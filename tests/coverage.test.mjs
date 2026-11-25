@@ -80,11 +80,14 @@ const supplemental = [
 ]
 
 test('the 66 documented names resolve to published entries and public React exports', () => {
-  const mappings = [...migration.matchAll(/^\| ([^|]+?) \| \[(\w+)\]\(https:\/\/alpina-ui\.vercel\.app\/docs\/components\/([\w-]+)\/\) \| (.+?) \|$/gm)]
+  const mappings = [...migration.matchAll(/^\| ([^|]+?) \| \[(\w+)\]\((https:\/\/[^)]+)\) \| (.+?) \|$/gm)]
   assert.deepEqual(mappings.map(([, name]) => name), names)
   const installed = new Map(registry.items.map((entry) => [entry.name, entry]))
-  for (const [, name, component, slug] of mappings) {
-    assert.equal(slug, name.toLowerCase().replaceAll(' ', '-'))
+  const covered = new Set()
+  for (const [, name, component, link] of mappings) {
+    const slug = name.toLowerCase().replaceAll(' ', '-')
+    assert.equal(link, new URL('docs/components/' + slug + '/', registry.homepage).href)
+    covered.add(slug)
     const entry = installed.get(slug)
     assert.ok(entry, 'Missing registry item ' + slug)
     assert.equal(entry.entry, entry.group + '/' + slug + '.tsx')
@@ -92,7 +95,6 @@ test('the 66 documented names resolve to published entries and public React expo
     // React.forwardRef returns an object while ordinary function components are functions.
     assert.ok(typeof api[component] === 'function' || api[component]?.$$typeof, component)
   }
-  const covered = new Set(mappings.map(([, , , slug]) => slug))
   const extras = migration.split(/^## The \d+ additional entries /m)[1]
   const listed = [...extras.matchAll(/^\| [^|]+ \| ([^|]+) \|$/gm)]
     .flatMap(([, entries]) => [...entries.matchAll(/`([a-z-]+)`/g)].map(match => match[1])).sort()

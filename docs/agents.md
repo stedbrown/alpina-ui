@@ -14,10 +14,10 @@ For a project-local installation from the package, copy `node_modules/alpina-ui/
 
 ## Connect the local MCP server
 
-Install the 1.0.0-rc.4 archive from the portal in your application using Node.js 20 or later. The package includes the reference data used by the server.
+Install the 1.0.0-rc.5 archive from the portal in your application using Node.js 20 or later. The package includes the reference data used by the server.
 
 ```sh
-npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.4.tgz
+npm install https://alpinaui.com/alpina-ui-1.0.0-rc.5.tgz
 ```
 
 Configure a local **stdio** server in your MCP client. Start `node` with the absolute path to the installed CLI and the argument `mcp`. For clients that use the `mcpServers` JSON format, replace the example path below with your own. On Windows, paths such as `C:/projects/store/node_modules/alpina-ui/cli/alpina.mjs` work in JSON.
@@ -38,11 +38,11 @@ Restart or reconnect the client and open its tool list. It should show the three
 | Tool | Example arguments | Result |
 | --- | --- | --- |
 | `search_components` | `{"query":"tabella contabile"}` | Ranked identifiers, groups and one-line descriptions. Search component names and tasks in English, German, French, Italian and Romansh. The offline index accepts partial words, omitted accents and misspellings such as `dropdwon`. Use `{}` for the full registry. |
-| `get_component` | `{"name":"dropdown-menu"}` | The import path, usage notes, TypeScript declaration and registered source paths. Add `"file":"interactive/action-list.tsx"` to read one listed file. |
+| `get_component` | `{"name":"dropdown-menu"}` | The import path, public documentation URL, installed usage notes, TypeScript declaration and source paths. Add `"file":"interactive/action-list.tsx"` to read one listed file. |
 | `get_guide` | `{"slug":"build"}` | The installed Markdown guide. Use `{}` to discover guide identifiers. |
 
 Try asking, “Which Alpina component lets someone filter by canton? Check the installed API and show how to clear the filter.” The agent can look up both canton controls and inspect their props before choosing one. Your editor handles any changes to the application. [MCP tools](https://modelcontextprotocol.io/specification/2025-11-25/server/tools)
 
 ## Read without an integration
 
-Open the public text index for links to machine-readable documentation. For version-sensitive work, the same package used by the application contains its own Markdown under `docs/` and TypeScript declarations under `dist/`. [Documentation index for agents](https://alpina-ui.vercel.app/llms.txt)
+Open the public text index for links to machine-readable documentation. For version-sensitive work, the same package used by the application contains its own Markdown under `docs/` and TypeScript declarations under `dist/`. [Documentation index for agents](https://alpinaui.com/llms.txt)

@@ -135,7 +135,7 @@ if (process.argv.includes('--release-package')) {
     throw new Error('The release package does not match the address book lockfile.')
   await writeFile(path.join(outputDir, archiveName), archive)
   // Preserve installation URLs for projects pinned to earlier releases.
-  for (const previous of ['alpina-ui-0.6.0.tgz', 'alpina-ui-0.7.0.tgz', 'alpina-ui-0.7.1.tgz', 'alpina-ui-0.8.0.tgz', 'alpina-ui-0.9.0.tgz', 'alpina-ui-0.10.0.tgz', 'alpina-ui-0.11.0.tgz', 'alpina-ui-0.12.0.tgz', 'alpina-ui-0.13.0.tgz', 'alpina-ui-0.14.0.tgz', 'alpina-ui-1.0.0-rc.1.tgz', 'alpina-ui-1.0.0-rc.2.tgz', 'alpina-ui-1.0.0-rc.3.tgz']) {
+  for (const previous of ['alpina-ui-0.6.0.tgz', 'alpina-ui-0.7.0.tgz', 'alpina-ui-0.7.1.tgz', 'alpina-ui-0.8.0.tgz', 'alpina-ui-0.9.0.tgz', 'alpina-ui-0.10.0.tgz', 'alpina-ui-0.11.0.tgz', 'alpina-ui-0.12.0.tgz', 'alpina-ui-0.13.0.tgz', 'alpina-ui-0.14.0.tgz', 'alpina-ui-1.0.0-rc.1.tgz', 'alpina-ui-1.0.0-rc.2.tgz', 'alpina-ui-1.0.0-rc.3.tgz', 'alpina-ui-1.0.0-rc.4.tgz']) {
     const bytes = await readFile(directory + 'vendor/' + previous)
     await writeFile(path.join(outputDir, previous), bytes)
     await writeFile(path.join(outputDir, previous + '.sha512'), createHash('sha512').update(bytes).digest('hex') + '  ' + previous + '\n')

@@ -80,7 +80,10 @@ function printPatch(localFile, sourceFile) {
 }
 
 async function run([command, ...args]) {
-  if (!command || command === '--help' || command === '-h') return console.log(usage)
+  if (!command || command === '--help' || command === '-h') {
+    console.log(usage + '\n\nDocumentation: ' + new URL('docs/', registry.homepage).href)
+    return
+  }
   if (command === '--version') return console.log(registry.version)
   if (command === 'mcp' && !args.length) {
     const { serveCatalog } = await import('./mcp.mjs')

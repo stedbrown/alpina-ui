@@ -1,22 +1,22 @@
 # Premiers pas
 
-Alpina UI 1.0.0-rc.4 comprend 97 composants React installables et cinq pages à copier. Le paquet fournit les modules ESM, les déclarations TypeScript, les feuilles de style et les sources modifiables. Les guides de démarrage et des interfaces suisses existent aussi en français, allemand et italien. Le formulaire d’adresse fournit libellés et messages d’erreur dans les quatre langues nationales.
+Alpina UI 1.0.0-rc.5 comprend 97 composants React installables et cinq pages à copier. Le paquet fournit les modules ESM, les déclarations TypeScript, les feuilles de style et les sources modifiables. Les guides de démarrage et des interfaces suisses existent aussi en français, allemand et italien. Le formulaire d’adresse fournit libellés et messages d’erreur dans les quatre langues nationales.
 
 <!-- alpina-download -->
 
-Avant l’installation, cherchez un composant, copiez une page ou essayez le carnet d’adresses bilingue. Vous pouvez changer de langue pendant la modification d’un contact. [Composants](https://alpina-ui.vercel.app/docs/components/) · [Pages à copier](https://alpina-ui.vercel.app/blocks/) · [Carnet d’adresses bilingue](https://alpina-ui.vercel.app/examples/bilingual-address-book/)
+Avant l’installation, cherchez un composant, copiez une page ou essayez le carnet d’adresses bilingue. Vous pouvez changer de langue pendant la modification d’un contact. [Composants](https://alpinaui.com/docs/components/) · [Pages à copier](https://alpinaui.com/blocks/) · [Carnet d’adresses bilingue](https://alpinaui.com/examples/bilingual-address-book/)
 
 ## Installer le paquet
 
-Si votre application utilise shadcn/ui, le guide explique comment conserver les deux bibliothèques, intégrer Tailwind v4 et migrer chaque famille de composants. [Passer de shadcn/ui à Alpina](https://alpina-ui.vercel.app/docs/guides/migration/)
+Si votre application utilise shadcn/ui, le guide explique comment conserver les deux bibliothèques, intégrer Tailwind v4 et migrer chaque famille de composants. [Passer de shadcn/ui à Alpina](https://alpinaui.com/docs/guides/migration/)
 
 Dans un projet React 18.2 ou 19 utilisant Node.js 20 ou ultérieur, installez l’archive versionnée depuis le portail.
 
 ```sh
-npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.4.tgz
+npm install https://alpinaui.com/alpina-ui-1.0.0-rc.5.tgz
 ```
 
-Si vous avez téléchargé l’archive, exécutez `npm install ./alpina-ui-1.0.0-rc.4.tgz` dans son répertoire. Importez le CSS une seule fois au point d’entrée de l’application. Les modules JavaScript peuvent aussi s’exécuter côté serveur.
+Si vous avez téléchargé l’archive, exécutez `npm install ./alpina-ui-1.0.0-rc.5.tgz` dans son répertoire. Importez le CSS une seule fois au point d’entrée de l’application. Les modules JavaScript peuvent aussi s’exécuter côté serveur.
 
 ```tsx
 import "alpina-ui/styles.css"
@@ -60,13 +60,13 @@ npx --no-install alpina add --all
 
 Importez le thème depuis `./components/alpina/theme.css` et les composants depuis des chemins comme `./components/alpina/ui/button` ou `./components/alpina/swiss/canton-select`, relatifs au fichier importateur. Chaque TSX importe son CSS et demande un outil de compilation compatible CSS et TypeScript. Les imports relatifs `.js` suivent la convention NodeNext.
 
-Pour copier une page, exécutez `npx --no-install alpina add block/dashboard`. Le fichier `components/alpina/blocks/dashboard.tsx` utilise les imports publics et accepte vos données de facturation. Chargez `alpina-ui/styles.css` une seule fois dans l’application. [Aperçu du tableau de bord](https://alpina-ui.vercel.app/blocks/dashboard/)
+Pour copier une page, exécutez `npx --no-install alpina add block/dashboard`. Le fichier `components/alpina/blocks/dashboard.tsx` utilise les imports publics et accepte vos données de facturation. Chargez `alpina-ui/styles.css` une seule fois dans l’application. [Aperçu du tableau de bord](https://alpinaui.com/blocks/dashboard/)
 
-Pour un lien vers le dépôt, placez `<Icon name="git-branch" size={18} />` à côté du texte. `iconNames` répertorie les noms disponibles. [Icônes](https://alpina-ui.vercel.app/icons/) · [Référence Icon](https://alpina-ui.vercel.app/docs/components/icon/)
+Pour un lien vers le dépôt, placez `<Icon name="git-branch" size={18} />` à côté du texte. `iconNames` répertorie les noms disponibles. [Icônes](https://alpinaui.com/icons/) · [Référence Icon](https://alpinaui.com/docs/components/icon/)
 
 ## Personnaliser le thème
 
-Les classes commencent par `al-`. Appliquez le thème sombre à toute l’application ou à une section. Les polices par défaut sont Helvetica Neue, Helvetica, Arial et la sans-sérif système. Importez `alpina-ui/fonts.css` pour héberger Inter localement. Chargez vos variables après le thème. L’éditeur permet de régler l’accent et la grille, vérifier le contraste et copier le CSS. [Design](https://alpina-ui.vercel.app/docs/guides/design/) · [Éditeur de thème](https://alpina-ui.vercel.app/themes/)
+Les classes commencent par `al-`. Appliquez le thème sombre à toute l’application ou à une section. Les polices par défaut sont Helvetica Neue, Helvetica, Arial et la sans-sérif système. Importez `alpina-ui/fonts.css` pour héberger Inter localement. Chargez vos variables après le thème. L’éditeur permet de régler l’accent et la grille, vérifier le contraste et copier le CSS. [Design](https://alpinaui.com/docs/guides/design/) · [Éditeur de thème](https://alpinaui.com/themes/)
 
 ```tsx
 <section data-al-theme="dark">

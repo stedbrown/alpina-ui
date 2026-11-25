@@ -42,9 +42,11 @@ function dependencies(file, seen = new Set()) {
   }
   return seen
 }
+const manifest = JSON.parse(await readFile('package.json', 'utf8'))
 const registry = {
-  name: 'alpina-ui',
-  version: JSON.parse(await readFile('package.json')).version,
+  name: manifest.name,
+  version: manifest.version,
+  homepage: manifest.homepage,
   items: [],
 }
 const summaries = new Map((await loadInventory()).map(([name, , , , summary]) => [name, summary]))

@@ -7,7 +7,7 @@ The release candidates preserve the component imports, named props and CLI regis
 Commit your lockfile first. Install the exact archive in your React project, then run your application’s typecheck and tests. For source-copy projects, run `npx --no-install alpina diff` to compare the new sources with local edits. To roll back, restore your previous manifest, lockfile and any edited component sources, then run `npm ci`.
 
 ```sh
-npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.4.tgz
+npm install https://alpinaui.com/alpina-ui-1.0.0-rc.5.tgz
 ```
 
 ## Calendar week numbers
@@ -50,4 +50,4 @@ assert.equal(formatCHF(-1.05, 'de-CH'), 'CHF\u00a0\u22121.05')
 assert.equal(formatSwissDate('2026-11-25', 'de-CH'), '25.11.2026')
 ```
 
-The field validators now explain checksum failures separately from malformed input. If an application maps validation failures to its own UI, use validation results and field paths instead of comparing translated sentences. Review the individual 0.x changes for print, accounting and cash rounding. [Upgrade notes](https://alpina-ui.vercel.app/docs/guides/release/) · [API stability policy](https://alpina-ui.vercel.app/docs/guides/api-stability/)
+The field validators now explain checksum failures separately from malformed input. If an application maps validation failures to its own UI, use validation results and field paths instead of comparing translated sentences. Review the individual 0.x changes for print, accounting and cash rounding. [Upgrade notes](https://alpinaui.com/docs/guides/release/) · [API stability policy](https://alpinaui.com/docs/guides/api-stability/)

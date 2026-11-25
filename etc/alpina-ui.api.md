@@ -58,6 +58,8 @@ alpina init [--dir components/alpina] [--dry-run]
 alpina add button block/login … [--dir components/alpina] [--dry-run]
 alpina add --all [--dir components/alpina] [--dry-run]
 alpina diff [components and blocks | --all] [--dir components/alpina] [--patch]
+
+Documentation: https://alpinaui.com/docs/
 ~~~
 
 ## Registry and stylesheet names

@@ -1,6 +1,6 @@
 # Package quality
 
-The [component status directory](https://alpina-ui.vercel.app/status/) lists the API maturity and last implementation change for every registry entry. Stable components have an established API. Beta marks a public API that may still change as consumers exercise it. New entries start in Beta. Maintainers review the stage when changing the documented API.
+The [component status directory](https://alpinaui.com/status/) lists the API maturity and last implementation change for every registry entry. Stable components have an established API. Beta marks a public API that may still change as consumers exercise it. New entries start in Beta. Maintainers review the stage when changing the documented API.
 
 Dates cover the registry entry and its transitive source files, including the individual component styles. The global theme and license texts are excluded. The checked-in dates survive shallow or source-only builds. After editing source, run `npm run build` and `npm run status:update`. The updater reads committed dates from Git, uses the current Swiss civil date for pending changes, and preserves the dates of unchanged source fingerprints.
 

@@ -8,6 +8,8 @@ license: MIT
 
 Start with the version used by the application. Package imports and editable component copies are both supported. Follow the convention already present in the project.
 
+For a project that has yet to install Alpina, the public agent index links to the installation guide, component registry and Markdown guides. [Alpina agent index](https://alpinaui.com/llms.txt)
+
 ## Find the actual API
 
 - Use the local MCP server when the component name, props or installed version are uncertain. Start with `search_components({ query: "invoice" })`. Use the returned identifier with `get_component({ name: "invoice-document" })` to read its import path and TypeScript declaration. Call `get_guide({})` for available guide slugs, then request the workflow you need, for example `get_guide({ slug: "qr-bill" })`. Request a listed source file when a type extends a shared interface. For example, the item type for `dropdown-menu` inherits its action fields from `interactive/action-list.tsx`.

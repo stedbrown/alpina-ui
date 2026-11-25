@@ -1,6 +1,6 @@
 {
   "name": "alpina-ui",
-  "version": "1.0.0-rc.4",
+  "version": "1.0.0-rc.5",
   "publishConfig": {
     "access": "public",
     "provenance": true,
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/stedbrown/alpina-ui.git"
   },
   "bugs": "https://github.com/stedbrown/alpina-ui/issues",
-  "homepage": "https://alpina-ui.vercel.app/",
+  "homepage": "https://alpinaui.com/",
   "type": "module",
   "description": "React components, a Swiss typographic grid, and localization tools for Switzerland’s four national languages.",
   "bin": {

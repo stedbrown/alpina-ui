@@ -65,7 +65,9 @@ Teams already using shadcn/ui can migrate one component family at a time. API di
 
 ## Site domain
 
-Set `SITE_URL` to your HTTPS origin in the Vercel production environment and in the GitHub Actions repository variables. Use that value locally with `npm run catalog` and `node scripts/readme.mjs`, then commit the generated README. With the variable unset, the build uses the package homepage. Redeploy after a domain change so canonical links, the sharing card, sitemap, robots file and machine-readable index advertise the new address.
+`homepage` in `package.json` is the default public origin. The package build copies it into `registry.json`, which supplies the documentation URLs for the CLI and MCP server. The site build uses the same origin for canonical links, sharing cards, the sitemap, robots.txt, package downloads and the agent index.
+
+Set `SITE_URL` to an HTTP(S) origin to build the site and its documentation links for another host. Configure it in Vercel or GitHub Actions for a hosted build. For a permanent move, update the package homepage and any configured overrides, regenerate the README with `node scripts/readme.mjs`, then rebuild the package and redeploy the site.
 
 ## License and data sources
 

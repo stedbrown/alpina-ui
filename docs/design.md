@@ -82,6 +82,8 @@ export function Session() {
 
 ## Set a page on the grid
 
+The theme builder previews a single component surface with your accent, a spacing unit and light or dark paper. It reports the text contrast for the button label and for accent text on the background. The exported CSS preserves system colors in forced-colors mode. Import it after the library stylesheet and apply the corresponding `data-al-theme` attribute to the container. [Theme builder](https://alpina-ui.vercel.app/themes/) · [WCAG minimum text contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
+
 Align the introduction, component previews and navigation to the same page margins. Give a working example enough columns for its longest translated label. At narrow widths, let each preview take a full row and keep the heading before its controls in the reading order. [Homepage](https://alpina-ui.vercel.app/) · [Homepage source](https://github.com/stedbrown/alpina-ui/blob/main/web/pages.tsx)
 
 Use `space="cover"` to give an opening section responsive vertical padding. Set `surface="accent"` for a red band or `ruler` to show the active columns. The `poster` type role scales with the container width. The site sets `data-al-page` on the body to apply the library’s page defaults.

@@ -38,7 +38,7 @@ try {
   assert.ok(await filter.evaluate(input => input === document.activeElement))
   await page.goto(origin + '/docs/')
   await main.getByRole('heading', { name: 'Getting started', level: 1 }).waitFor()
-  assert.deepEqual((await nav.getByRole('link').allTextContents()).map(text => text.trim()), ['Home', 'Docs', 'Components', 'Icons', 'Examples', 'Agents', 'GitHub'])
+  assert.deepEqual((await nav.getByRole('link').allTextContents()).map(text => text.trim()), ['Home', 'Docs', 'Components', 'Icons', 'Themes', 'Examples', 'Agents', 'GitHub'])
   assert.equal(await nav.getByRole('link', { name: 'Components' }).getAttribute('href'), '/docs/components/')
   assert.equal(await nav.getByRole('link', { name: 'Icons' }).getAttribute('href'), '/icons/')
   const github = nav.getByRole('link', { name: 'GitHub', exact: true })

@@ -6,7 +6,7 @@ import { HomeShowcase } from './home-showcase.js'
 import { projects } from './projects.js'
 
 const repository = 'https://github.com/stedbrown/alpina-ui'
-type Section = 'home' | 'docs' | 'components' | 'icons' | 'examples' | 'agents'
+type Section = 'home' | 'docs' | 'components' | 'icons' | 'themes' | 'examples' | 'agents'
 
 function GitHubLabel() {
   return <><Icon name="git-branch" size={18} />{' GitHub'}</>
@@ -17,6 +17,7 @@ export function Masthead({ current }: { current: Section }) {
     { href: '/docs/', label: 'Docs', current: current === 'docs' },
     { href: '/docs/components/', label: 'Components', current: current === 'components' },
     { href: '/icons/', label: 'Icons', current: current === 'icons' },
+    { href: '/themes/', label: 'Themes', current: current === 'themes' },
     { href: '/examples/', label: 'Examples', current: current === 'examples' },
     { href: '/agents/', label: 'Agents', current: current === 'agents' },
   ]

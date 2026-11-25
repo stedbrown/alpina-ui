@@ -110,6 +110,7 @@ const siteLinks = [
   { href: '/docs/', label: 'Docs', current: pageType !== 'components' },
   { href: '/docs/components/', label: 'Components', current: pageType === 'components' },
   { href: '/icons/', label: 'Icons' },
+  { href: '/themes/', label: 'Themes' },
   { href: '/examples/', label: 'Examples' },
   { href: '/agents/', label: 'Agents' },
   { href: 'https://github.com/stedbrown/alpina-ui', label: <><Icon name="git-branch" size={18} />{' GitHub'}</> },

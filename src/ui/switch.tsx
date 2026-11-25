@@ -5,7 +5,7 @@ export interface SwitchProps extends Omit<ComponentPropsWithoutRef<'input'>, 'ro
   stateLabels?: { on: string; off: string }
 }
 export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
-  { className = '', stateLabels, ...props },
+  { children, className = '', stateLabels, ...props },
   ref,
 ) {
   const control = (
@@ -17,16 +17,16 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
       className={`al-switch ${className}`.trim()}
     />
   )
-  if (!stateLabels) return control
+  if (children == null && !stateLabels) return control
+  const Wrapper = children == null ? 'span' : 'label'
   return (
-    <span className="al-switch-state">
+    <Wrapper className="al-switch-state">
       {control}
-      <span className="al-switch-on" aria-hidden="true">
-        {stateLabels.on}
-      </span>
-      <span className="al-switch-off" aria-hidden="true">
-        {stateLabels.off}
-      </span>
-    </span>
+      {children != null && <span>{children}</span>}
+      {stateLabels && <>
+        <span className="al-switch-on" aria-hidden="true">{stateLabels.on}</span>
+        <span className="al-switch-off" aria-hidden="true">{stateLabels.off}</span>
+      </>}
+    </Wrapper>
   )
 })

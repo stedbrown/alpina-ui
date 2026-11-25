@@ -20,6 +20,7 @@ import '../src/theme.css'
 function Fixture() {
   const ref = useRef<HTMLInputElement>(null)
   const [mixed, setMixed] = useState(true)
+  const [reminder, setReminder] = useState(false)
   const [count, setCount] = useState(0)
   useEffect(() => {
     if (!ref.current?.indeterminate) throw Error('checkbox ref must resolve to native mixed control')
@@ -58,6 +59,13 @@ function Fixture() {
       <Checkbox ref={ref} aria-label="All" indeterminate={mixed} onChange={() => setMixed(false)} />
       <Checkbox aria-label="Partial selection" indeterminate />
       <Switch aria-label="Loan" stateLabels={{ on: 'Active', off: 'Suspended' }} />
+      <form id="switch-settings">
+        <Switch name="reminder" value="email" checked={reminder} onChange={event => setReminder(event.currentTarget.checked)}
+          ref={node => { if (node && !(node instanceof HTMLInputElement)) throw Error('Expected the switch input') }}
+          stateLabels={{ on: 'On', off: 'Off' }}>Email reminders</Switch>
+        <Switch defaultChecked>Show details</Switch>
+        <label><Switch />Archive copies</label>
+      </form>
       <Table>
         <TableHeader>
           <TableRow>

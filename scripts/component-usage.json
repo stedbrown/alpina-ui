@@ -79,7 +79,7 @@
   "swiss-address-form": "Enter 6900 to choose Lugano, Massagno or Paradiso from the local postcode directory. Accepting a suggestion sets both locality and canton. You can also enter both manually.",
   "swiss-date": "Pass a civil date for a specific calendar day. The time element keeps its machine-readable value and isolates the localized date in bidirectional text.",
   "swiss-postal-code-input": "A full-field paste accepts four digits, full-width digits or a CH-prefixed postal code. The submitted four-digit value preserves leading zeros.",
-  "switch": "Use a switch for an immediate on/off setting. Keep its label meaningful in both states. Long state text wraps while the control keeps its shape.",
+  "switch": "Use a switch for an immediate on/off setting. Pass its visible label as children, wrap an empty switch in Label, or supply an accessible name. Keep the label meaningful in both states. The ref points to the checkbox input.",
   "table": "Use numeric cells and a shared TableAmount precision to align decimal separators. Place the currency in the header. TableRow supports subtotal and total rules, and Table can pin the column headings and first column inside a ScrollArea.",
   "tabs": "Use automatic activation for immediate panels or manual activation when opening a panel is costly. Vertical tab labels wrap within a capped column.",
   "text-link": "Use the action variant for a prominent navigation link. Inline focus rings follow the foreground color, including on inverse surfaces.",

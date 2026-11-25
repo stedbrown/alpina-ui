@@ -136,7 +136,7 @@
       "group": "ui",
       "entry": "ui/switch.tsx",
       "summary": "Turn a setting on or off.",
-      "usage": "Use a switch for an immediate on/off setting. Keep its label meaningful in both states. Long state text wraps while the control keeps its shape.",
+      "usage": "Use a switch for an immediate on/off setting. Pass its visible label as children, wrap an empty switch in Label, or supply an accessible name. Keep the label meaningful in both states. The ref points to the checkbox input.",
       "files": [
         "theme.css",
         "ui/switch.tsx",

@@ -118,7 +118,7 @@ These 66 families follow the project's recorded shadcn/ui component index. Each 
 | Table | [Table](https://alpina-ui.vercel.app/docs/components/table/) | Compose the table parts directly and mark comparable amount cells `numeric` for end alignment and tabular figures. |
 | Tabs | [Tabs](https://alpina-ui.vercel.app/docs/components/tabs/) | Describe each panel in `items`. Choose automatic or manual `activation` and manage the active tab through `value` and `onValueChange`. |
 | Textarea | [Textarea](https://alpina-ui.vercel.app/docs/components/textarea/) | Keep native textarea props for editing, submission and form reset. Opt in to `autoGrow` where height should follow content. |
-| Toast | [Toast](https://alpina-ui.vercel.app/docs/components/toast/) | Render a controlled notification with `open`, `onOpenChange` and `closeLabel`. Keep queues and application-wide dispatch in the owning layer. |
+| Toast | [Toast](https://alpina-ui.vercel.app/docs/components/toast/) | Render a controlled notification with `open`, `onOpenChange` and `closeLabel`. Mount one `Toaster` for app-wide messages sent with `toast(message)`. |
 | Toggle | [Toggle](https://alpina-ui.vercel.app/docs/components/toggle/) | Use `pressed` and `onPressedChange`. Keep the action’s label stable so its pressed state identifies the change. |
 | Toggle Group | [ToggleGroup](https://alpina-ui.vercel.app/docs/components/toggle-group/) | Describe choices in `options` and store selected values in an array. Use `multiple` for independent choices or `layout="grid"` for a tile picker. |
 | Tooltip | [Tooltip](https://alpina-ui.vercel.app/docs/components/tooltip/) | Pass a focusable child element and short `content` text. Keep the existing control’s accessible name. |

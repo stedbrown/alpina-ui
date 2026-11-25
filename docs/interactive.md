@@ -125,3 +125,7 @@ Keep `Toast` mounted and change `open` to display it. Its live region remains pr
 ## Browser verification
 
 After `npm ci`, run `node tests/interactive.browser.mjs` from the project directory. The script uses the Playwright Chromium installation if available, then falls back to an installed copy of Chrome. Set `CHROME_PATH` to select another executable. The suite runs React in Strict Mode and exercises the seven components in a 390 px viewport.
+
+For confirmations that originate anywhere on a long page, mount one `<Toaster closeLabel="Dismiss notification" />` at the application root. From a browser event, call `const dismiss = toast('Booking confirmed', { tone: 'success' })`. Notifications appear one at a time above the device safe area. Each waits for dismissal unless a duration is supplied. Call `dismiss()` to remove that message, including while it is queued.
+
+Use the inline `Toast` beside a specific control when readers need to revisit its feedback in document order. Both presentations keep focus on the current task and announce messages through a live region.

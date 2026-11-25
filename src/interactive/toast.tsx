@@ -1,5 +1,6 @@
 'use client'
-import { useEffect, useRef, useState, type ReactNode, type ReactElement } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode, type ReactElement } from 'react'
+import { createPortal } from 'react-dom'
 import './toast.css'
 
 export interface ToastProps {
@@ -114,3 +115,54 @@ export function Toast({
     </div>
   )
 }
+
+export type ToastOptions = Pick<ToastProps, 'tone' | 'duration' | 'urgency'>
+type QueuedToast = ToastOptions & { id: number; message: ReactNode }
+
+const emptyQueue: readonly QueuedToast[] = []
+let queue = emptyQueue
+let sequence = 0
+const listeners = new Set<() => void>()
+function updateQueue(next: readonly QueuedToast[]) {
+  queue = next
+  listeners.forEach(notify => notify())
+}
+function subscribe(notify: () => void) {
+  listeners.add(notify)
+  return () => { listeners.delete(notify) }
+}
+
+/** Queue a browser notification. The returned function cancels or dismisses it. */
+export function toast(message: ReactNode, options: ToastOptions = {}): () => void {
+  if (typeof document === 'undefined') throw new Error('Call toast() from a browser event.')
+  const id = ++sequence
+  updateQueue([...queue, { ...options, id, message }])
+  return () => dismissToast(id)
+}
+
+function dismissToast(id: number) {
+  if (queue.some(item => item.id === id)) updateQueue(queue.filter(item => item.id !== id))
+}
+
+export interface ToasterProps {
+  /** Localized label for the dismiss button. */
+  closeLabel: string
+  /** Default timeout in milliseconds. Omit to keep each message until dismissed. */
+  duration?: number
+}
+
+/** Mount once per application. Only the first message counts down or announces. */
+export function Toaster({ closeLabel, duration }: ToasterProps) {
+  const pending = useSyncExternalStore(subscribe, currentQueue, () => emptyQueue)
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  const first = pending[0]
+  if (!mounted) return null
+  return createPortal(<div className="al-toaster">
+    {first && <Toast key={first.id} open tone={first.tone} urgency={first.urgency}
+      duration={first.duration ?? duration} closeLabel={closeLabel}
+      onOpenChange={open => { if (!open) dismissToast(first.id) }}>{first.message}</Toast>}
+  </div>, document.body)
+}
+
+function currentQueue() { return queue }

@@ -5,7 +5,7 @@ import { Dialog } from '../src/interactive/dialog.js'
 import { DropdownMenu } from '../src/interactive/dropdown-menu.js'
 import { Sheet } from '../src/interactive/sheet.js'
 import { Tabs } from '../src/interactive/tabs.js'
-import { Toast } from '../src/interactive/toast.js'
+import { Toast, Toaster, toast } from '../src/interactive/toast.js'
 import { Tooltip } from '../src/interactive/tooltip.js'
 import { DataTable, type DataColumn, type DataSort } from '../src/ui/data-table.js'
 import { CurrencyCHF } from '../src/swiss/currency-chf.js'
@@ -129,6 +129,8 @@ function Fixture() {
         rowKey={(row) => row.id}
         empty="The archive is empty"
       />
+      <button onClick={() => { toast('Request saved'); toast('Receipt ready') }}>Queue confirmations</button>
+      <Toaster closeLabel="Dismiss confirmation" />
     </main>
   )
 }

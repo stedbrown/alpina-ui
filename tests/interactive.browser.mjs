@@ -201,6 +201,18 @@ try {
     .getByRole('table', { name: 'Archive' })
     .getByRole('cell', { name: "The archive is empty" })
   assert.equal(await empty.getAttribute('colspan'), '3')
+  await page.setViewportSize({ width: 360, height: 640 })
+  await button('Queue confirmations').click()
+  await page.evaluate(() => window.scrollTo(0, 0))
+  const confirmation = page.locator('.al-toaster')
+  await confirmation.getByRole('status').getByText('Request saved').waitFor()
+  const box = await confirmation.boundingBox()
+  assert.ok(box.x >= 0 && box.y >= 0 && box.x + box.width <= 360 && box.y + box.height <= 640)
+  assert.equal(await confirmation.getByText('Receipt ready').count(), 0)
+  await button('Dismiss confirmation').click()
+  await confirmation.getByRole('status').getByText('Receipt ready').waitFor()
+  await button('Dismiss confirmation').click()
+  await confirmation.getByRole('status').waitFor({ state: 'detached' })
   assert.deepEqual(errors, [])
   console.log(
     '✓ Dialog, Sheet, Tabs, Accordion, DropdownMenu, Tooltip, Toast and DataTable in Chromium',

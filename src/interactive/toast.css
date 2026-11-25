@@ -43,3 +43,16 @@
   outline: 2px solid var(--al-focus);
   outline-offset: -2px;
 }
+
+.al-toaster {
+  position: fixed;
+  z-index: 1000;
+  inset-inline: max(var(--al-space-4), env(safe-area-inset-left)) max(var(--al-space-4), env(safe-area-inset-right));
+  inset-block-end: max(var(--al-space-4), env(safe-area-inset-bottom));
+  inline-size: auto;
+  max-inline-size: 28rem;
+  margin-inline-start: auto;
+  pointer-events: none;
+}
+.al-toaster .al-toast { pointer-events: auto; max-block-size: 60dvh; overflow: auto; }
+@media print { .al-toaster { display: none; } }

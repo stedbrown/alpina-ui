@@ -1,6 +1,10 @@
 /* Import once. Theme values can be overridden on any containing element. */
 :where(:lang(de-CH), :lang(it-CH), :lang(rm-CH)) { quotes: '«' '»' '‹' '›'; }
 :where(:lang(fr-CH)) { quotes: '« ' ' »' '‹ ' ' ›'; }
+:root {
+  background-color: var(--al-surface);
+  color: var(--al-ink);
+}
 body[data-al-page] {
   display: flex;
   flex-direction: column;

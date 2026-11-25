@@ -21,6 +21,20 @@ async function openThemePage(options) {
 }
 
 try {
+  const host = await browser.newPage({ colorScheme: 'dark' })
+  await host.setContent('<!doctype html><html><body>Webview invoice</body></html>')
+  await host.addStyleTag({ path: fileURLToPath(new URL('../dist/styles.css', import.meta.url)) })
+  for (const [theme, bg, ink] of [
+    ['light', 'rgb(255, 255, 255)', 'rgb(0, 0, 0)'],
+    ['dark', 'rgb(0, 0, 0)', 'rgb(255, 255, 255)'],
+  ]) {
+    const colors = await host.evaluate(theme => {
+      document.documentElement.dataset.alTheme = theme
+      return [getComputedStyle(document.documentElement).backgroundColor, getComputedStyle(document.body).color]
+    }, theme)
+    assert.deepEqual(colors, [bg, ink])
+  }
+  await host.close()
   const automatic = await openThemePage({ colorScheme: 'dark' })
   const themeButton = automatic.locator('[data-site-appearance]')
   const background = () => automatic.locator('body').evaluate(el => getComputedStyle(el).backgroundColor)

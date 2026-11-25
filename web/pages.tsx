@@ -83,19 +83,22 @@ export function Landing({ version, count }: { version: string; count: number }) 
   return <>
     <Masthead current="home" />
     <PageRegion as="main" id="content" tabIndex={-1}>
-      <Grid as="section" width="site" space="cover" align="end" aria-labelledby="home-title">
-        <GridItem medium={4} large={7}>
-          <Typography as="h1" variant="title" id="home-title"><Typography as="span" variant="inherit" tone="accent">Swiss design</Typography><br /> for React.</Typography>
+      <Grid as="section" width="site" space="cover" align="end" surface="accent" aria-labelledby="home-title">
+        <GridItem><Stack direction="row" justify="space-between" gap={2}>
+          <Typography variant="label">Alpina UI / React component library</Typography>
+          <TextLink href="/docs/guides/release/">v{version}</TextLink>
+        </Stack></GridItem>
+        <GridItem><Separator weight="section" /></GridItem>
+        <GridItem medium={5} large={8}>
+          <Typography as="h1" variant="masthead" id="home-title">Swiss design<br /> for React.</Typography>
         </GridItem>
-        <GridItem medium={4} large={4} start={{ large: 9 }}>
-          <Stack gap={5}>
-            <Typography variant="lead" measure="narrow">Open-source React components built on a column grid, a measured type scale and one red accent.</Typography>
-            <Stack direction="row" gap={4}>
-              <TextLink variant="action" href="/start-here/">Start here</TextLink>
-              <TextLink href="/docs/components/">Browse components ({count}) →</TextLink>
-            </Stack>
+        <GridItem medium={3} large={3} start={{ large: 10 }}><Stack gap={5} align="start">
+          <Typography>Open-source components built on a column grid, a measured type scale and one red accent.</Typography>
+          <Stack direction="row" gap={4}>
+            <TextLink variant="action" href="/start-here/">Start here</TextLink>
+            <TextLink href="/docs/components/">Browse components ({count})</TextLink>
           </Stack>
-        </GridItem>
+        </Stack></GridItem>
       </Grid>
       <HomeShowcase />
       <Grid width="site"><GridItem><Separator weight="section" /></GridItem></Grid>

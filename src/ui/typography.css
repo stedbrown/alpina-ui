@@ -107,3 +107,14 @@ address.al-type { font-style: normal; }
 }
 .al-inline-code { font-family: var(--al-mono); overflow-wrap: anywhere; }
 .al-inline-code[data-unbroken], .al-inline-code > time { white-space: nowrap; }
+
+/* A two-line editorial heading, scaled to its local grid rather than the viewport. */
+.al-type[data-role='masthead'] {
+  font: 680 clamp(2.75rem, 9.1cqi, 9.25rem)/.94 var(--al-display);
+  line-height: round(nearest, .94em, var(--al-unit));
+  letter-spacing: var(--al-display-tracking);
+  font-optical-sizing: auto;
+  hyphens: none;
+  overflow-wrap: break-word;
+  text-wrap: wrap;
+}

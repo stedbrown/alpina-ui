@@ -66,3 +66,5 @@
   letter-spacing: -0.07em;
   white-space: nowrap;
 }
+
+.al-layout[data-surface='accent'] .al-text-link:not([data-variant='action']):hover { color: inherit; text-decoration-thickness: 2px; }

@@ -78,3 +78,29 @@ Pass a locale as the second argument to `buildSwissQrPayload(bill, 'rm-CH')` or 
 Use decimal strings for imported amounts and fractional quantities. The calculator accepts up to four decimal places. Discounts take a negative unit price. It rounds each line's net to the nearest centime, groups the resulting bases by VAT rate, then rounds each group's VAT to the nearest centime. Half-centime ties round away from zero. An optional `cashRounding` adjustment rounds only the final total to five centimes. The summary, receipt and QR code all use that payable total. `calculateInvoiceTotals(lines, { cashRounding })` exposes the same calculation in integer centimes.
 
 Short itemizations can share one A4 page with the payment slip. Longer ones flow across pages with repeated table headings, followed by a payment sheet with the totals and a single 210 × 105 mm slip at the bottom. The paper route requires perforated stock. Electronic PDFs include the separation instruction above the slip. Use the same A4 print settings as for a standalone Swiss QR-bill, and use `printSwissDocument` on the invoice ref to include the complete document. [SIX QR-bill implementation guidelines, sections 3.1 and 3.7](https://www.six-group.com/dam/download/banking-services/standardization/qr-bill/ig-qr-bill-v2.4-en.pdf)
+
+## Receive a Swiss QR-bill
+
+When receiving a bill, Alpina accepts one optional final line break in the same format as the rest of the code. The issuer omits that final delimiter. [SIX processing FAQ](https://www.six-group.com/en/products-services/banking-services/payment-standardization/downloads-faq/faq.html)
+
+Pass the decoded text to `parseSwissQrPayload(payload, { locale: 'rm-CH' })` in a browser or a server action. It returns `SwissQrBillData`, ready for the same validation and arithmetic used for issuing bills. A `SwissQrPayloadError` carries a stable `code`, a `field` such as `debtor.postalCode`, the one-based SIX `line` where applicable, and a localized correction. The parser accepts consistent LF or CRLF separators, validates the header, reserved fields and trailer, and applies the account, reference and notification rules above. [SIX IG 2.4, sections 4.1–4.4 and 6.2](https://www.six-group.com/dam/download/banking-services/standardization/qr-bill/ig-qr-bill-v2.4-en.pdf)
+
+```tsx
+'use client'
+import { QrBillScanner, type SwissQrBillData } from 'alpina-ui'
+import 'alpina-ui/styles.css'
+
+export function InvoiceIntake({ accept }: { accept: (bill: SwissQrBillData) => void }) {
+  return <QrBillScanner locale="rm-CH" onConfirm={accept} />
+}
+```
+
+Choose a PNG, JPEG, WebP or PDF up to 64 MiB. PDF pages are rasterised locally, starting at the last page where an invoice usually places the slip. The review shows the first recognised Swiss payment code and its PDF page number. A password-protected PDF needs an unlocked local copy. Open amounts remain marked for completion and non-payable notifications retain their notice. Confirming returns the details to the application.
+
+By default, the parser reports an invalid field as an error. Supply `onAdditionalError(issue)` to process an incoming payment with malformed billing information or alternative procedures. The invalid additional field is omitted and the callback receives its original wire line. The scanner uses this mode and lists the omissions in the review before confirmation. Errors in the payment itself still block confirmation. [SIX IG 2.4, table 7](https://www.six-group.com/dam/download/banking-services/standardization/qr-bill/ig-qr-bill-v2.4-en.pdf#page=32)
+
+The camera starts after the user selects **Use camera**. It requires a secure context, camera permission and a native `BarcodeDetector` supporting `qr_code`. The file picker also works without camera hardware or native barcode support. Cancel, leaving the component, and a successful read release camera tracks. Files and frames stay on the device. The downloadable HTML catalog includes both decoders and works offline.
+
+For a hosted application that must go offline, await `preloadQrBillScanner()` from a client component while connected. The promise resolves once the application’s own image and PDF decoder modules are ready. Files selected afterwards require no network requests for the lifetime of that open page. Restoring the entire application after an offline reload requires an application cache or the self-contained catalog.
+
+The package ships its own browser builds of jsQR and Mozilla PDF.js with their licenses in `dist/swiss`. Vite, Next and the hosted site defer these files. Raw esbuild projects using the scanner can add `'alpina-scanner-chunk'` to their build conditions with ESM code splitting to defer the decoders. For the standalone TypeScript copied by the CLI, install `jsqr@1.4.0` and `pdfjs-dist@6.5.438` and configure the bundler to import WebAssembly assets as bytes. Package imports need no additional setup. [jsQR](https://github.com/cozmo/jsQR) · [Mozilla PDF.js](https://github.com/mozilla/pdf.js) · [Barcode Detection API](https://wicg.github.io/shape-detection-api/#barcode-detection-api)

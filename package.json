@@ -77,6 +77,7 @@
     "jsqr": "^1.4.0",
     "lighthouse": "13.6.0",
     "marked": "^15.0.12",
+    "pdfjs-dist": "6.5.438",
     "pixelmatch": "7.1.0",
     "playwright-core": "^1.55.0",
     "pngjs": "7.0.0",
@@ -111,6 +112,15 @@
       "development": "./dist/swiss/postal-loader.internal.js",
       "production": "./dist/swiss/postal-loader.internal.js",
       "default": "./dist/swiss/postal-inline.js"
+    },
+    "#qr-reader-loader": {
+      "alpina-scanner-chunk": "./dist/swiss/qr-reader-loader.internal.js",
+      "webpack": "./dist/swiss/qr-reader-loader.internal.js",
+      "turbopack": "./dist/swiss/qr-reader-loader.internal.js",
+      "development": "./dist/swiss/qr-reader-loader.internal.js",
+      "production": "./dist/swiss/qr-reader-loader.internal.js",
+      "node": "./dist/swiss/qr-reader-loader.internal.js",
+      "default": "./dist/swiss/qr-reader-inline.js"
     }
   }
 }

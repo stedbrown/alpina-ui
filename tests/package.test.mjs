@@ -86,7 +86,7 @@ test('the registry lists the complete transitive source closure for each copied 
       closure.add(file)
       stack.push(...(edges.get(file) ?? []))
     }
-    if (closure.has('swiss/format-chf.ts') || closure.has('swiss/format-swiss-date.ts')) {
+    if (closure.has('swiss/format-chf.ts') || closure.has('swiss/format-swiss-date.ts') || closure.has('swiss/format-swiss-number.ts')) {
       closure.add('swiss/UNICODE-LICENSE.txt')
       const shippedNotice = await readFile(new URL('swiss/UNICODE-LICENSE.txt', source), 'utf8')
       assert.match(shippedNotice, /Copyright © 2004-2025 Unicode/)

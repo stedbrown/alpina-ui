@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url'
 import { execFileSync } from 'node:child_process'
 import { transform } from 'esbuild'
 import { groups, additions } from './items.mjs'
+import { buildScannerCodecs } from './scanner-codecs.mjs'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
 process.chdir(root)
@@ -80,6 +81,7 @@ await writeFile('dist/swiss/postal-inline.js', [
   "import rows from './postal-localities.data.js'",
   'export const loadPostalRows = () => Promise.resolve(rows)',
 ].join('\n') + '\n')
+await buildScannerCodecs()
 // Consumers choose a single stylesheet or per-component styles. ESM can be loaded in bare Node SSR.
 for (const file of modules) {
   const dest = 'dist/' + file.replace(/\.tsx?$/, '.js')

@@ -1518,5 +1518,35 @@
       "it-CH": "Numero d’identificazione delle imprese",
       "rm-CH": "Numer d’identificaziun da las interpresas"
     }
+  },
+  "qr-bill-scanner": {
+    "use": "Read a payment slip when someone needs to transfer invoice details into a local workflow.",
+    "avoid": "For creating a payment slip from known billing details, use SwissQrBill.",
+    "access": "Offer the file picker alongside the camera and keep payment confirmation available from the keyboard.",
+    "content": "Name the file types and explain that the payment details stay on the device.",
+    "example": {
+      "good": "Review payment details",
+      "poor": "Pay immediately"
+    },
+    "copy": {
+      "de-CH": "Zahlungsangaben prüfen",
+      "fr-CH": "Vérifier les données du paiement",
+      "it-CH": "Verifica i dati di pagamento",
+      "rm-CH": "Controllar las datas da pajament"
+    },
+    "keys": [
+      [
+        "Tab / Shift+Tab",
+        "Move between the file picker, camera and review actions."
+      ],
+      [
+        "Enter / Space",
+        "Open the native file picker, start the camera, or activate the focused review action."
+      ],
+      [
+        "Escape",
+        "Cancel reading or review and return focus to the file picker."
+      ]
+    ]
   }
 }

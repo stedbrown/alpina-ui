@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import {
-  InvoiceDocument, Letter, NativeSelect, localeNames, swissLocales, type SwissQrBillLocale, printSwissDocument, MultilingualField, AhvInput, Button, Field, IbanInput, PhoneInput, Stack, SwissQrBill, UidInput, printSwissQrBill,
+  InvoiceDocument, Letter, NativeSelect, localeNames, swissLocales, type SwissQrBillLocale, printSwissDocument, MultilingualField, AhvInput, Button, Field, IbanInput, PhoneInput, QrBillScanner, Stack, SwissQrBill, UidInput, printSwissQrBill,
 } from 'alpina-ui'
 
 export function IbanInputExample() {
@@ -73,4 +73,8 @@ export function InvoiceDocumentExample() {
         creditor: { name: 'Atelier Nord', street: 'Rue du Lac', buildingNumber: '8', postalCode: '2000', town: 'Neuchâtel', country: 'CH' },
         debtor: { name: 'Clara Meier', street: 'Aarbergergasse', buildingNumber: '7', postalCode: '3011', town: 'Bern', country: 'CH' } }} />
   </Stack>
+}
+
+export function QrBillScannerExample() {
+  return <QrBillScanner locale="en" />
 }

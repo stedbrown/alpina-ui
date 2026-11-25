@@ -171,6 +171,9 @@ async function run([command, ...args]) {
     )
     return
   }
+  if (command === 'add' && (all || names.includes('qr-bill-scanner'))) {
+    console.log('For the copied scanner source, install jsqr@1.4.0 and pdfjs-dist@6.5.438 in your project.')
+  }
   if (dry) {
     for (const { dest } of additions) console.log('planned  ' + path.relative(cwd, dest))
     return

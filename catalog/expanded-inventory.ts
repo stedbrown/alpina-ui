@@ -49,6 +49,13 @@ export const expanded = [
     "Itemize VAT-exclusive services and print the payable CHF total with a Swiss QR-bill."
   ],
   [
+    "qr-bill-scanner",
+    "QrBillScanner",
+    "Read a payment slip",
+    "Swiss localization",
+    "Read a Swiss QR-bill from a local image, PDF or camera and review its payment details."
+  ],
+  [
     "swiss-qr-bill",
     "SwissQrBill",
     "QR payment slip",

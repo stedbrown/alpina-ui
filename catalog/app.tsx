@@ -178,7 +178,7 @@ function Workbench({
   const Demo = demos[key]
   const source = sources[key]
   const guide =
-    id === 'swiss-qr-bill' ? 'qr-bill' : key in elements
+    ['swiss-qr-bill', 'qr-bill-scanner'].includes(id) ? 'qr-bill' : key in elements
       ? 'elements'
       : key in actions
         ? 'actions'

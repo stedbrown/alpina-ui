@@ -324,6 +324,11 @@
     "lazy": 0,
     "css": 832
   },
+  "qr-bill-scanner": {
+    "js": 14656,
+    "lazy": 770560,
+    "css": 2368
+  },
   "questionnaire": {
     "js": 2368,
     "lazy": 0,

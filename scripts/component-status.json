@@ -324,6 +324,11 @@
     "changed": "2026-11-25",
     "source": "380a4f3c9878d21ce64c"
   },
+  "qr-bill-scanner": {
+    "stage": "Beta",
+    "changed": "2026-11-25",
+    "source": "b9891ed8df0506205362"
+  },
   "questionnaire": {
     "stage": "Stable",
     "changed": "2026-11-25",

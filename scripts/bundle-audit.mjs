@@ -75,7 +75,7 @@ assert.ok((await lookupSwissPostalCode('6900')).some(entry => entry.locality ===
 const failures = []
 for (const item of items.toSorted((a, b) => a.name.localeCompare(b.name))) {
   const code = 'export * from ' + JSON.stringify('alpina-ui/' + item.group + '/' + item.name)
-  const result = await bundle(code, true, item.name === 'swiss-address-form' ? ['alpina-postal-chunk'] : undefined)
+  const result = await bundle(code, true, item.name === 'swiss-address-form' ? ['alpina-postal-chunk'] : item.name === 'qr-bill-scanner' ? ['alpina-scanner-chunk'] : undefined)
   const { js, lazy, eager } = weights(result)
   if (item.name === 'swiss-address-form') {
     const data = Object.entries(result.metafile.outputs).filter(([, output]) =>

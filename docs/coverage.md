@@ -1,6 +1,6 @@
 # Component coverage compared with shadcn/ui
 
-Alpina UI 0.12.0 has 95 installable component entries. The table below maps 66 of them to the families in the shadcn/ui **All Components** index recorded on November 24, 2026. The other 29 cover Swiss forms, formatting, icons, layout and navigation. The four copyable pages in Alpina's block gallery have their own CLI names and are counted separately. [Official shadcn/ui component index](https://ui.shadcn.com/docs/components) · [Alpina block gallery](https://alpina-ui.vercel.app/blocks/)
+Alpina UI 0.13.0 has 96 installable component entries. The table below maps 66 of them to the families in the shadcn/ui **All Components** index recorded on November 24, 2026. The other 30 cover Swiss forms, formatting, icons, layout and navigation. The four copyable pages in Alpina's block gallery have their own CLI names and are counted separately. [Official shadcn/ui component index](https://ui.shadcn.com/docs/components) · [Alpina block gallery](https://alpina-ui.vercel.app/blocks/)
 
 ## Differences to consider
 
@@ -95,7 +95,7 @@ The table records one documented implementation for each family. To estimate mig
 | Trace | `trace` | `Trace` | interactive |
 | Typography | `typography` | `Typography` | ui |
 
-## The 29 additional entries in Alpina 0.12.0
+## The 30 additional entries in Alpina 0.13.0
 
 | Purpose | Alpina entries |
 | --- | --- |
@@ -106,7 +106,7 @@ The table records one documented implementation for each family. To estimate mig
 | Language, cantons, and addresses | `canton-combobox`, `canton-select`, `locale-select`, `multilingual-field`, `swiss-address-form`, `swiss-postal-code-input` |
 | Formatting | `currency-chf`, `swiss-date` |
 | Printable documents | `letter`, `invoice-document` |
-| Payments and identifiers | `swiss-qr-bill`, `iban-input`, `ahv-input`, `phone-input`, `uid-input` |
+| Payments and identifiers | `swiss-qr-bill`, `qr-bill-scanner`, `iban-input`, `ahv-input`, `phone-input`, `uid-input` |
 
 The QR-bill checks its account, reference and currency combination before encoding a payment. The four identifier inputs check telephone number structure or the check digits of an IBAN, AHV or business UID. A checksum does not establish registration or ownership. The grid overlay provides visual inspection independently of the modular grid used to lay out an application. [QR-bill printing](https://alpina-ui.vercel.app/docs/guides/qr-bill/) · [Swiss forms and formatting](https://alpina-ui.vercel.app/docs/guides/swiss/)
 

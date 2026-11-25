@@ -7,6 +7,7 @@ import path from 'node:path'
 import { build } from 'esbuild'
 import ts from 'typescript'
 import { execSync } from 'node:child_process'
+import { scannerNotices } from './scanner-codecs.mjs'
 import { buildApiReference } from './api-reference.mjs'
 import { readDirectorySources } from './directory-sources.mjs'
 import { appearanceHead, buildWebsite, renderGuide, siteGrid } from './site.mjs'
@@ -145,7 +146,7 @@ const catalogOptions = offline => ({
   write: false,
   minify: true,
   platform: 'browser',
-  conditions: ['alpina-postal-chunk'],
+  conditions: ['alpina-postal-chunk', 'alpina-scanner-chunk'],
   target: ['es2022'],
   format: offline ? 'iife' : 'esm',
   splitting: !offline,
@@ -224,6 +225,7 @@ const notices = await Promise.all(
     async (name) => name + '\n' + (await readFile('node_modules/' + name + '/LICENSE', 'utf8')),
   ),
 )
+for (const [file, label] of scannerNotices) notices.push(label + '\n' + await readFile(file, 'utf8'))
 notices.unshift('Alpina UI\n' + license)
 notices.push(await readFile('src/swiss/UNICODE-LICENSE.txt', 'utf8'))
 notices.push('Postal localities ©swisstopo. https://www.swisstopo.admin.ch/en/terms-of-use-free-geodata-and-geoservices')

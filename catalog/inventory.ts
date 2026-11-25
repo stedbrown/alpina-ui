@@ -5,7 +5,7 @@ export const inventory = [
     'Grid',
     'Modular grid',
     'Graphic design',
-    'Lay out content on 4, 8, or 12 columns to match the container width.',
+    'Compose columns and rows, asymmetrical fields, and nested cards that share tracks.',
   ],
   [
     'typography',

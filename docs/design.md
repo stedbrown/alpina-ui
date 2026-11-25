@@ -80,13 +80,41 @@ export function Session() {
 
 `Grid` accepts `guides` to show columns and the vertical module. `GridItem` sets the span at each width. `Typography` lets you choose a visual role independently of the semantic level set by `as`. Copy these sources with `npx --no-install alpina add grid typography`.
 
+### Compose a module in two dimensions
+
+Müller-Brockmann illustrated how a grid could organize type and images into fields. In Alpina a field occupies adjacent columns and rows. Both axes use the same gutter. The `thirds` preset puts the lead in the first four of twelve columns and the detail in the other eight. The `five-seven` preset assigns five and seven columns. Each split activates when its **container** reaches 36rem. Both fields stack in document order in a narrower panel, even on a wide screen. Try both proportions and toggle the guides in the live specimen. [Grid specimen](https://alpina-ui.vercel.app/docs/components/grid/) · [Josef Müller-Brockmann, *Grid systems in graphic design*, Niggli](https://niggli.ch/en/products/rastersysteme-fur-die-visuelle-gestaltung)
+
+Use equal-height rows when labels, titles and values need to line up across adjacent cards. With `asChild`, the card itself occupies the grid field. Its children participate in the parent's row tracks, so a translated title can wrap while both time labels remain aligned. `subgrid` accepts `rows`, `columns` or `both`. [CSS Grid Layout Level 2](https://www.w3.org/TR/css-grid-2/)
+
+```tsx
+<Grid fields="five-seven" rows={3}>
+  {sessions.map(({ field, label, title, time }) => (
+    <GridItem key={field} field={field} subgrid="rows" asChild>
+      <Card as="article">
+        <Typography variant="label">{label}</Typography>
+        <Typography as="h3" variant="heading">{title}</Typography>
+        <Typography numeric>{time}</Typography>
+      </Card>
+    </GridItem>
+  ))}
+</Grid>
+```
+
+Supply one `lead` and one `detail` field to either preset. For a different layout, write a matrix with one string per row. Repeated names form rectangles, and a full stop leaves a cell empty. A matrix determines the number of columns and rows. For unnamed tracks, `row` and `rowSpan` place a `GridItem` by one-based row number.
+
+```tsx
+<Grid fields={['date title title', 'date venue .']}>
+  <GridItem field="date">12.03</GridItem>
+  <GridItem field="title">Press day</GridItem>
+  <GridItem field="venue">Basel</GridItem>
+</Grid>
+```
+
 ## Set a page on the grid
 
 The theme builder previews a single component surface with your accent, a spacing unit and light or dark paper. It reports the text contrast for the button label and for accent text on the background. The exported CSS preserves system colors in forced-colors mode. Import it after the library stylesheet and apply the corresponding `data-al-theme` attribute to the container. [Theme builder](https://alpina-ui.vercel.app/themes/) · [WCAG minimum text contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
 
 Align the introduction, component previews and navigation to the same page margins. Give a working example enough columns for its longest translated label. At narrow widths, let each preview take a full row and keep the heading before its controls in the reading order. [Homepage](https://alpina-ui.vercel.app/) · [Homepage source](https://github.com/stedbrown/alpina-ui/blob/main/web/pages.tsx)
-
-## Rows of controls
 
 Use `space="cover"` to give an opening section responsive vertical padding. Set `surface="accent"` for a red band or `ruler` to show the active columns. The `poster` type role scales with the container width. The site sets `data-al-page` on the body to apply the library’s page defaults.
 
@@ -97,6 +125,8 @@ At the default browser text size the grid unit is 4 CSS pixels. A caption advanc
 Press **Ctrl+Shift+G** on any portal page or in the offline catalog to toggle the proofing overlay. The stronger edge bands are the page margins. The vertical fields follow the grid’s 4, 8 and 12 columns, and the horizontal lines mark the baseline interval. The overlay accepts no pointer or keyboard input and disappears for print. Mount `<GridOverlay placement="container" width="full" />` inside a positioned container to inspect a smaller composition. [Overlay specimen](https://alpina-ui.vercel.app/docs/components/grid-overlay/)
 
 Text baselines advance by whole modules within each text run. The first ink position depends on the typeface's ascent. Artwork with an explicit aspect ratio retains that ratio, and the SIX payment slip retains its dimensions in millimetres. These intrinsic dimensions can fall between screen grid lines.
+
+## Rows of controls
 
 Use `Grid` to allocate areas of the page and `Stack` to arrange elements inside an area. With `direction="row"`, children wrap when space runs out, including when an Italian label becomes a longer German one. `gap={2}` is two modules, or 8 px at a 16 px root. `justify="space-between"` places two groups at opposite ends of the available space. In a column, children stretch across the width and the default gap is 4.
 

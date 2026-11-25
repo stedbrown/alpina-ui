@@ -39,7 +39,7 @@
   "empty": "Explain why the view is empty and offer a recovery action, such as clearing a filter. Set the heading level to fit the page.",
   "field": "Put the label, help and correction next to their control. The accessible description reads the error first and includes each referenced hint only once.",
   "figure": "Supply meaningful alternative text for informative images. The caption can identify the study and credit can link to its source. The image keeps its intrinsic proportions.",
-  "grid": "Use width=\"site\" to center the columns inside a 100rem frame. Use align to position items within the row. Column spans follow the container width.",
+  "grid": "Use width=\"site\" for a centered 100rem frame. Column spans follow the container width. Use fields with rows to compose rectangular areas, or select thirds or five-seven for lead/detail pairs. Give each GridItem a field name and use subgrid=\"rows\" to align content across cards.",
   "hover-card": "Touch users get a taller trigger. Long panel text wraps and the panel fits the visible viewport while remaining reachable by keyboard.",
   "icon": "Use a decorative icon beside visible action text. Give an icon-only button or link its own accessible name. Set the icon’s label when the graphic itself conveys meaning.",
   "input": "Use readOnly when a value is available to inspect or copy. Validation marks the logical leading edge of the control, including in right-to-left layouts.",

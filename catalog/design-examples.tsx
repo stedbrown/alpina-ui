@@ -1,25 +1,47 @@
 import { useState } from 'react'
-import { Grid, GridItem, GridOverlay, Typography, Switch, Stack } from 'alpina-ui'
+import { Card, Field, Grid, GridItem, GridOverlay, Select, Typography, Switch, Stack } from 'alpina-ui'
 
 export function GridExample() {
   const [guides, setGuides] = useState(true)
+  const [fields, setFields] = useState<'thirds' | 'five-seven' | 'programme'>('thirds')
   return (
-    <div>
-      <label style={{ display: 'flex', alignItems: 'center', gap: 8, marginBlockEnd: 16 }}>
-        <Switch checked={guides} onChange={(e) => setGuides(e.target.checked)} /> Show grid
-      </label>
-      <Grid guides={guides}>
-        <GridItem small={4} medium={2} large={3}>
-          <Typography variant="label">09.30</Typography>
+    <Stack>
+      <Stack direction="row" align="end">
+        <Field label="Field arrangement">
+          {props => <Select {...props} value={fields} onChange={e => {
+            const value = e.target.value
+            if (value === 'thirds' || value === 'five-seven' || value === 'programme') setFields(value)
+          }}>
+            <option value="thirds">One third / two thirds</option>
+            <option value="five-seven">Five twelfths / seven twelfths</option>
+            <option value="programme">Named programme fields</option>
+          </Select>}
+        </Field>
+        <label><Switch checked={guides} onChange={e => setGuides(e.target.checked)} /> Show grid</label>
+      </Stack>
+      {fields === 'programme' ? (
+        <Grid fields={['date title title', 'date venue .']} guides={guides}>
+          <GridItem field="date"><Typography numeric>12.03</Typography></GridItem>
+          <GridItem field="title"><Typography as="h3" variant="heading">Press day</Typography></GridItem>
+          <GridItem field="venue"><Typography>Basel</Typography></GridItem>
+        </Grid>
+      ) : <Grid fields={fields} rows={3} guides={guides}>
+        <GridItem field="lead" subgrid="rows" asChild>
+          <Card as="article">
+            <Typography variant="label">Morning session</Typography>
+            <Typography as="h3" variant="heading">Reading a poster</Typography>
+            <Typography numeric>09.30–10.15</Typography>
+          </Card>
         </GridItem>
-        <GridItem small={4} medium={6} large={9}>
-          <Typography as="h3" variant="heading">
-            Reading a poster
-          </Typography>
-          <Typography>Typography workshop</Typography>
+        <GridItem field="detail" subgrid="rows" asChild>
+          <Card as="article">
+            <Typography variant="label">Afternoon session</Typography>
+            <Typography as="h3" variant="heading">From letterpress to the concert programme</Typography>
+            <Typography numeric>14.00–15.30</Typography>
+          </Card>
         </GridItem>
-      </Grid>
-    </div>
+      </Grid>}
+    </Stack>
   )
 }
 export function GridOverlayExample() {

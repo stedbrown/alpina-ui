@@ -102,3 +102,50 @@
     display: block;
   }
 }
+
+/* Named fields collapse to a single reading column until the container can fit them. */
+.al-grid[data-fields] > .al-grid-item { grid-column: 1 / -1; }
+@container al-layout (min-width:36rem) {
+  .al-grid[data-rows] {
+    grid-template-rows: repeat(var(--al-grid-rows), minmax(min-content, 1fr));
+  }
+  .al-grid > .al-grid-item {
+    grid-row: var(--al-row, auto) / span var(--al-row-span, 1);
+  }
+  .al-grid[data-fields] { --al-cols: var(--al-field-columns); }
+  .al-grid[data-fields='thirds'] { --al-split: 5; }
+  .al-grid[data-fields='five-seven'] { --al-split: 6; }
+  .al-grid:is([data-fields='thirds'], [data-fields='five-seven']) > [data-field='lead'] {
+    grid-column: 1 / var(--al-split);
+    grid-row: 1 / span var(--al-grid-rows, 1);
+  }
+  .al-grid:is([data-fields='thirds'], [data-fields='five-seven']) > [data-field='detail'] {
+    grid-column: var(--al-split) / -1;
+    grid-row: 1 / span var(--al-grid-rows, 1);
+  }
+  .al-grid[data-fields='matrix'] { grid-template-areas: var(--al-field-areas); }
+  .al-grid[data-fields='matrix'] > [data-field] { grid-area: var(--al-field-name); }
+  .al-grid-item[data-subgrid] { display: grid; gap: var(--al-gutter); }
+  .al-grid-item:is([data-subgrid='rows'], [data-subgrid='both']) {
+    grid-template-rows: subgrid;
+    row-gap: normal;
+  }
+  .al-grid-item:is([data-subgrid='columns'], [data-subgrid='both']) {
+    grid-template-columns: subgrid;
+    column-gap: normal;
+  }
+  .al-grid[data-fields] > .al-grid-guides i,
+  .al-grid[data-fields] > .al-grid-ruler span { display: none; }
+  .al-grid[data-fields] > .al-grid-guides [data-field-track] { display: block; }
+  .al-grid[data-fields] > .al-grid-ruler [data-field-track] { display: flex; }
+  .al-grid[data-rows][data-guides]::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    grid-area: 1 / 1 / -1 / -1;
+    pointer-events: none;
+    --al-row-period: calc((100% + var(--al-gutter)) / var(--al-grid-rows));
+    background: repeating-linear-gradient(to bottom, transparent 0 calc(var(--al-row-period) - var(--al-gutter)),
+      color-mix(in srgb, var(--al-accent) 10%, transparent) calc(var(--al-row-period) - var(--al-gutter)) var(--al-row-period));
+  }
+}

@@ -55,3 +55,13 @@ test('DataTable renders one full-width empty cell and retains the column headers
   assert.match(html, /<th[^>]*scope="col"[^>]*>Invoice<\/th>/)
   assert.doesNotMatch(html, /aria-sort=/)
 })
+
+test('accounting headers include CHF once whether the caller supplied the unit or omitted it', () => {
+  for (const [header, expected] of [['Total', 'Total (CHF)'], ['Totale CHF', 'Totale CHF'], ['Total (CHF)', 'Total (CHF)']]) {
+    const markup = renderToStaticMarkup(createElement(DataTable, {
+      ...props, columns: [{ id: 'amount', header, format: 'chf', sortable: false, value: () => 24 }],
+    }))
+    assert.ok(markup.includes('>' + expected + '</th>'), markup)
+    assert.equal((markup.match(/CHF/g) ?? []).length, 1)
+  }
+})

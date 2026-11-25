@@ -6,6 +6,12 @@
   "outputDirectory": "site",
   "redirects": [
     {
+      "source": "/:path(.*)",
+      "has": [{ "type": "host", "value": "alpina-ui\\.vercel\\.app" }],
+      "destination": "https://alpinaui.com/:path",
+      "statusCode": 308
+    },
+    {
       "source": "/docs/guides/core/",
       "destination": "/docs/guides/build/",
       "statusCode": 301

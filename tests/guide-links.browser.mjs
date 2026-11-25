@@ -1,13 +1,26 @@
 import assert from 'node:assert/strict'
+import { createHash } from 'node:crypto'
 import { readFile } from 'node:fs/promises'
 import { siteUrl } from '../scripts/site-config.mjs'
 import { publicRoutes } from './public-pages.mjs'
 
 const config = JSON.parse(await readFile('vercel.json', 'utf8'))
+const pkg = JSON.parse(await readFile('package.json', 'utf8'))
+const productionOrigin = new URL(pkg.homepage).origin
+const previousHost = ['alpina-ui', 'vercel.app'].join('.')
+const previousOrigin = 'https://' + previousHost
 // Vercel runs its global slash normalizer before custom redirects. It treats 0.11 as a file.
 assert.equal(config.trailingSlash, undefined, 'A global slash rule preempts the dotted release URL')
-const redirects = config.redirects.filter(rule => rule.statusCode === 301)
-assert.deepEqual(config.redirects.slice(0, redirects.length), redirects, 'Retired URLs must match before slash normalization')
+const [hostRedirect, ...pathRedirects] = config.redirects
+assert.deepEqual(hostRedirect, {
+  source: '/:path(.*)',
+  has: [{ type: 'host', value: previousHost.replaceAll('.', '\\.') }],
+  destination: productionOrigin + '/:path',
+  statusCode: 308,
+}, 'Only the former production host must redirect, before all path-specific rules')
+assert.notEqual(productionOrigin, previousOrigin, 'The old host must not redirect to itself')
+const redirects = pathRedirects.filter(rule => rule.statusCode === 301)
+assert.deepEqual(pathRedirects.slice(0, redirects.length), redirects, 'Retired URLs must match before slash normalization')
 const paths = new Set(await publicRoutes())
 const retired = new Set(redirects.map(rule => rule.source.replace(/\/$/, '')))
 const expected = { core: 'build', interactive: 'build', actions: 'build', elements: 'build', workflows: 'build', research: 'design', coverage: 'migration', portal: 'build', directory: '/examples/' }
@@ -47,6 +60,17 @@ assert.deepEqual(failures, [], 'Published links must use canonical destinations'
 console.log('Verified permanent guide redirects and canonical links on ' + paths.size + ' public pages.')
 
 if (process.argv.includes('--deployed')) {
+  async function assertFirstResponse(origin, source, statusCode, destination) {
+    const request = new URL(source, origin)
+    const response = await fetch(request, { method: 'HEAD', redirect: 'manual', signal: AbortSignal.timeout(30000) })
+    assert.equal(response.status, statusCode, request.href)
+    if (destination) {
+      const location = response.headers.get('location')
+      assert.ok(location, request.href + ' has no Location header')
+      assert.equal(new URL(location, request).href, new URL(destination, origin).href, request.href)
+    }
+  }
+
   const requests = [
     ...redirects,
     { source: '/docs/guides/start', destination: '/docs/guides/start/', statusCode: 308 },
@@ -55,9 +79,33 @@ if (process.argv.includes('--deployed')) {
     { source: '/favicon.svg', statusCode: 200 },
   ]
   for (const { source, destination, statusCode } of requests) {
-    const response = await fetch(new URL(source, siteUrl), { method: 'HEAD', redirect: 'manual', signal: AbortSignal.timeout(30000) })
-    assert.equal(response.status, statusCode, source + ' returned ' + response.status)
-    if (destination) assert.equal(new URL(response.headers.get('location'), siteUrl).href, new URL(destination, siteUrl).href, source)
+    await assertFirstResponse(siteUrl, source, statusCode, destination)
   }
   console.log('Verified the first HTTP response for all retired URLs and representative canonical routes on ' + siteUrl)
+
+  const archives = new Set(['alpina-ui-0.11.0.tgz', pkg.name + '-' + pkg.version + '.tgz'])
+  const formerPaths = [...new Set([
+    ...paths, ...requests.map(request => request.source),
+    '/?ref=home', '/docs/components/button/?ref=old%2Fdocs&tag=grid&tag=type',
+    '/releases/0.11?ref=bookmark', '/previously-unlisted/page/?ref=archive',
+    ...[...archives].flatMap(file => ['/' + file, '/' + file + '.sha512']),
+  ])]
+  for (let start = 0; start < formerPaths.length; start += 4) {
+    await Promise.all(formerPaths.slice(start, start + 4).map(source =>
+      assertFirstResponse(previousOrigin, source, 308, productionOrigin + source)))
+  }
+  for (const file of archives) {
+    const expectedHash = createHash('sha512').update(await readFile('recipes/rubrica/vendor/' + file)).digest('hex')
+    for (const origin of [previousOrigin, productionOrigin]) {
+      const response = await fetch(origin + '/' + file, { signal: AbortSignal.timeout(30000) })
+      assert.equal(response.status, 200, origin + '/' + file)
+      assert.equal(response.url, productionOrigin + '/' + file)
+      assert.equal(createHash('sha512').update(Buffer.from(await response.arrayBuffer())).digest('hex'), expectedHash, response.url)
+      const checksum = await fetch(origin + '/' + file + '.sha512', { signal: AbortSignal.timeout(30000) })
+      assert.equal(checksum.status, 200, origin + '/' + file + '.sha512')
+      assert.equal(checksum.url, productionOrigin + '/' + file + '.sha512')
+      assert.equal((await checksum.text()).trimEnd(), expectedHash + '  ' + file, checksum.url)
+    }
+  }
+  console.log('Verified ' + formerPaths.length + ' hostname redirects and the release downloads from both origins.')
 }

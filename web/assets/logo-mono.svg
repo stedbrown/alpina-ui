@@ -1,4 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="title">
   <title id="title">Alpina UI</title>
-  <path fill="currentColor" fill-rule="evenodd" d="M0 0h64v64H0z M6 52 29 10h5l24 42H47l-5-9H22l-5 9Zm19-16h6l4-3 4 3-7-14Z"/>
+  <path fill="currentColor" fill-rule="evenodd" d="M0 0h64v64H0z M7 54 27.5 10H36.5L57 54H46.5L32 22.5 17.5 54Z"/>
 </svg>

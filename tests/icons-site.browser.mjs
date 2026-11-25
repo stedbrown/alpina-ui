@@ -34,6 +34,18 @@ try {
   assert.equal(await staticPage.getByRole('button', { name: /Copy JSX/ }).count(), 0)
   assert.ok(await staticPage.getByRole('link', { name: 'Icon usage and API' }).isVisible())
 
+  const mark = await openPage({ colorScheme: 'dark' })
+  await mark.goto(origin)
+  const proof = await mark.evaluate(async () => {
+    const image = new Image(); image.src = '/favicon.svg'; await image.decode()
+    const canvas = document.createElement('canvas'); canvas.width = canvas.height = 16
+    const ctx = canvas.getContext('2d'); ctx.fillStyle = '#161616'; ctx.fillRect(0, 0, 16, 16)
+    ctx.drawImage(image, 0, 0, 16, 16)
+    return [[8, 3], [4, 11], [11, 11], [8, 10]].map(([x, y]) => [...ctx.getImageData(x, y, 1, 1).data])
+  })
+  assert.ok(proof.slice(0, 3).every(([, green]) => green >= 210), 'The apex and both stems remain white at 16 px')
+  assert.deepEqual(proof[3], [235, 0, 0, 255], 'The red field remains open between the stems')
+  await mark.close()
   for (const width of [390, 1440]) {
     const page = await openPage({ viewport: { width, height: 850 }, hasTouch: width === 390 })
     await page.goto(origin)

@@ -1,4 +1,4 @@
-<img src="web/assets/logo.svg" alt="" width="64" height="64">
+<img src="web/assets/logo.svg" alt="A white A without a crossbar, shaped like a peak on a red square." width="64" height="64">
 
 # Alpina UI
 

@@ -1,7 +1,7 @@
 import { PageRegion } from 'alpina-ui'
 import type { ReactNode } from 'react'
 import {
-  Badge, CurrencyCHF, Grid, GridItem, Separator, Stack, Table,
+  Avatar, Badge, CurrencyCHF, Grid, GridItem, Separator, Stack, Table,
   TableBody, TableCell, TableHead, TableHeader, TableRow, TextLink, Typography,
 } from 'alpina-ui'
 import { Footer, Masthead, PageHeading } from './pages.js'
@@ -105,6 +105,10 @@ export function Principles() {
     <Masthead current="principles" />
     <PageRegion as="main" id="content" tabIndex={-1}>
       <PageHeading title="Design principles" summary="Eight decisions from a working Swiss interface. Compare each pair using the same components and the same information." />
+      <Grid as="section" width="site" space="compact" aria-labelledby="alpina-mark">
+        <GridItem medium={4} large={4}><Typography id="alpina-mark" as="h2" variant="heading">The Alpina mark</Typography></GridItem>
+        <GridItem medium={4} large={7}><Stack direction="row" align="center" wrap={false}><Avatar decorative name="Alpina" size="lg" src="/assets/logo.svg" /><Typography measure="narrow">A white A without a crossbar, shaped like a peak on a red square. Its flat apex and open centre keep the form legible at the size of a browser icon.</Typography></Stack></GridItem>
+      </Grid>
       {rules.map(({ id, title, note, source, sample }) => <Grid as="section" width="site" space="compact" aria-labelledby={id} key={id}>
         <GridItem><Separator weight="section" /></GridItem>
         <GridItem medium={8} large={4}><Stack gap={3} align="start">

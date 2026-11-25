@@ -45,9 +45,9 @@
     "css": 512
   },
   "bar-chart": {
-    "js": 1152,
+    "js": 2560,
     "lazy": 0,
-    "css": 960
+    "css": 1408
   },
   "breadcrumb": {
     "js": 1152,
@@ -70,9 +70,9 @@
     "css": 192
   },
   "calendar": {
-    "js": 7360,
+    "js": 7808,
     "lazy": 0,
-    "css": 1472
+    "css": 1728
   },
   "canton-combobox": {
     "js": 5120,
@@ -100,9 +100,9 @@
     "css": 896
   },
   "chart-table": {
-    "js": 1152,
+    "js": 1344,
     "lazy": 0,
-    "css": 960
+    "css": 1408
   },
   "checkbox": {
     "js": 384,
@@ -140,14 +140,14 @@
     "css": 192
   },
   "data-table": {
-    "js": 4224,
+    "js": 4608,
     "lazy": 0,
-    "css": 1536
+    "css": 1856
   },
   "date-picker": {
-    "js": 8960,
+    "js": 9408,
     "lazy": 0,
-    "css": 2368
+    "css": 2688
   },
   "description-list": {
     "js": 320,
@@ -235,9 +235,9 @@
     "css": 704
   },
   "invoice-document": {
-    "js": 14080,
+    "js": 15552,
     "lazy": 0,
-    "css": 2944
+    "css": 3264
   },
   "item": {
     "js": 384,
@@ -257,17 +257,17 @@
   "letter": {
     "js": 3328,
     "lazy": 0,
-    "css": 1152
+    "css": 1280
   },
   "line-chart": {
-    "js": 1536,
+    "js": 2816,
     "lazy": 0,
-    "css": 960
+    "css": 1408
   },
   "locale-select": {
-    "js": 2240,
+    "js": 2304,
     "lazy": 0,
-    "css": 1088
+    "css": 2304
   },
   "marker": {
     "js": 320,
@@ -370,9 +370,9 @@
     "css": 1216
   },
   "sidebar": {
-    "js": 320,
+    "js": 1280,
     "lazy": 0,
-    "css": 512
+    "css": 1408
   },
   "skeleton": {
     "js": 256,
@@ -385,9 +385,9 @@
     "css": 512
   },
   "sparkline": {
-    "js": 1536,
+    "js": 1920,
     "lazy": 0,
-    "css": 960
+    "css": 1408
   },
   "spinner": {
     "js": 320,
@@ -402,7 +402,7 @@
   "steps": {
     "js": 320,
     "lazy": 0,
-    "css": 448
+    "css": 1344
   },
   "swiss-address-form": {
     "js": 10048,
@@ -450,9 +450,9 @@
     "css": 640
   },
   "toast": {
-    "js": 960,
+    "js": 1344,
     "lazy": 0,
-    "css": 512
+    "css": 640
   },
   "toggle": {
     "js": 384,
@@ -460,9 +460,9 @@
     "css": 512
   },
   "toggle-group": {
-    "js": 2368,
+    "js": 2496,
     "lazy": 0,
-    "css": 1152
+    "css": 1344
   },
   "tooltip": {
     "js": 1728,

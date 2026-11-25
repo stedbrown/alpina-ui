@@ -5,7 +5,7 @@
 
 React components for Swiss software, from a multilingual address form to a printable QR-bill.
 
-[![CI](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml) [![MIT license](https://img.shields.io/badge/license-MIT-222222)](LICENSE) [![Package version](https://img.shields.io/badge/version-1.0.0--rc.1-eb0000)](CHANGELOG.md)
+[![CI](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml) [![MIT license](https://img.shields.io/badge/license-MIT-222222)](LICENSE) [![Package version](https://img.shields.io/badge/version-1.0.0--rc.2-eb0000)](CHANGELOG.md)
 
 [Live site](https://alpina-ui.vercel.app/) · [Documentation](https://alpina-ui.vercel.app/docs/) · [Designer kit](https://alpina-ui.vercel.app/kit/) · [Design principles](https://alpina-ui.vercel.app/principles/) · [Changelog](CHANGELOG.md) · [API stability](docs/api-stability.md)
 
@@ -18,7 +18,7 @@ React components for Swiss software, from a multilingual address form to a print
 In an existing React 18.2 or 19 app, install the versioned archive and import the stylesheet once.
 
 ```sh
-npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.1.tgz
+npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.2.tgz
 ```
 
 ```tsx
@@ -34,9 +34,10 @@ To own the source, run `npx --no-install alpina add button`. To copy a complete 
 
 ## What comes with Alpina
 
-- Issue a Swiss QR-bill with a SIX payment section, or read an incoming slip locally from a file or camera and confirm the parsed data. Print an invoice with itemized VAT and totals. [QR-bill guide](https://alpina-ui.vercel.app/docs/guides/qr-bill/)
-- Collect an eCH-0010 postal address with offline postcode suggestions. Use the same field and checksum rules for AHV, UID, IBAN and payment references in the browser and on the server. [Shared validation](https://alpina-ui.vercel.app/docs/guides/validation/)
+- Issue a Swiss QR-bill with a SIX payment section, or read an incoming slip locally from a file or camera and confirm the parsed data. Generate QRR or RF references and print a short invoice, itemized VAT and its payment slip on one A4 sheet. [QR-bill guide](https://alpina-ui.vercel.app/docs/guides/qr-bill/)
+- Collect an eCH-0010 postal address with offline postcode suggestions. Embed the address fields in an existing form or a configurable multi-step service. Use the same field and checksum rules for AHV, UID, IBAN and payment references in the browser and on the server. [Shared validation](https://alpina-ui.vercel.app/docs/guides/validation/)
 - Edit translations in German, French, Italian and Romansh side by side. English is also available in the public-service workflow and validation messages. Apply statutory or common holiday calendars by canton when calculating business days. [Language fields](https://alpina-ui.vercel.app/docs/components/multilingual-field/) · [Swiss formats](https://alpina-ui.vercel.app/docs/guides/swiss/)
+- Build a booking calendar with day availability and cantonal holidays. Compare budget and actuals as grouped bars, multiple lines or printable accounting tables. [Calendar](https://alpina-ui.vercel.app/docs/components/calendar/) · [Accounting tables](https://alpina-ui.vercel.app/docs/components/data-table/)
 - Lay out a page on four, eight or twelve columns. Inter’s optical sizes, tabular figures and a four-pixel baseline carry through to tables, print and dark mode. Export the tokens and printable sheets for design work. [Principles](https://alpina-ui.vercel.app/principles/) · [Kit](https://alpina-ui.vercel.app/kit/) · [Theme builder](https://alpina-ui.vercel.app/themes/)
 - Inspect a component’s keyboard behavior and screen-reader guidance alongside its source. CI checks interactions, automated accessibility, forced colors and visual regressions. [Reference](https://alpina-ui.vercel.app/docs/components/) · [Testing](docs/visual-testing.md)
 

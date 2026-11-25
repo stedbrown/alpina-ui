@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.0-rc.2 · 25 November 2026
+
+- **Public API** Add payment-reference generation and formatting, exact centime formatting, invoice content and address composition, shared address fields, responsive form navigation, server field feedback, booking availability, normalized Swiss input callbacks, file limits, queued notifications, sidebar navigation and comparative charts. Existing single-series charts and inline notifications continue to work. Pass `showWeekNumbers` explicitly to retain week numbers. See the [reviewed declarations](etc/alpina-ui.api.md).
+- Keep identifiers and action labels intact, retain space for description lists, show desktop branding, and paint the document canvas in the chosen theme.
+- Print one to eight standard invoice lines with their totals and QR payment slip on a single A4 sheet. Compact accounting rows use the printable width, with repeated headers, group headings and spanning total labels.
+- Handle appointment status and disabled dates in a calendar that remains usable at 180 CSS pixels. Accept server-side corrections in multi-step services and return focus to the relevant field.
+- Compare financial series with grouped bars and separate lines. A hatch distinguishes losses, intermediate axis labels orient readers and the alternative table preserves missing observations.
+- The reference now shows expanded data shapes and explains CHF headings. The packed Next.js example exercises a dynamic invoice route with Cache Components.
+
 ## 1.0.0-rc.1 · 25 November 2026
 
 - **Public API** Swiss identifier validation distinguishes shape and prefix errors from check-digit errors across fields, Standard Schema, server actions and QR payloads. Existing validation booleans and signatures remain usable. TableHead and TableCell accept independent text alignment, and guide tables retain the alignment of the original Markdown. The shared message helper accepts an optional reason. Portal, text, field and layout modules now expose the composable parts used by the reference site. See the [declaration report](etc/alpina-ui.api.md) for signatures.

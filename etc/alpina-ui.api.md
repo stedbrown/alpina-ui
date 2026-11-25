@@ -249,6 +249,7 @@ export * from './ui/empty.js';
 export * from './ui/field.js';
 export * from './ui/figure.js';
 export * from './ui/file-input.js';
+export * from './ui/form-steps.js';
 export * from './ui/grid-overlay.js';
 export * from './ui/grid.js';
 export * from './ui/icon.js';
@@ -300,6 +301,7 @@ export * from './interactive/toast.js';
 export * from './interactive/toggle-group.js';
 export * from './interactive/tooltip.js';
 export * from './interactive/trace.js';
+export * from './swiss/address-lines.js';
 export * from './swiss/ahv-input.js';
 export * from './swiss/calendar-dates.js';
 export * from './swiss/calendar.js';
@@ -308,6 +310,7 @@ export * from './swiss/canton-select.js';
 export * from './swiss/cantons.js';
 export * from './swiss/currency-chf.js';
 export * from './swiss/date-picker.js';
+export * from './swiss/format-centimes.js';
 export * from './swiss/format-chf.js';
 export * from './swiss/format-swiss-date.js';
 export * from './swiss/format-swiss-number.js';
@@ -316,6 +319,7 @@ export * from './swiss/iban-input.js';
 export * from './swiss/identifiers.js';
 export * from './swiss/invoice-document.js';
 export * from './swiss/invoice-totals.js';
+export * from './swiss/language-switcher.js';
 export * from './swiss/letter.js';
 export * from './swiss/locale-select.js';
 export * from './swiss/locales.js';
@@ -765,6 +769,13 @@ export interface ToastProps {
     className?: string;
 }
 export declare function Toast({ open, onOpenChange, closeLabel, children, urgency, tone, duration, className, }: ToastProps): ReactElement;
+export type ToastOptions = Pick<ToastProps, "tone" | "duration" | "urgency">;
+export declare function toast(message: ReactNode, options?: ToastOptions): () => void;
+export interface ToasterProps {
+    closeLabel: string;
+    duration?: number;
+}
+export declare function Toaster({ closeLabel, duration }: ToasterProps): import("react").ReactPortal | null;
 ~~~
 
 ## interactive/toggle-group.d.ts
@@ -775,6 +786,7 @@ export interface ToggleOption {
     value: string;
     label: ReactNode;
     disabled?: boolean;
+    disabledReason?: string;
 }
 export interface ToggleGroupProps {
     label: string;
@@ -786,6 +798,7 @@ export interface ToggleGroupProps {
     onValueChange?: (values: string[]) => void;
     name?: string;
     disabled?: boolean;
+    disabledReason?: string;
     className?: string;
 }
 export declare const ToggleGroup: import("react").ForwardRefExoticComponent<ToggleGroupProps & import("react").RefAttributes<HTMLDivElement>>;
@@ -935,14 +948,24 @@ export declare const CodeSample: import("react").ForwardRefExoticComponent<CodeS
 
 ## portal/sidebar.d.ts
 ~~~ts
-import { type HTMLAttributes, type ReactNode } from 'react';
+import { type ComponentPropsWithoutRef, type ForwardRefExoticComponent, type HTMLAttributes, type ReactNode, type RefAttributes } from 'react';
+import { type SlottedSignature } from '../ui/slot.js';
 export interface SidebarProps extends HTMLAttributes<HTMLElement> {
     as?: "aside" | "div";
     masthead?: ReactNode;
     tools?: ReactNode;
     footer?: ReactNode;
 }
-export declare const Sidebar: import("react").ForwardRefExoticComponent<SidebarProps & import("react").RefAttributes<HTMLDivElement>>;
+export declare const Sidebar: ForwardRefExoticComponent<SidebarProps & RefAttributes<HTMLDivElement>>;
+export interface SideNavProps extends ComponentPropsWithoutRef<"nav"> {
+    label: string;
+}
+export declare const SideNav: ForwardRefExoticComponent<SideNavProps & RefAttributes<HTMLElement>>;
+export interface SideNavLinkProps extends ComponentPropsWithoutRef<"a"> {
+    active?: boolean;
+    asChild?: boolean;
+}
+export declare const SideNavLink: SlottedSignature<SideNavLinkProps> & ForwardRefExoticComponent<SideNavLinkProps & RefAttributes<HTMLAnchorElement>>;
 ~~~
 
 ## portal/text-link.d.ts
@@ -954,6 +977,14 @@ export interface TextLinkProps extends ComponentPropsWithoutRef<"a"> {
     variant?: "inline" | "action" | "quiet" | "skip" | "brand";
 }
 export declare const TextLink: SlottedSignature<TextLinkProps> & ForwardRefExoticComponent<TextLinkProps & RefAttributes<HTMLAnchorElement>>;
+~~~
+
+## swiss/address-lines.d.ts
+~~~ts
+import type { EchMailAddress } from './ech-address-schema.internal.js';
+import type { SwissQrAddress } from './qr-payment.js';
+import { type SwissMessageLocale } from './locales.js';
+export declare function addressLines(address: SwissQrAddress | EchMailAddress, locale?: SwissMessageLocale): string[];
 ~~~
 
 ## swiss/ahv-input.d.ts
@@ -1014,6 +1045,9 @@ export declare const calendarText: {
         readonly clear: "Cancella la data";
         readonly holidays: "Festivi del mese";
         readonly afternoon: "pomeriggio";
+        readonly available: "Disponibile";
+        readonly full: "Al completo";
+        readonly closed: "Chiuso";
     };
     readonly "de-CH": {
         readonly prev: "Vorheriger Monat";
@@ -1023,6 +1057,9 @@ export declare const calendarText: {
         readonly clear: "Datum entfernen";
         readonly holidays: "Feiertage im Monat";
         readonly afternoon: "nachmittags";
+        readonly available: "Verf\u00FCgbar";
+        readonly full: "Ausgebucht";
+        readonly closed: "Geschlossen";
     };
     readonly "fr-CH": {
         readonly prev: "Mois pr\u00E9c\u00E9dent";
@@ -1032,6 +1069,9 @@ export declare const calendarText: {
         readonly clear: "Effacer la date";
         readonly holidays: "Jours f\u00E9ri\u00E9s du mois";
         readonly afternoon: "apr\u00E8s-midi";
+        readonly available: "Disponible";
+        readonly full: "Complet";
+        readonly closed: "Ferm\u00E9";
     };
     readonly "rm-CH": {
         readonly prev: "Mais precedent";
@@ -1041,6 +1081,9 @@ export declare const calendarText: {
         readonly clear: "Stizzar la data";
         readonly holidays: "Firads dal mais";
         readonly afternoon: "suentermezdi";
+        readonly available: "Disponibel";
+        readonly full: "Occupa";
+        readonly closed: "Serr\u00E0";
     };
 };
 ~~~
@@ -1060,6 +1103,9 @@ export interface CalendarProps {
     max?: string;
     locale?: SwissLocale;
     showWeekNumbers?: boolean;
+    isDateDisabled?: (date: string) => boolean;
+    dayStatus?: (date: string) => "available" | "full" | "closed" | undefined;
+    disableHolidays?: boolean;
     canton?: CantonCode;
     holidayRegion?: SwissHolidayRegion;
     observance?: SwissHolidayObservance;
@@ -1394,6 +1440,12 @@ export declare function echAddressSchema(locale?: SwissMessageLocale): import(".
 export {};
 ~~~
 
+## swiss/format-centimes.d.ts
+~~~ts
+import { type SwissLocale } from './locales.js';
+export declare function formatCentimes(cents: number | bigint, locale?: SwissLocale): string;
+~~~
+
 ## swiss/format-chf.d.ts
 ~~~ts
 import { type SwissLocale } from './locales.js';
@@ -1701,9 +1753,11 @@ export declare const IbanInput: import("react").ForwardRefExoticComponent<IbanIn
 ~~~ts
 export type IdentifierIssue = "format" | "checksum" | undefined;
 export declare const compactIban: (value: string) => string;
+export declare function mod97(value: string): number;
 export declare function ibanIssue(value: string, requireQr?: boolean): IdentifierIssue;
 export declare function ahvIssue(value: string): IdentifierIssue;
 export declare function uidIssue(value: string): IdentifierIssue;
+export declare function qrCheckDigit(body: string): number;
 export declare function qrrIssue(input: string): IdentifierIssue;
 export declare function scorIssue(input: string): IdentifierIssue;
 ~~~
@@ -1713,10 +1767,12 @@ Client entry.
 ~~~ts
 import { type ComponentPropsWithoutRef } from 'react';
 import type { IdentifierIssue } from './identifier-checks.internal.js';
+import type { SwissInputValueDetails } from './identifiers.js';
 import type { SwissMessageLocale } from './locales.js';
 export interface SwissIdentifierInputProps extends Omit<ComponentPropsWithoutRef<"input">, "type" | "value" | "defaultValue" | "children"> {
     value?: string;
     defaultValue?: string;
+    onValueChange?: (value: string, details: SwissInputValueDetails) => void;
     validationMessage?: string;
     locale?: SwissMessageLocale;
 }
@@ -1734,6 +1790,10 @@ export {};
 ## swiss/identifiers.d.ts
 ~~~ts
 export { compactIban } from './identifier-checks.internal.js';
+export interface SwissInputValueDetails {
+    normalized: string | null;
+    valid: boolean;
+}
 export declare function isSwissIban(value: string): boolean;
 export declare function isQrIban(value: string): boolean;
 export declare function formatSwissIban(value: string): string;
@@ -1747,7 +1807,7 @@ export declare function formatSwissPhone(value: string): string;
 
 ## swiss/invoice-document.d.ts
 ~~~ts
-import { type ComponentPropsWithoutRef } from 'react';
+import { type ComponentPropsWithoutRef, type ReactNode } from 'react';
 import { type SwissQrBillLocale } from './swiss-qr-bill.js';
 import type { SwissQrAddress, SwissQrBillData } from './qr-payment.js';
 import { type InvoiceLine } from './invoice-totals.js';
@@ -1764,6 +1824,11 @@ export interface InvoiceDocumentProps extends Omit<ComponentPropsWithoutRef<"art
     };
     locale?: SwissQrBillLocale;
     cashRounding?: boolean;
+    logo?: ReactNode;
+    intro?: ReactNode;
+    paymentTerms?: ReactNode;
+    notes?: ReactNode;
+    footer?: ReactNode;
 }
 export declare const InvoiceDocument: import("react").ForwardRefExoticComponent<InvoiceDocumentProps & import("react").RefAttributes<HTMLElement>>;
 ~~~
@@ -1795,14 +1860,32 @@ export declare function calculateInvoiceTotals(lines: readonly InvoiceLine[], op
 };
 ~~~
 
+## swiss/language-switcher.d.ts
+Client entry.
+~~~ts
+import { type ComponentPropsWithoutRef } from 'react';
+import { type SwissMessageLocale } from './locales.js';
+export interface LanguageSwitcherProps extends Omit<ComponentPropsWithoutRef<"div">, "children" | "onChange"> {
+    label: string;
+    value: SwissMessageLocale;
+    onLocaleChange: (value: SwissMessageLocale) => void;
+    locales?: readonly SwissMessageLocale[];
+    disabled?: boolean;
+}
+export declare const LanguageSwitcher: import("react").ForwardRefExoticComponent<LanguageSwitcherProps & import("react").RefAttributes<HTMLDivElement>>;
+~~~
+
 ## swiss/letter.d.ts
 ~~~ts
 import { type ComponentPropsWithoutRef } from 'react';
+import type { SwissQrAddress } from './qr-payment.js';
+import type { EchMailAddress } from './ech-address-schema.internal.js';
 import type { SwissLocale } from './locales.js';
 export { printSwissDocument } from './print-document.js';
+export type LetterAddress = readonly string[] | SwissQrAddress | EchMailAddress;
 export interface LetterProps extends ComponentPropsWithoutRef<"article"> {
-    sender: readonly string[];
-    recipient: readonly string[];
+    sender: LetterAddress;
+    recipient: LetterAddress;
     subject: string;
     date: string | Date;
     place?: string;
@@ -1994,8 +2077,8 @@ export declare function printSwissDocument(element: HTMLElement): void;
 Client entry.
 ~~~ts
 import { type ComponentPropsWithoutRef } from 'react';
+import { type SwissQrBillData } from './qr-payment.js';
 import type { SwissLocale } from './locales.js';
-import type { SwissQrBillData } from './qr-payment.js';
 export { preloadQrBillScanner } from './qr-reader.internal.js';
 export interface QrBillScannerProps extends Omit<ComponentPropsWithoutRef<"section">, "children" | "onConfirm"> {
     locale?: SwissLocale | "en";
@@ -2074,6 +2157,10 @@ export declare class SwissQrValidationError extends RangeError {
 }
 export declare function isQrReference(input: string): boolean;
 export declare function isCreditorReference(input: string): boolean;
+export declare function createQrReference(value: string | number | bigint): string;
+export declare function createCreditorReference(value: string | number | bigint): string;
+export declare function formatQrReference(value: string): string;
+export declare function formatCreditorReference(value: string): string;
 export declare function prepareSwissQrBill(bill: SwissQrBillData, locale?: SwissMessageLocale): {
     iban: string;
     creditor: SwissQrAddress;
@@ -2152,7 +2239,8 @@ export declare function standardSchema<Input, Output>(validate: (value: unknown)
 ## swiss/swiss-address-form.d.ts
 Client entry.
 ~~~ts
-import { type SwissLocale } from './locales.js';
+import { type ComponentPropsWithoutRef } from 'react';
+import { type SwissLocale, type SwissMessageLocale } from './locales.js';
 import { type SwissAddress, type SwissAddressFormat } from './postal-address.js';
 export type { SwissAddress, SwissAddressFormat } from './postal-address.js';
 export interface SwissAddressLabels {
@@ -2188,7 +2276,22 @@ export interface SwissAddressFormProps {
     labels?: Partial<SwissAddressLabels>;
     className?: string;
 }
+type AddressField = keyof SwissAddress;
+type AddressFieldLabels = Partial<Record<AddressField, string>> & Partial<Pick<SwissAddressLabels, "title" | "postalCodeHint" | "selectCanton" | "chooseLocality" | "suggestions" | "manualLocality">>;
+export interface SwissAddressFieldsProps extends Omit<ComponentPropsWithoutRef<"fieldset">, "children" | "defaultValue" | "onChange"> {
+    locale?: SwissMessageLocale;
+    format?: SwissAddressFormat;
+    fields?: readonly AddressField[];
+    names?: Partial<Record<AddressField, string>>;
+    idPrefix?: string;
+    labels?: AddressFieldLabels;
+    value?: Partial<SwissAddress>;
+    defaultValue?: Partial<SwissAddress>;
+    errors?: Partial<Record<AddressField, string>>;
+    onValueChange?: (address: Partial<SwissAddress>, changedFields: readonly AddressField[]) => void;
+}
 export declare const SwissAddressForm: import("react").ForwardRefExoticComponent<SwissAddressFormProps & import("react").RefAttributes<HTMLFormElement>>;
+export declare const SwissAddressFields: import("react").ForwardRefExoticComponent<SwissAddressFieldsProps & import("react").RefAttributes<HTMLFieldSetElement>>;
 ~~~
 
 ## swiss/swiss-date.d.ts
@@ -2207,10 +2310,12 @@ export declare const SwissDate: import("react").ForwardRefExoticComponent<SwissD
 Client entry.
 ~~~ts
 import { type ComponentPropsWithoutRef } from 'react';
+import { type SwissIdentifierInputProps } from './identifier-field.js';
 import type { SwissMessageLocale } from './locales.js';
 export interface SwissPostalCodeInputProps extends Omit<ComponentPropsWithoutRef<"input">, "type" | "inputMode" | "pattern" | "maxLength" | "minLength" | "children" | "value" | "defaultValue"> {
     value?: string;
     defaultValue?: string;
+    onValueChange?: SwissIdentifierInputProps["onValueChange"];
     locale?: SwissMessageLocale;
     validationMessage?: string;
 }
@@ -2322,8 +2427,9 @@ export declare const Badge: SlottedSignature<BadgeProps> & ForwardRefExoticCompo
 
 ## ui/bar-chart.d.ts
 ~~~ts
-import { type PlotProps } from './plot-frame.js';
-export interface BarChartProps extends PlotProps {
+import { type ComparisonPlotProps } from './comparison-plot.js';
+export type { ChartSeries } from './comparison-plot.js';
+export interface BarChartProps extends ComparisonPlotProps {
 }
 export declare const BarChart: import("react").ForwardRefExoticComponent<BarChartProps & import("react").RefAttributes<HTMLElement>>;
 ~~~
@@ -2452,6 +2558,25 @@ export interface CollapsibleProps extends ComponentPropsWithoutRef<"details"> {
     summary: ReactNode;
 }
 export declare const Collapsible: import("react").ForwardRefExoticComponent<CollapsibleProps & import("react").RefAttributes<HTMLDetailsElement>>;
+~~~
+
+## ui/comparison-plot.d.ts
+~~~ts
+import type { Ref } from 'react';
+import { type PlotProps } from './plot-frame.js';
+import type { ChartDatum } from './chart-datum.js';
+export interface ChartSeries {
+    name: string;
+    data: readonly ChartDatum[];
+}
+export interface ComparisonPlotProps extends Omit<PlotProps, "data"> {
+    data?: readonly ChartDatum[];
+    series?: readonly ChartSeries[];
+}
+export declare function ComparisonPlot({ series, kind, elementRef, categoryLabel, tableLabel, ...props }: Omit<ComparisonPlotProps, "data"> & {
+    kind: "bars" | "lines";
+    elementRef: Ref<HTMLElement>;
+}): import("react").JSX.Element;
 ~~~
 
 ## ui/data-table.d.ts
@@ -2588,10 +2713,28 @@ import type { SwissMessageLocale } from '../swiss/locales.js';
 export interface FileInputProps extends Omit<ComponentPropsWithoutRef<"input">, "type" | "value" | "defaultValue" | "children"> {
     locale?: SwissMessageLocale;
     files?: readonly File[];
+    maxSize?: number;
+    maxFiles?: number;
     onFilesChange?: (files: File[]) => void;
 }
 export declare const FileInput: import("react").ForwardRefExoticComponent<FileInputProps & import("react").RefAttributes<HTMLInputElement>>;
 export declare const Dropzone: import("react").ForwardRefExoticComponent<FileInputProps & import("react").RefAttributes<HTMLInputElement>>;
+~~~
+
+## ui/form-steps.d.ts
+Client entry.
+~~~ts
+import { type ComponentPropsWithoutRef } from 'react';
+export interface FormStepsProps extends Omit<ComponentPropsWithoutRef<"div">, "children"> {
+    label: string;
+    items: readonly {
+        id: string;
+        label: string;
+    }[];
+    current: string;
+    compactLabel?: string;
+}
+export declare const FormSteps: import("react").ForwardRefExoticComponent<FormStepsProps & import("react").RefAttributes<HTMLDivElement>>;
 ~~~
 
 ## ui/grid-overlay.d.ts
@@ -2767,8 +2910,9 @@ export declare const Label: import("react").ForwardRefExoticComponent<LabelProps
 
 ## ui/line-chart.d.ts
 ~~~ts
-import { type PlotProps } from './plot-frame.js';
-export interface LineChartProps extends PlotProps {
+import { type ComparisonPlotProps } from './comparison-plot.js';
+export type { ChartSeries } from './comparison-plot.js';
+export interface LineChartProps extends ComparisonPlotProps {
 }
 export declare const LineChart: import("react").ForwardRefExoticComponent<LineChartProps & import("react").RefAttributes<HTMLElement>>;
 ~~~

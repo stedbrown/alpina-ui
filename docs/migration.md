@@ -4,10 +4,10 @@ Start with one screen that already has a keyboard or form-submission test. A but
 
 ## Install alongside shadcn/ui
 
-Install Alpina UI 1.0.0-rc.1 from the portal's versioned package archive in your React project. To upgrade later, install the archive for the version you want to use. If your team edits component source, the CLI can copy selected TypeScript, CSS and dependencies into `components/alpina`. Your existing shadcn/ui source can stay in `components/ui`. [Installation guide](https://alpina-ui.vercel.app/docs/guides/start/)
+Install Alpina UI 1.0.0-rc.2 from the portal's versioned package archive in your React project. To upgrade later, install the archive for the version you want to use. If your team edits component source, the CLI can copy selected TypeScript, CSS and dependencies into `components/alpina`. Your existing shadcn/ui source can stay in `components/ui`. [Installation guide](https://alpina-ui.vercel.app/docs/guides/start/)
 
 ```sh
-npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.1.tgz
+npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.2.tgz
 # Optional editable source for the first screen
 npx --no-install alpina add button field input
 ```

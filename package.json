@@ -1,6 +1,6 @@
 {
   "name": "alpina-ui",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "publishConfig": {
     "access": "public",
     "provenance": true,
@@ -51,6 +51,7 @@
   },
   "files": [
     "CHANGELOG.md",
+    "etc/alpina-ui.api.md",
     "dist",
     "src",
     "cli",

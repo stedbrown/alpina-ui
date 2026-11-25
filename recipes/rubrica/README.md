@@ -8,7 +8,7 @@ Search by studio name, town, canton, or postal code. Select a canton and switch 
 
 ## Build and test
 
-Use Node.js 20 or later and npm. The recipe installs Alpina UI 1.0.0-rc.1 from the archive in its `vendor` directory. The lockfile records its integrity and pins the other dependencies. From the repository root, run the following commands. [Alpina UI 1.0.0-rc.1 package](https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.1.tgz)
+Use Node.js 20 or later and npm. The recipe installs Alpina UI 1.0.0-rc.2 from the archive in its `vendor` directory. The lockfile records its integrity and pins the other dependencies. From the repository root, run the following commands. [Alpina UI 1.0.0-rc.2 package](https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.2.tgz)
 
 ```sh
 cd recipes/rubrica

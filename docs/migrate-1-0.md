@@ -1,14 +1,18 @@
 # Move from Alpina 0.x to 1.0
 
-The first release candidate preserves the component imports, named props and CLI registry names in the archived 0.5–0.14 releases. There are no Alpina exports marked deprecated in the candidate. Keep existing component names, including `Attachment` for a download link and `FileInput` for picking a file. The two components serve different tasks. No JavaScript or TypeScript codemod is needed.
+The release candidates preserve the component imports, named props and CLI registry names in the archived 0.5–0.14 releases. There are no Alpina exports marked deprecated in the candidate. Keep existing component names, including `Attachment` for a download link and `FileInput` for picking a file. The two components serve different tasks. No JavaScript or TypeScript codemod is needed.
 
 ## Install and verify
 
 Commit your lockfile first. Install the exact archive in your React project, then run your application’s typecheck and tests. For source-copy projects, run `npx --no-install alpina diff` to compare the new sources with local edits. To roll back, restore your previous manifest, lockfile and any edited component sources, then run `npm ci`.
 
 ```sh
-npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.1.tgz
+npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.2.tgz
 ```
+
+## Calendar week numbers
+
+Calendar and DatePicker omit week numbers by default from RC2. If your existing layout depends on that column, pass `showWeekNumbers` to either component.
 
 ## Self-hosted font filenames
 

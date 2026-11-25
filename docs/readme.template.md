@@ -33,9 +33,10 @@ To own the source, run `npx --no-install alpina add button`. To copy a complete 
 
 ## What comes with Alpina
 
-- Issue a Swiss QR-bill with a SIX payment section, or read an incoming slip locally from a file or camera and confirm the parsed data. Print an invoice with itemized VAT and totals. [QR-bill guide]({{SITE}}/docs/guides/qr-bill/)
-- Collect an eCH-0010 postal address with offline postcode suggestions. Use the same field and checksum rules for AHV, UID, IBAN and payment references in the browser and on the server. [Shared validation]({{SITE}}/docs/guides/validation/)
+- Issue a Swiss QR-bill with a SIX payment section, or read an incoming slip locally from a file or camera and confirm the parsed data. Generate QRR or RF references and print a short invoice, itemized VAT and its payment slip on one A4 sheet. [QR-bill guide]({{SITE}}/docs/guides/qr-bill/)
+- Collect an eCH-0010 postal address with offline postcode suggestions. Embed the address fields in an existing form or a configurable multi-step service. Use the same field and checksum rules for AHV, UID, IBAN and payment references in the browser and on the server. [Shared validation]({{SITE}}/docs/guides/validation/)
 - Edit translations in German, French, Italian and Romansh side by side. English is also available in the public-service workflow and validation messages. Apply statutory or common holiday calendars by canton when calculating business days. [Language fields]({{SITE}}/docs/components/multilingual-field/) · [Swiss formats]({{SITE}}/docs/guides/swiss/)
+- Build a booking calendar with day availability and cantonal holidays. Compare budget and actuals as grouped bars, multiple lines or printable accounting tables. [Calendar]({{SITE}}/docs/components/calendar/) · [Accounting tables]({{SITE}}/docs/components/data-table/)
 - Lay out a page on four, eight or twelve columns. Inter’s optical sizes, tabular figures and a four-pixel baseline carry through to tables, print and dark mode. Export the tokens and printable sheets for design work. [Principles]({{SITE}}/principles/) · [Kit]({{SITE}}/kit/) · [Theme builder]({{SITE}}/themes/)
 - Inspect a component’s keyboard behavior and screen-reader guidance alongside its source. CI checks interactions, automated accessibility, forced colors and visual regressions. [Reference]({{SITE}}/docs/components/) · [Testing](docs/visual-testing.md)
 

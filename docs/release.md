@@ -1,5 +1,11 @@
 # Upgrading Alpina UI
 
+## Version 1.0.0-rc.2
+
+Install the [candidate archive](https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.2.tgz) and verify its [SHA-512 digest](https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.2.tgz.sha512). This candidate addresses feedback from four applications: a joinery invoicing app, a municipal service counter, a fiduciary ledger and a mobile appointment calendar.
+
+Short invoices print with the QR slip on one A4 sheet. Calendar and DatePicker omit the week-number column by default. Pass `showWeekNumbers` to display it. New address fields, progress navigation and language switching can be embedded in a larger service. The [component API](https://alpina-ui.vercel.app/docs/components/) shows the expanded TypeScript contracts. To roll back, reinstall the previous candidate archive below.
+
 ## Version 1.0.0-rc.1
 
 Install the [candidate archive](https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.1.tgz) in a test application. Compare its [SHA‑512 digest](https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.1.tgz.sha512) with the downloaded bytes. The [0.x migration guide](https://alpina-ui.vercel.app/docs/guides/migrate-1-0/) covers both renamed font assets and tested examples. The [Beta recommendations](https://alpina-ui.vercel.app/docs/guides/beta-review/) await maintainer decisions. The three packed framework projects run at both supported React endpoints in [CI](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml). To return to 0.14.0, restore the previous application lockfile or install the archive below.

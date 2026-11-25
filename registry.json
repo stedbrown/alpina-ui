@@ -1,6 +1,6 @@
 {
   "name": "alpina-ui",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "items": [
     {
       "name": "grid",
@@ -274,6 +274,8 @@
       "files": [
         "theme.css",
         "ui/bar-chart.tsx",
+        "ui/comparison-plot.tsx",
+        "ui/plot-axis.tsx",
         "ui/plot-frame.tsx",
         "ui/number-text.ts",
         "ui/chart-datum.ts",
@@ -288,6 +290,8 @@
       "files": [
         "theme.css",
         "ui/line-chart.tsx",
+        "ui/comparison-plot.tsx",
+        "ui/plot-axis.tsx",
         "ui/plot-frame.tsx",
         "ui/number-text.ts",
         "ui/chart-datum.ts",
@@ -307,7 +311,8 @@
         "ui/number-text.ts",
         "ui/chart-datum.ts",
         "ui/plots.css",
-        "ui/line-plot.tsx"
+        "ui/line-plot.tsx",
+        "ui/plot-axis.tsx"
       ]
     },
     {

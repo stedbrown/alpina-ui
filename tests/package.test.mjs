@@ -79,7 +79,9 @@ test('the registry lists the complete transitive source closure for each copied 
     componentNames.add(item.name)
     assert.ok(knownFiles.has(item.entry))
     const closure = new Set(['theme.css'])
-    const stack = [item.entry]
+    // These CLI entries also install their responsive, publicly exported companions.
+    const companions = { steps: 'ui/form-steps.tsx', 'locale-select': 'swiss/language-switcher.tsx' }
+    const stack = companions[item.name] ? [item.entry, companions[item.name]] : [item.entry]
     while (stack.length) {
       const file = stack.pop()
       if (closure.has(file)) continue

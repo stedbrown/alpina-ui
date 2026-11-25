@@ -7,7 +7,7 @@
   "ahv-input": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "2a03a4059a06e0d7575d"
+    "source": "b48f020e6d57c29c137b"
   },
   "alert": {
     "stage": "Stable",
@@ -17,12 +17,12 @@
   "alert-dialog": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "25455884f423469a231c"
+    "source": "bab641968e772baf9978"
   },
   "app-shell": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "2afa560cb78312309e9e"
+    "source": "735ba73df7f2fc3811d4"
   },
   "aspect-ratio": {
     "stage": "Stable",
@@ -32,7 +32,7 @@
   "attachment": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "63606427a8c107b70b41"
+    "source": "fd7de24297dde6885824"
   },
   "avatar": {
     "stage": "Stable",
@@ -42,12 +42,12 @@
   "badge": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "aee10a15a227c73c1cf2"
+    "source": "ae35905081de17c1f435"
   },
   "bar-chart": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "c2ce96f826ff90d88d7a"
+    "source": "c06a83c4520d0cbca047"
   },
   "breadcrumb": {
     "stage": "Stable",
@@ -62,7 +62,7 @@
   "button": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "0c0b8add60afe1529587"
+    "source": "94d5848aa0c0870960f0"
   },
   "button-group": {
     "stage": "Stable",
@@ -72,12 +72,12 @@
   "calendar": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "039ba012847e4bf071cb"
+    "source": "f75793d3e164181f3e20"
   },
   "canton-combobox": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "cd6e042653cfcd1440af"
+    "source": "2913f5063f6d920c01e2"
   },
   "canton-select": {
     "stage": "Stable",
@@ -92,7 +92,7 @@
   "carousel": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "1598f95be47cdfae1db3"
+    "source": "f7ec8ba92186494d04f3"
   },
   "chart": {
     "stage": "Stable",
@@ -102,7 +102,7 @@
   "chart-table": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "584cb5fa7263072a3190"
+    "source": "44fc08668c0fc21d6309"
   },
   "checkbox": {
     "stage": "Stable",
@@ -112,7 +112,7 @@
   "code-block": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "210864d4f00cfd906a95"
+    "source": "e4f9db73a0180a6dc38d"
   },
   "collapsible": {
     "stage": "Stable",
@@ -122,7 +122,7 @@
   "combobox": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "fdc9ceacbe3847cb66df"
+    "source": "449db794c39995469deb"
   },
   "command": {
     "stage": "Stable",
@@ -142,17 +142,17 @@
   "data-table": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "282d18f757cdf99b99ff"
+    "source": "25702c86a1c5abe59a4a"
   },
   "date-picker": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "fa895f7f8d88fa161fbb"
+    "source": "92875020861c6c92fc39"
   },
   "description-list": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "dde0606a9f21e1376fb3"
+    "source": "6c55fd6f4f5b0b0a462e"
   },
   "dialog": {
     "stage": "Stable",
@@ -192,7 +192,7 @@
   "file-input": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "45d872aa1838e1a18f2c"
+    "source": "3172c2187a01d46ffe87"
   },
   "grid": {
     "stage": "Stable",
@@ -212,7 +212,7 @@
   "iban-input": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "23f69632817aaaf34451"
+    "source": "d4ec27256c0e30f52b00"
   },
   "icon": {
     "stage": "Stable",
@@ -237,7 +237,7 @@
   "invoice-document": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "36b83e5931a6b3104f6b"
+    "source": "d134bad7518f0c191e8c"
   },
   "item": {
     "stage": "Stable",
@@ -257,17 +257,17 @@
   "letter": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "ff330faead8f6c488376"
+    "source": "cf2f724eb9c1a1d4e787"
   },
   "line-chart": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "6f763f172a0eff1cd22b"
+    "source": "cf482f5778f1363f9400"
   },
   "locale-select": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "5e5d0a75ddf78cb377c0"
+    "source": "09088e94dfe427cf5e95"
   },
   "marker": {
     "stage": "Stable",
@@ -287,12 +287,12 @@
   "message-scroller": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "9b5aec4267a38822aaf0"
+    "source": "ccc91328ecb4accf0c87"
   },
   "multilingual-field": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "c8f8e4ca14dce8f6949d"
+    "source": "797df123cba4afe76dc3"
   },
   "native-select": {
     "stage": "Stable",
@@ -302,7 +302,7 @@
   "navigation-menu": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "654d686fe3783dd20128"
+    "source": "ac38b264268354594bcb"
   },
   "pagination": {
     "stage": "Stable",
@@ -312,12 +312,12 @@
   "phone-input": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "3aa69e36bc94191048e0"
+    "source": "5135cb1c8e6c3492a3ca"
   },
   "popover": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "44411763cfb41aee3a68"
+    "source": "30d170da8baf572c315d"
   },
   "progress": {
     "stage": "Stable",
@@ -332,12 +332,12 @@
   "qr-bill-scanner": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "10b3e44e87d7f9977dcc"
+    "source": "955e8359057f1c694706"
   },
   "questionnaire": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "a304813946da0d2e6595"
+    "source": "36d291f5631eded417da"
   },
   "radio-group": {
     "stage": "Stable",
@@ -372,7 +372,7 @@
   "sidebar": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "37e0253827d04f8de5ea"
+    "source": "c6998ff928d035cb8e9b"
   },
   "skeleton": {
     "stage": "Stable",
@@ -387,7 +387,7 @@
   "sparkline": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "b5e4053fa6fc06d8e4a6"
+    "source": "0b506f6c76e1b4a12e45"
   },
   "spinner": {
     "stage": "Stable",
@@ -402,12 +402,12 @@
   "steps": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "21eeaaac622bae19404e"
+    "source": "e0d6d4cb910257d5f742"
   },
   "swiss-address-form": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "b99ac2c18a80d3166e8f"
+    "source": "d583bd970429266b17ea"
   },
   "swiss-date": {
     "stage": "Stable",
@@ -417,12 +417,12 @@
   "swiss-postal-code-input": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "72145dc807c39bbe487c"
+    "source": "bddbd82b799c7397db74"
   },
   "swiss-qr-bill": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "3d1207808276782e4212"
+    "source": "6906caec6e3bff4c5abf"
   },
   "switch": {
     "stage": "Stable",
@@ -432,7 +432,7 @@
   "table": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "cdc5f7cd837c42849051"
+    "source": "cba9347f7a84db24f2ff"
   },
   "tabs": {
     "stage": "Stable",
@@ -452,7 +452,7 @@
   "toast": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "20d9b80071c89544d653"
+    "source": "ad2bca393385e90f1b99"
   },
   "toggle": {
     "stage": "Stable",
@@ -462,7 +462,7 @@
   "toggle-group": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "af6eef53d2041673dadb"
+    "source": "a44fb461306e1ac98fdf"
   },
   "tooltip": {
     "stage": "Stable",
@@ -482,6 +482,6 @@
   "uid-input": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "9dac82bcb957485f543b"
+    "source": "36b7e2eaba8740a7b04d"
   }
 }

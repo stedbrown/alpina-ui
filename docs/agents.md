@@ -14,10 +14,10 @@ For a project-local installation from the package, copy `node_modules/alpina-ui/
 
 ## Connect the local MCP server
 
-Install the 1.0.0-rc.1 archive from the portal in your application using Node.js 20 or later. The package includes the reference data used by the server.
+Install the 1.0.0-rc.2 archive from the portal in your application using Node.js 20 or later. The package includes the reference data used by the server.
 
 ```sh
-npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.1.tgz
+npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.2.tgz
 ```
 
 Configure a local **stdio** server in your MCP client. Start `node` with the absolute path to the installed CLI and the argument `mcp`. For clients that use the `mcpServers` JSON format, replace the example path below with your own. On Windows, paths such as `C:/projects/store/node_modules/alpina-ui/cli/alpina.mjs` work in JSON.

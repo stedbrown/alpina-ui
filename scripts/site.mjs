@@ -5,6 +5,7 @@ import { build } from 'esbuild'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { marked } from 'marked'
+import { buildDesignerKit } from './designer-kit.mjs'
 
 export async function renderGuide(markdown) {
   return (await marked.parse(markdown)).replace(/<pre>/g, '<pre tabindex="0">')
@@ -78,7 +79,7 @@ async function loadPages() {
 }
 
 export async function buildWebsite({ guides, guideFiles, apiReference, registry, script, css, notices }) {
-  const { Landing, Examples, Icons, Themes, Principles, Blocks, BlockPage, blocks, ComponentDirectory, ComponentStatus, ReferencePage, ExampleIntroduction, inventory, projects } = await loadPages()
+  const { Landing, Examples, DesignerKit, Icons, Themes, Principles, Blocks, BlockPage, blocks, ComponentDirectory, ComponentStatus, ReferencePage, ExampleIntroduction, inventory, projects } = await loadPages()
   const paths = []
   const appJS = '/assets/catalog-' + sha(script) + '.js'
   const appCSS = '/assets/catalog-' + sha(css) + '.css'
@@ -159,6 +160,8 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
   const legacy = `(()=>{const h=location.hash.slice(1);if(!h)return;const p={rubrica:"client-directory","address-book":"client-directory","rubrica-bilingue":"bilingual-address-book","bilingual-address-book":"bilingual-address-book"};if(Object.hasOwn(p,h))location.replace("/examples/"+p[h]+"/");else if(h==="overview"||h.startsWith("guide/")||${ids}.includes(h.split("/")[0]))location.replace("/docs/#"+h)})();`
   await page('/', siteName, 'Open-source React and TypeScript components for forms, tables and multilingual interfaces on a Swiss typographic grid.',
     render(Landing, { version: registry.version, count: inventory.length }), { redirect: legacy, showcase: true })
+  await buildDesignerKit(output)
+  await page('/kit/', 'Designer kit', 'Download editable column grids, an A4 type sheet and light and dark design tokens for your design tools.', render(DesignerKit))
   await page('/icons/', 'Alpina icons', 'Browse original SVG icons for navigation, actions, content and Git workflows. Preview sizes and copy React code.', render(Icons), { icons: true })
   await page('/themes/', 'Theme builder', 'Preview your accent, grid and light or dark appearance on Alpina components. Check text contrast and copy CSS variables.', render(Themes), { theme: true })
   await page('/principles/', 'Design principles', 'Eight Swiss design decisions demonstrated with working Alpina components and paired examples.', render(Principles))

@@ -8,7 +8,7 @@ import { HomeShowcase } from './home-showcase.js'
 import { projects } from './projects.js'
 
 const repository = 'https://github.com/stedbrown/alpina-ui'
-type Section = 'home' | 'docs' | 'components' | 'icons' | 'themes' | 'blocks' | 'examples' | 'agents' | 'principles'
+type Section = 'home' | 'kit' | 'docs' | 'components' | 'icons' | 'themes' | 'blocks' | 'examples' | 'agents' | 'principles'
 
 function GitHubLabel() {
   return <><Icon name="git-branch" size={18} />{' GitHub'}</>
@@ -56,6 +56,7 @@ export function Footer({ version }: { version?: string } = {}) {
           <TextLink href="/" variant="quiet"><Typography as="span" variant="label">Alpina UI{version && ' · v' + version}</Typography></TextLink>
           <Stack direction="row" gap={4}>
             <TextLink href={repository + '/blob/main/LICENSE'}>MIT license</TextLink>
+            <TextLink href="/kit/">Designer kit</TextLink>
             <TextLink href="/status/">Component status</TextLink>
             <TextLink href={repository}><GitHubLabel /></TextLink>
           </Stack>
@@ -136,6 +137,7 @@ export function Landing({ version, count }: { version: string; count: number }) 
             <Typography as="h2" variant="display" id="design-title">The Swiss grid</Typography>
             <Typography measure="narrow">Four, eight or twelve columns align labels, actions and figures as the space changes. A four-pixel spacing unit gives forms and editorial pages the same rhythm.</Typography>
             <TextLink href="/principles/">Explore the design principles →</TextLink>
+            <TextLink href="/kit/">Download the designer kit →</TextLink>
             <TextLink href="/docs/guides/design/">Read the design notes →</TextLink>
           </Stack>
         </GridItem>

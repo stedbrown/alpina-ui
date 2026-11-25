@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 793.7007874015749 1122.5196850393702" font-family="Inter Variable, Inter, Helvetica, Arial, sans-serif" role="img" aria-labelledby="sheet-title sheet-desc">
+<title id="sheet-title">Alpina grid and type sheet</title>
+<desc id="sheet-desc">Three editable column grids and six type specimens. Positions use CSS pixels at 96 dpi.</desc>
+<rect x="0" y="0" width="793.7007874015749" height="1122.5196850393702" fill="#ffffff"/>
+<text x="40" y="65" font-size="18" font-weight="650" fill="#000000">Alpina UI</text>
+<text x="40" y="145" font-size="72" font-weight="700" fill="#eb0000">Grid and type</text>
+<text x="40" y="184" font-size="18" font-weight="400" fill="#000000">A4 working sheet  /  Four-pixel baseline  /  Print at 100%</text>
+<g id="grid-4">
+<rect x="40" y="220" width="713.7007874015749" height="1" fill="#000000"/>
+<text x="40" y="244" font-size="18" font-weight="650" fill="#000000">4 columns</text>
+<text x="212" y="244" font-size="14" font-weight="400" fill="#000000">Container 0 px and up  /  Margin 16 px  /  Gutter 12 px</text>
+<rect x="56" y="256" width="161.42519685039372" height="48" fill="#f7dddd"/>
+<rect x="56" y="256" width="1" height="48" fill="#eb0000"/>
+<rect x="229.42519685039372" y="256" width="161.42519685039372" height="48" fill="#f7dddd"/>
+<rect x="229.42519685039372" y="256" width="1" height="48" fill="#eb0000"/>
+<rect x="402.85039370078744" y="256" width="161.42519685039372" height="48" fill="#f7dddd"/>
+<rect x="402.85039370078744" y="256" width="1" height="48" fill="#eb0000"/>
+<rect x="576.2755905511812" y="256" width="161.42519685039372" height="48" fill="#f7dddd"/>
+<rect x="576.2755905511812" y="256" width="1" height="48" fill="#eb0000"/>
+</g>
+<g id="grid-8">
+<rect x="40" y="326" width="713.7007874015749" height="1" fill="#000000"/>
+<text x="40" y="350" font-size="18" font-weight="650" fill="#000000">8 columns</text>
+<text x="212" y="350" font-size="14" font-weight="400" fill="#000000">Container 576 px and up  /  Margin 24 px  /  Gutter 16 px</text>
+<rect x="64" y="362" width="69.21259842519686" height="48" fill="#f7dddd"/>
+<rect x="64" y="362" width="1" height="48" fill="#eb0000"/>
+<rect x="149.21259842519686" y="362" width="69.21259842519686" height="48" fill="#f7dddd"/>
+<rect x="149.21259842519686" y="362" width="1" height="48" fill="#eb0000"/>
+<rect x="234.42519685039372" y="362" width="69.21259842519686" height="48" fill="#f7dddd"/>
+<rect x="234.42519685039372" y="362" width="1" height="48" fill="#eb0000"/>
+<rect x="319.6377952755906" y="362" width="69.21259842519686" height="48" fill="#f7dddd"/>
+<rect x="319.6377952755906" y="362" width="1" height="48" fill="#eb0000"/>
+<rect x="404.85039370078744" y="362" width="69.21259842519686" height="48" fill="#f7dddd"/>
+<rect x="404.85039370078744" y="362" width="1" height="48" fill="#eb0000"/>
+<rect x="490.0629921259843" y="362" width="69.21259842519686" height="48" fill="#f7dddd"/>
+<rect x="490.0629921259843" y="362" width="1" height="48" fill="#eb0000"/>
+<rect x="575.2755905511812" y="362" width="69.21259842519686" height="48" fill="#f7dddd"/>
+<rect x="575.2755905511812" y="362" width="1" height="48" fill="#eb0000"/>
+<rect x="660.4881889763781" y="362" width="69.21259842519686" height="48" fill="#f7dddd"/>
+<rect x="660.4881889763781" y="362" width="1" height="48" fill="#eb0000"/>
+</g>
+<g id="grid-12">
+<rect x="40" y="432" width="713.7007874015749" height="1" fill="#000000"/>
+<text x="40" y="456" font-size="18" font-weight="650" fill="#000000">12 columns</text>
+<text x="212" y="456" font-size="14" font-weight="400" fill="#000000">Container 864 px and up  /  Margin 32 px  /  Gutter 24 px</text>
+<rect x="72" y="468" width="32.14173228346457" height="48" fill="#f7dddd"/>
+<rect x="72" y="468" width="1" height="48" fill="#eb0000"/>
+<rect x="128.14173228346456" y="468" width="32.14173228346457" height="48" fill="#f7dddd"/>
+<rect x="128.14173228346456" y="468" width="1" height="48" fill="#eb0000"/>
+<rect x="184.28346456692913" y="468" width="32.14173228346457" height="48" fill="#f7dddd"/>
+<rect x="184.28346456692913" y="468" width="1" height="48" fill="#eb0000"/>
+<rect x="240.42519685039372" y="468" width="32.14173228346457" height="48" fill="#f7dddd"/>
+<rect x="240.42519685039372" y="468" width="1" height="48" fill="#eb0000"/>
+<rect x="296.56692913385825" y="468" width="32.14173228346457" height="48" fill="#f7dddd"/>
+<rect x="296.56692913385825" y="468" width="1" height="48" fill="#eb0000"/>
+<rect x="352.70866141732284" y="468" width="32.14173228346457" height="48" fill="#f7dddd"/>
+<rect x="352.70866141732284" y="468" width="1" height="48" fill="#eb0000"/>
+<rect x="408.85039370078744" y="468" width="32.14173228346457" height="48" fill="#f7dddd"/>
+<rect x="408.85039370078744" y="468" width="1" height="48" fill="#eb0000"/>
+<rect x="464.99212598425197" y="468" width="32.14173228346457" height="48" fill="#f7dddd"/>
+<rect x="464.99212598425197" y="468" width="1" height="48" fill="#eb0000"/>
+<rect x="521.1338582677165" y="468" width="32.14173228346457" height="48" fill="#f7dddd"/>
+<rect x="521.1338582677165" y="468" width="1" height="48" fill="#eb0000"/>
+<rect x="577.2755905511812" y="468" width="32.14173228346457" height="48" fill="#f7dddd"/>
+<rect x="577.2755905511812" y="468" width="1" height="48" fill="#eb0000"/>
+<rect x="633.4173228346457" y="468" width="32.14173228346457" height="48" fill="#f7dddd"/>
+<rect x="633.4173228346457" y="468" width="1" height="48" fill="#eb0000"/>
+<rect x="689.5590551181102" y="468" width="32.14173228346457" height="48" fill="#f7dddd"/>
+<rect x="689.5590551181102" y="468" width="1" height="48" fill="#eb0000"/>
+</g>
+<rect x="40" y="554" width="713.7007874015749" height="1" fill="#000000"/>
+<text x="40" y="591" font-size="30" font-weight="650" fill="#000000">Type scale</text>
+<text x="40" y="621" font-size="14" font-weight="400" fill="#000000">Role</text>
+<text x="205" y="621" font-size="14" font-weight="400" fill="#000000">Size / leading (px)</text>
+<text x="417" y="621" font-size="14" font-weight="400" fill="#000000">Specimen</text>
+<g id="type-caption">
+<rect x="40" y="640" width="713.7007874015749" height="0.6" fill="#aaa"/>
+<text x="40" y="664" font-size="14" font-weight="400" fill="#000000">Caption</text>
+<text x="205" y="664" font-size="14" font-weight="400" fill="#000000">12 / 16</text>
+<text x="417" y="664" font-size="12" font-weight="400" fill="#000000">Aa 0123</text>
+</g>
+<g id="type-label">
+<rect x="40" y="680" width="713.7007874015749" height="0.6" fill="#aaa"/>
+<text x="40" y="704" font-size="14" font-weight="400" fill="#000000">Label</text>
+<text x="205" y="704" font-size="14" font-weight="400" fill="#000000">14 / 20</text>
+<text x="417" y="704" font-size="14" font-weight="650" fill="#000000">Aa 0123</text>
+</g>
+<g id="type-body">
+<rect x="40" y="720" width="713.7007874015749" height="0.6" fill="#aaa"/>
+<text x="40" y="744" font-size="14" font-weight="400" fill="#000000">Body</text>
+<text x="205" y="744" font-size="14" font-weight="400" fill="#000000">16 / 24</text>
+<text x="417" y="744" font-size="16" font-weight="400" fill="#000000">Aa 0123</text>
+</g>
+<g id="type-heading">
+<rect x="40" y="760" width="713.7007874015749" height="0.6" fill="#aaa"/>
+<text x="40" y="784" font-size="14" font-weight="400" fill="#000000">Heading</text>
+<text x="205" y="784" font-size="14" font-weight="400" fill="#000000">24 / 28</text>
+<text x="417" y="784" font-size="24" font-weight="650" fill="#000000">Aa 0123</text>
+</g>
+<g id="type-display">
+<rect x="40" y="800" width="713.7007874015749" height="0.6" fill="#aaa"/>
+<text x="40" y="848" font-size="14" font-weight="400" fill="#000000">Display</text>
+<text x="205" y="848" font-size="14" font-weight="400" fill="#000000">48 / 48</text>
+<text x="417" y="848" font-size="48" font-weight="650" fill="#000000">Aa 0123</text>
+</g>
+<g id="type-display-lg">
+<rect x="40" y="864" width="713.7007874015749" height="0.6" fill="#aaa"/>
+<text x="40" y="928" font-size="14" font-weight="400" fill="#000000">Display large</text>
+<text x="205" y="928" font-size="14" font-weight="400" fill="#000000">64 / 64</text>
+<text x="417" y="928" font-size="64" font-weight="650" fill="#000000">Aa 0123</text>
+</g>
+<g id="baseline-4">
+<text x="40" y="1008" font-size="14" font-weight="400" fill="#000000">4 px baseline</text>
+<rect x="205" y="984" width="548.7007874015749" height="1" fill="#eb0000"/>
+<rect x="205" y="988" width="548.7007874015749" height="0.5" fill="#aaa"/>
+<rect x="205" y="992" width="548.7007874015749" height="0.5" fill="#aaa"/>
+<rect x="205" y="996" width="548.7007874015749" height="0.5" fill="#aaa"/>
+<rect x="205" y="1000" width="548.7007874015749" height="1" fill="#eb0000"/>
+<rect x="205" y="1004" width="548.7007874015749" height="0.5" fill="#aaa"/>
+<rect x="205" y="1008" width="548.7007874015749" height="0.5" fill="#aaa"/>
+<rect x="205" y="1012" width="548.7007874015749" height="0.5" fill="#aaa"/>
+<rect x="205" y="1016" width="548.7007874015749" height="1" fill="#eb0000"/>
+</g>
+<rect x="40" y="1044" width="713.7007874015749" height="2" fill="#000000"/>
+<text x="40" y="1072" font-size="14" font-weight="400" fill="#000000">Alpina UI  /  Inter Variable</text>
+<text x="417" y="1072" font-size="14" font-weight="400" fill="#000000">alpina-ui.vercel.app/kit/</text>
+</svg>

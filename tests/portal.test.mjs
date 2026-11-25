@@ -3,7 +3,7 @@ import { readFile, readdir } from 'node:fs/promises'
 import test from 'node:test'
 const root = new URL('../', import.meta.url)
 test('the homepage and new projects compose public controls without local presentation overrides', async () => {
-  for (const path of ['web/pages.tsx', 'web/type-specimen.tsx', 'web/component-directory.tsx', 'web/home-showcase.tsx', 'web/icons.tsx',
+  for (const path of ['web/pages.tsx', 'web/kit.tsx', 'web/type-specimen.tsx', 'web/component-directory.tsx', 'web/home-showcase.tsx', 'web/icons.tsx',
     'catalog/workshop-registration.tsx', 'catalog/invoice-review.tsx']) {
     const source = await readFile(new URL(path, root), 'utf8')
     assert.match(source, /from 'alpina-ui'/, path)

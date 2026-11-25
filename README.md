@@ -1,6 +1,6 @@
 # Alpina UI
 
-Alpina UI brings Swiss typographic design to React. Its 93 components share a responsive grid, left-aligned type, square corners, and a black, white, and red palette. Use them to build a form, format a CHF amount, or print the payment section of a Swiss QR-bill. Address, date, and currency components support Switzerland’s four national languages.
+Alpina UI brings Swiss typographic design to React. Its 95 components share a responsive grid, left-aligned type, square corners, and a black, white, and red palette. Use them to build a form, format a CHF amount, or print the payment section of a Swiss QR-bill. Address, date, and currency components support Switzerland’s four national languages.
 
 ## Explore Alpina
 
@@ -10,14 +10,14 @@ Change the size of a poster edition, switch an invoice between three languages o
 
 Open the offline catalog in a browser to try every component, inspect its TypeScript API, and copy its source. Start with the typography specimen. Switch between 4, 8, and 12 columns to see how margins, gutters, and type sizes change with the available width. The portal uses the same public imports as any other Alpina application. [Offline catalog](https://alpina-ui.vercel.app/catalog.html) · [Design and measurements](docs/design.md)
 
-The catalog covers all 66 families in the shadcn/ui index reviewed on November 24, 2026. Its 27 additional entries include layout primitives, interface icons, Swiss payment and identity fields, and documentation components. The migration table maps each family to its Alpina equivalent and explains differences in the APIs. [Migration guide](https://alpina-ui.vercel.app/docs/guides/migration/) · [Component coverage](docs/coverage.md) · [Swiss graphic design research](docs/research.md)
+The catalog covers all 66 families in the shadcn/ui index reviewed on November 24, 2026. Its 29 additional entries include layout primitives, interface icons, Swiss payment and identity fields, and documentation components. The migration table maps each family to its Alpina equivalent and explains differences in the APIs. [Migration guide](https://alpina-ui.vercel.app/docs/guides/migration/) · [Component coverage](docs/coverage.md) · [Swiss graphic design research](docs/research.md)
 
 ## Install
 
 For a project using React and React DOM 18.2 or 19, install the versioned package archive served by the portal.
 
 ```sh
-npm install https://alpina-ui.vercel.app/alpina-ui-0.11.0.tgz
+npm install https://alpina-ui.vercel.app/alpina-ui-0.12.0.tgz
 ```
 
 Import the stylesheet once at your application entry point and use components by name. You can also copy the TypeScript and CSS into your project with `npx --no-install alpina add button`. [Quick start](docs/start.md)
@@ -35,6 +35,8 @@ Use `<Button asChild><a href="/invoices">Invoices</a></Button>` to style a link 
 
 Import `alpina-ui/fonts.css` to self-host Inter. For Tailwind v4, add `@import "alpina-ui/tailwind.css";` after importing Tailwind in your stylesheet. The theme builder previews your accent, grid unit and color scheme, reports text contrast, and exports CSS variables. [Typography](docs/design.md) · [Theme builder](https://alpina-ui.vercel.app/themes/)
 
+Designers can download both appearances as typed DTCG 2025.10 JSON or a standalone Style Dictionary configuration. The editable SVG and print-ready A4 PDF include 4-, 8- and 12-column grids, the baseline and six type sizes. [Designer kit](https://alpina-ui.vercel.app/kit/)
+
 ## Copy a page
 
 Run one of these commands in a project with Alpina installed. Each block uses public components and ships as editable TSX. The dashboard includes a chart and data table. The pricing page switches between monthly and annual CHF prices. [Block previews](https://alpina-ui.vercel.app/blocks/)
@@ -51,6 +53,10 @@ npx --no-install alpina add block/pricing
 Edit one title in German, French, Italian and Romansh with `MultilingualField`. The postal address form offers locality and canton suggestions after the fourth postcode digit. Calendar and DatePicker can mark public holidays for a canton and its supported regions. Use `addBusinessDays` to schedule across weekends and public holidays. [Multilingual field](https://alpina-ui.vercel.app/docs/components/multilingual-field/) · [Holiday and postcode sources](docs/swiss.md)
 
 `IbanInput`, `AhvInput`, `UidInput` and `PhoneInput` format Swiss bank accounts, social insurance numbers, business identifiers and phone numbers. Use `SwissAddressForm` with `format="ech-person"` or `format="ech-organisation"` for structured Swiss street addresses. `SwissQrBill` validates account and reference combinations, encodes the payment data, and prints a 210 × 105 mm payment section and receipt. [Interactive payment slip](https://alpina-ui.vercel.app/docs/components/swiss-qr-bill/) · [QR-bill guide](docs/qr-bill.md)
+
+Choose statutory or common observance for a cantonal work calendar. The common schedule adds documented office closures and marks them as customary. [Scope and sources](https://alpina-ui.vercel.app/docs/guides/swiss/)
+
+Place a letter address for a left- or right-window envelope with the historical SN 010130 profiles. For an itemized invoice, enter VAT-exclusive CHF prices and quantities. Alpina calculates VAT per rate, can round a cash total to five centimes and prints a payment section with the same payable amount on the last page. [Letter](https://alpina-ui.vercel.app/docs/components/letter/) · [InvoiceDocument](https://alpina-ui.vercel.app/docs/components/invoice-document/)
 
 ## Charts and framework examples
 
@@ -77,7 +83,7 @@ Serve `site/` with a static HTTP server to browse the website from its homepage.
 | --- | --- |
 | `src/ui` | 49 foundational components including Grid, Typography, Icon, and DataTable |
 | `src/interactive` | 23 interactive components and their shared behavior |
-| `src/swiss` | 15 Swiss components, plus datasets, validators, and formatters |
+| `src/swiss` | 17 Swiss components, plus datasets, validators, and formatters |
 | `src/portal` | 6 components for navigation, page structure, code samples, and documentation |
 | `src/theme.css` | Tokens for the light and dark themes |
 | `blocks` | Four complete page templates copied by the CLI |
@@ -94,7 +100,7 @@ Search seven fictional design studios, switch between Italian and German, and ed
 
 ## Inspect and update a component
 
-Each component page has four views. The preview keeps your input when you switch to the example code, API reference, or distributed source. Adjust the preview width to see how a component behaves in a narrow container. A link such as `#swiss-address-form/api` opens the reference directly.
+Each component page covers appropriate uses, alternatives, accessibility and wording, with examples in German, French, Italian and Romansh. Each page has four views. The preview keeps your input when you switch to the example code, API reference, or distributed source. Adjust the preview width to see how a component behaves in a narrow container. A link such as `#swiss-address-form/api` opens the reference directly.
 
 After upgrading the package, run `npx --no-install alpina diff` to compare copied components with the installed version. [CLI guide](docs/cli.md) · [Migration notes](docs/release.md)
 
@@ -116,18 +122,18 @@ Run `npm run size` after building to measure individual imports. The benchmark u
 | Import | Gzipped bytes |
 | --- | ---: |
 | Button JavaScript | 1,017 |
-| CurrencyCHF JavaScript | 1,027 |
+| CurrencyCHF JavaScript | 1,044 |
 | Dialog JavaScript | 1,155 |
 | Icon JavaScript, all 32 drawings | 1,245 |
-| All JavaScript exports in a single bundle | 77,821 |
-| Full stylesheet including the theme | 16,327 |
+| All JavaScript exports in a single bundle | 81,112 |
+| Full stylesheet including the theme | 17,609 |
 | Button CSS without the theme | 763 |
 
 The production Vite Button example loads one JavaScript asset. The package quality guide documents the checks for root imports and subpaths, including esbuild’s split-output behavior. [Package quality](docs/package-quality.md)
 
 ## Releases
 
-Version 0.11.0 adds multilingual editing, cantonal holiday scheduling, offline postal suggestions and four SVG data graphics. The portal follows the device appearance by default. CI builds three consumer projects and enforces component bundle budgets. [Changelog](CHANGELOG.md) · [Before and after](https://alpina-ui.vercel.app/releases/0.11/) · [Swiss forms](docs/swiss.md) · [Visual testing](docs/visual-testing.md)
+Version 0.12.0 adds Swiss print documents, a designer kit, statutory and common holiday schedules, and guidance for all 95 components. CI checks production bundles in three toolchains, page-level screenshot regressions and Lighthouse budgets. [Changelog](CHANGELOG.md) · [Before and after](https://alpina-ui.vercel.app/releases/0.11/) · [Swiss forms](docs/swiss.md) · [Visual testing](docs/visual-testing.md)
 
 Pushes run CI. A maintainer can publish a verified package archive with provenance by starting the separate release workflow. [Maintainer guide](docs/npm-release.md)
 

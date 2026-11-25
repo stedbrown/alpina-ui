@@ -1,5 +1,9 @@
 # Upgrading Alpina UI
 
+## Version 0.12.0
+
+Install the [0.12.0 archive](https://alpina-ui.vercel.app/alpina-ui-0.12.0.tgz). Display snapshots for negative chart and table values now contain U+2212. Holiday queries keep the statutory default. Choose common observance to include the documented office closures. [Print documents](https://alpina-ui.vercel.app/docs/components/invoice-document/) · [Designer kit](https://alpina-ui.vercel.app/kit/) · [Package quality](https://github.com/stedbrown/alpina-ui/blob/main/docs/package-quality.md)
+
 ## Version 0.11.0
 
 Install `https://alpina-ui.vercel.app/alpina-ui-0.11.0.tgz`. Check currency text snapshots that previously expected a hyphen on negative balances. Forms retain manual postal entry. Pass a canton to opt into holiday markers. The three framework examples run against the packed package. [Component status](https://alpina-ui.vercel.app/status/) · [Before and after](https://alpina-ui.vercel.app/releases/0.11/) · [Full changelog](https://github.com/stedbrown/alpina-ui/blob/main/CHANGELOG.md)

@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.12.0 · 25 November 2026
+
+- Restore the red Alpina masthead, visible GitHub label and “Swiss UI for React.” headline. Financial values, dates and identifiers keep their line. Browser checks inspect text geometry at eight widths and compare the homepage and public routes against screenshot references.
+- Charts, sparklines, numeric typography and table cells use a mathematical minus sign in displayed negative numbers.
+- A named Button import from the package root drops postal and QR data in split esbuild, Vite and Next production builds. Raw esbuild address consumers can opt into a separate offline postcode chunk. [Bundling details](docs/package-quality.md)
+- Set holiday observance to statutory or common in Swiss scheduling helpers and calendars. The Swiss guide lists customary office closures with their geographic scope and sources. [Holiday schedules](docs/swiss.md)
+- Download light and dark design tokens, ready-to-build Style Dictionary configurations and an editable A4 grid and type sheet. [Designer kit](https://alpina-ui.vercel.app/kit/)
+- Print A4 letters for left- or right-window envelopes using historical SN 010130 layouts. Print itemized VAT invoices with exact decimal totals and a QR payment section on the last page. [Swiss documents](docs/swiss.md)
+- The portal preloads Inter and prerenders component previews and blocks. Continuous integration checks homepage, component and block performance, accessibility and cumulative layout shift.
+- Every component has guidance on when to use it, alternatives, accessibility, and wording in Switzerland’s four national languages, with paired examples. [Component reference](https://alpina-ui.vercel.app/docs/components/)
+
 ## 0.11.0 · 25 November 2026
 
 ### Forms and scheduling

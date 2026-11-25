@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { forwardRef, useState, type ComponentPropsWithoutRef } from 'react'
 import { createRoot } from 'react-dom/client'
 import {
   Alert, AppShell, AspectRatio, Attachment, Avatar, Badge, Breadcrumb, Button, ButtonGroup,
   Card, CardContent, CardFooter, CardTitle, Chart, Checkbox, CodeBlock, Collapsible, CurrencyCHF, DataTable,
   Direction, Empty, Field, Grid, GridItem, Input, InputGroup, Item, Kbd, Label, Marker,
-  Message, NavigationMenu, Pagination, Progress, Prose, RadioGroup, ScrollArea, Select,
+  Message, SideNav, SideNavLink, Pagination, Progress, Prose, RadioGroup, ScrollArea, Select,
   Separator, Sidebar, Skeleton, Slider, Spinner, Stack, Switch, Table, TableBody, TableCell, TableRow,
   Textarea, TextLink, Toggle, Typography,
 } from '../src/index.js'
@@ -12,7 +12,9 @@ import '../src/theme.css'
 
 const token = 'Atelier'.repeat(12)
 const columns = [{ id: 'amount', header: 'Amount due', compare: (a: number, b: number) => a - b, cell: String }]
-const links = [{ href: '#directory', current: true, label: 'Directory' }]
+const RouterLink = forwardRef<HTMLAnchorElement, ComponentPropsWithoutRef<'a'> & { to: string }>(
+  ({ to, ...props }, ref) => <a {...props} ref={ref} href={to} />,
+)
 
 function Fixture() {
   const [mixed, setMixed] = useState<boolean | undefined>(true)
@@ -69,7 +71,10 @@ function Fixture() {
         <CodeBlock label="Install" code="npm install sample" />
       </GridItem>
     </Grid>
-    <AppShell brand="Studio" sidebar={<Sidebar><NavigationMenu label="Sections" sections={[{ links }]} /></Sidebar>}>
+    <AppShell brand="Studio" sidebar={<Sidebar><SideNav label="Sections">
+      <SideNavLink active asChild><RouterLink to="#directory">Directory</RouterLink></SideNavLink>
+      <SideNavLink href="#archive" aria-current={false}>Archive</SideNavLink>
+    </SideNav></Sidebar>}>
       <Prose><h2>Directory</h2><p><TextLink href="#index">Index</TextLink></p></Prose>
     </AppShell>
   </>

@@ -1,4 +1,6 @@
-import { forwardRef, type HTMLAttributes, type ReactNode } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef, type ForwardRefExoticComponent, type HTMLAttributes, type ReactNode, type RefAttributes } from 'react'
+import { Slot, type SlottedSignature } from '../ui/slot.js'
+import './navigation-menu.css'
 import './sidebar.css'
 
 export interface SidebarProps extends HTMLAttributes<HTMLElement> {
@@ -23,3 +25,27 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(function Sidebar
     </Element>
   )
 })
+
+export interface SideNavProps extends ComponentPropsWithoutRef<'nav'> {
+  label: string
+}
+
+export const SideNav = forwardRef<HTMLElement, SideNavProps>(function SideNav(
+  { label, children, className = '', ...props }, ref,
+) {
+  return <nav {...props} ref={ref} aria-label={label} className={('al-navigation ' + className).trim()} data-orientation="vertical">
+    <ul>{children}</ul>
+  </nav>
+})
+
+export interface SideNavLinkProps extends ComponentPropsWithoutRef<'a'> {
+  active?: boolean
+  asChild?: boolean
+}
+
+export const SideNavLink = forwardRef<HTMLAnchorElement, SideNavLinkProps>(function SideNavLink(
+  { active = false, asChild = false, 'aria-current': current, ...props }, ref,
+) {
+  const Link = asChild ? Slot : 'a'
+  return <li><Link {...props} ref={ref} aria-current={current ?? (active ? 'page' : undefined)} /></li>
+}) as SlottedSignature<SideNavLinkProps> & ForwardRefExoticComponent<SideNavLinkProps & RefAttributes<HTMLAnchorElement>>

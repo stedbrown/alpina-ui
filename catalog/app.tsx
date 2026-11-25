@@ -351,12 +351,6 @@ export function App({ pathname }: { pathname: string }) {
     <Sidebar
       ref={list}
       aria-label="Catalog"
-      masthead={
-        <>
-          <Brand hostedDocs={hostedDocs} />
-          <Typography as="span" variant="caption">v{version}</Typography>
-        </>
-      }
       tools={
         <InputGroup trailing={<Kbd aria-hidden="true">/</Kbd>}>
           <Input
@@ -377,7 +371,7 @@ export function App({ pathname }: { pathname: string }) {
       }
       footer={
         <>
-          <span>React + TypeScript</span>
+          <span>v{version}</span>
           <span>{inventory.length} components</span>
         </>
       }

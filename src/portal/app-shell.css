@@ -11,7 +11,9 @@
 .al-app-shell :where(*, *::before, *::after) {
   box-sizing: border-box;
 }
-.al-app-index {
+.al-app-rail {
+  display: flex;
+  flex-direction: column;
   position: sticky;
   inset-block-start: 0;
   align-self: start;
@@ -21,6 +23,18 @@
   z-index: 2;
   background: var(--al-bg);
 }
+.al-app-masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--al-space-2);
+  min-block-size: 3.5rem;
+  padding: var(--al-space-2) var(--al-space-5);
+  border-block-end: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 0 0 1px;
+}
+.al-app-brand { min-inline-size: 0; font-weight: 700; overflow-wrap: break-word; }
+.al-app-index { flex: 1; min-block-size: 0; overflow-y: auto; }
 .al-app-page,
 .al-app-main {
   min-width: 0;
@@ -75,17 +89,9 @@
   .al-app-shell {
     display: block;
   }
-  .al-app-mobile {
-    display: flex;
-    flex-wrap: wrap;
-    overflow-wrap: anywhere;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    border-block-end: var(--al-unit) solid var(--al-line);
-  border-image: linear-gradient(var(--al-line) 0 0) 1 / 0 0 1px;
-  }
+  .al-app-rail { display: block; position: static; height: auto; border: 0; }
+  .al-app-masthead { flex-wrap: wrap; padding-inline: var(--al-space-4); }
+  .al-app-mobile { display: block; }
   .al-app-index {
     display: none;
     position: static;
@@ -96,7 +102,7 @@
     border-block-end: var(--al-unit) solid var(--al-ink);
   border-image: linear-gradient(var(--al-ink) 0 0) 1 / 0 0 2px;
   }
-  .al-app-shell[data-index-open='true'] > .al-app-index {
+  .al-app-shell[data-index-open='true'] > .al-app-rail > .al-app-index {
     display: block;
   }
   .al-app-bar {
@@ -107,3 +113,5 @@
 .al-app-bar:has(> .al-navigation) { flex-wrap: nowrap; align-items: flex-start; }
 .al-app-bar > .al-navigation + .al-button { min-height: var(--al-space-11); white-space: nowrap; }
 @media (max-width: 650px) { .al-app-bar > .al-navigation[data-orientation='horizontal'] ul { gap: .15rem .75rem; } }
+
+@media print { .al-app-rail { display: none; } }

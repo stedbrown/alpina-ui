@@ -1,4 +1,4 @@
-import { AppShell, Sidebar, NavigationMenu, CodeBlock, TextLink, Prose, Typography } from 'alpina-ui'
+import { AppShell, Sidebar, SideNav, SideNavLink, NavigationMenu, CodeBlock, TextLink, Prose, Typography } from 'alpina-ui'
 
 export function AppShellExample() {
   return (
@@ -7,8 +7,11 @@ export function AppShellExample() {
       navigationLabel="Studio navigation"
       brand="Atelier"
       sidebar={
-        <Sidebar as="div" role="group" aria-label="Example contents" masthead="Atelier">
-          <TextLink href="#sidebar">Sidebar index</TextLink>
+        <Sidebar as="div" role="group" aria-label="Example contents">
+          <SideNav label="Archive sections">
+            <SideNavLink active href="#app-shell">Editions</SideNavLink>
+            <SideNavLink href="#sidebar">Sidebar index</SideNavLink>
+          </SideNav>
         </Sidebar>
       }
       toolbar="Archive"

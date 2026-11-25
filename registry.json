@@ -1386,7 +1386,7 @@
       "name": "app-shell",
       "group": "portal",
       "entry": "portal/app-shell.tsx",
-      "usage": "On small screens, Escape closes the open index when focus is inside the shell and returns focus to its trigger. Toolbar controls wrap as labels grow. AppearanceButton supplies labels for the three appearance modes. Use ComponentPreview to resize an embedded example and preserve its state across views.",
+      "usage": "On small screens, Escape closes the open index when focus is inside the shell and returns focus to its trigger. Toolbar controls wrap as labels grow. The brand remains visible at desktop and mobile widths. Use SideNav and SideNavLink in the sidebar to mark the active route. AppearanceButton supplies labels for the three appearance modes. Use ComponentPreview to resize an embedded example and preserve its state across views.",
       "files": [
         "theme.css",
         "portal/app-shell.tsx",
@@ -1410,10 +1410,12 @@
       "name": "sidebar",
       "group": "portal",
       "entry": "portal/sidebar.tsx",
-      "usage": "Keep navigation labels meaningful on their own. The scrollable index leaves space around focused entries, and long masthead or footer text can wrap.",
+      "usage": "Compose SideNav and SideNavLink for a list of routes. Set active on the current page and use asChild to supply your router link. Keep navigation labels meaningful on their own. The scrollable index leaves space around focused entries, and long masthead or footer text can wrap.",
       "files": [
         "theme.css",
         "portal/sidebar.tsx",
+        "ui/slot.tsx",
+        "portal/navigation-menu.css",
         "portal/sidebar.css"
       ]
     },

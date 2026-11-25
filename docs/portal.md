@@ -13,6 +13,25 @@ The catalog imports its components from `alpina-ui` and the stylesheet from `alp
 
 The portal application manages search and routing. The public components provide layout, native navigation, and responsive controls. Every catalog entry offers the source files shipped with the library.
 
+## A sidebar with router links
+
+Supply the brand once. The shell keeps it above the index on desktop and beside its disclosure on mobile. `SideNav` provides a named navigation landmark and list. Set `active` on the current link to show its rule and expose `aria-current="page"`. With `asChild`, the router owns the anchor and its URL.
+
+```tsx
+import Link from 'next/link'
+import { AppShell, Sidebar, SideNav, SideNavLink } from 'alpina-ui'
+
+export function AccountsPage() {
+  return <AppShell brand="Atelier" openLabel="Open navigation" closeLabel="Close navigation"
+    sidebar={<Sidebar><SideNav label="Accounts">
+      <SideNavLink asChild active><Link href="/invoices">Invoices</Link></SideNavLink>
+      <SideNavLink asChild><Link href="/clients">Clients</Link></SideNavLink>
+    </SideNav></Sidebar>}>
+    <h1>Invoices</h1>
+  </AppShell>
+}
+```
+
 ## Accessibility checks
 
 The Swiss eCH-0059 accessibility standard, version 3.0, uses WCAG 2.1 AA. Alpina also targets WCAG 2.2 AA, including target size, focus visibility when content overlaps, and accessible authentication. These are separate versioned references. [eCH-0059 v3.0](https://www.ech.ch/fr/ech/ech-0059/3.0) · [WCAG 2.2](https://www.w3.org/TR/WCAG22/)

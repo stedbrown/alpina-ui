@@ -74,21 +74,23 @@ export function AppShell({
       >
         {skipLabel}
       </a>
-      <nav className="al-app-mobile" aria-label={navigationLabel}>
-        {brand}
-        <Button
-          ref={trigger}
-          variant="outline"
-          size="sm"
-          aria-expanded={expanded}
-          aria-controls={id}
-          onClick={() => change(!expanded)}
-        >
-          {expanded ? closeLabel : openLabel}
-        </Button>
-      </nav>
-      <div className="al-app-index" id={id}>
-        {sidebar}
+      <div className="al-app-rail">
+        <div className="al-app-masthead">
+          <div className="al-app-brand">{brand}</div>
+          <nav className="al-app-mobile" aria-label={navigationLabel}>
+            <Button
+              ref={trigger}
+              variant="outline"
+              size="sm"
+              aria-expanded={expanded}
+              aria-controls={id}
+              onClick={() => change(!expanded)}
+            >
+              {expanded ? closeLabel : openLabel}
+            </Button>
+          </nav>
+        </div>
+        <div className="al-app-index" id={id}>{sidebar}</div>
       </div>
       <div className="al-app-page">
         {toolbar && <header className="al-app-bar">{toolbar}</header>}

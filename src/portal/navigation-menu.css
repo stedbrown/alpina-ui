@@ -29,11 +29,11 @@
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
-.al-navigation a[aria-current] {
+.al-navigation a[aria-current]:not([aria-current='false'], [aria-current='']) {
   font-weight: 700;
   color: var(--al-accent);
 }
-.al-navigation a[aria-current]::before {
+.al-navigation a[aria-current]:not([aria-current='false'], [aria-current=''])::before {
   content: '';
   position: absolute;
   inset-inline-start: 0;
@@ -55,7 +55,7 @@
 .al-navigation[data-orientation='horizontal'] a {
   padding: var(--al-space-2) 0;
 }
-.al-navigation[data-orientation='horizontal'] a[aria-current]::before {
+.al-navigation[data-orientation='horizontal'] a[aria-current]:not([aria-current='false'], [aria-current=''])::before {
   inset: auto 0 0;
   width: auto;
   height: 2px;

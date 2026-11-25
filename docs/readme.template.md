@@ -16,11 +16,13 @@ The live poster lets you set type size and tracking, operate a print queue, comp
 
 ## Install in 30 seconds
 
-In an existing React 18.2 or 19 app, install the versioned archive and import the stylesheet once.
+In an existing React 18.2 or 19 app, install the package from npm and import the stylesheet once.
 
 ```sh
-npm install {{SITE}}/alpina-ui-{{VERSION}}.tgz
+{{NPM_INSTALL}}
 ```
+
+Each release is also hosted as an archive with its SHA-512 digest: `npm install {{SITE}}/alpina-ui-{{VERSION}}.tgz`.
 
 ```tsx
 import { Button, CurrencyCHF } from 'alpina-ui'

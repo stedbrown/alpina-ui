@@ -240,7 +240,6 @@ export async function buildWebsite({ outputDir, guides, guideFiles, guideManifes
   // Translate only known bookmarks from the original single-file catalog. Leave local page anchors alone.
   const ids = JSON.stringify(registry.items.map((item) => item.name))
   const legacy = `(()=>{const h=location.hash.slice(1);if(!h)return;const p={rubrica:"client-directory","address-book":"client-directory","rubrica-bilingue":"bilingual-address-book","bilingual-address-book":"bilingual-address-book"};if(Object.hasOwn(p,h))location.replace("/examples/"+p[h]+"/");else if(h==="overview"||h.startsWith("guide/")||${ids}.includes(h.split("/")[0]))location.replace("/docs/#"+h)})();`
-  const command = 'npm install ' + siteUrl + '/alpina-ui-' + registry.version + '.tgz'
   const migration = await buildMigrationComparison(output, { coreCSS, fontsURL })
   // Prereleases install from the npm next tag, stable versions from latest.
   const npmCommand = 'npm install alpina-ui' + (registry.version.includes('-') ? '@next' : '')
@@ -320,7 +319,7 @@ export async function buildWebsite({ outputDir, guides, guideFiles, guideManifes
     '# Alpina UI', '', '> React components for Swiss typography and multilingual interfaces. The current release is ' + registry.version + '.', '',
     '## Agent tools', '', '- [Agent setup](' + siteUrl + '/reference/agents.md)', '- [Project skill](' + siteUrl + '/skills/alpina-ui/SKILL.md)',
     '', 'Install the project skill: `npx skills add stedbrown/alpina-ui --skill alpina-ui`.',
-    'Install the matching React package: `npm install ' + siteUrl + '/alpina-ui-' + registry.version + '.tgz`.', '',
+    'Install the React package from npm: `' + npmCommand + '`. To pin this exact release, install its archive: `npm install ' + siteUrl + '/alpina-ui-' + registry.version + '.tgz`.', '',
     '- [Component registry](' + siteUrl + '/registry.json)', '- [TypeScript API reference](' + siteUrl + '/reference/api.json)', '- [Icon directory](' + siteUrl + '/icons/)',
     '', agentGuidance, '', '## Guides', '', '- [Design principles](' + siteUrl + '/principles/)', ...guideLinks, '', '## Blocks', '', ...blocks.map(b => '- [' + b.title + '](' + siteUrl + '/blocks/' + b.slug + '/) — alpina add block/' + b.slug),
     '', '## Examples', '', ...projects.map((p) => '- [' + p.title + '](' + siteUrl + '/examples/' + p.slug + '/): ' + p.description), '',

@@ -10,13 +10,13 @@ Prima di installare puoi cercare un componente, copiare una pagina completa o pr
 
 Se usi shadcn/ui, scopri come far convivere le due librerie, collegare Tailwind v4 e migrare ogni famiglia di componenti. [Da shadcn/ui ad Alpina](https://alpinaui.com/docs/guides/migration/)
 
-In un progetto React 18.2 o 19 con Node.js 20 o successivo, installa dal portale l’archivio della versione desiderata.
+In un progetto React 18.2 o 19 con Node.js 20 o successivo, installa il pacchetto da npm. Le versioni candidate sono pubblicate con il tag `next`.
 
 ```sh
-npm install https://alpinaui.com/alpina-ui-1.0.0-rc.6.tgz
+npm install alpina-ui@next
 ```
 
-Se hai già scaricato l’archivio, esegui `npm install ./alpina-ui-1.0.0-rc.6.tgz` dalla sua cartella. Importa il CSS una sola volta nel punto di ingresso dell’applicazione. I moduli JavaScript funzionano anche sul server.
+Il portale offre anche ogni versione come archivio con la sua impronta SHA‑512. L’URL fissa la versione esatta nel lockfile: `npm install https://alpinaui.com/alpina-ui-1.0.0-rc.6.tgz`. Se hai già scaricato l’archivio, esegui `npm install ./alpina-ui-1.0.0-rc.6.tgz` dalla sua cartella. Importa il CSS una sola volta nel punto di ingresso dell’applicazione. I moduli JavaScript funzionano anche sul server.
 
 ```tsx
 import "alpina-ui/styles.css"

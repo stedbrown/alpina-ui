@@ -4,7 +4,7 @@
 
 The site navigation now identifies the active section and brings the release, appearance and GitHub controls together. Try the working migration comparison and enlarge the reservation form in the homepage accessibility section. [Homepage](https://alpinaui.com/) · [NavigationMenu](https://alpinaui.com/docs/components/navigation-menu/)
 
-Install the [candidate archive](https://alpinaui.com/alpina-ui-1.0.0-rc.6.tgz) and verify its [SHA-512 digest](https://alpinaui.com/alpina-ui-1.0.0-rc.6.tgz.sha512). The assistant skill now includes tested composition guidance and can be installed with one command. [Agent tools](https://alpinaui.com/agents/)
+This is the first release on npm: `npm install alpina-ui@next`. The [candidate archive](https://alpinaui.com/alpina-ui-1.0.0-rc.6.tgz) contains the same package. Verify it with its [SHA-512 digest](https://alpinaui.com/alpina-ui-1.0.0-rc.6.tgz.sha512). The assistant skill now includes tested composition guidance and can be installed with one command. [Agent tools](https://alpinaui.com/agents/)
 
 ## Version 1.0.0-rc.5
 

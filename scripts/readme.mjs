@@ -30,6 +30,8 @@ const table = [
 const template = await readFile('docs/readme.template.md', 'utf8')
 const rendered = '<!-- Generated from docs/readme.template.md and the public catalog by scripts/readme.mjs. -->\n' +
   template.replaceAll('{{SITE}}', origin).replaceAll('{{VERSION}}', manifest.version)
+    // Prereleases install from the npm next tag, stable versions from latest.
+    .replaceAll('{{NPM_INSTALL}}', 'npm install alpina-ui' + (manifest.version.includes('-') ? '@next' : ''))
     .replaceAll('{{BADGE_VERSION}}', manifest.version.replaceAll('-', '--')).replace('{{INVENTORY}}', table)
 if (process.argv.includes('--check')) {
   assert.equal((await readFile('README.md', 'utf8')).replaceAll('\r\n', '\n'), rendered.replaceAll('\r\n', '\n'), 'Run node scripts/readme.mjs to refresh the public directory')

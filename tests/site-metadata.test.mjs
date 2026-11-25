@@ -84,6 +84,7 @@ test('an alternate-domain build shares and indexes each hosted page on that doma
     for (const document of [agentGuide, index]) {
       assert.ok(document.includes('npx skills add stedbrown/alpina-ui --skill alpina-ui'))
       assert.ok(document.includes('npm install ' + origin + '/alpina-ui-' + pkg.version + '.tgz'))
+      assert.ok(document.includes('npm install alpina-ui' + (pkg.version.includes('-') ? '@next' : '')))
     }
     for (const file of [start, markdown]) {
       assert.ok(file.includes(origin + '/docs/guides/migration/'))

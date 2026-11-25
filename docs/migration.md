@@ -6,10 +6,10 @@ The edition-label comparison on the homepage runs the same form in both librarie
 
 ## Install alongside shadcn/ui
 
-Install Alpina UI 1.0.0-rc.6 from the portal's versioned package archive in your React project. To upgrade later, install the archive for the version you want to use. If your team edits component source, the CLI can copy selected TypeScript, CSS and dependencies into `components/alpina`. Your existing shadcn/ui source can stay in `components/ui`. [Installation guide](https://alpinaui.com/docs/guides/start/)
+Install Alpina UI from npm in your React project. Release candidates are published under the `next` tag. If your team edits component source, the CLI can copy selected TypeScript, CSS and dependencies into `components/alpina`. Your existing shadcn/ui source can stay in `components/ui`. [Installation guide](https://alpinaui.com/docs/guides/start/)
 
 ```sh
-npm install https://alpinaui.com/alpina-ui-1.0.0-rc.6.tgz
+npm install alpina-ui@next
 # Optional editable source for the first screen
 npx --no-install alpina add button field input
 ```

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { launchBrowser } from './launch-browser.mjs'
 import { openPublicPage, siteOrigin } from './public-pages.mjs'
+import { assertCalendarSpacing } from './calendar-spacing.mjs'
 import { mountComponentGallery } from './component-gallery.mjs'
 
 // Apply user font preferences and the four simultaneous WCAG 1.4.12 overrides.
@@ -75,7 +76,7 @@ try {
   const errors = []
   const narrow = await browser.newPage({ viewport: { width: 180, height: 600 }, isMobile: true, hasTouch: true })
   narrow.setDefaultTimeout(15_000)
-  await mountComponentGallery(narrow)
+  await mountComponentGallery(narrow, ['calendar', 'date-picker'])
   async function checkNarrowCalendar(calendar) {
     const headings = calendar.getByRole('columnheader')
     assert.equal(await headings.count(), 7, 'Week numbers require explicit opt-in')
@@ -93,6 +94,7 @@ try {
       })
     })
     assert.ok(readable, 'Both month controls and seven weekday columns must fit 180 CSS pixels')
+    await assertCalendarSpacing(calendar)
     await sunday.press('Enter')
   }
   await checkNarrowCalendar(narrow.locator('[data-component="calendar"] .al-calendar'))

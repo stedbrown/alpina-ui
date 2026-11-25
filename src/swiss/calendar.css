@@ -46,6 +46,21 @@
   .al-calendar-narrow { display: inline; }
 }
 
+@container calendar (max-width: 12rem) {
+  .al-calendar td button { font-size: clamp(.75rem, 7cqi, .875rem); }
+  /* Keep the hit area intact while separating neighbouring booking marks. */
+  .al-calendar td button[data-status] { position: relative; border-block-end-width: 0; }
+  .al-calendar td button[data-status]::before {
+    content: '';
+    position: absolute;
+    inset-inline: 2px;
+    inset-block-end: 0;
+    border-block-end: 2px solid currentColor;
+    border-block-end-style: inherit;
+    pointer-events: none;
+  }
+}
+
 @media (forced-colors: active) {
   .al-calendar td[data-weekend] { border-inline-start: 1px dotted CanvasText; }
   .al-calendar td[aria-selected='true'] button:enabled {

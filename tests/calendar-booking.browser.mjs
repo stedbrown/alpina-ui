@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { assertCalendarSpacing } from './calendar-spacing.mjs'
 import { PNG } from 'pngjs'
 import { build } from 'esbuild'
 import { launchBrowser } from './launch-browser.mjs'
@@ -55,6 +56,17 @@ try {
   await exercise(picker.locator('.al-calendar'))
   assert.equal(await picker.count(), 0)
   assert.equal(await page.locator('input[name=appointment]').inputValue(), '2027-08-06')
+  await page.setViewportSize({ width: 180, height: 600 })
+  await assertCalendarSpacing(page.locator('main > .al-calendar'), { booking: true })
+  await page.getByRole('button', { name: /^Booking/ }).click()
+  await assertCalendarSpacing(picker.locator('.al-calendar'), { booking: true })
+  // Wider fallback digits must fit beside the week numbers with a classic page scrollbar.
+  await page.addStyleTag({ content: ':root { --al-font-family: Verdana, "DejaVu Sans", sans-serif }' })
+  await assertCalendarSpacing(picker.locator('.al-calendar'), { booking: true })
+  assert.ok(await picker.evaluate(node => {
+    const box = node.getBoundingClientRect()
+    return box.left >= 0 && box.right <= innerWidth
+  }), 'The complete picker remains inside the viewport')
   console.log('Verified booking status, holiday closures, weekends and keyboard selection in both calendars.')
 } finally { await browser.close() }
 

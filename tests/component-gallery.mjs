@@ -20,7 +20,7 @@ const bundle = await build({
       import 'alpina-ui/fonts.css'
       ${imports.join('\n')}
       const demos = { ${examples.flatMap(({ names }) => names).join(', ')} }
-      createRoot(document.getElementById('gallery')).render(inventory.map(([id, name]) => {
+      createRoot(document.getElementById('gallery')).render(inventory.filter(([id]) => !window.galleryIds || window.galleryIds.includes(id)).map(([id, name]) => {
         const Example = demos[name + 'Example']
         return <section key={id} data-component={id}><Example /></section>
       }))
@@ -32,8 +32,9 @@ const bundle = await build({
 })
 
 /** Mount the actual catalog examples with the distributed stylesheet and local font. */
-export async function mountComponentGallery(page) {
-  await page.setContent('<!doctype html><html lang="en"><body data-al-page><main id="gallery"></main></body></html>')
+export async function mountComponentGallery(page, componentIds) {
+  await page.setContent('<!doctype html><html lang="en"><meta name="viewport" content="width=device-width,initial-scale=1"><body data-al-page><main id="gallery"></main></body></html>')
+  if (componentIds) await page.evaluate(ids => { window.galleryIds = ids }, componentIds)
   await page.addStyleTag({ content: bundle.outputFiles.find(file => file.path.endsWith('.css')).text })
   await page.addScriptTag({ content: bundle.outputFiles.find(file => file.path.endsWith('.js')).text })
   await page.locator('[data-component]').last().waitFor({ state: 'attached' })

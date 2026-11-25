@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict'
 import { readFile, readdir, writeFile } from 'node:fs/promises'
 import { build } from 'esbuild'
+import { siteUrl as origin } from './site-config.mjs'
 
 const manifest = JSON.parse(await readFile('package.json', 'utf8'))
 const registry = JSON.parse(await readFile('registry.json', 'utf8'))
-const origin = new URL(process.env.SITE_URL || manifest.homepage).origin
 const { outputFiles } = await build({
   entryPoints: ['catalog/inventory.ts'], bundle: true, platform: 'node', format: 'esm', write: false,
 })

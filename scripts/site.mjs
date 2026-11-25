@@ -6,6 +6,7 @@ import { createElement } from 'react'
 import { renderToStaticMarkup, renderToString } from 'react-dom/server'
 import { Marked, marked } from 'marked'
 import { GridOverlay, parseCivilDate } from 'alpina-ui'
+import { deploymentLinks, siteMetadata, siteUrl } from './site-config.mjs'
 import { buildDesignerKit } from './designer-kit.mjs'
 
 const guideMarkdown = new Marked({ renderer: {
@@ -17,7 +18,7 @@ const guideMarkdown = new Marked({ renderer: {
 } })
 
 export async function renderGuide(markdown) {
-  return (await guideMarkdown.parse(markdown)).replace(/<pre>/g, '<pre tabindex="0">')
+  return (await guideMarkdown.parse(deploymentLinks(markdown))).replace(/<pre>/g, '<pre tabindex="0">')
 }
 
 // Apply the saved catalog appearance before the first paint on every public page.
@@ -43,8 +44,6 @@ export const appearanceHead = '<script>(' + initializeAppearance.toString() + ')
   ['auto', 'light', 'dark'].map(mode => 'html[data-al-theme="' + mode + '"] [data-site-appearance] [data-mode="' + mode + '"]{display:block;position:absolute;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}').join('') +
   '</style><noscript><style>[data-site-appearance]{display:none}</style></noscript>'
 
-const origin = 'https://alpina-ui.vercel.app'
-const siteName = 'Alpina UI'
 const escape = (text) => String(text).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
 const sha = (text) => createHash('sha256').update(text).digest('hex').slice(0, 16)
 const render = (component, props) => renderToStaticMarkup(createElement(component, props))
@@ -94,12 +93,6 @@ function listenForGridShortcut() {
 }
 export const siteGrid = overlay + '<script>(' + listenForGridShortcut.toString() + ')()</script>'
 
-async function output(name, data) {
-  const target = path.join('site', name)
-  await mkdir(path.dirname(target), { recursive: true })
-  await writeFile(target, data)
-}
-
 // Transpile only this site's TSX. React and Alpina resolve to the installed ESM packages.
 async function loadPages() {
   const result = await build({
@@ -117,8 +110,13 @@ async function loadPages() {
   return import('data:text/javascript;base64,' + Buffer.from(result.outputFiles[0].contents).toString('base64'))
 }
 
-export async function buildWebsite({ guides, guideFiles, apiReference, componentGuidance, registry, script, css, notices, renderComponent }) {
+export async function buildWebsite({ outputDir, guides, guideFiles, apiReference, componentGuidance, registry, script, css, notices, renderComponent }) {
   const { Landing, Examples, DesignerKit, Icons, Themes, Principles, Blocks, BlockPage, blockDemos, blocks, ComponentDirectory, ComponentStatus, ReferencePage, ExampleIntroduction, inventory, projects } = await loadPages()
+  async function output(name, data) {
+    const target = path.join(outputDir, name)
+    await mkdir(path.dirname(target), { recursive: true })
+    await writeFile(target, data)
+  }
   const paths = []
   const appJS = '/assets/catalog-' + sha(script) + '.js'
   const appCSS = '/assets/catalog-' + sha(css) + '.css'
@@ -155,7 +153,7 @@ export async function buildWebsite({ guides, guideFiles, apiReference, component
   const filter = await readFile('web/directory-filter.js', 'utf8')
   const filterJS = '/assets/component-filter-' + sha(filter) + '.js'
   const preview = await readFile('web/assets/alpina-preview.png')
-  const previewURL = origin + '/assets/alpina-preview.png?v=' + sha(preview)
+  const previewURL = siteUrl + siteMetadata.imagePath + '?v=' + sha(preview)
   await Promise.all([
     output(appJS, script), output(appCSS, css), output(coreCSS, core),
     output(fontsURL, fontCSS),
@@ -166,30 +164,42 @@ export async function buildWebsite({ guides, guideFiles, apiReference, component
     output(filterJS, filter),
     output('third-party-notices.txt', notices.join('\n\n')),
     output('registry.json', JSON.stringify(registry)), output('reference/api.json', JSON.stringify(apiReference)),
-    output('skills/alpina-ui/SKILL.md', await readFile('skills/alpina-ui/SKILL.md')),
-    output('assets/alpina-preview.png', preview),
+    output('skills/alpina-ui/SKILL.md', deploymentLinks(await readFile('skills/alpina-ui/SKILL.md', 'utf8'))),
+    output(siteMetadata.imagePath, preview),
     output('assets/alpina-type-specimen.webp', await readFile('web/assets/alpina-type-specimen.webp')),
     ...['logo.svg', 'logo-mono.svg', 'icon-192.png', 'icon-512.png'].map(async name => output('assets/' + name, await readFile('web/assets/' + name))),
     ...['favicon.svg', 'favicon.ico', 'apple-touch-icon.png', 'site.webmanifest'].map(async name => output(name, await readFile('web/assets/' + name))),
   ])
 
   async function page(route, title, description, body, options = {}) {
-    const url = origin + route
-    const caption = title === siteName ? 'Alpina UI — Swiss UI components for React' : title + ' · ' + siteName
+    const url = siteUrl + route
+    const caption = route === '/' ? siteMetadata.title : title + ' · ' + siteMetadata.name
     const tags = [
       '<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffffff">',
       '<title>' + escape(caption) + '</title><meta name="description" content="' + escape(description) + '">',
       '<link rel="canonical" href="' + escape(url) + '"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">',
-      '<meta property="og:type" content="website"><meta property="og:site_name" content="Alpina UI">',
+      '<meta property="og:type" content="website"><meta property="og:site_name" content="' + escape(siteMetadata.name) + '">',
       '<meta property="og:title" content="' + escape(caption) + '"><meta property="og:description" content="' + escape(description) + '">',
       '<meta property="og:url" content="' + escape(url) + '"><meta property="og:image" content="' + previewURL + '">',
       '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">',
-      '<meta name="twitter:card" content="summary_large_image"><meta property="og:image:alt" content="Alpina UI homepage with a print estimate, a Swiss invoice and a press-hours chart">',
+      '<meta property="og:image:type" content="image/png"><meta property="og:image:alt" content="' + escape(siteMetadata.imageAlt) + '">',
+      '<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="' + escape(caption) + '">',
+      '<meta name="twitter:description" content="' + escape(description) + '"><meta name="twitter:image" content="' + previewURL + '">',
+      '<meta name="twitter:image:alt" content="' + escape(siteMetadata.imageAlt) + '">',
       '<link rel="preload" as="font" type="font/woff2" crossorigin href="' + latinFont + '">',
       '<link rel="license" href="/third-party-notices.txt"><link rel="stylesheet" href="' + (options.app ? appCSS : coreCSS) + '">',
       '<link rel="stylesheet" href="' + fontsURL + '">',
       appearanceHead,
     ]
+    if (route === '/') {
+      const source = {
+        '@context': 'https://schema.org', '@type': 'SoftwareSourceCode', '@id': url + '#source',
+        name: siteMetadata.name, url, description, image: previewURL, codeRepository: siteMetadata.repository,
+        license: siteMetadata.repository + '/blob/main/LICENSE', programmingLanguage: 'TypeScript',
+        runtimePlatform: 'React', version: registry.version, inLanguage: siteMetadata.language,
+      }
+      tags.push('<script type="application/ld+json">' + JSON.stringify(source).replace(/</g, '\\u003c') + '</script>')
+    }
     if (options.guidance) {
       const json = JSON.stringify(options.guidance).replace(/</g, '\\u003c')
       tags.push('<script type="application/json" id="component-guidance-data">' + json + '</script>')
@@ -206,14 +216,14 @@ export async function buildWebsite({ guides, guideFiles, apiReference, component
     if (options.block) tags.push('<script type="module" src="' + blockJS + '"></script>')
     if (options.filter) tags.push('<script type="module" src="' + filterJS + '"></script>')
     const content = options.app ? '<div id="app"' + (options.prerender ? ' data-prerendered' : '') + '>' + body + '</div>' + (options.noScript ?? '') + (options.prerender ? indexIntentScript : '') + '<script type="module" src="' + appJS + '"></script>' : body
-    await output(route + 'index.html', '<!doctype html>\n<html lang="en" data-al-theme="auto"><head>' + tags.join('\n') + '</head><body data-al-page>' + siteGrid + content + '</body></html>')
+    await output(route + 'index.html', '<!doctype html>\n<html lang="' + siteMetadata.language + '" data-al-theme="auto"><head>' + tags.join('\n') + '</head><body data-al-page>' + siteGrid + content + '</body></html>')
     paths.push(url)
   }
 
   // Translate only known bookmarks from the original single-file catalog. Leave local page anchors alone.
   const ids = JSON.stringify(registry.items.map((item) => item.name))
   const legacy = `(()=>{const h=location.hash.slice(1);if(!h)return;const p={rubrica:"client-directory","address-book":"client-directory","rubrica-bilingue":"bilingual-address-book","bilingual-address-book":"bilingual-address-book"};if(Object.hasOwn(p,h))location.replace("/examples/"+p[h]+"/");else if(h==="overview"||h.startsWith("guide/")||${ids}.includes(h.split("/")[0]))location.replace("/docs/#"+h)})();`
-  await page('/', siteName, 'Open-source React and TypeScript components for forms, tables and multilingual interfaces on a Swiss typographic grid.',
+  await page('/', siteMetadata.name, siteMetadata.description,
     render(Landing, { version: registry.version, count: inventory.length }), { redirect: legacy, showcase: true })
   await buildDesignerKit(output)
   await page('/kit/', 'Designer kit', 'Download editable column grids, an A4 type sheet and light and dark design tokens for your design tools.', render(DesignerKit))
@@ -241,7 +251,7 @@ export async function buildWebsite({ guides, guideFiles, apiReference, component
   const records = inventory.map(([slug, name]) => ({ ...status[slug], slug, name }))
     .sort((a, b) => a.name.localeCompare(b.name, 'en'))
   await page('/status/', 'Component status', 'Check the API maturity and latest source change for every Alpina component.', render(ComponentStatus, { records }))
-  const agentsMarkdown = await readFile('docs/agents.md', 'utf8')
+  const agentsMarkdown = deploymentLinks(await readFile('docs/agents.md', 'utf8'))
   const agentsHTML = await renderGuide(agentsMarkdown)
   await page('/agents/', 'Agent tools', 'Install the Alpina UI skill or connect a read-only local MCP server to search components, inspect source, and read guides.', render(ReferencePage, { agents: true, html: agentsHTML }))
   await output('reference/agents.md', agentsMarkdown)
@@ -264,14 +274,14 @@ export async function buildWebsite({ guides, guideFiles, apiReference, component
 
   const guideLinks = []
   for (const [key, file] of Object.entries(guideFiles)) {
-    const markdown = await readFile(file, 'utf8')
+    const markdown = deploymentLinks(await readFile(file, 'utf8'))
     const title = markdown.match(/^#\s+(.+)$/m)[1]
     await output('reference/' + key + '.md', markdown)
     const intro = marked.lexer(markdown).find((token) => token.type === 'paragraph')?.text ?? title
     const description = intro.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[`*]/g, '').split(/(?<=[.!?])\s/)[0]
     const route = '/docs/guides/' + key + '/'
     await page(route, title, description, render(ReferencePage, { html: key === 'start' ? quickStart : guides[key] }), { app: true })
-    guideLinks.push('- [' + title + '](' + origin + '/reference/' + key + '.md)')
+    guideLinks.push('- [' + title + '](' + siteUrl + '/reference/' + key + '.md)')
   }
 
   for (const [slug, name, title, , description] of inventory) {
@@ -289,14 +299,14 @@ export async function buildWebsite({ guides, guideFiles, apiReference, component
   }
   const index = [
     '# Alpina UI', '', '> React components for Swiss typography and multilingual interfaces. The current release is ' + registry.version + '.', '',
-    '## Agent tools', '', '- [Agent setup](' + origin + '/reference/agents.md)', '- [Project skill](' + origin + '/skills/alpina-ui/SKILL.md)',
-    '- [Component registry](' + origin + '/registry.json)', '- [TypeScript API reference](' + origin + '/reference/api.json)', '- [Icon directory](' + origin + '/icons/)',
-    '', '## Guides', '', '- [Design principles](' + origin + '/principles/)', ...guideLinks, '', '## Blocks', '', ...blocks.map(b => '- [' + b.title + '](' + origin + '/blocks/' + b.slug + '/) — alpina add block/' + b.slug),
-    '', '## Examples', '', ...projects.map((p) => '- [' + p.title + '](' + origin + '/examples/' + p.slug + '/): ' + p.description), '',
+    '## Agent tools', '', '- [Agent setup](' + siteUrl + '/reference/agents.md)', '- [Project skill](' + siteUrl + '/skills/alpina-ui/SKILL.md)',
+    '- [Component registry](' + siteUrl + '/registry.json)', '- [TypeScript API reference](' + siteUrl + '/reference/api.json)', '- [Icon directory](' + siteUrl + '/icons/)',
+    '', '## Guides', '', '- [Design principles](' + siteUrl + '/principles/)', ...guideLinks, '', '## Blocks', '', ...blocks.map(b => '- [' + b.title + '](' + siteUrl + '/blocks/' + b.slug + '/) — alpina add block/' + b.slug),
+    '', '## Examples', '', ...projects.map((p) => '- [' + p.title + '](' + siteUrl + '/examples/' + p.slug + '/): ' + p.description), '',
   ]
   await Promise.all([
     output('llms.txt', index.join('\n')),
-    output('robots.txt', 'User-agent: *\nAllow: /\nSitemap: ' + origin + '/sitemap.xml\n'),
+    output('robots.txt', 'User-agent: *\nAllow: /\nSitemap: ' + siteUrl + '/sitemap.xml\n'),
     output('sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + paths.map((url) => '<url><loc>' + escape(url) + '</loc></url>').join('') + '</urlset>\n'),
   ])
   console.log('Generated ' + paths.length + ' public pages.')

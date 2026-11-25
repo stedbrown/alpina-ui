@@ -105,12 +105,6 @@ const guideGroups = [
     keys: ['core', 'elements', 'interactive', 'actions', 'workflows', 'swiss', 'validation', 'qr-bill', 'portal', 'directory', 'coverage'],
   },
 ]
-// Keep links to bundled guides and component previews inside the single-file catalog.
-function guideContent(html: string, hosted: boolean) {
-  if (hosted) return html
-  return html.replace(/href="https:\/\/alpina-ui\.vercel\.app\/docs\/(components|guides)\/([\w-]+)\/"/g,
-    (_, section, slug) => 'href="' + (section === 'guides' ? guideHref(slug, false) : componentHref(slug, false)) + '"')
-}
 const searchTerms: Record<string, string> = {
   stack: 'toolbar spacing action groups',
   icon: 'pictogram symbol SVG glyph git branch repository',
@@ -508,9 +502,9 @@ export function App({ pathname }: { pathname: string }) {
             />
           )}
           {guide === 'start' ? (
-            <InstallGuide html={guideContent(guides.start, hostedDocs)} />
+            <InstallGuide html={guides.start} />
           ) : (
-            <Prose className="guide-content" dangerouslySetInnerHTML={{ __html: guideContent(guides[guide], hostedDocs) }} />
+            <Prose className="guide-content" dangerouslySetInnerHTML={{ __html: guides[guide] }} />
           )}
           {guide === 'directory' && <DirectorySource files={directorySources} hosted={hostedDocs} />}
         </>

@@ -10,9 +10,11 @@ import { execSync } from 'node:child_process'
 import { scannerNotices } from './scanner-codecs.mjs'
 import { buildApiReference } from './api-reference.mjs'
 import { readDirectorySources } from './directory-sources.mjs'
+import { deploymentLinks, siteUrl } from './site-config.mjs'
 import { appearanceHead, buildWebsite, renderGuide, siteGrid } from './site.mjs'
 
 process.chdir(fileURLToPath(new URL('../', import.meta.url)))
+const outputDir = path.resolve(process.env.ALPINA_SITE_OUTPUT ?? 'site')
 const guides = {}
 const componentGuidance = JSON.parse(await readFile('docs/component-guidance.json', 'utf8'))
 const guideFiles = {
@@ -40,6 +42,11 @@ const guideFiles = {
 for (const [key, file] of Object.entries(guideFiles)) {
   guides[key] = await renderGuide(await readFile(file, 'utf8'))
 }
+
+const offlineGuides = Object.fromEntries(Object.entries(guides).map(([key, html]) => [key,
+  html.replace(/href="([^"]*)\/docs\/(components|guides)\/([\w-]+)\/"/g, (link, origin, section, slug) =>
+    origin === siteUrl ? 'href="#' + (section === 'guides' ? 'guide/' : '') + slug + '"' : link),
+]))
 
 // Export the source of the actual demo shown for each component, with the imports it uses.
 const exampleCss = await readFile('catalog/examples.css', 'utf8')
@@ -112,8 +119,9 @@ const sourceFiles = Object.fromEntries(
 if (Object.keys(sources).length !== registry.items.length)
   throw new Error('The example count does not match the component registry')
 const apiReference = await buildApiReference()
-const directorySources = await readDirectorySources()
-await mkdir('site', { recursive: true })
+const directorySources = (await readDirectorySources()).map(file => file.path.endsWith('.md')
+  ? { ...file, content: deploymentLinks(file.content) } : file)
+await mkdir(outputDir, { recursive: true })
 const archiveName = 'alpina-ui-' + registry.version + '.tgz'
 if (process.argv.includes('--release-package')) {
   // Build hosts can produce different tar headers for identical package contents.
@@ -125,15 +133,15 @@ if (process.argv.includes('--release-package')) {
   const integrity = 'sha512-' + createHash('sha512').update(archive).digest('base64')
   if (expected.version !== registry.version || expected.integrity !== integrity)
     throw new Error('The release package does not match the address book lockfile.')
-  await writeFile('site/' + archiveName, archive)
+  await writeFile(path.join(outputDir, archiveName), archive)
   // Preserve installation URLs for projects pinned to earlier releases.
   for (const previous of ['alpina-ui-0.6.0.tgz', 'alpina-ui-0.7.0.tgz', 'alpina-ui-0.7.1.tgz', 'alpina-ui-0.8.0.tgz', 'alpina-ui-0.9.0.tgz', 'alpina-ui-0.10.0.tgz', 'alpina-ui-0.11.0.tgz', 'alpina-ui-0.12.0.tgz', 'alpina-ui-0.13.0.tgz']) {
-    await writeFile('site/' + previous, await readFile(directory + 'vendor/' + previous))
+    await writeFile(path.join(outputDir, previous), await readFile(directory + 'vendor/' + previous))
   }
 } else {
-  execSync('npm pack --ignore-scripts --silent --pack-destination site', { stdio: 'pipe' })
+  execSync('npm pack --ignore-scripts --silent', { stdio: 'pipe', env: { ...process.env, npm_config_pack_destination: outputDir } })
 }
-const archive = await readFile('site/' + archiveName)
+const archive = await readFile(path.join(outputDir, archiveName))
 const release = {
   name: archiveName,
   bytes: archive.length,
@@ -143,7 +151,7 @@ const catalogOptions = offline => ({
   entryPoints: ['catalog/app.tsx'],
   // The portal and the independently installable recipe share one React dispatcher.
   alias: { react: fileURLToPath(new URL('../node_modules/react', import.meta.url)) },
-  outdir: 'site/assets',
+  outdir: path.join(outputDir, 'assets'),
   bundle: true,
   jsx: 'automatic',
   write: false,
@@ -177,7 +185,7 @@ const catalogOptions = offline => ({
         ctx.onLoad({ filter: /.*/, namespace: 'alpina' }, () => ({
           contents:
             'export const guides=' +
-            JSON.stringify(guides) +
+            JSON.stringify(offline ? offlineGuides : guides) +
             ';export const componentGuidance=' + JSON.stringify(offline ? componentGuidance : {}) +
             ';export const usageNotes=' +
             JSON.stringify(Object.fromEntries(registry.items.map(({ name, usage }) => [name, usage]))) +
@@ -237,21 +245,21 @@ const offlineFonts = await build({
   entryPoints: ['src/fonts.css'], bundle: true, write: false, minify: true, loader: { '.woff2': 'dataurl' },
 })
 const html =
-  '<!doctype html>\n<html lang="en" data-al-theme="auto"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffffff"><title>Alpina UI</title>' + appearanceHead + '<style>' +
+  '<!doctype html>\n<html lang="en" data-al-theme="auto"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffffff"><meta name="robots" content="noindex"><title>Alpina UI offline catalog</title>' + appearanceHead + '<style>' +
   css + offlineFonts.outputFiles[0].text +
   '</style></head><body>' + siteGrid + '<div id="app"></div><noscript>Enable JavaScript to try the interactive components.</noscript><script>' +
   script +
   '</script><script type="text/plain" id="third-party-notices">' +
   notices.join('\n\n') +
   '</script></body></html>'
-await mkdir('site', { recursive: true })
-await writeFile('site/catalog.html', html)
+await mkdir(outputDir, { recursive: true })
+await writeFile(path.join(outputDir, 'catalog.html'), html)
 const hostedEntry = hosted.outputFiles.find(file => path.basename(file.path) === 'app.js')
-await mkdir('site/assets', { recursive: true })
+await mkdir(path.join(outputDir, 'assets'), { recursive: true })
 for (const file of hosted.outputFiles) {
   if (file !== hostedEntry && file.path.endsWith('.js')) await writeFile(file.path, file.contents)
 }
-await buildWebsite({ guides, guideFiles, apiReference, componentGuidance, registry, script: hostedEntry.text, css, notices, renderComponent })
+await buildWebsite({ outputDir, guides, guideFiles, apiReference, componentGuidance, registry, script: hostedEntry.text, css, notices, renderComponent })
 console.log(
-  'Offline catalog: site/catalog.html (' + (Buffer.byteLength(html) / 1024).toFixed(0) + ' KiB)',
+  'Offline catalog: ' + path.join(outputDir, 'catalog.html') + ' (' + (Buffer.byteLength(html) / 1024).toFixed(0) + ' KiB)',
 )

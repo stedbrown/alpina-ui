@@ -40,7 +40,7 @@ export async function gridSheet() {
   nodes.push('<g id="baseline-4">', type(inset,1008,14,'4 px baseline'))
   for (let n=0; n<=8; n++) nodes.push(rect(205, 984+n*4, right-205, n%4===0 ? 1 : 0.5, n%4===0 ? red : '#aaa'))
   nodes.push('</g>')
-  nodes.push(rect(inset,1044,right-inset,2,ink),type(inset,1072,14,'Alpina UI  /  Inter Variable'),type(417,1072,14,'alpina-ui.vercel.app/kit/'))
+  nodes.push(rect(inset,1044,right-inset,2,ink),type(inset,1072,14,'Alpina UI  /  Inter Variable'),type(417,1072,14,'A4  /  210 × 297 mm'))
   return '<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 '+width+' '+height+'" font-family="Inter Variable, Inter, Helvetica, Arial, sans-serif" role="img" aria-labelledby="sheet-title sheet-desc">\n<title id="sheet-title">Alpina grid and type sheet</title>\n<desc id="sheet-desc">Three editable column grids and six type specimens. Positions use CSS pixels at 96 dpi.</desc>\n'+nodes.join('\n')+'\n</svg>\n'
 }
 

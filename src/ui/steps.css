@@ -19,12 +19,19 @@
 .al-steps > li[aria-current='step'] { border-color: var(--al-accent); border-image-source: linear-gradient(var(--al-accent) 0 0); font-weight: 700; }
 .al-steps > li > span { font-variant-numeric: tabular-nums; }
 @container al-steps (max-width: 20rem) {
-  .al-steps > li {
+  .al-steps:not(.al-steps-fit) > li {
     flex-basis: 100%;
     padding: var(--al-space-1) var(--al-space-2);
     border-block-start: 0;
     border-image: none;
     border-inline-start: 2px solid var(--al-line);
   }
-  .al-steps > li[aria-current='step'] { border-inline-start-color: var(--al-accent); }
+  .al-steps:not(.al-steps-fit) > li[aria-current='step'] { border-inline-start-color: var(--al-accent); }
+}
+
+/* Measure each numbered label at its own width before distributing spare room. */
+.al-steps-fit { column-gap: var(--al-space-2); }
+.al-steps-fit > li {
+  flex: 1 0 max-content;
+  white-space: nowrap;
 }

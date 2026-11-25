@@ -47,7 +47,7 @@ export function AppointmentPage() {
 }
 ```
 
-`FormSteps` and `LanguageSwitcher` are available from `alpina-ui` for other forms. Give `FormSteps` a stable current step ID, a list of `{ id, label }` items and a localized `compactLabel`, such as `Passo {current} di {total}`. Pass a controlled locale and `onLocaleChange` to `LanguageSwitcher`. Both measure their own column and preserve keyboard focus when switching presentation.
+`FormSteps` and `LanguageSwitcher` are available from `alpina-ui` for other forms. Give `FormSteps` a stable current step ID, a list of `{ id, label }` items and a localized `compactLabel`, such as `Passo {current} di {total}`. Pass a controlled locale and `onLocaleChange` to `LanguageSwitcher`. Each step reserves the width of its full numbered label. Extra space is shared among steps. The compact count appears when the labels and their gaps exceed the column width. Both controls measure their own column and preserve keyboard focus when switching presentation.
 
 ## Find differences
 

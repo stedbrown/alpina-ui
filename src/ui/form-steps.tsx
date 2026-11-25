@@ -21,5 +21,5 @@ export const FormSteps = forwardRef<HTMLDivElement, FormStepsProps>(function For
   return <ResponsiveNavigation ref={ref} {...props} layoutKey={JSON.stringify([items, current])} compact={
     <Typography variant="label" numeric aria-current="step">{compactLabel.replace('{current}', String(index + 1))
       .replace('{total}', String(items.length))}</Typography>
-  }><Steps label={label} items={items} current={current} /></ResponsiveNavigation>
+  }><Steps className="al-steps-fit" label={label} items={items} current={current} /></ResponsiveNavigation>
 })

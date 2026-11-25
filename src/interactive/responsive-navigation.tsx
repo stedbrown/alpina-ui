@@ -21,7 +21,7 @@ export const ResponsiveNavigation = forwardRef<HTMLDivElement, ResponsiveRowProp
       const items = [...row.querySelectorAll<HTMLElement>('button, li')]
       const top = items[0]?.getBoundingClientRect().top
       const range = document.createRange()
-      const fits = items.length > 0 && items.every(item => {
+      const fits = items.length > 0 && row.scrollWidth <= row.clientWidth && items.every(item => {
         range.selectNodeContents(item)
         return item.getBoundingClientRect().top === top &&
           range.getBoundingClientRect().height <= parseFloat(getComputedStyle(item).lineHeight) + 1

@@ -54,6 +54,33 @@ try {
     else assert.match(await status.innerText(), new RegExp(step))
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth))
   }
+  // A long Italian step needs more space than its neighbours. Test the host's
+  // actual column, then resize only that column across the intrinsic threshold.
+  await languageSelect.selectOption('it-CH')
+  await page.setViewportSize({ width: 1280, height: 900 })
+  const stepList = main.locator('.al-steps')
+  await stepList.waitFor()
+  const cutoff = await stepList.evaluate(list => {
+    const style = getComputedStyle(list)
+    const range = document.createRange()
+    const widths = [...list.children].map(li => {
+      range.selectNodeContents(li)
+      const rects = [...range.getClientRects()].filter(r => r.width)
+      if (rects.some(r => Math.abs(r.top - rects[0].top) > 1)) throw Error('A numbered step wraps')
+      return range.getBoundingClientRect().width
+    })
+    return Math.ceil(widths.reduce((a, b) => a + b) + parseFloat(style.columnGap) * (widths.length - 1))
+  })
+  const resizeColumn = width => stepList.evaluate((list, width) => {
+    list.closest('.al-responsive-navigation').style.inlineSize = width
+  }, width)
+  await resizeColumn((cutoff - 2) + 'px')
+  await main.getByText('Passo 1 di 4', { exact: true }).waitFor()
+  await resizeColumn((cutoff + 2) + 'px')
+  await stepList.waitFor()
+  await resizeColumn('')
+  await page.setViewportSize({ width: 800, height: 900 })
+  await languageSelect.selectOption('en')
   await main.getByText('Step 1 of 4', { exact: true }).waitFor()
   await languageSelect.focus()
   await page.setViewportSize({ width: 1600, height: 900 })

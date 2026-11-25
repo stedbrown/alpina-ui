@@ -56,7 +56,7 @@ try {
     assert.equal((await repo.innerText()).trim(), 'GitHub')
     assert.equal(await repo.getAttribute('href'), 'https://github.com/stedbrown/alpina-ui')
     assert.equal(await repo.locator('svg').getAttribute('aria-hidden'), 'true')
-    if (width === 390) await header.locator('summary').press('Enter')
+    if (width === 390) await header.getByRole('button', { name: 'Menu', exact: true }).press('Enter')
     await header.getByRole('link', { name: 'Icons', exact: true }).click()
     const search = page.getByRole('searchbox', { name: 'Find an icon' })
     const count = page.locator('[data-icon-count]')

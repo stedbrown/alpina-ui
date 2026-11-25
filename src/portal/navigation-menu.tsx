@@ -1,5 +1,6 @@
 'use client'
-import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import { forwardRef, useId, type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import { Icon } from '../ui/icon.js'
 import { Slot } from '../ui/slot.js'
 import './navigation-menu.css'
 
@@ -18,7 +19,9 @@ export interface NavigationMenuProps extends Omit<ComponentPropsWithoutRef<'nav'
   label: string
   sections: readonly NavigationSection[]
   orientation?: 'vertical' | 'horizontal'
-  /** Show a native menu disclosure when a horizontal navigation has less than 42rem available. */
+  /** Foreground and background for this navigation. Otherwise follow the surrounding theme. */
+  surface?: 'paper' | 'ink' | 'accent'
+  /** On narrow horizontal menus, expose links in a keyboard-operable popover. */
   collapseLabel?: string
   align?: 'start' | 'end'
   onNavigate?: (href: string) => void
@@ -28,11 +31,14 @@ export const NavigationMenu = forwardRef<HTMLElement, NavigationMenuProps>(funct
   sections,
   orientation = 'vertical',
   collapseLabel,
+  surface,
   align = 'start',
   onNavigate,
   className = '',
   ...props
 }, ref) {
+  const panelId = useId()
+  const collapsible = orientation === 'horizontal' && !!collapseLabel
   const links = sections
     .filter((section) => section.links.length)
     .map((section) => (
@@ -47,8 +53,11 @@ export const NavigationMenu = forwardRef<HTMLElement, NavigationMenuProps>(funct
                   {...(!link.asChild && { href: link.href })}
                   aria-current={link.current ? 'page' : undefined}
                   onClick={(e) => {
-                    if (!e.defaultPrevented && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey)
+                    if (!e.defaultPrevented && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+                      const panel = e.currentTarget.closest<HTMLElement>('[popover]')
+                      if (panel?.hidePopover && panel.matches(':popover-open')) panel.hidePopover()
                       onNavigate?.(link.href)
+                    }
                   }}
                 >
                   {link.label}
@@ -59,22 +68,15 @@ export const NavigationMenu = forwardRef<HTMLElement, NavigationMenuProps>(funct
         </ul>
       </div>
     ))
-  const collapsible = orientation === 'horizontal' && !!collapseLabel
   return (
     <nav {...props} ref={ref} aria-label={label} className={('al-navigation ' + className).trim()}
-      data-orientation={orientation} data-collapsible={collapsible || undefined} data-align={align}>
-      {collapsible ? (
-        <details onKeyDown={event => {
-          if (event.key === 'Escape' && event.currentTarget.open) {
-            event.preventDefault()
-            event.currentTarget.open = false
-            event.currentTarget.querySelector('summary')?.focus()
-          }
-        }}>
-          <summary>{collapseLabel}</summary>
-          <div className="al-navigation-links">{links}</div>
-        </details>
-      ) : links}
+      data-orientation={orientation} data-collapsible={collapsible || undefined} data-align={align} data-surface={surface}>
+      {collapsible ? <>
+        <button type="button" className="al-navigation-trigger" popoverTarget={panelId} aria-controls={panelId}>
+          <Icon name="menu" size={18} />{collapseLabel}
+        </button>
+        <div className="al-navigation-links" id={panelId} popover="auto">{links}</div>
+      </> : <div className="al-navigation-links">{links}</div>}
     </nav>
   )
 })

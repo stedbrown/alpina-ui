@@ -12,7 +12,7 @@ function layoutIssues() {
   if (document.documentElement.scrollWidth > innerWidth + 1) errors.add('Page scrolls horizontally')
   for (const nav of document.querySelectorAll('header nav, nav[data-project-nav], nav.al-app-mobile')) {
     if (!nav.checkVisibility({ contentVisibilityAuto: true })) continue
-    const menu = nav.querySelector('summary')
+    const menu = nav.querySelector('button[popovertarget], summary')
     if (menu?.checkVisibility()) continue
     const links = [...nav.querySelectorAll('a')].filter(a => a.checkVisibility())
     if (links.length < 2) continue
@@ -65,7 +65,7 @@ function layoutIssues() {
   const nav = document.querySelector('.al-app-bar > [data-site-nav]')
   for (const button of document.querySelectorAll('header [data-site-appearance]')) {
     const header = button.closest('header')
-    const menu = header.querySelector('summary')
+    const menu = header.querySelector('button[popovertarget], summary')
     if (menu?.checkVisibility() && menu.getBoundingClientRect().right > button.getBoundingClientRect().left + tolerance)
       errors.add('Appearance control overlaps the menu')
   }

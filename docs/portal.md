@@ -6,7 +6,7 @@ The catalog imports its components from `alpina-ui` and the stylesheet from `alp
 | --- | --- |
 | AppShell | Accepts `brand`, `sidebar`, `toolbar`, and `children`. Control the mobile index with `open` and `onOpenChange`. Use `mainId` to link directly to the main content from site navigation. |
 | Sidebar | Accepts `masthead`, `tools`, `footer`, and `children`. Its ref points to the scrolling region so you can bring the current entry into view. |
-| NavigationMenu | Takes `label` and `sections`. Each section contains `links` with `href`, `label`, and `current`. Set `orientation` to `vertical` or `horizontal`. Native links support opening in a new tab. |
+| NavigationMenu | Takes `label` and `sections`. Each section contains `links` with `href`, `label`, and `current`. Set `orientation` to `vertical` or `horizontal`. Set `collapseLabel` for a narrow-screen menu with native keyboard and touch dismissal. `surface` accepts `paper`, `ink` and `accent`. The current link keeps a three-pixel rule and heavier text. |
 | CodeBlock | Accepts `code`, `label`, and copy-related labels. It uses the clipboard when available and selects the code for manual copying when needed. |
 | TextLink | Accepts native anchor attributes and a ref. An underline identifies the link even without color. |
 | Prose | Lays out semantic children in an `article`. The portal passes it local Markdown compiled at build time. |

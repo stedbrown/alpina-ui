@@ -63,6 +63,16 @@ Teams already using shadcn/ui can migrate one component family at a time. API di
 - [Component status]({{SITE}}/status/), [Beta review](docs/beta-review.md), [0.x migration](docs/migrate-1-0.md) and the [1.0 checklist](docs/1.0-checklist.md) describe the contracts and remaining decisions.
 - Run `npm ci`, `npm run build`, `npm run typecheck`, `npm test` and `npm run catalog` for a local build. Browser, bundle and performance checks are documented in the [quality guide](docs/package-quality.md). Maintainers can regenerate this README with `node scripts/readme.mjs`.
 
+## Install the assistant skill
+
+Run this in the project where your coding agent builds the interface.
+
+```sh
+npx skills add stedbrown/alpina-ui --skill alpina-ui
+```
+
+The skill covers composition, Swiss forms and payments. For exact prop names the companion MCP server reads the version installed in the application. [Agent setup]({{SITE}}/agents/)
+
 ## Site domain
 
 `homepage` in `package.json` is the default public origin. The package build copies it into `registry.json`, which supplies the documentation URLs for the CLI and MCP server. The site build uses the same origin for canonical links, sharing cards, the sitemap, robots.txt, package downloads and the agent index.

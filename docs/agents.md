@@ -4,11 +4,13 @@ A skill gives an agent reusable instructions for composing Alpina interfaces. Th
 
 ## Install the skill
 
-From your application directory, run the following command and choose your agent in the installer.
+From your application directory, run the following command and choose your agent in the installer. The default installation is local to that project.
 
 ```sh
 npx skills add stedbrown/alpina-ui --skill alpina-ui
 ```
+
+For an unattended project-local Codex installation, append `--agent codex --yes`. Check that the installer lists `alpina-ui`; its `SKILL.md` contains the Swiss layout guidance and React examples. [Skills CLI installation reference](https://github.com/vercel-labs/skills#install-a-skill)
 
 For a project-local installation from the package, copy `node_modules/alpina-ui/skills/alpina-ui/` into your agent’s project skills directory. For example, an agent that uses `.agents/skills/` should find `.agents/skills/alpina-ui/SKILL.md`. The skill includes its MIT license. [Read the skill on main](https://github.com/stedbrown/alpina-ui/blob/main/skills/alpina-ui/SKILL.md) · [Agent Skills specification](https://agentskills.io/specification)
 

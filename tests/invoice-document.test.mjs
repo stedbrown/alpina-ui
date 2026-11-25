@@ -57,7 +57,21 @@ test('large offsetting lines retain the fourth price digit and every printed cen
   }))
   assert.ok(html.includes('90’071’992’547’409.91'))
   assert.ok(html.includes('−90’071’992’547’409.91'))
-  assert.match(html, /999['’]999['’]999['’]999\.9997/)
+  assert.match(html, /value="999999999999\.9997">1’000’000’000’000\.00</)
   assert.ok(html.includes('>−0.01<'))
   assert.ok(html.includes('CHF 0.99'))
+})
+
+test('invoice quantities retain their units and monetary columns always have two decimals', () => {
+  const party = { name: 'Studio', postalCode: '3000', town: 'Bern', country: 'CH' }
+  const lines = [{ ...line('2.50', 80, 0), unit: 'h' }, { ...line(1.25, '24.00', 0), unit: 'm²' },
+    { ...line(2, '1.005', 0) }, { ...line(1, '-0.005', 0) }]
+  const html = renderToStaticMarkup(createElement(InvoiceDocument, {
+    invoiceNumber: 'R-3', issueDate: '2026-11-25', supplyDate: '2026-11-24', dueDate: '2026-12-25',
+    vatNumber: 'CHE109322551', locale: 'de-CH', lines, payment: { iban: 'CH5800791123000889012', creditor: party, debtor: party },
+  }))
+  const body = html.match(/<tbody>([\s\S]*?)<\/tbody>/)[1]
+  const values = [...body.matchAll(/<td>([\s\S]*?)<\/td>/g)].map(match => match[1].replace(/<[^>]+>/g, ''))
+  assert.deepEqual(values, ['2.5 h', '80.00', '0 %', '200.00', '1.25 m²', '24.00', '0 %', '30.00',
+    '2', '1.01', '0 %', '2.01', '1', '−0.01', '0 %', '−0.01'])
 })

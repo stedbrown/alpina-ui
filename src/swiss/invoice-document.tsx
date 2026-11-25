@@ -1,7 +1,7 @@
 import { forwardRef, type ComponentPropsWithoutRef } from 'react'
 import { SwissQrBill, type SwissQrBillLocale } from './swiss-qr-bill.js'
 import type { SwissQrAddress, SwissQrBillData } from './qr-payment.js'
-import { calculateInvoiceTotals, type InvoiceLine } from './invoice-totals.js'
+import { calculateInvoiceTotals, invoiceUnitPriceCents, type InvoiceLine } from './invoice-totals.js'
 import { formatCHF } from './format-chf.js'
 import { SwissDate } from './swiss-date.js'
 import { formatSwissUid, isSwissUid } from './identifiers.js'
@@ -70,13 +70,14 @@ export const InvoiceDocument = forwardRef<HTMLElement, InvoiceDocumentProps>(fun
     const digits = fraction.replace(/0+$/, '')
     return (raw.startsWith('-') ? '−' : '') + decimal.format(BigInt(integer)).replaceAll("'", '’') + (digits ? separator + digits : '')
   }
+  const columnAmount = (cents: number) => amount(cents).replace('CHF', '').trim()
   const rate = (value: number) => number(value) + '\u00a0%'
   const bill = { ...payment, currency: 'CHF' as const, amount: (result.totalCents / 100).toFixed(2) }
   // Keep the final sheet bounded. Longer itemizations flow across ordinary A4 pages.
   const shortAddress = (party: SwissQrAddress) => party.name.length <= 32 && (party.street?.length ?? 0) <= 32 &&
     (party.buildingNumber?.length ?? 0) <= 8 && party.town.length <= 24 && party.postalCode.length <= 8
   const compact = invoiceNumber.length <= 24 && shortAddress(payment.creditor) && shortAddress(payment.debtor) &&
-    lines.length <= 3 && lines.every(line => line.description.length <= 32 && String(line.quantity).length <= 7 &&
+    lines.length <= 3 && lines.every(line => line.description.length <= 32 && String(line.quantity).length + (line.unit?.length ?? 0) <= 7 &&
       String(line.unitPrice).length <= 8) && result.lineNetCents.every(value => Math.abs(value) < 100_000_000)
   const statement = <div className="al-invoice-statement">
     <h2>{l.invoice} <bdi>{invoiceNumber}</bdi></h2>
@@ -91,8 +92,9 @@ export const InvoiceDocument = forwardRef<HTMLElement, InvoiceDocumentProps>(fun
         <thead><tr>{[l.description, l.quantity, l.price, l.vat, l.net].map(label => <th key={label} scope="col">{label}</th>)}</tr></thead>
         <tbody>{lines.map((line, index) => <tr key={index}>
           <th scope="row">{line.description}</th>
-          <td>{number(line.quantity)}</td><td>{number(line.unitPrice)}</td><td>{rate(line.vatRate)}</td>
-          <td>{amount(result.lineNetCents[index]).replace('CHF', '').trim()}</td>
+          <td>{number(line.quantity)}{line.unit?.trim() && '\u00a0' + line.unit.trim()}</td>
+          <td><data value={String(line.unitPrice)}>{columnAmount(invoiceUnitPriceCents(line.unitPrice))}</data></td>
+          <td>{rate(line.vatRate)}</td><td>{columnAmount(result.lineNetCents[index])}</td>
         </tr>)}</tbody>
       </table>
     </div>

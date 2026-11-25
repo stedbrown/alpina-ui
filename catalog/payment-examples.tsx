@@ -62,7 +62,7 @@ export function InvoiceDocumentExample() {
     <Button variant="outline" onClick={() => { if (invoice.current) printSwissDocument(invoice.current) }}>Print invoice</Button>
     <InvoiceDocument ref={invoice} invoiceNumber="AN-104" issueDate="2026-11-25" supplyDate="2026-11-24"
       dueDate="2026-12-25" vatNumber="CHE-109.322.551" locale="en"
-      lines={[{ description: 'Proof review', quantity: 2, unitPrice: '80.00', vatRate: 8.1 },
+      lines={[{ description: 'Proof review', quantity: 2, unit: 'h', unitPrice: '80.00', vatRate: 8.1 },
         { description: 'Printed catalogue', quantity: 1, unitPrice: '24.00', vatRate: 2.6 }]}
       payment={{ iban: 'CH5800791123000889012',
         creditor: { name: 'Atelier Nord', street: 'Rue du Lac', buildingNumber: '8', postalCode: '2000', town: 'Neuchâtel', country: 'CH' },

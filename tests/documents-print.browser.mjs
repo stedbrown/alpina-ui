@@ -77,6 +77,10 @@ try {
     const slip = await page.locator('.al-bill-slip').boundingBox()
     mm(slip.width, 210); mm(slip.height, 105); mm(slip.y - final.y, 192)
     assert.equal(await page.locator('tbody tr').count(), length)
+    const amounts = await page.locator('.al-invoice-items tbody tr:first-child td:nth-child(3), .al-invoice-items tbody tr:first-child td:last-child').evaluateAll(cells =>
+      cells.map(cell => ({ alignment: getComputedStyle(cell).textAlign, figures: getComputedStyle(cell).fontVariantNumeric })))
+    assert.equal(amounts.length, 2)
+    assert.ok(amounts.every(cell => ['end', 'right'].includes(cell.alignment) && cell.figures.includes('tabular-nums')))
     await marker('.al-bill-slip')
     const pageCount = await pages({ x: 0, y: 192 })
     if (length === 3) assert.equal(pageCount, 1)

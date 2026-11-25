@@ -4,6 +4,8 @@ export interface InvoiceLine {
   description: string
   /** Positive decimal quantity, with up to four fractional digits. */
   quantity: string | number
+  /** Optional unit printed after the quantity, such as h or m². */
+  unit?: string
   /** VAT-exclusive CHF per unit, with up to four fractional digits. Negative prices represent discounts. */
   unitPrice: string | number
   vatRate: SwissVatRate
@@ -27,6 +29,10 @@ function cents(value: bigint): number {
   const result = Number(value)
   if (!Number.isSafeInteger(result)) throw new RangeError('Invoice amount exceeds the exact centime range.')
   return result
+}
+
+export function invoiceUnitPriceCents(price: InvoiceLine['unitPrice']): number {
+  return cents(nearest(fixed(price), 100n))
 }
 
 /** Line net amounts and each rate's VAT round half away from zero to whole centimes. */

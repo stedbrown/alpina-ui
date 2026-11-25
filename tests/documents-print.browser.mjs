@@ -119,6 +119,15 @@ try {
     if (length <= 8) assert.equal(pageCount, 1)
     else assert.ok(pageCount > 1)
   }
+  const slotNames = ['logo', 'intro', 'paymentTerms', 'notes', 'footer']
+  const slots = Object.fromEntries(slotNames.map(name => [name, h('a', {
+    href: 'https://invoice.example/' + name, 'data-pdf-measure': '',
+  }, name)]))
+  await render(h(InvoiceDocument, { ...invoice, ...slots, lines: lines.slice(0, 3), locale: 'it-CH' }))
+  await marker('.al-bill-slip')
+  assert.equal(await pages({ x: 0, y: 192 }), 1)
+  const correspondencePdf = (await page.pdf({ preferCSSPageSize: true, printBackground: true })).toString('latin1')
+  for (const name of slotNames) assert.ok(correspondencePdf.includes('https://invoice.example/' + name), name + ' prints with the invoice')
   const denseParty = { ...party, name: 'W'.repeat(70), street: 'W'.repeat(70), buildingNumber: 'W'.repeat(16), town: 'W'.repeat(35) }
   const denseLines = lines.slice(0, 4).map(line => ({ ...line, description: 'W'.repeat(48), quantity: '40000.0001' }))
   for (const locale of ['de-CH', 'fr-CH', 'it-CH', 'rm-CH', 'en']) {

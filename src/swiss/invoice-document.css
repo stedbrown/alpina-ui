@@ -30,6 +30,10 @@
   .al-invoice-items table { min-width: 27rem; }
   .al-invoice-statement, .al-invoice-summary { padding-inline: 16px; }
 }
+.al-invoice-logo, .al-invoice-intro { margin-bottom: var(--al-space-4); overflow-wrap: break-word; }
+.al-invoice-logo :is(img, svg) { display: block; max-inline-size: 100%; max-block-size: 4rem; object-fit: contain; object-position: left; }
+.al-invoice-closing { display: grid; gap: var(--al-space-3); padding: 0 24px 24px; overflow-wrap: break-word; }
+.al-invoice-closing > footer { color: var(--al-muted); }
 .al-invoice-cut { display: none; }
 .al-invoice-running { display: none; }
 @page alpina-invoice { size: A4 portrait; margin: 0; }
@@ -60,6 +64,10 @@
   .al-invoice-statement { padding: 0 15mm 2mm; }
   .al-invoice-statement > h2 { display: none; }
   .al-invoice-summary { padding: 0 15mm 6mm; break-inside: avoid; }
+  .al-invoice-logo, .al-invoice-intro { margin-bottom: 2mm; }
+  .al-invoice-logo :is(img, svg) { max-block-size: 15mm; }
+  .al-invoice-closing { display: block; padding: 0 15mm 6mm; }
+  .al-invoice-closing > * + * { margin-top: 2mm; }
   .al-invoice-document .al-invoice-statement h2 { font-size: 16pt; line-height: 19pt; margin: 0 0 4mm; }
   .al-invoice-parties { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .al-invoice-dates { grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 2mm 0; }

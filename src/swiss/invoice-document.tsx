@@ -1,4 +1,4 @@
-import { forwardRef, type ComponentPropsWithoutRef } from 'react'
+import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import { SwissQrBill, type SwissQrBillLocale } from './swiss-qr-bill.js'
 import type { SwissQrAddress, SwissQrBillData } from './qr-payment.js'
 import { calculateInvoiceTotals, invoiceUnitPriceCents, type InvoiceLine } from './invoice-totals.js'
@@ -21,6 +21,16 @@ export interface InvoiceDocumentProps extends Omit<ComponentPropsWithoutRef<'art
   payment: Omit<SwissQrBillData, 'amount' | 'currency' | 'debtor'> & { debtor: SwissQrAddress }
   locale?: SwissQrBillLocale
   cashRounding?: boolean
+  /** Sender mark. Supply alternative text when the mark identifies the issuer. */
+  logo?: ReactNode
+  /** Opening correspondence before the line items. */
+  intro?: ReactNode
+  /** Settlement instructions following the invoice total. */
+  paymentTerms?: ReactNode
+  /** Additional notes or closing correspondence. */
+  notes?: ReactNode
+  /** Issuer contact details before the detachable payment slip. */
+  footer?: ReactNode
 }
 
 function labels(invoice: string, issued: string, supplied: string, due: string, from: string, to: string, description: string,
@@ -48,7 +58,8 @@ function Party({ title, party }: { title: string; party: SwissQrAddress }) {
 }
 
 export const InvoiceDocument = forwardRef<HTMLElement, InvoiceDocumentProps>(function InvoiceDocument({
-  invoiceNumber, issueDate, supplyDate, dueDate, vatNumber, lines, payment, locale = 'de-CH', cashRounding, className = '', ...props
+  invoiceNumber, issueDate, supplyDate, dueDate, vatNumber, lines, payment, locale = 'de-CH', cashRounding,
+  logo, intro, paymentTerms, notes, footer, className = '', ...props
 }, ref) {
   if (!invoiceNumber.trim()) throw new RangeError('Supply an invoice number.')
   if (!isSwissUid(vatNumber)) throw new RangeError('Supply a valid Swiss business identifier for the VAT number.')
@@ -63,13 +74,15 @@ export const InvoiceDocument = forwardRef<HTMLElement, InvoiceDocumentProps>(fun
   const rate = (value: number) => number(value) + '\u00a0%'
   const bill = { ...payment, currency: 'CHF' as const, amount: (result.totalCents / 100).toFixed(2) }
   const statement = <div className="al-invoice-statement">
+    {logo != null && <div className="al-invoice-logo">{logo}</div>}
     <h2>{l.invoice} <bdi>{invoiceNumber}</bdi></h2>
     <div className="al-invoice-parties">
       <Party title={l.from} party={payment.creditor} /><Party title={l.to} party={payment.debtor} />
     </div>
-    <p className="al-invoice-id">{l.vat} <bdi>{formatSwissUid(vatNumber)} {locale === 'fr-CH' ? 'TVA' : locale === 'it-CH' ? 'IVA' : 'MWST'}</bdi></p>
+    <p className="al-invoice-id"><bdi>{formatSwissUid(vatNumber)} {locale === 'fr-CH' ? 'TVA' : locale === 'it-CH' ? 'IVA' : 'MWST'}</bdi></p>
     <dl className="al-invoice-dates">{([[l.issued, issueDate], [l.supplied, supplyDate], [l.due, dueDate]] as const).map(([label, date]) =>
       <div key={label}><dt>{label}</dt><dd><SwissDate value={date} locale={swissLocale} /></dd></div>)}</dl>
+    {intro != null && <div className="al-invoice-intro">{intro}</div>}
     <div className="al-invoice-items">
       <table aria-label={l.items}>
         <thead><tr>{[l.description, l.quantity, l.price, l.vat, l.net].map(label => <th key={label} scope="col">{label}</th>)}</tr></thead>
@@ -95,6 +108,11 @@ export const InvoiceDocument = forwardRef<HTMLElement, InvoiceDocumentProps>(fun
             <div className="al-invoice-total"><dt>{l.total}</dt><dd>{amount(result.totalCents)}</dd></div>
           </dl>
         </div>
+        {(paymentTerms != null || notes != null || footer != null) && <div className="al-invoice-closing">
+          {paymentTerms != null && <div>{paymentTerms}</div>}
+          {notes != null && <div>{notes}</div>}
+          {footer != null && <footer>{footer}</footer>}
+        </div>}
       </div>
     </InvoicePaper>
     <div className="al-invoice-final">

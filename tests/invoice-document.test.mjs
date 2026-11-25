@@ -90,3 +90,19 @@ test('public centime formatting accepts invoice totals and preserves arbitrary b
     assert.throws(() => formatCentimes(invalid), RangeError)
   }
 })
+
+test('invoice correspondence is ordered, accessible and printed with one official VAT suffix', () => {
+  const party = { name: 'Atelier', postalCode: '3000', town: 'Bern', country: 'CH' }
+  const props = { invoiceNumber: 'R-4', issueDate: '2026-11-25', supplyDate: '2026-11-24', dueDate: '2026-12-25',
+    vatNumber: 'CHE109322551', lines: [line(1, 100)], payment: { iban: 'CH5800791123000889012', creditor: party, debtor: party },
+    logo: createElement('img', { src: '/studio.svg', alt: 'Atelier mark' }), intro: 'For your library shelves.',
+    paymentTerms: 'Pay within 30 days.', notes: 'Thank you for the commission.', footer: createElement('address', null, 'Accounts desk') }
+  for (const [locale, suffix] of [['it-CH', 'IVA'], ['fr-CH', 'TVA'], ['de-CH', 'MWST'], ['rm-CH', 'MWST'], ['en', 'MWST']]) {
+    const html = renderToStaticMarkup(createElement(InvoiceDocument, { ...props, locale }))
+    assert.equal(html.match(/<p class="al-invoice-id">(.+?)<\/p>/)[1], '<bdi>CHE-109.322.551 ' + suffix + '</bdi>')
+    const ordered = ['alt="Atelier mark"', 'For your library shelves.', 'Test line', 'al-invoice-total',
+      'Pay within 30 days.', 'Thank you for the commission.', '<address>Accounts desk</address>', 'al-bill-slip']
+    const locations = ordered.map(text => html.indexOf(text))
+    assert.ok(locations.every((at, index) => at >= 0 && (!index || at > locations[index - 1])))
+  }
+})

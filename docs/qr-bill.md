@@ -93,6 +93,21 @@ Pass a locale as the second argument to `buildSwissQrPayload(bill, 'rm-CH')` or 
 
 Use decimal strings for imported amounts and fractional quantities. The calculator accepts up to four decimal places. Discounts take a negative unit price. It rounds each line's net to the nearest centime, groups the resulting bases by VAT rate, then rounds each group's VAT to the nearest centime. Half-centime ties round away from zero. An optional `cashRounding` adjustment rounds only the final total to five centimes. The summary, receipt and QR code all use that payable total. `calculateInvoiceTotals(lines, { cashRounding })` exposes the same calculation in integer centimes.
 
+The optional `logo`, `intro`, `paymentTerms`, `notes` and `footer` props accept text or React content. Place a logo with meaningful alternative text above the issuer, introduce the work before the items, then put settlement instructions and contact information after the total. All five areas participate in print pagination and stay outside the detachable payment slip.
+
+```tsx
+<InvoiceDocument
+  {...invoice}
+  logo={<img src="/workshop.svg" width="112" height="36" alt="Atelier Nord" />}
+  intro="Supply and installation of the oak shelving agreed on 12 March."
+  paymentTerms="Payment is due within 30 days."
+  notes="Thank you for commissioning our workshop."
+  footer={<address>Accounts · atelier@example.ch</address>}
+/>
+```
+
+The VAT number appears once, with the official German, French or Italian suffix. The Romansh and English interfaces retain `MWST` on the registered number. [Federal Tax Administration guidance on Swiss VAT numbers](https://www.estv.admin.ch/de/unternehmens-identifikationsnummer-uid)
+
 In print, the invoice uses the actual height of the addresses, item table and totals to reserve the bottom 105 mm of the last A4 page. A short invoice fits on one sheet. Longer invoices repeat their title and table headings. Native browser printing isolates a single visible letter or invoice from surrounding application controls. A mounted React view respects CSS-hidden tabs. In static HTML, mark inactive views with `hidden` or a closed dialog. With several documents on screen, call `printSwissDocument(invoiceRef.current)` to select one. Hydrated React applications also measure the layout on engines without CSS intrinsic size rounding. Static HTML on those engines uses a separate payment sheet. Use A4 portrait at 100%, with browser headers and footers off. Paper invoices require perforated stock. [SIX QR-bill implementation guidelines, sections 3.1 and 3.7](https://www.six-group.com/dam/download/banking-services/standardization/qr-bill/ig-qr-bill-v2.4-en.pdf)
 
 ## Receive a Swiss QR-bill

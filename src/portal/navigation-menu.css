@@ -102,7 +102,7 @@
   white-space: nowrap;
 }
 @supports selector(details::details-content) {
-  @container al-navigation (min-width: 40rem) {
+  @container al-navigation (min-width: 42rem) {
     .al-navigation[data-collapsible] summary { display: none; }
     .al-navigation details::details-content { content-visibility: visible; }
     .al-navigation[data-collapsible] .al-navigation-links ul {

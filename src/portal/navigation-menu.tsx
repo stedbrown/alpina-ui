@@ -18,7 +18,7 @@ export interface NavigationMenuProps extends Omit<ComponentPropsWithoutRef<'nav'
   label: string
   sections: readonly NavigationSection[]
   orientation?: 'vertical' | 'horizontal'
-  /** Show a native menu disclosure when a horizontal navigation has less than 40rem available. */
+  /** Show a native menu disclosure when a horizontal navigation has less than 42rem available. */
   collapseLabel?: string
   align?: 'start' | 'end'
   onNavigate?: (href: string) => void

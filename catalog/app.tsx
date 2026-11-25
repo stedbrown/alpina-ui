@@ -115,6 +115,7 @@ const siteLinks = [
   { href: '/blocks/', label: 'Blocks' },
   { href: '/icons/', label: 'Icons' },
   { href: '/themes/', label: 'Themes' },
+  { href: '/principles/', label: 'Principles' },
   { href: '/examples/', label: 'Examples' },
   { href: '/agents/', label: 'Agents' },
   { href: 'https://github.com/stedbrown/alpina-ui', label: <><Icon name="git-branch" size={18} />{' GitHub'}</> },

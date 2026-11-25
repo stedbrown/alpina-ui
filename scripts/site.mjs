@@ -54,7 +54,7 @@ async function loadPages() {
 }
 
 export async function buildWebsite({ guides, guideFiles, apiReference, registry, script, css, notices }) {
-  const { Landing, Examples, Icons, Themes, Blocks, BlockPage, blocks, ComponentDirectory, ReferencePage, ExampleIntroduction, inventory, projects } = await loadPages()
+  const { Landing, Examples, Icons, Themes, Principles, Blocks, BlockPage, blocks, ComponentDirectory, ReferencePage, ExampleIntroduction, inventory, projects } = await loadPages()
   const paths = []
   const appJS = '/assets/catalog-' + sha(script) + '.js'
   const appCSS = '/assets/catalog-' + sha(css) + '.css'
@@ -137,6 +137,7 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
     render(Landing, { version: registry.version, count: inventory.length }), { redirect: legacy, showcase: true })
   await page('/icons/', 'Alpina icons', 'Browse original SVG icons for navigation, actions, content and Git workflows. Preview sizes and copy React code.', render(Icons), { icons: true })
   await page('/themes/', 'Theme builder', 'Preview your accent, grid and light or dark appearance on Alpina components. Check text contrast and copy CSS variables.', render(Themes), { theme: true })
+  await page('/principles/', 'Design principles', 'Eight Swiss design decisions demonstrated with working Alpina components and paired examples.', render(Principles))
   await page('/blocks/', 'Page blocks', 'Copy complete login, dashboard, account settings and CHF pricing pages with the Alpina CLI.', render(Blocks))
   for (const block of blocks) {
     await page('/blocks/' + block.slug + '/', block.title + ' block', block.detail, render(BlockPage, { block }), { block: true })
@@ -189,7 +190,7 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
     '# Alpina UI', '', '> React components for Swiss typography and multilingual interfaces. The current release is ' + registry.version + '.', '',
     '## Agent tools', '', '- [Agent setup](' + origin + '/reference/agents.md)', '- [Project skill](' + origin + '/skills/alpina-ui/SKILL.md)',
     '- [Component registry](' + origin + '/registry.json)', '- [TypeScript API reference](' + origin + '/reference/api.json)', '- [Icon directory](' + origin + '/icons/)',
-    '', '## Guides', '', ...guideLinks, '', '## Blocks', '', ...blocks.map(b => '- [' + b.title + '](' + origin + '/blocks/' + b.slug + '/) — alpina add block/' + b.slug),
+    '', '## Guides', '', '- [Design principles](' + origin + '/principles/)', ...guideLinks, '', '## Blocks', '', ...blocks.map(b => '- [' + b.title + '](' + origin + '/blocks/' + b.slug + '/) — alpina add block/' + b.slug),
     '', '## Examples', '', ...projects.map((p) => '- [' + p.title + '](' + origin + '/examples/' + p.slug + '/): ' + p.description), '',
   ]
   await Promise.all([

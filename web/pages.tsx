@@ -6,7 +6,7 @@ import { HomeShowcase } from './home-showcase.js'
 import { projects } from './projects.js'
 
 const repository = 'https://github.com/stedbrown/alpina-ui'
-type Section = 'home' | 'docs' | 'components' | 'icons' | 'themes' | 'blocks' | 'examples' | 'agents'
+type Section = 'home' | 'docs' | 'components' | 'icons' | 'themes' | 'blocks' | 'examples' | 'agents' | 'principles'
 
 function GitHubLabel() {
   return <><Icon name="git-branch" size={18} />{' GitHub'}</>
@@ -19,6 +19,7 @@ export function Masthead({ current }: { current: Section }) {
     { href: '/blocks/', label: 'Blocks', current: current === 'blocks' },
     { href: '/icons/', label: 'Icons', current: current === 'icons' },
     { href: '/themes/', label: 'Themes', current: current === 'themes' },
+    { href: '/principles/', label: 'Principles', current: current === 'principles' },
     { href: '/examples/', label: 'Examples', current: current === 'examples' },
     { href: '/agents/', label: 'Agents', current: current === 'agents' },
   ]
@@ -124,6 +125,7 @@ export function Landing({ version, count }: { version: string; count: number }) 
           <Stack gap={4} align="start">
             <Typography as="h2" variant="display" id="design-title">The Swiss grid.</Typography>
             <Typography measure="narrow">Four, eight or twelve columns align labels, actions and figures as the space changes. A four-pixel spacing unit gives forms and editorial pages the same rhythm.</Typography>
+            <TextLink href="/principles/">Explore the design principles →</TextLink>
             <TextLink href="/docs/guides/design/">Read the design notes →</TextLink>
           </Stack>
         </GridItem>

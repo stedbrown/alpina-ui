@@ -36,7 +36,7 @@ formatCHF(-1234.5, locale)
 formatSwissDate('2027-02-19', locale, { dateStyle: 'full' })
 ```
 
-The JavaScript engine decides which ICU locales it includes. A valid BCP 47 tag may silently resolve to another language. Check `Intl.NumberFormat.supportedLocalesOf(['rm-CH'], { localeMatcher: 'lookup' })` and `Intl.DateTimeFormat.supportedLocalesOf(…)` separately. Alpina supplies CLDR 48 Romansh date forms, month and weekday names and numeric separators for its formatters. The runtime still provides time-zone conversion and currency rounding. Generic application calls to `Intl.DisplayNames`, relative time, or number spell-out need their own locale data where required. [Unicode CLDR 48, Romansh](https://github.com/unicode-org/cldr/blob/release-48/common/main/rm.xml) · [ECMA-402 locale matching](https://tc39.es/ecma402/#sec-supportedlocales)
+The JavaScript engine decides which ICU locales it includes. A valid BCP 47 tag may silently resolve to another language. Check `Intl.NumberFormat.supportedLocalesOf(['rm-CH'], { localeMatcher: 'lookup' })` and `Intl.DateTimeFormat.supportedLocalesOf(…)` separately. Alpina supplies CLDR 48 Romansh date forms, month and weekday names and numeric separators for its formatters. The runtime still provides time-zone conversion and currency rounding. Generic application calls to `Intl.DisplayNames`, relative time, or number spell-out need their own locale data where required. [Unicode CLDR 48, Romansh](https://github.com/unicode-org/cldr/blob/release-48/common/main/rm.xml) · [ECMA‑402 locale matching](https://tc39.es/ecma402/#sec-supportedlocales)
 
 ## Collect a postal address
 

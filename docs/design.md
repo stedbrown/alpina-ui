@@ -59,7 +59,25 @@ import "alpina-ui/fonts.css"
 
 The optional sheet supplies `--al-font-family` to the existing `--al-font` token. This also sets the display typeface and works inside nested light or dark themes. Use `font-family: var(--al-font)` on your application's body to extend the choice to surrounding prose. The `data-al-page` page layout already sets this property.
 
-Both WOFF2 files are served by the application. CSS bundlers resolve their relative URLs automatically. If you copy the CSS manually, place `fonts/inter-latin-wght-normal.woff2` and `fonts/inter-latin-ext-wght-normal.woff2` next to it in a `fonts/` directory. The Latin file covers accents used in Italian, German, French and Romansh, including **città**, **Grüezi**, **œuvre** and **bainvgnü**. The extended subset loads for additional letters such as **Ā**. The package redistributes the unmodified normal-style subsets from `@fontsource-variable/inter@5.3.0` and their SIL Open Font License 1.1. Keep the accompanying license when redistributing the files. [Fontsource Inter](https://fontsource.org/fonts/inter) · [Bundled license](../src/fonts/OFL.txt)
+Both WOFF2 files are served by the application. CSS bundlers resolve their relative URLs automatically. If you copy the CSS manually, place `fonts/inter-latin-standard-normal.woff2` and `fonts/inter-latin-ext-standard-normal.woff2` next to it in a `fonts/` directory. The Latin file covers accents used in Italian, German, French and Romansh, including **città**, **Grüezi**, **œuvre** and **bainvgnü**. The extended subset loads for additional letters such as **Ā**. The package redistributes the unmodified normal-style subsets from `@fontsource-variable/inter@5.3.0` and their SIL Open Font License 1.1. Keep the accompanying license when redistributing the files. [Fontsource Inter](https://fontsource.org/fonts/inter) · [Bundled license](../src/fonts/OFL.txt)
+
+### Display spacing
+
+Heading, display, title and poster roles share a curve based on the actual type size. At a 16 px root and a 4 px grid unit, these are the measured settings. Tracking is the extra space per character. Leading is the distance between successive baselines.
+
+| Type size | Tracking | Leading |
+| ---: | ---: | ---: |
+| 24 px | −0.52 px | 28 px |
+| 32 px | −0.96 px | 36 px |
+| 48 px | −1.84 px | 48 px |
+| 64 px | −2.72 px | 60 px |
+| 96 px | −4.48 px | 88 px |
+| 128 px | −6.24 px | 116 px |
+| 192 px | −9.60 px | 176 px |
+
+Above 48 px, the line box tightens so a two-line title reads as one unit. Tracking reaches its limit at −0.05 em. Both settings scale with the root text size. Leading snaps to the current grid unit when the browser supports CSS rounding. Give the title enough width for its longest word and test accents on adjacent lines.
+
+The optional Inter files include the weight (100–900) and optical size (14–32) axes. Display roles request automatic optical sizing, which lets the browser select the appropriate design up to the font’s maximum. Running text keeps the default text cut. The spacing curve also works with the system font stack. [Inter, optical sizes](https://rsms.me/inter/)
 
 ### Place the first elements
 

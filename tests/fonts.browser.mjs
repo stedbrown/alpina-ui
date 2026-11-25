@@ -29,7 +29,7 @@ try {
       const file = import.meta.resolve('alpina-ui' + pathname)
       return route.fulfill({ contentType: 'text/css', body: await readFile(new URL(file)) })
     }
-    assert.match(pathname, /^\/fonts\/inter-latin(?:-ext)?-wght-normal\.woff2$/)
+    assert.match(pathname, /^\/fonts\/inter-latin(?:-ext)?-standard-normal\.woff2$/)
     requested.push(pathname)
     return route.fulfill({ contentType: 'font/woff2', body: await readFile(new URL('.' + pathname, css)) })
   })
@@ -37,7 +37,7 @@ try {
   assert.deepEqual(requested, [])
   await page.addStyleTag({ url: base + '/fonts.css' })
   await page.evaluate(() => document.fonts.ready)
-  assert.deepEqual(requested, ['/fonts/inter-latin-wght-normal.woff2'])
+  assert.deepEqual(requested, ['/fonts/inter-latin-standard-normal.woff2'])
   assert.match(await page.locator('td').evaluate(el => getComputedStyle(el).fontFamily), /Inter Variable/)
   for (const el of await page.locator('data, time, td').all())
     assert.match(await el.evaluate(node => getComputedStyle(node).fontVariantNumeric), /tabular-nums/)
@@ -50,7 +50,20 @@ try {
     document.querySelector('#languages').append(' Ÿ ẞ')
     await document.fonts.load('650 18px "Inter Variable"', 'Ÿẞ')
   })
-  assert.ok(requested.includes('/fonts/inter-latin-ext-wght-normal.woff2'))
+  assert.ok(requested.includes('/fonts/inter-latin-ext-standard-normal.woff2'))
+
+  const opticalWidths = await page.evaluate(() => {
+    const sample = document.createElement('span')
+    sample.textContent = 'Affiches publiques · Zürich'
+    sample.style.font = '650 72px "Inter Variable"'
+    sample.style.alignSelf = 'flex-start'
+    document.body.append(sample)
+    return [14, 32].map(size => {
+      sample.style.fontVariationSettings = '"opsz" ' + size
+      return sample.getBoundingClientRect().width
+    })
+  })
+  assert.notEqual(opticalWidths[0], opticalWidths[1], 'the shipped font must contain distinct text and display cuts')
 
   // Report the face Chromium actually used to paint each sample glyph.
   const devtools = await page.context().newCDPSession(page)

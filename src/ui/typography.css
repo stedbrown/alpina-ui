@@ -31,8 +31,6 @@
   font-size: clamp(3.5rem, 21.25cqi, 24rem);
   font-weight: 700;
   line-height: var(--al-leading-display);
-  line-height: round(nearest, .98em, var(--al-unit));
-  letter-spacing: -.063em;
   text-wrap: balance;
   overflow-wrap: anywhere;
 }
@@ -48,21 +46,23 @@
   font-size: var(--al-type-heading);
   line-height: var(--al-leading-heading);
   font-weight: 600;
-  letter-spacing: -0.025em;
 }
 .al-type[data-role='display'] {
   font-size: var(--al-type-display);
   line-height: var(--al-leading-display);
   font-weight: 600;
-  letter-spacing: -0.048em;
 }
 .al-type[data-role='title'] {
   font: 650 clamp(3rem, 7cqi, 6.75rem)/var(--al-leading-display) var(--al-display);
-  line-height: round(nearest, .98em, var(--al-unit));
-  letter-spacing: -0.058em;
   overflow-wrap: anywhere;
   hyphens: auto;
   text-wrap: balance;
+}
+.al-type:is([data-role='heading'], [data-role='display'], [data-role='title'], [data-role='poster']) {
+  font-optical-sizing: auto;
+  letter-spacing: var(--al-display-tracking);
+  line-height: var(--al-display-line);
+  line-height: round(nearest, var(--al-display-line), var(--al-unit));
 }
 .al-type[data-measure='reading'] {
   max-inline-size: clamp(45ch, var(--al-measure), 75ch);

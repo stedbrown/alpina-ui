@@ -78,9 +78,11 @@ textarea {
 .component-hero h1.al-type,
 .intro h1 {
   font: 650 clamp(2.75rem, 7cqi, 4.5rem)/var(--al-leading-display) var(--al-display);
-  line-height: round(up, 1em, var(--al-unit));
+  font-optical-sizing: auto;
+  letter-spacing: var(--al-display-tracking);
+  line-height: var(--al-display-line);
+  line-height: round(nearest, var(--al-display-line), var(--al-unit));
   margin: 0;
-  letter-spacing: -.055em;
   overflow-wrap: anywhere;
 }
 .intro h1 { margin-block-end: var(--al-space-3); }

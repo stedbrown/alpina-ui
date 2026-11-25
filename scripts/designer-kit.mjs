@@ -37,6 +37,11 @@ export async function kitTokens(mode) {
       const multiplier = css.match(/\* ([\d.]+)\)/)?.[1]
       const value = multiplier ? Number(multiplier) * al.unit.$value.value : parseFloat(css) * (css.endsWith('rem') ? 16 : 1)
       add(name, 'dimension', px(value), value + 'px')
+    } else if (name === 'display-tracking' || name === 'display-line') {
+      // DTCG dimensions are static. Supply the 48px display specimen there and keep
+      // the fluid CSS expression for Style Dictionary's CSS platform.
+      const value = name === 'display-tracking' ? -1.84 : 48
+      add(name, 'dimension', px(value), css, 'At a 48px display size on the default 4px grid.')
     } else if (name.startsWith('duration-')) {
       add(name, 'duration', { value: parseFloat(css), unit: 'ms' }, css)
     } else if (name === 'ease') {

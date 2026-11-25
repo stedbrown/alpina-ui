@@ -49,7 +49,7 @@ async function audit(name, route, profile) {
   const lcp = report.audits['largest-contentful-paint'].numericValue
   const tbt = report.audits['total-blocking-time'].numericValue
   console.log(profile, route, 'Performance', performance, 'Accessibility', accessibility, 'CLS', cls, 'LCP', Math.round(lcp) + ' ms', 'TBT', Math.round(tbt) + ' ms')
-  const fonts = report.audits['network-requests'].details.items.filter(item => item.url.includes('/inter-latin-wght-normal-'))
+  const fonts = report.audits['network-requests'].details.items.filter(item => item.url.includes('/inter-latin-standard-normal-'))
   assert.equal(fonts.length, 1, 'The preloaded Latin font should make one request')
   assert.equal(fonts[0].statusCode, 200, 'Inter must be available from this deployment')
   return performance >= 95 && accessibility === 100 && cls === 0

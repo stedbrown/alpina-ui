@@ -4,13 +4,21 @@ import path from 'node:path'
 import { build } from 'esbuild'
 import { createElement } from 'react'
 import { renderToStaticMarkup, renderToString } from 'react-dom/server'
-import { marked } from 'marked'
+import { Marked, marked } from 'marked'
+import { GridOverlay, parseCivilDate } from 'alpina-ui'
 import { buildDesignerKit } from './designer-kit.mjs'
 
+const guideMarkdown = new Marked({ renderer: {
+  codespan({ text }) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(text)) return false
+    try { parseCivilDate(text) } catch { return false }
+    return '<code class="al-swiss-figures"><time datetime="' + text + '">' + text + '</time></code>'
+  },
+} })
+
 export async function renderGuide(markdown) {
-  return (await marked.parse(markdown)).replace(/<pre>/g, '<pre tabindex="0">')
+  return (await guideMarkdown.parse(markdown)).replace(/<pre>/g, '<pre tabindex="0">')
 }
-import { GridOverlay } from 'alpina-ui'
 
 // Apply the saved catalog appearance before the first paint on every public page.
 function initializeAppearance() {
@@ -122,7 +130,7 @@ export async function buildWebsite({ guides, guideFiles, apiReference, component
   })
   // Public pages preload the Latin face. Optional display avoids a late font swap on a slow connection.
   const fontCSS = fontBuild.outputFiles.find(file => file.path.endsWith('.css')).text.replaceAll('font-display:swap', 'font-display:optional')
-  const latinFont = '/assets/' + path.basename(fontBuild.outputFiles.find(file => /inter-latin-wght-normal-.*\.woff2$/.test(file.path)).path)
+  const latinFont = '/assets/' + path.basename(fontBuild.outputFiles.find(file => /inter-latin-standard-normal-.*\.woff2$/.test(file.path)).path)
   const fontsURL = '/assets/fonts-' + sha(fontCSS) + '.css'
   const showcaseBuild = await build({
     entryPoints: ['web/home-showcase-controls.js'], bundle: true, format: 'esm',

@@ -15,8 +15,10 @@
 .al-prose :where(h1, h2, h3, h4, h5, h6) {
   text-wrap: balance;
   line-height: var(--al-leading-heading);
-  line-height: round(up, 1.08em, var(--al-unit));
-  letter-spacing: -0.035em;
+  font-optical-sizing: auto;
+  letter-spacing: var(--al-display-tracking);
+  line-height: var(--al-display-line);
+  line-height: round(nearest, var(--al-display-line), var(--al-unit));
 }
 .al-prose h1 {
   font-size: clamp(2.5rem, 5vw, 4.5rem);

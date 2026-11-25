@@ -327,12 +327,12 @@
   "prose": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "380a4f3c9878d21ce64c"
+    "source": "1b44e1338e1c683ed60b"
   },
   "qr-bill-scanner": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "9f841ade52f869bf828f"
+    "source": "22c75fe9985cf8703943"
   },
   "questionnaire": {
     "stage": "Stable",
@@ -407,7 +407,7 @@
   "swiss-address-form": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "d2d8e6d1016798ffa8dc"
+    "source": "01536651ad12e24d0366"
   },
   "swiss-date": {
     "stage": "Stable",
@@ -477,7 +477,7 @@
   "typography": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "bb32d9fced53f7c7c94f"
+    "source": "5111ae366a1893bc890f"
   },
   "uid-input": {
     "stage": "Beta",

@@ -46,7 +46,7 @@ export async function gridSheet() {
 
 if (process.argv[1]?.endsWith('print-designer-sheet.mjs')) {
   const svg = await gridSheet()
-  const font = await readFile(new URL('../src/fonts/inter-latin-wght-normal.woff2', import.meta.url))
+  const font = await readFile(new URL('../src/fonts/inter-latin-standard-normal.woff2', import.meta.url))
   const browser = await chromium.launch()
   try {
     const page = await browser.newPage()

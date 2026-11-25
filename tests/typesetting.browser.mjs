@@ -31,5 +31,17 @@ try {
   assert.equal(await page.locator('time').getAttribute('lang'), 'it-CH')
   assert.match(await style('data', 'fontVariantNumeric'), /tabular-nums/)
   assert.match(await style('time', 'fontVariantNumeric'), /tabular-nums/)
+  const sizes = [[24, -.52, 28], [32, -.96, 36], [48, -1.84, 48], [64, -2.72, 60],
+    [96, -4.48, 88], [128, -6.24, 116], [192, -9.6, 176]]
+  for (const variant of ['heading', 'display', 'title', 'poster']) {
+    await page.locator('article').evaluate((article, html) => { article.innerHTML = html },
+      renderToStaticMarkup(h(Typography, { as: 'h1', variant }, 'Édition publique')))
+    for (const [size, tracking, leading] of sizes) {
+      await page.locator('h1').evaluate((node, px) => { node.style.fontSize = px + 'px' }, size)
+      assert.ok(Math.abs(parseFloat(await style('h1', 'letterSpacing')) - tracking) < .01, variant + ' at ' + size)
+      assert.equal(parseFloat(await style('h1', 'lineHeight')), leading)
+      assert.equal(await style('h1', 'fontOpticalSizing'), 'auto')
+    }
+  }
   console.log('Prose measure, wrapping, language, kerning and numeric roles passed.')
 } finally { await browser.close() }

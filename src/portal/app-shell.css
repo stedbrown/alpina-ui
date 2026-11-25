@@ -25,6 +25,9 @@
 .al-app-main {
   min-width: 0;
 }
+.al-app-shell :focus-visible {
+  scroll-margin-block: var(--al-focus-scroll-margin, var(--al-space-2));
+}
 .al-app-main {
   max-width: 100rem;
   margin-inline: auto;

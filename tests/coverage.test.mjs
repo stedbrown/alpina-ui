@@ -77,7 +77,7 @@ const names = [
 ]
 const supplemental = [
   'ahv-input', 'app-shell', 'canton-combobox', 'canton-select', 'currency-chf', 'description-list', 'figure', 'grid', 'grid-overlay', 'iban-input', 'icon',
-  'locale-select', 'phone-input', 'prose', 'stack', 'steps', 'swiss-address-form', 'swiss-date', 'swiss-postal-code-input', 'swiss-qr-bill', 'text-link',
+  'locale-select', 'phone-input', 'prose', 'stack', 'steps', 'swiss-address-form', 'swiss-date', 'swiss-postal-code-input', 'swiss-qr-bill', 'text-link', 'uid-input',
 ]
 
 test('the 66 documented names resolve to published entries and public React exports', () => {

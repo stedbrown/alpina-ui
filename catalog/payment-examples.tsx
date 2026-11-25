@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import {
-  AhvInput, Button, Field, IbanInput, PhoneInput, Stack, SwissQrBill, Typography, printSwissQrBill,
+  AhvInput, Button, Field, IbanInput, PhoneInput, Stack, SwissQrBill, Typography, UidInput, printSwissQrBill,
 } from 'alpina-ui'
 
 export function IbanInputExample() {
@@ -16,6 +16,11 @@ export function AhvInputExample() {
 export function PhoneInputExample() {
   return <Field label="Telephone" description="Enter a domestic number or include +41.">
     {props => <PhoneInput {...props} name="phone" placeholder="+41 32 765 43 21" />}
+  </Field>
+}
+export function UidInputExample() {
+  return <Field label="Swiss business identifier" description="CHE followed by nine digits, including the check digit.">
+    {props => <UidInput {...props} name="uid" defaultValue="CHE-109.322.551" />}
   </Field>
 }
 export function SwissQrBillExample() {

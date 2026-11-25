@@ -29,6 +29,26 @@ try {
 
   await open('login', 'Sign in')
   const password = main.getByLabel('Password', { exact: true })
+  const email = main.getByLabel('Email address')
+  const reveal = main.getByRole('button', { name: 'Show password' })
+  assert.equal(await email.getAttribute('autocomplete'), 'username')
+  assert.equal(await password.getAttribute('autocomplete'), 'current-password')
+  await page.context().grantPermissions(['clipboard-read', 'clipboard-write'], { origin })
+  await password.focus()
+  await page.evaluate(() => navigator.clipboard.writeText('paste-permitted'))
+  await page.keyboard.press('Control+v')
+  assert.equal(await password.inputValue(), 'paste-permitted')
+  await reveal.press('Enter')
+  assert.equal(await password.getAttribute('type'), 'text')
+  await main.getByRole('button', { name: 'Hide password' }).press('Enter')
+  for (const control of [email, password, reveal, main.getByRole('button', { name: 'Sign in', exact: true })]) {
+    await control.focus()
+    const visible = await control.evaluate(el => {
+      const { width, height, x, y } = el.getBoundingClientRect()
+      return width >= 24 && height >= 24 && el.contains(document.elementFromPoint(x + width / 2, y + height / 2))
+    })
+    assert.ok(visible, 'A focused sign-in control stays visible and meets the minimum target size')
+  }
   await password.fill('invalid-preview-password')
   await main.getByRole('button', { name: 'Sign in', exact: true }).press('Enter')
   await main.getByRole('alert').waitFor()

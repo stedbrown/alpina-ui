@@ -36,6 +36,22 @@ export function formatAhvNumber(value: string): string {
   return [digits.slice(0, 3), digits.slice(3, 7), digits.slice(7, 11), digits.slice(11)].join('.')
 }
 
+/** Validate the nine digits of a CHE identifier according to eCH-0108. */
+export function isSwissUid(value: string): boolean {
+  const match = /^CHE-?([1-9]\d{2})\.?(\d{3})\.?(\d{3})$/i.exec(value.trim())
+  if (!match) return false
+  const digits = match.slice(1).join('')
+  const weights = [5, 4, 3, 2, 7, 6, 5, 4]
+  const sum = weights.reduce((total, weight, index) => total + Number(digits[index]) * weight, 0)
+  return (11 - sum % 11) % 11 === Number(digits[8])
+}
+
+export function formatSwissUid(value: string): string {
+  if (!isSwissUid(value)) return value
+  const digits = value.replace(/\D/g, '')
+  return 'CHE-' + digits.slice(0, 3) + '.' + digits.slice(3, 6) + '.' + digits.slice(6)
+}
+
 function nationalDigits(value: string): string {
   return value.trim().replace(/^(?:\+41|0041)\s*\(0\)/, '+41')
     .replace(/[()\s.-]/gu, '').replace(/^(?:\+41|0041|0)/, '')

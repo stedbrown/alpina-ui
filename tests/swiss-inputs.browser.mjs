@@ -23,6 +23,7 @@ try {
   const iban = page.getByRole('textbox', { name: 'IBAN' })
   const ahv = page.getByRole('textbox', { name: 'AHV' })
   const phone = page.getByRole('textbox', { name: 'Phone' })
+  const uid = page.getByRole('textbox', { name: 'Business identifier' })
   const state = field => field.evaluate(el => ({
     valid: el.checkValidity(), custom: el.validity.customError,
     missing: el.validity.valueMissing, message: el.validationMessage,
@@ -32,6 +33,12 @@ try {
     await field.fill(value)
     await field.press('Tab')
   }
+  assert.equal(await uid.inputValue(), 'CHE-109.322.551')
+  await edit(uid, 'CHE-109.322.552')
+  assert.equal((await state(uid)).message, 'Check the business identifier.')
+  await edit(uid, 'che109322551')
+  assert.equal(await uid.inputValue(), 'CHE-109.322.551')
+  assert.ok((await state(uid)).valid)
 
   assert.equal(await iban.inputValue(), 'CH93 0076 2011 6238 5295 7')
   assert.equal(await phone.inputValue(), '+41 79 123 45 67')

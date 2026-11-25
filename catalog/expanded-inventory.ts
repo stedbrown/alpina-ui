@@ -21,6 +21,13 @@ export const expanded = [
     "Accept domestic and international input and display a Swiss +41 number."
   ],
   [
+    "uid-input",
+    "UidInput",
+    "Swiss business identifier",
+    "Swiss localization",
+    "Validate and format the nine digits of a Swiss CHE business identifier."
+  ],
+  [
     "swiss-qr-bill",
     "SwissQrBill",
     "QR payment slip",

@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { IbanInput } from '../src/swiss/iban-input.js'
 import { AhvInput } from '../src/swiss/ahv-input.js'
 import { PhoneInput } from '../src/swiss/phone-input.js'
+import { UidInput } from '../src/swiss/uid-input.js'
 
 function Fixture() {
   const [phone, setPhone] = useState('0791234567')
@@ -25,6 +26,8 @@ function Fixture() {
     <button onClick={() => iban.current?.focus()}>Focus account</button>
     <button onClick={() => setPhone('0441234567')}>Load saved phone</button>
     <button onClick={() => setPhone('')}>Clear saved phone</button>
+    <label htmlFor="uid">Business identifier</label>
+    <UidInput id="uid" defaultValue="CHE109322551" validationMessage="Check the business identifier." />
     <output id="events">{changes}</output>
   </>
 }

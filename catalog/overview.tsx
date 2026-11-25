@@ -119,12 +119,11 @@ export function Overview({ hosted = false }: { hosted?: boolean }) {
                 size="sm"
                 type="button"
                 lang={lang}
-                aria-label={localeNames[lang]}
                 aria-pressed={locale === lang}
                 key={lang}
                 onClick={() => setLocale(lang)}
               >
-                {lang.slice(0, 2).toUpperCase()}
+                {localeNames[lang]}
               </Button>
             ))}
           </div>

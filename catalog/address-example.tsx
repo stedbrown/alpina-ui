@@ -16,7 +16,7 @@ export function SwissAddressFormExample() {
         {(control) => <LocaleSelect {...control} value={locale} onLocaleChange={setLocale} />}
       </Field>
       <div onChange={() => setSaved(false)}>
-        <SwissAddressForm locale={locale} onSave={() => setSaved(true)} />
+        <SwissAddressForm locale={locale} format="ech-organisation" onSave={() => setSaved(true)} />
       </div>
       <output aria-live="polite" lang={locale}>
         {saved ? confirmation[locale] : ''}

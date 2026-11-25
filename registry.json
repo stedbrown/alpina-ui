@@ -887,6 +887,7 @@
         "swiss/cantons.ts",
         "swiss/locales.ts",
         "swiss/postal-code.ts",
+        "swiss/postal-address.ts",
         "swiss/swiss-postal-code-input.tsx",
         "swiss/swiss-address-form.css"
       ]
@@ -1021,6 +1022,20 @@
       "files": [
         "theme.css",
         "swiss/phone-input.tsx",
+        "swiss/identifier-field.tsx",
+        "ui/input.tsx",
+        "ui/input.css",
+        "swiss/identifiers.ts"
+      ]
+    },
+    {
+      "name": "uid-input",
+      "group": "swiss",
+      "entry": "swiss/uid-input.tsx",
+      "usage": "Collect a CHE business identifier with its modulo-11 check digit. A valid entry is grouped on blur. Pass validationMessage to localize the native validation error.",
+      "files": [
+        "theme.css",
+        "swiss/uid-input.tsx",
         "swiss/identifier-field.tsx",
         "ui/input.tsx",
         "ui/input.css",

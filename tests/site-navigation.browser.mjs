@@ -6,8 +6,8 @@ import { chromium } from 'playwright-core'
 
 const origin = 'https://alpina.test'
 const site = new URL('../site/', import.meta.url)
+const componentCount = JSON.parse(await readFile(new URL('registry.json', site), 'utf8')).items.length
 const executable = process.env.CHROME_PATH ?? process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
-const componentCount = JSON.parse(await readFile(new URL('../registry.json', import.meta.url))).items.length
 const browser = await chromium.launch(
   executable ? { executablePath: executable } : existsSync(chromium.executablePath()) ? {} : { channel: 'chrome' },
 )

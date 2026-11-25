@@ -11,6 +11,7 @@ Alpina ships React components and pure functions for Swiss data. Set the locale 
 | `CantonCombobox` | `locale?`, `value?`, `defaultValue?`, `onCantonChange?(code)`, `name?`, `required?` | Labeled search field and list of cantons |
 | `SwissPostalCodeInput` | `value?` and `defaultValue?` as strings, `required?`, `onChange?` | Text input with a numeric keypad |
 | `SwissAddressForm` | `onSave`, `initialValue?`, `locale?`, `labels?`, `className?` | Postal address form with five required fields |
+| `UidInput` | `value?`, `defaultValue?`, `validationMessage?` | Swiss business identifier with modulo-11 validation |
 | `Calendar` | `value?`, `defaultValue?`, `onValueChange?`, `defaultMonth?`, `min?`, `max?` | Monthly grid of civil dates |
 | `DatePicker` | `label`, `name?`, `value?`, `defaultValue?`, `onValueChange?` | Picker that returns an ISO civil date |
 
@@ -51,6 +52,30 @@ export function ShippingForm({ save }: AddressService) {
 A delivery service could return `{ fieldErrors: { postalCode: 'Delivery is currently unavailable for this postal code.' } }`, translated into the language of its form. Your application supplies this text. The form itself performs the local format checks described above.
 
 `initialValue?: Partial<SwissAddress>` is read on first mount. To open another address, give the form a new React `key`. Changing `locale` updates the built-in labels and errors while preserving entered values. Customize any text through `labels?: Partial<SwissAddressLabels>`, for example `labels={{ submit: 'Confirm address' }}`. The `swissAddressLabels` map exposes the strings for all four languages. Romansh field terminology follows the forms used by the Canton of Graubünden. [Cantonal form in Romansh](https://www.gr.ch/RM/instituziuns/administraziun/diem/hba/vender-dar-en-locaziun/tagungsraeume/Seiten/Reservationsanfrage.aspx)
+
+### Exchange a Swiss street address with eCH-0010
+
+Select `format="ech-person"` or `format="ech-organisation"` for eCH-0010 8.1.0 street delivery. The public example uses the organisation form. These modes keep the street and building number separate, accept two optional address lines, and require a Swiss postal code in the inclusive range 1000–9999. The compact five-field form remains available for applications that store a single street line. Postal directory matching is an application concern. [eCH-0010 8.1.0 and supplementary XML schemas](https://www.ech.ch/de/ech/ech-0010/8.1.0)
+
+| Address field | Maximum Unicode characters |
+| --- | ---: |
+| Given or family name | 30 each |
+| Organisation name | 60 |
+| Supplementary lines 1 and 2 | 150 each |
+| Street | 150 |
+| Building number | 30 |
+| Town | 40 |
+
+For a person, `recipient` is the family name and `firstName` is optional. For an organisation, `recipient` holds the organisation name. Line 1 can identify a care-of recipient and line 2 a building. `locality` in Alpina maps to the schema’s `town`. The form retains the canton for application use. The exchange object includes the Swiss country code and country name. Additional exchange profiles, such as a post-office box or a foreign address, have different fields.
+
+```tsx
+<SwissAddressForm format="ech-organisation" locale="de-CH" onSave={address => {
+  const payload = toEchMailAddress(address, 'ech-organisation')
+  return savePostalRecord(payload)
+}} />
+```
+
+`UidInput` accepts the CHE prefix and nine digits in grouped or compact form. The final digit follows the modulo-11 check in eCH-0108. A check digit of 10 is unassignable. An exact multiple of 11 yields 0. For example, `CHE109322551` displays as `CHE-109.322.551`. Verifying assignment to an enterprise requires a UID register lookup. [eCH-0108 v6.0.0](https://www.ech.ch/de/ech/ech-0108/6.0.0) · [Federal Statistical Office UID register](https://www.bfs.admin.ch/de/unternehmensidentifikation-uid)
 
 ## Compose individual fields
 

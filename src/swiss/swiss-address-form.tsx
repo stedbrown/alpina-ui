@@ -10,15 +10,53 @@ import { CantonSelect } from './canton-select.js'
 import { cantons, type CantonCode } from './cantons.js'
 import { defaultSwissLocale, type SwissLocale } from './locales.js'
 import { isSwissPostalCode } from './postal-code.js'
+import { addressFieldLimit, isXmlAddressText, normalizeAddressText, type SwissAddress, type SwissAddressFormat } from './postal-address.js'
 import { SwissPostalCodeInput } from './swiss-postal-code-input.js'
 import './swiss-address-form.css'
 
-export interface SwissAddress {
-  recipient: string
-  street: string
-  postalCode: string
-  locality: string
-  canton: CantonCode
+export type { SwissAddress, SwissAddressFormat } from './postal-address.js'
+
+const structuredLabels = {
+  'de-CH': {
+    firstName: 'Vorname (optional)',
+    lastName: 'Nachname',
+    organisation: 'Name der Organisation', addressLine1: 'Adresszusatz 1 (optional)', addressLine2: 'Adresszusatz 2 (optional)',
+    streetName: 'Strasse',
+    houseNumber: 'Hausnummer (optional)',
+    required: 'Optionale Felder sind gekennzeichnet.',
+    lengthError: 'Höchstens {n} Zeichen eingeben.',
+    codeError: 'Geben Sie eine PLZ von 1000 bis 9999 ein.',
+  },
+  'fr-CH': {
+    firstName: 'Prénom (facultatif)',
+    lastName: 'Nom de famille',
+    organisation: 'Nom de l’organisation', addressLine1: 'Complément d’adresse 1 (facultatif)', addressLine2: 'Complément d’adresse 2 (facultatif)',
+    streetName: 'Rue',
+    houseNumber: 'Numéro de maison (facultatif)',
+    required: 'Les champs facultatifs sont indiqués.',
+    lengthError: 'Saisissez au maximum {n} caractères.',
+    codeError: 'Saisissez un NPA entre 1000 et 9999.',
+  },
+  'it-CH': {
+    firstName: 'Nome (facoltativo)',
+    lastName: 'Cognome',
+    organisation: 'Nome dell’organizzazione', addressLine1: 'Complemento di indirizzo 1 (facoltativo)', addressLine2: 'Complemento di indirizzo 2 (facoltativo)',
+    streetName: 'Via',
+    houseNumber: 'Numero civico (facoltativo)',
+    required: 'I campi facoltativi sono indicati.',
+    lengthError: 'Inserisci al massimo {n} caratteri.',
+    codeError: 'Inserisci un NPA compreso tra 1000 e 9999.',
+  },
+  'rm-CH': {
+    firstName: 'Prenum (facultativ)',
+    lastName: 'Num da famiglia',
+    organisation: 'Num da l’organisaziun', addressLine1: 'Cumplement d’adressa 1 (facultativ)', addressLine2: 'Cumplement d’adressa 2 (facultativ)',
+    streetName: 'Via',
+    houseNumber: 'Numer da chasa (facultativ)',
+    required: 'Ils champs facultativs èn inditgads.',
+    lengthError: 'Endatai maximalmain {n} segns.',
+    codeError: 'Endatai in NP tranter 1000 e 9999.',
+  },
 }
 
 export interface SwissAddressLabels {
@@ -122,6 +160,8 @@ export interface SwissAddressValidationResult {
 
 export interface SwissAddressFormProps {
   locale?: SwissLocale
+  /** Collect separate person or organisation fields for eCH-0010 street delivery. */
+  format?: SwissAddressFormat
   initialValue?: Partial<SwissAddress>
   onSave: (
     address: SwissAddress,
@@ -130,13 +170,17 @@ export interface SwissAddressFormProps {
   className?: string
 }
 
-const addressFields = ['recipient', 'street', 'postalCode', 'locality', 'canton'] as const
-type AddressField = (typeof addressFields)[number]
-type Issue = 'requiredError' | 'postalCodeError' | { message: string }
+const requiredFields: (keyof SwissAddress)[] = ['recipient', 'street', 'postalCode', 'locality', 'canton']
+type AddressField = keyof SwissAddress
+type Issue = 'requiredError' | 'postalCodeError' | 'lengthError' | 'codeError' | 'characterError' | { message: string }
 type AddressErrors = Partial<Record<AddressField, Issue>>
 
-function fieldIssue(key: AddressField, value: string): Issue | undefined {
-  if (!value) return 'requiredError'
+function fieldIssue(key: AddressField, value: string, format: SwissAddressFormat): Issue | undefined {
+  if (!value && requiredFields.includes(key)) return 'requiredError'
+  if (format !== 'compact' && !isXmlAddressText(value)) return 'characterError'
+  const limit = addressFieldLimit(key, format)
+  if (limit && [...value].length > limit) return 'lengthError'
+  if (key === 'postalCode' && format !== 'compact' && !/^[1-9]\d{3}$/.test(value)) return 'codeError'
   if (key === 'postalCode' && !isSwissPostalCode(value)) return 'postalCodeError'
   if (key === 'canton' && !cantons.some(({ code }) => code === value)) return 'requiredError'
 }
@@ -144,6 +188,7 @@ function fieldIssue(key: AddressField, value: string): Issue | undefined {
 export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProps>(function SwissAddressForm(
   {
     locale = defaultSwissLocale,
+    format = 'compact',
     initialValue,
     onSave,
     labels,
@@ -152,7 +197,14 @@ export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProp
   forwardedRef,
 ) {
   const prefix = useId()
-  const text = { ...swissAddressLabels[locale], ...labels }
+  const structured = format !== 'compact'
+  const extra = structuredLabels[locale]
+  const text = { ...swissAddressLabels[locale], ...extra,
+    ...(structured && { recipient: format === 'ech-person' ? extra.lastName : extra.organisation,
+      instruction: extra.required, street: extra.streetName }), ...labels }
+  const extraFields: AddressField[] = structured ? ['addressLine1', 'addressLine2'] : []
+  const addressFields: AddressField[] = ['recipient', ...(format === 'ech-person' ? ['firstName' as const] : []),
+    ...extraFields, 'street', ...(structured ? ['houseNumber' as const] : []), 'postalCode', 'locality', 'canton']
   const form = useRef<HTMLFormElement>(null)
   useImperativeHandle(forwardedRef, () => form.current!, [])
   const pendingFocus = useRef<AddressField | null>(null)
@@ -199,11 +251,11 @@ export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProp
     if (saving.current) return
     const data = new FormData(event.currentTarget)
     const values = Object.fromEntries(
-      addressFields.map((key) => [key, String(data.get(key) ?? '').trim()]),
+      addressFields.map((key) => [key, normalizeAddressText(String(data.get(key) ?? ''))]),
     ) as Record<AddressField, string>
     const issues: AddressErrors = {}
     for (const field of addressFields) {
-      const issue = fieldIssue(field, values[field])
+      const issue = fieldIssue(field, values[field], format)
       if (issue) issues[field] = issue
     }
     if (showErrors(issues, true)) {
@@ -239,7 +291,7 @@ export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProp
     const { name, value } = target
     const key = name as AddressField
     if (validationStarted.current && addressFields.includes(key)) {
-      const next = fieldIssue(key, value.trim())
+      const next = fieldIssue(key, normalizeAddressText(value), format)
       setErrors((current) => (current[key] === next ? current : { ...current, [key]: next }))
     }
     if (status === 'failed' || status === 'saved') setStatus('idle')
@@ -247,7 +299,18 @@ export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProp
 
   function message(key: AddressField) {
     const issue = errors[key]
+    if (issue === 'characterError') return {
+      'it-CH': 'Rimuovi i caratteri di controllo non validi.', 'de-CH': 'Entfernen Sie die ungültigen Steuerzeichen.',
+      'fr-CH': 'Retirez les caractères de contrôle non valides.', 'rm-CH': 'Allontanai ils segns da controlla nunvalaivels.',
+    }[locale]
+    if (issue === 'lengthError') return text.lengthError.replace('{n}', String(addressFieldLimit(key, format)))
     return typeof issue === 'string' ? text[issue] : issue?.message
+  }
+
+  function optionalField(key: 'firstName' | 'addressLine1' | 'addressLine2' | 'houseNumber') {
+    return <Field key={key} id={prefix + '-' + key} className="al-address-street" label={text[key]} error={message(key)}>
+      {control => <Input {...control} name={key} defaultValue={defaults[key]} autoComplete={key === 'firstName' ? 'given-name' : undefined} />}
+    </Field>
   }
 
   return (
@@ -308,12 +371,15 @@ export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProp
             <Input
               {...control}
               name="recipient"
-              autoComplete="name"
+              autoComplete={format === 'ech-person' ? 'family-name' : format === 'ech-organisation' ? 'organization' : 'name'}
               defaultValue={defaults.recipient}
               required
             />
           )}
         </Field>
+        {format === 'ech-person' && optionalField('firstName')}
+        {structured && optionalField('addressLine1')}
+        {structured && optionalField('addressLine2')}
         <Field
           id={prefix + '-street'}
           className="al-address-street"
@@ -330,6 +396,7 @@ export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProp
             />
           )}
         </Field>
+        {structured && optionalField('houseNumber')}
         <Field
           id={prefix + '-postalCode'}
           className="al-address-postcode"

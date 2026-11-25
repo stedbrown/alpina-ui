@@ -70,7 +70,7 @@ try {
   if (update) await mkdir(destination, { recursive: true })
   const jobs = routes.filter(route => route !== '/').map(route => [route, 800, 'light'])
   if (routes.includes('/')) {
-    for (const width of [320, 360, 640, 768, 800, 960, 1024, 1440])
+    for (const width of [320, 360, 640, 768, 800, 960, 1024, 1440, 2560])
       for (const scheme of ['light', 'dark']) jobs.push(['/', width, scheme])
   }
   async function worker() {

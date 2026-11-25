@@ -86,6 +86,12 @@
   .al-button {
     border-color: ButtonText;
   }
+  .al-button:is([data-variant='primary'], [data-variant='danger']):not(:disabled, [aria-disabled='true']) {
+    /* Chromium otherwise paints a text backplate over the system-colour label. */
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+  }
   .al-button:is(:disabled, [aria-disabled='true']) {
     color: GrayText;
     border-color: GrayText;

@@ -32,6 +32,7 @@ body[data-al-page] > footer:last-child { margin-block-start: auto; }
   --al-hover: color-mix(in srgb, var(--al-ink) 9%, var(--al-bg));
   --al-accent: #eb0000;
   --al-on-accent: #fff;
+  --_al-link-hover: var(--al-accent);
   --al-accent-hover: #000;
   --al-danger: var(--al-accent);
   --al-success: var(--al-ink);

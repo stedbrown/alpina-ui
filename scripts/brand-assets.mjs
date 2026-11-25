@@ -1,6 +1,5 @@
 // Render every raster size from the same vector used by the portal and GitHub.
 import { readFile, writeFile } from 'node:fs/promises'
-import { fileURLToPath } from 'node:url'
 import { chromium } from 'playwright-core'
 
 const dir = new URL('../web/assets/', import.meta.url)
@@ -30,15 +29,5 @@ try {
     } else await writeFile(asset(filename), png)
   }
 
-  const font = await readFile(new URL('../src/fonts/inter-latin-standard-normal.woff2', import.meta.url))
-  await page.setViewportSize({ width: 1200, height: 630 })
-  await page.setContent(`<style>
-    @font-face{font-family:Inter;src:url(data:font/woff2;base64,${font.toString('base64')}) format("woff2");font-weight:100 900}
-    *{box-sizing:border-box}body{margin:0;padding:52px 60px;color:#121212;background:#fff;font:550 32px Inter,sans-serif}
-    header{display:flex;align-items:center;gap:15px}header svg{width:56px;height:56px}
-    main{margin-top:51px;font:720 142px/.89 Inter,sans-serif;letter-spacing:-8px;font-optical-sizing:auto}
-    main span{display:block;color:#eb0000}footer{margin-top:50px;border-top:2px solid;padding-top:17px;display:flex;justify-content:space-between;font-size:26px;letter-spacing:-.6px}
-    </style><header>${logo} Alpina UI</header><main>Swiss UI<span>for React.</span></main><footer><span>Forms, tables and printed documents</span><span>Open source · MIT</span></footer>`)
-  await page.evaluate(() => document.fonts.ready)
-  await page.screenshot({ path: fileURLToPath(asset('alpina-preview.png')) })
+  // The social card is captured from the real homepage by readme-screenshots.mjs.
 } finally { await browser.close() }

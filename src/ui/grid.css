@@ -7,7 +7,7 @@
 .al-layout[data-space='cover'] { padding-block: var(--al-space-8); padding-block: round(nearest, clamp(var(--al-space-8), 4vw, 4rem), var(--al-unit)); }
 .al-layout[data-surface='paper'] { background: var(--al-bg); color: var(--al-ink); }
 .al-layout[data-surface='ink'] { background: var(--al-ink); color: var(--al-bg); }
-.al-layout[data-surface='accent'] { background: var(--al-accent); color: var(--al-on-accent); }
+.al-layout[data-surface='accent'] { background: var(--al-accent); color: var(--al-on-accent); --_al-link-hover: var(--al-on-accent); }
 .al-grid {
   --al-cols: 4;
   --al-gutter: calc(var(--al-unit, 0.25rem) * 3);

@@ -138,6 +138,37 @@ try {
     }
   }
 
+  for (const width of [320, 768, 1440, 2560]) {
+    await page.setViewportSize({width, height:900})
+    for (const colorScheme of ['light', 'dark']) {
+      await page.emulateMedia({colorScheme, reducedMotion:'reduce'})
+      const layout = await page.evaluate(() => {
+        const title = document.querySelector('h1')
+        const section = title.closest('section')
+        const aligned = [...section.querySelectorAll('h1, p, a')].every(el => {
+          const rect = el.getBoundingClientRect()
+          return rect.left >= 0 && rect.right <= innerWidth + 1
+        })
+        const lines = [...title.childNodes].filter(n => n.nodeType === Node.TEXT_NODE).map(n => {
+          const range = new Range(); range.selectNodeContents(n)
+          return [...range.getClientRects()].filter(r => r.width).length
+        })
+        const intro = section.querySelector('.al-grid-item:last-child p').firstChild
+        const broken = [...intro.textContent.matchAll(/[A-Za-z]+/g)].filter(match => {
+          const range = new Range()
+          range.setStart(intro, match.index)
+          range.setEnd(intro, match.index + match[0].length)
+          return new Set([...range.getClientRects()].map(rect => rect.top)).size > 1
+        }).map(match => match[0])
+        return { aligned, lines, broken, width: document.documentElement.scrollWidth, field: getComputedStyle(section).backgroundColor }
+      })
+      assert.equal(layout.width, width, colorScheme + ' at ' + width)
+      assert.ok(layout.aligned)
+      assert.deepEqual(layout.broken, [], 'The hero introduction keeps words whole at ' + width)
+      assert.deepEqual(layout.lines, [1,1], 'Both cover lines fit at ' + width)
+      assert.equal(layout.field, 'rgb(235, 0, 0)', 'Brand field in ' + colorScheme)
+    }
+  }
   const staticPage = await homepage(false)
   const staticQueue = staticPage.getByRole('table', {name:'Print queue'})
   assert.equal(await staticQueue.getByRole('button').count(), 0)

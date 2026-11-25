@@ -83,17 +83,17 @@ export function Landing({ version, count, queue, command, installation }: { vers
   return <>
     <Masthead current="home" />
     <PageRegion as="main" id="content" tabIndex={-1}>
-      <Grid as="section" width="site" space="cover" align="end" surface="accent" entrance="sequence" aria-labelledby="home-title">
+      <Grid as="section" width="site" space="cover" align="end" surface="accent" data-al-theme="light" entrance="sequence" aria-labelledby="home-title">
         <GridItem><Stack direction="row" justify="space-between" gap={2}>
-          <Typography variant="label">Alpina UI / React component library</Typography>
-          <TextLink href="/docs/guides/release/">v{version}</TextLink>
+          <Typography variant="label">Open-source React library</Typography>
+          <TextLink href="/docs/guides/release/">Release notes</TextLink>
         </Stack></GridItem>
         <GridItem><Separator weight="section" /></GridItem>
         <GridItem medium={5} large={8}>
           <Typography as="h1" variant="masthead" id="home-title">Swiss design<br /> for React.</Typography>
         </GridItem>
         <GridItem medium={3} large={3} start={{ large: 10 }}><Stack gap={5} align="start">
-          <Typography>Open-source components built on a column grid, a measured type scale and one red accent.</Typography>
+          <Typography>Compose interfaces with precise grids, clear type and one red accent.</Typography>
           <Stack direction="row" gap={4}>
             <TextLink variant="action" href="/start-here/">Start here</TextLink>
             <TextLink href="/docs/components/">Browse components ({count})</TextLink>

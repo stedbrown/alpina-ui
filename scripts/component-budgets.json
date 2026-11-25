@@ -327,7 +327,7 @@
   "prose": {
     "js": 768,
     "lazy": 0,
-    "css": 1664
+    "css": 1920
   },
   "qr-bill-scanner": {
     "js": 17792,
@@ -442,7 +442,7 @@
   "text-link": {
     "js": 1088,
     "lazy": 0,
-    "css": 576
+    "css": 640
   },
   "textarea": {
     "js": 320,

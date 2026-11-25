@@ -19,7 +19,13 @@ export interface CalendarProps {
   max?: string
   locale?: SwissLocale
   showWeekNumbers?: boolean
-  /** Highlight official holidays for this canton. Dates remain selectable. */
+  /** Return true to keep a civil date visible to keyboard users while preventing selection. */
+  isDateDisabled?: (date: string) => boolean
+  /** A full or closed day cannot be booked. The status is included in its accessible name. */
+  dayStatus?: (date: string) => 'available' | 'full' | 'closed' | undefined
+  /** Prevent selection of all holidays in the configured canton, region and observance. */
+  disableHolidays?: boolean
+  /** Highlight official holidays for this canton. */
   canton?: CantonCode
   /** Apply the named local holiday schedule within the canton. */
   holidayRegion?: SwissHolidayRegion
@@ -29,7 +35,8 @@ export interface CalendarProps {
 }
 
 export const Calendar = forwardRef<HTMLElement, CalendarProps>(function Calendar(
-  { value, defaultValue = '', onValueChange, defaultMonth, min = firstCivilDay, max = lastCivilDay, locale = defaultSwissLocale, showWeekNumbers = false, canton, holidayRegion, observance, className = '' },
+  { value, defaultValue = '', onValueChange, defaultMonth, min = firstCivilDay, max = lastCivilDay, locale = defaultSwissLocale,
+    showWeekNumbers = false, isDateDisabled, dayStatus, disableHolidays = false, canton, holidayRegion, observance, className = '' },
   ref,
 ) {
   const [selection, select] = useControllable(value, defaultValue, onValueChange)
@@ -119,14 +126,20 @@ export const Calendar = forwardRef<HTMLElement, CalendarProps>(function Calendar
             const day = month + '-' + String(n).padStart(2, '0')
             const holidayNames = monthHolidays.filter(holiday => holiday.date === day)
               .map(holiday => holiday.name + (holiday.duration === 'afternoon' ? ' (' + text.afternoon + ')' : '')).join(', ')
-            return <td key={column} aria-selected={day === selection}>
+            const excluded = (disableHolidays && !!holidayNames) || isDateDisabled?.(day)
+            const status = excluded ? 'closed' : dayStatus?.(day)
+            const unavailable = status === 'closed' || status === 'full'
+            const statusLabel = status && text[status]
+            return <td key={column} aria-selected={day === selection} data-weekend={column >= 5 || undefined}>
               <button type="button" data-day={day} data-holiday={holidayNames ? '' : undefined} tabIndex={day === current ? 0 : -1}
-                title={holidayNames || undefined}
-                aria-label={[formatSwissDate(day, locale, { dateStyle: 'full' }), holidayNames].filter(Boolean).join(', ')}
+                data-status={status} aria-disabled={unavailable || undefined}
+                title={[holidayNames, statusLabel].filter(Boolean).join(', ') || undefined}
+                aria-label={[formatSwissDate(day, locale, { dateStyle: 'full' }), holidayNames, statusLabel].filter(Boolean).join(', ')}
                 aria-current={day === today ? 'date' : undefined}
                 disabled={day < min || day > max}
                 onKeyDown={(event) => navigate(event, day)}
                 onClick={() => {
+                  if (unavailable) return
                   setCursor(day)
                   if (day === selection) onValueChange?.(day)
                   else select(day)

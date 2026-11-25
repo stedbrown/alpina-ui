@@ -84,8 +84,8 @@ export function calendarLabels(day: string, locale: SwissLocale) {
 }
 
 export const calendarText = {
-  'it-CH': { prev: 'Mese precedente', next: 'Mese successivo', choose: 'Scegli una data', close: 'Chiudi', clear: 'Cancella la data', holidays: 'Festivi del mese', afternoon: 'pomeriggio' },
-  'de-CH': { prev: 'Vorheriger Monat', next: 'Nächster Monat', choose: 'Datum wählen', close: 'Schliessen', clear: 'Datum entfernen', holidays: 'Feiertage im Monat', afternoon: 'nachmittags' },
-  'fr-CH': { prev: 'Mois précédent', next: 'Mois suivant', choose: 'Choisir une date', close: 'Fermer', clear: 'Effacer la date', holidays: 'Jours fériés du mois', afternoon: 'après-midi' },
-  'rm-CH': { prev: 'Mais precedent', next: 'Mais suandant', choose: 'Tscherner ina data', close: 'Serrar', clear: 'Stizzar la data', holidays: 'Firads dal mais', afternoon: 'suentermezdi' },
+  'it-CH': { prev: 'Mese precedente', next: 'Mese successivo', choose: 'Scegli una data', close: 'Chiudi', clear: 'Cancella la data', holidays: 'Festivi del mese', afternoon: 'pomeriggio', available: 'Disponibile', full: 'Al completo', closed: 'Chiuso' },
+  'de-CH': { prev: 'Vorheriger Monat', next: 'Nächster Monat', choose: 'Datum wählen', close: 'Schliessen', clear: 'Datum entfernen', holidays: 'Feiertage im Monat', afternoon: 'nachmittags', available: 'Verfügbar', full: 'Ausgebucht', closed: 'Geschlossen' },
+  'fr-CH': { prev: 'Mois précédent', next: 'Mois suivant', choose: 'Choisir une date', close: 'Fermer', clear: 'Effacer la date', holidays: 'Jours fériés du mois', afternoon: 'après-midi', available: 'Disponible', full: 'Complet', closed: 'Fermé' },
+  'rm-CH': { prev: 'Mais precedent', next: 'Mais suandant', choose: 'Tscherner ina data', close: 'Serrar', clear: 'Stizzar la data', holidays: 'Firads dal mais', afternoon: 'suentermezdi', available: 'Disponibel', full: 'Occupa', closed: 'Serrà' },
 } as const

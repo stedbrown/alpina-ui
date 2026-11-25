@@ -9,9 +9,13 @@
 .al-calendar th[scope='row'] { font-variant-numeric: tabular-nums; border-inline-end: 1px solid var(--al-line); }
 .al-calendar td button { appearance: none; box-sizing: border-box; width: 100%; min-height: var(--al-space-10); padding: 0; display: block; border: 1px solid transparent; border-radius: var(--al-radius); background: transparent; color: inherit; font: inherit; font-variant-numeric: tabular-nums; cursor: pointer; }
 .al-calendar td button[aria-current] { text-decoration: underline; text-underline-offset: .22em; }
-.al-calendar td button:enabled:hover { background: var(--al-hover); }
+.al-calendar td[data-weekend] { background: var(--al-soft); }
+.al-calendar td:not([aria-selected='true']) button:enabled:not([aria-disabled]):hover { background: var(--al-hover); }
 .al-calendar td[aria-selected=true] button:enabled { background: var(--al-ink); color: var(--al-surface); font-weight: 700; }
-.al-calendar td button:disabled { text-decoration: line-through; cursor: default; }
+.al-calendar td button:is(:disabled,[aria-disabled='true']) { text-decoration: line-through; cursor: default; }
+.al-calendar [data-status='available'] { border-block-end: 2px solid currentColor; }
+.al-calendar [data-status='full'] { border-block-end: 2px dotted currentColor; }
+.al-calendar [data-status='closed'] { border-block-end: 2px dashed currentColor; }
 .al-calendar td button:focus-visible { outline: 2px solid var(--al-focus); outline-offset: -2px; }
 .al-calendar [data-holiday] { position: relative; font-weight: 700; }
 .al-calendar [data-holiday]::after {
@@ -43,5 +47,14 @@
 }
 
 @media (forced-colors: active) {
-  .al-calendar td[aria-selected='true'] button:enabled { outline: 2px solid Highlight; outline-offset: -2px; }
+  .al-calendar td[data-weekend] { border-inline-start: 1px dotted CanvasText; }
+  .al-calendar td[aria-selected='true'] button:enabled {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+  }
+  .al-calendar td[aria-selected='true'] button:enabled:focus-visible {
+    outline: 2px solid HighlightText;
+    outline-offset: -4px;
+  }
 }

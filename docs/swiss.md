@@ -178,6 +178,14 @@ By default, amounts round to the nearest centime. Set `cashRounding` on `Currenc
 
 The Calendar starts on Monday. Pass `showWeekNumbers` to display the ISO week beside each row. The default seven-column layout and the DatePicker dialog fit 180 CSS pixels. Narrow calendars shorten the visible weekday headings while retaining full names for assistive technology. `isoWeek(day)` returns the week number and ISO week year, which can differ from the civil year in late December and early January.
 
+For bookings, pass `dayStatus(date)` to mark a date as `available`, `full` or `closed`. The callbacks receive ISO civil dates. Weekends have a distinct background. The day button announces its localized status and uses a solid, dotted or dashed rule for available, full or closed dates. Arrow keys still visit unavailable dates so their status can be read. Selecting one leaves the current value unchanged. `isDateDisabled(date)` and `disableHolidays` mark a day closed even when the availability callback reports spaces. `disableHolidays` applies to the configured canton, region and observance, including listed half-day holidays.
+
+```tsx
+<DatePicker locale="fr-CH" canton="VD" disableHolidays name="appointment"
+  isDateDisabled={date => clinicClosures.has(date)}
+  dayStatus={date => capacity.get(date) === 0 ? 'full' : 'available'} />
+```
+
 ## Schedule work around public holidays
 
 `swissHolidays(year, canton, options?)` returns dates in chronological order. It uses the public rest-day rules for all 26 cantons reviewed in November 2026. The rules project onto the requested Gregorian year. Historical legislation, payroll entitlements, school breaks and individual employers’ closing dates require their own calendars. Only 1 August has federal holiday status. Easter Sunday, Whit Sunday and the Federal Day of Thanksgiving appear as named Sundays, with Geneva’s local fast in September. [SECO overview and regional schedules](https://www.seco.admin.ch/dam/de/sd-web/x5LtHPJdNis5/Anhang-Feiertage-Schweiz-Auszug-ArG-ArGV1-5-SECO-SB-2024-DE.pdf) · [Federal Department of Foreign Affairs on the September observances](https://www.aboutswitzerland.eda.admin.ch/en/summer-festivals-and-customs)

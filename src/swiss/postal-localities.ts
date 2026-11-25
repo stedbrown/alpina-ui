@@ -1,3 +1,4 @@
+import { loadPostalRows } from './postal-loader.internal.js'
 import type { CantonCode } from './cantons.js'
 
 export interface SwissPostalLocality {
@@ -8,7 +9,7 @@ export interface SwissPostalLocality {
 /** Looks up an exact residential postcode in the packaged swisstopo directory. */
 export async function lookupSwissPostalCode(postalCode: string): Promise<SwissPostalLocality[]> {
   if (!/^[1-9][0-9]{3}$/.test(postalCode)) return []
-  const { default: rows } = await import('./postal-localities.data.js')
+  const rows = await loadPostalRows()
   const prefix = '\n' + postalCode
   let start = rows.indexOf(prefix)
   const matches: SwissPostalLocality[] = []

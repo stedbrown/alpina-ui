@@ -952,6 +952,7 @@
         "swiss/locales.ts",
         "swiss/postal-code.ts",
         "swiss/postal-localities.ts",
+        "swiss/postal-loader.internal.ts",
         "swiss/postal-localities.data.ts",
         "swiss/postal-address.ts",
         "swiss/swiss-postal-code-input.tsx",

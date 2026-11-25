@@ -50,6 +50,24 @@ try {
     await page.getByRole('button', { name: 'Continue' }).click()
     assert.equal(await page.title(), 'Activated')
     assert.deepEqual(paths.toSorted(), files)
+
+    // Exercise the other side of the conditional export in a real Vite build.
+    await writeFile(join(project, 'entry.js'), [
+      "import { lookupSwissPostalCode } from 'alpina-ui'",
+      "document.querySelector('main').innerHTML = '<button>Find postcode</button>'",
+      "document.querySelector('button').onclick = async () => { document.title = (await lookupSwissPostalCode('6900')).map(row => row.locality).join(', ') }",
+    ].join('\n'))
+    await build({ root: project, configFile: false, logLevel: 'error' })
+    const addressFiles = await readdir(join(dist, 'assets'))
+    const postal = addressFiles.find(file => file.startsWith('postal-localities.data-'))
+    assert.ok(postal, 'Vite should split the address directory')
+    paths.length = 0
+    for (const file of addressFiles) files.push('assets/' + file)
+    await page.reload()
+    assert.ok(!paths.includes('assets/' + postal), 'Vite eagerly requested the directory')
+    await page.getByRole('button', { name: 'Find postcode' }).click()
+    await page.waitForFunction(() => document.title.includes('Massagno'))
+    assert.ok(paths.includes('assets/' + postal), 'Vite did not request local data on lookup')
   } finally {
     await browser.close()
   }

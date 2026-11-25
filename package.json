@@ -99,5 +99,15 @@
     "prepare:integrations": "node integrations/prepare.mjs",
     "test:integrations": "npm run prepare:integrations && npm ci --prefix integrations && npm run build --prefix integrations --workspaces && node integrations/test.mjs",
     "prepack": "npm run build"
+  },
+  "imports": {
+    "#postal-loader": {
+      "alpina-postal-chunk": "./dist/swiss/postal-loader.internal.js",
+      "webpack": "./dist/swiss/postal-loader.internal.js",
+      "turbopack": "./dist/swiss/postal-loader.internal.js",
+      "development": "./dist/swiss/postal-loader.internal.js",
+      "production": "./dist/swiss/postal-loader.internal.js",
+      "default": "./dist/swiss/postal-inline.js"
+    }
   }
 }

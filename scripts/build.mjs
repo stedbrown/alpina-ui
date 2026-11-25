@@ -61,7 +61,7 @@ for (const [group, names] of Object.entries(groups)) {
 await writeFile('registry.json', JSON.stringify(registry, null, 2) + '\n')
 // Re-export public entries and Swiss data/formatting helpers. Internal overlay helpers stay internal.
 const publicFiles = modules.filter(
-  (f) => registry.items.some((i) => i.entry === f) || (f.startsWith('swiss/') && f.endsWith('.ts') && !f.endsWith('.data.ts')),
+  (f) => registry.items.some((i) => i.entry === f) || (f.startsWith('swiss/') && f.endsWith('.ts') && !f.endsWith('.data.ts') && !f.endsWith('.internal.ts')),
 )
 await writeFile(
   'src/index.ts',
@@ -71,6 +71,15 @@ await rm('dist', { force: true, recursive: true })
 execFileSync(process.execPath, ['node_modules/typescript/bin/tsc', '-p', 'tsconfig.json'], {
   stdio: 'inherit',
 })
+// A copied component uses the original deferred loader. Package consumers resolve the
+// same private import through the bundler conditions declared in package.json.
+const postalPath = 'dist/swiss/postal-localities.js'
+const postal = await readFile(postalPath, 'utf8')
+await writeFile(postalPath, postal.replace('./postal-loader.internal.js', '#postal-loader'))
+await writeFile('dist/swiss/postal-inline.js', [
+  "import rows from './postal-localities.data.js'",
+  'export const loadPostalRows = () => Promise.resolve(rows)',
+].join('\n') + '\n')
 // Consumers choose a single stylesheet or per-component styles. ESM can be loaded in bare Node SSR.
 for (const file of modules) {
   const dest = 'dist/' + file.replace(/\.tsx?$/, '.js')

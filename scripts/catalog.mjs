@@ -141,6 +141,7 @@ const catalogOptions = offline => ({
   write: false,
   minify: true,
   platform: 'browser',
+  conditions: ['alpina-postal-chunk'],
   target: ['es2022'],
   format: offline ? 'iife' : 'esm',
   splitting: !offline,

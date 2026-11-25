@@ -16,10 +16,10 @@ for (const slug of selected) {
 }
 const budgets = JSON.parse(await readFile(recordPath, 'utf8'))
 
-async function bundle(code, splitting = true) {
+async function bundle(code, splitting = true, conditions) {
   return build({
     stdin: { contents: code, resolveDir: root, sourcefile: 'consumer.js' },
-    bundle: true, splitting, format: 'esm', platform: 'browser', target: 'es2022',
+    bundle: true, splitting, conditions, format: 'esm', platform: 'browser', target: 'es2022',
     external: ['react', 'react/*', 'react-dom', 'react-dom/*'],
     minify: true, write: false, metafile: true, outdir: 'measurement', entryNames: 'entry',
   })
@@ -64,28 +64,27 @@ for (const [specifier, splitting] of [['alpina-ui', false], ['alpina-ui/ui/butto
   const entry = outputs['measurement/entry.js']
   assert.deepEqual(contributions([entry]), expected, 'Unexpected modules in Button')
   assert.deepEqual(entry.imports.filter(edge => !edge.external), [], 'Button reaches another chunk')
-  if (specifier === 'alpina-ui' && splitting) {
-    // esbuild treats every dynamic-import target as an additional entry point, even when
-    // the importing module was discarded. Verify its exact contents and isolation.
-    const extra = Object.entries(outputs).filter(([key]) => key !== 'measurement/entry.js')
-    for (const [, output] of extra) {
-      assert.equal(output.entryPoint, 'dist/swiss/postal-localities.data.js')
-      assert.deepEqual(contributions([output]), ['dist/swiss/postal-localities.data.js'])
-    }
-  } else {
-    assert.equal(button.outputFiles.length, 1, 'Button emitted additional chunks')
-  }
+  assert.equal(button.outputFiles.length, 1, 'Button emitted an orphan chunk')
+
 }
+
+const localLookup = await bundle("export { lookupSwissPostalCode } from 'alpina-ui'")
+const { lookupSwissPostalCode } = await import('data:text/javascript;base64,' + Buffer.from(localLookup.outputFiles[0].contents).toString('base64'))
+assert.ok((await lookupSwissPostalCode('6900')).some(entry => entry.locality === 'Massagno'))
 
 const failures = []
 for (const item of items.toSorted((a, b) => a.name.localeCompare(b.name))) {
-  const result = await bundle('export * from ' + JSON.stringify('alpina-ui/' + item.group + '/' + item.name))
+  const code = 'export * from ' + JSON.stringify('alpina-ui/' + item.group + '/' + item.name)
+  const result = await bundle(code, true, item.name === 'swiss-address-form' ? ['alpina-postal-chunk'] : undefined)
   const { js, lazy, eager } = weights(result)
   if (item.name === 'swiss-address-form') {
     const data = Object.entries(result.metafile.outputs).filter(([, output]) =>
       output.inputs['dist/swiss/postal-localities.data.js']?.bytesInOutput > 0)
     assert.equal(data.length, 1, 'Address autocomplete must include the directory')
     assert.ok(!eager.has(data[0][0]), 'Postal data must be deferred')
+    const fallback = await bundle(code)
+    assert.equal(fallback.outputFiles.length, 1, 'Zero-config esbuild should inline the address directory')
+    assert.ok(weights(fallback).js <= budgets[item.name].js + budgets[item.name].lazy, 'Inline address directory exceeds total budget')
   }
   const actual = { js, lazy, css: gzipSync(await readFile('dist/styles/' + item.name + '.css')).length }
   if (record && (selected.includes('--all') || selected.includes(item.name))) {

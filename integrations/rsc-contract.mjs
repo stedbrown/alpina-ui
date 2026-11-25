@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { spawnSync } from 'node:child_process'
-import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
+import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import ts from 'typescript'
@@ -72,6 +72,29 @@ try {
   assert.equal(run.status, 0, 'Next failed to prerender the package contract')
   const html = await readFile(join(project, '.next/server/app/index.html'), 'utf8')
   assert.ok(html.includes('data-verified="' + index + '"'), 'Next did not prerender the complete export check')
+  // Build the same app again with a single client-side root import. Inspect the
+  // complete deployment, including server chunks and detached browser assets.
+  await writeFile(join(project, 'app/page.jsx'), [
+    '"use client"',
+    "import { Button } from 'alpina-ui'",
+    'export default function Page() { return <Button>Continue</Button> }',
+  ].join('\n'))
+  await rm(join(project, '.next'), { recursive: true, force: true })
+  const button = spawnSync(process.execPath, [cli, 'build'], {
+    cwd: project, env: { ...process.env, NEXT_TELEMETRY_DISABLED: '1' }, stdio: 'inherit',
+  })
+  assert.equal(button.status, 0, 'Next failed to build the root Button fixture')
+  assert.match(await readFile(join(project, '.next/server/app/index.html'), 'utf8'), /<button[^>]*>Continue<\/button>/)
+  for (const directory of ['server', 'static']) {
+    const output = join(project, '.next', directory)
+    for (const file of await readdir(output, { recursive: true, withFileTypes: true })) {
+      if (!file.isFile()) continue
+      const contents = await readFile(join(file.parentPath, file.name))
+      assert.ok(!contents.includes('6900TIMassagno'), 'Next emitted postal data in ' + file.name)
+      assert.ok(!contents.includes('997-byte capacity of version 25-M'), 'Next emitted the QR encoder in ' + file.name)
+    }
+  }
+  console.log('Verified the complete Next production output for a root Button import.')
   console.log('Verified ' + index + ' runtime exports through the barrel and every registered subpath in a production React Server Component.')
 } finally {
   await rm(project, { recursive: true, force: true })

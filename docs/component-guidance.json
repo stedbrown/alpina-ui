@@ -1675,11 +1675,11 @@
       ],
       [
         "Enter / Space",
-        "Open or close a collapsed menu from its summary."
+        "Open or close the mobile navigation with its Menu button."
       ],
       [
         "Escape",
-        "Close a collapsed menu that is open and focus its summary."
+        "Dismiss the open navigation and return focus to its Menu button."
       ]
     ]
   },

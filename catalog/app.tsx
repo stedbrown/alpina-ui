@@ -1,8 +1,9 @@
+import { Masthead } from '../web/masthead.js'
 import { AppearanceButton } from '../web/appearance-button.js'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 import {
-  AppShell, Avatar, Breadcrumb, ComponentPreview, InputGroup, ReferenceArticle,
+  AppShell, NavigationBrand, PageRegion, Breadcrumb, ComponentPreview, InputGroup, ReferenceArticle,
   Sidebar,
   NavigationMenu,
   Prose,
@@ -111,12 +112,8 @@ function useRoute() {
   return [hash, navigateView] as const
 }
 
-function Brand({ hostedDocs }: { hostedDocs: boolean }) {
-  return (
-    <TextLink variant="brand" href={hostedDocs ? '/' : '#overview'} aria-label={hostedDocs ? 'Alpina UI home' : 'Alpina UI overview'}>
-      <Avatar decorative size="sm" name="Alpina" src={brandMark} />Alpina UI
-    </TextLink>
-  )
+function CatalogBrand() {
+  return <NavigationBrand href="#overview" logo={brandMark} aria-label="Alpina UI overview">Alpina UI</NavigationBrand>
 }
 const views = { Preview: '', Code: 'code', API: 'api', Source: 'source' } as const
 type View = keyof typeof views
@@ -212,19 +209,8 @@ function Workbench({
 export function App({ pathname, translatedGuide }: { pathname: string; translatedGuide?: string }) {
   const [, pageType, pageId, pageLang] = /^\/docs\/(guides|components)\/([\w-]+)(?:\/(it|de|fr))?$/.exec(pathname) ?? []
   const hostedDocs = pathname === '/docs' || !!pageId
+  const hasSiteHeader = hostedDocs || pathname === '/catalog.html'
   const pathRoute = pageType === 'guides' ? 'guide/' + pageId + (pageLang ? '/' + pageLang : '') : pageId
-  const siteLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/docs/', label: 'Docs', current: pageType !== 'components' },
-    { href: '/docs/components/', label: 'Components', current: pageType === 'components' },
-    { href: '/blocks/', label: 'Blocks' },
-    { href: '/icons/', label: 'Icons' },
-    { href: '/themes/', label: 'Themes' },
-    { href: '/principles/', label: 'Principles' },
-    { href: '/examples/', label: 'Examples' },
-    { href: '/agents/', label: 'Agents' },
-    { href: 'https://github.com/stedbrown/alpina-ui', label: <><Icon name="git-branch" size={18} />{' GitHub'}</> },
-  ]
 
   const [hash, navigateView] = useRoute()
   const requested = hash || pathRoute || (hostedDocs ? 'guide/start' : 'overview')
@@ -408,25 +394,27 @@ export function App({ pathname, translatedGuide }: { pathname: string; translate
       {!matches.length && <Empty role="status" title="No matching components." />}
     </Sidebar>
   )
-  if (liveDirectory) return <DirectoryLive />
-  if (workflow) return <WorkflowExample key={workflow.slug} project={workflow} hosted={false} />
-  return (
+  if (liveDirectory) return hasSiteHeader ? <>
+    <Masthead current="examples" skipTo="#main-content" />
+    <PageRegion id="main-content" tabIndex={-1}><DirectoryLive /></PageRegion>
+  </> : <DirectoryLive />
+  if (workflow) return <>
+    {hasSiteHeader && <Masthead current="examples" skipTo="#main-content" />}
+    <WorkflowExample key={workflow.slug} project={workflow} hosted={false} />
+  </>
+  return <>
+    {hasSiteHeader && <Masthead current={pageType === 'components' || !hostedDocs ? 'components' : 'docs'} skipTo="#main-content" />}
     <AppShell
-      brand={<Brand hostedDocs={hostedDocs} />}
+      skipLabel={hasSiteHeader ? '' : 'Skip to content'}
+      brand={hasSiteHeader ? <Typography variant="label">Documentation</Typography> : <CatalogBrand />}
       sidebar={sidebar}
       open={index.open}
       onOpenChange={setIndexOpen}
       mainId="main-content"
-      toolbar={
-        <>
-          {hostedDocs ? (
-            <NavigationMenu lang="en" label="Site navigation" data-site-nav="" orientation="horizontal" collapseLabel="Menu" sections={[{ links: siteLinks }]} />
-          ) : (
-            <Breadcrumb label="Current section" items={[{ href: '#overview', label: 'Library' }, { label: area }]} />
-          )}
-          <AppearanceButton />
-        </>
-      }
+      toolbar={!hasSiteHeader && <>
+        <Breadcrumb label="Current section" items={[{ href: '#overview', label: 'Library' }, { label: area }]} />
+        <AppearanceButton />
+      </>}
     >
       {item ? (
         <Workbench key={item[0]} item={item} hostedDocs={hostedDocs} mode={mode} navigateView={navigateView} />
@@ -465,7 +453,7 @@ export function App({ pathname, translatedGuide }: { pathname: string; translate
         <Specimen hosted={hostedDocs} />
       )}
     </AppShell>
-  )
+  </>
 }
 function Project({ bilingual }: { bilingual: boolean }) {
   const source = bilingual
@@ -473,7 +461,8 @@ function Project({ bilingual }: { bilingual: boolean }) {
     : 'https://github.com/stedbrown/alpina-ui/blob/main/catalog/overview.tsx'
   return (
     <>
-      <Grid as="header" width="site" space="compact"><GridItem><NavigationMenu
+      <Masthead current="examples" skipTo="#main-content" />
+      <Grid width="site" space="compact"><GridItem><NavigationMenu
         lang="en"
         label="Example navigation"
         data-project-nav=""
@@ -485,19 +474,20 @@ function Project({ bilingual }: { bilingual: boolean }) {
           { href: source, label: 'Source on GitHub' },
         ] }]}
       /></GridItem></Grid>
-      {bilingual ? <DirectoryLive standalone /> : (
-        <Grid as="main" width="site" space="section"><GridItem><Overview hosted /></GridItem></Grid>
+      {bilingual ? <PageRegion id="main-content" tabIndex={-1}><DirectoryLive standalone /></PageRegion> : (
+        <Grid as="main" id="main-content" tabIndex={-1} width="site" space="section"><GridItem><Overview hosted /></GridItem></Grid>
       )}
     </>
   )
 }
 function WorkflowExample({ project, hosted }: { project: WorkflowProject; hosted: boolean }) {
   return <>
-    <Grid as="header" width="site" space="compact"><GridItem>
-      <TextLink variant="skip" href="#main-content" onClick={(event) => {
+    {hosted && <Masthead current="examples" skipTo="#main-content" />}
+    <Grid width="site" space="compact"><GridItem>
+      {!hosted && <TextLink variant="skip" href="#main-content" onClick={(event) => {
         event.preventDefault()
         document.getElementById('main-content')?.focus()
-      }}>Skip to example</TextLink>
+      }}>Skip to example</TextLink>}
       <NavigationMenu label="Example navigation" orientation="horizontal" collapseLabel="Menu" sections={[{ links: [
         { href: hosted ? '/examples/' : '#overview', label: hosted ? '← Examples' : '← Catalog' },
         { href: componentHref(project.component, hosted), label: 'Component reference' },

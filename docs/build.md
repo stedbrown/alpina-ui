@@ -21,3 +21,7 @@ For a spare field in a form use [DatePicker](https://alpinaui.com/docs/component
 ## Lay out a page on a grid
 
 Choose the heading, reading column and primary action before deciding how many columns to use. Align them with [Grid](https://alpinaui.com/docs/components/grid/); use [Stack](https://alpinaui.com/docs/components/stack/) for the smaller groups within each region. [Typography](https://alpinaui.com/docs/components/typography/) supplies the display scale and reading measure. Try a long label, keyboard navigation and 200% text zoom in the narrowest column. See the [design principles](https://alpinaui.com/principles/) for paired layout examples.
+
+## Keep navigation consistent across pages
+
+Place the site header above the application's own index or toolbar. Pass the home link and logo to `NavigationMenu.brand`, route links to `sections`, and repository, release and appearance controls to `actions`. Use `NavigationBrand` for the logo and name, `NavigationAction` for a utility link and `ThemeToggle` for a persistent device, light or dark preference. For a server-rendered site, include `themeInitializationScript` in the document head to restore the saved choice before paint. [NavigationMenu example and API](https://alpinaui.com/docs/components/navigation-menu/)

@@ -17,7 +17,10 @@ function layoutIssues() {
     const links = [...nav.querySelectorAll('a')].filter(a => a.checkVisibility())
     if (links.length < 2) continue
     const first = links[0].getBoundingClientRect()
-    if (links.some(link => Math.abs(link.getBoundingClientRect().top - first.top) > 2)) {
+    if (links.some(link => {
+      const box = link.getBoundingClientRect()
+      return Math.abs(box.top + box.height / 2 - first.top - first.height / 2) > 2
+    })) {
       errors.add(nav.ariaLabel + ' wraps')
     }
   }
@@ -62,7 +65,6 @@ function layoutIssues() {
     if (line && range.getBoundingClientRect().right > line.getBoundingClientRect().right + tolerance)
       errors.add('Numeric value overflows: ' + value.textContent.trim())
   }
-  const nav = document.querySelector('.al-app-bar > [data-site-nav]')
   for (const button of document.querySelectorAll('header [data-site-appearance]')) {
     const header = button.closest('header')
     const menu = header.querySelector('button[popovertarget], summary')
@@ -73,11 +75,6 @@ function layoutIssues() {
   const preview = document.querySelector('.al-preview:not([hidden]) .al-preview-content')
   if (heading && preview && Math.abs(heading.getBoundingClientRect().left - preview.getBoundingClientRect().left) > tolerance)
     errors.add('Live example is off the component heading column')
-  if (nav) {
-    const control = nav.nextElementSibling
-    const a = nav.getBoundingClientRect(), b = control.getBoundingClientRect()
-    if (b.top >= a.bottom - tolerance || a.top >= b.bottom - tolerance) errors.add('Theme control wraps')
-  }
   for (const el of document.querySelectorAll('input:placeholder-shown, textarea:placeholder-shown')) {
     if (!el.placeholder || !el.checkVisibility()) continue
     const style = getComputedStyle(el)
@@ -174,12 +171,12 @@ try {
           await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))))
         const issues = [...await page.evaluate(layoutIssues), ...await page.evaluate(readableLabelIssues)]
         if (issues.length) failures.push(route + ' ' + width + 'px: ' + issues.join(', '))
-        const menu = page.locator('nav[data-collapsible] summary:visible').first()
+        const menu = page.locator('nav[data-collapsible] button[popovertarget]:visible').first()
         if (await menu.count()) {
-          await menu.evaluate(el => { el.parentElement.open = true })
+          await menu.press('Enter')
           const menuIssues = await page.evaluate(layoutIssues)
           if (menuIssues.length) failures.push(route + ' ' + width + 'px (menu open): ' + menuIssues.join(', '))
-          await menu.evaluate(el => { el.parentElement.open = false })
+          await page.keyboard.press('Escape')
         }
       }
       if (route === '/themes/') assert.match(await page.locator('#theme-preview time').innerText(), /March/)

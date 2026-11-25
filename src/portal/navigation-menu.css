@@ -204,3 +204,16 @@
   .al-navigation-layout[data-bar] { display: flex; flex-wrap: wrap; }
   .al-navigation-layout[data-bar] > .al-navigation-links { display: block; flex: 1 1 65%; }
 }
+/* At high text zoom, a second utility row keeps the brand and menu target separate. */
+@container al-navigation (max-width: 14rem) {
+  .al-navigation-layout[data-bar] { grid-template-columns: minmax(0, 1fr) auto; row-gap: 0; }
+  .al-navigation-layout[data-bar] > .al-navigation-actions {
+    grid-column: 1 / -1;
+    justify-self: stretch;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0;
+  }
+  .al-navigation-actions > .al-navigation-action,
+  .al-navigation-actions > .al-button { padding-inline: var(--al-space-1); }
+}

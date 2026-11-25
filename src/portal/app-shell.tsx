@@ -14,6 +14,7 @@ export interface AppShellProps {
   navigationLabel?: string
   openLabel?: string
   closeLabel?: string
+  /** Pass an empty label when the enclosing page already provides a skip link. */
   skipLabel?: string
   contentAs?: 'main' | 'section'
   mainId?: string
@@ -64,7 +65,7 @@ export function AppShell({
   }, [expanded, onOpenChange])
   return (
     <div ref={shell} className="al-app-shell" data-index-open={expanded}>
-      <a
+      {skipLabel && <a
         className="al-skip"
         href={'#' + target}
         onClick={(e) => {
@@ -73,7 +74,7 @@ export function AppShell({
         }}
       >
         {skipLabel}
-      </a>
+      </a>}
       <div className="al-app-rail">
         <div className="al-app-masthead">
           <div className="al-app-brand">{brand}</div>

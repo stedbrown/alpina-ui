@@ -34,7 +34,36 @@ try {
       assert.ok(Math.abs(geometry.alignment) <= 1, 'Brand and title use the same left grid edge')
       assert.ok(geometry.line && geometry.fits, 'Unbroken navigation at ' + width)
     }
+    await page.setViewportSize({ width: 320, height: 900 })
+    await page.addStyleTag({ content: 'html { font-size: 200% } * { line-height: 1.5 !important; letter-spacing: .12em !important; word-spacing: .16em !important }' })
+    assert.ok(await nav.evaluate(el => {
+      const boxes = [...el.querySelectorAll('a,button')].filter(control => control.checkVisibility())
+        .map(control => control.getBoundingClientRect())
+      return el.scrollWidth <= el.clientWidth + 1 && boxes.every((a, i) =>
+        boxes.slice(i + 1).every(b => a.right <= b.left + 1 || b.right <= a.left + 1 ||
+          a.bottom <= b.top + 1 || b.bottom <= a.top + 1))
+    }), 'Masthead actions remain reachable at 200% text size with WCAG text spacing')
     await page.close()
   }
+  const page = await openPublicPage(browser, { viewport: { width: 390, height: 844 } })
+  for (const [route, current] of [
+    ['/docs/', 'Docs'], ['/docs/components/button/', 'Components'], ['/kit/', 'Kit'], ['/themes/', 'Themes'],
+    ['/examples/', 'Examples'], ['/examples/invoice-review/', 'Examples'], ['/examples/bilingual-address-book/', 'Examples'],
+    ['/agents/', 'Agents'], ['/principles/', 'Principles'], ['/blocks/login/', 'Blocks'], ['/catalog.html', 'Components'],
+  ]) {
+    await page.goto(siteOrigin + route)
+    await page.getByRole('main').first().waitFor()
+    if (route.startsWith('/docs/components/')) await page.locator('.al-preview-content > *').first().waitFor()
+    const nav = page.getByRole('navigation', { name: 'Site navigation', exact: true })
+    await nav.getByRole('link', { name: 'Alpina UI home' }).waitFor()
+    assert.equal(await nav.count(), 1, route)
+    assert.equal(await nav.getByRole('link', { name: 'GitHub' }).getAttribute('href'), 'https://github.com/stedbrown/alpina-ui')
+    assert.equal(await nav.getByRole('link', { name: /^Release / }).getAttribute('href'), '/docs/guides/release/')
+    await nav.getByRole('button', { name: 'Menu', exact: true }).press('Enter')
+    assert.equal(await nav.getByRole('link', { name: current, exact: true }).getAttribute('aria-current'), 'page', route)
+    await page.keyboard.press('Escape')
+    assert.ok(await nav.getByRole('button', { name: 'Menu', exact: true }).evaluate(el => el === document.activeElement))
+  }
+  await page.close()
   console.log('The masthead and cover share a red field, column edge and responsive action row in both themes.')
 } finally { await browser.close() }

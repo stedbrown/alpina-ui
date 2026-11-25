@@ -85,7 +85,7 @@ export function Landing({ version, count, queue, command, installation, access, 
     <Masthead current="home" />
     <PageRegion as="main" id="content" tabIndex={-1}>
       <Grid as="section" id="cover" width="site" space="viewport" align="end" surface="accent" data-al-theme="light" guides entrance="sequence" aria-labelledby="home-title">
-        <GridItem><Stack direction="row" justify="space-between" gap={2}>
+        <GridItem entranceStep={2}><Stack direction="row" justify="space-between" gap={2}>
           <Stack direction="row" align="baseline" gap={3} wrap={false}>
             <Typography variant="folio" numeric aria-hidden="true">01</Typography>
             <Typography variant="label">Open-source React library</Typography>
@@ -98,17 +98,17 @@ export function Landing({ version, count, queue, command, installation, access, 
             </Stack>
           </Stack>
         </Stack></GridItem>
-        <GridItem><Typography as="h1" variant="masthead" responsive id="home-title">Swiss design<br /> for React.</Typography></GridItem>
+        <GridItem entranceStep={1}><Typography as="h1" variant="masthead" responsive id="home-title">Swiss design<br /> for React.</Typography></GridItem>
         {[
           [count, 'Components'], [12, 'Grid columns'], [4, 'National languages'], ['2.2', 'WCAG AA target'],
-        ].map(([value, label]) => <GridItem key={label} small={2} medium={2} large={3}>
+        ].map(([value, label]) => <GridItem key={label} entranceStep={3} small={2} medium={2} large={3}>
           <Stack gap={1}><Separator weight="section" />
             <Typography variant="title" numeric tone="ink">{value}</Typography>
             <Typography variant="label">{label}</Typography>
           </Stack>
         </GridItem>)}
-        <GridItem medium={4} large={5}><Typography variant="lead" id="cover-intro">A precise grid, expressive type and accessible controls for the web.</Typography></GridItem>
-        <GridItem medium={4} large={5} start={{ large: 8 }}><Stack direction="row" gap={4} columnGap={6}>
+        <GridItem medium={4} large={5} entranceStep={3}><Typography variant="lead" id="cover-intro">A precise grid, expressive type and accessible controls for the web.</Typography></GridItem>
+        <GridItem medium={4} large={5} entranceStep={3} start={{ large: 8 }}><Stack direction="row" gap={4} columnGap={6}>
           <TextLink href="/docs/components/">Browse components ({count})</TextLink>
         </Stack></GridItem>
       </Grid>

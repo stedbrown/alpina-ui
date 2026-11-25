@@ -60,6 +60,27 @@ try {
   assert.ok(await cover.locator('#cover-guides').isHidden())
   await control.press('Space')
   assert.ok(await cover.locator('#cover-guides').isVisible())
+  for (const preference of ['no-preference', 'reduce']) {
+    await page.emulateMedia({ reducedMotion: preference })
+    const animation = await cover.evaluate(section => {
+      const style = query => getComputedStyle(section.querySelector(query))
+      return {
+        title: style('[data-entrance-step="1"]').animationDelay,
+        lines: style('.al-grid-guides').animationDelay,
+        figures: style('[data-entrance-step="3"]').animationDelay,
+        names: [...section.querySelector('.al-grid').children].map(el => getComputedStyle(el).animationName),
+        feedback: style('a[data-variant="action"]').transitionDuration,
+      }
+    })
+    if (preference === 'reduce') {
+      assert.ok(animation.names.every(name => name === 'none'))
+      assert.equal(animation.feedback, '0s')
+    } else {
+      assert.deepEqual([animation.title, animation.lines, animation.figures], ['0s', '0.08s', '0.16s'])
+      assert.ok(animation.names.includes('al-guides-entry'))
+      assert.notEqual(animation.feedback, '0s')
+    }
+  }
   for (const term of ['Components', 'Grid columns', 'National languages', 'WCAG AA target']) {
     assert.ok(await cover.getByText(term, { exact: true }).isVisible())
   }

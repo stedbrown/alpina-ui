@@ -109,6 +109,8 @@ type Span12 = Span8 | 9 | 10 | 11 | 12
 export interface GridItemProps extends HTMLAttributes<HTMLDivElement> {
   /** Apply position and subgrid to a single child, such as Card. */
   asChild?: boolean
+  /** Group several items into one beat of the parent grid’s entrance sequence. */
+  entranceStep?: 1 | 2 | 3
   field?: string
   /** One-based starting row and the number of shared rows occupied. */
   row?: number
@@ -124,6 +126,7 @@ export const GridItem = forwardRef<HTMLDivElement, GridItemProps>(function GridI
   {
     start,
     asChild = false,
+    entranceStep,
     field,
     row,
     rowSpan,
@@ -143,6 +146,7 @@ export const GridItem = forwardRef<HTMLDivElement, GridItemProps>(function GridI
       ref={ref}
       {...props}
       className={('al-grid-item ' + className).trim()}
+      data-entrance-step={entranceStep}
       data-field={field}
       data-subgrid={subgrid}
       style={

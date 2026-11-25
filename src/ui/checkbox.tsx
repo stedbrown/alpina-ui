@@ -20,7 +20,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
   const bind = useCallback(
     (node: HTMLInputElement | null) => {
       input.current = node
-      if (node && indeterminate !== undefined) node.indeterminate = indeterminate
+      if (node) node.indeterminate = indeterminate ?? false
     },
     [indeterminate],
   )

@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState, type Key, type ReactElement, type ReactNode } from 'react'
+import { useId, useMemo, useState, type Key, type ReactElement, type ReactNode } from 'react'
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption } from './table.js'
 import { ScrollArea } from './scroll-area.js'
 import './data-table.css'
@@ -25,6 +25,8 @@ export interface DataTableProps<Row> {
   sort?: DataSort | null
   defaultSort?: DataSort
   onSortChange?: (sort: DataSort) => void
+  /** Instructions announced with the scroll region when at least one column is sortable. */
+  sortHint?: string
 }
 export function DataTable<Row>({
   rows,
@@ -35,7 +37,10 @@ export function DataTable<Row>({
   sort,
   defaultSort,
   onSortChange,
+  sortHint = 'Use the buttons in the column headings to sort the rows.',
 }: DataTableProps<Row>): ReactElement {
+  const hintId = useId()
+  const hasSortHint = Boolean(sortHint) && columns.some((column) => column.compare)
   const [internal, setInternal] = useState<DataSort | null>(defaultSort ?? null)
   const current = sort === undefined ? internal : sort
   const comparator = columns.find((col) => col.id === current?.column)?.compare
@@ -54,7 +59,8 @@ export function DataTable<Row>({
     onSortChange?.(next)
   }
   return (
-    <ScrollArea className="al-data-table" label={caption}>
+    <ScrollArea className="al-data-table" label={caption} aria-describedby={hasSortHint ? hintId : undefined}>
+      {hasSortHint && <span hidden id={hintId}>{sortHint}</span>}
       <Table>
         <TableCaption>{caption}</TableCaption>
         <TableHeader>

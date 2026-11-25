@@ -35,6 +35,24 @@
   clip-path: inset(50%);
   white-space: nowrap;
 }
+.al-spinner[data-show-label] {
+  display: inline-flex;
+  inline-size: auto;
+  block-size: auto;
+  max-inline-size: 100%;
+  align-items: center;
+  gap: var(--al-space-2);
+}
+.al-spinner[data-show-label]::before {
+  flex: none;
+  inline-size: var(--al-spinner-size);
+  block-size: var(--al-spinner-size);
+}
+.al-spinner-text {
+  overflow-wrap: anywhere;
+  color: var(--al-ink);
+  font: 500 var(--al-type-label)/var(--al-leading-label) var(--al-font);
+}
 @keyframes al-spinner-dial {
   to {
     transform: rotate(1turn);

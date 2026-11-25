@@ -10,3 +10,6 @@
   border: 0;
   object-fit: cover;
 }
+.al-aspect-ratio[data-fit='contain'] > :is(img, video, canvas) {
+  object-fit: contain;
+}

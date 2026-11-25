@@ -32,6 +32,7 @@ export const LocaleSelect = forwardRef<HTMLSelectElement, LocaleSelectProps>(fun
     <NativeSelect
       appearance="outline"
       {...props}
+      disabled={props.disabled || choices.length === 0}
       ref={ref}
       value={value}
       defaultValue={value === undefined ? fallback : undefined}

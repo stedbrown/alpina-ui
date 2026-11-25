@@ -9,7 +9,7 @@
     transparent 68%
   );
   background-size: 240% 100%;
-  animation: al-skeleton-scan 1.85s ease-in-out infinite;
+  animation: al-skeleton-scan 1.85s ease-in-out 2;
 }
 @keyframes al-skeleton-scan {
   from {

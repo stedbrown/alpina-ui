@@ -27,3 +27,11 @@
     appearance: auto;
   }
 }
+@media (prefers-reduced-motion: reduce) and (forced-colors: none) {
+  .al-progress:indeterminate {
+    appearance: none;
+    border: 1px solid var(--al-control);
+    background: repeating-linear-gradient(135deg, var(--al-ink) 0 1px, var(--al-soft) 1px 5px);
+  }
+  .al-progress:indeterminate::-webkit-progress-bar { background: transparent; }
+}

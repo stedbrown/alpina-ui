@@ -27,9 +27,10 @@
   outline: 2px solid var(--al-focus);
   outline-offset: 2px;
 }
-.al-select[aria-invalid='true'] {
+.al-select:is([aria-invalid='true'], :user-invalid) {
   border-color: var(--al-danger);
-  box-shadow: inset 2px 0 var(--al-danger);
+  border-inline-start-width: 3px;
+  padding-inline-start: calc(var(--al-space-3) - 2px);
 }
 .al-select:disabled {
   border-color: var(--al-line);
@@ -38,7 +39,7 @@
   cursor: not-allowed;
 }
 @media (forced-colors: active) {
-  .al-select[aria-invalid='true'] {
+  .al-select:is([aria-invalid='true'], :user-invalid) {
     border-style: dashed;
   }
   .al-select:disabled {

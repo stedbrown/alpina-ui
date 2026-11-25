@@ -23,6 +23,7 @@
 }
 .al-alert-title {
   display: block;
+  margin: 0;
   margin-block-end: var(--al-space-1);
   font-size: var(--al-type-label);
   font-weight: 650;

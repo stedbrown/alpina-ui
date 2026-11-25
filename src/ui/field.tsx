@@ -32,7 +32,7 @@ export function Field({
   const descriptionId = hasDescription ? `${controlId}-hint` : undefined
   const errorId = hasError ? `${controlId}-error` : undefined
   const references = [
-    ...new Set([...(describedBy?.trim().split(/\s+/) ?? []), descriptionId, errorId].filter(Boolean)),
+    ...new Set([errorId, descriptionId, ...(describedBy?.trim().split(/\s+/) ?? [])].filter(Boolean)),
   ].join(' ')
 
   return (
@@ -40,11 +40,6 @@ export function Field({
       <label className="al-field-label" htmlFor={controlId}>
         {label}
       </label>
-      {children({
-        id: controlId,
-        'aria-describedby': references || undefined,
-        'aria-invalid': hasError || undefined,
-      })}
       {hasDescription && (
         <div className="al-field-hint" id={descriptionId}>
           {description}
@@ -55,6 +50,11 @@ export function Field({
           {error}
         </div>
       )}
+      {children({
+        id: controlId,
+        'aria-describedby': references || undefined,
+        'aria-invalid': hasError || undefined,
+      })}
     </div>
   )
 }

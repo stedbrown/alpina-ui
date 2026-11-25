@@ -8,6 +8,8 @@ import './dropdown-menu.css'
 export interface ActionItem {
   value: string
   label: string
+  /** Visible key combination for a shortcut already implemented by the application. */
+  shortcut?: string
   disabled?: boolean
   /** Visually identifies an action that can remove or discard data. */
   tone?: 'default' | 'danger'
@@ -129,6 +131,7 @@ export function ActionList({
             }}
           >
             <span>{item.label}</span>
+            {item.shortcut && <kbd className="al-dropdown-shortcut">{item.shortcut}</kbd>}
             {item.tone === 'danger' && (
               <span className="al-dropdown-danger-mark" aria-hidden="true">
                 −

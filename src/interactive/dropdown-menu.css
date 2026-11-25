@@ -57,8 +57,8 @@
   visibility: hidden;
   box-sizing: border-box;
   inline-size: max-content;
-  min-inline-size: min(12rem, calc(100vw - 1rem));
-  max-inline-size: min(24rem, calc(100vw - 1rem));
+  min-inline-size: min(12rem, calc(var(--al-visible-width, 100vw) - 1rem));
+  max-inline-size: min(24rem, calc(var(--al-visible-width, 100vw) - 1rem));
   padding: var(--al-space-1);
   margin: 0;
   overflow: auto;
@@ -88,6 +88,10 @@
 .al-dropdown-rule {
   border-block-start: 1px solid var(--al-line);
   margin-block: var(--al-space-1);
+}
+.al-dropdown-shortcut {
+  margin-inline-start: auto;
+  font: var(--al-type-caption)/var(--al-leading-caption) var(--al-mono);
 }
 .al-dropdown-item[data-tone='danger'] {
   color: var(--al-danger);

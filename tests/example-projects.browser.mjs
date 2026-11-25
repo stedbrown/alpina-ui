@@ -1,0 +1,110 @@
+import assert from 'node:assert/strict'
+import { existsSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
+import { chromium } from 'playwright-core'
+
+const site = new URL('../site/', import.meta.url)
+const origin = 'https://examples.test'
+const executablePath = process.env.CHROME_PATH ?? process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
+const browser = await chromium.launch(executablePath ? { executablePath } :
+  existsSync(chromium.executablePath()) ? {} : { channel: 'chrome' })
+
+try {
+  const page = await browser.newPage({ viewport: { width: 390, height: 844 } })
+  const errors = []
+  page.on('pageerror', (error) => errors.push(error.message))
+  await page.route(origin + '/**', (route) => {
+    const { pathname } = new URL(route.request().url())
+    const file = pathname.endsWith('/') ? pathname + 'index.html' : pathname
+    return route.fulfill({ path: fileURLToPath(new URL('.' + file, site)) })
+  })
+
+  await page.goto(origin + '/examples/workshop-registration/')
+  const heading = (name) => page.getByRole('heading', { name, exact: true })
+  const button = (name) => page.getByRole('button', { name, exact: true })
+  await heading('Workshop registration').waitFor()
+  assert.ok(await page.getByRole('radio', { name: /Hand bookbinding/ }).isDisabled())
+  await button('Review registration').click()
+  const name = page.getByLabel('Attendee name')
+  const email = page.getByLabel('Email address')
+  assert.equal(await name.getAttribute('aria-invalid'), 'true')
+  await page.waitForFunction(() => document.activeElement?.name === 'name')
+  await name.fill('Rene Keller')
+  await email.fill('invalid')
+  await email.press('Enter')
+  assert.match(await email.getAttribute('aria-describedby'), /error/)
+  await email.fill('rene@example.org')
+  await page.getByRole('radio', { name: /Two-colour overprinting/ }).check()
+  await email.press('Enter')
+  await heading('Review your registration').waitFor()
+  assert.equal(await page.locator('[aria-current="step"]').innerText(), '2. Review')
+  assert.equal(await page.getByText('rene@example.org', { exact: true }).count(), 1)
+  await button('Edit details').click()
+  assert.equal(await name.inputValue(), 'Rene Keller')
+  assert.ok(await page.getByRole('radio', { name: /Two-colour overprinting/ }).isChecked())
+  await button('Review registration').click()
+  await button('Confirm registration').click()
+  await heading('Registration confirmed').waitFor()
+  await button('Change registration').click()
+  await name.fill('Unsaved name')
+  await button('Discard changes').click()
+  assert.equal(await page.getByText('Rene Keller', { exact: true }).count(), 1)
+  assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth))
+
+  await page.setViewportSize({ width: 320, height: 780 })
+  await page.goto(origin + '/examples/invoice-review/')
+  await heading('Invoice review').waitFor()
+  const charges = page.getByRole('table', { name: 'Invoice charges' })
+  assert.equal(await charges.locator('tfoot data').getAttribute('value'), '291')
+  for (const width of [320, 390, 576, 768, 1440]) {
+    await page.setViewportSize({ width, height: 780 })
+    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Page fits at ' + width)
+    assert.ok(await charges.locator('td[data-numeric] data').evaluateAll((amounts) => amounts.every((amount) => {
+      const range = document.createRange()
+      range.selectNodeContents(amount)
+      const lines = Array.from(range.getClientRects(), (rect) => Math.round(rect.top))
+      return new Set(lines).size === 1
+    })), 'CHF amounts stay together at ' + width)
+  }
+  await page.setViewportSize({ width: 320, height: 780 })
+  const filter = page.getByLabel('Filter by status')
+  await filter.selectOption('returned')
+  await button('Show all invoices').click()
+  const queueItem = page.getByRole('radio', { name: /Atelier du Trait/ })
+  await queueItem.check()
+  await page.getByText('Inspect order PO-021').click()
+  assert.ok(await page.getByText(/6 ordered at/).isVisible())
+  await button('Request correction').click()
+  const note = page.getByLabel('Correction note')
+  await button('Return invoice').click()
+  assert.equal(await note.getAttribute('aria-invalid'), 'true')
+  await note.fill('Six proofs were ordered, eight were billed.')
+  await note.press('Escape')
+  await button('Request correction').click()
+  assert.equal(await note.inputValue(), 'Six proofs were ordered, eight were billed.')
+  await button('Return invoice').click()
+  await page.getByText('Returned for correction', { exact: true }).click()
+  assert.ok(await page.getByText('Six proofs were ordered, eight were billed.').isVisible())
+  await filter.selectOption('returned')
+  assert.equal(await page.getByRole('radio').count(), 1)
+  await button('Reopen for review').click()
+  assert.equal(await filter.inputValue(), 'returned')
+  assert.ok(await page.getByText('No returned invoices', { exact: true }).isVisible())
+  await button('View AP-105').click()
+  assert.equal(await filter.inputValue(), 'all')
+  assert.ok(await queueItem.isChecked())
+  await button('Approve invoice').click()
+  await filter.selectOption('approved')
+  assert.equal(await page.getByRole('radio').count(), 2)
+  assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth))
+  await page.setViewportSize({ width: 1152, height: 800 })
+  await page.goto(origin + '/catalog.html#workshop-registration')
+  await heading('Workshop registration').waitFor()
+  await page.getByRole('link', { name: '← Catalog' }).click()
+  await page.getByRole('link', { name: 'Invoice review' }).click()
+  await heading('Invoice review').waitFor()
+  assert.deepEqual(errors, [])
+  console.log('Workshop reservations and invoice decisions passed editing, validation, keyboard, recovery, narrow-screen and offline routing checks.')
+} finally {
+  await browser.close()
+}

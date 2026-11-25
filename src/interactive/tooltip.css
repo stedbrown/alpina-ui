@@ -9,7 +9,7 @@
   visibility: hidden;
   box-sizing: border-box;
   margin: 0;
-  max-inline-size: min(32ch, calc(100vw - 1rem));
+  max-inline-size: min(32ch, calc(var(--al-visible-width, 100vw) - 1rem));
   overflow: auto;
   padding: var(--al-space-2) var(--al-space-3);
   border: 1px solid var(--al-ink);

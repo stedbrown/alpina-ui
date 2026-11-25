@@ -7,6 +7,8 @@
   list-style: none;
 }
 .al-pagination a {
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
   display: inline-flex;
   justify-content: center;
   align-items: center;

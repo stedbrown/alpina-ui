@@ -101,3 +101,6 @@
   font-size: var(--al-type-label);
   line-height: var(--al-leading-label);
 }
+@media (pointer: coarse) {
+  .al-canton-options li { box-sizing: border-box; min-block-size: var(--al-space-11); align-items: center; }
+}

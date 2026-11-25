@@ -23,6 +23,15 @@
   grid-column: var(--al-start-s, auto) / span var(--al-span-s);
   min-width: 0;
 }
+.al-grid[data-width='site'] {
+  box-sizing: border-box;
+  max-inline-size: 100rem;
+  margin-inline: auto;
+}
+.al-grid[data-align='start'] { align-items: start; }
+.al-grid[data-align='center'] { align-items: center; }
+.al-grid[data-align='end'] { align-items: end; }
+.al-grid[data-align='baseline'] { align-items: baseline; }
 .al-grid-ruler {
   display: grid;
   grid-column: 1 / -1;

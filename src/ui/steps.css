@@ -1,0 +1,28 @@
+.al-steps {
+  container: al-steps / inline-size;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  gap: var(--al-space-2) var(--al-space-4);
+  list-style: none;
+  font: 400 var(--al-type-label)/var(--al-leading-label) var(--al-font);
+}
+.al-steps > li {
+  flex: 1 1 6rem;
+  min-inline-size: 0;
+  padding-block: var(--al-space-2);
+  border-block-start: 2px solid var(--al-line);
+  overflow-wrap: anywhere;
+}
+.al-steps > li[aria-current='step'] { border-color: var(--al-accent); font-weight: 700; }
+.al-steps > li > span { font-variant-numeric: tabular-nums; }
+@container al-steps (max-width: 20rem) {
+  .al-steps > li {
+    flex-basis: 100%;
+    padding: var(--al-space-1) var(--al-space-2);
+    border-block-start: 0;
+    border-inline-start: 2px solid var(--al-line);
+  }
+  .al-steps > li[aria-current='step'] { border-inline-start-color: var(--al-accent); }
+}

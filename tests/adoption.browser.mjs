@@ -83,7 +83,7 @@ try {
     await readFile(new URL('site/' + archiveName, project)),
   )
   console.log(
-    'Verified 78 API pages at 320 px, preview state across views, browser history and offline downloads.',
+    'Verified ' + registry.items.length + ' API pages at 320 px, preview state across views, browser history and offline downloads.',
   )
 } finally {
   await browser.close()

@@ -180,6 +180,15 @@ try {
   await submit.click()
   await page.evaluate(() => window.finish())
   await page.waitForFunction(() => !document.querySelector('button[type="submit"]').disabled)
+  assert.equal(await form.getByRole('status').textContent(), 'Indirizzo salvato.')
+  await field('postalCode').evaluate((input) => {
+    input.select()
+    const data = new DataTransfer()
+    data.setData('text', 'CH-０１２３')
+    input.dispatchEvent(new ClipboardEvent('paste', { clipboardData: data, bubbles: true, cancelable: true }))
+  })
+  assert.equal(await field('postalCode').inputValue(), '0123')
+  assert.equal(await form.getByRole('status').textContent(), '')
   assert.equal(await form.getByRole('alert').count(), 0)
   assert.deepEqual(errors, [])
   console.log(

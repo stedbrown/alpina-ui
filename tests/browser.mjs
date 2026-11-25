@@ -14,6 +14,7 @@ for (const file of [
   'data-examples',
   'address-example',
   'stack-example',
+  'composition-examples',
   'elements-v3',
   'actions-v3',
   'workflows-v3',
@@ -74,7 +75,7 @@ try {
   const metrics = main.locator('.sp-measures dd')
   assert.equal(await gridButton.getAttribute('aria-pressed'), 'false')
   assert.equal(await guideLayer.count(), 0)
-  assert.equal(registry.items.length, 78)
+  assert.equal(registry.items.length, 81)
   assert.equal(await page.locator('#index-list a').count(), registry.items.length)
 
   for (const screen of [1440, 768, 390]) {
@@ -284,7 +285,7 @@ try {
   }
   assert.deepEqual(errors, [])
   console.log(
-    'Offline catalog passed: 78 previews, ' +
+    'Offline catalog passed: ' + registry.items.length + ' previews, ' +
       inspected.size +
       ' source files, 14 guides, the 4/8/12-column specimen and the address book.',
   )

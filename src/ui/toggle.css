@@ -1,4 +1,6 @@
 .al-toggle {
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
   min-block-size: 2.75rem;
   padding: var(--al-space-2) var(--al-space-3);
   border: 1px solid var(--al-control);
@@ -7,6 +9,11 @@
   background: var(--al-bg);
   font: 600 var(--al-type-label)/var(--al-leading-label) var(--al-font);
   cursor: pointer;
+}
+@media (hover: hover) {
+  .al-toggle:hover:enabled {
+    box-shadow: inset 0 0 0 1px currentColor;
+  }
 }
 .al-toggle[aria-pressed='true'] {
   background: var(--al-ink);

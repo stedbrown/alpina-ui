@@ -1,8 +1,14 @@
 .al-stack {
+  box-sizing: border-box;
   display: flex;
   min-inline-size: 0;
   gap: var(--al-stack-gap);
 }
+.al-stack[data-surface] {
+  background: var(--al-bg);
+  color: var(--al-ink);
+}
+.al-stack[data-surface='soft'] { background: var(--al-soft); }
 .al-stack > :where(*) {
   min-inline-size: 0;
 }

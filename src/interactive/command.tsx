@@ -106,6 +106,9 @@ export function Command({
             role="option"
             aria-selected={active === item}
             aria-disabled={item.disabled || undefined}
+            onPointerMove={(event) => {
+              if (event.pointerType === 'mouse' && !item.disabled) setHighlight(item.value)
+            }}
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => run(item)}
           >

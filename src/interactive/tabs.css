@@ -51,8 +51,11 @@
 }
 .al-tabs[data-orientation='vertical'] {
   display: grid;
-  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+  grid-template-columns: fit-content(45%) minmax(0, 1fr);
   gap: var(--al-space-4);
+}
+.al-tabs[data-orientation='vertical'] .al-tab {
+  overflow-wrap: anywhere;
 }
 .al-tabs[data-orientation='vertical'] .al-tab-list {
   flex-direction: column;

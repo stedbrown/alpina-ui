@@ -56,6 +56,7 @@ export function Calendar({ value, defaultValue = '', onValueChange, defaultMonth
   const text = calendarText[locale]
 
   function navigate(event: KeyboardEvent<HTMLButtonElement>, day: string) {
+    if (event.altKey || event.metaKey || event.ctrlKey) return
     let next: string
     switch (event.key) {
       case 'ArrowLeft': next = addDays(day, -1); break
@@ -76,12 +77,19 @@ export function Calendar({ value, defaultValue = '', onValueChange, defaultMonth
     }
   }
 
+  function moveMonth(offset: number) {
+    const day = clampDay(addMonths(current, offset), min, max)
+    const boundary = offset < 0 ? min : max
+    if (day.slice(0, 7) === boundary.slice(0, 7)) pendingFocus.current = true
+    setCursor(day)
+  }
+
   return (
     <section className={('al-calendar ' + className).trim()} lang={locale} aria-labelledby={id}>
       <div className="al-calendar-head">
         <strong id={id} aria-live="polite" aria-atomic="true">{labels.month}</strong>
-        <Button size="sm" variant="ghost" aria-label={text.prev} disabled={month <= min.slice(0, 7)} onClick={() => setCursor(clampDay(addMonths(current, -1), min, max))}>‹</Button>
-        <Button size="sm" variant="ghost" aria-label={text.next} disabled={month >= max.slice(0, 7)} onClick={() => setCursor(clampDay(addMonths(current, 1), min, max))}>›</Button>
+        <Button size="sm" variant="ghost" aria-label={text.prev} disabled={month <= min.slice(0, 7)} onClick={() => moveMonth(-1)}>‹</Button>
+        <Button size="sm" variant="ghost" aria-label={text.next} disabled={month >= max.slice(0, 7)} onClick={() => moveMonth(1)}>›</Button>
       </div>
       <table ref={grid} role="grid" aria-labelledby={id}>
         <thead><tr>{labels.days.map(({ full, short }) => <th key={full} scope="col" aria-label={full}>{short}</th>)}</tr></thead>

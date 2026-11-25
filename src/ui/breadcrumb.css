@@ -18,6 +18,8 @@
   align-items: center;
   gap: var(--al-space-2);
 }
+.al-breadcrumb :is(a, span) { min-inline-size: 0; }
+.al-breadcrumb:dir(rtl) > ol > li + li::before { transform: skewX(18deg); }
 .al-breadcrumb > ol > li + li::before {
   content: '';
   box-sizing: border-box;

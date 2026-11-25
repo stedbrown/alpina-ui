@@ -20,6 +20,7 @@ export interface QuestionnaireProps {
   submitLabel?: string
   completeLabel?: string
   editLabel?: string
+  emptyLabel?: string
   className?: string
 }
 
@@ -32,6 +33,7 @@ export function Questionnaire({
   submitLabel = 'Submit',
   completeLabel = 'Answers recorded.',
   editLabel = 'Edit answers',
+  emptyLabel = 'No questions available.',
   className = '',
 }: QuestionnaireProps): ReactElement {
   const [answers, setAnswers] = useState<Record<string, string>>({})
@@ -87,6 +89,11 @@ export function Questionnaire({
               onClick={() => {
                 if (step < questions.length - 1) move(step + 1)
                 else {
+                  const missing = questions.findIndex((item) => !item.options.some((option) => option.value === answers[item.id]))
+                  if (missing !== -1) {
+                    move(missing)
+                    return
+                  }
                   const response = Object.fromEntries(questions.map(({ id }) => [id, answers[id]!]))
                   onComplete(response)
                   shouldFocus.current = true
@@ -99,7 +106,7 @@ export function Questionnaire({
           </div>
         </>
       ) : (
-        done && (
+        done ? (
           <>
             <h3 tabIndex={-1} ref={heading}>
               {completeLabel}
@@ -114,7 +121,7 @@ export function Questionnaire({
               {editLabel}
             </Button>
           </>
-        )
+        ) : <p>{emptyLabel}</p>
       )}
     </section>
   )

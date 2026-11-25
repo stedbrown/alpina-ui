@@ -13,7 +13,7 @@ export interface SwissPostalCodeInputProps extends Omit<
 }
 
 export const SwissPostalCodeInput = forwardRef<HTMLInputElement, SwissPostalCodeInputProps>(
-  function SwissPostalCodeInput({ locale, ...props }, ref) {
+  function SwissPostalCodeInput({ locale, onPaste, ...props }, ref) {
     return (
       <Input
         autoComplete="postal-code"
@@ -27,6 +27,18 @@ export const SwissPostalCodeInput = forwardRef<HTMLInputElement, SwissPostalCode
         pattern={swissPostalCodePattern}
         minLength={4}
         maxLength={4}
+        onPaste={(event) => {
+          onPaste?.(event)
+          const input = event.currentTarget
+          if (event.defaultPrevented || input.readOnly || input.disabled) return
+          const raw = event.clipboardData.getData('text')
+          const digits = raw.normalize('NFKC').trim().replace(/^CH\s*-\s*/i, '')
+          if (raw === digits || !/^[0-9]{4}$/.test(digits)) return
+          if (input.selectionStart !== 0 || input.selectionEnd !== input.value.length) return
+          event.preventDefault()
+          input.setRangeText(digits, 0, input.value.length, 'end')
+          input.dispatchEvent(new Event('input', { bubbles: true }))
+        }}
       />
     )
   },

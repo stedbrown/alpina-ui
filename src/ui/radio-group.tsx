@@ -23,6 +23,7 @@ export interface RadioGroupProps extends Omit<
 
 export function RadioGroup({
   name,
+  form,
   label,
   options,
   value,
@@ -39,6 +40,7 @@ export function RadioGroup({
       {...props}
       data-orientation={orientation}
       name={name}
+      form={form}
       className={`al-radio-group ${className}`.trim()}
     >
       <legend>{label}</legend>
@@ -47,6 +49,7 @@ export function RadioGroup({
           <input
             type="radio"
             name={name ?? generatedName}
+            form={form}
             value={option.value}
             required={required}
             checked={value === undefined ? undefined : option.value === value}

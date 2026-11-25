@@ -19,7 +19,8 @@
   position: relative;
   color: inherit;
   text-decoration: none;
-  padding: 0.3rem 0.45rem 0.3rem 0.85rem;
+  padding-block: 0.3rem;
+  padding-inline: 0.85rem 0.45rem;
   font: 400 var(--al-type-label)/var(--al-leading-label) var(--al-font);
   overflow-wrap: anywhere;
 }
@@ -57,4 +58,12 @@
   inset: auto 0 0;
   width: auto;
   height: 2px;
+}
+@media (pointer: coarse) {
+  .al-navigation a {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    min-block-size: var(--al-space-11);
+  }
 }

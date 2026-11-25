@@ -21,7 +21,7 @@ function Fixture() {
     <LocaleSelect aria-label="Language" value={locale} onLocaleChange={setLocale} />
     <Calendar locale={locale} defaultValue="2024-02-29" min="2024-01-10" max="2025-03-01" />
     <form aria-label="Data">
-      <DatePicker locale={locale} name="day" label="Collection" defaultValue="2024-02-29" />
+      <DatePicker locale={locale} name="day" label="Collection" defaultValue="2024-02-29" clearable />
       <InputOTP aria-label="Code" defaultValue="0123" name="otp" required />
       <InputOTP aria-label="Controlled" value={otp} onValueChange={setOTP} />
       <NativeSelect aria-label="Paper" name="paper" multiple defaultValue={['A4']}><option>A3</option><option>A4</option></NativeSelect>

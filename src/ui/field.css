@@ -6,6 +6,8 @@
   font-family: var(--al-font);
 }
 .al-field-label {
+  overflow-wrap: anywhere;
+  max-inline-size: 100%;
   inline-size: fit-content;
   color: var(--al-ink);
   font-size: var(--al-type-label);
@@ -14,8 +16,8 @@
 }
 .al-field-hint,
 .al-field-error {
-  font-size: var(--al-type-caption);
-  line-height: var(--al-leading-caption);
+  font-size: var(--al-type-label);
+  line-height: var(--al-leading-label);
   overflow-wrap: anywhere;
 }
 .al-field-hint {

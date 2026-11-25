@@ -77,7 +77,7 @@ export const InputOTP = forwardRef<HTMLInputElement, InputOTPProps>(function Inp
       }}
       onPaste={(event) => {
         onPaste?.(event)
-        if (event.defaultPrevented) return
+        if (event.defaultPrevented || event.currentTarget.readOnly || event.currentTarget.disabled) return
         const raw = event.clipboardData.getData('text')
         const content = normalize(raw, length)
         if (raw === content) return

@@ -21,7 +21,7 @@ const tools = [
   tool('search_components', 'Search installed component identifiers and groups. Omit query to list the entire registry.', {
     query: string('A name or group, such as DropdownMenu, canton, or interactive.'),
   }),
-  tool('get_component', 'Read an installed component’s public TypeScript declaration, import path, and list of source files. Request one listed file to read its source.', {
+  tool('get_component', 'Read an installed component’s usage notes, public TypeScript declaration, import path and list of source files. Request one listed file to read its source.', {
     name: string('Exact registry identifier, for example dropdown-menu.'),
     file: string('Optional source path exactly as listed by this component.'),
   }, ['name']),
@@ -72,7 +72,7 @@ async function callTool(root, registry, guides, name, args) {
   return resultText([
     'Alpina UI ' + registry.version + ' · ' + entry.name,
     'Import path: alpina-ui/' + entry.group + '/' + entry.name,
-    '', 'Public declaration', signature.trim(), '', 'Source files', ...entry.files,
+    '', 'Usage notes', entry.usage, '', 'Public declaration', signature.trim(), '', 'Source files', ...entry.files,
   ].join('\n'))
 }
 

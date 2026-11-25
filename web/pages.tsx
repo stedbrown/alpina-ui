@@ -1,25 +1,11 @@
 import {
-  AspectRatio,
-  Grid,
-  GridItem,
-  NavigationMenu,
-  Separator,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-  TextLink,
-  Typography,
+  Avatar, DescriptionList, Figure, Grid, GridItem, NavigationMenu, Separator,
+  Stack, TextLink, Typography,
 } from 'alpina-ui'
 import { TypeSpecimen } from './type-specimen.js'
-import { initialContacts } from '../recipes/rubrica/src/data.js'
+import { projects } from './projects.js'
 
 const repository = 'https://github.com/stedbrown/alpina-ui'
-const pageWidth = '100rem'
-const outerMargin = 'max(0px, calc((100% - ' + pageWidth + ') / 2))'
 type Section = 'home' | 'docs' | 'examples' | 'agents'
 
 export function Masthead({ current }: { current: Section }) {
@@ -29,15 +15,14 @@ export function Masthead({ current }: { current: Section }) {
     { href: '/agents/', label: 'Agent tools', current: current === 'agents' },
     { href: repository, label: 'GitHub ↗' },
   ]
-
   return (
-    <Grid as="header" space="compact" style={{ paddingInline: outerMargin, borderBlockEnd: '1px solid var(--al-line)' }}>
+    <Grid as="header" width="site" space="compact">
       <GridItem>
         <TextLink variant="skip" href="#content">Skip to content</TextLink>
         <Stack direction="row" justify="space-between" gap={1} columnGap={6}>
           <TextLink variant="quiet" href="/" aria-current={current === 'home' ? 'page' : undefined}>
             <Stack direction="row" gap={2} wrap={false}>
-              <img src="/assets/alpina-mark.png" width="26" height="26" alt="" />
+              <Avatar decorative size="sm" name="Alpina" src="/assets/alpina-mark.png" />
               <Typography as="span" variant="heading">Alpina UI</Typography>
             </Stack>
           </TextLink>
@@ -50,12 +35,10 @@ export function Masthead({ current }: { current: Section }) {
 
 export function Footer({ version }: { version?: string } = {}) {
   return (
-    <Grid as="footer" surface="ink" space="compact" style={{ paddingInline: outerMargin }}>
+    <Grid as="footer" width="site" surface="ink" space="compact">
       <GridItem>
         <Stack direction="row" justify="space-between" align="baseline" gap={2} columnGap={6}>
-          {version
-            ? <Typography variant="label">Alpina UI · v{version}</Typography>
-            : <TextLink href="/" variant="quiet"><Typography as="span" variant="heading">Alpina UI</Typography></TextLink>}
+          <TextLink href="/" variant="quiet"><Typography as="span" variant="label">Alpina UI{version && ' · v' + version}</Typography></TextLink>
           <Stack direction="row" gap={4}>
             <TextLink href={repository + '/blob/main/LICENSE'}>MIT license</TextLink>
             <TextLink href={repository}>GitHub ↗</TextLink>
@@ -66,142 +49,116 @@ export function Footer({ version }: { version?: string } = {}) {
   )
 }
 
-export function Landing({ version, count }: { version: string; count: number }) {
-  return (
-    <>
-      <Masthead current="home" />
-      <main id="content" tabIndex={-1} style={{ width: '100%', maxWidth: pageWidth, marginInline: 'auto' }}>
-        <Grid as="section" aria-labelledby="introduction" space="cover">
-          <GridItem medium={4} large={5} style={{ alignSelf: 'center', paddingBlock: 'var(--al-space-4)' }}>
-            <Stack gap={6} align="start">
-              <Typography variant="label">Open-source component library</Typography>
-              <Typography as="h1" variant="display" id="introduction" style={{
-                fontSize: 'clamp(3.5rem, 6.8cqi, 6.75rem)', lineHeight: 0.94, letterSpacing: '-0.065em', hyphens: 'none',
-              }}>Swiss type<br />for React.</Typography>
-              <Typography style={{ maxWidth: '35ch', fontSize: 'clamp(1.0625rem, 1.5cqi, 1.35rem)', lineHeight: 1.4 }}>
-                Build forms, tables and multilingual interfaces with {count} components on a shared typographic grid.
-              </Typography>
-              <Stack direction="row" gap={3} columnGap={5}>
-                <TextLink variant="action" href="/docs/">Get started&nbsp; →</TextLink>
-                <TextLink href="/examples/">Explore examples</TextLink>
-              </Stack>
-            </Stack>
-          </GridItem>
-          <GridItem medium={4} large={7} style={{ alignSelf: 'center' }}>
-            <figure style={{ margin: 0 }}>
-              <AspectRatio ratio={16 / 11}>
-                <img src="/assets/alpina-type-specimen.webp" width="1280" height="880" fetchPriority="high"
-                  alt="A red Alpina booklet with a cropped lowercase a, laid over a sheet of letterforms." />
-              </AspectRatio>
-              <figcaption>
-                <Stack direction="row" justify="space-between" gap={2} style={{ paddingBlockStart: 'var(--al-space-2)' }}>
-                  <Typography variant="caption">Alpina letterform study</Typography>
-                  <Typography variant="caption"><TextLink href="/docs/guides/design/">Design notes →</TextLink></Typography>
-                </Stack>
-              </figcaption>
-            </figure>
-          </GridItem>
-        </Grid>
-        <Grid><GridItem><Separator weight="section" /></GridItem></Grid>
-        <Grid as="section" aria-labelledby="inside" space="section">
-          <GridItem medium={3} large={4}>
-            <Stack gap={3} align="start" style={{ paddingBlockEnd: 'var(--al-space-5)' }}>
-              <Typography as="h2" variant="display" id="inside">Type in use</Typography>
-              <Typography style={{ maxWidth: '32ch' }}>One workshop notice in German, French and Italian. Choose a language to compare the lettering and the date.</Typography>
-              <Stack direction="row" gap={2} columnGap={4}>
-                <TextLink href="/docs/components/typography/">Typography</TextLink>
-                <TextLink href="/docs/components/swiss-date/">SwissDate</TextLink>
-              </Stack>
-            </Stack>
-          </GridItem>
-          <GridItem medium={5} large={7} start={{ large: 6 }}>
-            <TypeSpecimen />
-          </GridItem>
-        </Grid>
-        <Grid><GridItem><Separator /></GridItem></Grid>
-        <Grid as="section" aria-labelledby="directory-preview" space="section">
-          <GridItem medium={3} large={4}>
-            <Stack gap={3} align="start" style={{ paddingBlockEnd: 'var(--al-space-5)' }}>
-              <Typography as="h2" variant="display" id="directory-preview">Studio address book</Typography>
-              <Typography style={{ maxWidth: '32ch' }}>A working example built with Alpina. Filter studios by canton and edit a postal address in Italian or German.</Typography>
-              <Stack direction="row" gap={2} columnGap={4}>
-                <TextLink href="/examples/bilingual-address-book/">Open the project →</TextLink>
-                <TextLink href={repository + '/tree/main/recipes/rubrica'}>React source ↗</TextLink>
-              </Stack>
-            </Stack>
-          </GridItem>
-          <GridItem medium={5} large={7} start={{ large: 6 }}>
-            <Table aria-label="Studios from the bilingual address book">
-              <TableHeader><TableRow>
-                <TableHead>Studio</TableHead><TableHead>City</TableHead><TableHead>Canton</TableHead>
-              </TableRow></TableHeader>
-              <TableBody>
-                {initialContacts.slice(0, 4).map((studio) => (
-                  <TableRow key={studio.id}>
-                    <TableHead scope="row">{studio.recipient}</TableHead>
-                    <TableCell>{studio.locality}</TableCell>
-                    <TableCell>{studio.canton}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </GridItem>
-        </Grid>
-      </main>
-      <Footer version={version} />
-    </>
-  )
-}
-
-const projects = [
-  {
-    name: 'Studio address book',
-    description: 'Find a studio by canton, switch between Italian and German, and edit its postal address. Changes last until you reload the page.',
-    href: '/examples/bilingual-address-book/',
-    source: '/tree/main/recipes/rubrica',
-    report: '/blob/main/recipes/rubrica/PROVA.md',
-  },
-  {
-    name: 'Client directory',
-    description: 'Filter client records by canton, edit a postal address in any of the four national languages, and sort orders by their total in Swiss francs.',
-    href: '/examples/client-directory/',
-    source: '/blob/main/catalog/overview.tsx',
-  },
+const startingPoints = [
+  { term: 'Collect an address', detail: <Stack gap={1}>
+    <Typography>Translated field names and validation for all four Swiss national languages.</Typography>
+    <TextLink href="/docs/components/swiss-address-form/">Swiss address form →</TextLink>
+  </Stack> },
+  { term: 'Review records', detail: <Stack gap={1}>
+    <Typography>Sort rows by their underlying values while displaying formatted dates and francs.</Typography>
+    <TextLink href="/docs/components/data-table/">Data table →</TextLink>
+  </Stack> },
+  { term: 'Guide a decision', detail: <Stack gap={1}>
+    <Typography>Offer contextual actions and ask for confirmation before deleting a record.</Typography>
+    <Stack direction="row" gap={3}><TextLink href="/docs/components/dropdown-menu/">Dropdown menu</TextLink><TextLink href="/docs/components/alert-dialog/">Alert dialog</TextLink></Stack>
+  </Stack> },
 ]
 
+export function Landing({ version, count }: { version: string; count: number }) {
+  return <>
+    <Masthead current="home" />
+    <main id="content" tabIndex={-1}>
+      <Grid width="site"><GridItem><Separator /></GridItem></Grid>
+      <Grid as="section" width="site" space="cover" align="center" aria-labelledby="home-title">
+        <GridItem medium={8} large={6}>
+          <Stack gap={5} align="start">
+            <Typography variant="label">Open source · TypeScript · MIT</Typography>
+            <Typography as="h1" variant="title" id="home-title"><Typography as="span" variant="inherit" tone="accent">Swiss</Typography> UI components for React.</Typography>
+            <Typography measure="narrow">Build forms, tables and multilingual workflows with {count} components. Install the package or copy individual components into your project and edit the source.</Typography>
+            <Stack direction="row" gap={3} columnGap={5}>
+              <TextLink variant="action" href="/docs/components/">Browse components →</TextLink>
+              <TextLink href="/docs/">Installation</TextLink>
+            </Stack>
+          </Stack>
+        </GridItem>
+        <GridItem medium={8} large={5} start={{ large: 8 }}>
+          <TypeSpecimen />
+        </GridItem>
+      </Grid>
+      <Grid width="site"><GridItem><Separator weight="section" /></GridItem></Grid>
+      <Grid as="section" width="site" space="section" aria-labelledby="tasks-title">
+        <GridItem medium={3} large={4}>
+          <Stack gap={3} align="start">
+            <Typography as="h2" variant="display" id="tasks-title">Start with a task.</Typography>
+            <Typography measure="narrow">Each component has a working preview, usage notes, a typed API and the source code.</Typography>
+          </Stack>
+        </GridItem>
+        <GridItem medium={5} large={7} start={{ large: 6 }}>
+          <DescriptionList aria-label="Components by task" items={startingPoints} />
+        </GridItem>
+      </Grid>
+      <Grid width="site"><GridItem><Separator /></GridItem></Grid>
+      <Grid as="section" width="site" space="section" aria-labelledby="projects-title">
+        <GridItem medium={3} large={4}>
+          <Stack gap={3} align="start">
+            <Typography as="h2" variant="display" id="projects-title">Examples.</Typography>
+            <Typography measure="narrow">Try a complete interaction, then open the project's React source.</Typography>
+            <TextLink href="/examples/">All four projects →</TextLink>
+          </Stack>
+        </GridItem>
+        <GridItem medium={5} large={7} start={{ large: 6 }}>
+          <Stack gap={4}>{projects.slice(0, 2).map((project) =>
+            <Stack key={project.slug} gap={1} align="start">
+              <Typography as="h3" variant="heading"><TextLink href={'/examples/' + project.slug + '/'}>{project.title}</TextLink></Typography>
+              <Typography measure="reading">{project.description}</Typography>
+            </Stack>
+          )}</Stack>
+        </GridItem>
+      </Grid>
+      <Grid width="site"><GridItem><Separator /></GridItem></Grid>
+      <Grid as="section" width="site" space="section" align="center" aria-labelledby="design-title">
+        <GridItem medium={4} large={5}>
+          <Figure image={{ src: '/assets/alpina-type-specimen.webp', alt: 'A red Alpina booklet over a sheet of printed letterforms.', width: 1280, height: 880, loading: 'lazy' }}
+            caption="Alpina letterform study" />
+        </GridItem>
+        <GridItem medium={4} large={5} start={{ large: 7 }}>
+          <Stack gap={4} align="start">
+            <Typography as="h2" variant="display" id="design-title">The Swiss grid.</Typography>
+            <Typography measure="narrow">Four, eight or twelve columns align labels, actions and figures as the space changes. A four-pixel spacing unit gives forms and editorial pages the same rhythm.</Typography>
+            <TextLink href="/docs/guides/design/">Read the design notes →</TextLink>
+          </Stack>
+        </GridItem>
+      </Grid>
+    </main>
+    <Footer version={version} />
+  </>
+}
+
 export function Examples() {
-  return (
-    <>
-      <Masthead current="examples" />
-      <main id="content" tabIndex={-1}>
-        <Grid as="section" aria-labelledby="examples-title" space="cover">
-          <GridItem>
-            <Typography as="h1" variant="poster" id="examples-title">Examples</Typography>
-          </GridItem>
-          <GridItem medium={6} large={6}>
-            <Typography variant="lead">Explore complete applications built with Alpina. Open a project to try it, or read the React source.</Typography>
+  return <>
+    <Masthead current="examples" />
+    <main id="content" tabIndex={-1}>
+      <Grid as="section" width="site" space="cover" aria-labelledby="examples-title">
+        <GridItem><Typography as="h1" variant="title" id="examples-title">Example projects</Typography></GridItem>
+        <GridItem large={7}><Typography measure="narrow">Four applications built with Alpina. Try a workflow, then read the same source that runs it here.</Typography></GridItem>
+      </Grid>
+      {projects.map((project) =>
+        <Grid as="article" width="site" key={project.slug} space="compact">
+          <GridItem><Separator /></GridItem>
+          <GridItem medium={4} large={5}><Typography as="h2" variant="display"><TextLink variant="quiet" href={'/examples/' + project.slug + '/'}>{project.title}</TextLink></Typography></GridItem>
+          <GridItem medium={4} large={6} start={{ large: 7 }}>
+            <Stack gap={3} align="start">
+              <Typography measure="narrow">{project.description}</Typography>
+              <Stack direction="row" gap={3} columnGap={5}>
+                <TextLink variant="action" href={'/examples/' + project.slug + '/'}>{project.action} →</TextLink>
+                <TextLink href={repository + project.source}>React source ↗</TextLink>
+                {project.report && <TextLink href={repository + project.report}>Build report</TextLink>}
+              </Stack>
+            </Stack>
           </GridItem>
         </Grid>
-        {projects.map((project) => (
-          <Grid as="article" key={project.href} space="compact">
-            <GridItem><Separator weight="section" /></GridItem>
-            <GridItem medium={4} large={6}>
-              <Typography as="h2" variant="display"><TextLink variant="quiet" href={project.href}>{project.name}</TextLink></Typography>
-            </GridItem>
-            <GridItem medium={4} large={5} start={{ large: 8 }}>
-              <Stack gap={4} align="start">
-                <Typography measure="narrow">{project.description}</Typography>
-                <Stack direction="row" gap={3} columnGap={5}>
-                  <TextLink variant="action" href={project.href}>Open project →</TextLink>
-                  <TextLink href={repository + project.source}>Source</TextLink>
-                  {project.report && <TextLink href={repository + project.report}>Build report</TextLink>}
-                </Stack>
-              </Stack>
-            </GridItem>
-          </Grid>
-        ))}
-      </main>
-      <Footer />
-    </>
-  )
+      )}
+    </main>
+    <Footer />
+  </>
 }

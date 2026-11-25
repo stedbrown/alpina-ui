@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState, type ReactElement } from 'react'
 import { Field } from '../ui/field.js'
 import { Input } from '../ui/input.js'
+import { Button } from '../ui/button.js'
 import { useBrowserLayoutEffect, useFloating } from './floating.js'
 import { useControllable } from './controllable.js'
 import { filterOptions, type SearchOption } from './search-options.js'
@@ -20,6 +21,8 @@ export interface ComboboxProps {
   id?: string
   required?: boolean
   requiredMessage?: string
+  /** Accessible name for the optional button that clears a committed choice. */
+  clearLabel?: string
   disabled?: boolean
   value?: string
   defaultValue?: string
@@ -36,7 +39,8 @@ export function Combobox({
   id,
   name,
   required,
-  requiredMessage,
+  requiredMessage = 'Choose an option.',
+  clearLabel,
   disabled,
   value,
   defaultValue = '',
@@ -73,9 +77,9 @@ export function Combobox({
   }
   useBrowserLayoutEffect(() => {
     input.current?.setCustomValidity(
-      required && !chosen && !disabled ? requiredMessage || label : '',
+      required && !chosen && !disabled ? requiredMessage : '',
     )
-  }, [required, chosen, disabled, label, requiredMessage])
+  }, [required, chosen, disabled, requiredMessage])
   useBrowserLayoutEffect(() => {
     if (expanded && active)
       panel.current?.querySelector('[data-active="true"]')?.scrollIntoView({ block: 'nearest' })
@@ -147,9 +151,15 @@ export function Combobox({
                 e.preventDefault()
                 if (active) commit(active)
                 else close()
+              } else if (e.altKey && e.key === 'ArrowUp') {
+                if (expanded) {
+                  e.preventDefault()
+                  close()
+                }
               } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
                 e.preventDefault()
                 setOpen(true)
+                if (e.altKey) return
                 if (!enabled.length) return
                 const index = active && expanded ? enabled.indexOf(active) : -1
                 const next =
@@ -162,7 +172,16 @@ export function Combobox({
               }
             }}
           />
-          <span aria-hidden="true" className="al-combo-glyph" />
+          {clearLabel && chosen ? (
+            <Button size="sm" variant="ghost" className="al-combo-clear" aria-label={clearLabel} disabled={disabled}
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={() => {
+                choose('')
+                setAttempted(false)
+                close()
+                input.current?.focus({ preventScroll: true })
+              }}>×</Button>
+          ) : <span aria-hidden="true" className="al-combo-glyph" />}
           {name && (
             <input type="hidden" name={name} disabled={disabled} value={chosen?.value ?? ''} />
           )}

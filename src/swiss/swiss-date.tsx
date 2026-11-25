@@ -18,7 +18,7 @@ export function SwissDate({
   const formatted = formatSwissDate(value, locale, { dateStyle, timeZone })
   return (
     <time lang={locale} {...props} dateTime={typeof value === 'string' ? value : value.toISOString()}>
-      {formatted}
+      <bdi dir="ltr">{formatted}</bdi>
     </time>
   )
 }

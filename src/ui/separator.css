@@ -17,6 +17,7 @@
   border-color: var(--al-ink);
   border-block-start-width: var(--al-space-1);
 }
+.al-separator[role='separator'] { border-color: var(--al-control); }
 .al-separator[data-weight='section'][data-orientation='vertical'] {
   border-block: 0;
   border-inline-start-width: var(--al-space-1);

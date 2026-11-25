@@ -13,3 +13,6 @@
 .al-native-select.al-select[aria-invalid='true'] {
   border-block-end: 2px dashed var(--al-danger);
 }
+.al-native-select.al-select[data-appearance='line']:disabled {
+  border-block-end-style: dashed;
+}

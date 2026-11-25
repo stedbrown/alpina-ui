@@ -10,6 +10,8 @@ export interface CantonSelectProps extends Omit<
   'children' | 'value' | 'defaultValue' | 'multiple'
 > {
   locale?: SwissLocale
+  /** Sort by localized name, or retain the federal statistical order. */
+  order?: 'federal' | 'name'
   value?: CantonCode | ''
   defaultValue?: CantonCode | ''
   /** Add an initially empty, disabled option. Required validates the empty value. */
@@ -22,6 +24,7 @@ export interface CantonSelectProps extends Omit<
 export const CantonSelect = forwardRef<HTMLSelectElement, CantonSelectProps>(function CantonSelect(
   {
     locale = defaultSwissLocale,
+    order = 'federal',
     value,
     defaultValue,
     placeholder,
@@ -34,6 +37,9 @@ export const CantonSelect = forwardRef<HTMLSelectElement, CantonSelectProps>(fun
 ) {
   const initialValue =
     defaultValue ?? (placeholder === undefined && allLabel === undefined ? undefined : '')
+  const choices = order === 'name'
+    ? [...cantons].sort((a, b) => a.names[locale].localeCompare(b.names[locale], locale))
+    : cantons
   return (
     <NativeSelect
       appearance="outline"
@@ -57,7 +63,7 @@ export const CantonSelect = forwardRef<HTMLSelectElement, CantonSelectProps>(fun
           </option>
         )
       )}
-      {cantons.map(({ code, names }) => (
+      {choices.map(({ code, names }) => (
         <option key={code} value={code} lang={locale}>
           {names[locale]} ({code})
         </option>

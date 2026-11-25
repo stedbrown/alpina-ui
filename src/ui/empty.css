@@ -9,6 +9,7 @@
   overflow-wrap: anywhere;
 }
 .al-empty-title {
+  margin: 0;
   font-size: var(--al-type-heading);
   line-height: var(--al-leading-heading);
   font-weight: 650;

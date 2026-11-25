@@ -11,11 +11,14 @@ export interface PaginationProps extends Omit<ComponentPropsWithoutRef<'nav'>, '
   label: string
   items: readonly PaginationItem[]
   currentPage: number
+  /** Accessible name for number-only links. An item's accessibleLabel takes precedence. */
+  pageLabel?: (page: number) => string
 }
 export function Pagination({
   label,
   items,
   currentPage,
+  pageLabel = (page) => 'Page ' + page,
   className = '',
   ...props
 }: PaginationProps): ReactElement {
@@ -27,7 +30,7 @@ export function Pagination({
             <a
               href={item.href}
               aria-current={item.page === currentPage ? 'page' : undefined}
-              aria-label={item.accessibleLabel}
+              aria-label={item.accessibleLabel ?? (item.label == null ? pageLabel(item.page) : undefined)}
               rel={
                 item.page === currentPage - 1
                   ? 'prev'

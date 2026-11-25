@@ -1,5 +1,20 @@
 # Upgrading Alpina UI
 
+## Version 0.7
+
+The library adds three entries. Use `Steps` to identify the current stage of a workflow, `DescriptionList` to pair terms with their values and `Figure` to keep a specimen with its caption. The component index includes usage guidance for each entry. [Component index](https://alpina-ui.vercel.app/docs/components/)
+
+Use `Grid width="site"` for a shared page frame, `Typography variant="title"` for a responsive page heading and `Stack surface="ink" inset={6}` to place controls on a contrasting surface. The homepage, workshop registration and invoice review demonstrate these public building blocks. [Example projects](https://alpina-ui.vercel.app/examples/)
+
+### Interaction changes
+
+- Tab now enters a toggle group once. Use the arrows to move focus and Space to toggle a choice. Action menus accept a `shortcut` hint for an application-defined keyboard binding.
+- The address form confirms a successful save in the active language. Error text appears before the invalid control. To customize the new confirmation, supply `labels.saved`.
+- Pass `clearable` to a date picker or `clearLabel` to a combobox to offer a way to remove a selection. Their default selection behavior is preserved.
+- Data tables expose sorting instructions through `sortHint`. Translate the hint for multilingual tables. Numeric cells align amounts without splitting ordinary franc values.
+
+Projects that copied source can inspect their local changes with `npx --no-install alpina diff` before updating. [CLI guide](https://alpina-ui.vercel.app/docs/guides/cli/)
+
 ## Version 0.6
 
 The public site has dedicated documentation, runnable examples, and agent tools. Existing catalog bookmarks still open their component, guide, or project. The single-file catalog remains available for offline use. [Documentation](https://alpina-ui.vercel.app/docs/) · [Projects](https://alpina-ui.vercel.app/examples/) · [Agent tools](https://alpina-ui.vercel.app/agents/)

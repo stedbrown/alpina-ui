@@ -38,6 +38,7 @@ export function Toast({
     if (!open) {
       setHovered(false)
       setFocused(false)
+      previous.current = null
       return
     }
     const update = () => setHidden(document.hidden)
@@ -66,11 +67,22 @@ export function Toast({
       remaining.current = Math.max(0, remaining.current - (performance.now() - start))
     }
   }, [open, duration, hovered, focused, hidden])
+  function dismiss() {
+    if (previous.current?.isConnected) previous.current.focus({ preventScroll: true })
+    onOpenChange(false)
+  }
   return (
     <div
       className={['al-toast', className].filter(Boolean).join(' ')}
       data-visible={open}
       data-tone={tone}
+      onKeyDown={(event) => {
+        if (event.key === 'Escape' && !event.defaultPrevented) {
+          event.preventDefault()
+          event.stopPropagation()
+          dismiss()
+        }
+      }}
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
       onFocusCapture={(e) => {
@@ -94,10 +106,7 @@ export function Toast({
           type="button"
           className="al-toast-dismiss"
           aria-label={closeLabel}
-          onClick={() => {
-            if (previous.current?.isConnected) previous.current.focus({ preventScroll: true })
-            onOpenChange(false)
-          }}
+          onClick={dismiss}
         >
           <span aria-hidden="true">×</span>
         </button>

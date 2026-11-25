@@ -37,6 +37,7 @@ export function ContextMenu({
       className="al-context"
       id={id}
       aria-haspopup="menu"
+      aria-controls={point ? id + '-menu' : undefined}
       aria-keyshortcuts="Shift+F10"
       onContextMenu={(e) => {
         if (!items.length || (e.target instanceof Element && e.target.closest('[role=menu]')))

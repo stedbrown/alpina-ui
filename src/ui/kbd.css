@@ -12,5 +12,6 @@
   color: var(--al-ink);
   font: var(--al-type-caption)/var(--al-leading-caption) var(--al-mono);
   vertical-align: middle;
-  white-space: nowrap;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
 }

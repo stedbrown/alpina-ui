@@ -33,6 +33,8 @@
 }
 .al-app-bar {
   display: flex;
+  flex-wrap: wrap;
+  overflow-wrap: anywhere;
   align-items: center;
   justify-content: space-between;
   min-height: 3.5rem;
@@ -46,7 +48,8 @@
 .al-skip {
   position: absolute;
   z-index: 15;
-  inset: 0.5rem auto auto 0.5rem;
+  inset-block-start: 0.5rem;
+  inset-inline-start: 0.5rem;
   padding: 0.7rem;
   clip-path: inset(50%);
   pointer-events: none;
@@ -69,6 +72,8 @@
   }
   .al-app-mobile {
     display: flex;
+    flex-wrap: wrap;
+    overflow-wrap: anywhere;
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;

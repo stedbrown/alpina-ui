@@ -30,6 +30,7 @@ function Fixture() {
             { value: 'a4', label: 'A4' },
           ]}
           empty="No matching sizes"
+          clearLabel="Clear format"
           defaultValue="a4"
           name="format"
           required

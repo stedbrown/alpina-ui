@@ -9,3 +9,4 @@
   flex-direction: column;
   align-items: stretch;
 }
+.al-button-group > * { min-inline-size: 0; max-inline-size: 100%; }

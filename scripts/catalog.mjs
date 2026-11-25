@@ -42,6 +42,7 @@ for (const file of [
     (name) => 'catalog/' + name + '.tsx',
   ),
   'catalog/stack-example.tsx',
+  'catalog/composition-examples.tsx',
   'catalog/demos.tsx',
   'catalog/address-example.tsx',
   'catalog/design-examples.tsx',
@@ -116,6 +117,9 @@ if (process.argv.includes('--release-package')) {
   if (expected.version !== registry.version || expected.integrity !== integrity)
     throw new Error('The release package does not match the address book lockfile.')
   await writeFile('site/' + archiveName, archive)
+  // Keep the previous public installation URL valid for projects pinned to 0.6.0.
+  const previous = 'alpina-ui-0.6.0.tgz'
+  await writeFile('site/' + previous, await readFile(directory + 'vendor/' + previous))
 } else {
   execSync('npm pack --ignore-scripts --silent --pack-destination site', { stdio: 'pipe' })
 }
@@ -157,6 +161,8 @@ const result = await build({
           contents:
             'export const guides=' +
             JSON.stringify(guides) +
+            ';export const usageNotes=' +
+            JSON.stringify(Object.fromEntries(registry.items.map(({ name, usage }) => [name, usage]))) +
             ';export const sources=' +
             JSON.stringify(sources) +
             ';export const exampleCss=' +

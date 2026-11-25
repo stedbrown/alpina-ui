@@ -1,5 +1,6 @@
 declare module 'alpina:content' {
   export const guides: Record<string, string>
+  export const usageNotes: Record<string, string>
   export const sources: Record<string, string>
   export const exampleCss: string
   export const sourceFiles: Record<string, string>

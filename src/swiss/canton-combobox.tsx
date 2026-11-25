@@ -184,6 +184,11 @@ export function CantonCombobox({
       event.preventDefault()
       if (active) commit(active)
       else close()
+    } else if (event.altKey && event.key === 'ArrowUp') {
+      if (visible) {
+        event.preventDefault()
+        close()
+      }
     } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault()
       setOpen(true)

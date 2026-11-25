@@ -1,38 +1,42 @@
-import { Collapsible, Stack, SwissDate, Tabs, Typography } from 'alpina-ui'
+import { Collapsible, CurrencyCHF, Stack, SwissDate, Tabs, TextLink, Typography } from 'alpina-ui'
+import { initialInvoices, invoiceTotalCHF } from '../catalog/invoice-data.js'
 
-const typeSpecimens = [
-  { locale: 'de-CH', language: 'German', title: 'Druck\u00ADwerkstatt' },
-  { locale: 'fr-CH', language: 'French', title: 'Atelier d’impression' },
-  { locale: 'it-CH', language: 'Italian', title: 'Laboratorio di stampa' },
+const languages = [
+  { locale: 'de-CH', language: 'German', total: 'Rechnungsbetrag', due: 'Fällig am' },
+  { locale: 'fr-CH', language: 'French', total: 'Montant total', due: 'Échéance' },
+  { locale: 'it-CH', language: 'Italian', total: 'Totale fattura', due: 'Scadenza' },
 ] as const
 
-const specimenDate = '2026-06-18'
-
 export function TypeSpecimen() {
+  const invoice = initialInvoices[0]
   return (
-    <Stack id="type-specimen" role="region" aria-labelledby="type-specimen-title" gap={2} data-al-theme="dark"
-      style={{ padding: 'clamp(1rem, 2.6cqi, 2.5rem)', background: 'var(--al-bg)', color: 'var(--al-ink)' }}>
-      <Typography as="h3" variant="label" id="type-specimen-title">Workshop notice</Typography>
+    <Stack id="type-specimen" role="region" aria-labelledby="invoice-title" gap={4} surface="ink" inset={6}>
+      <Stack gap={1}>
+        <Typography variant="caption">{invoice.supplier}</Typography>
+        <Typography as="h2" variant="heading" id="invoice-title">Invoice {invoice.id}</Typography>
+      </Stack>
+      <Typography>Switch the language to compare local date and currency formats.</Typography>
       <Stack gap={0} data-specimen-disclosures="">
-        {typeSpecimens.map(({ locale, language, title }) => (
-          <Collapsible key={locale} name="specimen-language" summary={language} open={locale === 'de-CH'}>
+        {languages.map(({ locale, language, total, due }) => (
+          <Collapsible key={locale} name="invoice-language" summary={language} open={locale === 'de-CH'}>
             <Stack gap={4} lang={locale} data-specimen-sample="">
-              <Typography variant="display" style={{ fontSize: 'clamp(2.25rem, 5cqi, 4.75rem)', lineHeight: 1 }}>{title}</Typography>
-              <Stack direction="row" align="baseline" justify="space-between" gap={2}>
-                <Typography numeric><SwissDate value={specimenDate} locale={locale} dateStyle="full" /></Typography>
-                <Typography as="span" variant="caption" lang="en">{locale}</Typography>
+              <Stack gap={1}>
+                <Typography variant="label">{total}</Typography>
+                <Typography variant="display" numeric><CurrencyCHF amount={invoiceTotalCHF(invoice)} locale={locale} /></Typography>
+              </Stack>
+              <Stack gap={1}>
+                <Typography variant="caption">{due}</Typography>
+                <Typography numeric><SwissDate value={invoice.due} locale={locale} dateStyle="full" /></Typography>
               </Stack>
             </Stack>
           </Collapsible>
         ))}
       </Stack>
       <template>
-        <Tabs
-          label="Specimen language"
-          defaultValue="de-CH"
-          items={typeSpecimens.map(({ locale, language }) => ({ value: locale, label: language, content: null }))}
-        />
+        <Tabs label="Invoice language" defaultValue="de-CH"
+          items={languages.map(({ locale, language }) => ({ value: locale, label: language, content: null }))} />
       </template>
+      <TextLink href="/examples/invoice-review/">Open invoice review →</TextLink>
     </Stack>
   )
 }

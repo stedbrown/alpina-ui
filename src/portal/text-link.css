@@ -9,7 +9,7 @@
   color: var(--al-accent);
 }
 .al-text-link:focus-visible {
-  outline: 2px solid var(--al-focus);
+  outline: 2px solid currentColor;
   outline-offset: 2px;
 }
 .al-text-link[data-variant='quiet'] {
@@ -21,6 +21,7 @@
 .al-text-link[data-variant='action'],
 .al-text-link[data-variant='skip'] {
   box-sizing: border-box;
+  max-inline-size: 100%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -34,6 +35,9 @@
 .al-text-link[data-variant='action']:hover {
   text-decoration: underline;
 }
+.al-text-link:is([data-variant='action'], [data-variant='skip']):focus-visible {
+  outline-color: var(--al-focus);
+}
 .al-text-link[data-variant='skip']:not(:focus) {
   position: absolute;
   width: 1px;
@@ -45,6 +49,7 @@
 }
 .al-text-link[data-variant='skip']:focus {
   position: fixed;
-  inset: var(--al-space-2) auto auto var(--al-space-2);
+  inset-block-start: var(--al-space-2);
+  inset-inline-start: var(--al-space-2);
   z-index: 20;
 }

@@ -45,6 +45,7 @@ const registry = {
   version: JSON.parse(await readFile('package.json')).version,
   items: [],
 }
+const usageNotes = JSON.parse(await readFile('scripts/component-usage.json', 'utf8'))
 for (const [group, names] of Object.entries(groups)) {
   for (const name of names) {
     const entry = group + '/' + name + '.tsx'
@@ -52,7 +53,9 @@ for (const [group, names] of Object.entries(groups)) {
     const files = dependencies(entry)
     if (files.has('swiss/format-chf.ts') || files.has('swiss/format-swiss-date.ts'))
       files.add('swiss/UNICODE-LICENSE.txt')
-    registry.items.push({ name, group, entry, files: ['theme.css', ...files] })
+    const usage = usageNotes[name]
+    if (typeof usage !== 'string' || !usage.trim()) throw new Error('Missing usage notes for ' + name)
+    registry.items.push({ name, group, entry, usage, files: ['theme.css', ...files] })
   }
 }
 await writeFile('registry.json', JSON.stringify(registry, null, 2) + '\n')

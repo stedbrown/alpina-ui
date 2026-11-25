@@ -10,7 +10,7 @@ export interface CurrencyCHFProps extends Omit<ComponentPropsWithoutRef<'data'>,
 export function CurrencyCHF({ amount, locale = defaultSwissLocale, ...props }: CurrencyCHFProps): ReactElement {
   return (
     <data lang={locale} {...props} value={String(amount)}>
-      {formatCHF(amount, locale)}
+      <bdi dir="ltr">{formatCHF(amount, locale)}</bdi>
     </data>
   )
 }

@@ -93,6 +93,7 @@
 }
 .al-button[aria-busy='true'] {
   cursor: progress;
+  opacity: 1;
 }
 .al-button[aria-busy='true']::before {
   content: '';

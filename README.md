@@ -1,21 +1,21 @@
 # Alpina UI
 
-Alpina UI is a collection of 78 React components that brings Swiss typographic design to the web. Its responsive grid, left-aligned type, and black, white, and red palette carry through from the smallest control to the documentation site. Swiss address, date, and currency components support the country’s four national languages.
+Alpina UI is a collection of 81 React components that brings Swiss typographic design to the web. Its responsive grid, left-aligned type, and black, white, and red palette carry through from the smallest control to the documentation site. Swiss address, date, and currency components support the country’s four national languages.
 
 ## Explore Alpina
 
-The homepage uses Alpina’s public grid, typography, links, and navigation components. Open the documentation for installation and component APIs, or explore complete applications in the project gallery. [Homepage](https://alpina-ui.vercel.app/) · [Documentation](https://alpina-ui.vercel.app/docs/) · [Examples](https://alpina-ui.vercel.app/examples/)
+Switch invoice AP-104 between German, French and Italian on the homepage. The invoice uses the same supplier record and total calculation as the review application. Browse components by task and open a preview to read its interaction notes, inspect the types and copy the source. [Homepage](https://alpina-ui.vercel.app/) · [Component index](https://alpina-ui.vercel.app/docs/components/) · [Installation](https://alpina-ui.vercel.app/docs/)
 
-Open the offline catalog in a browser to try every component, inspect its TypeScript API, and copy its source. Start with the typography specimen. Switch between 4, 8, and 12 columns to see how margins, gutters, and type sizes change with the available width. The portal uses the same public imports as any other Alpina application. [Download the offline catalog](https://github.com/stedbrown/alpina-ui/releases/download/v0.6.0/alpina-ui-catalog.html) · [Design and measurements](docs/design.md)
+Open the offline catalog in a browser to try every component, inspect its TypeScript API, and copy its source. Start with the typography specimen. Switch between 4, 8, and 12 columns to see how margins, gutters, and type sizes change with the available width. The portal uses the same public imports as any other Alpina application. [Download the offline catalog](https://github.com/stedbrown/alpina-ui/releases/download/v0.7.0/alpina-ui-catalog.html) · [Design and measurements](docs/design.md)
 
-The catalog covers all 66 families in the shadcn/ui component index reviewed on November 24, 2026. The other 12 entries include grid and stack layouts, Swiss localization tools, and components for building a documentation site. The comparison explains which interactions each family supports. [Component coverage](docs/coverage.md) · [Swiss graphic design research](docs/research.md)
+The catalog covers all 66 families in the shadcn/ui component index reviewed on November 24, 2026. The other 15 entries include grid and stack layouts, Swiss localization tools, and components for building a documentation site. The comparison explains which interactions each family supports. [Component coverage](docs/coverage.md) · [Swiss graphic design research](docs/research.md)
 
 ## Install
 
 For a project using React and React DOM 18.2 or 19, install the package from the GitHub release.
 
 ```sh
-npm install https://github.com/stedbrown/alpina-ui/releases/download/v0.6.0/alpina-ui-0.6.0.tgz
+npm install https://github.com/stedbrown/alpina-ui/releases/download/v0.7.0/alpina-ui-0.7.0.tgz
 ```
 
 Import the stylesheet once at your application entry point and use components by name. You can also copy the TypeScript and CSS into your project with `npx --no-install alpina add button`. [Quick start](docs/start.md)
@@ -47,7 +47,7 @@ Serve `site/` with a static HTTP server to browse the website from its homepage.
 
 | Path | Contents |
 | --- | --- |
-| `src/ui` | 40 foundational components including Grid, Typography, and DataTable |
+| `src/ui` | 43 foundational components including Grid, Typography, and DataTable |
 | `src/interactive` | 23 interactive components and their shared behavior |
 | `src/swiss` | 9 Swiss components, datasets, and formatters |
 | `src/portal` | 6 components for navigation, page structure, code samples, and documentation |
@@ -61,13 +61,20 @@ Serve `site/` with a static HTTP server to browse the website from its homepage.
 
 ## Try the bilingual address book
 
-Search seven fictional design studios, switch between Italian and German, and edit an address without losing your draft. The adoption report tracks the CSS needed to build the example using only the portal. Moving layout, current-row styling, and long-word handling into Alpina reduced the application stylesheet from 56 declarations to 43. [Try the offline address book](https://github.com/stedbrown/alpina-ui/releases/download/v0.6.0/alpina-address-book-it-de.html) · [Example source](recipes/rubrica) · [Adoption report](recipes/rubrica/PROVA.md)
+Search seven fictional design studios, switch between Italian and German, and edit an address without losing your draft. The adoption report tracks the CSS needed to build the example using only the portal. Moving layout, current-row styling, and long-word handling into Alpina reduced the application stylesheet from 56 declarations to 43. [Try the offline address book](https://github.com/stedbrown/alpina-ui/releases/download/v0.7.0/alpina-address-book-it-de.html) · [Example source](recipes/rubrica) · [Adoption report](recipes/rubrica/PROVA.md)
 
 ## Inspect and update a component
 
 Each component page has four views. The preview keeps your input when you switch to the example code, API reference, or distributed source. Adjust the preview width to see how a component behaves in a narrow container. A link such as `#swiss-address-form/api` opens the reference directly.
 
 After upgrading the package, run `npx --no-install alpina diff` to compare copied components with the installed version. [CLI guide](docs/cli.md) · [Migration notes](docs/release.md)
+
+### Try a complete workflow
+
+- Register for a print workshop, correct an invalid field and return from review to edit a choice. [Workshop registration](https://alpina-ui.vercel.app/examples/workshop-registration/)
+- Compare an invoice with a purchase order, request a correction with a note and reopen the decision. [Invoice review](https://alpina-ui.vercel.app/examples/invoice-review/)
+
+Both projects use the library’s public components and ship without an application stylesheet. [All examples](https://alpina-ui.vercel.app/examples/)
 
 ## Use Alpina with a coding agent
 
@@ -80,11 +87,11 @@ Run `npm run size` after building to measure individual imports. The benchmark u
 | Import | Gzipped bytes |
 | --- | ---: |
 | Button JavaScript | 252 |
-| CurrencyCHF JavaScript | 639 |
-| Dialog JavaScript | 1,156 |
-| All JavaScript exports | 25,481 |
-| Full stylesheet including the theme | 11,661 |
-| Button CSS without the theme | 737 |
+| CurrencyCHF JavaScript | 655 |
+| Dialog JavaScript | 1,155 |
+| All JavaScript exports | 27,112 |
+| Full stylesheet including the theme | 12,737 |
+| Button CSS without the theme | 736 |
 
 ## License
 

@@ -9,7 +9,8 @@
   z-index: 11;
   visibility: hidden;
   margin: 0;
-  inline-size: min(22rem, calc(100vw - 1rem));
+  inline-size: min(22rem, calc(var(--al-visible-width, 100vw) - 1rem));
+  overflow-wrap: anywhere;
   overflow: auto;
   padding: var(--al-space-4);
   border: 1px solid var(--al-ink);

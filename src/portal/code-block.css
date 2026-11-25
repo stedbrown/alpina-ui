@@ -8,6 +8,7 @@
 }
 .al-code-block figcaption {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.75rem;
   align-items: center;
@@ -24,6 +25,7 @@
   padding: 1rem;
   max-height: 34rem;
   overflow: auto;
+  scroll-padding: var(--al-space-2);
   tab-size: 2;
 }
 .al-code-block pre:focus-visible {

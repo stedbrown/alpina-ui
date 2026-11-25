@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactElement } from 'react'
 import { Dialog } from '../interactive/dialog.js'
+import { Button } from '../ui/button.js'
 import { Calendar, type CalendarProps } from './calendar.js'
 import { calendarText } from './calendar-dates.js'
 import { defaultSwissLocale } from './locales.js'
@@ -13,9 +14,11 @@ export interface DatePickerProps extends CalendarProps {
   label?: string
   name?: string
   disabled?: boolean
+  /** Allow the user to remove the selected day from the calendar dialog. */
+  clearable?: boolean
 }
 
-export function DatePicker({ value, defaultValue = '', onValueChange, name, label, locale = defaultSwissLocale, disabled = false, className = '', ...calendar }: DatePickerProps): ReactElement {
+export function DatePicker({ value, defaultValue = '', onValueChange, name, label, locale = defaultSwissLocale, disabled = false, clearable = false, className = '', ...calendar }: DatePickerProps): ReactElement {
   const [local, setLocal] = useState(defaultValue)
   const selection = value ?? local
   const [open, setOpen] = useState(false)
@@ -36,20 +39,23 @@ export function DatePicker({ value, defaultValue = '', onValueChange, name, labe
   }, [defaultValue, value])
 
   useEffect(() => {
-    if (open && !disabled) root.current?.querySelector<HTMLButtonElement>('[data-day][tabindex="0"]')?.focus()
+    if (disabled) setOpen(false)
+    else if (open) root.current?.querySelector<HTMLButtonElement>('[data-day][tabindex="0"]')?.focus()
   }, [open, disabled])
+  function choose(day: string) {
+    if (value === undefined) setLocal(day)
+    if (selection !== day) onValueChange?.(day)
+    setOpen(false)
+  }
 
   return <div ref={root} lang={locale} className={('al-date-picker ' + className).trim()}>
     {name && <input type="hidden" name={name} value={selection} disabled={disabled} />}
     {disabled ? <button type="button" disabled>{selection ? <SwissDate value={selection} locale={locale} /> : label ?? text.choose}</button> :
       <Dialog title={label ?? text.choose} closeLabel={text.close} open={open} onOpenChange={setOpen}
+        footer={clearable && selection ? <Button variant="outline" onClick={() => choose('')}>{text.clear}</Button> : undefined}
         trigger={<>{selection ? <SwissDate value={selection} locale={locale} /> : label ?? text.choose}<span aria-hidden="true">▾</span></>}
         triggerLabel={selection ? (label ?? text.choose) + ', ' + formatSwissDate(selection, locale) : label ?? text.choose}>
-        {open && <Calendar {...calendar} value={selection} defaultMonth={selection || calendar.defaultMonth} locale={locale} onValueChange={(day) => {
-          if (value === undefined) setLocal(day)
-          if (selection !== day) onValueChange?.(day)
-          setOpen(false)
-        }} />}
+        {open && <Calendar {...calendar} value={selection} defaultMonth={selection || calendar.defaultMonth} locale={locale} onValueChange={choose} />}
       </Dialog>}
   </div>
 }

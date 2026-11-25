@@ -18,6 +18,16 @@
   transform: rotate(45deg);
   pointer-events: none;
 }
+.al-combo:has(.al-combo-clear) input { padding-inline-end: var(--al-space-12); }
+.al-combo .al-combo-clear {
+  position: absolute;
+  inset-block: 1px;
+  inset-inline-end: 1px;
+  min-block-size: 0;
+  min-inline-size: var(--al-space-10);
+  padding: 0;
+  font-size: var(--al-type-heading);
+}
 .al-combo-popup {
   position: fixed;
   inset: auto;
@@ -49,6 +59,7 @@
   gap: var(--al-space-2);
   padding: var(--al-space-2);
   cursor: pointer;
+  overflow-wrap: anywhere;
 }
 .al-combo-popup li[data-active='true'],
 .al-combo-popup li:hover {
@@ -64,4 +75,7 @@
 }
 .al-combo-popup small {
   font-variant-numeric: tabular-nums;
+}
+@media (pointer: coarse) {
+  .al-combo-popup li { box-sizing: border-box; min-block-size: var(--al-space-11); align-items: center; }
 }

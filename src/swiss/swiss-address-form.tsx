@@ -35,6 +35,7 @@ export interface SwissAddressLabels {
   postalCodeError: string
   submit: string
   saving: string
+  saved?: string
   saveError: string
   errorSummary?: string
 }
@@ -54,6 +55,7 @@ export const swissAddressLabels: Readonly<Record<SwissLocale, Readonly<SwissAddr
     postalCodeError: 'Inserisci un NPA di quattro cifre.',
     submit: 'Salva indirizzo',
     saving: 'Salvataggio…',
+    saved: 'Indirizzo salvato.',
     saveError: 'Salvataggio non riuscito. Riprova.',
     errorSummary: 'Campi da correggere',
   },
@@ -71,6 +73,7 @@ export const swissAddressLabels: Readonly<Record<SwissLocale, Readonly<SwissAddr
     postalCodeError: 'Geben Sie eine vierstellige PLZ ein.',
     submit: 'Adresse speichern',
     saving: 'Wird gespeichert…',
+    saved: 'Adresse gespeichert.',
     saveError: 'Speichern fehlgeschlagen. Bitte erneut versuchen.',
     errorSummary: 'Zu korrigierende Felder',
   },
@@ -88,6 +91,7 @@ export const swissAddressLabels: Readonly<Record<SwissLocale, Readonly<SwissAddr
     postalCodeError: 'Saisissez un NPA à quatre chiffres.',
     submit: 'Enregistrer l’adresse',
     saving: 'Enregistrement…',
+    saved: 'Adresse enregistrée.',
     saveError: 'Échec de l’enregistrement. Veuillez réessayer.',
     errorSummary: 'Champs à corriger',
   },
@@ -105,6 +109,7 @@ export const swissAddressLabels: Readonly<Record<SwissLocale, Readonly<SwissAddr
     postalCodeError: 'Endatai in NP da quatter cifras.',
     submit: 'Arcunar l’adressa',
     saving: 'L’adressa vegn arcunada…',
+    saved: 'Adressa arcunada.',
     saveError: 'L’adressa n’ha betg pudì vegnir arcunada. Empruvai anc ina giada.',
     errorSummary: 'Champs da curreger',
   },
@@ -150,7 +155,7 @@ export function SwissAddressForm({
   const submitButton = useRef<HTMLButtonElement>(null)
   const validationStarted = useRef(false)
   const saving = useRef(false)
-  const [status, setStatus] = useState<'idle' | 'saving' | 'failed'>('idle')
+  const [status, setStatus] = useState<'idle' | 'saving' | 'saved' | 'failed'>('idle')
   const [errors, setErrors] = useState<AddressErrors>({})
   // Retain the initial snapshot across language changes and parent re-renders.
   const [defaults] = useState(() => ({ ...initialValue }))
@@ -211,9 +216,12 @@ export function SwissAddressForm({
           const message = result.fieldErrors[field]?.trim()
           if (message) returned[field] = { message }
         }
-        showErrors(returned, !!focusWithinForm())
+        if (showErrors(returned, !!focusWithinForm())) {
+          setStatus('idle')
+          return
+        }
       }
-      setStatus('idle')
+      setStatus('saved')
     } catch {
       setStatus('failed')
     } finally {
@@ -230,7 +238,7 @@ export function SwissAddressForm({
       const next = fieldIssue(key, value.trim())
       setErrors((current) => (current[key] === next ? current : { ...current, [key]: next }))
     }
-    if (status === 'failed') setStatus('idle')
+    if (status === 'failed' || status === 'saved') setStatus('idle')
   }
 
   function message(key: AddressField) {
@@ -363,6 +371,7 @@ export function SwissAddressForm({
               name="canton"
               autoComplete="address-level1"
               locale={locale}
+              order="name"
               placeholder={text.selectCanton}
               defaultValue={defaults.canton ?? ''}
               required
@@ -371,6 +380,7 @@ export function SwissAddressForm({
         </Field>
       </fieldset>
       <div className="al-address-actions">
+        <span role="status">{status === 'saved' ? text.saved : null}</span>
         {status === 'failed' && (
           <span className="al-address-save-error" role="alert">
             {text.saveError}

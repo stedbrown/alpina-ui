@@ -3,6 +3,8 @@ import { Masthead, Footer } from './pages.js'
 import { inventory } from '../catalog/inventory.js'
 
 export { Landing, Examples } from './pages.js'
+export { ComponentDirectory } from './component-directory.js'
+export { projects } from './projects.js'
 export { inventory }
 
 export function ReferencePage({ html, agents = false }: { html: string; agents?: boolean }) {

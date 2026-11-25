@@ -1,0 +1,18 @@
+.al-description-list {
+  container: al-description / inline-size;
+  margin: 0;
+  color: inherit;
+  font: 400 var(--al-type-body)/var(--al-leading-body) var(--al-font);
+}
+.al-description-list > div {
+  display: grid;
+  gap: var(--al-space-1) var(--al-space-4);
+  padding-block: var(--al-space-3);
+}
+.al-description-list > div + div { border-block-start: 1px solid var(--al-line); }
+.al-description-list :is(dt, dd) { min-inline-size: 0; margin: 0; overflow-wrap: anywhere; }
+.al-description-list dt { font-weight: 600; }
+.al-description-list dd { font-variant-numeric: tabular-nums; }
+@container al-description (min-width: 25rem) {
+  .al-description-list > div { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+}

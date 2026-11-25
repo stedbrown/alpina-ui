@@ -37,6 +37,7 @@ export function AppShell({
   const [local, setLocal] = useState(false)
   const expanded = open ?? local
   const trigger = useRef<HTMLButtonElement>(null)
+  const shell = useRef<HTMLDivElement>(null)
   function change(value: boolean) {
     setLocal(value)
     onOpenChange?.(value)
@@ -47,7 +48,9 @@ export function AppShell({
       if (
         e.key === 'Escape' &&
         !e.defaultPrevented &&
-        !document.querySelector('dialog[open]') &&
+        e.target instanceof Element &&
+        shell.current?.contains(e.target) &&
+        !e.target.closest('dialog[open]') &&
         trigger.current?.offsetWidth
       ) {
         e.preventDefault()
@@ -60,7 +63,7 @@ export function AppShell({
     return () => window.removeEventListener('keydown', escape)
   }, [expanded, onOpenChange])
   return (
-    <div className="al-app-shell" data-index-open={expanded}>
+    <div ref={shell} className="al-app-shell" data-index-open={expanded}>
       <a
         className="al-skip"
         href={'#' + target}

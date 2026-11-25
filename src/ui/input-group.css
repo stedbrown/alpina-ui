@@ -10,6 +10,7 @@
   font-family: var(--al-font);
 }
 .al-input-group-addon {
+  overflow-wrap: anywhere;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -31,7 +32,7 @@
 .al-input-group > :is(input, select, textarea):focus-visible {
   outline: none;
 }
-.al-input-group:has([aria-invalid='true']) {
+.al-input-group:has([aria-invalid='true'], :user-invalid) {
   border-color: var(--al-danger);
   border-block-end-width: 2px;
 }

@@ -73,3 +73,11 @@
   inline-size: 1.75rem;
   block-size: 3px;
 }
+@media (pointer: coarse) {
+  .al-resizable[data-orientation='horizontal'] {
+    grid-template-columns: minmax(0, var(--al-first-track)) var(--al-space-11) minmax(0, var(--al-second-track));
+  }
+  .al-resizable[data-orientation='vertical'] {
+    grid-template-rows: minmax(0, var(--al-first-track)) var(--al-space-11) minmax(0, var(--al-second-track));
+  }
+}

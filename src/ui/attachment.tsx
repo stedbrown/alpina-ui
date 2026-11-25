@@ -16,7 +16,7 @@ export function Attachment({
       <svg aria-hidden="true" viewBox="0 0 20 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M3 1.5h9l5 5v16H3z M12 2v5h5 M6 13h8 M6 17h6" />
       </svg>
-      <span className="al-attachment-name">{filename}</span>
+      <bdi className="al-attachment-name">{filename}</bdi>
       {detail != null && <span className="al-attachment-detail">{detail}</span>}
     </a>
   )

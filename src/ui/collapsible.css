@@ -4,11 +4,18 @@
   color: var(--al-ink);
 }
 .al-collapsible summary {
+  overflow-wrap: anywhere;
   cursor: pointer;
   min-block-size: 2.75rem;
   box-sizing: border-box;
   padding: var(--al-space-3) var(--al-space-2);
   font: 600 var(--al-type-label)/var(--al-leading-label) var(--al-font);
+}
+@media (hover: hover) {
+  .al-collapsible > summary:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
 }
 .al-collapsible summary:focus-visible {
   outline: 2px solid var(--al-focus);

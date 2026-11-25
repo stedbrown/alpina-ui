@@ -32,8 +32,11 @@ export function TableRow(props: TableRowProps): ReactElement {
 export function TableHead({ scope = 'col', numeric = false, ...props }: TableHeadProps): ReactElement {
   return <th {...props} scope={scope} data-numeric={numeric || undefined} />
 }
-export function TableCell({ numeric = false, ...props }: TableCellProps): ReactElement {
-  return <td {...props} data-numeric={numeric || undefined} />
+export function TableCell({ numeric = false, children, ...props }: TableCellProps): ReactElement {
+  const plainValue = typeof children === 'string' || typeof children === 'number' || typeof children === 'bigint'
+  return <td {...props} data-numeric={numeric || undefined}>
+    {numeric && plainValue ? <span className="al-table-value">{children}</span> : children}
+  </td>
 }
 export function TableCaption(props: TableCaptionProps): ReactElement {
   return <caption {...props} />

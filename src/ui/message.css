@@ -1,5 +1,7 @@
 .al-message {
   display: grid;
+  min-inline-size: 0;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--al-space-1);
   justify-items: start;
   font-family: var(--al-font);
@@ -9,6 +11,8 @@
   justify-items: end;
 }
 .al-message header {
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;

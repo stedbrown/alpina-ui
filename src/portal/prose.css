@@ -30,6 +30,14 @@
 .al-prose a:hover {
   color: var(--al-accent);
 }
+.al-prose :where(a, summary, button):focus-visible {
+  outline: 2px solid var(--al-focus);
+  outline-offset: 2px;
+}
+.al-prose :where(img, video) {
+  max-inline-size: 100%;
+  block-size: auto;
+}
 .al-prose pre {
   overflow: auto;
   padding: 0.8rem;
@@ -54,7 +62,7 @@
   vertical-align: top;
 }
 .al-prose blockquote {
-  border-left: 3px solid var(--al-accent);
+  border-inline-start: 3px solid var(--al-accent);
   padding: 0.2em 1em;
   margin: 1em 0;
 }

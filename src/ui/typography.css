@@ -50,6 +50,13 @@
   font-weight: 600;
   letter-spacing: -0.048em;
 }
+.al-type[data-role='title'] {
+  font: 650 clamp(3rem, 7cqi, 6.75rem)/0.98 var(--al-display);
+  letter-spacing: -0.058em;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  text-wrap: balance;
+}
 .al-type[data-measure='reading'] {
   max-inline-size: 65ch;
 }

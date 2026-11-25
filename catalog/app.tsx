@@ -11,14 +11,17 @@ import {
   Kbd,
   Button,
   ButtonGroup,
+  Grid,
+  GridItem,
   Label,
   Select,
   Typography,
+  Stack,
   Empty,
 } from 'alpina-ui'
 import 'alpina-ui/styles.css'
 import { inventory, type Item } from './inventory.js'
-import { bilingualProject, clientProject, componentHref, guideHref } from './paths.js'
+import { bilingualProject, clientProject, componentHref, guideHref, workflowProjects, type WorkflowProject } from './paths.js'
 import * as baseExamples from './demos.js'
 import * as dataExamples from './data-examples.js'
 import * as designExamples from './design-examples.js'
@@ -27,6 +30,7 @@ import * as actions from './actions-v3.js'
 import * as workflows from './workflows-v3.js'
 import * as portal from './portal-v3.js'
 import { StackExample } from './stack-example.js'
+import * as composition from './composition-examples.js'
 import { SwissAddressFormExample } from './address-example.js'
 import { ApiReference } from './api-reference.js'
 import { Preview } from './preview.js'
@@ -35,6 +39,8 @@ import { DirectoryLive } from './directory-live.js'
 import { DirectorySource } from './directory-source.js'
 import { Specimen } from './specimen.js'
 import { Overview } from './overview.js'
+import { InvoiceReview } from './invoice-review.js'
+import { WorkshopRegistration } from './workshop-registration.js'
 import {
   apiReference,
   componentFiles,
@@ -43,12 +49,14 @@ import {
   guides,
   sourceFiles,
   sources,
+  usageNotes,
   version,
 } from 'alpina:content'
 import './catalog.css'
 import './examples.css'
 
 const demos = {
+  ...composition,
   ...baseExamples,
   ...dataExamples,
   ...designExamples,
@@ -190,6 +198,12 @@ function Workbench({
       <Preview visible={mode === 'Preview'}>
         <Demo />
       </Preview>
+      {mode === 'Preview' && (
+        <Stack gap={1}>
+          <Typography as="h2" variant="heading">Usage notes</Typography>
+          <Typography measure="reading">{usageNotes[id]}</Typography>
+        </Stack>
+      )}
       {mode === 'API' && <ApiReference entries={apiReference[id]} />}
       {mode === 'Code' && (
         <>
@@ -239,6 +253,7 @@ function App() {
     : null
   const liveDirectory = hash === 'bilingual-address-book' || hash === 'rubrica-bilingue'
   const directory = hash === 'address-book' || hash === 'rubrica'
+  const workflow = workflowProjects.find((project) => project.slug === hash)
   const overview = !guide && !item && !directory
   const [query, setQuery] = useState('')
   const [mobile, setMobile] = useState(false)
@@ -264,7 +279,8 @@ function App() {
   useEffect(() => {
     if (hostedDocs && (directory || liveDirectory))
       location.replace(liveDirectory ? bilingualProject : clientProject)
-  }, [directory, liveDirectory])
+    else if (hostedDocs && workflow) location.replace('/examples/' + workflow.slug + '/')
+  }, [directory, liveDirectory, workflow])
   useEffect(() => {
     document.documentElement.dataset.alTheme = dark ? 'dark' : 'light'
     try {
@@ -275,7 +291,7 @@ function App() {
   }, [dark])
   useEffect(() => {
     if (liveDirectory) return
-    const title = item ? (hostedDocs ? item[1] : item[2]) : (guide && guideNames[guide]) || area
+    const title = item ? (hostedDocs ? item[1] : item[2]) : (guide && guideNames[guide]) || workflow?.title || area
     document.title = title + ' · Alpina UI'
     window.scrollTo(0, 0)
     const mobileLayout = matchMedia('(max-width:740px)').matches
@@ -288,10 +304,10 @@ function App() {
         b = list.current.getBoundingClientRect()
       if (a.bottom > b.bottom || a.top < b.top) list.current.scrollTop += a.top - b.top - 40
     }
-  }, [item, guide, area, liveDirectory])
+  }, [item, guide, area, liveDirectory, workflow])
   useEffect(() => {
     function shortcut(e: KeyboardEvent) {
-      if (['#bilingual-address-book', '#rubrica-bilingue'].includes(location.hash)) return
+      if (['#bilingual-address-book', '#rubrica-bilingue'].includes(location.hash) || workflowProjects.some(({ slug }) => location.hash === '#' + slug)) return
       if (document.querySelector('dialog[open]') || e.isComposing || e.defaultPrevented) return
       const typing =
         e.target instanceof Element && e.target.closest('input,textarea,select,[contenteditable=true]')
@@ -373,6 +389,7 @@ function App() {
                 { href: '#overview', label: 'Specimen', current: overview },
                 { href: '#address-book', label: 'Client address book', current: directory },
                 { href: '#bilingual-address-book', label: 'IT / DE address book' },
+                ...workflowProjects.map(({ slug, title }) => ({ href: '#' + slug, label: title })),
                 { href: '#guide/start', label: 'Installation', current: guide === 'start' },
                 {
                   href: '#guide/research',
@@ -403,6 +420,7 @@ function App() {
     </Sidebar>
   )
   if (liveDirectory) return <DirectoryLive />
+  if (workflow) return <WorkflowExample key={workflow.slug} project={workflow} hosted={false} />
   return (
     <AppShell
       brand={<Brand />}
@@ -492,6 +510,25 @@ function Project({ bilingual }: { bilingual: boolean }) {
     </>
   )
 }
+function WorkflowExample({ project, hosted }: { project: WorkflowProject; hosted: boolean }) {
+  return <>
+    <Grid as="header" space="compact"><GridItem>
+      <TextLink variant="skip" href="#main-content" onClick={(event) => {
+        event.preventDefault()
+        document.getElementById('main-content')?.focus()
+      }}>Skip to example</TextLink>
+      <NavigationMenu label="Example navigation" orientation="horizontal" sections={[{ links: [
+        { href: hosted ? '/examples/' : '#overview', label: hosted ? '← Examples' : '← Catalog' },
+        { href: componentHref(project.component, hosted), label: 'Component reference' },
+        { href: 'https://github.com/stedbrown/alpina-ui/blob/main/' + project.source, label: 'Source on GitHub' },
+      ] }]} />
+    </GridItem></Grid>
+    {project.slug === 'workshop-registration' ? <WorkshopRegistration /> : <InvoiceReview />}
+  </>
+}
 const isBilingualProject = pathname + '/' === bilingualProject
 const isProject = isBilingualProject || pathname + '/' === clientProject
-createRoot(document.getElementById('app')!).render(isProject ? <Project bilingual={isBilingualProject} /> : <App />)
+const workflow = workflowProjects.find(({ slug }) => pathname === '/examples/' + slug)
+createRoot(document.getElementById('app')!).render(workflow
+  ? <WorkflowExample project={workflow} hosted />
+  : isProject ? <Project bilingual={isBilingualProject} /> : <App />)

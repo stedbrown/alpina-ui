@@ -36,7 +36,7 @@ async function loadPages() {
 }
 
 export async function buildWebsite({ guides, guideFiles, apiReference, registry, script, css, notices }) {
-  const { Landing, Examples, ReferencePage, ExampleIntroduction, inventory } = await loadPages()
+  const { Landing, Examples, ComponentDirectory, ReferencePage, ExampleIntroduction, inventory, projects } = await loadPages()
   const paths = []
   const appJS = '/assets/catalog-' + sha(script) + '.js'
   const appCSS = '/assets/catalog-' + sha(css) + '.css'
@@ -48,11 +48,14 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
   })
   const specimen = specimenBuild.outputFiles[0].text
   const specimenJS = '/assets/type-specimen-' + sha(specimen) + '.js'
+  const filter = await readFile('web/directory-filter.js', 'utf8')
+  const filterJS = '/assets/component-filter-' + sha(filter) + '.js'
   const preview = await readFile('web/assets/alpina-preview.png')
   const previewURL = origin + '/assets/alpina-preview.png?v=' + sha(preview)
   await Promise.all([
     output(appJS, script), output(appCSS, css), output(coreCSS, core),
     output(specimenJS, specimen),
+    output(filterJS, filter),
     output('third-party-notices.txt', notices.join('\n\n')),
     output('registry.json', JSON.stringify(registry)), output('reference/api.json', JSON.stringify(apiReference)),
     output('skills/alpina-ui/SKILL.md', await readFile('skills/alpina-ui/SKILL.md')),
@@ -61,14 +64,9 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
     output('assets/alpina-mark.png', await readFile('web/assets/alpina-mark.png')),
   ])
 
-  const projects = [
-    { slug: 'bilingual-address-book', title: 'Studio address book', description: 'Search and edit studio addresses in Italian or German. Keep a partially completed form when you switch languages.' },
-    { slug: 'client-directory', title: 'Client directory', description: 'Filter clients by Swiss canton, sort orders in francs, and edit the selected postal address.' },
-  ]
-
   async function page(route, title, description, body, options = {}) {
     const url = origin + route
-    const caption = title === siteName ? 'Alpina UI — Swiss typography for React' : title + ' · ' + siteName
+    const caption = title === siteName ? 'Alpina UI — Swiss UI components for React' : title + ' · ' + siteName
     const tags = [
       '<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffffff">',
       '<title>' + escape(caption) + '</title><meta name="description" content="' + escape(description) + '">',
@@ -77,11 +75,12 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
       '<meta property="og:title" content="' + escape(caption) + '"><meta property="og:description" content="' + escape(description) + '">',
       '<meta property="og:url" content="' + escape(url) + '"><meta property="og:image" content="' + previewURL + '">',
       '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">',
-      '<meta name="twitter:card" content="summary_large_image"><meta property="og:image:alt" content="Swiss type for React beside Alpina’s red letterform study">',
+      '<meta name="twitter:card" content="summary_large_image"><meta property="og:image:alt" content="Alpina UI components for React beside a multilingual Swiss invoice">',
       '<link rel="license" href="/third-party-notices.txt"><link rel="stylesheet" href="' + (options.app ? appCSS : coreCSS) + '">',
     ]
     if (options.redirect) tags.push('<script>' + options.redirect + '</script>')
     if (options.specimen) tags.push('<script type="module" src="' + specimenJS + '"></script>')
+    if (options.filter) tags.push('<script type="module" src="' + filterJS + '"></script>')
     const content = options.app ? '<div id="app">' + body + '</div><script defer src="' + appJS + '"></script>' : body
     await output(route + 'index.html', '<!doctype html>\n<html lang="en"><head>' + tags.join('\n') + '</head><body data-al-page>' + content + '</body></html>')
     paths.push(url)
@@ -92,7 +91,8 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
   const legacy = `(()=>{const h=location.hash.slice(1);if(!h)return;const p={rubrica:"client-directory","address-book":"client-directory","rubrica-bilingue":"bilingual-address-book","bilingual-address-book":"bilingual-address-book"};if(Object.hasOwn(p,h))location.replace("/examples/"+p[h]+"/");else if(h==="overview"||h.startsWith("guide/")||${ids}.includes(h.split("/")[0]))location.replace("/docs/#"+h)})();`
   await page('/', siteName, 'Open-source React and TypeScript components for forms, tables and multilingual interfaces on a Swiss typographic grid.',
     render(Landing, { version: registry.version, count: inventory.length }), { redirect: legacy, specimen: true })
-  await page('/examples/', 'Example projects', 'Explore complete Alpina UI applications, from a bilingual studio address book to a client directory with sortable orders.', render(Examples))
+  await page('/examples/', 'Example projects', 'Try workshop registration, invoice review, a bilingual studio address book and a client directory built with Alpina UI.', render(Examples))
+  await page('/docs/components/', 'Component index', 'Find a React component by name, task or category and open its preview, source code and API.', render(ComponentDirectory), { filter: true })
   const agentsMarkdown = await readFile('docs/agents.md', 'utf8')
   const agentsHTML = await marked.parse(agentsMarkdown)
   await page('/agents/', 'Agent tools', 'Install the Alpina UI skill or connect a read-only local MCP server to search components, inspect source, and read guides.', render(ReferencePage, { agents: true, html: agentsHTML }))
@@ -127,11 +127,12 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
   }
 
   for (const [slug, name, title, group, description] of inventory) {
+    const { usage } = registry.items.find((entry) => entry.name === slug)
     const contracts = apiReference[slug].map((part) => {
       const props = part.props.map((p) => '<li><code>' + escape(p.name) + '</code> — ' + (p.required ? 'required' : 'optional') + ', <code>' + escape(p.type) + '</code></li>').join('')
       return '<h2>' + escape(part.name) + '</h2>' + (props ? '<ul>' + props + '</ul>' : '<p>Accepts the documented native element attributes.</p>')
     }).join('')
-    const html = '<p>' + escape(group) + '</p><h1>' + escape(name) + '</h1><p>' + escape(description) + '</p>' + contracts + '<p><a href="/docs/">Documentation</a></p>'
+    const html = '<p>' + escape(group) + '</p><h1>' + escape(name) + '</h1><p>' + escape(description) + '</p><h2>Usage notes</h2><p>' + escape(usage) + '</p>' + contracts + '<p><a href="/docs/components/">Component index</a></p>'
     await page('/docs/components/' + slug + '/', name + ' — ' + title, description, render(ReferencePage, { html }), { app: true })
   }
   const index = [

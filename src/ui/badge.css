@@ -24,6 +24,7 @@
   --al-badge-ink: var(--al-danger);
 }
 .al-badge-mark {
+  align-self: start;
   font-weight: 750;
   flex: none;
 }

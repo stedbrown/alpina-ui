@@ -9,10 +9,13 @@
   font: 400 var(--al-type-label)/var(--al-leading-label) var(--al-font);
 }
 .al-radio-group > legend {
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
   padding: 0 0 var(--al-space-2);
   font-weight: 650;
 }
 .al-radio-option {
+  overflow-wrap: anywhere;
   display: flex;
   align-items: center;
   gap: var(--al-space-2);

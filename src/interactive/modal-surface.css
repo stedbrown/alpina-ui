@@ -49,7 +49,11 @@
   --al-dialog-width: 48rem;
 }
 .al-modal::backdrop {
-  background: repeating-linear-gradient(135deg, transparent 0 5px, #000 5px 6px);
+  background: rgb(0 0 0 / 48%);
+}
+:root:has(.al-modal:modal) {
+  overflow: hidden;
+  scrollbar-gutter: stable;
 }
 .al-modal.al-sheet {
   position: fixed;

@@ -24,12 +24,17 @@ export function useFloating(
       if (!anchor || !panel || !view) return
       const margin = 8
       const gap = 5
-      const viewportWidth = anchor.ownerDocument.documentElement.clientWidth
-      const viewportHeight = view.innerHeight
+      // A zoomed page or an onscreen keyboard can leave only part of the layout viewport visible.
+      const viewport = view.visualViewport
+      const viewportWidth = Math.min(viewport?.width ?? Infinity, anchor.ownerDocument.documentElement.clientWidth)
+      const viewportHeight = viewport?.height ?? view.innerHeight
+      const originX = viewport?.offsetLeft ?? 0
+      const originY = viewport?.offsetTop ?? 0
+      panel.style.setProperty('--al-visible-width', viewportWidth + 'px')
       const bounds = anchor.getBoundingClientRect()
-      const spaceAbove = Math.max(0, bounds.top - margin - gap)
-      const spaceBelow = Math.max(0, viewportHeight - bounds.bottom - margin - gap)
-      const availableHeight = Math.max(spaceAbove, spaceBelow, 48)
+      const spaceAbove = Math.max(0, bounds.top - originY - margin - gap)
+      const spaceBelow = Math.max(0, originY + viewportHeight - bounds.bottom - margin - gap)
+      const availableHeight = Math.min(viewportHeight - margin * 2, Math.max(spaceAbove, spaceBelow, 48))
       if (position === 'combobox') {
         panel.style.width = Math.min(bounds.width, viewportWidth - margin * 2) + 'px'
         panel.style.maxHeight = 'min(18rem, ' + availableHeight + 'px)'
@@ -49,12 +54,12 @@ export function useFloating(
           : alignRight
             ? bounds.right - box.width
             : bounds.left
-      const left = Math.max(margin, Math.min(naturalLeft, viewportWidth - box.width - margin))
+      const left = Math.max(originX + margin, Math.min(naturalLeft, originX + viewportWidth - box.width - margin))
       const top = Math.max(
-        margin,
+        originY + margin,
         Math.min(
           above ? bounds.top - box.height - gap : bounds.bottom + gap,
-          viewportHeight - box.height - margin,
+          originY + viewportHeight - box.height - margin,
         ),
       )
       panel.style.left = Math.round(left) + 'px'
@@ -68,10 +73,14 @@ export function useFloating(
     observer?.observe(panel)
     view.addEventListener('resize', place)
     view.addEventListener('scroll', place, true)
+    view.visualViewport?.addEventListener('resize', place)
+    view.visualViewport?.addEventListener('scroll', place)
     return () => {
       observer?.disconnect()
       view.removeEventListener('resize', place)
       view.removeEventListener('scroll', place, true)
+      view.visualViewport?.removeEventListener('resize', place)
+      view.visualViewport?.removeEventListener('scroll', place)
       if (panel.matches('[popover]') && panel.isConnected) panel.hidePopover()
     }
   }, [open, anchorRef, panelRef, position, align])

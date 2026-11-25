@@ -6,6 +6,10 @@ export interface GridProps extends HTMLAttributes<HTMLDivElement> {
   as?: 'div' | 'header' | 'main' | 'section' | 'article' | 'footer'
   /** Block padding for a compact band, a content section, or a larger opening section. */
   space?: 'compact' | 'section' | 'cover'
+  /** Center the columns in the site's 100rem frame while the surface stays full width. */
+  width?: 'site' | 'full'
+  /** Align items within their grid row. The default is stretch. */
+  align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline'
   surface?: 'paper' | 'ink' | 'accent'
   /** Prints the column numbers and gutters of the active responsive grid. */
   ruler?: boolean
@@ -15,6 +19,8 @@ export function Grid({
   guides = false,
   ruler = false,
   space,
+  width,
+  align,
   surface,
   children,
   className = '',
@@ -22,7 +28,7 @@ export function Grid({
 }: GridProps): ReactElement {
   return (
     <Element {...props} data-space={space} data-surface={surface} className={('al-layout ' + className).trim()}>
-      <div className="al-grid" data-guides={guides || undefined}>
+      <div className="al-grid" data-width={width} data-align={align} data-guides={guides || undefined}>
         {children}
         {ruler && (
           <div className="al-grid-ruler" aria-hidden="true">

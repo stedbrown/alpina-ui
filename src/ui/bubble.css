@@ -1,4 +1,5 @@
 .al-bubble {
+  box-sizing: border-box;
   max-inline-size: min(60ch, 90%);
   inline-size: fit-content;
   padding: var(--al-space-2) var(--al-space-3);

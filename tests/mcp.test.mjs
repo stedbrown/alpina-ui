@@ -36,6 +36,7 @@ test('stdio client can discover and read the installed registry, types, source a
   assert.deepEqual(result[1].tools.map((tool) => tool.name), ['search_components', 'get_component', 'get_guide'])
   assert.equal(result[2].content[0].text, 'dropdown-menu (interactive)')
   assert.ok(result[3].content[0].text.includes(read('dist/interactive/dropdown-menu.d.ts').trim()))
+  assert.ok(result[3].content[0].text.includes(JSON.parse(read('registry.json')).items.find(entry => entry.name === 'dropdown-menu').usage))
   assert.equal(result[4].content[0].text, read('src/interactive/action-list.tsx'))
   assert.ok(result[5].content[0].text.split('\n').includes('agents'))
   assert.equal(result[6].content[0].text, read('docs/directory.md'))

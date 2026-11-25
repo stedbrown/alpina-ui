@@ -24,6 +24,7 @@
   font: 600 var(--al-type-body)/var(--al-leading-body) var(--al-font);
   text-align: start;
   cursor: pointer;
+  overflow-wrap: anywhere;
 }
 .al-accordion-button:hover:enabled .al-accordion-mark,
 .al-accordion-button[aria-expanded='true'] .al-accordion-mark {

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactElement, type ReactNode } from 'react'
 import { Button } from '../ui/button.js'
+import { moveButton } from './roving.js'
 import './toggle-group.css'
 
 export interface ToggleOption {
@@ -34,6 +35,11 @@ export function ToggleGroup({
 }: ToggleGroupProps): ReactElement {
   const [local, setLocal] = useState<readonly string[]>(defaultValue ?? [])
   const selected = value ?? local
+  const [focused, setFocused] = useState<string | null>(null)
+  const enabled = options.filter((option) => !option.disabled)
+  const tabstop = enabled.find((option) => option.value === focused)
+    ?? enabled.find((option) => selected.includes(option.value))
+    ?? enabled[0]
   const root = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const form = root.current?.closest('form')
@@ -61,6 +67,11 @@ export function ToggleGroup({
       ref={root}
       role="group"
       aria-label={label}
+      data-al-roving=""
+      onKeyDown={(event) => moveButton(event, 'horizontal')}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocused(null)
+      }}
       className={('al-toggle-group ' + className).trim()}
     >
       {options.map((option) => (
@@ -69,6 +80,9 @@ export function ToggleGroup({
           variant="ghost"
           disabled={disabled || option.disabled}
           aria-pressed={selected.includes(option.value)}
+          data-al-choice={option.value}
+          tabIndex={option === tabstop ? 0 : -1}
+          onFocus={() => setFocused(option.value)}
           onClick={() => toggle(option.value)}
         >
           {option.label}

@@ -10,6 +10,10 @@ export interface StackProps extends ComponentPropsWithoutRef<'div'> {
   gap?: Space
   /** Horizontal gap when it differs from the vertical gap. */
   columnGap?: Space
+  /** Pad all sides in multiples of the typographic unit. */
+  inset?: Space
+  /** Ink and paper set a matching theme for controls inside the stack. */
+  surface?: 'soft' | 'ink' | 'paper'
   align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline'
   justify?: 'start' | 'center' | 'end' | 'space-between'
   /** Allows controls to wrap onto additional lines. */
@@ -21,6 +25,8 @@ export const Stack = forwardRef<HTMLDivElement, StackProps>(function Stack(
     direction = 'column',
     gap = 4,
     columnGap,
+    inset,
+    surface,
     align,
     justify = 'start',
     wrap,
@@ -33,11 +39,14 @@ export const Stack = forwardRef<HTMLDivElement, StackProps>(function Stack(
   const layout = {
     '--al-stack-gap': 'var(--al-space-' + gap + ')',
     columnGap: columnGap === undefined ? undefined : 'var(--al-space-' + columnGap + ')',
+    padding: inset === undefined ? undefined : 'var(--al-space-' + inset + ')',
     flexDirection: direction,
     alignItems: align ?? (direction === 'row' ? 'center' : 'stretch'),
     justifyContent: justify,
     flexWrap: (wrap ?? direction === 'row') ? 'wrap' : 'nowrap',
     ...style,
   } as CSSProperties
-  return <div {...props} ref={ref} className={('al-stack ' + className).trim()} style={layout} />
+  const theme = surface === 'ink' ? 'dark' : surface === 'paper' ? 'light' : undefined
+  return <div data-al-theme={theme} data-surface={surface} {...props} ref={ref}
+    className={('al-stack ' + className).trim()} style={layout} />
 })

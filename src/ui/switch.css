@@ -1,4 +1,5 @@
 .al-switch {
+  flex: none;
   appearance: none;
   display: inline-grid;
   align-items: center;
@@ -87,6 +88,8 @@
 }
 .al-switch-state {
   display: inline-flex;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
   align-items: center;
   gap: var(--al-space-2);
   color: var(--al-ink);

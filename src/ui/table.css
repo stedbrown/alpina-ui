@@ -17,6 +17,8 @@
   padding: var(--al-space-3) var(--al-space-4);
   border-block-end: 1px solid var(--al-line);
   text-align: start;
+  vertical-align: baseline;
+  overflow-wrap: anywhere;
 }
 .al-table > thead > tr > th {
   border-block-end-color: var(--al-control);
@@ -34,7 +36,12 @@
   background: var(--al-soft);
   font-weight: 650;
 }
-.al-table [data-numeric] {
+.al-table :is(th, td)[data-numeric] {
   text-align: end;
   font-variant-numeric: tabular-nums lining-nums;
+}
+.al-table td[data-numeric] > :is(data, .al-table-value) {
+  display: inline-block;
+  inline-size: max-content;
+  max-inline-size: min(18ch, 45vi);
 }

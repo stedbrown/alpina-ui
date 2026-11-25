@@ -70,8 +70,8 @@ export function calendarLabels(day: string, locale: SwissLocale) {
 }
 
 export const calendarText = {
-  'it-CH': { prev: 'Mese precedente', next: 'Mese successivo', choose: 'Scegli una data', close: 'Chiudi' },
-  'de-CH': { prev: 'Vorheriger Monat', next: 'Nächster Monat', choose: 'Datum wählen', close: 'Schliessen' },
-  'fr-CH': { prev: 'Mois précédent', next: 'Mois suivant', choose: 'Choisir une date', close: 'Fermer' },
-  'rm-CH': { prev: 'Mais precedent', next: 'Mais suandant', choose: 'Tscherner ina data', close: 'Serrar' },
+  'it-CH': { prev: 'Mese precedente', next: 'Mese successivo', choose: 'Scegli una data', close: 'Chiudi', clear: 'Cancella la data' },
+  'de-CH': { prev: 'Vorheriger Monat', next: 'Nächster Monat', choose: 'Datum wählen', close: 'Schliessen', clear: 'Datum entfernen' },
+  'fr-CH': { prev: 'Mois précédent', next: 'Mois suivant', choose: 'Choisir une date', close: 'Fermer', clear: 'Effacer la date' },
+  'rm-CH': { prev: 'Mais precedent', next: 'Mais suandant', choose: 'Tscherner ina data', close: 'Serrar', clear: 'Stizzar la data' },
 } as const

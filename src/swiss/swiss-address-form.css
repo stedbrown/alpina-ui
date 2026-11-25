@@ -81,6 +81,7 @@
   font-size: var(--al-type-label);
   line-height: var(--al-leading-label);
 }
+.al-address-actions [role='status']:empty { position: absolute; }
 @container (min-width: 36rem) {
   .al-address-fields {
     grid-template-columns: minmax(calc(var(--al-unit) * 20), 0.42fr) minmax(0, 1fr) minmax(0, 1.2fr);

@@ -1,4 +1,5 @@
 .al-slider {
+  box-sizing: border-box;
   display: block;
   min-inline-size: 0;
   inline-size: 100%;
@@ -9,7 +10,7 @@
 }
 .al-slider:focus-visible {
   outline: 2px solid var(--al-focus);
-  outline-offset: 2px;
+  outline-offset: -2px;
 }
 .al-slider:disabled {
   cursor: not-allowed;

@@ -13,6 +13,7 @@
   align-items: baseline;
   justify-content: space-between;
   flex-wrap: wrap;
+  overflow-wrap: anywhere;
   gap: 0.45rem;
   padding: 1rem 1.25rem;
 }
@@ -29,6 +30,7 @@
   scrollbar-width: thin;
   flex: 1;
   min-height: 0;
+  scroll-padding-block: var(--al-space-2);
   padding: 0.25rem 1.25rem 1.25rem;
 }
 .al-sidebar-foot {

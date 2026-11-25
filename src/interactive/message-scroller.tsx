@@ -27,7 +27,12 @@ export function MessageScroller({
     const body = content.current
     if (!node || !body) return
     function follow() {
-      if (following.current && node) node.scrollTop = node.scrollHeight
+      if (!node) return
+      if (following.current) node.scrollTop = node.scrollHeight
+      else if (node.scrollHeight - node.clientHeight - node.scrollTop <= 4) {
+        following.current = true
+        setAway(false)
+      }
     }
     follow()
     if (typeof ResizeObserver === 'undefined') return

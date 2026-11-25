@@ -4,7 +4,7 @@
   gap: var(--al-space-4);
   min-inline-size: 0;
   overflow-wrap: anywhere;
-  padding: var(--al-space-6);
+  padding: clamp(var(--al-space-4), 3vw, var(--al-space-6));
   border: 1px solid var(--al-line);
   border-radius: var(--al-radius);
   background: var(--al-surface);
@@ -38,6 +38,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--al-space-2);
+  margin-block-start: auto;
   padding-block-start: var(--al-space-4);
   border-block-start: 1px solid var(--al-line);
 }

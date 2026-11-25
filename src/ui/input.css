@@ -13,7 +13,7 @@
   font: 400 var(--al-type-body)/var(--al-leading-body) var(--al-font);
 }
 .al-input::placeholder {
-  color: var(--al-muted);
+  color: var(--al-placeholder, var(--al-muted));
   opacity: 1;
 }
 @media (hover: hover) {
@@ -26,9 +26,14 @@
   outline: 2px solid var(--al-focus);
   outline-offset: 2px;
 }
-.al-input[aria-invalid='true'] {
+.al-input:is([aria-invalid='true'], :user-invalid) {
   border-color: var(--al-danger);
-  box-shadow: inset 2px 0 var(--al-danger);
+  border-inline-start-width: 3px;
+  padding-inline-start: calc(var(--al-space-3) - 2px);
+}
+.al-input[readonly] {
+  background: var(--al-soft);
+  border-style: dashed;
 }
 .al-input:disabled {
   border-color: var(--al-line);
@@ -37,7 +42,7 @@
   cursor: not-allowed;
 }
 @media (forced-colors: active) {
-  .al-input[aria-invalid='true'] {
+  .al-input:is([aria-invalid='true'], :user-invalid) {
     border-style: dashed;
   }
   .al-input:disabled {

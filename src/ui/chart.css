@@ -5,6 +5,7 @@
   font-family: var(--al-font);
 }
 .al-chart figcaption {
+  overflow-wrap: anywhere;
   margin-block-end: var(--al-space-4);
   font-size: var(--al-type-heading);
   line-height: var(--al-leading-heading);
@@ -80,6 +81,7 @@
   font-size: var(--al-type-label);
 }
 .al-chart :is(th, td) {
+  overflow-wrap: anywhere;
   padding: var(--al-space-2);
   border-block-end: 1px solid var(--al-line);
 }

@@ -48,7 +48,7 @@ export function Carousel({
   return (
     <section
       aria-label={label}
-      tabIndex={0}
+      tabIndex={items.length > 1 ? 0 : undefined}
       className={['al-carousel', className].filter(Boolean).join(' ')}
       onKeyDown={(e) => {
         if (e.target !== e.currentTarget || e.altKey || e.ctrlKey || e.metaKey) return
@@ -69,6 +69,10 @@ export function Carousel({
         id={id}
         className="al-carousel-stage"
         onTouchStart={(e) => {
+          if (e.target instanceof Element && e.target.closest('input, textarea, select, button, a, [contenteditable="true"], [role="slider"]')) {
+            touch.current = null
+            return
+          }
           const p = e.touches[0]
           touch.current = p && e.touches.length === 1 ? { x: p.clientX, y: p.clientY } : null
         }}

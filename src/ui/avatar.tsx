@@ -1,6 +1,13 @@
 'use client'
 import { useState, type ComponentPropsWithoutRef, type ReactElement } from 'react'
 import './avatar.css'
+let graphemes: Intl.Segmenter | undefined
+function initial(word: string) {
+  if (!word) return ''
+  if (typeof Intl.Segmenter !== 'function') return Array.from(word)[0]
+  graphemes ??= new Intl.Segmenter()
+  return graphemes.segment(word).containing(0)?.segment ?? ''
+}
 export interface AvatarProps extends ComponentPropsWithoutRef<'span'> {
   name: string
   src?: string
@@ -19,7 +26,7 @@ export function Avatar({
   const words = name.trim().split(/\s+/u).filter(Boolean)
   const initials =
     [words[0], words.length > 1 ? words[words.length - 1] : '']
-      .map((word) => Array.from(word || '')[0] || '')
+      .map((word) => initial(word || ''))
       .join('')
       .toUpperCase() || '·'
   return (

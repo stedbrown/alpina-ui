@@ -44,6 +44,8 @@ Pixel equivalents assume a 16 px root. Alpina's module is 0.25 rem. Each role pa
 
 ## Reading the portal
 
+The public source, preview and installation paths follow a practice demonstrated by shadcn/ui. For interaction design, Radix documents how focus moves into and out of a popup, and React Aria shows accessible primitives working together on actual records. Alpina applies those patterns to a workshop reservation and an invoice decision. The typography, four-pixel spacing unit and responsive columns come from Alpina's own design system. [shadcn/ui documentation](https://ui.shadcn.com/docs) · [Radix accessibility](https://www.radix-ui.com/primitives/docs/overview/accessibility) · [React Aria examples](https://react-aria.adobe.com/)
+
 1. In the specimen, switch from 320 to 960 px and show the grid. Follow the first digit of each time and the first letter of each title.
 2. In the index, open a short entry and then a much longer one. Look for the red marker and the positions of Preview, Code, and Source.
 3. In the contact directory example, switch languages, filter contacts, and sort amounts. Compare the margins where text wraps.

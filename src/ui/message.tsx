@@ -19,7 +19,7 @@ export function Message({
   return (
     <article {...props} data-side={side} className={('al-message ' + className).trim()}>
       <header>
-        <strong>{author}</strong>
+        <strong><bdi>{author}</bdi></strong>
         {timestamp != null &&
           (dateTime ? <time dateTime={dateTime}>{timestamp}</time> : <span>{timestamp}</span>)}
       </header>

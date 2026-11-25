@@ -1,7 +1,7 @@
 import type { HTMLAttributes, ReactElement } from 'react'
 import './typography.css'
 
-export type TypeRole = 'inherit' | 'caption' | 'label' | 'body' | 'lead' | 'heading' | 'display' | 'poster'
+export type TypeRole = 'inherit' | 'caption' | 'label' | 'body' | 'lead' | 'heading' | 'display' | 'title' | 'poster'
 export interface TypographyProps extends HTMLAttributes<HTMLElement> {
   as?: 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div'
   variant?: TypeRole

@@ -12,7 +12,8 @@
 }
 .al-trace li {
   display: grid;
-  grid-template-columns: minmax(4.5rem, auto) 1fr;
+  grid-template-columns: min(12ch, 40%) minmax(0, 1fr);
+  overflow-wrap: anywhere;
   align-items: baseline;
   gap: var(--al-space-3);
   padding-block: var(--al-space-3);
@@ -29,6 +30,13 @@
 .al-trace summary {
   font-weight: 650;
   cursor: pointer;
+}
+.al-trace summary:focus-visible {
+  outline: 2px solid var(--al-focus);
+  outline-offset: 2px;
+}
+@media (pointer: coarse) {
+  .al-trace summary { min-block-size: var(--al-space-11); align-content: center; }
 }
 .al-trace details > div {
   padding-block-start: var(--al-space-2);

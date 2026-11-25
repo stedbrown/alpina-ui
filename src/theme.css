@@ -16,7 +16,8 @@ body[data-al-page] > footer:last-child { margin-block-start: auto; }
   --al-bg: #fff;
   --al-surface: #fff;
   --al-ink: #000;
-  --al-muted: var(--al-ink);
+  --al-muted: color-mix(in srgb, var(--al-ink) 75%, var(--al-bg));
+  --al-placeholder: color-mix(in srgb, var(--al-ink) 60%, var(--al-bg));
   --al-line: color-mix(in srgb, var(--al-ink) 26%, var(--al-bg));
   --al-control: var(--al-ink);
   --al-soft: color-mix(in srgb, var(--al-ink) 4%, var(--al-bg));
@@ -78,6 +79,7 @@ body[data-al-page] > footer:last-child { margin-block-start: auto; }
     --al-surface: Canvas;
     --al-ink: CanvasText;
     --al-muted: CanvasText;
+    --al-placeholder: GrayText;
     --al-line: ButtonBorder;
     --al-control: ButtonText;
     --al-soft: Canvas;

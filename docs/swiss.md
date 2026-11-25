@@ -250,3 +250,18 @@ Use `MultilingualField` to keep all four national languages in one form. A trans
 ```
 
 Read `formData.get('title[fr]')` in a submit handler or server action. Select `layout="columns"` to compare texts or `variant="textarea"` for longer passages. The copy action fills an empty destination. Use `value` and `onValueChange` for controlled forms, and `labels` to translate counts, status and copy actions. Character counts use grapheme clusters when supported by the runtime.
+
+## Printing a business letter
+
+`Letter` prints on A4 and takes sender and recipient address lines, a subject, a date and the letter body. Set `windowPosition="left"` or `"right"` to match the envelope. The following measurements are in millimetres from the sheet's top-left corner. They reproduce the public KOMA-Script SN and SNleft reference layouts for the historical Swiss business letter. [KOMA-Script letter profiles, table 4.19](https://mirrors.mit.edu/CTAN/macros/latex/contrib/koma-script/doc/scrguide-en.pdf) · [Swiss Post envelope templates](https://www.post.ch/en/sending-letters/addressing-and-designing/designing-and-packaging-letters)
+
+| Address field | Left | Top | Width | Height |
+| --- | --- | --- | --- | --- |
+| Left window | 20 | 35.5 | 100 | 45 |
+| Right window | 112 | 45 | 90 | 45 |
+
+Fold guides start 3.5 mm from the left edge at 105 and 210 mm from the top. Use `foldMarks={false}` for other envelope folds. Keep the recipient to the address lines that fit the window and proof a sheet in the actual envelope. Continuation pages carry the letter body in the same column.
+
+SWITEC records the withdrawal of SN 010130:2010 on 12 December 2016. The current SN 10130:2026-02 is a separately published edition. The measurements above identify the legacy profiles implemented and tested by Alpina. [Swiss national standardisation work programme](https://www.switec.info/media/2025-08_swiss_national_workprogram.pdf) · [Current business-letter standard](https://www.dinmedia.de/en/standard/sn-10130/400500596)
+
+Open the print dialog from a user action with `printSwissDocument(articleRef.current)`. The helper isolates the mounted document and restores the application after the dialog closes. Print at actual size on A4 with browser headers and footers disabled. [Live letter example](https://alpina-ui.vercel.app/docs/components/letter/)

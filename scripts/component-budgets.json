@@ -229,6 +229,11 @@
     "lazy": 0,
     "css": 704
   },
+  "invoice-document": {
+    "js": 11008,
+    "lazy": 0,
+    "css": 2432
+  },
   "item": {
     "js": 384,
     "lazy": 0,
@@ -243,6 +248,11 @@
     "js": 192,
     "lazy": 0,
     "css": 192
+  },
+  "letter": {
+    "js": 1984,
+    "lazy": 0,
+    "css": 1152
   },
   "line-chart": {
     "js": 1536,

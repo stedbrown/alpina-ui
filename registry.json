@@ -1138,6 +1138,49 @@
       ]
     },
     {
+      "name": "letter",
+      "group": "swiss",
+      "entry": "swiss/letter.tsx",
+      "usage": "Supply sender and recipient lines, a civil date and the subject. Select the window used by your envelope and use printSwissDocument with the article ref.",
+      "files": [
+        "theme.css",
+        "swiss/letter.tsx",
+        "swiss/swiss-date.tsx",
+        "swiss/format-swiss-date.ts",
+        "swiss/locales.ts",
+        "swiss/figures.css",
+        "swiss/letter.css",
+        "swiss/document-print.css",
+        "swiss/print-document.ts",
+        "swiss/UNICODE-LICENSE.txt"
+      ]
+    },
+    {
+      "name": "invoice-document",
+      "group": "swiss",
+      "entry": "swiss/invoice-document.tsx",
+      "usage": "Supply the creditor and debtor, VAT UID, issue, supply and due dates and VAT-exclusive line items. The same centime total drives the summary and the QR payment. Use printSwissDocument for a complete A4 invoice.",
+      "files": [
+        "theme.css",
+        "swiss/invoice-document.tsx",
+        "swiss/swiss-qr-bill.tsx",
+        "swiss/qr-payment.ts",
+        "swiss/identifiers.ts",
+        "swiss/qr-matrix.ts",
+        "swiss/locales.ts",
+        "swiss/swiss-qr-bill.css",
+        "swiss/invoice-totals.ts",
+        "swiss/format-chf.ts",
+        "swiss/swiss-date.tsx",
+        "swiss/format-swiss-date.ts",
+        "swiss/figures.css",
+        "swiss/invoice-document.css",
+        "swiss/document-print.css",
+        "swiss/print-document.ts",
+        "swiss/UNICODE-LICENSE.txt"
+      ]
+    },
+    {
       "name": "swiss-qr-bill",
       "group": "swiss",
       "entry": "swiss/swiss-qr-bill.tsx",

@@ -1,0 +1,14 @@
+@media print {
+  [data-al-document-path] > :not([data-al-document-path], [data-al-document-target]),
+  [data-al-document-path]::before, [data-al-document-path]::after { display: none !important; }
+  body [data-al-document-path] { display: contents !important; }
+  :is(html, body)[data-al-document-path] {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  body:has(.al-letter, .al-invoice-document) { margin: 0; }
+}

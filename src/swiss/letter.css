@@ -1,0 +1,63 @@
+.al-letter {
+  position: relative;
+  container-type: inline-size;
+  box-sizing: border-box;
+  padding: var(--al-space-6);
+  font: 400 1rem/1.5 var(--al-font);
+  color: var(--al-ink);
+  background: var(--al-bg);
+  box-shadow: inset 0 0 0 1px var(--al-line);
+  overflow-wrap: anywhere;
+}
+.al-letter-head { display: grid; gap: 24px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.al-letter address { font-style: normal; margin: 0; }
+.al-letter-sender { font-weight: 600; }
+.al-letter-window { align-self: end; padding-top: 32px; }
+.al-letter[data-window='left'] .al-letter-window { grid-column: 1; }
+.al-letter-dateline { margin: 32px 0 12px; }
+.al-letter h2 { font-size: 1.5rem; line-height: 32px; margin: 0 0 16px; }
+.al-letter-body > :first-child { margin-block-start: 0; }
+.al-letter-body > :last-child { margin-block-end: 0; }
+.al-letter-folds { display: none; }
+@container (max-width: 24rem) {
+  .al-letter-head { grid-template-columns: 1fr; gap: 16px; }
+  .al-letter-window { padding-top: 0; }
+}
+@page alpina-letter { size: A4 portrait; margin: 15mm 0 18mm; }
+@media print {
+  .al-letter {
+    page: alpina-letter;
+    container-type: normal;
+    width: 170mm;
+    padding: 0;
+    margin: 0 0 0 20mm;
+    color: black;
+    background: white;
+    box-shadow: none;
+    font: 11pt/1.35 Arial, sans-serif;
+  }
+  .al-letter-head { display: block; position: relative; height: 86mm; break-inside: avoid; }
+  .al-letter-sender { width: 90mm; font-size: 9pt; }
+  .al-letter-window {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    box-sizing: border-box;
+    padding: 0;
+    left: 92mm;
+    top: 30mm;
+    width: 90mm;
+    height: 45mm;
+    font: 10pt/1.3 Arial, sans-serif;
+  }
+  .al-letter[data-window='left'] .al-letter-window { left: 0; top: 20.5mm; width: 100mm; }
+  .al-letter-folds { display: block; position: absolute; inset: 0 auto auto -16.5mm; }
+  .al-letter-folds::before, .al-letter-folds::after {
+    content: ''; position: absolute; top: 90mm; width: 3mm; border-top: .2mm solid black;
+  }
+  .al-letter-folds::after { top: 195mm; }
+  .al-letter-dateline { margin: 0 0 8mm; }
+  .al-letter h2 { font: bold 14pt/1.25 Arial, sans-serif; margin-bottom: 6mm; break-after: avoid; }
+  .al-letter-body { orphans: 3; widows: 3; }
+}

@@ -35,6 +35,20 @@ export const expanded = [
     "Validate and format the nine digits of a Swiss CHE business identifier."
   ],
   [
+    "letter",
+    "Letter",
+    "Swiss business letter",
+    "Swiss localization",
+    "Print correspondence on A4 with the Swiss left or right address window and folding marks."
+  ],
+  [
+    "invoice-document",
+    "InvoiceDocument",
+    "Swiss VAT invoice",
+    "Swiss localization",
+    "Itemize VAT-exclusive services and print the payable CHF total with a Swiss QR-bill."
+  ],
+  [
     "swiss-qr-bill",
     "SwissQrBill",
     "QR payment slip",

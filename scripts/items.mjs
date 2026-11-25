@@ -8,6 +8,8 @@ export const additions = [
   ['swiss', 'ahv-input', 'AhvInput', 'AHV number', 'Swiss localization', 'Check the Swiss social insurance number and its EAN‑13 checksum.'],
   ['swiss', 'phone-input', 'PhoneInput', 'Swiss telephone number', 'Swiss localization', 'Accept domestic and international input and display a Swiss +41 number.'],
   ['swiss', 'uid-input', 'UidInput', 'Swiss business identifier', 'Swiss localization', 'Validate and format the nine digits of a Swiss CHE business identifier.'],
+  ['swiss', 'letter', 'Letter', 'Swiss business letter', 'Swiss localization', 'Print correspondence on A4 with the Swiss left or right address window and folding marks.'],
+  ['swiss', 'invoice-document', 'InvoiceDocument', 'Swiss VAT invoice', 'Swiss localization', 'Itemize VAT-exclusive services and print the payable CHF total with a Swiss QR-bill.'],
   ['swiss', 'swiss-qr-bill', 'SwissQrBill', 'QR payment slip', 'Swiss localization', 'Prepare a SIX QR-bill payment part and receipt with a scannable Swiss QR Code.'],
   ['ui', 'bar-chart', 'BarChart', 'Horizontal bar chart', 'Navigation and data', 'Compare signed values on a common scale with directly labelled bars.'],
   ['ui', 'line-chart', 'LineChart', 'Time series', 'Navigation and data', 'Plot an ordered series with a labelled scale and a readable data table.'],

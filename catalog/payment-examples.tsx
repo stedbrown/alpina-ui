@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import {
-  MultilingualField, AhvInput, Button, Field, IbanInput, PhoneInput, Stack, SwissQrBill, Typography, UidInput, printSwissQrBill,
+  InvoiceDocument, Letter, printSwissDocument, MultilingualField, AhvInput, Button, Field, IbanInput, PhoneInput, Stack, SwissQrBill, Typography, UidInput, printSwissQrBill,
 } from 'alpina-ui'
 
 export function IbanInputExample() {
@@ -41,4 +41,31 @@ export function SwissQrBillExample() {
 
 export function MultilingualFieldExample() {
   return <MultilingualField name="title" label="Exhibition title" defaultValue={{ de: 'Die neue Typografie', fr: 'La nouvelle typographie' }} />
+}
+
+export function LetterExample() {
+  const letter = useRef<HTMLElement>(null)
+  return <Stack gap={4}>
+    <Button variant="outline" onClick={() => { if (letter.current) printSwissDocument(letter.current) }}>Print letter</Button>
+    <Letter ref={letter} sender={['Atelier Nord', 'Rue du Lac 8', '2000 Neuchâtel']}
+      recipient={['Clara Meier', 'Aarbergergasse 7', '3011 Bern']} subject="Your first proof"
+      date="2026-11-25" place="Neuchâtel" windowPosition="left">
+      <p>Dear Clara,</p><p>The printed proofs are ready for review. Please return the marked sheets by Friday.</p>
+      <p>Sincerely,<br />Atelier Nord</p>
+    </Letter>
+  </Stack>
+}
+
+export function InvoiceDocumentExample() {
+  const invoice = useRef<HTMLElement>(null)
+  return <Stack gap={4}>
+    <Button variant="outline" onClick={() => { if (invoice.current) printSwissDocument(invoice.current) }}>Print invoice</Button>
+    <InvoiceDocument ref={invoice} invoiceNumber="AN-104" issueDate="2026-11-25" supplyDate="2026-11-24"
+      dueDate="2026-12-25" vatNumber="CHE-109.322.551" locale="en"
+      lines={[{ description: 'Proof review', quantity: 2, unitPrice: '80.00', vatRate: 8.1 },
+        { description: 'Printed catalogue', quantity: 1, unitPrice: '24.00', vatRate: 2.6 }]}
+      payment={{ iban: 'CH5800791123000889012',
+        creditor: { name: 'Atelier Nord', street: 'Rue du Lac', buildingNumber: '8', postalCode: '2000', town: 'Neuchâtel', country: 'CH' },
+        debtor: { name: 'Clara Meier', street: 'Aarbergergasse', buildingNumber: '7', postalCode: '3011', town: 'Bern', country: 'CH' } }} />
+  </Stack>
 }

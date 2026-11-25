@@ -4,6 +4,8 @@
   "iban-input": "Use for Swiss and Liechtenstein accounts. Valid accounts are grouped on blur. Use isSwissIban and compactIban on submitted values.",
   "ahv-input": "Accept 13 digits beginning with 756. The component validates the EAN‑13 check digit and groups a valid number on blur. Pass validationMessage to localize native form errors.",
   "phone-input": "Accept ordinary nine-digit Swiss national numbers, domestic trunk prefixes and international +41 or 0041 input. Format valid entries on blur. Short service codes use a separate field.",
+  "letter": "Supply sender and recipient lines, a civil date and the subject. Select the window used by your envelope and use printSwissDocument with the article ref.",
+  "invoice-document": "Supply the creditor and debtor, VAT UID, issue, supply and due dates and VAT-exclusive line items. The same centime total drives the summary and the QR payment. Use printSwissDocument for a complete A4 invoice.",
   "swiss-qr-bill": "Supply a structured creditor address, a Swiss or Liechtenstein IBAN and a compatible reference. Use printSwissQrBill with the component ref to print one payment slip on A4 at actual size.",
   "grid-overlay": "Mount the overlay alongside a page or inside a positioned container with placement set to container. Use hidden to toggle it. The portal shortcut is Ctrl+Shift+G.",
   "accordion": "Use a question or section name as each trigger. The full header is clickable, long labels wrap, and arrow keys move between headers without opening them.",

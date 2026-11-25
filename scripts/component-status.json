@@ -229,6 +229,11 @@
     "changed": "2026-11-25",
     "source": "b8aab94e6c11648f2574"
   },
+  "invoice-document": {
+    "stage": "Beta",
+    "changed": "2026-11-25",
+    "source": "f6fc5469b7c85e49e125"
+  },
   "item": {
     "stage": "Stable",
     "changed": "2026-11-25",
@@ -243,6 +248,11 @@
     "stage": "Stable",
     "changed": "2026-11-25",
     "source": "d6cc6046dc73b720b51f"
+  },
+  "letter": {
+    "stage": "Beta",
+    "changed": "2026-11-25",
+    "source": "e8d38a6aa10ad6a01b59"
   },
   "line-chart": {
     "stage": "Beta",

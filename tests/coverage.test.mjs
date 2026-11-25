@@ -76,7 +76,7 @@ const names = [
   "Typography"
 ]
 const supplemental = [
-  'ahv-input', 'app-shell', 'bar-chart', 'canton-combobox', 'canton-select', 'chart-table', 'currency-chf', 'description-list', 'figure', 'grid', 'grid-overlay', 'iban-input', 'icon',
+  'ahv-input', 'app-shell', 'bar-chart', 'canton-combobox', 'canton-select', 'chart-table', 'currency-chf', 'description-list', 'figure', 'grid', 'grid-overlay', 'iban-input', 'icon', 'invoice-document', 'letter',
   'line-chart', 'locale-select', 'multilingual-field', 'phone-input', 'prose', 'sparkline', 'stack', 'steps', 'swiss-address-form', 'swiss-date', 'swiss-postal-code-input', 'swiss-qr-bill', 'text-link', 'uid-input',
 ]
 

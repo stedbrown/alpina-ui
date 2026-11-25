@@ -19,7 +19,7 @@ function tool(name, description, properties, required = []) {
 }
 
 const tools = [
-  tool('search_components', 'Find components by name, group or task in English, Italian, German and French. Omit query to list the entire registry.', {
+  tool('search_components', 'Find components by name, group or task in English, German, French, Italian and Romansh. Partial names and common misspellings work. Omit query to list the entire registry.', {
     query: string('A name, group or task such as DropdownMenu, facture, Adresse, or jours fériés.'),
   }),
   tool('get_component', 'Read an installed component’s usage notes, public TypeScript declaration, import path and list of source files. Request one listed file to read its source.', {

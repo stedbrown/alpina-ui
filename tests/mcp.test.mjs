@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict'
+import { names, topics } from '../cli/component-vocabulary.mjs'
+import { searchComponents } from '../cli/search-components.mjs'
 import { spawnSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 import { test } from 'node:test'
@@ -95,6 +97,71 @@ for (const [queries, expected] of [
     for (const line of lines) assert.match(line, /^[a-z-]+ \([a-z]+\) — \S.+/)
   })
 }
+
+test('every registered component is discoverable by its name in each supported search language', () => {
+  const { items } = JSON.parse(read('registry.json'))
+  assert.deepEqual(Object.keys(names).sort(), items.map(item => item.name).sort())
+  for (const [id, translations] of Object.entries(names)) {
+    assert.equal(translations.length, 5, id)
+    for (const query of translations) {
+      assert.ok(query.trim(), id)
+      const results = searchComponents(items, query).slice(0, 3)
+      assert.ok(results.some(item => item.name === id), id + ': ' + query)
+    }
+  }
+})
+
+test('the stdio search ranks three phrases per language for every component task', () => {
+  for (const { items, aliases } of topics) {
+    assert.equal(aliases.length, 5)
+    for (const phrases of aliases) assert.ok(new Set(phrases.split('|')).size >= 3)
+    const queries = aliases.flatMap(phrases => phrases.split('|'))
+    const [, ...responses] = exchange([hello, ...queries.map((query, i) => call(i + 2, 'search_components', { query }))])
+    assert.equal(responses.length, queries.length)
+    for (const [i, reply] of responses.entries()) {
+      const matches = reply.result.content[0].text.split('\n').map(line => line.split(' ')[0])
+      assert.equal(matches[0], items[0], queries[i])
+      for (const related of items) assert.ok(matches.includes(related), queries[i] + ': ' + related)
+    }
+  }
+})
+
+test('agents can find three distinct controls in each registry group in all five languages', () => {
+  const groups = [
+    [['input', 'checkbox', 'slider'], [
+      ['text input', 'check box', 'range slider'], ['Eingabefeld', 'Kontrollkästchen', 'Schieberegler'],
+      ['champ de saisie', 'case à cocher', 'curseur'], ['campo di testo', 'casella di controllo', 'cursore'],
+      ['champ da text', 'chascha da controlla', 'regulatur']]],
+    [['dialog', 'drawer', 'tabs'], [
+      ['modal window', 'sliding drawer', 'tab panels'], ['Dialogfenster', 'Schublade', 'Registerkarten'],
+      ['fenêtre modale', 'tiroir', 'onglets'], ['finestra', 'cassetto', 'schede'],
+      ['fanestra modala', 'chaschut', 'registers']]],
+    [['ahv-input', 'swiss-postal-code-input', 'letter'], [
+      ['social insurance number', 'postal code', 'postal letter'], ['AHV Nummer', 'Postleitzahl', 'Brief'],
+      ['numéro AVS', 'numéro postal', 'lettre'], ['numero AVS', 'numero postale', 'lettera'],
+      ['numer da l’AVS', 'numer postal', 'brev']]],
+    [['sidebar', 'code-block', 'text-link'], [
+      ['sidebar', 'source code', 'text link'], ['Seitenleiste', 'Quelltext', 'Textlink'],
+      ['barre latérale', 'code source', 'lien texte'], ['barra laterale', 'codice sorgente', 'collegamento testuale'],
+      ['trav laterala', 'code da funtauna', 'colliaziun da text']]],
+  ]
+  for (const [ids, languages] of groups) {
+    const queries = languages.flat()
+    const [, ...replies] = exchange([hello, ...queries.map((query, i) => call(i + 2, 'search_components', { query }))])
+    queries.forEach((query, i) => assert.equal(replies[i].result.content[0].text.split(' ')[0], ids[i % ids.length], query))
+  }
+})
+
+test('MCP handles misspellings, transpositions, abbreviations, diacritics and unrelated queries', () => {
+  const cases = [
+    ['tabella contabile', 'data-table'], ['dropdwon', 'dropdown-menu'], ['droppdwn', 'dropdown-menu'],
+    ['modale', 'dialog'], ['grafico', 'chart'], ['Diagram', 'chart'], ['boite de dialgoue', 'dialog'],
+    ['Buchhaltugstabele', 'data-table'], ['contabiltad', 'data-table'], ['menu a tndina', 'dropdown-menu'],
+    ['Balkendia', 'bar-chart'], ['rfzqx', 'No'],
+  ]
+  const [, ...replies] = exchange([hello, ...cases.map(([query], i) => call(i + 2, 'search_components', { query }))])
+  cases.forEach(([query, expected], i) => assert.equal(replies[i].result.content[0].text.split(' ')[0], expected, query))
+})
 
 test('get_guide selects only published translations', () => {
   const [, french, unavailable] = exchange([hello, call(2, 'get_guide', { slug: 'swiss', language: 'fr' }),

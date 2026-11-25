@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_call:
+    inputs:
+      verify_release:
+        type: boolean
+        default: false
+    outputs:
+      archive:
+        value: ${{ jobs.checks.outputs.archive }}
+      sha512:
+        value: ${{ jobs.checks.outputs.sha512 }}
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-24.04
+    outputs:
+      archive: ${{ steps.package.outputs.archive }}
+      sha512: ${{ steps.package.outputs.sha512 }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - run: npm ci
+      - run: npm run build
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run catalog -- --release-package
+      - name: Install Chromium and its system libraries
+        run: npx --no-install playwright-core install --with-deps chromium
+      - run: npm run test:browser
+
+      - name: Compare the public download with the build and test the packed consumer
+        if: inputs.verify_release
+        id: package
+        shell: bash
+        run: |
+          archive=$(npm pack --ignore-scripts --silent --pack-destination "$RUNNER_TEMP")
+          download="$GITHUB_WORKSPACE/site/$archive"
+          mkdir "$RUNNER_TEMP/fresh" "$RUNNER_TEMP/release" "$RUNNER_TEMP/consumer"
+          tar -xzf "$RUNNER_TEMP/$archive" -C "$RUNNER_TEMP/fresh"
+          tar -xzf "$download" -C "$RUNNER_TEMP/release"
+          diff -qr "$RUNNER_TEMP/fresh/package" "$RUNNER_TEMP/release/package"
+          react_version=$(node -p "require('react/package.json').version")
+          dom_version=$(node -p "require('react-dom/package.json').version")
+          cd "$RUNNER_TEMP/consumer"
+          npm init --yes >/dev/null
+          npm install --ignore-scripts --no-audit --no-fund --no-save "$download" "react@$react_version" "react-dom@$dom_version"
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict'
+          import { readFileSync } from 'node:fs'
+          import { createElement } from 'react'
+          import { renderToStaticMarkup } from 'react-dom/server'
+          import { Button } from 'alpina-ui'
+          const manifest = JSON.parse(readFileSync('node_modules/alpina-ui/package.json', 'utf8'))
+          assert.equal(manifest.name, 'alpina-ui')
+          assert.ok(!manifest.private)
+          assert.equal(manifest.license, 'MIT')
+          assert.equal(manifest.repository.url, 'git+https://github.com/stedbrown/alpina-ui.git')
+          assert.equal(manifest.publishConfig.access, 'public')
+          assert.match(renderToStaticMarkup(createElement(Button, null, 'Save')), /<button[^>]*>Save<\/button>/)
+          assert.match(readFileSync(new URL(import.meta.resolve('alpina-ui/styles.css')), 'utf8'), /\.al-button\b/)
+          NODE
+          ./node_modules/.bin/alpina add block/login
+          test -s components/alpina/blocks/login.tsx
+          echo "archive=$archive" >> "$GITHUB_OUTPUT"
+          echo "sha512=$(sha512sum "$download" | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"

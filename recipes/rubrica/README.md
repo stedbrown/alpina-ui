@@ -1,6 +1,6 @@
 # Atelier address book
 
-This Italian–German example uses Alpina UI to search, create, and edit contact details for seven fictional design studios. Changes last until you reload the page. Download the standalone HTML and open it in a browser to try it offline. [Download the address book](https://github.com/stedbrown/alpina-ui/releases/download/v0.8.0/alpina-address-book-it-de.html)
+This Italian–German example uses Alpina UI to search, create and edit contact details for seven fictional design studios. Changes last until you reload the page. Try it in the portal, or build the standalone HTML file below for offline use. [Open the bilingual address book](https://alpina-ui.vercel.app/examples/bilingual-address-book/)
 
 ## Try the workflow
 
@@ -8,7 +8,7 @@ Search by studio name, town, canton, or postal code. Select a canton and switch 
 
 ## Build and test
 
-Use Node.js 20 or later and npm. The `vendor` directory contains the same Alpina UI 0.8.0 package offered by the catalog. The lockfile records its integrity and pins the other dependencies. From the repository root, run the following commands.
+Use Node.js 20 or later and npm. The recipe installs Alpina UI 0.9.0 from the archive in its `vendor` directory. The lockfile records its integrity and pins the other dependencies. From the repository root, run the following commands. [Alpina UI 0.9.0 package](https://alpina-ui.vercel.app/alpina-ui-0.9.0.tgz)
 
 ```sh
 cd recipes/rubrica

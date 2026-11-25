@@ -1,21 +1,21 @@
 # Alpina UI
 
-Alpina UI is a collection of 82 React components that brings Swiss typographic design to the web. Its responsive grid, left-aligned type, and black, white, and red palette carry through from the smallest control to the documentation site. Swiss address, date, and currency components support the country’s four national languages.
+Alpina UI brings Swiss typographic design to React. Its 86 components share a responsive grid, left-aligned type, square corners, and a black, white, and red palette. Use them to build a form, format a CHF amount, or print the payment section of a Swiss QR-bill. Address, date, and currency components support Switzerland’s four national languages.
 
 ## Explore Alpina
 
 Change the size of a poster edition, switch an invoice between three languages or read the press hours as a table on the homepage. Follow a component link to inspect its types and copy the source. The icon gallery shows the original Alpina symbols used for navigation, actions and status. [Homepage](https://alpina-ui.vercel.app/) · [Component index](https://alpina-ui.vercel.app/docs/components/) · [Icon gallery](https://alpina-ui.vercel.app/icons/) · [Installation](https://alpina-ui.vercel.app/docs/)
 
-Open the offline catalog in a browser to try every component, inspect its TypeScript API, and copy its source. Start with the typography specimen. Switch between 4, 8, and 12 columns to see how margins, gutters, and type sizes change with the available width. The portal uses the same public imports as any other Alpina application. [Download the offline catalog](https://github.com/stedbrown/alpina-ui/releases/download/v0.8.0/alpina-ui-catalog.html) · [Design and measurements](docs/design.md)
+Open the offline catalog in a browser to try every component, inspect its TypeScript API, and copy its source. Start with the typography specimen. Switch between 4, 8, and 12 columns to see how margins, gutters, and type sizes change with the available width. The portal uses the same public imports as any other Alpina application. [Offline catalog](https://alpina-ui.vercel.app/catalog.html) · [Design and measurements](docs/design.md)
 
-The catalog covers all 66 families in the shadcn/ui component index reviewed on November 24, 2026. The other 16 entries include grid and stack layouts, interface icons, Swiss localization tools, and components for building a documentation site. The comparison explains which interactions each family supports. [Component coverage](docs/coverage.md) · [Swiss graphic design research](docs/research.md)
+The catalog covers all 66 families in the shadcn/ui index reviewed on November 24, 2026. Its 20 additional entries include layout primitives, interface icons, Swiss payment and identity fields, and documentation components. The migration table maps each family to its Alpina equivalent and explains differences in the APIs. [Migration guide](https://alpina-ui.vercel.app/docs/guides/migration/) · [Component coverage](docs/coverage.md) · [Swiss graphic design research](docs/research.md)
 
 ## Install
 
-For a project using React and React DOM 18.2 or 19, install the package from the GitHub release.
+For a project using React and React DOM 18.2 or 19, install the versioned package archive served by the portal.
 
 ```sh
-npm install https://github.com/stedbrown/alpina-ui/releases/download/v0.8.0/alpina-ui-0.8.0.tgz
+npm install https://alpina-ui.vercel.app/alpina-ui-0.9.0.tgz
 ```
 
 Import the stylesheet once at your application entry point and use components by name. You can also copy the TypeScript and CSS into your project with `npx --no-install alpina add button`. [Quick start](docs/start.md)
@@ -29,9 +29,28 @@ export function SaveButton() {
 }
 ```
 
+Use `<Button asChild><a href="/invoices">Invoices</a></Button>` to style a link while retaining its native navigation and keyboard behavior. The same pattern works with router links, badges, text links, menu items, and breadcrumb links.
+
+Import `alpina-ui/fonts.css` to self-host Inter. For Tailwind v4, add `@import "alpina-ui/tailwind.css";` after importing Tailwind in your stylesheet. The theme builder previews your accent, grid unit and color scheme, reports text contrast, and exports CSS variables. [Typography](docs/design.md) · [Theme builder](https://alpina-ui.vercel.app/themes/)
+
+## Copy a page
+
+Run one of these commands in a project with Alpina installed. Each block uses public components and ships as editable TSX. The dashboard includes a chart and data table. The pricing page switches between monthly and annual CHF prices. [Block previews](https://alpina-ui.vercel.app/blocks/)
+
+```sh
+npx --no-install alpina add block/login
+npx --no-install alpina add block/dashboard
+npx --no-install alpina add block/account-settings
+npx --no-install alpina add block/pricing
+```
+
+## Swiss forms and payments
+
+`IbanInput`, `AhvInput`, and `PhoneInput` format Swiss account, social insurance, and telephone numbers. `SwissQrBill` validates account and reference combinations, encodes the payment data, and prints a 210 × 105 mm payment section and receipt. [Interactive payment slip](https://alpina-ui.vercel.app/docs/components/swiss-qr-bill/) · [QR-bill guide](docs/qr-bill.md)
+
 ## Build from source
 
-Use Node.js 20.6 or later and npm. Run the build first. It generates the registry, ESM modules, declarations, and styles used by the catalog and tests.
+CI uses Node.js 24 and npm. Run the build first. It generates the registry, ESM modules, declarations, and styles used by the catalog and tests.
 
 ```sh
 npm ci
@@ -49,9 +68,10 @@ Serve `site/` with a static HTTP server to browse the website from its homepage.
 | --- | --- |
 | `src/ui` | 44 foundational components including Grid, Typography, Icon, and DataTable |
 | `src/interactive` | 23 interactive components and their shared behavior |
-| `src/swiss` | 9 Swiss components, datasets, and formatters |
+| `src/swiss` | 13 Swiss components, plus datasets, validators, and formatters |
 | `src/portal` | 6 components for navigation, page structure, code samples, and documentation |
 | `src/theme.css` | Tokens for the light and dark themes |
+| `blocks` | Four complete page templates copied by the CLI |
 | `cli` and `registry.json` | Commands for copying source files and a record of their dependencies |
 | `dist` | Generated ESM, TypeScript declarations, and CSS |
 | `web`, `catalog`, and `site` | Public pages, interactive documentation, and the generated website and offline catalog |
@@ -61,7 +81,7 @@ Serve `site/` with a static HTTP server to browse the website from its homepage.
 
 ## Try the bilingual address book
 
-Search seven fictional design studios, switch between Italian and German, and edit an address without losing your draft. The adoption report tracks the CSS needed to build the example using only the portal. Moving layout, current-row styling, and long-word handling into Alpina reduced the application stylesheet from 56 declarations to 43. [Try the offline address book](https://github.com/stedbrown/alpina-ui/releases/download/v0.8.0/alpina-address-book-it-de.html) · [Example source](recipes/rubrica) · [Adoption report](recipes/rubrica/PROVA.md)
+Search seven fictional design studios, switch between Italian and German, and edit an address without losing your draft. The adoption report tracks the CSS needed to build the example using only the portal. Moving layout, current-row styling, and long-word handling into Alpina reduced the application stylesheet from 56 declarations to 43. [Try the address book](https://alpina-ui.vercel.app/examples/bilingual-address-book/) · [Example source and offline build](recipes/rubrica) · [Adoption report](recipes/rubrica/PROVA.md)
 
 ## Inspect and update a component
 
@@ -86,14 +106,18 @@ Run `npm run size` after building to measure individual imports. The benchmark u
 
 | Import | Gzipped bytes |
 | --- | ---: |
-| Button JavaScript | 252 |
-| CurrencyCHF JavaScript | 655 |
+| Button JavaScript | 1,017 |
+| CurrencyCHF JavaScript | 716 |
 | Dialog JavaScript | 1,155 |
 | Icon JavaScript, all 32 drawings | 1,245 |
-| All JavaScript exports | 28,539 |
-| Full stylesheet including the theme | 12,842 |
-| Button CSS without the theme | 736 |
+| All JavaScript exports | 37,204 |
+| Full stylesheet including the theme | 13,774 |
+| Button CSS without the theme | 763 |
+
+## Releases
+
+Pushes run CI. A maintainer can publish a verified package archive with provenance by starting the separate release workflow. [Maintainer guide](docs/npm-release.md)
 
 ## License
 
-Alpina’s original code is available under the MIT license. Data derived from Unicode CLDR uses the included Unicode license. [MIT license](LICENSE) · [Unicode license](docs/UNICODE-LICENSE.txt)
+Alpina’s original code is available under the MIT license. Data derived from Unicode CLDR uses the Unicode license. The optional Inter fonts use the SIL Open Font License 1.1. [MIT license](LICENSE) · [Unicode license](docs/UNICODE-LICENSE.txt) · [Inter font license](src/fonts/OFL.txt)

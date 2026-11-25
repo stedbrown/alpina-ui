@@ -1,6 +1,6 @@
 # Component coverage compared with shadcn/ui
 
-On November 24, 2026, the **All Components** section of shadcn/ui listed 66 families. The Alpina UI 0.5.0 registry had 78 installable entries, including a dedicated entry for each of those 66 names. This comparison covers that public index. AI Elements, Blocks, Charts, and community registries have separate inventories. [Official shadcn/ui component index](https://ui.shadcn.com/docs/components)
+Alpina UI 0.9.0 has 86 installable component entries. The table below maps 66 of them to the families in the shadcn/ui **All Components** index recorded on November 24, 2026. The other 20 cover Swiss forms, formatting, icons, layout and navigation. The four copyable pages in Alpina's block gallery have their own CLI names and are counted separately. [Official shadcn/ui component index](https://ui.shadcn.com/docs/components) · [Alpina block gallery](https://alpina-ui.vercel.app/blocks/)
 
 ## Differences to consider
 
@@ -20,7 +20,7 @@ On November 24, 2026, the **All Components** section of shadcn/ui listed 66 fami
 | Select and Native Select | Both Alpina entries use the HTML `select` and the device picker. The shadcn/ui Select family describes a composite control with a trigger and list. [shadcn/ui Select](https://ui.shadcn.com/docs/components/base/select) |
 | Slider | Alpina uses a single-value HTML slider. shadcn/ui also documents a slider with multiple thumbs. [shadcn/ui Slider](https://ui.shadcn.com/docs/components/base/slider) |
 
-Each library defines its own APIs. To estimate migration work, compare the props, states, and rendered behavior your product relies on.
+The table records one documented implementation for each family. To estimate migration work, compare the props, states and keyboard interactions your product uses. The migration guide includes a porting note for every family. [Component-by-component migration guide](https://alpina-ui.vercel.app/docs/guides/migration/)
 
 ## Index of the 66 names
 
@@ -95,7 +95,7 @@ Each library defines its own APIs. To estimate migration work, compare the props
 | Trace | `trace` | `Trace` | interactive |
 | Typography | `typography` | `Typography` | ui |
 
-## The 16 additional entries in Alpina 0.8
+## The 20 additional entries in Alpina 0.9.0
 
 | Purpose | Alpina entries |
 | --- | --- |
@@ -104,5 +104,8 @@ Each library defines its own APIs. To estimate migration work, compare the props
 | Read-only summaries and workflows | `description-list`, `steps` |
 | Language, cantons, and addresses | `canton-combobox`, `canton-select`, `locale-select`, `swiss-address-form`, `swiss-postal-code-input` |
 | Formatting | `currency-chf`, `swiss-date` |
+| Payments and identifiers | `swiss-qr-bill`, `iban-input`, `ahv-input`, `phone-input` |
+
+The QR-bill entry takes structured payment data and renders the 210 × 105 mm receipt and payment part. It checks the account, reference and currency combination before encoding the payment. The three input entries check the structure of a Swiss telephone number or the check digits of an IBAN or AHV number. Account ownership, an assigned AHV number and telephone reachability require verification by the integrating service. [QR-bill printing](https://alpina-ui.vercel.app/docs/guides/qr-bill/) · [Swiss forms and formatting](https://alpina-ui.vercel.app/docs/guides/swiss/)
 
 Run `node --test tests/coverage.test.mjs` to compare this documented snapshot with the registry entries and the compiled package exports. A fresh comparison requires a new count of the published shadcn/ui index.

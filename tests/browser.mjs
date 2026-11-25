@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { existsSync } from 'node:fs'
-import { mkdir, readFile } from 'node:fs/promises'
+import { mkdir, readFile, readdir } from 'node:fs/promises'
 import path from 'node:path'
 import { chromium } from 'playwright-core'
 import ts from 'typescript'
@@ -8,20 +8,9 @@ import ts from 'typescript'
 const root = new URL('../', import.meta.url)
 const registry = JSON.parse(await readFile(new URL('registry.json', root), 'utf8'))
 const examples = new Map()
-for (const file of [
-  'demos',
-  'design-examples',
-  'data-examples',
-  'address-example',
-  'stack-example',
-  'icon-example',
-  'composition-examples',
-  'elements-v3',
-  'actions-v3',
-  'workflows-v3',
-  'portal-v3',
-]) {
-  const name = 'catalog/' + file + '.tsx'
+for (const file of await readdir(new URL('catalog/', root))) {
+  if (!file.endsWith('.tsx')) continue
+  const name = 'catalog/' + file
   const source = ts.createSourceFile(
     name,
     await readFile(new URL(name, root), 'utf8'),
@@ -30,7 +19,9 @@ for (const file of [
     ts.ScriptKind.TSX,
   )
   for (const stmt of source.statements) {
-    if (ts.isFunctionDeclaration(stmt) && stmt.name?.text.endsWith('Example')) {
+    if (ts.isFunctionDeclaration(stmt) && stmt.name?.text.endsWith('Example') &&
+        stmt.modifiers?.some(modifier => modifier.kind === ts.SyntaxKind.ExportKeyword)) {
+      assert.ok(!examples.has(stmt.name.text), 'Duplicate catalog example: ' + stmt.name.text)
       examples.set(stmt.name.text, stmt.getText(source))
     }
   }
@@ -159,6 +150,7 @@ try {
   const total = table.getByRole('button', { name: 'Total' })
   const values = () =>
     table.locator('tbody data').evaluateAll((nodes) => nodes.map((el) => Number(el.value)))
+  await clients.waitFor()
   assert.equal(await clients.getByRole('button').count(), 4)
   await total.click()
   assert.deepEqual(await values(), [96.5, 420, 875, 1280.5])

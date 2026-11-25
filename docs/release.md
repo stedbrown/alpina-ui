@@ -1,5 +1,18 @@
 # Upgrading Alpina UI
 
+## Version 0.9.0
+
+Install the versioned archive in an existing React 18.2 or 19 project. Applications that import the package can continue using the same component names. For locally copied components, run `npx --no-install alpina diff` after installing the new version to review changes. [Download the 0.9.0 package](https://alpina-ui.vercel.app/alpina-ui-0.9.0.tgz) · [CLI guide](https://alpina-ui.vercel.app/docs/guides/cli/)
+
+```sh
+npm install https://alpina-ui.vercel.app/alpina-ui-0.9.0.tgz
+```
+
+- **Router links and refs.** `Button`, `Badge`, `TextLink` and individual menu or breadcrumb items accept `asChild`. Supply one element that forwards its props and ref to the underlying control. Leaf components forward refs and preserve caller classes alongside their library classes. [Migration guide](https://alpina-ui.vercel.app/docs/guides/migration/)
+- **Typography and themes.** Import `alpina-ui/fonts.css` to serve the Latin Inter WOFF2 files from your own application. Tables, CHF amounts and Swiss dates use tabular figures. The optional `alpina-ui/tailwind.css` bridge maps Tailwind v4 utilities to Alpina tokens. The theme builder previews light and dark combinations, reports text contrast and exports the CSS variables. [Design guide](https://alpina-ui.vercel.app/docs/guides/design/) · [Theme builder](https://alpina-ui.vercel.app/themes/)
+- **Swiss forms and billing.** `IbanInput`, `AhvInput` and `PhoneInput` validate entries and format completed numbers on blur. `SwissQrBill` renders a SIX 2.4 payment section with a scannable QR Code. Use `printSwissQrBill` to print the selected slip and follow the print guide to check the result on paper. [Swiss forms](https://alpina-ui.vercel.app/docs/guides/swiss/) · [Swiss QR-bill guide](https://alpina-ui.vercel.app/docs/guides/qr-bill/)
+- **Copyable pages.** Use `npx --no-install alpina add block/dashboard` to copy the dashboard into your app. The login, dashboard, account settings and CHF pricing pages use public Alpina components. Their source exposes the data and callbacks that connect them to your application. [Block gallery and installation commands](https://alpina-ui.vercel.app/blocks/)
+
 ## Version 0.8
 
 `Icon` adds a family of original SVG pictograms to the registry. Render `<Icon name="git-branch" size={18} />` beside a repository link. Adjacent text gives the link its accessible name. When a symbol stands alone and conveys information, set its `label`. [Icon gallery](https://alpina-ui.vercel.app/icons/) · [Icon reference](https://alpina-ui.vercel.app/docs/components/icon/)

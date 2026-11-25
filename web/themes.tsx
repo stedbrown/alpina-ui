@@ -13,7 +13,10 @@ export function Themes() {
         <GridItem medium={3} large={4}>
           <template id="theme-tools">
             <Stack gap={4}>
-              <Field label="Accent color" id="theme-accent">{props => <Input {...props} type="color" defaultValue={defaultTheme.accent} />}</Field>
+              <Field label="Accent color" id="theme-accent" description="Six hexadecimal digits, for example #eb0000." describedBy="theme-accent-error">
+                {props => <Input {...props} maxLength={7} autoComplete="off" spellCheck={false} defaultValue={defaultTheme.accent} />}
+              </Field>
+              <Typography variant="caption" id="theme-accent-error" role="status" hidden />
               <Field label="Grid unit" id="theme-unit">{props => <Select {...props} defaultValue="4">
                 {[3, 4, 5, 6].map(unit => <option key={unit} value={unit}>{unit} px</option>)}
               </Select>}</Field>

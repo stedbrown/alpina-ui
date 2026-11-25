@@ -46,7 +46,7 @@ The HTML props below belong to the underlying element and include ARIA attribute
 | `Button` | Native `button` props. `variant` accepts `primary` (default), `secondary`, `outline`, `ghost`, or `danger`. `size` accepts `sm`, `md` (default), or `lg`. | Defaults to `type="button"`. Use `type="submit"` to submit a form. Give icon-only buttons an accessible name. |
 | `Input` | Native `input` props. Defaults to type `text`. | Supports native types such as `email`, `date`, and `number`, with `name`, `autoComplete`, `required`, and browser constraints. |
 | `Textarea` | Native `textarea` props. `rows` defaults to 3. | Set its initial height with `rows` and its maximum length with `maxLength`. |
-| `Select` | Native `select` props with `option` or `optgroup` children. | The browser handles keyboard navigation, type-ahead, and mobile selection. |
+| `Select` | Native `select` props with `option` or `optgroup` children. | A styled picker preserves native form values, type-ahead, option groups, and multiple selection. |
 | `Checkbox` | Native `input` props with its type fixed to `checkbox`. | Associate a label. Set `value` to submit a particular value with the form. |
 | `Switch` | Native `input` props with type `checkbox` and role `switch`. | Represents a binary state. Keep the label stable when the state changes, for example “Email notifications.” |
 | `RadioGroup` | `label: ReactNode`, `options: readonly RadioOption[]`, `value?`, `defaultValue?`, `onValueChange?(value)`, `required?`, and `fieldset` props except `children` and `onChange`. | Each option has a unique `value: string`, `label: ReactNode`, and optional `disabled?: boolean`. The group generates a shared name or accepts `name`. Supply a stable name to serialize form data. |

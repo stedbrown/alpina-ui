@@ -395,7 +395,7 @@
   },
   "canton-combobox": {
     "use": "Find a canton from its name or abbreviation without stepping through all the cantons.",
-    "avoid": "Use CantonSelect when device-native selection or a simple short form matters more than search.",
+    "avoid": "Use CantonSelect when a short list is easier to scan than to search.",
     "access": "Provide a visible label, test selecting a suggestion with the keyboard and distinguish an empty search from a confirmed choice.",
     "content": "Keep the query hint to one brief instruction. Use a real abbreviation as an example only if both names and codes work.",
     "example": {
@@ -428,7 +428,7 @@
     ]
   },
   "canton-select": {
-    "use": "Ask for a Swiss canton from a fixed list when a native picker fits the form.",
+    "use": "Ask for a Swiss canton from a fixed list in a short form.",
     "avoid": "Use CantonCombobox for frequent lookups by abbreviation or partial name.",
     "access": "Associate the select with a visible Canton label. Keep an explicit empty option when a canton has yet to be chosen.",
     "content": "Use the local name for the field and allow enough width for complete canton names. Keep abbreviations uppercase when displayed.",
@@ -445,15 +445,31 @@
     "keys": [
       [
         "Tab / Shift+Tab",
-        "Focus or leave the select."
+        "Focus or leave a closed select."
+      ],
+      [
+        "Space / ↓",
+        "Open the single-choice picker."
       ],
       [
         "↑ / ↓",
-        "Move between enabled options using the native picker."
+        "Move through enabled options in the open picker."
+      ],
+      [
+        "Home / End",
+        "Move to the first or last enabled option in the open picker."
       ],
       [
         "Type",
-        "Use the browser’s option search."
+        "Find an option by its label in the open picker."
+      ],
+      [
+        "Enter",
+        "Confirm the highlighted option and return focus to the select."
+      ],
+      [
+        "Escape",
+        "Close the picker and keep the previously selected value."
       ]
     ]
   },
@@ -1413,15 +1429,31 @@
     "keys": [
       [
         "Tab / Shift+Tab",
-        "Focus or leave the select."
+        "Focus or leave a closed select."
+      ],
+      [
+        "Space / ↓",
+        "Open the single-choice picker."
       ],
       [
         "↑ / ↓",
-        "Move between enabled options using the native picker."
+        "Move through enabled options in the open picker."
+      ],
+      [
+        "Home / End",
+        "Move to the first or last enabled option in the open picker."
       ],
       [
         "Type",
-        "Use the browser’s option search."
+        "Find an option by its label in the open picker."
+      ],
+      [
+        "Enter",
+        "Confirm the highlighted option and return focus to the select."
+      ],
+      [
+        "Escape",
+        "Close the picker and keep the previously selected value."
       ]
     ]
   },
@@ -1589,15 +1621,31 @@
     "keys": [
       [
         "Tab / Shift+Tab",
-        "Focus or leave the select."
+        "Focus or leave a closed select."
+      ],
+      [
+        "Space / ↓",
+        "Open the single-choice picker."
       ],
       [
         "↑ / ↓",
-        "Move between enabled options using the native picker."
+        "Move through enabled options in the open picker."
+      ],
+      [
+        "Home / End",
+        "Move to the first or last enabled option in the open picker."
       ],
       [
         "Type",
-        "Use the browser’s option search."
+        "Find an option by its label in the open picker."
+      ],
+      [
+        "Enter",
+        "Confirm the highlighted option and return focus to the select."
+      ],
+      [
+        "Escape",
+        "Close the picker and keep the previously selected value."
       ]
     ]
   },
@@ -1899,15 +1947,31 @@
     "keys": [
       [
         "Tab / Shift+Tab",
-        "Focus or leave the select."
+        "Focus or leave a closed select."
+      ],
+      [
+        "Space / ↓",
+        "Open the single-choice picker."
       ],
       [
         "↑ / ↓",
-        "Move between enabled options using the native picker."
+        "Move through enabled options in the open picker."
+      ],
+      [
+        "Home / End",
+        "Move to the first or last enabled option in the open picker."
       ],
       [
         "Type",
-        "Use the browser’s option search."
+        "Find an option by its label in the open picker."
+      ],
+      [
+        "Enter",
+        "Confirm the highlighted option and return focus to the select."
+      ],
+      [
+        "Escape",
+        "Close the picker and keep the previously selected value."
       ]
     ]
   },

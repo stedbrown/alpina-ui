@@ -15,13 +15,21 @@ const reset = document.querySelector<HTMLButtonElement>('#theme-reset')!
 const forcedColors = window.matchMedia('(forced-colors: active)')
 const darkScheme = window.matchMedia('(prefers-color-scheme: dark)')
 let useDefaultAccent = true
+let validAccent = defaultTheme.accent
+const accentError = document.querySelector<HTMLElement>('#theme-accent-error')!
+function showAccentError(invalid: boolean) {
+  accentError.hidden = !invalid
+  accentError.textContent = invalid ? 'Enter a color in the form #rrggbb.' : ''
+  if (invalid) accent.setAttribute('aria-invalid', 'true')
+  else accent.removeAttribute('aria-invalid')
+}
 
 function score(ratio: number) {
   return ratio.toFixed(2) + ':1 · ' + (ratio >= 4.5 ? 'Pass' : 'Fail')
 }
 function update() {
-  const theme = themeValues({ accent: accent.value, unit: Number(unit.value), mode: mode.value }, darkScheme.matches, useDefaultAccent)
-  accent.value = theme.values['--al-accent']
+  const theme = themeValues({ accent: validAccent, unit: Number(unit.value), mode: mode.value }, darkScheme.matches, useDefaultAccent)
+  if (useDefaultAccent) accent.value = theme.values['--al-accent']
   preview.dataset.alTheme = mode.value
   for (const [key, value] of Object.entries(theme.values)) {
     if (forcedColors.matches) preview.style.removeProperty(key)
@@ -33,7 +41,15 @@ function update() {
   feedback.textContent = ''
   reset.disabled = accent.value === defaultTheme.accent && Number(unit.value) === defaultTheme.unit && mode.value === defaultTheme.mode
 }
-accent.addEventListener('input', () => { useDefaultAccent = false; update() })
+accent.addEventListener('input', () => {
+  useDefaultAccent = false
+  if (/^#[a-f0-9]{6}$/i.test(accent.value)) {
+    validAccent = accent.value.toLowerCase()
+    showAccentError(false)
+  }
+  update()
+})
+accent.addEventListener('blur', () => showAccentError(!/^#[a-f0-9]{6}$/i.test(accent.value)))
 unit.addEventListener('change', update)
 mode.addEventListener('change', update)
 forcedColors.addEventListener('change', update)
@@ -41,6 +57,8 @@ darkScheme.addEventListener('change', update)
 reset.addEventListener('click', () => {
   accent.value = defaultTheme.accent
   useDefaultAccent = true
+  validAccent = defaultTheme.accent
+  showAccentError(false)
   unit.value = String(defaultTheme.unit)
   mode.value = defaultTheme.mode
   update()

@@ -7,7 +7,7 @@
   "ahv-input": {
     "js": 1344,
     "lazy": 0,
-    "css": 576
+    "css": 704
   },
   "alert": {
     "js": 384,
@@ -80,9 +80,9 @@
     "css": 1920
   },
   "canton-select": {
-    "js": 1344,
+    "js": 3008,
     "lazy": 0,
-    "css": 640
+    "css": 1088
   },
   "card": {
     "js": 384,
@@ -212,7 +212,7 @@
   "iban-input": {
     "js": 1408,
     "lazy": 0,
-    "css": 576
+    "css": 704
   },
   "icon": {
     "js": 1408,
@@ -222,7 +222,7 @@
   "input": {
     "js": 256,
     "lazy": 0,
-    "css": 576
+    "css": 704
   },
   "input-group": {
     "js": 320,
@@ -265,9 +265,9 @@
     "css": 960
   },
   "locale-select": {
-    "js": 704,
+    "js": 2240,
     "lazy": 0,
-    "css": 640
+    "css": 1088
   },
   "marker": {
     "js": 320,
@@ -295,9 +295,9 @@
     "css": 2112
   },
   "native-select": {
-    "js": 384,
+    "js": 1984,
     "lazy": 0,
-    "css": 640
+    "css": 1088
   },
   "navigation-menu": {
     "js": 1472,
@@ -312,7 +312,7 @@
   "phone-input": {
     "js": 1408,
     "lazy": 0,
-    "css": 576
+    "css": 704
   },
   "popover": {
     "js": 2624,
@@ -355,9 +355,9 @@
     "css": 192
   },
   "select": {
-    "js": 320,
+    "js": 1920,
     "lazy": 0,
-    "css": 576
+    "css": 1024
   },
   "separator": {
     "js": 320,
@@ -382,7 +382,7 @@
   "slider": {
     "js": 256,
     "lazy": 0,
-    "css": 256
+    "css": 512
   },
   "sparkline": {
     "js": 1536,
@@ -405,9 +405,9 @@
     "css": 448
   },
   "swiss-address-form": {
-    "js": 7872,
+    "js": 10048,
     "lazy": 34240,
-    "css": 2880
+    "css": 3456
   },
   "swiss-date": {
     "js": 1344,
@@ -417,7 +417,7 @@
   "swiss-postal-code-input": {
     "js": 1472,
     "lazy": 0,
-    "css": 576
+    "css": 704
   },
   "swiss-qr-bill": {
     "js": 10048,
@@ -482,6 +482,6 @@
   "uid-input": {
     "js": 1408,
     "lazy": 0,
-    "css": 576
+    "css": 704
   }
 }

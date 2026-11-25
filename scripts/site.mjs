@@ -41,14 +41,20 @@ const escape = (text) => String(text).replace(/[&<>"']/g, (c) => ({ '&': '&amp;'
 const sha = (text) => createHash('sha256').update(text).digest('hex').slice(0, 16)
 const render = (component, props) => renderToStaticMarkup(createElement(component, props))
 
-// A reader can reach the prerendered index trigger before the catalog module arrives.
-function rememberIndexIntent() {
+// Remember actions on the prerendered catalog until its React listeners are ready.
+function rememberCatalogIntent() {
   const root = document.getElementById('app')
   const trigger = root.querySelector('.al-app-mobile button[aria-expanded]')
   const listeners = new AbortController()
   const options = { capture: true, signal: listeners.signal }
   root.addEventListener('click', event => {
-    if (event.target.closest?.('button') !== trigger) return
+    const button = event.target.closest?.('button')
+    if (button?.dataset.componentView) {
+      event.stopPropagation()
+      root.dataset.viewIntent = button.dataset.componentView
+      return
+    }
+    if (!button || button !== trigger) return
     event.stopPropagation()
     root.dataset.indexIntent = root.dataset.indexIntent ? '' : 'browse'
   }, options)
@@ -64,7 +70,7 @@ function rememberIndexIntent() {
   }, options)
   root.addEventListener('alpina-index-ready', () => listeners.abort(), { once: true })
 }
-const indexIntentScript = '<script>(' + rememberIndexIntent.toString() + ')()</script>'
+const indexIntentScript = '<script>(' + rememberCatalogIntent.toString() + ')()</script>'
 
 // Keep the proofing layer outside the app root so it works on static and hydrated routes.
 const overlay = render(GridOverlay, { hidden: true, 'data-site-grid': '' })
@@ -126,6 +132,9 @@ export async function buildWebsite({ guides, guideFiles, apiReference, component
   const showcaseJS = '/assets/showcase-' + sha(showcase) + '.js'
   const icons = await readFile('web/icon-controls.js', 'utf8')
   const iconsJS = '/assets/icons-' + sha(icons) + '.js'
+  const pickerBuild = await build({ entryPoints: ['web/static-selects.ts'], bundle: true, format: 'esm', target: 'es2022', write: false, minify: true })
+  const picker = pickerBuild.outputFiles[0].text
+  const pickerJS = '/assets/picker-' + sha(picker) + '.js'
   const themeBuild = await build({ entryPoints: ['web/theme-controls.ts'], bundle: true, format: 'esm', target: 'es2022', write: false, minify: true })
   const theme = themeBuild.outputFiles[0].text
   const themeJS = '/assets/themes-' + sha(theme) + '.js'
@@ -144,7 +153,7 @@ export async function buildWebsite({ guides, guideFiles, apiReference, component
     output(fontsURL, fontCSS),
     ...fontBuild.outputFiles.filter(file => file.path.endsWith('.woff2')).map(file => output('assets/' + path.basename(file.path), file.contents)),
     output(showcaseJS, showcase), output(iconsJS, icons),
-    output(themeJS, theme),
+    output(themeJS, theme), output(pickerJS, picker),
     ...blockBuild.outputFiles.map(file => output('assets/' + path.basename(file.path), file.contents)),
     output(filterJS, filter),
     output('third-party-notices.txt', notices.join('\n\n')),
@@ -181,6 +190,8 @@ export async function buildWebsite({ guides, guideFiles, apiReference, component
       '<script>document.documentElement.dataset.showcaseJs=""</script>',
       '<style>html[data-showcase-js] [data-showcase-fallback],html:not([data-showcase-js]) [data-showcase-live]{display:none!important}</style>',
       '<script type="module" src="' + showcaseJS + '"></script>')
+    if (options.showcase || options.icons || options.theme) tags.push(
+      '<script type="module">if (!CSS.supports("appearance", "base-select")) import(' + JSON.stringify(pickerJS) + ')</script>')
     if (options.icons) tags.push('<script type="module" src="' + iconsJS + '"></script>')
     if (options.theme) tags.push('<script type="module" src="' + themeJS + '"></script>')
     if (options.block) tags.push('<script type="module" src="' + blockJS + '"></script>')

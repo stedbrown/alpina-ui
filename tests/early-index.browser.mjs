@@ -2,16 +2,21 @@ import assert from 'node:assert/strict'
 import { launchBrowser } from './launch-browser.mjs'
 import { openPublicPage, siteOrigin } from './public-pages.mjs'
 
+async function delayCatalog(page) {
+  let resume
+  const gate = new Promise(resolve => { resume = resolve })
+  await page.route('**/assets/catalog-*.js', async route => {
+    await gate
+    await route.fallback()
+  })
+  return resume
+}
+
 const browser = await launchBrowser()
 try {
   for (const action of ['click', 'Enter', 'Control+k', '/']) {
     const page = await openPublicPage(browser, { viewport: { width: 320, height: 750 } })
-    let resume
-    const gate = new Promise(resolve => { resume = resolve })
-    await page.route('**/assets/catalog-*.js', async route => {
-      await gate
-      await route.fallback()
-    })
+    const resume = await delayCatalog(page)
     try {
       await page.goto(siteOrigin + '/docs/components/currency-chf/', { waitUntil: 'commit' })
       const trigger = page.getByRole('button', { name: 'Browse components' })
@@ -42,6 +47,26 @@ try {
       await page.close()
     }
   }
+  for (const action of ['click', 'Enter', 'Space']) {
+    const page = await openPublicPage(browser)
+    const resume = await delayCatalog(page)
+    try {
+      await page.goto(siteOrigin + '/docs/components/dropdown-menu/', { waitUntil: 'commit' })
+      const api = page.getByRole('button', { name: 'API', exact: true })
+      if (action === 'click') await api.click()
+      else await api.press(action)
+      resume()
+      await page.getByRole('heading', { name: 'API reference' }).waitFor()
+      assert.equal(new URL(page.url()).hash, '#dropdown-menu/api')
+      assert.ok(await api.evaluate(el => el === document.activeElement))
+      await page.goBack()
+      await page.getByRole('heading', { name: 'Interactive preview' }).waitFor()
+      assert.equal(new URL(page.url()).hash, '')
+    } finally {
+      resume()
+      await page.close()
+    }
+  }
   const desktop = await openPublicPage(browser, { viewport: { width: 1120, height: 750 } })
   await desktop.goto(siteOrigin + '/docs/components/currency-chf/')
   const search = desktop.getByRole('searchbox', { name: 'Search components' })
@@ -54,7 +79,7 @@ try {
       input.selectionStart === 0 && input.selectionEnd === 3
   })
   await desktop.close()
-  console.log('Pointer, Enter and search shortcuts survive a delayed component catalog module.')
+  console.log('Index shortcuts and component views preserve activation, focus and history during delayed hydration.')
 } finally {
   await browser.close()
 }

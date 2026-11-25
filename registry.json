@@ -91,6 +91,8 @@
       "files": [
         "theme.css",
         "ui/select.tsx",
+        "ui/select-enhancement.internal.tsx",
+        "ui/select-picker.internal.ts",
         "ui/select.css"
       ]
     },
@@ -905,6 +907,8 @@
         "theme.css",
         "interactive/native-select.tsx",
         "ui/select.tsx",
+        "ui/select-enhancement.internal.tsx",
+        "ui/select-picker.internal.ts",
         "ui/select.css",
         "interactive/native-select.css"
       ]
@@ -990,6 +994,8 @@
         "portal/text-link.css",
         "interactive/native-select.tsx",
         "ui/select.tsx",
+        "ui/select-enhancement.internal.tsx",
+        "ui/select-picker.internal.ts",
         "ui/select.css",
         "interactive/native-select.css",
         "swiss/canton-select.tsx",
@@ -1045,6 +1051,8 @@
         "swiss/locale-select.tsx",
         "interactive/native-select.tsx",
         "ui/select.tsx",
+        "ui/select-enhancement.internal.tsx",
+        "ui/select-picker.internal.ts",
         "ui/select.css",
         "interactive/native-select.css",
         "swiss/locales.ts"
@@ -1060,6 +1068,8 @@
         "swiss/canton-select.tsx",
         "interactive/native-select.tsx",
         "ui/select.tsx",
+        "ui/select-enhancement.internal.tsx",
+        "ui/select-picker.internal.ts",
         "ui/select.css",
         "interactive/native-select.css",
         "swiss/cantons.ts",

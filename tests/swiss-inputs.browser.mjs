@@ -59,7 +59,7 @@ try {
   assert.ok((await state(iban)).valid)
   await edit(iban, '')
   assert.ok((await state(iban)).missing)
-  assert.equal((await state(iban)).custom, false)
+  assert.equal((await state(iban)).message, 'Complete this field.')
 
   await edit(ahv, '7561234567897')
   assert.equal(await ahv.inputValue(), '756.1234.5678.97')

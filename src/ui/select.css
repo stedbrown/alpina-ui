@@ -13,7 +13,7 @@
   font: 400 var(--al-type-body)/var(--al-leading-body) var(--al-font);
   cursor: pointer;
 }
-/* Keep native indicators, list boxes and mobile pickers available. */
+/* A select with size or multiple remains an inline list box. */
 .al-select:is([multiple], [size]) {
   padding: var(--al-space-1) var(--al-space-2);
 }
@@ -52,4 +52,78 @@
 }
 .al-select option {
   font-style: normal;
+}
+
+/* Keep the native selection model while painting the closed and open picker. */
+@supports (appearance: base-select) {
+  .al-select:not([multiple]):is(:not([size]), [size="0"], [size="1"]),
+  .al-select::picker(select) {
+    appearance: base-select;
+  }
+  .al-select:not([multiple]):is(:not([size]), [size="0"], [size="1"]) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .al-select::picker-icon {
+    content: "";
+    inline-size: .45em;
+    block-size: .45em;
+    margin-inline: var(--al-space-2) var(--al-space-1);
+    border: solid currentColor;
+    border-width: 0 1.5px 1.5px 0;
+    transform: translateY(-.15em) rotate(45deg);
+  }
+  .al-select::picker(select) {
+    margin-block: var(--al-space-1);
+    padding: var(--al-space-1);
+    border: 1px solid var(--al-control);
+    border-radius: var(--al-radius);
+    background: var(--al-surface);
+    color: var(--al-ink);
+    font: 400 var(--al-type-body)/var(--al-leading-body) var(--al-font);
+    max-block-size: min(20rem, 70dvh);
+    overflow: auto;
+  }
+}
+.al-select option, .al-select-popup option {
+  padding: var(--al-space-1) var(--al-space-2);
+  font: inherit;
+  font-style: normal;
+}
+.al-select option:checked, .al-select-popup option:checked {
+  background-color: var(--al-soft);
+  font-weight: 700;
+}
+.al-select option:is(:hover,:focus-visible):enabled,
+.al-select-popup option:is(:hover,:focus-visible):enabled {
+  background-color: var(--al-ink);
+  color: var(--al-surface);
+}
+.al-select option:disabled, .al-select-popup option:disabled {
+  color: var(--al-muted);
+}
+.al-select-popup {
+  position: fixed;
+  z-index: 10;
+  inset: auto;
+  margin: 0;
+  box-sizing: border-box;
+  padding: var(--al-space-1);
+  border: 1px solid var(--al-control);
+  border-radius: var(--al-radius);
+  background: var(--al-surface);
+  color: var(--al-ink);
+  font: 400 var(--al-type-body)/var(--al-leading-body) var(--al-font);
+  overflow-y: auto;
+}
+.al-select-popup:focus-visible {
+  outline: 2px solid var(--al-focus);
+  outline-offset: 1px;
+}
+@media (forced-colors: active) {
+  .al-select option:checked, .al-select-popup option:checked {
+    color: HighlightText;
+    background-color: Highlight;
+  }
 }

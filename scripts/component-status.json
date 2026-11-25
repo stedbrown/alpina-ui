@@ -7,7 +7,7 @@
   "ahv-input": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "8ed8c998adf9f83f3f11"
+    "source": "c75d5c30d2d7df9c85c8"
   },
   "alert": {
     "stage": "Stable",
@@ -77,12 +77,12 @@
   "canton-combobox": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "5391581cb1d487ac9dd9"
+    "source": "14f62c8cab974d42face"
   },
   "canton-select": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "2bc50fe46477b956a6b4"
+    "source": "55643c70221237340afd"
   },
   "card": {
     "stage": "Stable",
@@ -122,12 +122,12 @@
   "combobox": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "d0a0f3448f294bea575c"
+    "source": "651d539a9162beaaa959"
   },
   "command": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "405f30817b94f7e297eb"
+    "source": "41af37dd8e06eb453314"
   },
   "context-menu": {
     "stage": "Stable",
@@ -212,7 +212,7 @@
   "iban-input": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "1f955ff8ddd2aece3363"
+    "source": "6d9a05547b1b4c275da5"
   },
   "icon": {
     "stage": "Stable",
@@ -222,7 +222,7 @@
   "input": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "632471952d0fceca95d5"
+    "source": "f009369516413da65f39"
   },
   "input-group": {
     "stage": "Stable",
@@ -232,7 +232,7 @@
   "input-otp": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "b8aab94e6c11648f2574"
+    "source": "07b4c88f009fac6b2f85"
   },
   "invoice-document": {
     "stage": "Beta",
@@ -267,7 +267,7 @@
   "locale-select": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "d27411aa4b0d57008f3c"
+    "source": "e128f13338ee11cd7366"
   },
   "marker": {
     "stage": "Stable",
@@ -292,12 +292,12 @@
   "multilingual-field": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "d5d78057e263eb618172"
+    "source": "d25a3b16c8f60e3e9b25"
   },
   "native-select": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "9c596bbbf7a8b0c8300f"
+    "source": "6d8c35e661e80fac956d"
   },
   "navigation-menu": {
     "stage": "Stable",
@@ -312,7 +312,7 @@
   "phone-input": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "b19d9e34afe52f2067bd"
+    "source": "c325beff55b4360da2fe"
   },
   "popover": {
     "stage": "Stable",
@@ -357,7 +357,7 @@
   "select": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "decfc0c914cb24afc673"
+    "source": "44704fcb599eedaf08d6"
   },
   "separator": {
     "stage": "Stable",
@@ -382,7 +382,7 @@
   "slider": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "00c7a6484fb68dca2b5a"
+    "source": "cf60941fa57e448974e8"
   },
   "sparkline": {
     "stage": "Beta",
@@ -407,7 +407,7 @@
   "swiss-address-form": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "58037fe05f08a15cec83"
+    "source": "d2d8e6d1016798ffa8dc"
   },
   "swiss-date": {
     "stage": "Stable",
@@ -417,7 +417,7 @@
   "swiss-postal-code-input": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "b18c81062b7a41a8aa96"
+    "source": "800635ee4f5d7b1486ae"
   },
   "swiss-qr-bill": {
     "stage": "Beta",
@@ -482,6 +482,6 @@
   "uid-input": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "cdc3e76e77af83f41f3a"
+    "source": "d0af718eebeb9d3e1f74"
   }
 }

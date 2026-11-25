@@ -26,6 +26,8 @@ export function AccountSettingsBlock({
   const [draft, setDraft] = useState(initial)
   const [status, setStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const [nameError, setNameError] = useState('')
+  const [emailError, setEmailError] = useState('')
+  const email = useRef<HTMLInputElement>(null)
   const submitting = useRef(false)
   const name = useRef<HTMLInputElement>(null)
   const digest = useId()
@@ -37,6 +39,7 @@ export function AccountSettingsBlock({
     setDraft(current => ({ ...current, ...patch }))
     setStatus('idle')
     if (patch.fullName !== undefined) setNameError('')
+    if (patch.email !== undefined) setEmailError('')
   }
 
   async function save(event: FormEvent<HTMLFormElement>) {
@@ -46,6 +49,11 @@ export function AccountSettingsBlock({
     if (!next.fullName) {
       setNameError('Enter your name.')
       name.current?.focus()
+      return
+    }
+    if (!email.current?.validity.valid) {
+      setEmailError('Enter a valid email address.')
+      email.current?.focus()
       return
     }
     submitting.current = true
@@ -66,6 +74,7 @@ export function AccountSettingsBlock({
     setDraft(saved)
     setStatus('idle')
     setNameError('')
+    setEmailError('')
     name.current?.focus()
   }
 
@@ -89,7 +98,7 @@ export function AccountSettingsBlock({
         </Stack>
       </GridItem>
       <GridItem medium={4} large={5} start={{ large: 7 }}>
-        <form method="post" aria-label="Edit account settings" aria-busy={busy} onSubmit={save}>
+        <form noValidate method="post" aria-label="Edit account settings" aria-busy={busy} onSubmit={save}>
           <Stack gap={4}>
             <Separator weight="section" />
             <Typography as="h2" variant="heading">Profile</Typography>
@@ -97,8 +106,8 @@ export function AccountSettingsBlock({
               <Input {...control} ref={name} name="fullName" autoComplete="name" required readOnly={busy}
                 value={draft.fullName} onChange={event => edit({ fullName: event.currentTarget.value })} />
             }</Field>
-            <Field label="Email address">{control =>
-              <Input {...control} type="email" name="email" autoComplete="email" required readOnly={busy}
+            <Field label="Email address" error={emailError}>{control =>
+              <Input {...control} ref={email} type="email" name="email" autoComplete="email" required readOnly={busy}
                 value={draft.email} onChange={event => edit({ email: event.currentTarget.value })} />
             }</Field>
             <Separator />

@@ -319,7 +319,7 @@ export const expanded = [
     "NativeSelect",
     "Native select",
     "Forms",
-    "Use the device’s own selection control with an underline or an outline."
+    "Choose from labeled options in an underlined or outlined select."
   ],
   [
     "toggle-group",

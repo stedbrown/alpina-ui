@@ -19,6 +19,9 @@ export function LoginBlock({
 }: LoginBlockProps) {
   const [status, setStatus] = useState<'idle' | 'pending' | 'error' | 'success'>('idle')
   const [visible, setVisible] = useState(false)
+  const [emailError, setEmailError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
+  const emailField = useRef<HTMLInputElement>(null)
   const password = useRef<HTMLInputElement>(null)
   const heading = useRef<HTMLHeadingElement>(null)
   const submitting = useRef(false)
@@ -31,7 +34,17 @@ export function LoginBlock({
   async function signIn(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (submitting.current || !password.current) return
-    const email = String(new FormData(event.currentTarget).get('email')).trim()
+    setEmailError(emailField.current?.validity.valid ? '' : 'Enter a valid email address.')
+    setPasswordError(password.current.value ? '' : 'Enter your password.')
+    if (!emailField.current?.validity.valid) {
+      emailField.current?.focus()
+      return
+    }
+    if (!password.current.value) {
+      password.current.focus()
+      return
+    }
+    const email = emailField.current.value.trim()
     submitting.current = true
     setStatus('pending')
     try {
@@ -65,20 +78,20 @@ export function LoginBlock({
             {continueHref && <TextLink variant="action" href={continueHref}>Continue to workspace</TextLink>}
           </Stack>
         ) : (
-          <form method="post" aria-label="Account sign-in" aria-busy={busy} onSubmit={signIn}
+          <form noValidate method="post" aria-label="Account sign-in" aria-busy={busy} onSubmit={signIn}
             onChange={() => { if (status === 'error') setStatus('idle') }}>
             <Stack gap={5}>
               <Separator weight="section" />
-              <Field label="Email address">{control =>
-                <Input {...control} name="email" type="email" autoComplete="username"
+              <Field label="Email address" error={emailError}>{control =>
+                <Input {...control} ref={emailField} onChange={() => setEmailError('')} name="email" type="email" autoComplete="username"
                   defaultValue={initialEmail} readOnly={busy} required />
               }</Field>
-              <Field label="Password">{control =>
+              <Field label="Password" error={passwordError}>{control =>
                 <InputGroup trailing={<Button variant="ghost" size="sm" disabled={busy}
                   aria-controls={control.id} onClick={() => setVisible(!visible)}>
                   {visible ? 'Hide password' : 'Show password'}
                 </Button>}>
-                  <Input {...control} ref={password} type={visible ? 'text' : 'password'}
+                  <Input {...control} ref={password} onChange={() => setPasswordError('')} type={visible ? 'text' : 'password'}
                     autoComplete="current-password" readOnly={busy} required />
                 </InputGroup>
               }</Field>

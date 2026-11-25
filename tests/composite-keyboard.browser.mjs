@@ -164,13 +164,31 @@ try {
   await otp.press('Backspace')
   assert.equal(await otp.inputValue(), '04')
 
-  for (const slug of ['canton-select', 'locale-select', 'native-select', 'select']) {
+  for (const [slug, label] of [
+    ['canton-select', 'Canton'], ['locale-select', 'Correspondence language'],
+    ['native-select', 'Print format'], ['select', 'Paper size'],
+  ]) {
     await visit(slug)
-    const select = role('combobox').first()
-    await select.press('Home')
-    const first = await select.inputValue()
-    await select.press('End')
-    assert.notEqual(await select.inputValue(), first, slug)
+    const select = role('combobox', label)
+    const options = await select.evaluate(el => [...el.options].filter(o => !o.matches(':disabled')).map(o => o.value))
+    assert.ok(options.length > 1, slug)
+    const original = await select.inputValue()
+    await select.press('Space')
+    await page.keyboard.press('Home')
+    assert.equal(await select.inputValue(), original, slug + ' keeps its value until confirmation')
+    await page.keyboard.press('Enter')
+    assert.equal(await select.inputValue(), options[0], slug)
+    await focused(select)
+    await select.press('ArrowDown')
+    await page.keyboard.press('End')
+    await page.keyboard.press('Escape')
+    assert.equal(await select.inputValue(), options[0], slug + ' cancels the highlighted option')
+    await focused(select)
+    await select.press('Space')
+    await page.keyboard.press('End')
+    await page.keyboard.press('Enter')
+    assert.equal(await select.inputValue(), options.at(-1), slug)
+    await focused(select)
   }
 
   await visit('swiss-address-form')

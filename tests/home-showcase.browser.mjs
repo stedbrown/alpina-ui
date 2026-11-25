@@ -79,7 +79,9 @@ try {
   assert.match(await estimate.getByRole('status').innerText(), /CHF\s*224\.00/)
 
   const log = page.getByRole('region', { name: 'Press log' })
-  await log.getByRole('combobox', { name: 'Reporting week' }).press('End')
+  await log.getByRole('combobox', { name: 'Reporting week' }).press('Space')
+  await page.keyboard.press('End')
+  await page.keyboard.press('Enter')
   await checkSecondWeek(log.getByRole('figure', { name: 'Hours on press' }))
   const invoice = page.getByRole('region', { name: 'Invoice AP-104' })
   await invoice.getByRole('tab', { name: 'German' }).press('ArrowRight')

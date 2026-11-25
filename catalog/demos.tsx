@@ -3,6 +3,7 @@ import {
   cantons,
   CurrencyCHF,
   SwissDate,
+  DatePicker,
   LocaleSelect,
   CantonSelect,
   SwissPostalCodeInput,
@@ -109,18 +110,10 @@ export function SwissDateExample() {
         </output>
       </div>
       <div className="apx-pair">
-        <Field label="Calendar date">
-          {(props) => (
-            <Input
-              {...props}
-              type="date"
-              min="0001-01-01"
-              max="9999-12-31"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-          )}
-        </Field>
+        <div className="al-field">
+          <span className="al-field-label">Calendar date</span>
+          <DatePicker locale={locale} label="Calendar date" value={date} onValueChange={setDate} clearable />
+        </div>
         <Field label="Formatting language">
           {(props) => <LocaleSelect {...props} value={locale} onLocaleChange={setLocale} />}
         </Field>
@@ -514,7 +507,7 @@ export function FieldExample() {
   const [saved, setSaved] = useState('')
   const valid = name.trim().length >= 3
   return (
-    <form
+    <form noValidate
       className="apx"
       onSubmit={(event) => {
         event.preventDefault()
@@ -1083,7 +1076,7 @@ export function SheetExample() {
           title="Filter projects"
           closeLabel="Close filters"
         >
-          <form
+          <form noValidate
             className="apx apx-filter"
             onSubmit={(event) => {
               event.preventDefault()
@@ -1196,7 +1189,7 @@ export function DropdownMenuExample() {
         }
       />
       <Dialog title="Edit contact" closeLabel="Close" open={editor} onOpenChange={setEditor}>
-        <form
+        <form noValidate
           onSubmit={(event) => {
             event.preventDefault()
             if (draft.trim()) {

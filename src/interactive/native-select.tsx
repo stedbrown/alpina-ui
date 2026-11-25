@@ -6,7 +6,7 @@ export interface NativeSelectProps extends SelectProps {
   appearance?: 'line' | 'outline'
 }
 
-/** Preserves the platform picker and native form, validation and multiple-selection semantics. */
+/** Uses the Alpina picker with native form, validation and multiple-selection semantics. */
 export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(function NativeSelect(
   { className = '', appearance = 'line', ...props },
   ref,

@@ -29,8 +29,8 @@ export const IdentifierField = forwardRef<HTMLInputElement, IdentifierFieldProps
   const source = value ?? local
   const display = editing ? source : format(source)
   function validateInput(input: HTMLInputElement) {
-    const missing = locale && input.required && !input.value
-    input.setCustomValidity(missing ? requiredMessages[locale] : input.value && !validate(input.value) ? validationMessage : '')
+    const missing = input.required && !input.value
+    input.setCustomValidity(missing ? requiredMessages[locale ?? 'en'] : input.value && !validate(input.value) ? validationMessage : '')
   }
   useEffect(() => {
     if (node.current) validateInput(node.current)

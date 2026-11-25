@@ -133,10 +133,10 @@ function useRoute() {
     window.addEventListener('hashchange', update)
     return () => window.removeEventListener('hashchange', update)
   }, [])
-  function navigateView(next: string) {
+  const navigateView = useCallback((next: string) => {
     location.hash = next
     setHash(next)
-  }
+  }, [])
   return [hash, navigateView] as const
 }
 
@@ -201,19 +201,19 @@ function Workbench({
         <code className="component-path">{hostedDocs ? 'alpina-ui/' + files[0].replace(/\.tsx$/, '') : name}</code>
       </header>
       <ButtonGroup label="Component view" className="view-toggle">
-        {(Object.keys(views) as View[]).map((view) => (
-          <Button
+        {(Object.keys(views) as View[]).map((view) => {
+          const destination = views[view] ? id + '/' + views[view] : id
+          return <Button
             variant={view === mode ? 'primary' : 'outline'}
             size="sm"
             key={view}
             aria-pressed={view === mode}
-            onClick={() => {
-              navigateView(views[view] ? id + '/' + views[view] : id)
-            }}
+            data-component-view={destination}
+            onClick={() => navigateView(destination)}
           >
             {view}
           </Button>
-        ))}
+        })}
       </ButtonGroup>
       <Preview visible={mode === 'Preview'}>
         <Demo />
@@ -358,12 +358,15 @@ export function App({ pathname }: { pathname: string }) {
     window.addEventListener('keydown', shortcut)
     const root = document.getElementById('app')!
     root.dispatchEvent(new Event('alpina-index-ready'))
+    const view = root.dataset.viewIntent
+    delete root.dataset.viewIntent
+    if (view) navigateView(view)
     const intent = root.dataset.indexIntent
     delete root.dataset.indexIntent
     if (intent === 'browse') setIndexOpen(true)
     if (intent === 'search') focusSearch()
     return () => window.removeEventListener('keydown', shortcut)
-  }, [setIndexOpen])
+  }, [navigateView, setIndexOpen])
   const sidebar = (
     <Sidebar
       ref={list}

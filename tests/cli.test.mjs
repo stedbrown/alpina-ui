@@ -70,6 +70,8 @@ test('selective add copies only the requested entries, styles and transitive dep
     'swiss/locales.ts',
     'ui/select.tsx',
     'ui/select.css',
+    'ui/select-picker.internal.ts',
+    'ui/select-enhancement.internal.tsx',
     'interactive/dialog.tsx',
     'interactive/controllable.ts',
     'interactive/floating.ts',

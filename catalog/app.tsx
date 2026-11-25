@@ -361,7 +361,7 @@ function App() {
             ref={search}
             type="search"
             aria-label="Search components"
-            placeholder="Search components"
+            placeholder="Search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {
@@ -450,7 +450,7 @@ function App() {
       toolbar={
         <>
           {hostedDocs ? (
-            <NavigationMenu label="Site navigation" className="site-nav" orientation="horizontal" sections={[{ links: siteLinks }]} />
+            <NavigationMenu label="Site navigation" className="site-nav" orientation="horizontal" collapseLabel="Menu" sections={[{ links: siteLinks }]} />
           ) : (
             <div className="bread">
               <TextLink href="#overview">Library</TextLink>
@@ -466,7 +466,7 @@ function App() {
             onClick={() => setDark(!dark)}
           >
             <i className="theme-disc" aria-hidden="true" />
-            <span className="theme-name">{dark ? 'Dark theme' : 'Light theme'}</span>
+            <span className="theme-name">Dark theme</span>
           </Button>
         </>
       }
@@ -517,6 +517,7 @@ function Project({ bilingual }: { bilingual: boolean }) {
         label="Example navigation"
         className="project-nav"
         orientation="horizontal"
+        collapseLabel="Menu"
         sections={[{ links: [
           { href: '/examples/', label: '← Examples' },
           { href: bilingual ? guideHref('directory', true) : componentHref('swiss-address-form', true), label: 'Documentation' },
@@ -536,7 +537,7 @@ function WorkflowExample({ project, hosted }: { project: WorkflowProject; hosted
         event.preventDefault()
         document.getElementById('main-content')?.focus()
       }}>Skip to example</TextLink>
-      <NavigationMenu label="Example navigation" orientation="horizontal" sections={[{ links: [
+      <NavigationMenu label="Example navigation" orientation="horizontal" collapseLabel="Menu" sections={[{ links: [
         { href: hosted ? '/examples/' : '#overview', label: hosted ? '← Examples' : '← Catalog' },
         { href: componentHref(project.component, hosted), label: 'Component reference' },
         { href: 'https://github.com/stedbrown/alpina-ui/blob/main/' + project.source, label: 'Source on GitHub' },

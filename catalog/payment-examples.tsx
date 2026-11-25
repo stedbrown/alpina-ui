@@ -25,7 +25,7 @@ export function SwissQrBillExample() {
       <Typography variant="label">Sample payment slip</Typography>
       <Button variant="outline" onClick={() => { if (slip.current) printSwissQrBill(slip.current) }}>Print payment slip</Button>
     </Stack>
-    <SwissQrBill ref={slip} locale="en" bill={{
+    <SwissQrBill ref={slip} fit locale="en" bill={{
       iban: 'CH58 0079 1123 0008 8901 2', currency: 'CHF', amount: '211.00',
       creditor: { name: 'Muster Krankenkasse', street: 'Musterstrasse', buildingNumber: '12', postalCode: '8000', town: 'Seldwyla', country: 'CH' },
       debtor: { name: 'Sarah Beispiel', street: 'Musterstrasse', buildingNumber: '1', postalCode: '8000', town: 'Seldwyla', country: 'CH' },

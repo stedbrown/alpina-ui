@@ -10,6 +10,8 @@ export interface SwissQrBillProps extends Omit<ComponentPropsWithoutRef<'div'>, 
   locale?: SwissQrBillLocale
   /** Page prints a separate A4 sheet. Inline leaves page positioning to the invoice. */
   printLayout?: 'page' | 'inline'
+  /** Scale the complete slip to fit a narrow screen. Printed dimensions stay in millimetres. */
+  fit?: boolean
 }
 
 // The five correspondence languages and fixed headings are specified in SIX IG 2.4, Annex C.
@@ -139,7 +141,7 @@ function Amount({ bill, words, receipt = false }: { bill: Payment; words: BillLa
 }
 
 export const SwissQrBill = forwardRef<HTMLDivElement, SwissQrBillProps>(function SwissQrBill(
-  { bill, locale = 'de-CH', printLayout = 'page', className = '', ...props }, ref,
+  { bill, locale = 'de-CH', printLayout = 'page', fit = false, className = '', ...props }, ref,
 ) {
   const payment = prepareSwissQrBill(bill)
   const words = headings[locale]
@@ -147,8 +149,8 @@ export const SwissQrBill = forwardRef<HTMLDivElement, SwissQrBillProps>(function
     (party.name.length > 36 || (party.street?.length ?? 0) > 42 || party.town.length > 24)) ||
     payment.message.length + payment.billingInformation.length > 60
   return (
-    <div {...props} ref={ref} className={('al-qr-bill ' + className).trim()} data-print-layout={printLayout}
-      lang={locale} dir="ltr" role="region" aria-label={props['aria-label'] ?? words.receipt + ' / ' + words.payment} tabIndex={props.tabIndex ?? 0}>
+    <div {...props} ref={ref} className={('al-qr-bill ' + className).trim()} data-print-layout={printLayout} data-fit={fit || undefined}
+      lang={locale} dir="ltr" role="region" aria-label={props['aria-label'] ?? words.receipt + ' / ' + words.payment} tabIndex={props.tabIndex ?? (fit ? undefined : 0)}>
       <div className="al-bill-slip">
         <section className="al-bill-receipt" aria-label={words.receipt}>
           <h2>{words.receipt}</h2>

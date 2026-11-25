@@ -418,6 +418,8 @@ textarea {
 .project-nav {
   min-width: 0;
 }
+.al-app-bar:has(> .site-nav) { flex-wrap: nowrap; align-items: flex-start; }
+.al-app-bar > .site-nav + .al-button { min-height: var(--al-space-11); white-space: nowrap; }
 .project-nav {
   padding: var(--al-space-2) max(clamp(1rem, 3vw, 3rem), calc((100% - 76rem) / 2));
   border-block-end: 1px solid var(--al-line);

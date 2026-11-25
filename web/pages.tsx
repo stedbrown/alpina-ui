@@ -24,20 +24,20 @@ export function Masthead({ current }: { current: Section }) {
   ]
   return (
     <Grid as="header" width="site" space="compact">
-      <GridItem medium={3} large={3}>
+      <GridItem>
         <TextLink variant="skip" href="#content">Skip to content</TextLink>
-        <Stack direction="row" justify="space-between" gap={1} wrap={false}>
-          <TextLink variant="quiet" href="/" aria-current={current === 'home' ? 'page' : undefined}>
-            <Stack direction="row" gap={2} wrap={false}>
-              <Avatar decorative size="sm" name="Alpina" src="/assets/alpina-mark.png" />
-              <Typography as="span" variant="heading">Alpina UI</Typography>
-            </Stack>
-          </TextLink>
-          <NavigationMenu label="Repository" orientation="horizontal" sections={[{ links: [{ href: repository, label: <GitHubLabel /> }] }]} />
+        <Stack direction="row" justify="space-between" align="start" gap={3} wrap={false}>
+          <Stack direction="row" gap={3} wrap={false}>
+            <TextLink variant="quiet" href="/" aria-current={current === 'home' ? 'page' : undefined}>
+              <Stack direction="row" gap={2} wrap={false}>
+                <Avatar decorative size="sm" name="Alpina" src="/assets/alpina-mark.png" />
+                <Typography as="span" variant="heading">Alpina UI</Typography>
+              </Stack>
+            </TextLink>
+            <NavigationMenu label="Repository" orientation="horizontal" sections={[{ links: [{ href: repository, label: <GitHubLabel /> }] }]} />
+          </Stack>
+          <NavigationMenu label="Main navigation" orientation="horizontal" align="end" collapseLabel="Menu" sections={[{ links }]} />
         </Stack>
-      </GridItem>
-      <GridItem medium={5} large={5} start={{ large: 8 }}>
-        <NavigationMenu label="Main navigation" orientation="horizontal" sections={[{ links }]} />
       </GridItem>
     </Grid>
   )

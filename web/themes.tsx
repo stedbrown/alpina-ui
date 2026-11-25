@@ -1,4 +1,4 @@
-import { Badge, Button, CurrencyCHF, Field, Grid, GridItem, Icon, Input, Select, Separator, Stack, SwissDate, Textarea, TextLink, Typography } from 'alpina-ui'
+import { Badge, Button, CurrencyCHF, Field, Grid, GridItem, Icon, Input, Select, Separator, Stack, Textarea, TextLink, Typography } from 'alpina-ui'
 import { Footer, Masthead } from './pages.js'
 import { defaultTheme, themeValues } from './theme-values.js'
 
@@ -38,7 +38,7 @@ export function Themes() {
             <Stack gap={1}>
               <Typography variant="label">Amount due</Typography>
               <Typography variant="display" numeric><CurrencyCHF amount={840} locale="de-CH" /></Typography>
-              <Typography>Due <SwissDate value="2027-03-12" locale="fr-CH" /></Typography>
+              <Typography numeric>Due <time dateTime="2027-03-12">12 March 2027</time></Typography>
             </Stack>
             <Stack direction="row">
               <Button asChild><a href="/examples/invoice-review/">Review invoice <Icon name="arrow-right" size={16} /></a></Button>

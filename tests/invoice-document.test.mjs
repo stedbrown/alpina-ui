@@ -77,3 +77,16 @@ test('invoice quantities retain their units and monetary columns always have two
   assert.deepEqual(values, ['2.5 h', '80.00', '0 %', '200.00', '1.25 m²', '24.00', '0 %', '30.00',
     '2', '1.01', '0 %', '2.01', '1', '−0.01', '0 %', '−0.01'])
 })
+
+test('public centime formatting accepts invoice totals and preserves arbitrary bigint precision', async () => {
+  const { formatCentimes } = await import('alpina-ui')
+  const { formatCentimes: direct } = await import('alpina-ui/swiss/format-centimes')
+  assert.equal(formatCentimes, direct)
+  const { totalCents } = calculateInvoiceTotals([line('2.5', 80)])
+  assert.equal(formatCentimes(totalCents), 'CHF\u00a0216.20')
+  assert.equal(formatCentimes(-1, 'de-CH'), 'CHF\u00a0−0.01')
+  assert.equal(formatCentimes(900719925474099312345n, 'fr-CH'), '9\u202f007\u202f199\u202f254\u202f740\u202f993\u202f123.45\u00a0CHF')
+  for (const invalid of [1.2, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1]) {
+    assert.throws(() => formatCentimes(invalid), RangeError)
+  }
+})

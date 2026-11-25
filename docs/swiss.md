@@ -294,3 +294,7 @@ Supply `quantity` and VAT-exclusive `unitPrice` as numbers or period-separated d
 ## Validate on the server
 
 Alpina exposes nine dependency-free Standard Schema validators with localized issues and typed outputs. The shared validation guide includes framework integrations and a working Next.js Server Action. [Swiss validation guide](https://alpina-ui.vercel.app/docs/guides/validation/)
+
+### Display invoice totals in centimes
+
+Pass `calculateInvoiceTotals(lines).totalCents` directly to `formatCentimes(cents, locale)`. For example, `formatCentimes(8005, 'it-CH')` displays CHF 80.05. The helper accepts safe integer numbers and arbitrary-precision integers (`bigint`). Use `formatCHF` when the source amount is already in francs.

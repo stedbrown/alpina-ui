@@ -21,6 +21,10 @@ export async function measureInteractions(origin, routes, reports) {
         await page.getByRole('button', { name: 'Code', exact: true }).tap()
         await page.getByText('Example.tsx', { exact: true }).waitFor()
       } else {
+        // The server renders the button before the block entry loads LoginBlock
+        // and calls hydrateRoot. The load event does not wait for its top-level await.
+        const entry = page.locator('script[type="module"][src*="/block-preview-"]')
+        await entry.evaluate(script => import(script.src).then(() => true))
         await page.getByRole('button', { name: 'Show password', exact: true }).tap()
         await page.getByRole('button', { name: 'Hide password', exact: true }).waitFor()
       }

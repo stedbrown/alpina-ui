@@ -7,10 +7,12 @@ import { extname, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { gzipSync } from 'node:zlib'
 import { measureInteractions } from './interaction-vitals.mjs'
+import { siteUrl } from './site-config.mjs'
 import { chromium } from 'playwright-core'
 
 const site = resolve('site')
-const reports = resolve('test-results/lighthouse')
+const deployed = process.argv.includes('--deployed')
+const reports = resolve(deployed ? 'test-results/lighthouse-production' : 'test-results/lighthouse')
 await mkdir(reports, { recursive: true })
 const mime = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.woff2': 'font/woff2', '.webp': 'image/webp', '.png': 'image/png', '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.webmanifest': 'application/manifest+json', '.json': 'application/json' }
 const server = createServer(async (request, response) => {
@@ -27,8 +29,8 @@ const server = createServer(async (request, response) => {
     response.end(compress ? gzipSync(body) : body)
   } catch { response.writeHead(404).end() }
 })
-await new Promise(resolve => server.listen(0, '127.0.0.1', resolve))
-const origin = 'http://127.0.0.1:' + server.address().port
+if (!deployed) await new Promise(resolve => server.listen(0, '127.0.0.1', resolve))
+const origin = deployed ? siteUrl : 'http://127.0.0.1:' + server.address().port
 const cli = fileURLToPath(import.meta.resolve('lighthouse/cli/index.js'))
 const chrome = process.env.CHROME_PATH ?? process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ??
   (existsSync(chromium.executablePath()) ? chromium.executablePath() : undefined)
@@ -63,4 +65,6 @@ try {
   }
   await measureInteractions(origin, routes, reports)
   assert.deepEqual(failures, [], 'Lighthouse thresholds failed. Inspect test-results/lighthouse for full reports.')
-} finally { await new Promise(resolve => server.close(resolve)) }
+} finally {
+  if (server.listening) await new Promise(resolve => server.close(resolve))
+}

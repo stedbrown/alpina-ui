@@ -61,7 +61,11 @@ try {
   const github = nav.getByRole('link', { name: 'GitHub', exact: true })
   assert.equal(await github.getAttribute('href'), 'https://github.com/stedbrown/alpina-ui')
   assert.equal(await github.locator('svg').getAttribute('aria-hidden'), 'true')
-  const migration = page.getByRole('navigation', { name: 'Documentation guides' }).getByRole('link', { name: 'From shadcn/ui to Alpina' })
+  const guideNavigation = page.getByRole('navigation', { name: 'Documentation guides' })
+  const guideLabels = ['Start', 'CLI', 'Swiss', 'Validation', 'QR-bill', 'Build an interface', 'Design', 'Migration from shadcn/ui', 'API stability', 'Release']
+  const migration = guideNavigation.getByRole('link', { name: 'Migration from shadcn/ui', exact: true })
+  await migration.waitFor()
+  assert.deepEqual((await guideNavigation.getByRole('link').allTextContents()).slice(0, guideLabels.length), guideLabels)
   assert.equal(await migration.getAttribute('href'), '/docs/guides/migration/')
   await migration.click()
   await main.getByRole('heading', { level: 1, name: 'From shadcn/ui to Alpina' }).waitFor()

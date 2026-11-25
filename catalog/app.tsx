@@ -50,6 +50,7 @@ import {
   componentFiles,
   directorySources,
   guides,
+  guideManifest,
   sourceFiles,
   loadPostalSource,
   sources,
@@ -71,35 +72,10 @@ const demos = {
   StackExample,
   IconExample,
 }
-const guideNames: Record<string, string> = {
-  'beta-review': 'Beta review for 1.0',
-  research: 'Research and sources',
-  design: 'Measurements and grids',
-  start: 'Quick start',
-  cli: 'Compare source files',
-  release: 'Alpina upgrade notes',
-  'api-stability': 'Public API stability',
-  'migrate-1-0': 'Move from 0.x to 1.0',
-  migration: 'From shadcn/ui to Alpina',
-  directory: 'Bilingual address book',
-  portal: 'Build the portal',
-  core: 'Foundations',
-  elements: 'Text and data',
-  interactive: 'Interactions',
-  actions: 'Menus and dialogs',
-  workflows: 'Forms and workflows',
-  swiss: 'Swiss formats',
-  validation: 'Shared validation',
-  'qr-bill': 'Swiss QR-bill',
-  coverage: 'Comparison with shadcn/ui',
-}
+const guideNames: Record<string, string> = Object.fromEntries(guideManifest.map(({ id, title }) => [id, title]))
 const guideGroups = [
-  { title: 'Get started', keys: ['start', 'migration', 'cli', 'release', 'migrate-1-0', 'api-stability', 'beta-review'] },
-  { title: 'Design', keys: ['design', 'research'] },
-  {
-    title: 'Guides',
-    keys: ['core', 'elements', 'interactive', 'actions', 'workflows', 'swiss', 'validation', 'qr-bill', 'portal', 'directory', 'coverage'],
-  },
+  { title: 'Guides', keys: guideManifest.filter(guide => guide.navigation === 'guides').map(guide => guide.id) },
+  { title: 'Release candidate', keys: guideManifest.filter(guide => guide.navigation === 'candidate').map(guide => guide.id) },
 ]
 const searchTerms: Record<string, string> = {
   stack: 'toolbar spacing action groups',
@@ -385,10 +361,9 @@ export function App({ pathname }: { pathname: string }) {
             links: [
               ...keys.map((key) => ({
                 href: guideHref(key, true),
-                label: key === 'directory' ? 'Build a bilingual address book' : guideNames[key],
+                label: guideNames[key],
                 current: guide === key,
               })),
-              ...(title === 'Design' ? [{ href: '/docs/#overview', label: 'Typography specimen', current: overview }] : []),
             ],
           }))}
         />

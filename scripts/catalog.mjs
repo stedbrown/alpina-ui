@@ -17,28 +17,8 @@ process.chdir(fileURLToPath(new URL('../', import.meta.url)))
 const outputDir = path.resolve(process.env.ALPINA_SITE_OUTPUT ?? 'site')
 const guides = {}
 const componentGuidance = JSON.parse(await readFile('docs/component-guidance.json', 'utf8'))
-const guideFiles = {
-  'beta-review': 'docs/beta-review.md',
-  coverage: 'docs/coverage.md',
-  'migrate-1-0': 'docs/migrate-1-0.md',
-  migration: 'docs/migration.md',
-  research: 'docs/research.md',
-  portal: 'docs/portal.md',
-  elements: 'docs/elements-v3.md',
-  actions: 'docs/actions-v3.md',
-  workflows: 'docs/workflows-v3.md',
-  start: 'docs/start.md',
-  cli: 'docs/cli.md',
-  release: 'docs/release.md',
-  'api-stability': 'docs/api-stability.md',
-  directory: 'docs/directory.md',
-  core: 'docs/core.md',
-  design: 'docs/design.md',
-  interactive: 'docs/interactive.md',
-  swiss: 'docs/swiss.md',
-  validation: 'docs/validation.md',
-  'qr-bill': 'docs/qr-bill.md',
-}
+const guideManifest = JSON.parse(await readFile('cli/public-guides.json', 'utf8'))
+const guideFiles = Object.fromEntries(guideManifest.map(({ id, file }) => [id, 'docs/' + file]))
 for (const [key, file] of Object.entries(guideFiles)) {
   guides[key] = await renderGuide(await readFile(file, 'utf8'))
 }
@@ -188,6 +168,7 @@ const catalogOptions = offline => ({
           contents:
             'export const guides=' +
             JSON.stringify(offline ? offlineGuides : guides) +
+            ';export const guideManifest=' + JSON.stringify(guideManifest) +
             ';export const componentGuidance=' + JSON.stringify(offline ? componentGuidance : {}) +
             ';export const usageNotes=' +
             JSON.stringify(Object.fromEntries(registry.items.map(({ name, usage }) => [name, usage]))) +

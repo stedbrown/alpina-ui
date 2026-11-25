@@ -1,0 +1,119 @@
+[
+  {
+    "id": "start",
+    "title": "Start",
+    "file": "start.md",
+    "navigation": "guides"
+  },
+  {
+    "id": "cli",
+    "title": "CLI",
+    "file": "cli.md",
+    "navigation": "guides"
+  },
+  {
+    "id": "swiss",
+    "title": "Swiss",
+    "file": "swiss.md",
+    "navigation": "guides"
+  },
+  {
+    "id": "validation",
+    "title": "Validation",
+    "file": "validation.md",
+    "navigation": "guides"
+  },
+  {
+    "id": "qr-bill",
+    "title": "QR-bill",
+    "file": "qr-bill.md",
+    "navigation": "guides"
+  },
+  {
+    "id": "build",
+    "title": "Build an interface",
+    "file": "build.md",
+    "navigation": "guides"
+  },
+  {
+    "id": "design",
+    "title": "Design",
+    "file": "design.md",
+    "navigation": "guides"
+  },
+  {
+    "id": "migration",
+    "title": "Migration from shadcn/ui",
+    "file": "migration.md",
+    "navigation": "guides"
+  },
+  {
+    "id": "api-stability",
+    "title": "API stability",
+    "file": "api-stability.md",
+    "navigation": "guides"
+  },
+  {
+    "id": "release",
+    "title": "Release",
+    "file": "release.md",
+    "navigation": "guides"
+  },
+  {
+    "id": "migrate-1-0",
+    "title": "From 0.x to 1.0",
+    "file": "migrate-1-0.md",
+    "navigation": "candidate"
+  },
+  {
+    "id": "beta-review",
+    "title": "Beta decisions",
+    "file": "beta-review.md",
+    "navigation": "candidate"
+  },
+  {
+    "id": "core",
+    "title": "Core",
+    "file": "core.md"
+  },
+  {
+    "id": "interactive",
+    "title": "Interactions",
+    "file": "interactive.md"
+  },
+  {
+    "id": "actions",
+    "title": "Actions",
+    "file": "actions-v3.md"
+  },
+  {
+    "id": "elements",
+    "title": "Elements",
+    "file": "elements-v3.md"
+  },
+  {
+    "id": "workflows",
+    "title": "Workflows",
+    "file": "workflows-v3.md"
+  },
+  {
+    "id": "research",
+    "title": "Research",
+    "file": "research.md"
+  },
+  {
+    "id": "coverage",
+    "title": "Coverage",
+    "file": "coverage.md"
+  },
+  {
+    "id": "directory",
+    "title": "Directory",
+    "file": "directory.md"
+  },
+  {
+    "id": "portal",
+    "title": "Portal",
+    "file": "portal.md"
+  }
+]

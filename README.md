@@ -1,21 +1,23 @@
 # Alpina UI
 
-Alpina UI brings Swiss typographic design to React. Its 86 components share a responsive grid, left-aligned type, square corners, and a black, white, and red palette. Use them to build a form, format a CHF amount, or print the payment section of a Swiss QR-bill. Address, date, and currency components support Switzerland’s four national languages.
+Alpina UI brings Swiss typographic design to React. Its 88 components share a responsive grid, left-aligned type, square corners, and a black, white, and red palette. Use them to build a form, format a CHF amount, or print the payment section of a Swiss QR-bill. Address, date, and currency components support Switzerland’s four national languages.
 
 ## Explore Alpina
+
+Use the grid overlay to inspect an interface at its actual width. Press Ctrl+Shift+G on the portal to see margins, columns and the four-pixel module. The principles gallery shows how the same timetable, price list or bilingual instruction reads under two different arrangements. [Design principles](https://alpina-ui.vercel.app/principles/) · [Grid reference](https://alpina-ui.vercel.app/docs/components/grid/)
 
 Change the size of a poster edition, switch an invoice between three languages or read the press hours as a table on the homepage. Follow a component link to inspect its types and copy the source. The icon gallery shows the original Alpina symbols used for navigation, actions and status. [Homepage](https://alpina-ui.vercel.app/) · [Component index](https://alpina-ui.vercel.app/docs/components/) · [Icon gallery](https://alpina-ui.vercel.app/icons/) · [Installation](https://alpina-ui.vercel.app/docs/)
 
 Open the offline catalog in a browser to try every component, inspect its TypeScript API, and copy its source. Start with the typography specimen. Switch between 4, 8, and 12 columns to see how margins, gutters, and type sizes change with the available width. The portal uses the same public imports as any other Alpina application. [Offline catalog](https://alpina-ui.vercel.app/catalog.html) · [Design and measurements](docs/design.md)
 
-The catalog covers all 66 families in the shadcn/ui index reviewed on November 24, 2026. Its 20 additional entries include layout primitives, interface icons, Swiss payment and identity fields, and documentation components. The migration table maps each family to its Alpina equivalent and explains differences in the APIs. [Migration guide](https://alpina-ui.vercel.app/docs/guides/migration/) · [Component coverage](docs/coverage.md) · [Swiss graphic design research](docs/research.md)
+The catalog covers all 66 families in the shadcn/ui index reviewed on November 24, 2026. Its 22 additional entries include layout primitives, interface icons, Swiss payment and identity fields, and documentation components. The migration table maps each family to its Alpina equivalent and explains differences in the APIs. [Migration guide](https://alpina-ui.vercel.app/docs/guides/migration/) · [Component coverage](docs/coverage.md) · [Swiss graphic design research](docs/research.md)
 
 ## Install
 
 For a project using React and React DOM 18.2 or 19, install the versioned package archive served by the portal.
 
 ```sh
-npm install https://alpina-ui.vercel.app/alpina-ui-0.9.0.tgz
+npm install https://alpina-ui.vercel.app/alpina-ui-0.10.0.tgz
 ```
 
 Import the stylesheet once at your application entry point and use components by name. You can also copy the TypeScript and CSS into your project with `npx --no-install alpina add button`. [Quick start](docs/start.md)
@@ -46,7 +48,7 @@ npx --no-install alpina add block/pricing
 
 ## Swiss forms and payments
 
-`IbanInput`, `AhvInput`, and `PhoneInput` format Swiss account, social insurance, and telephone numbers. `SwissQrBill` validates account and reference combinations, encodes the payment data, and prints a 210 × 105 mm payment section and receipt. [Interactive payment slip](https://alpina-ui.vercel.app/docs/components/swiss-qr-bill/) · [QR-bill guide](docs/qr-bill.md)
+`IbanInput`, `AhvInput`, `UidInput` and `PhoneInput` format Swiss bank accounts, social insurance numbers, business identifiers and phone numbers. Use `SwissAddressForm` with `format="ech-person"` or `format="ech-organisation"` for structured Swiss street addresses. `SwissQrBill` validates account and reference combinations, encodes the payment data, and prints a 210 × 105 mm payment section and receipt. [Interactive payment slip](https://alpina-ui.vercel.app/docs/components/swiss-qr-bill/) · [QR-bill guide](docs/qr-bill.md)
 
 ## Build from source
 
@@ -66,9 +68,9 @@ Serve `site/` with a static HTTP server to browse the website from its homepage.
 
 | Path | Contents |
 | --- | --- |
-| `src/ui` | 44 foundational components including Grid, Typography, Icon, and DataTable |
+| `src/ui` | 45 foundational components including Grid, Typography, Icon, and DataTable |
 | `src/interactive` | 23 interactive components and their shared behavior |
-| `src/swiss` | 13 Swiss components, plus datasets, validators, and formatters |
+| `src/swiss` | 14 Swiss components, plus datasets, validators, and formatters |
 | `src/portal` | 6 components for navigation, page structure, code samples, and documentation |
 | `src/theme.css` | Tokens for the light and dark themes |
 | `blocks` | Four complete page templates copied by the CLI |
@@ -107,14 +109,16 @@ Run `npm run size` after building to measure individual imports. The benchmark u
 | Import | Gzipped bytes |
 | --- | ---: |
 | Button JavaScript | 1,017 |
-| CurrencyCHF JavaScript | 716 |
+| CurrencyCHF JavaScript | 893 |
 | Dialog JavaScript | 1,155 |
 | Icon JavaScript, all 32 drawings | 1,245 |
-| All JavaScript exports | 37,204 |
-| Full stylesheet including the theme | 13,774 |
+| All JavaScript exports | 40,237 |
+| Full stylesheet including the theme | 15,674 |
 | Button CSS without the theme | 763 |
 
 ## Releases
+
+Version 0.10.0 adds modular grids and subgrids, Swiss cash and calendar conventions, UID validation, structured postal addresses, automatic appearance and an A4 print stylesheet. The catalog runs responsive, accessibility and visual regression checks alongside its interaction suite. [Changelog](CHANGELOG.md) · [Swiss forms](docs/swiss.md) · [Visual testing](docs/visual-testing.md)
 
 Pushes run CI. A maintainer can publish a verified package archive with provenance by starting the separate release workflow. [Maintainer guide](docs/npm-release.md)
 

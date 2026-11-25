@@ -1,5 +1,11 @@
 # Upgrading Alpina UI
 
+## Version 0.10.0
+
+Install `https://alpina-ui.vercel.app/alpina-ui-0.10.0.tgz`. Source-copy projects can run `npx --no-install alpina diff` to inspect local changes before adopting the updated styles.
+
+The default Swiss date is now numeric. Request an explicit `dateStyle` when a sentence needs a written month. Five-centime cash rounding is opt-in. An explicit light or dark appearance takes precedence inside an automatic theme. Check locally overridden spacing against the development overlay, particularly in forms with multiline labels. [Changelog](https://github.com/stedbrown/alpina-ui/blob/main/CHANGELOG.md) · [Design principles](https://alpina-ui.vercel.app/principles/) · [Swiss components](https://alpina-ui.vercel.app/docs/guides/swiss/)
+
 ## Version 0.9.0
 
 Install the versioned archive in an existing React 18.2 or 19 project. Applications that import the package can continue using the same component names. For locally copied components, run `npx --no-install alpina diff` after installing the new version to review changes. [Download the 0.9.0 package](https://alpina-ui.vercel.app/alpina-ui-0.9.0.tgz) · [CLI guide](https://alpina-ui.vercel.app/docs/guides/cli/)

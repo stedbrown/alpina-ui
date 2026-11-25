@@ -1,6 +1,6 @@
 # Component coverage compared with shadcn/ui
 
-Alpina UI 0.9.0 has 86 installable component entries. The table below maps 66 of them to the families in the shadcn/ui **All Components** index recorded on November 24, 2026. The other 20 cover Swiss forms, formatting, icons, layout and navigation. The four copyable pages in Alpina's block gallery have their own CLI names and are counted separately. [Official shadcn/ui component index](https://ui.shadcn.com/docs/components) · [Alpina block gallery](https://alpina-ui.vercel.app/blocks/)
+Alpina UI 0.10.0 has 88 installable component entries. The table below maps 66 of them to the families in the shadcn/ui **All Components** index recorded on November 24, 2026. The other 22 cover Swiss forms, formatting, icons, layout and navigation. The four copyable pages in Alpina's block gallery have their own CLI names and are counted separately. [Official shadcn/ui component index](https://ui.shadcn.com/docs/components) · [Alpina block gallery](https://alpina-ui.vercel.app/blocks/)
 
 ## Differences to consider
 
@@ -95,17 +95,17 @@ The table records one documented implementation for each family. To estimate mig
 | Trace | `trace` | `Trace` | interactive |
 | Typography | `typography` | `Typography` | ui |
 
-## The 20 additional entries in Alpina 0.9.0
+## The 22 additional entries in Alpina 0.10.0
 
 | Purpose | Alpina entries |
 | --- | --- |
-| Layout and portal | `app-shell`, `figure`, `grid`, `stack`, `prose`, `text-link` |
+| Layout and portal | `app-shell`, `figure`, `grid`, `grid-overlay`, `stack`, `prose`, `text-link` |
 | Interface symbols | `icon` |
 | Read-only summaries and workflows | `description-list`, `steps` |
 | Language, cantons, and addresses | `canton-combobox`, `canton-select`, `locale-select`, `swiss-address-form`, `swiss-postal-code-input` |
 | Formatting | `currency-chf`, `swiss-date` |
-| Payments and identifiers | `swiss-qr-bill`, `iban-input`, `ahv-input`, `phone-input` |
+| Payments and identifiers | `swiss-qr-bill`, `iban-input`, `ahv-input`, `phone-input`, `uid-input` |
 
-The QR-bill entry takes structured payment data and renders the 210 × 105 mm receipt and payment part. It checks the account, reference and currency combination before encoding the payment. The three input entries check the structure of a Swiss telephone number or the check digits of an IBAN or AHV number. Account ownership, an assigned AHV number and telephone reachability require verification by the integrating service. [QR-bill printing](https://alpina-ui.vercel.app/docs/guides/qr-bill/) · [Swiss forms and formatting](https://alpina-ui.vercel.app/docs/guides/swiss/)
+The QR-bill checks its account, reference and currency combination before encoding a payment. The four identifier inputs check telephone number structure or the check digits of an IBAN, AHV or business UID. A checksum does not establish registration or ownership. The grid overlay provides visual inspection independently of the modular grid used to lay out an application. [QR-bill printing](https://alpina-ui.vercel.app/docs/guides/qr-bill/) · [Swiss forms and formatting](https://alpina-ui.vercel.app/docs/guides/swiss/)
 
 Run `node --test tests/coverage.test.mjs` to compare this documented snapshot with the registry entries and the compiled package exports. A fresh comparison requires a new count of the published shadcn/ui index.

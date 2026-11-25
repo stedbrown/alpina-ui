@@ -1,6 +1,7 @@
 node_modules/
 dist/
 /site/
+/test-results/
 /catalog/relief.webp
 *.tgz
 !/recipes/rubrica/vendor/alpina-ui-0.6.0.tgz
@@ -8,4 +9,6 @@ dist/
 !/recipes/rubrica/vendor/alpina-ui-0.7.1.tgz
 !/recipes/rubrica/vendor/alpina-ui-0.8.0.tgz
 !/recipes/rubrica/vendor/alpina-ui-0.9.0.tgz
+!/recipes/rubrica/vendor/alpina-ui-0.10.0.tgz
+/test-results/
 .vercel/

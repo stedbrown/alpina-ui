@@ -2,12 +2,11 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises'
 import { createHash } from 'node:crypto'
 import { fileURLToPath } from 'node:url'
 import { build } from 'esbuild'
-import { marked } from 'marked'
 import ts from 'typescript'
 import { execSync } from 'node:child_process'
 import { buildApiReference } from './api-reference.mjs'
 import { readDirectorySources } from './directory-sources.mjs'
-import { appearanceHead, buildWebsite, siteGrid } from './site.mjs'
+import { appearanceHead, buildWebsite, renderGuide, siteGrid } from './site.mjs'
 
 process.chdir(fileURLToPath(new URL('../', import.meta.url)))
 const guides = {}
@@ -30,10 +29,7 @@ const guideFiles = {
   'qr-bill': 'docs/qr-bill.md',
 }
 for (const [key, file] of Object.entries(guideFiles)) {
-  guides[key] = (await marked.parse(await readFile(file, 'utf8'))).replace(
-    /<pre>/g,
-    '<pre tabindex="0">',
-  )
+  guides[key] = await renderGuide(await readFile(file, 'utf8'))
 }
 
 // Export the source of the actual demo shown for each component, with the imports it uses.
@@ -122,7 +118,7 @@ if (process.argv.includes('--release-package')) {
     throw new Error('The release package does not match the address book lockfile.')
   await writeFile('site/' + archiveName, archive)
   // Preserve installation URLs for projects pinned to earlier releases.
-  for (const previous of ['alpina-ui-0.6.0.tgz', 'alpina-ui-0.7.0.tgz', 'alpina-ui-0.7.1.tgz', 'alpina-ui-0.8.0.tgz']) {
+  for (const previous of ['alpina-ui-0.6.0.tgz', 'alpina-ui-0.7.0.tgz', 'alpina-ui-0.7.1.tgz', 'alpina-ui-0.8.0.tgz', 'alpina-ui-0.9.0.tgz']) {
     await writeFile('site/' + previous, await readFile(directory + 'vendor/' + previous))
   }
 } else {

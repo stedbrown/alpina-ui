@@ -31,12 +31,14 @@ try {
       const obscured = await page.evaluate(() => {
         const fields = document.querySelectorAll('a[href], button, input, select, textarea, summary, [tabindex]')
         function exposed(element) {
-          const box = element.getBoundingClientRect()
-          const left = Math.max(0, box.left), top = Math.max(0, box.top)
-          const width = Math.min(innerWidth, box.right) - left, height = Math.min(innerHeight, box.bottom) - top
-          if (width <= 0 || height <= 0) return false
-          for (const x of [.1, .5, .9]) for (const y of [.1, .5, .9]) {
-            if (element.contains(document.elementFromPoint(left + width * x, top + height * y))) return true
+          // A wrapped link can have empty space between its two visible fragments.
+          for (const box of element.getClientRects()) {
+            const left = Math.max(0, box.left), top = Math.max(0, box.top)
+            const width = Math.min(innerWidth, box.right) - left, height = Math.min(innerHeight, box.bottom) - top
+            if (width <= 0 || height <= 0) continue
+            for (const x of [.1, .5, .9]) for (const y of [.1, .5, .9]) {
+              if (element.contains(document.elementFromPoint(left + width * x, top + height * y))) return true
+            }
           }
           return false
         }

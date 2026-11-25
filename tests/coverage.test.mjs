@@ -97,6 +97,10 @@ test('the 66 documented names resolve to published entries and public React expo
     assert.ok(typeof api[component] === 'function' || api[component]?.$$typeof, component)
   }
   const covered = new Set(rows.map(([, , slug]) => slug))
+  const extras = guide.split(/^## The \d+ additional entries /m)[1]
+  const listed = [...extras.matchAll(/^\| [^|]+ \| ([^|]+) \|$/gm)]
+    .flatMap(([, entries]) => [...entries.matchAll(/`([a-z-]+)`/g)].map(match => match[1])).sort()
+  assert.deepEqual(listed, supplemental, 'The coverage guide lists each additional component once.')
   assert.deepEqual([...installed.keys()].filter((slug) => !covered.has(slug)).sort(), supplemental)
   assert.equal(registry.items.length, rows.length + supplemental.length)
 })

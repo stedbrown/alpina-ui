@@ -5,6 +5,10 @@ import { build } from 'esbuild'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { marked } from 'marked'
+
+export async function renderGuide(markdown) {
+  return (await marked.parse(markdown)).replace(/<pre>/g, '<pre tabindex="0">')
+}
 import { GridOverlay } from 'alpina-ui'
 
 // Apply the saved catalog appearance before the first paint on every public page.
@@ -145,7 +149,7 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
   await page('/examples/', 'Example projects', 'Try workshop registration, invoice review, a bilingual studio address book and a client directory built with Alpina UI.', render(Examples))
   await page('/docs/components/', 'Component index', 'Find a React component by name, task or category and open its preview, source code and API.', render(ComponentDirectory), { filter: true })
   const agentsMarkdown = await readFile('docs/agents.md', 'utf8')
-  const agentsHTML = await marked.parse(agentsMarkdown)
+  const agentsHTML = await renderGuide(agentsMarkdown)
   await page('/agents/', 'Agent tools', 'Install the Alpina UI skill or connect a read-only local MCP server to search components, inspect source, and read guides.', render(ReferencePage, { agents: true, html: agentsHTML }))
   await output('reference/agents.md', agentsMarkdown)
 

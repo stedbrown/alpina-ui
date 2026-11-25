@@ -1,4 +1,6 @@
 .al-data-table {
+  /* Keep visually hidden currency labels inside the table's scroll viewport. */
+  position: relative;
   container: al-data-table / inline-size;
   inline-size: 100%;
   max-width: 100%;

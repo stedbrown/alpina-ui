@@ -6,6 +6,7 @@ import { basename, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { build } from 'esbuild'
 import { launchBrowser } from './launch-browser.mjs'
+import { prepareTrials, verifyTrials } from './skill-trial-checks.mjs'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
 const pkg = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'))
@@ -39,6 +40,7 @@ try {
   }
   const harness = await normalized(new URL('./skill-example-fixture.tsx.txt', import.meta.url))
   await writeFile(join(consumer, 'main.tsx'), imports.join('\n') + '\n' + harness)
+  const entries = ['main', ...await prepareTrials(consumer)]
   await writeFile(join(consumer, 'tsconfig.json'), JSON.stringify({ compilerOptions: {
     noEmit: true, strict: true, skipLibCheck: true, jsx: 'react-jsx', module: 'ESNext',
     moduleResolution: 'Bundler', target: 'ES2022', noUnusedLocals: true,
@@ -47,7 +49,7 @@ try {
     stdio: 'inherit', timeout: 45000,
   })
   const output = join(consumer, 'public')
-  await build({ entryPoints: [join(consumer, 'main.tsx')], outdir: output, bundle: true, format: 'esm',
+  await build({ entryPoints: entries.map(entry => join(consumer, entry + '.tsx')), outdir: output, bundle: true, format: 'esm',
     splitting: true, jsx: 'automatic', loader: { '.woff2': 'dataurl' }, define: { 'process.env.NODE_ENV': '"production"' } })
   browser = await launchBrowser()
   const page = await browser.newPage({ viewport: { width: 1024, height: 900 } })
@@ -55,11 +57,14 @@ try {
   page.on('pageerror', error => errors.push(error.message))
   page.on('console', message => { if (message.type() === 'error') errors.push(message.text()) })
   await page.route('https://skill.test/**', route => {
-    const path = new URL(route.request().url()).pathname
+    const url = new URL(route.request().url())
+    const path = url.pathname
     if (path !== '/') return route.fulfill({ path: join(output, basename(path)) })
+    const entry = url.searchParams.get('example') ?? 'main'
+    assert.ok(entries.includes(entry))
     return route.fulfill({
       contentType: 'text/html',
-      body: '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/main.css"></head><body><div id="app"></div><script type="module" src="/main.js"></script></body></html>',
+      body: '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/' + entry + '.css"></head><body><div id="app"></div><script type="module" src="/' + entry + '.js"></script></body></html>',
     })
   })
   await page.goto('https://skill.test/')
@@ -70,6 +75,7 @@ try {
   assert.equal(await page.getByRole('textbox', {name:'Email',exact:true}).getAttribute('aria-invalid'), 'true')
   await page.getByRole('button', {name:'Print invoice'}).waitFor()
   await page.getByRole('table', {name:'Journal des ventes'}).waitFor()
+  await verifyTrials(page)
   assert.deepEqual(errors, [])
   console.log('Type-checked and rendered ' + names.length + ' published skill examples against ' + basename(archive) + '.')
 } finally {

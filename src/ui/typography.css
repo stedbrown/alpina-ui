@@ -132,6 +132,30 @@ address.al-type { font-style: normal; }
   letter-spacing: -.035em;
 }
 .al-type[data-tracking='normal'] { letter-spacing: normal; }
+
+/* Display lettering can wrap at the spaces of a headline, also when the surrounding
+   baseline grid is wider than the column holding it. */
+.al-type:is([data-role='display'], [data-role='poster'], [data-role='masthead']) {
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+.al-type:has(> .al-type-line) {
+  box-sizing: border-box;
+  container-type: inline-size;
+  inline-size: 100%;
+}
+.al-type-line {
+  display: block;
+  font-size: min(1em, calc(100cqi / var(--al-word-measure)));
+  line-height: var(--al-display-line);
+  line-height: round(nearest, var(--al-display-line), var(--al-unit));
+  letter-spacing: var(--al-display-tracking);
+}
+.al-type[data-role='poster'] > .al-type-line { font-size: min(1em, 21.25cqi, calc(100cqi / var(--al-word-measure))); }
+.al-type[data-role='masthead'] > .al-type-line { line-height: .94; }
+.al-type[data-role='masthead'][data-responsive] > .al-type-line { line-height: .86; letter-spacing: -.035em; }
+.al-type[data-tracking] > .al-type-line { letter-spacing: inherit; }
 .al-type[data-tracking='optical'] { letter-spacing: var(--al-display-tracking); }
 
 .al-type[data-role='specimen'] {

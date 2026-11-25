@@ -201,6 +201,8 @@ Today's SBB digital design system publishes column counts, margins, and gutters 
 
 ## A typographic cover in React
 
+Set a poster headline to the width of its column. With a 1600 px viewport, a seven-column heading has roughly half that space. The block-level `display`, `poster` and `masthead` roles keep words whole, reduce the type to accommodate the longest word and wrap at word boundaries. Inline emphasis and explicit line breaks are preserved. A compact column can share the same title component as a full-width cover.
+
 ```tsx
 import { Grid, GridItem, Typography } from 'alpina-ui'
 

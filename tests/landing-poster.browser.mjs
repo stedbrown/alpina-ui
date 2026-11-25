@@ -26,7 +26,7 @@ try {
     const poster = await cover.evaluate(section => {
       const title = section.querySelector('h1')
       const run = new Range()
-      run.selectNodeContents(title.firstChild)
+      run.selectNodeContents(title.querySelector('.al-type-line').firstChild)
       const line = [...run.getClientRects()].filter(rect => rect.width)
       return {
         height: section.clientHeight,

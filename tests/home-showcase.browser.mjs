@@ -272,7 +272,7 @@ try {
           const rect = el.getBoundingClientRect()
           return rect.left >= 0 && rect.right <= innerWidth + 1
         })
-        const lines = [...title.childNodes].filter(n => n.nodeType === Node.TEXT_NODE).map(n => {
+        const lines = [...title.querySelector('.al-type-line').childNodes].filter(n => n.nodeType === Node.TEXT_NODE).map(n => {
           const range = new Range(); range.selectNodeContents(n)
           return [...range.getClientRects()].filter(r => r.width).length
         })

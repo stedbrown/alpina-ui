@@ -71,3 +71,20 @@ Choose `BarChart` to compare categories against zero, `LineChart` for an ordered
 ```
 
 Use `formatValue` for presentation units and `loading` while observations are outstanding. The native data disclosure exposes values and labels in reading order. With `ChartTable`, this table is the primary view.
+
+For grouped bars or several lines on a shared scale, supply `series` with a name and ordered observations for each series. Category labels identify matching observations. Supply unique labels within each series, and order the first series as it should appear on the axis. Missing values leave a gap and display a dash in the data table.
+
+```tsx
+import { BarChart, LineChart, Stack } from 'alpina-ui'
+
+const series = [
+  { name: '2026', data: [{ label: 'Q1', value: 48 }, { label: 'Q2', value: 56 }] },
+  { name: '2025', data: [{ label: 'Q1', value: 32 }, { label: 'Q2', value: 51 }] },
+]
+export function BookingComparison() {
+  return <Stack gap={6}>
+    <BarChart title="Bookings by quarter" categoryLabel="Quarter" series={series} />
+    <LineChart title="Booking trend" categoryLabel="Quarter" series={series} />
+  </Stack>
+}
+```

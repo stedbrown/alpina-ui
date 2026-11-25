@@ -36,17 +36,18 @@ export function DataTableExample() {
 }
 
 export function BarChartExample() {
-  return <BarChart title="Change in library loans" description="Change against the previous quarter, in loans."
-    categoryLabel="Branch" valueLabel="Change" data={[
-      { label: 'Oerlikon', value: 128 }, { label: 'Altstadt', value: 84 }, { label: 'Wiedikon', value: -32 },
+  return <BarChart title="Change in library loans" description="Year-on-year change in quarterly loans by branch."
+    categoryLabel="Branch" series={[
+      { name: '2026', data: [{ label: 'Oerlikon', value: 128 }, { label: 'Altstadt', value: 84 }, { label: 'Wiedikon', value: -32 }] },
+      { name: '2025', data: [{ label: 'Oerlikon', value: 64 }, { label: 'Altstadt', value: -16 }, { label: 'Wiedikon', value: 48 }] },
     ]} />
 }
 
 export function LineChartExample() {
-  return <LineChart title="Passenger counts" description="Morning departures at the station, Monday through Friday."
-    categoryLabel="Day" valueLabel="Passengers" data={[
-      { label: 'Mon', value: 420 }, { label: 'Tue', value: 520 }, { label: 'Wed', value: 480 },
-      { label: 'Thu', value: 560 }, { label: 'Fri', value: 460 },
+  return <LineChart title="Morning passengers" description="Station counts on the five working days in the survey week."
+    categoryLabel="Day" series={[
+      { name: '2026', data: [{ label: 'Mon', value: 420 }, { label: 'Tue', value: 520 }, { label: 'Wed', value: 480 }, { label: 'Thu', value: 560 }, { label: 'Fri', value: 460 }] },
+      { name: '2025', data: [{ label: 'Mon', value: 390 }, { label: 'Tue', value: 480 }, { label: 'Wed', value: 510 }, { label: 'Thu', value: 470 }, { label: 'Fri', value: 450 }] },
     ]} />
 }
 

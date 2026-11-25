@@ -46,3 +46,20 @@ test('negative display values use U+2212 across plots and cells, preserving iden
     }
   }
 })
+
+test('named comparisons align series by category and preserve missing readings in lines and tables', () => {
+  const groups = [
+    { name: 'Actual', data: [{ label: 'Jan', value: 4 }, { label: 'Feb', value: 8 }, { label: 'Mar', value: 2 }] },
+    { name: 'Budget', data: [{ label: 'Mar', value: -1 }, { label: 'Jan', value: 3 }] },
+  ]
+  for (const chart of [BarChart, LineChart]) {
+    const markup = html(chart, { series: groups })
+    assert.match(markup, /class="al-series-legend"/)
+    assert.match(markup, /<th scope="col">Actual<\/th><th scope="col">Budget<\/th>/)
+    assert.match(markup, /<th scope="row">Feb<\/th><td>8<\/td><td>—<\/td>/)
+    assert.match(markup, /<th scope="row">Mar<\/th><td>2<\/td><td>−1<\/td>/)
+    if (chart === BarChart) assert.equal((markup.match(/class="al-value-bar"/g) ?? []).length, 5)
+    else assert.match(markup, /<path d="M0 [\d.]+ M100 [\d.]+ "/)
+    assert.match(html(chart, { series: [] }), /No observations/)
+  }
+})

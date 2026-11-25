@@ -39,10 +39,15 @@ test('an alternate-domain build shares and indexes each hosted page on that doma
     for (const url of urls) {
       assert.equal(new URL(url).origin, origin)
       const head = (await read(new URL(url).pathname + 'index.html')).split('</head>')[0]
-      assert.ok(head.includes('<html lang="en"'), url)
+      const translation = /^\/docs\/guides\/(start|swiss)\/(?:(it|de|fr)\/)?$/.exec(new URL(url).pathname)
+      assert.ok(head.includes('<html lang="' + (translation?.[2] ?? 'en') + '"'), url)
       assert.ok(head.includes('<link rel="canonical" href="' + url + '">'), url)
       assert.ok(head.includes('<meta property="og:url" content="' + url + '">'), url)
-      assert.doesNotMatch(head, /hreflang="(?:de|fr|it|rm)(?:-CH)?"/)
+      if (translation) {
+        const base = origin + '/docs/guides/' + translation[1] + '/'
+        for (const tag of ['en', 'de', 'fr', 'it', 'x-default'])
+          assert.ok(head.includes('hreflang="' + tag + '" href="' + base + (['en', 'x-default'].includes(tag) ? '' : tag + '/') + '"'), url)
+      } else assert.doesNotMatch(head, /hreflang=/)
     }
     const metadata = (key, html = home) => html.match(new RegExp('<meta (?:name|property)="' + key + '" content="([^"]+)"'))?.[1]
     const image = new URL(metadata('og:image'))

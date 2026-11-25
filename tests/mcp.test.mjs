@@ -95,3 +95,10 @@ for (const [queries, expected] of [
     for (const line of lines) assert.match(line, /^[a-z-]+ \([a-z]+\) — \S.+/)
   })
 }
+
+test('get_guide selects only published translations', () => {
+  const [, french, unavailable] = exchange([hello, call(2, 'get_guide', { slug: 'swiss', language: 'fr' }),
+    call(3, 'get_guide', { slug: 'release', language: 'fr' })])
+  assert.equal(french.result.content[0].text, read('docs/fr/swiss.md'))
+  assert.equal(unavailable.result.isError, true)
+})

@@ -1,6 +1,6 @@
 # Swiss interfaces
 
-Alpina ships React components and pure functions for Swiss data. Set the locale explicitly or use the default, `it-CH`. The other supported locales are `de-CH`, `fr-CH`, and `rm-CH`.
+Alpina ships React components and pure functions for Swiss data. Set a locale on a component or its enclosing provider. Swiss interfaces support `it-CH`, `de-CH`, `fr-CH` and `rm-CH`.
 
 | Component | Main props | HTML or output |
 | --- | --- | --- |

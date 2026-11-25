@@ -74,7 +74,8 @@ for (const language of ['de', 'fr']) {
       await page.goto(siteOrigin + route)
       if (/^\/docs\/components\/.+\/$/.test(route)) await page.locator('.al-preview-content > *').first().waitFor()
       if (route.startsWith('/docs/') || route === '/catalog.html') {
-        assert.equal(await page.locator('html').getAttribute('lang'), 'en', route)
+        const edition = /^\/docs\/guides\/(?:start|swiss)\/(de|fr|it)\/$/.exec(route)
+        assert.equal(await page.locator('html').getAttribute('lang'), edition?.[1] ?? 'en', route)
       }
       assert.deepEqual(await page.evaluate(browserChrome), [], language + ' · ' + route)
     }

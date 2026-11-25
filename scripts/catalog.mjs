@@ -17,7 +17,9 @@ process.chdir(fileURLToPath(new URL('../', import.meta.url)))
 const outputDir = path.resolve(process.env.ALPINA_SITE_OUTPUT ?? 'site')
 const guides = {}
 const componentGuidance = JSON.parse(await readFile('docs/component-guidance.json', 'utf8'))
+const packageVersion = JSON.parse(await readFile('package.json', 'utf8')).version
 const guideManifest = JSON.parse(await readFile('cli/public-guides.json', 'utf8')).filter(guide => !guide.route)
+  .map(guide => guide.id === 'migrate-1-0' && !packageVersion.startsWith('1.0.0-') ? { ...guide, navigation: undefined } : guide)
 const redirects = JSON.parse(await readFile('vercel.json', 'utf8')).redirects
 // An incremental build may still contain the HTML and Markdown from an older release.
 for (const { source } of redirects) {
@@ -26,7 +28,9 @@ for (const { source } of redirects) {
   if (retired) await rm(path.join(outputDir, retired), { force: true })
 }
 const guideAliases = Object.fromEntries(redirects.filter(rule => rule.source.startsWith('/docs/guides/')).map(rule => [rule.source.split('/')[3], rule.destination]))
-const guideFiles = Object.fromEntries(guideManifest.map(({ id, file }) => [id, 'docs/' + file]))
+const guideFiles = Object.fromEntries(guideManifest.flatMap(({ id, file, languages = [] }) => [
+  [id, 'docs/' + file], ...languages.map(language => [id + '/' + language, 'docs/' + language + '/' + file]),
+]))
 for (const [key, file] of Object.entries(guideFiles)) {
   let markdown = await readFile(file, 'utf8')
   if (key === 'beta-review') {
@@ -184,7 +188,7 @@ const catalogOptions = offline => ({
         ctx.onLoad({ filter: /.*/, namespace: 'alpina' }, () => ({
           contents:
             'export const guides=' +
-            JSON.stringify(offline ? offlineGuides : guides) +
+            JSON.stringify(offline ? offlineGuides : Object.fromEntries(Object.entries(guides).filter(([key]) => !key.includes('/')))) +
             ';export const directoryStory=' + JSON.stringify(directoryStory) +
             ';export const guideAliases=' + JSON.stringify(guideAliases) +
             ';export const guideManifest=' + JSON.stringify(guideManifest) +
@@ -261,7 +265,7 @@ await mkdir(path.join(outputDir, 'assets'), { recursive: true })
 for (const file of hosted.outputFiles) {
   if (file !== hostedEntry && file.path.endsWith('.js')) await writeFile(file.path, file.contents)
 }
-await buildWebsite({ outputDir, guides, guideFiles, apiReference, componentGuidance, registry, script: hostedEntry.text, css, notices, renderComponent })
+await buildWebsite({ outputDir, guides, guideFiles, guideManifest, apiReference, componentGuidance, registry, script: hostedEntry.text, css, notices, renderComponent })
 console.log(
   'Offline catalog: ' + path.join(outputDir, 'catalog.html') + ' (' + (Buffer.byteLength(html) / 1024).toFixed(0) + ' KiB)',
 )

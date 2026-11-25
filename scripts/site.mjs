@@ -143,8 +143,8 @@ async function loadPages() {
   return import('data:text/javascript;base64,' + Buffer.from(result.outputFiles[0].contents).toString('base64'))
 }
 
-export async function buildWebsite({ outputDir, guides, guideFiles, apiReference, componentGuidance, registry, script, css, notices, renderComponent }) {
-  const { Landing, StartHere, Examples, DesignerKit, StaticApi, Icons, Themes, Principles, Blocks, BlockPage, blockDemos, blocks, ComponentDirectory, ComponentStatus, ReferencePage, ExampleIntroduction, inventory, projects } = await loadPages()
+export async function buildWebsite({ outputDir, guides, guideFiles, guideManifest, apiReference, componentGuidance, registry, script, css, notices, renderComponent }) {
+  const { Landing, StartHere, Examples, DesignerKit, StaticApi, Icons, Themes, Principles, Blocks, BlockPage, blockDemos, blocks, ComponentDirectory, ComponentStatus, ReferencePage, GuideLanguages, downloadLabel, ExampleIntroduction, inventory, projects } = await loadPages()
   async function output(name, data) {
     const target = path.join(outputDir, name)
     await mkdir(path.dirname(target), { recursive: true })
@@ -224,6 +224,8 @@ export async function buildWebsite({ outputDir, guides, guideFiles, apiReference
       '<link rel="stylesheet" href="' + fontsURL + '">',
       appearanceHead,
     ]
+    for (const [language, href] of Object.entries(options.alternates ?? {}))
+      tags.push('<link rel="alternate" hreflang="' + escape(language) + '" href="' + escape(siteUrl + href) + '">')
     if (route === '/') {
       const source = {
         '@context': 'https://schema.org', '@type': 'SoftwareSourceCode', '@id': url + '#source',
@@ -246,8 +248,8 @@ export async function buildWebsite({ outputDir, guides, guideFiles, apiReference
     if (options.theme) tags.push('<script type="module" src="' + themeJS + '"></script>')
     if (options.block) tags.push('<script type="module" src="' + blockJS + '"></script>')
     if (options.filter) tags.push('<script type="module" src="' + filterJS + '"></script>')
-    const content = options.app ? render(PageRegion, { id: 'app', 'data-prerendered': options.prerender ? '' : undefined, dangerouslySetInnerHTML: { __html: body } }) + (options.noScript ?? '') + (options.prerender ? indexIntentScript : '') + '<script type="module" src="' + appJS + '"></script>' : body
-    await output(route + 'index.html', '<!doctype html>\n<html lang="' + siteMetadata.language + '" data-al-theme="auto"><head>' + tags.join('\n') + '</head><body data-al-page>' + siteGrid + content + '</body></html>')
+    const content = (options.guideBody ? '<template id="translated-guide">' + options.guideBody + '</template>' : '') + (options.app ? render(PageRegion, { id: 'app', 'data-prerendered': options.prerender ? '' : undefined, dangerouslySetInnerHTML: { __html: body } }) + (options.noScript ?? '') + (options.prerender ? indexIntentScript : '') + '<script type="module" src="' + appJS + '"></script>' : body)
+    await output(route + 'index.html', '<!doctype html>\n<html lang="' + (options.language ?? siteMetadata.language) + '" data-al-theme="auto"><head>' + tags.join('\n') + '</head><body data-al-page>' + siteGrid + content + '</body></html>')
     paths.push(url)
   }
 
@@ -282,7 +284,7 @@ export async function buildWebsite({ outputDir, guides, guideFiles, apiReference
   }, 'Download Alpina UI ' + registry.version) })
   const quickStart = guides.start.replace('<!-- alpina-download -->', packageLink)
   const componentLinks = inventory.map(([slug, label]) => ({ href: '/docs/components/' + slug + '/', label }))
-  const guideLinksForIndex = await Promise.all(Object.entries(guideFiles).map(async ([key, file]) => ({
+  const guideLinksForIndex = await Promise.all(Object.entries(guideFiles).filter(([key]) => guideManifest.some(guide => guide.id === key && guide.navigation)).map(async ([key, file]) => ({
     href: '/docs/guides/' + key + '/', label: (await readFile(file, 'utf8')).match(/^#\s+(.+)$/m)[1],
   })))
   const docsIndex = quickStart + render(NavigationMenu, { label: 'Documentation directory',
@@ -300,7 +302,12 @@ export async function buildWebsite({ outputDir, guides, guideFiles, apiReference
     const intro = marked.lexer(markdown).find((token) => token.type === 'paragraph')?.text ?? title
     const description = intro.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[`*]/g, '').split(/(?<=[.!?])\s/)[0]
     const route = '/docs/guides/' + key + '/'
-    await page(route, title, description, render(ReferencePage, { html: key === 'start' ? quickStart : guides[key] }), { app: true })
+    const [id, language = 'en'] = key.split('/')
+    const family = Object.keys(guideFiles).filter(candidate => candidate === id || candidate.startsWith(id + '/'))
+    const alternates = family.length > 1 ? Object.fromEntries([...family.map(name => [name.split('/')[1] ?? 'en', '/docs/guides/' + name + '/']), ['x-default', '/docs/guides/' + id + '/']]) : undefined
+    const selector = alternates ? render(GuideLanguages, { guide: id, language, hosted: true }) : ''
+    const html = id === 'start' ? guides[key].replace('<!-- alpina-download -->', packageLink.replace('Download Alpina UI', downloadLabel[language] + ' Alpina UI')) : guides[key]
+    await page(route, title, description, render(ReferencePage, { html: selector + html }), { app: true, language, alternates, guideBody: language === 'en' ? undefined : guides[key] })
     guideLinks.push('- [' + title + '](' + siteUrl + '/reference/' + key + '.md)')
   }
 

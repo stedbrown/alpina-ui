@@ -11,7 +11,10 @@ test('the npm archive includes the published guides and excludes maintainer note
     : execFileSync(process.platform === 'win32' ? 'npm.cmd' : 'npm', args, { ...options, shell: process.platform === 'win32' })
   const files = new Set(JSON.parse(listing)[0].files.map(file => file.path))
   const manifest = JSON.parse(await readFile('cli/public-guides.json', 'utf8'))
-  for (const guide of manifest) assert.ok(files.has('docs/' + guide.file), guide.file)
+  for (const guide of manifest) {
+    for (const prefix of ['', ...(guide.languages ?? []).map(language => language + '/')])
+      assert.ok(files.has('docs/' + prefix + guide.file), prefix + guide.file)
+  }
   for (const internal of ['readme.template', 'npm-release', 'package-quality', '1.0-checklist', 'visual-testing', 'portal', 'beta-review'])
     assert.ok(!files.has('docs/' + internal + '.md'), internal)
 })

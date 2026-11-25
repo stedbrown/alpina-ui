@@ -26,8 +26,9 @@ const tools = [
     name: string('Exact registry identifier, for example dropdown-menu.'),
     file: string('Optional source path exactly as listed by this component.'),
   }, ['name']),
-  tool('get_guide', 'Read an installed English Markdown guide. Omit slug to list available guides.', {
+  tool('get_guide', 'Read an installed published Markdown guide. Omit slug to list available guides.', {
     slug: string('Guide identifier returned by this tool, for example swiss or design.'),
+    language: string('Optional guide language. Start and Swiss are available in en, it, de and fr.'),
   }),
 ]
 
@@ -54,9 +55,11 @@ async function callTool(root, registry, guides, name, args) {
   }
   if (name === 'get_guide') {
     if (args.slug === undefined) return resultText([...guides.keys()].join('\n'))
-    const filename = guides.get(args.slug)
-    if (!filename) return resultText('Unknown guide. Call get_guide without a slug to list guides.', true)
-    return resultText(await read('docs', filename))
+    const guide = guides.get(args.slug)
+    if (!guide) return resultText('Unknown guide. Call get_guide without a slug to list guides.', true)
+    const language = args.language ?? 'en'
+    if (language !== 'en' && !guide.languages?.includes(language)) return resultText('This guide is available in ' + ['en', ...(guide.languages ?? [])].join(', ') + '.', true)
+    return resultText(await read('docs', language === 'en' ? guide.file : language + '/' + guide.file))
   }
   const entry = registry.items.find((item) => item.name === args.name)
   if (!entry) return resultText('Unknown component. Use search_components to find its identifier.', true)
@@ -75,7 +78,7 @@ async function callTool(root, registry, guides, name, args) {
 
 export async function serveCatalog(root, registry) {
   const published = JSON.parse(await readFile(path.join(root, 'cli/public-guides.json'), 'utf8'))
-  const guides = new Map(published.filter(guide => guide.mcp !== false).map(guide => [guide.id, guide.file]))
+  const guides = new Map(published.filter(guide => guide.mcp !== false).map(guide => [guide.id, guide]))
   const serverInfo = { name: 'alpina-ui', version: registry.version }
   const versions = [modernVersion, ...handshakeVersions]
   let initialized = false

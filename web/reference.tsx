@@ -12,6 +12,7 @@ export { Themes } from './themes.js'
 export { Principles } from './principles.js'
 export { blockDemos } from './block-demos.js'
 export { Blocks, BlockPage, blocks } from './blocks.js'
+export { GuideLanguages, downloadLabel } from '../catalog/guide-languages.js'
 export { projects } from './projects.js'
 export { inventory }
 

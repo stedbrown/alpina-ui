@@ -38,6 +38,7 @@ import * as composition from './composition-examples.js'
 import { SwissAddressFormExample } from './address-example.js'
 import { ApiReference } from './api-reference.js'
 import { ReferenceGuidance } from './reference-guidance.js'
+import { GuideLanguages, guideLanguageNames, guideTitle, type GuideLanguage } from './guide-languages.js'
 import { InstallGuide } from './install-guide.js'
 import { DirectoryLive } from './directory-live.js'
 import { DirectorySource } from './directory-source.js'
@@ -76,7 +77,7 @@ const demos = {
 const guideNames: Record<string, string> = Object.fromEntries(guideManifest.map(({ id, title }) => [id, title]))
 const guideGroups = [
   { title: 'Guides', keys: guideManifest.filter(guide => guide.navigation === 'guides').map(guide => guide.id) },
-  { title: 'Release guidance', keys: guideManifest.filter(guide => guide.navigation === 'candidate' && (guide.id !== 'migrate-1-0' || /^\d+\.\d+\.\d+-/.test(version) && version.startsWith('1.0.0-'))).map(guide => guide.id) },
+  { title: 'Release guidance', keys: guideManifest.filter(guide => guide.navigation === 'candidate').map(guide => guide.id) },
 ]
 const searchTerms: Record<string, string> = {
   stack: 'toolbar spacing action groups',
@@ -208,10 +209,10 @@ function Workbench({
     </ReferenceArticle>
   )
 }
-export function App({ pathname }: { pathname: string }) {
-  const [, pageType, pageId] = /^\/docs\/(guides|components)\/([\w-]+)$/.exec(pathname) ?? []
+export function App({ pathname, translatedGuide }: { pathname: string; translatedGuide?: string }) {
+  const [, pageType, pageId, pageLang] = /^\/docs\/(guides|components)\/([\w-]+)(?:\/(it|de|fr))?$/.exec(pathname) ?? []
   const hostedDocs = pathname === '/docs' || !!pageId
-  const pathRoute = pageType === 'guides' ? 'guide/' + pageId : pageId
+  const pathRoute = pageType === 'guides' ? 'guide/' + pageId + (pageLang ? '/' + pageLang : '') : pageId
   const siteLinks = [
     { href: '/', label: 'Home' },
     { href: '/docs/', label: 'Docs', current: pageType !== 'components' },
@@ -236,11 +237,11 @@ export function App({ pathname }: { pathname: string }) {
   const subpage = viewPath === 'codice' ? 'code' : viewPath === 'sorgente' ? 'source' : viewPath
   const item = inventory.find((row) => row[0] === itemId)
   const mode = (Object.keys(views) as View[]).find((view) => views[view] === subpage) ?? 'Preview'
-  const guide = route.startsWith('guide/')
-    ? Object.hasOwn(guideNames, route.slice(6))
-      ? route.slice(6)
-      : 'start'
-    : null
+  const [, requestedGuide, locale] = route.split('/')
+  const guide = route.startsWith('guide/') ? (Object.hasOwn(guideNames, requestedGuide) ? requestedGuide : 'start') : null
+  const multilingual = guide === 'start' || guide === 'swiss'
+  const language: GuideLanguage = multilingual && locale && Object.hasOwn(guideLanguageNames, locale) ? locale as GuideLanguage : 'en'
+  const guideBody = guide ? (hostedDocs && language !== 'en' ? translatedGuide : guides[language === 'en' ? guide : guide + '/' + language]) : undefined
   const liveDirectory = hash === 'bilingual-address-book' || hash === 'rubrica-bilingue'
   const projectStory = route === 'project/bilingual-address-book'
   const directory = hash === 'address-book' || hash === 'rubrica'
@@ -271,7 +272,8 @@ export function App({ pathname }: { pathname: string }) {
   useEffect(() => {
     if (liveDirectory) return
     const title = item ? (hostedDocs ? item[1] : item[2]) : (guide && guideNames[guide]) || workflow?.title || area
-    document.title = title + ' · Alpina UI'
+    document.documentElement.lang = language
+    document.title = (multilingual ? guideTitle(guide!, language) : title) + ' · Alpina UI'
     window.scrollTo(0, 0)
     const mobileLayout = matchMedia('(max-width:740px)').matches
     if (!first.current && mobileLayout)
@@ -283,7 +285,7 @@ export function App({ pathname }: { pathname: string }) {
         b = list.current.getBoundingClientRect()
       if (a.bottom > b.bottom || a.top < b.top) list.current.scrollTop += a.top - b.top - 40
     }
-  }, [item, guide, area, liveDirectory, workflow])
+  }, [item, guide, area, liveDirectory, workflow, language, multilingual])
   useLayoutEffect(() => {
     if (!index.focusSearch) return
     search.current?.focus()
@@ -322,6 +324,7 @@ export function App({ pathname }: { pathname: string }) {
   const sidebar = (
     <Sidebar
       ref={list}
+      lang="en"
       aria-label="Catalog"
       tools={
         <InputGroup trailing={<Kbd aria-hidden="true">/</Kbd>}>
@@ -417,7 +420,7 @@ export function App({ pathname }: { pathname: string }) {
       toolbar={
         <>
           {hostedDocs ? (
-            <NavigationMenu label="Site navigation" data-site-nav="" orientation="horizontal" collapseLabel="Menu" sections={[{ links: siteLinks }]} />
+            <NavigationMenu lang="en" label="Site navigation" data-site-nav="" orientation="horizontal" collapseLabel="Menu" sections={[{ links: siteLinks }]} />
           ) : (
             <Breadcrumb label="Current section" items={[{ href: '#overview', label: 'Library' }, { label: area }]} />
           )}
@@ -440,7 +443,7 @@ export function App({ pathname }: { pathname: string }) {
               orientation="horizontal"
               sections={[
                 {
-                  links: Object.entries(guideNames).map(([key, label]) => ({
+                  links: guideManifest.filter(entry => entry.navigation).map(({ id: key, title: label }) => ({
                     href: '#guide/' + key,
                     label,
                     current: key === guide,
@@ -449,10 +452,11 @@ export function App({ pathname }: { pathname: string }) {
               ]}
             />
           )}
+          {multilingual && <GuideLanguages guide={guide} language={language} hosted={hostedDocs} />}
           {guide === 'start' ? (
-            <InstallGuide html={guides.start} />
+            <InstallGuide html={guideBody!} language={language} />
           ) : (
-            <Prose data-guide-content="" dangerouslySetInnerHTML={{ __html: guides[guide] }} />
+            <Prose data-guide-content="" dangerouslySetInnerHTML={{ __html: guideBody! }} />
           )}
         </>
       ) : directory ? (
@@ -477,7 +481,7 @@ function Project({ bilingual }: { bilingual: boolean }) {
         collapseLabel="Menu"
         sections={[{ links: [
           { href: '/examples/', label: '← Examples' },
-          { href: bilingual ? guideHref('directory', true) : componentHref('swiss-address-form', true), label: 'Documentation' },
+          { href: bilingual ? '/examples/' : componentHref('swiss-address-form', true), label: 'Documentation' },
           { href: source, label: 'Source on GitHub' },
         ] }]}
       /></GridItem></Grid>
@@ -507,8 +511,9 @@ if (typeof document !== 'undefined') {
   const pathname = location.pathname.replace(/(?:\/index\.html)?\/?$/, '')
   const bilingual = pathname + '/' === bilingualProject
   const workflow = workflowProjects.find(({ slug }) => pathname === '/examples/' + slug)
+  const translatedGuide = document.querySelector<HTMLTemplateElement>('#translated-guide')?.innerHTML
   const page = workflow ? <WorkflowExample project={workflow} hosted />
-    : bilingual || pathname + '/' === clientProject ? <Project bilingual={bilingual} /> : <App pathname={pathname} />
+    : bilingual || pathname + '/' === clientProject ? <Project bilingual={bilingual} /> : <App pathname={pathname} translatedGuide={translatedGuide} />
   const root = document.getElementById('app')!
   // Bookmarked views and query-configured examples can differ from the canonical preview.
   if (root.hasAttribute('data-prerendered') && !location.hash && !location.search) hydrateRoot(root, page)

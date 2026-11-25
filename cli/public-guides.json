@@ -3,7 +3,12 @@
     "id": "start",
     "title": "Start",
     "file": "start.md",
-    "navigation": "guides"
+    "navigation": "guides",
+    "languages": [
+      "it",
+      "de",
+      "fr"
+    ]
   },
   {
     "id": "cli",
@@ -15,7 +20,12 @@
     "id": "swiss",
     "title": "Swiss",
     "file": "swiss.md",
-    "navigation": "guides"
+    "navigation": "guides",
+    "languages": [
+      "it",
+      "de",
+      "fr"
+    ]
   },
   {
     "id": "validation",

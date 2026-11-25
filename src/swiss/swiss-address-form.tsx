@@ -460,29 +460,59 @@ export const SwissAddressFields = forwardRef<HTMLFieldSetElement, SwissAddressFi
     onValueChange?.(next, Object.keys(patch) as AddressField[])
   }
 
+  function renderField(key: AddressField, shared = false) {
+    const name = names?.[key] ?? key
+    const id = prefix + '-' + name
+    const section = key === 'recipient' || key === 'canton' || key === 'locality' ? key : key === 'postalCode' ? 'postcode' : 'street'
+    return <Field key={key} id={id} className={'al-address-' + section} label={text[key]}
+      error={shared ? undefined : errors?.[key]}
+      describedBy={shared ? [
+        errors?.[key] && id + '-error',
+        key === 'postalCode' && text.postalCodeHint && id + '-hint',
+        key === 'postalCode' && places && prefix + '-postal-matches',
+      ].filter(Boolean).join(' ') : undefined}>
+      {control => {
+        const common = { ...control, name, 'aria-invalid': errors?.[key] ? true as const : undefined, required: requiredFields.includes(key),
+          onChange: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+            if (key === 'postalCode') setEditedPostal(true)
+            if (['postalCode', 'locality', 'canton'].includes(key)) setChosen('')
+            update({ [key]: event.currentTarget.value })
+          } }
+        if (key === 'postalCode') return <SwissPostalCodeInput {...common} value={address.postalCode ?? ''} locale={locale} />
+        if (key === 'canton') return <CantonSelect {...common} value={address.canton ?? ''} locale={locale === 'en' ? 'de-CH' : locale}
+          order="name" autoComplete="address-level1" placeholder={text.selectCanton} />
+        const autoComplete = key === 'recipient' ? (format === 'ech-person' ? 'family-name' : format === 'ech-organisation' ? 'organization' : 'name')
+          : key === 'firstName' ? 'given-name' : key === 'street' ? 'address-line1' : key === 'locality' ? 'address-level2' : undefined
+        return <Input {...common} value={address[key] ?? ''} autoComplete={autoComplete} />
+      }}
+    </Field>
+  }
+
+  // Keep the caller's field order, including a standalone locality or canton.
+  const rows: AddressField[][] = []
+  const isLocation = (key: AddressField) => key === 'postalCode' || key === 'locality' || key === 'canton'
+  for (const key of fields) {
+    const last = rows.at(-1)
+    if (last && isLocation(last[0]!) && isLocation(key)) last.push(key)
+    else rows.push([key])
+  }
+
   return <fieldset ref={group} lang={locale} aria-label={text.title} {...rest}
     className={('al-address-fields ' + className).trim()}>
-    {fields.map(key => {
-      const name = names?.[key] ?? key
-      const section = key === 'recipient' || key === 'canton' || key === 'locality' ? key : key === 'postalCode' ? 'postcode' : 'street'
-      return <Field key={key} id={prefix + '-' + name} className={'al-address-' + section} label={text[key]}
-        error={errors?.[key]} description={key === 'postalCode' ? text.postalCodeHint : undefined}
-        describedBy={key === 'postalCode' && places ? prefix + '-postal-matches' : undefined}>
-        {control => {
-          const common = { ...control, name, required: requiredFields.includes(key),
-            onChange: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-              if (key === 'postalCode') setEditedPostal(true)
-              if (['postalCode', 'locality', 'canton'].includes(key)) setChosen('')
-              update({ [key]: event.currentTarget.value })
-            } }
-          if (key === 'postalCode') return <SwissPostalCodeInput {...common} value={address.postalCode ?? ''} locale={locale} />
-          if (key === 'canton') return <CantonSelect {...common} value={address.canton ?? ''} locale={locale === 'en' ? 'de-CH' : locale}
-            order="name" autoComplete="address-level1" placeholder={text.selectCanton} />
-          const autoComplete = key === 'recipient' ? (format === 'ech-person' ? 'family-name' : format === 'ech-organisation' ? 'organization' : 'name')
-            : key === 'firstName' ? 'given-name' : key === 'street' ? 'address-line1' : key === 'locality' ? 'address-level2' : undefined
-          return <Input {...common} value={address[key] ?? ''} autoComplete={autoComplete} />
-        }}
-      </Field>
+    {rows.map(row => {
+      if (!isLocation(row[0]!)) return renderField(row[0]!)
+      return <div key={row[0]} className="al-address-location">
+        <div className="al-address-row">{row.map(key => renderField(key, true))}</div>
+        {row.map(key => {
+          const id = prefix + '-' + (names?.[key] ?? key)
+          const hint = key === 'postalCode' && text.postalCodeHint
+          if (!errors?.[key] && !hint) return null
+          return <div key={key} className="al-address-feedback">
+            {errors?.[key] && <div className="al-field-error" id={id + '-error'}>{text[key]}: {errors[key]}</div>}
+            {hint && <div className="al-field-hint" id={id + '-hint'}>{text[key]}: {hint}</div>}
+          </div>
+        })}
+      </div>
     })}
     {fields.includes('postalCode') && <div className="al-address-suggestions">
       <span id={prefix + '-postal-matches'} aria-live="polite">{places && (places.length

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import { existsSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { build } from 'esbuild'
+import { readableLabelIssues } from './readable-labels.mjs'
 import { chromium } from 'playwright-core'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
@@ -72,16 +73,27 @@ try {
   const submit = form.getByRole('button')
   async function checkAddressRow() {
     for (const width of [640, 420, 230]) {
-      const { labels, controls, hint } = await form.evaluate((element, width) => {
+      const { labels, controls, lastControl, feedback, row } = await form.evaluate((element, width) => {
         element.style.inlineSize = width + 'px'
         const fields = ['postalCode', 'locality', 'canton'].map(name => element.elements.namedItem(name))
         return {
           labels: fields.map(input => input.labels[0].getBoundingClientRect().top),
           controls: fields.map(input => input.getBoundingClientRect().top),
-          hint: element.querySelector('.al-address-postcode .al-field-hint').getBoundingClientRect().bottom,
+          lastControl: Math.max(...fields.map(input => input.getBoundingClientRect().bottom)),
+          row: Math.max(...fields.map(input => input.getBoundingClientRect().right)) -
+            Math.min(...fields.map(input => input.getBoundingClientRect().left)),
+          feedback: fields.flatMap(input => (input.getAttribute('aria-describedby') ?? '').split(' ')
+            .filter(id => id.endsWith('-hint') || id.endsWith('-error'))
+            .map(id => { const { top, width } = document.getElementById(id).getBoundingClientRect(); return { top, width } })),
+
         }
       }, width)
-      assert.ok(hint <= controls[0], 'The postal hint precedes the input')
+      assert.ok(feedback.length)
+      for (const note of feedback) {
+        assert.ok(note.top >= lastControl, 'Field feedback follows all the grouped inputs')
+        assert.equal(note.width, row, 'Hints and errors use the full row at ' + width)
+      }
+      assert.deepEqual(await form.evaluate(readableLabelIssues), [], 'Address feedback at ' + width)
       if (width > 230) {
         assert.equal(labels[0], labels[1], 'Postal and locality labels at ' + width)
         assert.equal(controls[0], controls[1], 'Postal and locality controls at ' + width)
@@ -180,7 +192,7 @@ try {
   await page.evaluate(() =>
     window.finish({
       fieldErrors: {
-        postalCode: 'Verifica il numero postale con il destinatario.',
+        postalCode: 'Lo sportello serve solo Lugano (6900).',
         locality: 'Conferma il nome della località.',
       },
     }),
@@ -188,6 +200,8 @@ try {
   await page.waitForFunction(() => document.activeElement?.getAttribute('name') === 'postalCode')
   assert.equal(await form.getByRole('alert').count(), 0)
   assert.equal(await field('recipient').inputValue(), '  A & B  ')
+  await checkAddressRow()
+  assert.match(await field('postalCode').getAttribute('aria-describedby'), /-error.*-hint/)
   const returnedErrors = form.getByRole('group', { name: 'Campi da correggere (2)' })
   await returnedErrors.getByRole('link', { name: 'Località' }).click()
   assert.equal(await page.evaluate(() => document.activeElement.name), 'locality')

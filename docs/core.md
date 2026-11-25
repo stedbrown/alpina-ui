@@ -142,7 +142,7 @@ export function Invoices({ rows }: { rows: readonly Invoice[] }) {
 | `DataTableProps<Row>` property | Behavior |
 | --- | --- |
 | `rows: readonly Row[]` | Keeps the supplied order until sorting is applied. Sorts a copy and preserves the order of equivalent rows. |
-| `columns: readonly DataTableColumn<Row>[]` | Accepts display columns and typed accounting columns. A display column requires a unique `id`, a text `header`, and `cell(row): ReactNode`. `align` accepts `start` or `end`. Supply `compare(a, b)` to enable sorting. Return a negative number, zero, or a positive number. |
+| `columns: readonly DataTableColumn<Row>[]` | Accepts display columns and typed accounting columns. A display column requires a unique `id`, a text `header`, and `cell(row): ReactNode`. `align` accepts `start` or `end`. Set `nowrap: true` to keep a custom cell such as a linked invoice number on one line. Supply `compare(a, b)` to enable sorting. Return a negative number, zero, or a positive number. |
 | `rowKey(row): Key` | Returns a stable, unique React key such as an invoice ID. |
 | `caption: string`, `empty: ReactNode` | The caption identifies the table and its scrollable region. The empty message spans all columns. |
 | `defaultSort?: DataSort` | For internal state, set the initial sort with `{ column, direction }`. `column` must identify a sortable column. |

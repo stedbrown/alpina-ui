@@ -56,7 +56,7 @@ The callback can return nothing or return a promise. While saving, the form susp
 
 ### Postal locality suggestions
 
-Use `SwissAddressFields` inside an existing form. It renders a fieldset with native controls, field names and locality suggestions. `value` and `onValueChange` support controlled forms. Use `defaultValue` with native FormData for an uncontrolled form.
+Use `SwissAddressFields` inside an existing form. It renders a fieldset with native controls, field names and locality suggestions. Postcode, locality and canton share a row when space permits. Their labelled hints and errors appear underneath the group. Each control announces its own feedback. `value` and `onValueChange` support controlled forms. Use `defaultValue` with native FormData for an uncontrolled form.
 
 ```tsx
 import { SwissAddressFields } from 'alpina-ui/swiss/swiss-address-form'

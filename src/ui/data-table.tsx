@@ -13,6 +13,8 @@ export interface DataColumn<Row> {
   cell: (row: Row) => ReactNode
   compare?: (a: Row, b: Row) => number
   align?: 'start' | 'end'
+  /** Keep the full value, including a custom link or inline markup, on one line. */
+  nowrap?: boolean
 }
 export type AccountingColumn<Row> = {
   id: string
@@ -183,7 +185,8 @@ function DataTableView<Row>({
             <TableHead id={hintId + '-group-' + index} scope="rowgroup" colSpan={columns.length}>{name}</TableHead>
           </TableRow>}
           {records.map(entry => <TableRow key={rowKey(entry.row)}>{columns.map(col =>
-            <TableCell key={col.id} data-align={alignment(col)} numeric={alignment(col) === 'end'}>{content(col, entry)}</TableCell>
+            <TableCell key={col.id} data-align={alignment(col)} {...(!('format' in col) && col.nowrap && { 'data-unbroken': true })}
+              numeric={alignment(col) === 'end'}>{content(col, entry)}</TableCell>
           )}</TableRow>)}
           {groupBy && summary(subtotalLabel?.(name) ?? name, records, 'subtotal')}
         </TableBody>)}

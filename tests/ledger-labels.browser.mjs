@@ -2,16 +2,17 @@ import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import { createElement as h } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { Badge, Button, DataTable, DescriptionList, InlineCode, Stack, Table, TableBody, TableRow, TableCell } from 'alpina-ui'
+import { Badge, Button, DataTable, DescriptionList, InlineCode, Stack, Table, TableBody, TableRow, TableCell, TextLink } from 'alpina-ui'
 import { launchBrowser } from './launch-browser.mjs'
 import { readableLabelIssues } from './readable-labels.mjs'
 
 const css = await readFile(new URL('../dist/styles.css', import.meta.url), 'utf8')
 const fixture = renderToStaticMarkup(h(Stack, { align: 'start' },
   h(DataTable, {
-    caption: 'Fatture', empty: 'Nessuna fattura', rows: [{ id: '2026-0158' }], rowKey: r => r.id,
+    caption: 'Fatture', empty: 'Nessuna fattura', rows: [{ id: '2026-0158' }, { id: '2026-0141' }], rowKey: r => r.id,
     columns: [
       { id: 'id', header: 'Numero', cell: r => r.id, compare: () => 0 },
+      { id: 'document', header: 'Link', nowrap: true, cell: r => h(TextLink, { href: '#invoice-' + r.id }, r.id) },
       { id: 'client', header: 'Cliente', cell: () => 'Falegnameria di quartiere' },
       { id: 'date', header: 'Data', format: 'swiss-date', value: () => '2026-03-14' },
       { id: 'amount', header: 'Totale', format: 'chf', value: () => 1285.15 },
@@ -32,7 +33,7 @@ try {
   for (const width of [320, 360, 640, 768, 800, 960, 1024, 1440]) {
     await page.setViewportSize({ width, height: 900 })
     assert.deepEqual(await page.evaluate(readableLabelIssues), [], width + 'px')
-    const split = await page.getByRole('table', { name: 'Fatture' }).locator('tbody td:first-child, time, button, .al-badge').evaluateAll(elements => {
+    const split = await page.getByRole('table', { name: 'Fatture' }).locator('tbody td:first-child, td a, time, button, .al-badge').evaluateAll(elements => {
       return elements.flatMap(el => {
         const range = document.createRange()
         range.selectNodeContents(el)
@@ -61,14 +62,16 @@ try {
   await page.setContent('<style>' + css + '</style>' + renderToStaticMarkup(propsTable))
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth))
   assert.equal(await page.getByText('2026-0158').evaluate(el => getComputedStyle(el).whiteSpace), 'nowrap')
-  await page.setContent('<div style="width:2ch">Custom summary</div>' +
+  await page.setContent('<table><tr><td style="max-width:2ch"><a href="#">2026-0141</a></td></tr></table><div class="al-field-error" style="width:2ch">Lo sportello serve solo Lugano.</div><div style="width:2ch">Custom summary</div>' +
     '<span style="display:inline-block;width:2ch">Custom label</span>' +
     '<div style="width:2ch"><span>Wrapper width</span></div>' +
     '<div style="width:2ch"><span>OK</span></div>' +
     '<div style="clip-path:inset(50%);width:0"><span style="display:block">Audible only</span></div>')
   assert.deepEqual((await page.evaluate(readableLabelIssues)).sort(), [
+    'Text column narrower than 4ch: 2026-0141',
     'Text column narrower than 4ch: Custom label',
     'Text column narrower than 4ch: Custom summary',
+    'Text column narrower than 4ch: Lo sportello serve solo Lugano.',
     'Text column narrower than 4ch: Wrapper width',
   ])
   console.log('Invoice references, actions and description terms retain their intrinsic reading width.')

@@ -48,24 +48,42 @@
 }
 .al-address-fields {
   display: grid;
-  grid-template-columns: minmax(calc(var(--al-unit) * 20), 0.38fr) minmax(0, 1fr);
+  container: address-fields / inline-size;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--al-space-5) var(--al-space-3);
   min-inline-size: 0;
   margin: 0;
   padding: var(--al-space-6);
   border: 0;
 }
-.al-address-fields > .al-field {
+.al-address-location, .al-address-feedback {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--al-space-1);
+}
+.al-address-row {
   display: flex;
+  flex-wrap: wrap;
+  gap: var(--al-space-5) var(--al-space-3);
+}
+.al-address-row > .al-field {
+  display: flex;
+  flex: 1 1 0;
   flex-direction: column;
+  justify-content: space-between;
 }
-.al-address-fields > .al-field > :is(input, select) {
-  margin-block-start: auto;
+.al-address-row > .al-address-postcode { flex: 0 1 calc(var(--al-unit) * 22); }
+.al-address-row > .al-address-canton { flex-basis: 100%; }
+.al-address-feedback .al-field-error {
+  padding-inline-start: var(--al-space-2);
+  border-inline-start: 2px solid var(--al-danger);
 }
-.al-address-recipient,
-.al-address-street,
-.al-address-canton {
-  grid-column: 1 / -1;
+.al-address-feedback > div { max-inline-size: none; }
+@container address-fields (min-width: 33rem) {
+  .al-address-row > .al-address-canton { flex: 1.2 1 0; }
+}
+@container address-fields (max-width: 14rem) {
+  .al-address-row > .al-field { flex-basis: 100%; }
 }
 .al-address-postcode input {
   font-variant-numeric: tabular-nums;
@@ -102,14 +120,6 @@
   line-height: var(--al-leading-label);
 }
 .al-address-actions [role='status']:empty { position: absolute; }
-@container (min-width: 36rem) {
-  .al-address-fields {
-    grid-template-columns: minmax(calc(var(--al-unit) * 20), 0.42fr) minmax(0, 1fr) minmax(0, 1.2fr);
-  }
-  .al-address-canton {
-    grid-column: auto;
-  }
-}
 @container (max-width: 22rem) {
   .al-address-summary {
     margin-inline: var(--al-space-4);
@@ -121,10 +131,5 @@
   }
   .al-address-actions .al-button {
     inline-size: 100%;
-  }
-}
-@container (max-width: 16rem) {
-  .al-address-fields {
-    grid-template-columns: minmax(0, 1fr);
   }
 }

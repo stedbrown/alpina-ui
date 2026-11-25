@@ -7,7 +7,7 @@ The release candidates preserve the component imports, named props and CLI regis
 Commit your lockfile first. Install the exact archive in your React project, then run your application’s typecheck and tests. For source-copy projects, run `npx --no-install alpina diff` to compare the new sources with local edits. To roll back, restore your previous manifest, lockfile and any edited component sources, then run `npm ci`.
 
 ```sh
-npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.3.tgz
+npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.4.tgz
 ```
 
 ## Calendar week numbers

@@ -197,12 +197,12 @@
   "grid": {
     "js": 2752,
     "lazy": 0,
-    "css": 1600
+    "css": 2240
   },
   "grid-overlay": {
     "js": 2304,
     "lazy": 0,
-    "css": 1728
+    "css": 2368
   },
   "hover-card": {
     "js": 1856,
@@ -325,7 +325,7 @@
     "css": 448
   },
   "prose": {
-    "js": 768,
+    "js": 1024,
     "lazy": 0,
     "css": 1920
   },
@@ -402,7 +402,7 @@
   "steps": {
     "js": 320,
     "lazy": 0,
-    "css": 1344
+    "css": 1664
   },
   "swiss-address-form": {
     "js": 11072,
@@ -475,9 +475,9 @@
     "css": 512
   },
   "typography": {
-    "js": 512,
+    "js": 704,
     "lazy": 0,
-    "css": 1024
+    "css": 1280
   },
   "uid-input": {
     "js": 1792,

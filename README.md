@@ -5,7 +5,7 @@
 
 Open-source React components built on the Swiss typographic grid. Compose forms, tables and charts with a four-pixel rhythm, a measured type scale and one red accent.
 
-[![CI](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml) [![MIT license](https://img.shields.io/badge/license-MIT-222222)](LICENSE) [![Package version](https://img.shields.io/badge/version-1.0.0--rc.3-eb0000)](CHANGELOG.md)
+[![CI](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml) [![MIT license](https://img.shields.io/badge/license-MIT-222222)](LICENSE) [![Package version](https://img.shields.io/badge/version-1.0.0--rc.4-eb0000)](CHANGELOG.md)
 
 [Live site](https://alpina-ui.vercel.app/) · [Start here](https://alpina-ui.vercel.app/start-here/) · [Documentation](https://alpina-ui.vercel.app/docs/) · [Designer kit](https://alpina-ui.vercel.app/kit/) · [Design principles](https://alpina-ui.vercel.app/principles/) · [Changelog](CHANGELOG.md) · [API stability](docs/api-stability.md)
 
@@ -13,12 +13,14 @@ Open-source React components built on the Swiss typographic grid. Compose forms,
 | --- | --- |
 | [![Alpina homepage in light appearance](docs/images/home-light.png)](docs/images/home-light.png) | [![Alpina homepage in dark appearance](docs/images/home-dark.png)](docs/images/home-dark.png) |
 
+The live poster lets you set type size and tracking, operate a print queue, compare paper and ink, and enlarge a keyboard-operated form to 400%. [Explore the specimens](https://alpina-ui.vercel.app/)
+
 ## Install in 30 seconds
 
 In an existing React 18.2 or 19 app, install the versioned archive and import the stylesheet once.
 
 ```sh
-npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.3.tgz
+npm install https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.4.tgz
 ```
 
 ```tsx
@@ -30,7 +32,7 @@ export function Checkout() {
 }
 ```
 
-To own the source, run `npx --no-install alpina add button`. To copy a complete page, use `npx --no-install alpina add block/dashboard`. Optional imports include self-hosted Inter and a Tailwind v4 token bridge. [Installation guide](https://alpina-ui.vercel.app/docs/) · [CLI commands](https://alpina-ui.vercel.app/docs/guides/cli/)
+To own the source, run `npx --no-install alpina add button`. To copy a complete page, use `npx --no-install alpina add block/dashboard`. Import `alpina-ui/fonts.css` for self-hosted Inter. Components establish the typeface even in a document with an unstyled body. A Tailwind v4 token bridge is also available. [Installation guide](https://alpina-ui.vercel.app/docs/) · [CLI commands](https://alpina-ui.vercel.app/docs/guides/cli/)
 
 ## What comes with Alpina
 

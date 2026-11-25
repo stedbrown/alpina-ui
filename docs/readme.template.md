@@ -12,6 +12,8 @@ Open-source React components built on the Swiss typographic grid. Compose forms,
 | --- | --- |
 | [![Alpina homepage in light appearance](docs/images/home-light.png)](docs/images/home-light.png) | [![Alpina homepage in dark appearance](docs/images/home-dark.png)](docs/images/home-dark.png) |
 
+The live poster lets you set type size and tracking, operate a print queue, compare paper and ink, and enlarge a keyboard-operated form to 400%. [Explore the specimens]({{SITE}}/)
+
 ## Install in 30 seconds
 
 In an existing React 18.2 or 19 app, install the versioned archive and import the stylesheet once.
@@ -29,7 +31,7 @@ export function Checkout() {
 }
 ```
 
-To own the source, run `npx --no-install alpina add button`. To copy a complete page, use `npx --no-install alpina add block/dashboard`. Optional imports include self-hosted Inter and a Tailwind v4 token bridge. [Installation guide]({{SITE}}/docs/) · [CLI commands]({{SITE}}/docs/guides/cli/)
+To own the source, run `npx --no-install alpina add button`. To copy a complete page, use `npx --no-install alpina add block/dashboard`. Import `alpina-ui/fonts.css` for self-hosted Inter. Components establish the typeface even in a document with an unstyled body. A Tailwind v4 token bridge is also available. [Installation guide]({{SITE}}/docs/) · [CLI commands]({{SITE}}/docs/guides/cli/)
 
 ## What comes with Alpina
 

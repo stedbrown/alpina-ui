@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.0-rc.4 · 25 November 2026
+
+- **Public API** Read the installed version from `alpina-ui/package.json`. Grid supports viewport covers and chapter spacing, GridItem can group entrance steps, and GridSpecimen can magnify its contents or use system colors. Typography adds folio and specimen roles, adjustable specimen size and numeric tracking. [Reviewed declarations](etc/alpina-ui.api.md)
+- Establish the component font in unstyled consumer pages, including standalone postcode feedback, code samples and text inside layouts.
+- Read invoice calculations and QR-bill details on narrow screens, and enlarge the payment slip independently of its physical print dimensions.
+- Keep short invoice links and document codes together by default in DataTable. Set `nowrap: false` on a column to allow wrapping. Local MCP search now recognizes component names in five languages and common spelling errors.
+- Rebuild the homepage as a full-height typographic poster with ten numbered sections, adjustable type, an interactive print shop, a keyboard-operated reflow demonstration and contrasting paper and ink proofs. Update the [light](docs/images/home-light.png) and [dark](docs/images/home-dark.png) first screens.
+- Link both historical 0.11 release URLs directly to the [original changelog entry](#release-0-11-0).
+
 ## 1.0.0-rc.3 · 25 November 2026
 
 - **Public API** Add `AlpinaProvider` for locale inheritance, the `nowrap` flag for custom DataTable columns and the opt-in `stripSeparators` option for QRR and creditor references. Typography adds a masthead role and configurable tracking. Grid supports an optional entrance sequence. [Reviewed declarations](etc/alpina-ui.api.md)

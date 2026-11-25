@@ -1,5 +1,15 @@
 # Upgrading Alpina UI
 
+## Version 1.0.0-rc.4
+
+[Download RC4](https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.4.tgz) and compare its [SHA-512 checksum](https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.4.tgz.sha512). RC3 remains available below for rollback.
+
+Standalone components establish their own typeface. Imports of the optional Inter stylesheet now cover the same address hints, validation messages and layout text you see in the portal. Tools can read the installed version from `alpina-ui/package.json`.
+
+On narrow screens, invoice lines place the description above the calculation. QR-bills show the payment details alongside access to the full slip. Print keeps the 210 × 105 mm payment section. [InvoiceDocument](https://alpina-ui.vercel.app/docs/components/invoice-document/) · [SwissQrBill](https://alpina-ui.vercel.app/docs/components/swiss-qr-bill/)
+
+Try the [interactive poster](https://alpina-ui.vercel.app/) with a keyboard. Explore the grid, set the type size and tracking, compare both themes and operate the print-shop example. The [local MCP server](https://alpina-ui.vercel.app/agents/) also accepts multilingual component terms and spelling errors.
+
 ## Version 1.0.0-rc.3
 
 [Download the candidate](https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.3.tgz) and [verify its SHA-512 checksum](https://alpina-ui.vercel.app/alpina-ui-1.0.0-rc.3.tgz.sha512). The previous archive below remains available for rollback.

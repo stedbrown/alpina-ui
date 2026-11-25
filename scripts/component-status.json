@@ -12,7 +12,7 @@
   "alert": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "5df9034692ce28988fb4"
+    "source": "3648a20f6bbba7e16f78"
   },
   "alert-dialog": {
     "stage": "Stable",
@@ -112,7 +112,7 @@
   "code-block": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "53821713372d95f67446"
+    "source": "d46394c90c133a0a1edb"
   },
   "collapsible": {
     "stage": "Stable",
@@ -197,12 +197,12 @@
   "grid": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "974fe981eea54281e17e"
+    "source": "76e5cb1528847978cc1c"
   },
   "grid-overlay": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "bb370d5deba44029573d"
+    "source": "7275b15374c8365f55a0"
   },
   "hover-card": {
     "stage": "Stable",
@@ -327,12 +327,12 @@
   "prose": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "5ea1a552edf68e1a8be0"
+    "source": "83284faafc623c324624"
   },
   "qr-bill-scanner": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "7e126047f4d9e43f3d95"
+    "source": "2262c3a8b20eed5a9d20"
   },
   "questionnaire": {
     "stage": "Stable",
@@ -402,12 +402,12 @@
   "steps": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "6a18ac9a753b5ae70b4b"
+    "source": "3bde09f288615b341f6f"
   },
   "swiss-address-form": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "3d5606f1bce44d5fdee3"
+    "source": "988d6e4f47c740d4305a"
   },
   "swiss-date": {
     "stage": "Stable",
@@ -477,7 +477,7 @@
   "typography": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "f4590f6eacfd3b2df009"
+    "source": "ab3e9cddf7a4f53f39ca"
   },
   "uid-input": {
     "stage": "Beta",

@@ -2,7 +2,8 @@ import { forwardRef, type ComponentPropsWithoutRef } from 'react'
 import { SwissQrBill, type SwissQrBillLocale } from './swiss-qr-bill.js'
 import type { SwissQrAddress, SwissQrBillData } from './qr-payment.js'
 import { calculateInvoiceTotals, invoiceUnitPriceCents, type InvoiceLine } from './invoice-totals.js'
-import { formatCHF } from './format-chf.js'
+import { formatCentimes } from './format-centimes.internal.js'
+import { formatSwissNumber } from './format-swiss-number.js'
 import { SwissDate } from './swiss-date.js'
 import { formatSwissUid, isSwissUid } from './identifiers.js'
 import './invoice-document.css'
@@ -55,21 +56,8 @@ export const InvoiceDocument = forwardRef<HTMLElement, InvoiceDocumentProps>(fun
     throw new RangeError('A payable CHF QR invoice must total between 0.01 and 999999999.99.')
   const l = words[locale]
   const swissLocale = locale === 'en' ? 'de-CH' : locale
-  function amount(cents: number) {
-    const francs = BigInt(cents) / 100n
-    const formatted = formatCHF(cents < 0 && francs === 0n ? -0 : francs, swissLocale)
-    const fraction = String(Math.abs(cents % 100)).padStart(2, '0')
-    return formatted.replace(/([.,])00(?=(?:\u00a0CHF)?$)/, (_, separator) => separator + fraction)
-  }
-  const decimal = new Intl.NumberFormat(locale === 'en' ? 'en-CH' : locale)
-  const separator = decimal.formatToParts(1.5).find(part => part.type === 'decimal')!.value
-  function number(value: number | string) {
-    // Preserve every supplied decimal. Binary64 can already lose the fourth decimal place at 1e12.
-    const raw = String(value)
-    const [integer, fraction = ''] = raw.replace(/^-/, '').split('.')
-    const digits = fraction.replace(/0+$/, '')
-    return (raw.startsWith('-') ? '−' : '') + decimal.format(BigInt(integer)).replaceAll("'", '’') + (digits ? separator + digits : '')
-  }
+  const amount = (cents: number) => formatCentimes(BigInt(cents), swissLocale)
+  const number = (value: string | number) => formatSwissNumber(value, locale)
   const columnAmount = (cents: number) => amount(cents).replace('CHF', '').trim()
   const rate = (value: number) => number(value) + '\u00a0%'
   const bill = { ...payment, currency: 'CHF' as const, amount: (result.totalCents / 100).toFixed(2) }

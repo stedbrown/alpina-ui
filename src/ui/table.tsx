@@ -1,12 +1,18 @@
 import { numberText } from './number-text.js'
 import { forwardRef, type ComponentPropsWithoutRef } from 'react'
 import './table.css'
+export { TableAmount, type TableAmountProps, type AccountingValue, type AccountingNegativeStyle } from './table-amount.js'
 
-export interface TableProps extends ComponentPropsWithoutRef<'table'> {}
+export interface TableProps extends ComponentPropsWithoutRef<'table'> {
+  stickyHeader?: boolean
+  stickyFirstColumn?: boolean
+}
 export interface TableHeaderProps extends ComponentPropsWithoutRef<'thead'> {}
 export interface TableBodyProps extends ComponentPropsWithoutRef<'tbody'> {}
 export interface TableFooterProps extends ComponentPropsWithoutRef<'tfoot'> {}
-export interface TableRowProps extends ComponentPropsWithoutRef<'tr'> {}
+export interface TableRowProps extends ComponentPropsWithoutRef<'tr'> {
+  variant?: 'subtotal' | 'total'
+}
 export interface TableHeadProps extends ComponentPropsWithoutRef<'th'> {
   numeric?: boolean
 }
@@ -16,10 +22,10 @@ export interface TableCellProps extends ComponentPropsWithoutRef<'td'> {
 export interface TableCaptionProps extends ComponentPropsWithoutRef<'caption'> {}
 
 export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
-  { className = '', ...props },
+  { stickyHeader, stickyFirstColumn, className = '', ...props },
   ref,
 ) {
-  return <table ref={ref} {...props} className={`al-table ${className}`.trim()} />
+  return <table ref={ref} {...props} data-sticky-header={stickyHeader || undefined} data-sticky-first={stickyFirstColumn || undefined} className={`al-table ${className}`.trim()} />
 })
 export const TableHeader = forwardRef<HTMLTableSectionElement, TableHeaderProps>(function TableHeader(
   props,
@@ -40,10 +46,10 @@ export const TableFooter = forwardRef<HTMLTableSectionElement, TableFooterProps>
   return <tfoot ref={ref} {...props} />
 })
 export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(function TableRow(
-  props,
+  { variant, ...props },
   ref,
 ) {
-  return <tr ref={ref} {...props} />
+  return <tr ref={ref} {...props} data-summary={variant} />
 })
 export const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(function TableHead(
   { scope = 'col', numeric = false, ...props },

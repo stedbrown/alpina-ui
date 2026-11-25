@@ -50,3 +50,35 @@
   vertical-align: top;
   white-space: nowrap;
 }
+
+.al-table-amount, .al-table-date {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.al-table-amount[data-reserve-sign]::after { content: ')'; visibility: hidden; }
+.al-table tr[data-summary] > :is(th, td) {
+  background: var(--al-bg);
+  color: var(--al-ink);
+  font-weight: 650;
+  border-image: none;
+  border-block-start: 1px solid var(--al-line);
+  border-block-end: 3px solid transparent;
+}
+.al-table tr[data-summary='total'] > :is(th, td) { border-block-start: 3px double currentColor; border-block-end: 1px solid transparent; }
+@media screen {
+  .al-table[data-sticky-header] > thead > tr > th { position: sticky; inset-block-start: 0; z-index: 2; }
+  .al-table[data-sticky-first] > :is(thead, tbody, tfoot) > tr > :first-child {
+    position: sticky;
+    inset-inline-start: 0;
+    z-index: 1;
+    background-color: var(--al-bg);
+  }
+  .al-table[data-sticky-first] > thead > tr > :first-child { background-color: var(--al-soft); }
+  .al-table[data-sticky-header][data-sticky-first] > thead > tr > :first-child { z-index: 3; }
+}
+@media print {
+  .al-table thead { display: table-header-group; }
+  .al-table > tfoot:has([data-summary='total']) { display: table-row-group; }
+  .al-table tr { break-inside: avoid; }
+  .al-table td[data-numeric] > :is(data, .al-table-value) { overflow: visible; max-inline-size: none; }
+}

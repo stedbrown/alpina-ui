@@ -1,7 +1,9 @@
 'use client'
 
-import { forwardRef, useId, useMemo, useState, type ForwardedRef, type Key, type ReactElement, type ReactNode, type RefAttributes } from 'react'
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption } from './table.js'
+import { forwardRef, useId, useMemo, useState, type CSSProperties, type ForwardedRef, type Key, type ReactElement, type ReactNode, type RefAttributes } from 'react'
+import { Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption, TableAmount, type AccountingNegativeStyle } from './table.js'
+import { accountingDate, minorUnits, type AccountingValue } from './accounting-values.js'
+import { defaultSwissLocale, type SwissLocale } from '../swiss/locales.js'
 import { ScrollArea } from './scroll-area.js'
 import './data-table.css'
 
@@ -12,13 +14,30 @@ export interface DataColumn<Row> {
   compare?: (a: Row, b: Row) => number
   align?: 'start' | 'end'
 }
+export type AccountingColumn<Row> = {
+  id: string
+  header: string
+  sortable?: boolean
+} & ({
+  format: 'chf' | 'decimal'
+  value: (row: Row) => AccountingValue | null | undefined
+  fractionDigits?: number
+  aggregate?: 'sum'
+} | {
+  format: 'swiss-date'
+  value: (row: Row) => string | null | undefined
+})
+
+export type DataTableColumn<Row> = DataColumn<Row> | AccountingColumn<Row>
+type Prepared<Row> = { row: Row; values: Map<string, string | bigint> }
+
 export interface DataSort {
   column: string
   direction: 'ascending' | 'descending'
 }
 export interface DataTableProps<Row> {
   rows: readonly Row[]
-  columns: readonly DataColumn<Row>[]
+  columns: readonly DataTableColumn<Row>[]
   rowKey: (row: Row) => Key
   caption: string
   empty: ReactNode
@@ -28,86 +47,137 @@ export interface DataTableProps<Row> {
   /** Instructions announced with the scroll region when at least one column is sortable. */
   sortHint?: string
   className?: string
+  locale?: SwissLocale
+  negativeStyle?: AccountingNegativeStyle
+  stickyHeader?: boolean
+  stickyFirstColumn?: boolean
+  maxHeight?: CSSProperties['maxBlockSize']
+  /** Keep groups in source order and sort rows within their group. */
+  groupBy?: (row: Row) => string
+  /** Label each group's subtotal, using the group name when omitted. */
+  subtotalLabel?: (group: string) => string
+  /** Add a grand total for columns marked aggregate="sum". */
+  totalLabel?: string
 }
+
+function sortable<Row>(col: DataTableColumn<Row>) {
+  return 'format' in col ? col.sortable !== false : !!col.compare
+}
+function alignment<Row>(col: DataTableColumn<Row>) {
+  if (!('format' in col)) return col.align
+  return col.format === 'swiss-date' ? undefined : 'end'
+}
+function precision(col: { format: 'chf' | 'decimal'; fractionDigits?: number }) {
+  return col.format === 'chf' ? 2 : col.fractionDigits ?? 2
+}
+
 function DataTableView<Row>({
-  rows,
-  columns,
-  rowKey,
-  caption,
-  empty,
-  sort,
-  defaultSort,
-  onSortChange,
-  sortHint = 'Use the buttons in the column headings to sort the rows.',
-  className = '',
+  rows, columns, rowKey, caption, empty, sort, defaultSort, onSortChange,
+  sortHint = 'Use the buttons in the column headings to sort the rows.', className = '',
+  locale = defaultSwissLocale, negativeStyle, stickyHeader, stickyFirstColumn, maxHeight,
+  groupBy, subtotalLabel, totalLabel,
 }: DataTableProps<Row>, ref: ForwardedRef<HTMLDivElement>): ReactElement {
   const hintId = useId()
-  const hasSortHint = Boolean(sortHint) && columns.some((column) => column.compare)
+  const hasSortHint = Boolean(sortHint) && columns.some(sortable)
   const [internal, setInternal] = useState<DataSort | null>(defaultSort ?? null)
   const current = sort === undefined ? internal : sort
-  const comparator = columns.find((col) => col.id === current?.column)?.compare
-  const ordered = useMemo(() => {
-    if (!current || !comparator) return rows
-    const sign = current.direction === 'ascending' ? 1 : -1
-    return [...rows].sort((a, b) => sign * comparator(a, b))
-  }, [rows, current, comparator])
-  function change(column: string) {
-    const next: DataSort = {
-      column,
-      direction:
-        current?.column === column && current.direction === 'ascending' ? 'descending' : 'ascending',
+  const active = columns.find(col => col.id === current?.column && sortable(col))
+  const groups = useMemo(() => {
+    const groups = new Map<string, Prepared<Row>[]>()
+    const accounting = columns.filter(col => 'format' in col)
+    const emptyValues = new Map<string, string | bigint>()
+    for (const row of rows) {
+      const group = groupBy?.(row) ?? ''
+      const values = accounting.length ? new Map<string, string | bigint>() : emptyValues
+      for (const col of accounting) {
+        if (col.format === 'swiss-date') {
+          const date = col.value(row)
+          if (date != null) values.set(col.id, accountingDate(date))
+        } else {
+          const value = col.value(row)
+          if (value != null) values.set(col.id, minorUnits(value, precision(col)))
+        }
+      }
+      const records = groups.get(group)
+      const entry = { row, values }
+      if (records) records.push(entry)
+      else groups.set(group, [entry])
     }
+    return groups
+  }, [rows, columns, groupBy])
+  const ordered = useMemo(() => {
+    const direction = current?.direction === 'descending' ? -1 : 1
+    return Array.from(groups, ([name, records]) => {
+      if (!active) return { name, records }
+      return { name, records: [...records].sort((a, b) => {
+        if (!('format' in active)) return direction * active.compare!(a.row, b.row)
+        const left = a.values.get(active.id), right = b.values.get(active.id)
+        if (left === undefined || right === undefined) return Number(left === undefined) - Number(right === undefined)
+        return direction * (left < right ? -1 : left > right ? 1 : 0)
+      }) }
+    })
+  }, [groups, current, active])
+  function change(column: string) {
+    const next: DataSort = { column, direction: current?.column === column && current.direction === 'ascending' ? 'descending' : 'ascending' }
     if (sort === undefined) setInternal(next)
     onSortChange?.(next)
   }
+  function figure(col: AccountingColumn<Row> & { format: 'chf' | 'decimal' }, value: bigint) {
+    return <TableAmount minorUnits={value} format={col.format} fractionDigits={precision(col)} locale={locale} negativeStyle={negativeStyle} />
+  }
+  function content(col: DataTableColumn<Row>, entry: Prepared<Row>) {
+    if (!('format' in col)) return col.cell(entry.row)
+    const value = entry.values.get(col.id)
+    if (value == null) return '—'
+    if (col.format === 'swiss-date') {
+      const iso = String(value)
+      return <time dateTime={iso} className="al-table-date">{iso.slice(8) + '.' + iso.slice(5, 7) + '.' + iso.slice(0, 4)}</time>
+    }
+    return figure(col, value as bigint)
+  }
+  function summary(label: string, records: readonly Prepared<Row>[], variant: 'subtotal' | 'total') {
+    return <TableRow variant={variant}>{columns.map((col, index) => {
+      let amount: ReactNode
+      if ('aggregate' in col && col.aggregate === 'sum') {
+        let sum: bigint | undefined
+        for (const entry of records) {
+          const value = entry.values.get(col.id)
+          if (typeof value === 'bigint') sum = (sum ?? 0n) + value
+        }
+        amount = sum === undefined ? '—' : figure(col, sum)
+      }
+      if (index === 0) return <TableHead scope="row" key={col.id} numeric={alignment(col) === 'end'}>{label}{amount != null && <><br />{amount}</>}</TableHead>
+      return <TableCell key={col.id} numeric={alignment(col) === 'end'}>{amount}</TableCell>
+    })}</TableRow>
+  }
   return (
-    <ScrollArea ref={ref} className={('al-data-table ' + className).trim()} label={caption} aria-describedby={hasSortHint ? hintId : undefined}>
+    <ScrollArea ref={ref} className={('al-data-table ' + className).trim()} maxHeight={maxHeight}
+      label={caption} aria-describedby={hasSortHint ? hintId : undefined}>
       {hasSortHint && <span hidden id={hintId}>{sortHint}</span>}
-      <Table>
+      <Table stickyHeader={stickyHeader} stickyFirstColumn={stickyFirstColumn}>
         <TableCaption>{caption}</TableCaption>
         <TableHeader>
-          <TableRow>
-            {columns.map((col) => {
-              const active = current?.column === col.id && !!col.compare
-              return (
-                <TableHead
-                  key={col.id}
-                  data-align={col.align}
-                  numeric={col.align === 'end'}
-                  aria-sort={active ? current.direction : undefined}
-                >
-                  {col.compare ? (
-                    <button type="button" onClick={() => change(col.id)}>
-                      {col.header}
-                      <span aria-hidden="true">
-                        {active ? (current.direction === 'ascending' ? '↑' : '↓') : '↕'}
-                      </span>
-                    </button>
-                  ) : (
-                    col.header
-                  )}
-                </TableHead>
-              )
-            })}
-          </TableRow>
+          <TableRow>{columns.map(col => {
+            const sorted = active === col
+            const title = col.header + ('format' in col && col.format === 'chf' ? ' (CHF)' : '')
+            return <TableHead key={col.id} data-align={alignment(col)} numeric={alignment(col) === 'end'} aria-sort={sorted ? current?.direction : undefined}>
+              {sortable(col) ? <>
+                <button type="button" onClick={() => change(col.id)}>{title}
+                  <span aria-hidden="true">{sorted ? (current?.direction === 'ascending' ? '↑' : '↓') : '↕'}</span>
+                </button>
+                <span className="al-table-print-label">{title}</span>
+              </> : title}
+            </TableHead>
+          })}</TableRow>
         </TableHeader>
-        <TableBody>
-          {ordered.length ? (
-            ordered.map((row) => (
-              <TableRow key={rowKey(row)}>
-                {columns.map((col) => (
-                  <TableCell key={col.id} data-align={col.align} numeric={col.align === 'end'}>
-                    {col.cell(row)}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={Math.max(1, columns.length)}>{empty}</TableCell>
-            </TableRow>
-          )}
-        </TableBody>
+        {ordered.map(({ name, records }) => <TableBody key={name} aria-label={groupBy ? name : undefined}>
+          {records.map(entry => <TableRow key={rowKey(entry.row)}>{columns.map(col =>
+            <TableCell key={col.id} data-align={alignment(col)} numeric={alignment(col) === 'end'}>{content(col, entry)}</TableCell>
+          )}</TableRow>)}
+          {groupBy && summary(subtotalLabel?.(name) ?? name, records, 'subtotal')}
+        </TableBody>)}
+        {!ordered.length && <TableBody><TableRow><TableCell colSpan={Math.max(1, columns.length)}>{empty}</TableCell></TableRow></TableBody>}
+        {totalLabel && rows.length > 0 && <TableFooter>{summary(totalLabel, ordered.flatMap(group => group.records), 'total')}</TableFooter>}
       </Table>
     </ScrollArea>
   )

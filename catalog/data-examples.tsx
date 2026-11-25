@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BarChart, ChartTable, LineChart, Sparkline, CantonCombobox, type CantonCode, CurrencyCHF, DataTable, Typography } from 'alpina-ui'
+import { BarChart, ChartTable, LineChart, Sparkline, CantonCombobox, type CantonCode, DataTable } from 'alpina-ui'
 
 export function CantonComboboxExample() {
   const [code, setCode] = useState<CantonCode | ''>('')
@@ -19,35 +19,20 @@ export function CantonComboboxExample() {
 }
 
 export function DataTableExample() {
-  const rows = [
-    { ref: 'A-104', item: 'A5 covers', total: 420 },
-    { ref: 'A-105', item: 'Letterheads', total: 1280.5 },
-    { ref: 'A-106', item: 'B2 posters', total: 96 },
+  const entries = [
+    { id: 'P-104', entry: 'Cover proofs', date: '03.11.2026', amount: '480.00', account: 'Prepress' },
+    { id: 'P-105', entry: 'Plate credit', date: '28.10.2026', amount: '-32.50', account: 'Prepress' },
+    { id: 'P-106', entry: 'Press run', date: '18.11.2026', amount: '1280.50', account: 'Printing' },
+    { id: 'P-107', entry: 'Binding', date: '04.11.2026', amount: '96', account: 'Printing' },
   ]
-  return (
-    <DataTable
-      rows={rows}
-      rowKey={(r) => r.ref}
-      caption="Print orders"
-      empty="No orders"
-      columns={[
-        {
-          id: 'ref',
-          header: 'Order',
-          cell: (r) => <Typography as="span" variant="inherit" numeric>{r.ref}</Typography>,
-          compare: (a, b) => a.ref.localeCompare(b.ref),
-        },
-        { id: 'item', header: 'Print job', cell: (r) => r.item },
-        {
-          id: 'total',
-          header: 'Amount',
-          align: 'end',
-          cell: (r) => <CurrencyCHF amount={r.total} />,
-          compare: (a, b) => a.total - b.total,
-        },
-      ]}
-    />
-  )
+  return <DataTable caption="Print ledger" empty="No entries" rows={entries} rowKey={row => row.id}
+    locale="de-CH" negativeStyle="parentheses" stickyHeader stickyFirstColumn maxHeight="34rem"
+    groupBy={row => row.account} subtotalLabel={name => name + ' subtotal'} totalLabel="Invoice total"
+    columns={[
+      { id: 'entry', header: 'Work', cell: row => row.entry },
+      { id: 'date', header: 'Booked', format: 'swiss-date', value: row => row.date },
+      { id: 'amount', header: 'Amount', format: 'chf', value: row => row.amount, aggregate: 'sum' },
+    ]} />
 }
 
 export function BarChartExample() {

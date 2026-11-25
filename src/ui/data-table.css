@@ -69,3 +69,11 @@
   }
   .al-data-table th button { gap: var(--al-space-1); }
 }
+
+.al-table-print-label { display: none; }
+@media print {
+  .al-data-table.al-scroll-area { container-type: normal; overflow: visible; max-block-size: none !important; scrollbar-gutter: auto; }
+  /* Chromium omits native controls when it repeats a table header on later sheets. */
+  .al-data-table th button { display: none; }
+  .al-data-table th .al-table-print-label { display: block; padding: var(--al-space-3) var(--al-space-4); }
+}

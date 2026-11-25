@@ -142,7 +142,7 @@
   "data-table": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "a849ceff8be95c7a6abb"
+    "source": "0bfc633c18a5af4ab5e3"
   },
   "date-picker": {
     "stage": "Stable",
@@ -232,7 +232,7 @@
   "invoice-document": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "17bb6dc6fdb8c097b435"
+    "source": "6398504b23750c254653"
   },
   "item": {
     "stage": "Stable",
@@ -422,7 +422,7 @@
   "table": {
     "stage": "Stable",
     "changed": "2026-11-25",
-    "source": "152ab9fdacf07488a242"
+    "source": "9c1609dcf7b845569d28"
   },
   "tabs": {
     "stage": "Stable",

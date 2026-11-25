@@ -153,28 +153,46 @@
       "name": "table",
       "group": "ui",
       "entry": "ui/table.tsx",
-      "usage": "Mark amount cells numeric to align comparable values. Ordinary franc amounts stay together and exceptionally long numbers can wrap inside the table.",
+      "usage": "Use numeric cells and a shared TableAmount precision to align decimal separators. Place the currency in the header. TableRow supports subtotal and total rules, and Table can pin the column headings and first column inside a ScrollArea.",
       "files": [
         "theme.css",
         "ui/table.tsx",
         "ui/number-text.ts",
-        "ui/table.css"
+        "ui/table.css",
+        "ui/table-amount.tsx",
+        "swiss/format-centimes.internal.ts",
+        "swiss/format-chf.ts",
+        "swiss/locales.ts",
+        "swiss/format-swiss-number.ts",
+        "swiss/figures.css",
+        "ui/accounting-values.ts",
+        "swiss/format-swiss-date.ts",
+        "swiss/UNICODE-LICENSE.txt"
       ]
     },
     {
       "name": "data-table",
       "group": "ui",
       "entry": "ui/data-table.tsx",
-      "usage": "Compare underlying values when sorting formatted cells. Column headers expose the sort direction and act as full-cell buttons. Translate sortHint when the surrounding interface changes language.",
+      "usage": "Use typed CHF, decimal and Swiss date columns to sort financial records. Mark additive columns with aggregate=\"sum\" and supply totalLabel. Use groupBy for subtotals and translate sortHint in localized applications.",
       "files": [
         "theme.css",
         "ui/data-table.tsx",
         "ui/table.tsx",
         "ui/number-text.ts",
         "ui/table.css",
+        "ui/table-amount.tsx",
+        "swiss/format-centimes.internal.ts",
+        "swiss/format-chf.ts",
+        "swiss/locales.ts",
+        "swiss/format-swiss-number.ts",
+        "swiss/figures.css",
+        "ui/accounting-values.ts",
+        "swiss/format-swiss-date.ts",
         "ui/scroll-area.tsx",
         "ui/scroll-area.css",
-        "ui/data-table.css"
+        "ui/data-table.css",
+        "swiss/UNICODE-LICENSE.txt"
       ]
     },
     {
@@ -1183,7 +1201,9 @@
         "swiss/qr-matrix.ts",
         "swiss/swiss-qr-bill.css",
         "swiss/invoice-totals.ts",
+        "swiss/format-centimes.internal.ts",
         "swiss/format-chf.ts",
+        "swiss/format-swiss-number.ts",
         "swiss/swiss-date.tsx",
         "swiss/format-swiss-date.ts",
         "swiss/figures.css",

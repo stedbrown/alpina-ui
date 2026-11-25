@@ -142,13 +142,41 @@ export function Invoices({ rows }: { rows: readonly Invoice[] }) {
 | `DataTableProps<Row>` property | Behavior |
 | --- | --- |
 | `rows: readonly Row[]` | Keeps the supplied order until sorting is applied. Sorts a copy and preserves the order of equivalent rows. |
-| `columns: readonly DataColumn<Row>[]` | Each column requires a unique `id`, a text `header`, and `cell(row): ReactNode`. `align` accepts `start` or `end`. Supply `compare(a, b)` to enable sorting. Return a negative number, zero, or a positive number. |
+| `columns: readonly DataTableColumn<Row>[]` | Accepts display columns and typed accounting columns. A display column requires a unique `id`, a text `header`, and `cell(row): ReactNode`. `align` accepts `start` or `end`. Supply `compare(a, b)` to enable sorting. Return a negative number, zero, or a positive number. |
 | `rowKey(row): Key` | Returns a stable, unique React key such as an invoice ID. |
 | `caption: string`, `empty: ReactNode` | The caption identifies the table and its scrollable region. The empty message spans all columns. |
 | `defaultSort?: DataSort` | For internal state, set the initial sort with `{ column, direction }`. `column` must identify a sortable column. |
 | `sort?: DataSort \| null`, `onSortChange?(next: DataSort)` | Pass `sort` and update it in the callback to control sorting. `null` keeps the order of the supplied rows. The callback also receives changes in uncontrolled mode. |
 
 Directions are `ascending` and `descending`. The first click on a new column sorts ascending. Subsequent activations alternate directions. Enter and Space activate the header buttons. The active header exposes `aria-sort`. The visual arrows are decorative.
+
+### Reconcile a Swiss ledger
+
+Use the typed accounting columns when a ledger contains bookings, debits and credits. Enter and Space toggle a column’s sort direction. Swiss dates accept ISO civil dates or day-month-year values with periods. Amounts accept francs as numbers, BigInts or decimal strings. Use strings to retain digits beyond JavaScript’s exact integer range. Apostrophes and spaces group thousands. A period or comma introduces the fraction. The parser also accepts a CHF prefix or suffix, a minus sign and accounting parentheses.
+
+```tsx
+import { DataTable } from "alpina-ui"
+
+type Posting = { id: string; account: string; booked: string; francs: string }
+
+export function Ledger({ rows }: { rows: readonly Posting[] }) {
+  return <DataTable caption="General ledger" empty="No bookings" rows={rows}
+    rowKey={row => row.id} locale="fr-CH" negativeStyle="parentheses"
+    stickyHeader stickyFirstColumn maxHeight="32rem"
+    groupBy={row => row.account} subtotalLabel={name => name + " subtotal"}
+    totalLabel="Total" columns={[
+      { id: "id", header: "Booking", cell: row => row.id },
+      { id: "booked", header: "Booked", format: "swiss-date", value: row => row.booked },
+      { id: "amount", header: "Amount", format: "chf", value: row => row.francs, aggregate: "sum" },
+    ]} />
+}
+```
+
+A CHF column puts the currency in its heading and shows two digits after the decimal point. A `decimal` column accepts `fractionDigits` from 0 to 20. All cells in a column share that precision. Negative parentheses reserve the same closing space in positive cells, so the decimal separators stay aligned. Screen readers receive the localized sign. A missing value displays a dash and sorts last in either direction.
+
+An `aggregate: "sum"` column rounds each entry to its display precision, half away from zero, then adds its exact minor units. Sorting keeps groups in source order and reorders entries within each group. A total row has a double rule and prints once at the end. The column headings repeat on each A4 page. [Interactive ledger](https://alpina-ui.vercel.app/docs/components/data-table/)
+
+For a hand-built ledger, wrap `Table` in a named `ScrollArea` and enable `stickyHeader` and `stickyFirstColumn` on the table. Place `TableAmount` in a numeric cell. For instance, `<TableCell numeric><TableAmount minorUnits={-2450n} format="chf" negativeStyle="parentheses" /></TableCell>` displays a credit of 24.50 francs. Use the same precision and sign style throughout each column and write the currency in the header. Set `variant="subtotal"` or `variant="total"` on a `TableRow`.
 
 ### A card with a table and pagination
 

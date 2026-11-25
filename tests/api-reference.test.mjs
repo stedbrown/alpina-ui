@@ -44,7 +44,7 @@ test('inherited API, controlled state, generic data shapes and transport types s
   assert.equal(table.generic, 'Row')
   assert.equal(table.ref, 'HTMLDivElement')
   assert.match(property(table, 'sortHint').defaultValue, /column headings/)
-  assert.equal(property(table, 'columns').type, 'readonly DataColumn<Row>[]')
+  assert.equal(property(table, 'columns').type, 'readonly DataTableColumn<Row>[]')
   assert.match(
     table.types.find((t) => t.name === 'DataColumn').definition,
     /interface DataColumn<Row>.*compare\?: \(a: Row, b: Row\) => number/s,

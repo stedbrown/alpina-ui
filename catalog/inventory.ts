@@ -33,7 +33,7 @@ export const inventory = [
     'DataTable',
     'Sortable table',
     'Navigation and data',
-    'Sort by the underlying values and customize how each cell renders.',
+    'Sort dates and amounts, reconcile subtotals and print an accounting ledger.',
   ],
   [
     'currency-chf',

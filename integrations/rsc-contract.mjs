@@ -66,7 +66,7 @@ try {
     '}',
     'export default function Contract() {', ...checks,
     ' if (!barrel.isSwissIban("CH9300762011623852957")) throw Error("Server helper failed")',
-    ' return <main data-verified="' + index + '">Component boundaries verified</main>',
+    ' return <main data-verified="' + index + '"><barrel.AlpinaProvider locale="fr-CH"><barrel.FileInput multiple /><barrel.SwissDate value="2026-03-19" dateStyle="long" /></barrel.AlpinaProvider></main>',
     '}',
   ].join('\n'))
   // Compile the same editable source a consumer gets from the packaged CLI.
@@ -85,6 +85,8 @@ try {
   assert.equal(run.status, 0, 'Next failed to prerender the package contract')
   const html = await readFile(join(project, '.next/server/app/index.html'), 'utf8')
   assert.ok(html.includes('data-verified="' + index + '"'), 'Next did not prerender the complete export check')
+  assert.match(html, /Ajouter des fichiers/)
+  assert.match(html, /19 mars 2026/)
   const service = await readFile(join(project, '.next/server/app/public-service.html'), 'utf8')
   assert.match(service, /Residence certificate/)
   await rm(serviceRoute, { recursive: true })

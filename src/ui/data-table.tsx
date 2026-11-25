@@ -1,9 +1,10 @@
 'use client'
+import { useSwissLocale } from '../swiss/locale-context.internal.js'
 
 import { forwardRef, useId, useMemo, useState, type CSSProperties, type ForwardedRef, type Key, type ReactElement, type ReactNode, type RefAttributes } from 'react'
 import { Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption, TableAmount, type AccountingNegativeStyle } from './table.js'
 import { accountingDate, minorUnits, type AccountingValue } from './accounting-values.js'
-import { defaultSwissLocale, type SwissLocale } from '../swiss/locales.js'
+import { type SwissLocale } from '../swiss/locales.js'
 import { ScrollArea } from './scroll-area.js'
 import './data-table.css'
 
@@ -76,9 +77,10 @@ function precision(col: { format: 'chf' | 'decimal'; fractionDigits?: number }) 
 function DataTableView<Row>({
   rows, columns, rowKey, caption, empty, sort, defaultSort, onSortChange,
   sortHint = 'Use the buttons in the column headings to sort the rows.', className = '',
-  locale = defaultSwissLocale, negativeStyle, stickyHeader, stickyFirstColumn, maxHeight,
+  locale: requestedLocale, negativeStyle, stickyHeader, stickyFirstColumn, maxHeight,
   groupBy, subtotalLabel, totalLabel,
 }: DataTableProps<Row>, ref: ForwardedRef<HTMLDivElement>): ReactElement {
+  const locale = useSwissLocale(requestedLocale)
   const hintId = useId()
   const hasSortHint = Boolean(sortHint) && columns.some(sortable)
   const [internal, setInternal] = useState<DataSort | null>(defaultSort ?? null)

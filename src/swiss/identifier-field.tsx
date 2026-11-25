@@ -1,4 +1,5 @@
 'use client'
+import { useMessageLocale } from './locale-context.internal.js'
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState, type ComponentPropsWithoutRef } from 'react'
 import type { IdentifierIssue } from './identifier-checks.internal.js'
 import type { SwissInputValueDetails } from './identifiers.js'
@@ -25,9 +26,10 @@ interface IdentifierFieldProps extends SwissIdentifierInputProps {
 }
 
 export const IdentifierField = forwardRef<HTMLInputElement, IdentifierFieldProps>(function IdentifierField(
-  { value, defaultValue = '', validate, format, messages, checksumMessages = messages, locale, validationMessage,
+  { value, defaultValue = '', validate, format, messages, checksumMessages = messages, locale: requestedLocale, validationMessage,
     onChange, onBlur, onValueChange, ...props }, ref,
 ) {
+  const locale = useMessageLocale(requestedLocale, 'en')
   const node = useRef<HTMLInputElement>(null)
   useImperativeHandle(ref, () => node.current!, [])
   const [local, setLocal] = useState(defaultValue)
@@ -39,7 +41,7 @@ export const IdentifierField = forwardRef<HTMLInputElement, IdentifierFieldProps
     const result = input.value ? validate(input.value) : true
     const invalid = result === false || result === 'format' || result === 'checksum'
     const translated = result === 'checksum' ? checksumMessages : messages
-    input.setCustomValidity(missing ? requiredMessages[locale ?? 'en'] : invalid ? validationMessage ?? translated[locale ?? 'en'] : '')
+    input.setCustomValidity(missing ? requiredMessages[locale] : invalid ? validationMessage ?? translated[locale] : '')
     return !missing && !invalid
   }
   function report(displayed: string, valid: boolean) {

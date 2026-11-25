@@ -68,6 +68,8 @@ test('selective add copies only the requested entries, styles and transitive dep
     'swiss/canton-select.tsx',
     'swiss/cantons.ts',
     'swiss/locales.ts',
+    'swiss/locale-context.internal.ts',
+    'swiss/alpina-provider.ts',
     'ui/select.tsx',
     'ui/select.css',
     'ui/select-picker.internal.ts',

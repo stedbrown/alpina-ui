@@ -1,9 +1,10 @@
 'use client'
+import { useSwissLocale } from './locale-context.internal.js'
 
 import { forwardRef, type ComponentPropsWithoutRef } from 'react'
 import { NativeSelect } from '../interactive/native-select.js'
 import { cantons, type CantonCode } from './cantons.js'
-import { defaultSwissLocale, type SwissLocale } from './locales.js'
+import { type SwissLocale } from './locales.js'
 
 export interface CantonSelectProps extends Omit<
   ComponentPropsWithoutRef<'select'>,
@@ -23,7 +24,7 @@ export interface CantonSelectProps extends Omit<
 
 export const CantonSelect = forwardRef<HTMLSelectElement, CantonSelectProps>(function CantonSelect(
   {
-    locale = defaultSwissLocale,
+    locale: requestedLocale,
     order = 'federal',
     value,
     defaultValue,
@@ -35,6 +36,7 @@ export const CantonSelect = forwardRef<HTMLSelectElement, CantonSelectProps>(fun
   },
   ref,
 ) {
+  const locale = useSwissLocale(requestedLocale)
   const initialValue =
     defaultValue ?? (placeholder === undefined && allLabel === undefined ? undefined : '')
   const choices = order === 'name'

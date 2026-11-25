@@ -53,6 +53,7 @@ for (const [group, names] of Object.entries(groups)) {
     const entry = group + '/' + name + '.tsx'
     await access('src/' + entry)
     const files = dependencies(entry)
+    if (files.has('swiss/locale-context.internal.ts')) dependencies('swiss/alpina-provider.ts', files)
     if (publicCompanions[name]) dependencies(publicCompanions[name], files)
     if (files.has('swiss/format-chf.ts') || files.has('swiss/format-swiss-date.ts') || files.has('swiss/format-swiss-number.ts'))
       files.add('swiss/UNICODE-LICENSE.txt')

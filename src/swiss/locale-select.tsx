@@ -1,8 +1,9 @@
 'use client'
+import { useSwissLocale } from './locale-context.internal.js'
 
 import { forwardRef, type ComponentPropsWithoutRef } from 'react'
 import { NativeSelect } from '../interactive/native-select.js'
-import { defaultSwissLocale, localeNames, swissLocales, type SwissLocale } from './locales.js'
+import { localeNames, swissLocales, type SwissLocale } from './locales.js'
 
 export interface LocaleSelectProps extends Omit<
   ComponentPropsWithoutRef<'select'>,
@@ -18,7 +19,7 @@ export interface LocaleSelectProps extends Omit<
 export const LocaleSelect = forwardRef<HTMLSelectElement, LocaleSelectProps>(function LocaleSelect(
   {
     value,
-    defaultValue = defaultSwissLocale,
+    defaultValue: requestedLocale,
     onChange,
     onLocaleChange,
     locales = swissLocales,
@@ -26,6 +27,7 @@ export const LocaleSelect = forwardRef<HTMLSelectElement, LocaleSelectProps>(fun
   },
   ref,
 ) {
+  const defaultValue = useSwissLocale(requestedLocale)
   const choices = Array.from(new Set(locales))
   const fallback = choices.includes(defaultValue) ? defaultValue : choices[0]
   return (

@@ -1,3 +1,4 @@
+import { LocalizedInvoiceDocument } from './invoice-document-locale.internal.js'
 import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import { SwissQrBill, type SwissQrBillLocale } from './swiss-qr-bill.js'
 import type { SwissQrAddress, SwissQrBillData } from './qr-payment.js'
@@ -57,10 +58,12 @@ function Party({ title, party }: { title: string; party: SwissQrAddress }) {
   </address></section>
 }
 
-export const InvoiceDocument = forwardRef<HTMLElement, InvoiceDocumentProps>(function InvoiceDocument({
-  invoiceNumber, issueDate, supplyDate, dueDate, vatNumber, lines, payment, locale = 'de-CH', cashRounding,
-  logo, intro, paymentTerms, notes, footer, className = '', ...props
-}, ref) {
+export const InvoiceDocument = forwardRef<HTMLElement, InvoiceDocumentProps>(function InvoiceDocument(input, ref) {
+  if (input.locale === undefined) return <LocalizedInvoiceDocument {...input} ref={ref} />
+  const {
+    invoiceNumber, issueDate, supplyDate, dueDate, vatNumber, lines, payment, locale, cashRounding,
+    logo, intro, paymentTerms, notes, footer, className = '', ...props
+  } = input
   if (!invoiceNumber.trim()) throw new RangeError('Supply an invoice number.')
   if (!isSwissUid(vatNumber)) throw new RangeError('Supply a valid Swiss business identifier for the VAT number.')
   const result = calculateInvoiceTotals(lines, { cashRounding })

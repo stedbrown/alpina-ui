@@ -1,11 +1,11 @@
 'use client'
+import { useSwissLocale } from './locale-context.internal.js'
 
 import { forwardRef, useImperativeHandle, useEffect, useRef, useState } from 'react'
 import { Dialog } from '../interactive/dialog.js'
 import { Button } from '../ui/button.js'
 import { Calendar, type CalendarProps } from './calendar.js'
 import { calendarText } from './calendar-dates.js'
-import { defaultSwissLocale } from './locales.js'
 import { SwissDate } from './swiss-date.js'
 import { formatSwissDate } from './format-swiss-date.js'
 import './date-picker.css'
@@ -19,9 +19,10 @@ export interface DatePickerProps extends CalendarProps {
 }
 
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(function DatePicker(
-  { value, defaultValue = '', onValueChange, name, label, locale = defaultSwissLocale, disabled = false, clearable = false, className = '', ...calendar },
+  { value, defaultValue = '', onValueChange, name, label, locale: requestedLocale, disabled = false, clearable = false, className = '', ...calendar },
   forwardedRef,
 ) {
+  const locale = useSwissLocale(requestedLocale)
   const [local, setLocal] = useState(defaultValue)
   const selection = value ?? local
   const [open, setOpen] = useState(false)

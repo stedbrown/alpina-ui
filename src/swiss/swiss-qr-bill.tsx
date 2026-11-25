@@ -1,3 +1,4 @@
+import { LocalizedSwissQrBill } from './swiss-qr-bill-locale.internal.js'
 import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import { formatCreditorReference, formatQrReference, prepareSwissQrBill, type SwissQrAddress, type SwissQrBillData } from './qr-payment.js'
 import { qrMatrix } from './qr-matrix.js'
@@ -151,9 +152,9 @@ function Amount({ bill, words, receipt = false, blankLabel }: { bill: Payment; w
   </dl>
 }
 
-export const SwissQrBill = forwardRef<HTMLDivElement, SwissQrBillProps>(function SwissQrBill(
-  { bill, locale = 'de-CH', printLayout = 'page', fit = false, className = '', ...props }, ref,
-) {
+export const SwissQrBill = forwardRef<HTMLDivElement, SwissQrBillProps>(function SwissQrBill(input, ref) {
+  if (input.locale === undefined) return <LocalizedSwissQrBill {...input} ref={ref} />
+  const { bill, locale, printLayout = 'page', fit = false, className = '', ...props } = input
   const payment = prepareSwissQrBill(bill, locale)
   const words = headings[locale]
   const dense = !payment.amount || [payment.creditor, payment.debtor].some(party => party &&

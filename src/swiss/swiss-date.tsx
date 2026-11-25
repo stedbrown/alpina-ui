@@ -1,6 +1,7 @@
+import { LocalizedSwissDate } from './swiss-date-locale.internal.js'
 import { forwardRef, type CSSProperties, type ComponentPropsWithoutRef } from 'react'
 import { formatSwissDate, type SwissDateOptions } from './format-swiss-date.js'
-import { defaultSwissLocale, type SwissLocale } from './locales.js'
+import { type SwissLocale } from './locales.js'
 import './figures.css'
 import './swiss-date.css'
 
@@ -10,17 +11,16 @@ export interface SwissDateProps
   locale?: SwissLocale
 }
 
-export const SwissDate = forwardRef<HTMLTimeElement, SwissDateProps>(function SwissDate(
-  {
+export const SwissDate = forwardRef<HTMLTimeElement, SwissDateProps>(function SwissDate(input, ref) {
+  if (input.locale === undefined) return <LocalizedSwissDate {...input} ref={ref} />
+  const {
     value,
-    locale = defaultSwissLocale,
+    locale,
     dateStyle,
     timeZone,
     className = '',
     ...props
-  },
-  ref,
-) {
+  } = input
   const formatted = formatSwissDate(value, locale, { dateStyle, timeZone })
   return (
     <time ref={ref} lang={locale} {...props} dateTime={typeof value === 'string' ? value : value.toISOString()}

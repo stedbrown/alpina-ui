@@ -1,6 +1,7 @@
+import { LocalizedCurrencyCHF } from './currency-chf-locale.internal.js'
 import { forwardRef, type CSSProperties, type ComponentPropsWithoutRef } from 'react'
 import { formatCHF, type SwissCurrencyOptions } from './format-chf.js'
-import { defaultSwissLocale, type SwissLocale } from './locales.js'
+import { type SwissLocale } from './locales.js'
 import './figures.css'
 
 export interface CurrencyCHFProps extends Omit<ComponentPropsWithoutRef<'data'>, 'children' | 'value'>, SwissCurrencyOptions {
@@ -8,10 +9,9 @@ export interface CurrencyCHFProps extends Omit<ComponentPropsWithoutRef<'data'>,
   locale?: SwissLocale
 }
 
-export const CurrencyCHF = forwardRef<HTMLDataElement, CurrencyCHFProps>(function CurrencyCHF(
-  { amount, locale = defaultSwissLocale, cashRounding, className = '', ...props },
-  ref,
-) {
+export const CurrencyCHF = forwardRef<HTMLDataElement, CurrencyCHFProps>(function CurrencyCHF(input, ref) {
+  if (input.locale === undefined) return <LocalizedCurrencyCHF {...input} ref={ref} />
+  const { amount, locale, cashRounding, className = '', ...props } = input
   const formatted = formatCHF(amount, locale, { cashRounding })
   const minus = { 'de-CH': 'minus', 'fr-CH': 'moins', 'it-CH': 'meno', 'rm-CH': 'minus' }
   const negative = formatted.includes('−')

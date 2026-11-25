@@ -1,4 +1,5 @@
 'use client'
+import { useSwissLocale, useMessageLocale } from './locale-context.internal.js'
 
 import { forwardRef, useImperativeHandle, useEffect, useId, useRef, useState, type ChangeEvent, type ComponentPropsWithoutRef, type FormEvent } from 'react'
 import { Button } from '../ui/button.js'
@@ -236,7 +237,7 @@ function fieldIssue(key: AddressField, value: string, format: SwissAddressFormat
 
 export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProps>(function SwissAddressForm(
   {
-    locale = defaultSwissLocale,
+    locale: requestedLocale,
     format = 'compact',
     initialValue,
     onSave,
@@ -245,6 +246,7 @@ export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProp
   },
   forwardedRef,
 ) {
+  const locale = useSwissLocale(requestedLocale)
   const prefix = useId()
   const structured = format !== 'compact'
   const extra = structuredLabels[locale]
@@ -412,9 +414,10 @@ export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProp
 })
 
 export const SwissAddressFields = forwardRef<HTMLFieldSetElement, SwissAddressFieldsProps>(function SwissAddressFields(
-  { locale = defaultSwissLocale, format = 'compact', fields = defaultFields(format), names, idPrefix,
+  { locale: requestedLocale, format = 'compact', fields = defaultFields(format), names, idPrefix,
     labels, value, defaultValue, errors, onValueChange, className = '', ...rest }, forwardedRef,
 ) {
+  const locale = useMessageLocale(requestedLocale, defaultSwissLocale)
   const generated = useId()
   const prefix = idPrefix ?? generated
   const group = useRef<HTMLFieldSetElement>(null)

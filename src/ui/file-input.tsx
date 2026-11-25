@@ -1,4 +1,5 @@
 'use client'
+import { useMessageLocale } from '../swiss/locale-context.internal.js'
 
 import { forwardRef, useEffect, useId, useImperativeHandle, useLayoutEffect, useRef, useState, type ComponentPropsWithoutRef } from 'react'
 import type { SwissMessageLocale } from '../swiss/locales.js'
@@ -48,9 +49,10 @@ function fileSize(bytes: number, locale: SwissMessageLocale) {
 }
 
 export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(function FileInput({
-  id, locale = 'en', files, onFilesChange, maxSize, maxFiles, accept, multiple = false, disabled, className = '',
+  id, locale: requestedLocale, files, onFilesChange, maxSize, maxFiles, accept, multiple = false, disabled, className = '',
   onChange, onInvalid, 'aria-describedby': describedBy, ...props
 }, ref) {
+  const locale = useMessageLocale(requestedLocale, 'en')
   const uid = useId()
   const inputId = id ?? uid
   const input = useRef<HTMLInputElement>(null)

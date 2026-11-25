@@ -1,3 +1,4 @@
+import { LocalizedLetter } from './letter-locale.internal.js'
 import { forwardRef, type ComponentPropsWithoutRef } from 'react'
 import { addressLines } from './address-lines.js'
 import type { SwissQrAddress } from './qr-payment.js'
@@ -26,10 +27,12 @@ export interface LetterProps extends ComponentPropsWithoutRef<'article'> {
   foldMarks?: boolean
 }
 
-export const Letter = forwardRef<HTMLElement, LetterProps>(function Letter({
-  sender, recipient, subject, date, place, locale, windowPosition = 'right', foldMarks = true,
-  children, className = '', ...props
-}, ref) {
+export const Letter = forwardRef<HTMLElement, LetterProps>(function Letter(input, ref) {
+  if (input.locale === undefined) return <LocalizedLetter {...input} ref={ref} />
+  const {
+    sender, recipient, subject, date, place, locale, windowPosition = 'right', foldMarks = true,
+    children, className = '', ...props
+  } = input
   const from = recipientLines(sender, locale)
   const to = recipientLines(recipient, locale)
   if (!from.length || !to.length || !subject.trim()) throw new RangeError('Supply a sender, recipient and subject.')

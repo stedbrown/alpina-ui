@@ -1,8 +1,9 @@
+import { LocalizedTableAmount } from './table-amount-locale.internal.js'
 import { forwardRef, type ComponentPropsWithoutRef } from 'react'
 import { formatCentimes } from '../swiss/format-centimes.internal.js'
 import { formatSwissNumber } from '../swiss/format-swiss-number.js'
 import '../swiss/figures.css'
-import { defaultSwissLocale, type SwissLocale } from '../swiss/locales.js'
+import { type SwissLocale } from '../swiss/locales.js'
 import { decimalFromMinor, minorUnits as toMinor, type AccountingValue } from './accounting-values.js'
 
 export type { AccountingValue }
@@ -16,10 +17,12 @@ export type TableAmountProps = Omit<ComponentPropsWithoutRef<'data'>, 'value' | 
     locale?: SwissLocale
   }
 
-export const TableAmount = forwardRef<HTMLDataElement, TableAmountProps>(function TableAmount({
-  value, minorUnits, format = 'decimal', fractionDigits = 2, negativeStyle = 'minus',
-  locale = defaultSwissLocale, className = '', ...props
-}, ref) {
+export const TableAmount = forwardRef<HTMLDataElement, TableAmountProps>(function TableAmount(input, ref) {
+  if (input.locale === undefined) return <LocalizedTableAmount {...input} ref={ref} />
+  const {
+    value, minorUnits, format = 'decimal', fractionDigits = 2, negativeStyle = 'minus',
+    locale, className = '', ...props
+  } = input
   const digits = format === 'chf' ? 2 : fractionDigits
   const minor = minorUnits ?? toMinor(value!, digits)
   const decimal = decimalFromMinor(minor, digits)

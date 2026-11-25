@@ -1,4 +1,5 @@
 'use client'
+import { useSwissLocale } from './locale-context.internal.js'
 
 import { forwardRef, useImperativeHandle, useEffect, useId, useRef, useState, type KeyboardEvent } from 'react'
 import { useBrowserLayoutEffect, useFloating } from '../interactive/floating.js'
@@ -6,7 +7,7 @@ import { Field } from '../ui/field.js'
 import { Button } from '../ui/button.js'
 import { Input } from '../ui/input.js'
 import { cantons, type CantonCode } from './cantons.js'
-import { defaultSwissLocale, type SwissLocale } from './locales.js'
+import { type SwissLocale } from './locales.js'
 import './canton-combobox.css'
 
 const strings = {
@@ -86,7 +87,7 @@ export interface CantonComboboxProps {
 
 export const CantonCombobox = forwardRef<HTMLInputElement, CantonComboboxProps>(function CantonCombobox(
   {
-    locale = defaultSwissLocale,
+    locale: requestedLocale,
     value,
     defaultValue = '',
     onCantonChange,
@@ -105,6 +106,7 @@ export const CantonCombobox = forwardRef<HTMLInputElement, CantonComboboxProps>(
   },
   forwardedRef,
 ) {
+  const locale = useSwissLocale(requestedLocale)
   const [nativeLabel, nativePlaceholder, emptyMessage, clearMessage, missingMessage] = strings[locale]
   const generated = useId()
   const inputId = id ?? generated

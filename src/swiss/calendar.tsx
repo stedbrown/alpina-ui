@@ -1,11 +1,12 @@
 'use client'
+import { useSwissLocale } from './locale-context.internal.js'
 
 import { forwardRef, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import { Button } from '../ui/button.js'
 import { useControllable } from '../interactive/controllable.js'
 import { addDays, addMonths, calendarLabels, calendarText, calendarWeekNames, clampDay, firstCivilDay, isoWeek, lastCivilDay, mondayIndex, monthLength, zurichToday } from './calendar-dates.js'
 import { formatSwissDate, parseCivilDate } from './format-swiss-date.js'
-import { defaultSwissLocale, type SwissLocale } from './locales.js'
+import { type SwissLocale } from './locales.js'
 import type { CantonCode } from './cantons.js'
 import { swissHolidays, type SwissHolidayRegion, type SwissHolidayObservance } from './holidays.js'
 import './calendar.css'
@@ -35,10 +36,11 @@ export interface CalendarProps {
 }
 
 export const Calendar = forwardRef<HTMLElement, CalendarProps>(function Calendar(
-  { value, defaultValue = '', onValueChange, defaultMonth, min = firstCivilDay, max = lastCivilDay, locale = defaultSwissLocale,
+  { value, defaultValue = '', onValueChange, defaultMonth, min = firstCivilDay, max = lastCivilDay, locale: requestedLocale,
     showWeekNumbers = false, isDateDisabled, dayStatus, disableHolidays = false, canton, holidayRegion, observance, className = '' },
   ref,
 ) {
+  const locale = useSwissLocale(requestedLocale)
   const [selection, select] = useControllable(value, defaultValue, onValueChange)
   const today = zurichToday()
   parseCivilDate(min)

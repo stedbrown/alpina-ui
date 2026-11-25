@@ -1,4 +1,5 @@
 'use client'
+import { useMessageLocale } from './locale-context.internal.js'
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState, type ComponentPropsWithoutRef } from 'react'
 import { Button } from '../ui/button.js'
 import { Field } from '../ui/field.js'
@@ -54,8 +55,9 @@ export interface MultilingualFieldProps extends Omit<ComponentPropsWithoutRef<'f
 
 export const MultilingualField = forwardRef<HTMLFieldSetElement, MultilingualFieldProps>(function MultilingualField(
   { name, label, includeEnglish = false, layout = 'tabs', variant = 'input', sourceLanguage = 'de',
-    value, defaultValue, onValueChange, labels, locale = 'en', className = '', form, ...props }, ref,
+    value, defaultValue, onValueChange, labels, locale: requestedLocale, className = '', form, ...props }, ref,
 ) {
+  const locale = useMessageLocale(requestedLocale, 'en')
   const group = useRef<HTMLFieldSetElement>(null)
   useImperativeHandle(ref, () => group.current!, [])
   const [local, setLocal] = useState<Translations>(defaultValue ?? {})

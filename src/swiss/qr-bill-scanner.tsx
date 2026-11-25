@@ -1,4 +1,5 @@
 'use client'
+import { useMessageLocale } from './locale-context.internal.js'
 import { forwardRef, useEffect, useRef, useState, type ComponentPropsWithoutRef } from 'react'
 import { Button } from '../ui/button.js'
 import { DescriptionList } from '../ui/description-list.js'
@@ -27,8 +28,9 @@ function displayAddress(address: SwissQrAddress) {
     address.postalCode + ' ' + address.town, address.country].filter(Boolean).join(', ')
 }
 export const QrBillScanner = forwardRef<HTMLElement, QrBillScannerProps>(function QrBillScanner(
-  { locale = 'de-CH', onConfirm, className = '', ...props }, ref,
+  { locale: requestedLocale, onConfirm, className = '', ...props }, ref,
 ) {
+  const locale = useMessageLocale(requestedLocale, 'de-CH')
   const t = scannerLabels[locale]
   const [stage, setStage] = useState<Stage>('idle')
   const [error, setError] = useState('')

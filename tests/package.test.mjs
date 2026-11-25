@@ -86,6 +86,7 @@ test('the registry lists the complete transitive source closure for each copied 
       const file = stack.pop()
       if (closure.has(file)) continue
       closure.add(file)
+      if (file === 'swiss/locale-context.internal.ts') stack.push('swiss/alpina-provider.ts')
       stack.push(...(edges.get(file) ?? []))
     }
     if (closure.has('swiss/format-chf.ts') || closure.has('swiss/format-swiss-date.ts') || closure.has('swiss/format-swiss-number.ts')) {

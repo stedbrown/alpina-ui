@@ -274,7 +274,9 @@ Read `formData.get('title[fr]')` in a submit handler or server action. Select `l
 
 ## Printing a business letter
 
-`Letter` prints on A4 and takes sender and recipient address lines, a subject, a date and the letter body. Set `windowPosition="left"` or `"right"` to match the envelope. The following measurements are in millimetres from the sheet's top-left corner. They reproduce the public KOMA-Script SN and SNleft reference layouts for the historical Swiss business letter. [KOMA-Script letter profiles, table 4.19](https://mirrors.mit.edu/CTAN/macros/latex/contrib/koma-script/doc/scrguide-en.pdf) · [Swiss Post envelope templates](https://www.post.ch/en/sending-letters/addressing-and-designing/designing-and-packaging-letters)
+`Letter` prints on A4 and accepts sender and recipient addresses as lines of text, `SwissQrAddress` or `EchMailAddress`. To use the same lines in another document, call `addressLines(address, locale)`. Domestic addresses end with the postcode and town. The helper preserves eCH organisation and contact details, apartment numbers, postal boxes and a supplied foreign country name. For foreign QR addresses it uses the localized country name when available and otherwise retains the ISO code. [Swiss Post addressing examples](https://www.post.ch/en/sending-letters/addressing-and-designing/addressing-consignments-correctly)
+
+Supply a subject, a date and the letter body. Set `windowPosition="left"` or `"right"` to match the envelope. The following measurements are in millimetres from the sheet's top-left corner. They reproduce the public KOMA-Script SN and SNleft reference layouts for the historical Swiss business letter. [KOMA-Script letter profiles, table 4.19](https://mirrors.mit.edu/CTAN/macros/latex/contrib/koma-script/doc/scrguide-en.pdf) · [Swiss Post envelope templates](https://www.post.ch/en/sending-letters/addressing-and-designing/designing-and-packaging-letters)
 
 | Address field | Left | Top | Width | Height |
 | --- | --- | --- | --- | --- |

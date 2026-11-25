@@ -14,7 +14,7 @@ Tab enters on the active day. Horizontal arrows move one day and vertical arrows
 | --- | --- |
 | `InputOTP` | A text input accepts between 1 and 32 digits with a configurable length. `autoComplete="one-time-code"` supports assisted entry on compatible devices. Paste accepts spaces or hyphens. Leading zeros remain in the value. Associate a `Field` and use `required` for form validation. |
 | `NativeSelect` | HTML props, ref, option groups, multiple selection and the open picker follow the `Select` API. `appearance="line"` draws a bottom rule. `outline` draws the full border. |
-| `ToggleGroup` | Buttons have names, pressed states, and visible focus. `multiple` enables multiple choices. `name` submits one entry per selection. Pressing a selected button again clears it. |
+| `ToggleGroup` | Buttons have names, pressed states, and visible focus. `multiple` enables multiple choices. `name` submits one entry per selection. Pressing a selected button again clears it. In a grid, the selected tile has a solid field. A disabled tile strikes through its label. Supply `disabledReason` on an option or the whole group to show and announce its explanation. |
 | `Questionnaire` | Each question groups native radio buttons. Moving forward requires an answer. Users can go back to make corrections. Completion sends a map of IDs to values to `onComplete`. The application supplies localized navigation labels. |
 | `MessageScroller` | A named `log` region follows the latest message. Reading earlier messages preserves the scroll position. A button returns to the bottom. `--al-log-height` sets the maximum height. |
 | `Trace` | An ordered list preserves the original event sequence. `dateTime` holds the structured value and `detail` opens a native disclosure. |

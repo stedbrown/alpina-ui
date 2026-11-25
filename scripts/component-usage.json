@@ -86,7 +86,7 @@
   "textarea": "Set rows for the starting height and enable auto-grow when appropriate. Read-only and validation states follow the same conventions as Input.",
   "toast": "A focused notification can be dismissed with Escape. Its dismiss button and Escape return focus to the control used to reach this notification.",
   "toggle": "Keep the toggle’s label stable and communicate its on/off state with aria-pressed. The control supports Space and long labels can wrap.",
-  "toggle-group": "Tab enters a group once. Arrow keys move focus, Home and End reach its edges, and pressing Space changes the focused option. Use layout=\"grid\" for equal-width tiles with arrow navigation between rows.",
+  "toggle-group": "Tab enters a group once. Arrow keys move focus, Home and End reach its edges, and pressing Space changes the focused option. Use layout=\"grid\" for equal-width tiles with arrow navigation between rows. Provide disabledReason on unavailable options to show and announce why they cannot be selected.",
   "tooltip": "Attach a short description to an existing focusable control. Focus shows it immediately. Escape dismisses it and the popup stays within the visible viewport.",
   "trace": "Time and event text align to a consistent gutter. Long entries wrap, keyboard focus outlines the disclosure, and touch users get a taller summary.",
   "typography": "Choose the semantic heading level with as and its visual size with variant. The title role scales with the container and wraps long multilingual headings. InlineCode marks code inside a sentence or table cell.",

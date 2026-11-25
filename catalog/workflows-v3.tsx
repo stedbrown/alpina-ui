@@ -22,9 +22,10 @@ export function NativeSelectExample() {
 }
 
 export function ToggleGroupExample() {
-  return <ToggleGroup label="Catalog views" defaultValue={['year']} options={[
+  return <ToggleGroup layout="grid" label="Catalog views" defaultValue={['year']} options={[
     { value: 'year', label: 'By year' }, { value: 'author', label: 'By author' },
     { value: 'technique', label: 'By technique' },
+    { value: 'workshop', label: 'By workshop', disabled: true, disabledReason: 'No workshops indexed.' },
   ]} />
 }
 

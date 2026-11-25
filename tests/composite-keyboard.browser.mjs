@@ -1,4 +1,8 @@
 import assert from 'node:assert/strict'
+import axe from 'axe-core'
+import { createElement as h } from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
+import { ToggleGroup } from 'alpina-ui'
 import { launchBrowser } from './launch-browser.mjs'
 import { openPublicPage, siteOrigin } from './public-pages.mjs'
 
@@ -58,6 +62,40 @@ try {
     if (accordion || slug === 'toggle-group') await target.press('Space')
     const state = accordion ? 'aria-expanded' : slug === 'toggle-group' ? 'aria-pressed' : 'aria-selected'
     assert.equal(await target.getAttribute(state), 'true', slug)
+    if (slug === 'toggle-group') {
+      await page.addScriptTag({ content: axe.source })
+      const violations = await preview.evaluate(el => window.axe.run(el, { runOnly: ['label-content-name-mismatch'] })
+        .then(report => report.violations.map(rule => rule.id)))
+      assert.deepEqual(violations, [], 'Spoken grid labels must include all visible text')
+      const reason = 'No workshops indexed.'
+      const inactive = role('button', 'By workshop ' + reason)
+      assert.ok(await inactive.isDisabled())
+      assert.equal(await inactive.locator('.al-toggle-label').evaluate(el => getComputedStyle(el).textDecorationLine), 'line-through')
+      assert.equal(await inactive.getAttribute('aria-describedby'), null)
+      const session = await page.context().newCDPSession(page)
+      const { root } = await session.send('DOM.getDocument')
+      const { nodeId } = await session.send('DOM.querySelector', { nodeId: root.nodeId, selector: '[data-al-choice="workshop"]' })
+      const { nodes } = await session.send('Accessibility.getPartialAXTree', { nodeId })
+      assert.equal(nodes[0].name.value, 'By workshop ' + reason)
+      assert.ok(!nodes[0].description?.value, 'Visible explanation is announced once')
+      await session.detach()
+      const row = await browser.newPage()
+      await row.setContent(renderToStaticMarkup(h(ToggleGroup, { label: 'Catalog views', options: [
+        { value: 'workshop', label: 'By workshop', disabled: true, disabledReason: reason },
+      ] })))
+      const rowButton = row.getByRole('button', { name: 'By workshop', exact: true })
+      const description = await rowButton.evaluate(el => document.getElementById(el.getAttribute('aria-describedby')).textContent)
+      assert.equal(description, reason, 'Row descriptions stay separate from the visible name')
+      await row.close()
+      await target.press('End')
+      await focused(role('button', 'By technique'))
+      for (const forcedColors of ['none', 'active']) {
+        await page.emulateMedia({ forcedColors })
+        const fill = button => button.evaluate(el => getComputedStyle(el).backgroundColor)
+        assert.notEqual(await fill(target), await fill(choices.first()), 'Selected grid tile needs a distinct fill')
+      }
+      await page.emulateMedia({ forcedColors: 'none' })
+    }
   }
 
   for (const slug of ['canton-combobox', 'combobox']) {

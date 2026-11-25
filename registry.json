@@ -928,7 +928,7 @@
       "name": "toggle-group",
       "group": "interactive",
       "entry": "interactive/toggle-group.tsx",
-      "usage": "Tab enters a group once. Arrow keys move focus, Home and End reach its edges, and pressing Space changes the focused option. Use layout=\"grid\" for equal-width tiles with arrow navigation between rows.",
+      "usage": "Tab enters a group once. Arrow keys move focus, Home and End reach its edges, and pressing Space changes the focused option. Use layout=\"grid\" for equal-width tiles with arrow navigation between rows. Provide disabledReason on unavailable options to show and announce why they cannot be selected.",
       "files": [
         "theme.css",
         "interactive/toggle-group.tsx",

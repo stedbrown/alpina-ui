@@ -38,6 +38,29 @@
   background: var(--al-hover);
 }
 
+.al-toggle-group[data-layout='grid'] > .al-button[aria-pressed='true'],
+.al-toggle-group[data-layout='grid'] > .al-button[aria-pressed='true']:hover:enabled {
+  border-image: none;
+  border-block-end-color: transparent;
+  background: var(--al-ink);
+  color: var(--al-bg);
+}
+.al-toggle-group[data-layout='grid'] > .al-button[aria-pressed='true']:focus-visible { outline-color: var(--al-bg); }
+.al-toggle-group[data-layout='grid'] > .al-button:disabled { opacity: 1; }
+.al-toggle-group[data-layout='grid'] > .al-button:disabled .al-toggle-label { text-decoration: line-through; }
+.al-toggle-label { display: flex; flex-direction: column; gap: inherit; align-items: inherit; }
+.al-toggle-label, .al-toggle-reason { max-inline-size: 100%; white-space: normal; overflow-wrap: break-word; }
+.al-toggle-reason { font-size: var(--al-type-caption); line-height: var(--al-leading-caption); font-weight: 400; }
+
 @media (forced-colors: active) {
+  .al-toggle-group[data-layout='grid'] > .al-button[aria-pressed='true'],
+  .al-toggle-group[data-layout='grid'] > .al-button[aria-pressed='true']:hover:enabled {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+  }
+  .al-toggle-group[data-layout='grid'] > .al-button[aria-pressed='true']:focus-visible { outline-color: HighlightText; }
+  .al-toggle-group[data-layout='grid'] > .al-button:disabled:not([aria-pressed='true']) { color: GrayText; }
+
   .al-toggle-group .al-button[aria-pressed='true'] { border-image: none; border-block-end: 3px solid Highlight; }
 }

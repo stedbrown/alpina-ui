@@ -1,6 +1,6 @@
 'use client'
 
-import { forwardRef, useImperativeHandle, useEffect, useRef, useState, type ReactNode } from 'react'
+import { forwardRef, useImperativeHandle, useEffect, useId, useRef, useState, type ReactNode } from 'react'
 import { Button } from '../ui/button.js'
 import { moveButton } from './roving.js'
 import './toggle-group.css'
@@ -9,6 +9,8 @@ export interface ToggleOption {
   value: string
   label: ReactNode
   disabled?: boolean
+  /** Explain why this option cannot be selected. */
+  disabledReason?: string
 }
 export interface ToggleGroupProps {
   label: string
@@ -21,6 +23,8 @@ export interface ToggleGroupProps {
   onValueChange?: (values: string[]) => void
   name?: string
   disabled?: boolean
+  /** Shared explanation when the entire group is disabled. */
+  disabledReason?: string
   className?: string
 }
 
@@ -35,11 +39,13 @@ export const ToggleGroup = forwardRef<HTMLDivElement, ToggleGroupProps>(function
     onValueChange,
     name,
     disabled,
+    disabledReason,
     className = '',
   },
   forwardedRef,
 ) {
   const [local, setLocal] = useState<readonly string[]>(defaultValue ?? [])
+  const id = useId()
   const selected = value ?? local
   const [focused, setFocused] = useState<string | null>(null)
   const enabled = options.filter((option) => !option.disabled)
@@ -100,20 +106,27 @@ export const ToggleGroup = forwardRef<HTMLDivElement, ToggleGroupProps>(function
       }}
       className={('al-toggle-group ' + className).trim()}
     >
-      {options.map((option) => (
-        <Button
+      {options.map((option, index) => {
+        const inactive = disabled || option.disabled
+        const reason = inactive && (option.disabledReason || disabledReason)
+        const optionId = id + '-' + index
+        return <Button
           key={option.value}
           variant="ghost"
-          disabled={disabled || option.disabled}
+          disabled={inactive}
+          aria-describedby={reason && layout === 'row' ? optionId + '-reason' : undefined}
           aria-pressed={selected.includes(option.value)}
           data-al-choice={option.value}
           tabIndex={option === tabstop ? 0 : -1}
           onFocus={() => setFocused(option.value)}
           onClick={() => toggle(option.value)}
         >
-          {option.label}
+          {inactive && layout === 'grid'
+            ? <span className="al-toggle-label">{option.label}</span>
+            : option.label}
+          {reason && <span id={optionId + '-reason'} className="al-toggle-reason" hidden={layout !== 'grid'}>{reason}</span>}
         </Button>
-      ))}
+      })}
       {name &&
         options
           .filter((option) => !option.disabled && selected.includes(option.value))

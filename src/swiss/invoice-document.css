@@ -27,8 +27,26 @@
 .al-invoice-summary .al-invoice-total { margin-top: 4px; padding-top: 12px; font-weight: 700; box-shadow: inset 0 2px var(--al-ink); }
 @container (max-width: 28rem) {
   .al-invoice-parties, .al-invoice-dates { grid-template-columns: 1fr; }
-  .al-invoice-items table { min-width: 27rem; }
+
   .al-invoice-statement, .al-invoice-summary { padding-inline: 16px; }
+}
+@media screen {
+  @container (max-width: 32rem) {
+    .al-invoice-items { overflow: visible; }
+    .al-invoice-items :is(table, tbody) { display: block; }
+    .al-invoice-items thead { position: absolute; inline-size: 1px; block-size: 1px; clip-path: inset(50%); overflow: hidden; }
+    .al-invoice-items tbody tr {
+      display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--al-space-2);
+      box-shadow: inset 0 -1px var(--al-line); padding-block: var(--al-space-2);
+    }
+    .al-invoice-items tbody :is(th, td) { box-shadow: none; border: 0; padding: 0; text-align: start; }
+    .al-invoice-items tbody th { flex-basis: 100%; min-inline-size: 0; font-weight: 600; }
+    .al-invoice-items td:nth-child(3)::before { content: '× ' / ''; }
+    .al-invoice-items td:last-child { font-weight: 700; }
+    .al-invoice-items td:last-child::before { content: '= CHF ' / ''; }
+    .al-invoice-items [data-vat-label] { order: 1; flex-basis: 100%; color: var(--al-muted); }
+    .al-invoice-items [data-vat-label]::before { content: attr(data-vat-label) ' ' / ''; }
+  }
 }
 .al-invoice-logo, .al-invoice-intro { margin-bottom: var(--al-space-4); overflow-wrap: break-word; }
 .al-invoice-logo :is(img, svg) { display: block; max-inline-size: 100%; max-block-size: 4rem; object-fit: contain; object-position: left; }
@@ -82,7 +100,8 @@
   .al-invoice-summary dl > div { padding: .6mm 0; }
 }
 @media screen and (forced-colors: active) {
-  .al-invoice-items :is(th, td) { border-block-end: 1px solid CanvasText; }
+  .al-invoice-items :is(th, td) { border-block-end-color: CanvasText; }
+  .al-invoice-items tr { border-block-end: 1px solid CanvasText; }
   .al-invoice-summary .al-invoice-total { border-block-start: 3px double CanvasText; }
 }
 

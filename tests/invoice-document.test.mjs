@@ -73,7 +73,7 @@ test('invoice quantities retain their units and monetary columns always have two
     vatNumber: 'CHE109322551', locale: 'de-CH', lines, payment: { iban: 'CH5800791123000889012', creditor: party, debtor: party },
   }))
   const body = html.match(/<tbody>([\s\S]*?)<\/tbody>/)[1]
-  const values = [...body.matchAll(/<td>([\s\S]*?)<\/td>/g)].map(match => match[1].replace(/<[^>]+>/g, ''))
+  const values = [...body.matchAll(/<td(?: [^>]*)?>([\s\S]*?)<\/td>/g)].map(match => match[1].replace(/<[^>]+>/g, ''))
   assert.deepEqual(values, ['2.5 h', '80.00', '0 %', '200.00', '1.25 m²', '24.00', '0 %', '30.00',
     '2', '1.01', '0 %', '2.01', '1', '−0.01', '0 %', '−0.01'])
 })

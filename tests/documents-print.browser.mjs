@@ -86,6 +86,23 @@ try {
   const invoice = { invoiceNumber: 'AN-104', issueDate: '2026-11-25', supplyDate: '2026-11-24', dueDate: '2026-12-25',
     vatNumber: 'CHE-109.322.551', payment: { iban: 'CH5800791123000889012', creditor: party, debtor: party } }
   const lines = Array.from({ length: 120 }, (_, i) => ({ description: 'Item ' + i, quantity: 3, unitPrice: 24.44, vatRate: [0, 2.6, 3.8, 8.1][i % 4] }))
+  for (const width of [320, 360]) {
+    await page.setViewportSize({ width, height: 800 })
+    await page.emulateMedia({ media: 'screen' })
+    await render(h(InvoiceDocument, { ...invoice, locale: 'it-CH', lines: [{ ...lines[0], description: 'Correzione delle bozze', unit: 'h' }] }))
+    const table = page.getByRole('table', { name: 'Voci della fattura' })
+    assert.equal(await table.getByRole('columnheader').count(), 5)
+    const row = table.getByRole('row').last()
+    const [description, quantity, price, tax, net] = await row.locator('th, td').evaluateAll(cells => cells.map(cell => {
+      const box = cell.getBoundingClientRect()
+      return { left: box.left, right: box.right, top: box.top, bottom: box.bottom }
+    }))
+    assert.ok(description.bottom <= quantity.top + 1 && quantity.top === price.top && price.top === net.top)
+    assert.ok(tax.top >= price.bottom - 1)
+    assert.ok(net.right <= width && net.left > price.left, 'The complete line total is visible without scrolling')
+    assert.ok(await table.evaluate(el => el.parentElement.scrollWidth <= el.parentElement.clientWidth + 1))
+  }
+  await page.setViewportSize({ width: 1000, height: 1300 })
   for (const length of [1, 2, 3, 4, 5, 6, 7, 8, 120]) {
     const realistic = { ...party, name: 'Atelier für Innenausbau am Waldrand', street: 'Werkstattstrasse', buildingNumber: '12' }
     const document = h(InvoiceDocument, { ...invoice, payment: { ...invoice.payment, creditor: realistic }, lines: lines.slice(0, length) })

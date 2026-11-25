@@ -237,7 +237,7 @@
   "invoice-document": {
     "stage": "Beta",
     "changed": "2026-11-25",
-    "source": "ff1c6a805ffd412ca471"
+    "source": "fb82315527b8959dc4ca"
   },
   "item": {
     "stage": "Stable",

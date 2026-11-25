@@ -1278,7 +1278,7 @@
   "invoice-document": {
     "use": "Issue a printable, itemised Swiss invoice with its VAT breakdown, total and QR payment section on the same document.",
     "avoid": "Use SwissQrBill alone when the surrounding system already produces the complete invoice body.",
-    "access": "Provide meaningful line descriptions and keep quantity, tax and total headings attached to their columns. Check reading order and print long invoices over several pages.",
+    "access": "On narrow screens each item shows its description, quantity × unit price, net CHF and VAT without horizontal scrolling. Column and row headings remain available to screen readers. In print, longer invoices repeat their headings.",
     "content": "Use a short noun phrase for each service and state its period or quantity when that identifies the charge. Keep the invoice number consistent across the document.",
     "example": {
       "good": "Studio hire · 2 days",

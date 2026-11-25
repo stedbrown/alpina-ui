@@ -93,7 +93,7 @@ export const InvoiceDocument = forwardRef<HTMLElement, InvoiceDocumentProps>(fun
           <th scope="row">{line.description}</th>
           <td>{number(line.quantity)}{line.unit?.trim() && '\u00a0' + line.unit.trim()}</td>
           <td><data value={String(line.unitPrice)}>{columnAmount(invoiceUnitPriceCents(line.unitPrice))}</data></td>
-          <td>{rate(line.vatRate)}</td><td>{columnAmount(result.lineNetCents[index])}</td>
+          <td data-vat-label={l.vat}>{rate(line.vatRate)}</td><td>{columnAmount(result.lineNetCents[index])}</td>
         </tr>)}</tbody>
       </table>
     </div>

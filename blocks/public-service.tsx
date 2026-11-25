@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react'
 import {
   AhvInput, Alert, Button, DescriptionList, Field, FileInput, Grid, GridItem, Input, PageRegion,
-  Select, Separator, Stack, Steps, SwissPostalCodeInput, TextLink, ToggleGroup, Typography,
+  Select, Separator, Stack, Steps, SwissAddressFields, TextLink, ToggleGroup, Typography,
   ahvSchema, echAddressSchema, formatAhvNumber, localeNames, swissLocales, swissValidationMessage,
   type EchMailAddress, type SwissMessageLocale,
 } from 'alpina-ui'
@@ -258,7 +258,6 @@ function ServiceForm({ initialLocale, draftKey, onSubmit }: Required<Pick<Public
       const props = { ...control, name, value: details[name], required: name !== 'houseNumber', disabled: busy,
         onChange: (event: ChangeEvent<HTMLInputElement>) => edit(name, event) }
       if (name === 'ahv') return <AhvInput {...props} locale={locale} />
-      if (name === 'postalCode') return <SwissPostalCodeInput {...props} locale={locale} />
       return <Input {...props} autoComplete={autocomplete[name]} />
     }}</Field>
   }
@@ -309,7 +308,16 @@ function ServiceForm({ initialLocale, draftKey, onSubmit }: Required<Pick<Public
           {!!invalidFields.length && <Alert ref={errorSummary} tabIndex={-1} role="alert" tone="danger" title={t.issues}>
             <ul>{invalidFields.map(key => <li key={key}><TextLink href={'#' + prefix + '-' + key}>{t[key]} · {errors[key]}</TextLink></li>)}</ul>
           </Alert>}
-          {fieldsByStep[step].map(field)}
+          {step === 0 && personalFields.map(field)}
+          {step === 1 && <SwissAddressFields locale={locale} format="ech-person" disabled={busy} idPrefix={prefix}
+            fields={['street', 'houseNumber', 'postalCode', 'locality']} names={{ locality: 'town' }}
+            labels={{ title: t.address, street: t.street, houseNumber: t.houseNumber, postalCode: t.postalCode, locality: t.town }}
+            value={{ street: details.street, houseNumber: details.houseNumber, postalCode: details.postalCode, locality: details.town }}
+            errors={{ ...errors, locality: errors.town }} onValueChange={address => {
+              setDetails(previous => ({ ...previous, street: address.street ?? '', houseNumber: address.houseNumber ?? '',
+                postalCode: address.postalCode ?? '', town: address.locality ?? '' }))
+              setNotice(undefined)
+            }} />}
           {step === 2 && <Field id={prefix + '-files'} label={t.files} description={t.fileHint}>{control =>
             <FileInput {...control} name="attachments" locale={locale} multiple disabled={busy} files={files}
               onFilesChange={nextFiles => { setFiles(nextFiles); setNotice(undefined) }} />

@@ -1,6 +1,6 @@
 'use client'
 
-import { forwardRef, useImperativeHandle, useEffect, useId, useRef, useState, type FormEvent } from 'react'
+import { forwardRef, useImperativeHandle, useEffect, useId, useRef, useState, type ChangeEvent, type ComponentPropsWithoutRef, type FormEvent } from 'react'
 import { Button } from '../ui/button.js'
 import { Field } from '../ui/field.js'
 import { Input } from '../ui/input.js'
@@ -9,7 +9,7 @@ import { TextLink } from '../portal/text-link.js'
 import { NativeSelect } from '../interactive/native-select.js'
 import { CantonSelect } from './canton-select.js'
 import { cantons, type CantonCode } from './cantons.js'
-import { defaultSwissLocale, type SwissLocale } from './locales.js'
+import { defaultSwissLocale, type SwissLocale, type SwissMessageLocale } from './locales.js'
 import { isSwissPostalCode } from './postal-code.js'
 import { lookupSwissPostalCode, type SwissPostalLocality } from './postal-localities.js'
 import { addressFieldLimit, isXmlAddressText, normalizeAddressText, type SwissAddress, type SwissAddressFormat } from './postal-address.js'
@@ -188,7 +188,39 @@ export interface SwissAddressFormProps {
 }
 
 const requiredFields: (keyof SwissAddress)[] = ['recipient', 'street', 'postalCode', 'locality', 'canton']
+const englishAddress = {
+  title: 'Postal address', instruction: 'All fields are required.', recipient: 'Recipient', street: 'Street and house number',
+  postalCode: 'Postcode', locality: 'Town or city', canton: 'Canton', selectCanton: 'Choose a canton', postalCodeHint: '4 digits',
+  firstName: 'First name (optional)', lastName: 'Last name', organisation: 'Organisation',
+  addressLine1: 'Additional address line 1 (optional)', addressLine2: 'Additional address line 2 (optional)',
+  streetName: 'Street', houseNumber: 'House number (optional)', required: 'Optional fields are marked.',
+  chooseLocality: 'Use a locality and canton', suggestions: 'Suggestions for {code}', manualLocality: 'Enter the locality and canton manually.',
+}
+
 type AddressField = keyof SwissAddress
+type AddressFieldLabels = Partial<Record<AddressField, string>> & Partial<Pick<SwissAddressLabels,
+  'title' | 'postalCodeHint' | 'selectCanton' | 'chooseLocality' | 'suggestions' | 'manualLocality'>>
+
+export interface SwissAddressFieldsProps extends Omit<ComponentPropsWithoutRef<'fieldset'>, 'children' | 'defaultValue' | 'onChange'> {
+  locale?: SwissMessageLocale
+  format?: SwissAddressFormat
+  /** Address fields to collect in their display order. Native field names may be overridden. */
+  fields?: readonly AddressField[]
+  names?: Partial<Record<AddressField, string>>
+  idPrefix?: string
+  labels?: AddressFieldLabels
+  value?: Partial<SwissAddress>
+  defaultValue?: Partial<SwissAddress>
+  errors?: Partial<Record<AddressField, string>>
+  onValueChange?: (address: Partial<SwissAddress>, changedFields: readonly AddressField[]) => void
+}
+
+function defaultFields(format: SwissAddressFormat): AddressField[] {
+  return ['recipient', ...(format === 'ech-person' ? ['firstName' as const] : []),
+    ...(format !== 'compact' ? ['addressLine1' as const, 'addressLine2' as const] : []), 'street',
+    ...(format !== 'compact' ? ['houseNumber' as const] : []), 'postalCode', 'locality', 'canton']
+}
+
 type Issue = 'requiredError' | 'postalCodeError' | 'lengthError' | 'codeError' | 'characterError' | { message: string }
 type AddressErrors = Partial<Record<AddressField, Issue>>
 
@@ -219,46 +251,18 @@ export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProp
   const text = { ...swissAddressLabels[locale], ...extra,
     ...(structured && { recipient: format === 'ech-person' ? extra.lastName : extra.organisation,
       instruction: extra.required, street: extra.streetName }), ...labels }
-  const extraFields: AddressField[] = structured ? ['addressLine1', 'addressLine2'] : []
-  const addressFields: AddressField[] = ['recipient', ...(format === 'ech-person' ? ['firstName' as const] : []),
-    ...extraFields, 'street', ...(structured ? ['houseNumber' as const] : []), 'postalCode', 'locality', 'canton']
+  const addressFields = defaultFields(format)
   const form = useRef<HTMLFormElement>(null)
   useImperativeHandle(forwardedRef, () => form.current!, [])
   const pendingFocus = useRef<AddressField | null>(null)
   const submitButton = useRef<HTMLButtonElement>(null)
-  const placeChoice = useRef<HTMLSelectElement>(null)
   const validationStarted = useRef(false)
   const saving = useRef(false)
   const [status, setStatus] = useState<'idle' | 'saving' | 'saved' | 'failed'>('idle')
   const [errors, setErrors] = useState<AddressErrors>({})
   // Retain the initial snapshot across language changes and parent re-renders.
   const [defaults] = useState(() => ({ ...initialValue }))
-  const initialQuery = defaults.locality && defaults.canton ? '' : defaults.postalCode ?? ''
-  const [query, setQuery] = useState(initialQuery)
-  const [result, setResult] = useState<{ code: string; places: SwissPostalLocality[] }>()
-  const places = result?.code === query ? result.places : undefined
   const invalidFields = addressFields.filter((field) => errors[field])
-
-  useEffect(() => {
-    if (!/^[1-9][0-9]{3}$/.test(query)) return
-    let active = true
-    const show = (matches: SwissPostalLocality[]) => {
-      if (active) setResult({ code: query, places: matches })
-    }
-    lookupSwissPostalCode(query).then(show, () => show([]))
-    return () => { active = false }
-  }, [query])
-
-  function acceptLocality(place: SwissPostalLocality) {
-    const locality = form.current?.elements.namedItem('locality')
-    const canton = form.current?.elements.namedItem('canton')
-    if (!(locality instanceof HTMLInputElement) || !(canton instanceof HTMLSelectElement)) return
-    locality.value = place.locality
-    canton.value = place.canton
-    if (validationStarted.current) setErrors(current => ({ ...current,
-      locality: fieldIssue('locality', place.locality, format), canton: undefined }))
-    setStatus('idle')
-  }
 
   function focusField(name: AddressField) {
     const field = form.current?.elements.namedItem(name)
@@ -328,18 +332,13 @@ export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProp
     }
   }
 
-  function edit(event: FormEvent<HTMLFormElement>) {
-    const target = event.target
-    if (!(target instanceof HTMLInputElement || target instanceof HTMLSelectElement)) return
-    const { name, value } = target
-    if (name === 'postalCode') setQuery(value)
-    if ((name === 'locality' || name === 'canton') && placeChoice.current) placeChoice.current.value = ''
-    const key = name as AddressField
-    if (validationStarted.current && addressFields.includes(key)) {
-      const next = fieldIssue(key, normalizeAddressText(value), format)
-      setErrors((current) => (current[key] === next ? current : { ...current, [key]: next }))
-    }
-    if (status === 'failed' || status === 'saved') setStatus('idle')
+  function edit(address: Partial<SwissAddress>, changed: readonly AddressField[]) {
+    if (validationStarted.current) setErrors(current => {
+      const next = { ...current }
+      for (const key of changed) next[key] = fieldIssue(key, normalizeAddressText(address[key] ?? ''), format)
+      return next
+    })
+    setStatus('idle')
   }
 
   function message(key: AddressField) {
@@ -350,12 +349,6 @@ export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProp
     }[locale]
     if (issue === 'lengthError') return text.lengthError.replace('{n}', String(addressFieldLimit(key, format)))
     return typeof issue === 'string' ? text[issue] : issue?.message
-  }
-
-  function optionalField(key: 'firstName' | 'addressLine1' | 'addressLine2' | 'houseNumber') {
-    return <Field key={key} id={prefix + '-' + key} className="al-address-street" label={text[key]} error={message(key)}>
-      {control => <Input {...control} name={key} defaultValue={defaults[key]} autoComplete={key === 'firstName' ? 'given-name' : undefined} />}
-    </Field>
   }
 
   return (
@@ -369,8 +362,6 @@ export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProp
       method="dialog"
       noValidate
       onSubmit={submit}
-      onChange={edit}
-      onReset={() => setQuery(initialQuery)}
     >
       <div className="al-address-heading">
         <Typography as="h2" variant="heading" id={prefix + '-title'}>
@@ -402,118 +393,9 @@ export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProp
           </ul>
         </div>
       )}
-      <fieldset
-        className="al-address-fields"
-        disabled={status === 'saving'}
-        aria-labelledby={prefix + '-title'}
-      >
-        <Field
-          id={prefix + '-recipient'}
-          className="al-address-recipient"
-          label={text.recipient}
-          error={message('recipient')}
-        >
-          {(control) => (
-            <Input
-              {...control}
-              name="recipient"
-              autoComplete={format === 'ech-person' ? 'family-name' : format === 'ech-organisation' ? 'organization' : 'name'}
-              defaultValue={defaults.recipient}
-              required
-            />
-          )}
-        </Field>
-        {format === 'ech-person' && optionalField('firstName')}
-        {structured && optionalField('addressLine1')}
-        {structured && optionalField('addressLine2')}
-        <Field
-          id={prefix + '-street'}
-          className="al-address-street"
-          label={text.street}
-          error={message('street')}
-        >
-          {(control) => (
-            <Input
-              {...control}
-              name="street"
-              autoComplete="address-line1"
-              defaultValue={defaults.street}
-              required
-            />
-          )}
-        </Field>
-        {structured && optionalField('houseNumber')}
-        <Field
-          id={prefix + '-postalCode'}
-          describedBy={places && prefix + '-postal-matches'}
-          className="al-address-postcode"
-          label={text.postalCode}
-          description={text.postalCodeHint}
-          error={message('postalCode')}
-        >
-          {(control) => (
-            <SwissPostalCodeInput
-              {...control}
-              locale={locale}
-              name="postalCode"
-              defaultValue={defaults.postalCode ?? ''}
-              required
-            />
-          )}
-        </Field>
-        <Field
-          id={prefix + '-locality'}
-          className="al-address-locality"
-          label={text.locality}
-          error={message('locality')}
-        >
-          {(control) => (
-            <Input
-              {...control}
-              name="locality"
-              autoComplete="address-level2"
-              defaultValue={defaults.locality}
-              required
-            />
-          )}
-        </Field>
-        <Field
-          id={prefix + '-canton'}
-          className="al-address-canton"
-          label={text.canton}
-          error={message('canton')}
-        >
-          {(control) => (
-            <CantonSelect
-              {...control}
-              name="canton"
-              autoComplete="address-level1"
-              locale={locale}
-              order="name"
-              placeholder={text.selectCanton}
-              defaultValue={defaults.canton ?? ''}
-              required
-            />
-          )}
-        </Field>
-        <div className="al-address-suggestions">
-          <span id={prefix + '-postal-matches'} aria-live="polite">
-            {places && (places.length
-              ? text.suggestions.replace('{code}', query) + ' (' + places.length + ') · ©swisstopo'
-              : text.manualLocality)}
-          </span>
-          {!!places?.length && <NativeSelect aria-labelledby={prefix + '-postal-matches'}
-              ref={placeChoice} appearance="outline" defaultValue="" key={query}
-              onChange={event => {
-                const place = places[Number(event.currentTarget.value)]
-                if (place) acceptLocality(place)
-              }}>
-              <option disabled value="">{text.chooseLocality}</option>
-              {places.map(({ locality, canton }, index) =>
-                <option key={locality + canton} value={index}>{locality} ({canton})</option>)}
-          </NativeSelect>}
-        </div>
-      </fieldset>
+      <SwissAddressFields idPrefix={prefix} locale={locale} format={format} labels={text} defaultValue={defaults}
+        disabled={status === 'saving'} aria-labelledby={prefix + '-title'} onValueChange={edit}
+        errors={Object.fromEntries(addressFields.map(key => [key, message(key)]))} />
       <div className="al-address-actions">
         <span role="status">{status === 'saved' ? text.saved : null}</span>
         {status === 'failed' && (
@@ -527,4 +409,95 @@ export const SwissAddressForm = forwardRef<HTMLFormElement, SwissAddressFormProp
       </div>
     </form>
   )
+})
+
+export const SwissAddressFields = forwardRef<HTMLFieldSetElement, SwissAddressFieldsProps>(function SwissAddressFields(
+  { locale = defaultSwissLocale, format = 'compact', fields = defaultFields(format), names, idPrefix,
+    labels, value, defaultValue, errors, onValueChange, className = '', ...rest }, forwardedRef,
+) {
+  const generated = useId()
+  const prefix = idPrefix ?? generated
+  const group = useRef<HTMLFieldSetElement>(null)
+  useImperativeHandle(forwardedRef, () => group.current!, [])
+  const base = locale === 'en' ? englishAddress : { ...swissAddressLabels[locale], ...structuredLabels[locale] }
+  const text = { ...base, ...(format !== 'compact' && { street: base.streetName,
+    recipient: format === 'ech-person' ? base.lastName : base.organisation }), ...labels }
+  const [local, setLocal] = useState<Partial<SwissAddress>>(() => defaultValue ?? {})
+  const address = value ?? local
+  const initial = useRef(value ?? defaultValue)
+  const [editedPostal, setEditedPostal] = useState(false)
+  const completeInitial = !editedPostal && initial.current?.locality && initial.current.canton &&
+    initial.current.postalCode === address.postalCode
+  const query = fields.includes('postalCode') && !completeInitial ? address.postalCode ?? '' : ''
+  const [result, setResult] = useState<{ code: string; places: SwissPostalLocality[] }>()
+  const [chosen, setChosen] = useState('')
+  const places = result?.code === query ? result.places : undefined
+
+  useEffect(() => {
+    if (!/^[1-9][0-9]{3}$/.test(query)) return
+    let active = true
+    const show = (places: SwissPostalLocality[]) => { if (active) setResult({ code: query, places }) }
+    lookupSwissPostalCode(query).then(show, () => show([]))
+    return () => { active = false }
+  }, [query])
+  useEffect(() => {
+    const form = group.current?.form
+    function reset(event: Event) {
+      queueMicrotask(() => {
+        if (event.defaultPrevented) return
+        setLocal(defaultValue ?? {})
+        setChosen('')
+        setEditedPostal(false)
+      })
+    }
+    form?.addEventListener('reset', reset)
+    return () => form?.removeEventListener('reset', reset)
+  }, [defaultValue, rest.form])
+
+  function update(patch: Partial<SwissAddress>) {
+    const next = { ...address, ...patch }
+    if (value === undefined) setLocal(next)
+    onValueChange?.(next, Object.keys(patch) as AddressField[])
+  }
+
+  return <fieldset ref={group} lang={locale} aria-label={text.title} {...rest}
+    className={('al-address-fields ' + className).trim()}>
+    {fields.map(key => {
+      const name = names?.[key] ?? key
+      const section = key === 'recipient' || key === 'canton' || key === 'locality' ? key : key === 'postalCode' ? 'postcode' : 'street'
+      return <Field key={key} id={prefix + '-' + name} className={'al-address-' + section} label={text[key]}
+        error={errors?.[key]} description={key === 'postalCode' ? text.postalCodeHint : undefined}
+        describedBy={key === 'postalCode' && places ? prefix + '-postal-matches' : undefined}>
+        {control => {
+          const common = { ...control, name, required: requiredFields.includes(key),
+            onChange: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+              if (key === 'postalCode') setEditedPostal(true)
+              if (['postalCode', 'locality', 'canton'].includes(key)) setChosen('')
+              update({ [key]: event.currentTarget.value })
+            } }
+          if (key === 'postalCode') return <SwissPostalCodeInput {...common} value={address.postalCode ?? ''} locale={locale} />
+          if (key === 'canton') return <CantonSelect {...common} value={address.canton ?? ''} locale={locale === 'en' ? 'de-CH' : locale}
+            order="name" autoComplete="address-level1" placeholder={text.selectCanton} />
+          const autoComplete = key === 'recipient' ? (format === 'ech-person' ? 'family-name' : format === 'ech-organisation' ? 'organization' : 'name')
+            : key === 'firstName' ? 'given-name' : key === 'street' ? 'address-line1' : key === 'locality' ? 'address-level2' : undefined
+          return <Input {...common} value={address[key] ?? ''} autoComplete={autoComplete} />
+        }}
+      </Field>
+    })}
+    {fields.includes('postalCode') && <div className="al-address-suggestions">
+      <span id={prefix + '-postal-matches'} aria-live="polite">{places && (places.length
+        ? text.suggestions.replace('{code}', query) + ' (' + places.length + ') · ©swisstopo' : text.manualLocality)}</span>
+      {!!places?.length && <NativeSelect aria-labelledby={prefix + '-postal-matches'} appearance="outline"
+        value={chosen} onChange={event => {
+          const index = event.currentTarget.value
+          const place = places[Number(index)]
+          if (!place || index === '') return
+          setChosen(index)
+          update({ locality: place.locality, canton: place.canton })
+        }}>
+        <option disabled value="">{text.chooseLocality}</option>
+        {places.map(({ locality, canton }, index) => <option key={locality + canton} value={index}>{locality} ({canton})</option>)}
+      </NativeSelect>}
+    </div>}
+  </fieldset>
 })

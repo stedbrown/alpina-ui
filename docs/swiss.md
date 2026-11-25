@@ -56,6 +56,17 @@ The callback can return nothing or return a promise. While saving, the form susp
 
 ### Postal locality suggestions
 
+Use `SwissAddressFields` inside an existing form. It renders a fieldset with native controls, field names and locality suggestions. `value` and `onValueChange` support controlled forms. Use `defaultValue` with native FormData for an uncontrolled form.
+
+```tsx
+import { SwissAddressFields } from 'alpina-ui/swiss/swiss-address-form'
+
+export function DeliveryFields() {
+  return <SwissAddressFields locale="fr-CH" fields={['street', 'postalCode', 'locality', 'canton']}
+    names={{ locality: 'town' }} />
+}
+```
+
 After four digits, `SwissAddressForm` offers the official locality and canton together. For example, 6900 offers Lugano, Massagno and Paradiso. For 1085 the locality Vulliens occurs in both FR and VD. Selecting an option fills the two fields. People can keep an existing address or enter either field manually, including administrative postcodes outside the residential directory.
 
 `await lookupSwissPostalCode('6900')` returns an array of `{ locality, canton }` pairs. An unknown or incomplete postcode returns an empty array. The first valid lookup imports the packaged dataset, so a code-splitting bundler can fetch it on demand. The hosted portal loads it from the same origin. No address is sent to a third party. The downloadable catalog includes the data for offline use.

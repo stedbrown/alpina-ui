@@ -47,6 +47,14 @@ test('groups retain their records and totals add exact displayed centimes, inclu
   const large = ledger({ rows: [ { ...rows[0], amount: '9007199254740992.01' }, { ...rows[1], amount: '-9007199254740992' } ] })
   assert.match(large, /<tfoot>[\s\S]*?value="0.01"/)
 })
+test('summary labels span descriptive columns without consuming a numeric value', () => {
+  const grouped = ledger({ groupBy: row => row.group })
+  for (const [, label] of grouped.matchAll(/<tr data-summary="(?:subtotal|total)"><th([^>]*)>/g))
+    assert.match(label, /colSpan="2"/i)
+  const numericFirst = ledger({ columns: [columns[2], columns[0], columns[1]] })
+  assert.match(numericFirst, /<tfoot><tr[^>]*><td[^>]*>[\s\S]*?value="1000.01"[\s\S]*?<\/td><th[^>]*colSpan="2"[^>]*>Total<\/th>/i)
+})
+
 test('TableAmount supports exact minor units, localized Swiss decimals and measured column precision', () => {
   const render = props => renderToStaticMarkup(h(TableAmount, props))
   assert.match(render({ minorUnits: -5n, format: 'chf', locale: 'rm-CH' }), /value="-0.05"[^>]*>−0,05</)

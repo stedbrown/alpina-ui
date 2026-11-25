@@ -135,8 +135,15 @@ function DataTableView<Row>({
     }
     return figure(col, value as bigint)
   }
+  // A colspan can cover only adjacent columns; keep every numeric result on its own axis.
+  const numericColumn = (col: DataTableColumn<Row>) => alignment(col) === 'end'
+  const firstLabelColumn = columns.findIndex(col => !numericColumn(col))
+  const labelIndex = Math.max(0, firstLabelColumn)
+  const nextNumber = columns.findIndex((col, i) => i > labelIndex && numericColumn(col))
+  const labelSpan = firstLabelColumn === -1 ? 1 : (nextNumber < 0 ? columns.length : nextNumber) - labelIndex
   function summary(label: string, records: readonly Prepared<Row>[], variant: 'subtotal' | 'total') {
     return <TableRow variant={variant}>{columns.map((col, index) => {
+      if (index > labelIndex && index < labelIndex + labelSpan) return null
       let amount: ReactNode
       if ('aggregate' in col && col.aggregate === 'sum') {
         let sum: bigint | undefined
@@ -146,7 +153,7 @@ function DataTableView<Row>({
         }
         amount = sum === undefined ? '—' : figure(col, sum)
       }
-      if (index === 0) return <TableHead scope="row" key={col.id} numeric={alignment(col) === 'end'}>{label}{amount != null && <><br />{amount}</>}</TableHead>
+      if (index === labelIndex) return <TableHead scope="row" colSpan={labelSpan} key={col.id} numeric={alignment(col) === 'end'}>{label}{amount != null && <><br />{amount}</>}</TableHead>
       return <TableCell key={col.id} numeric={alignment(col) === 'end'}>{amount}</TableCell>
     })}</TableRow>
   }

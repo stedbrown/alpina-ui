@@ -8,13 +8,14 @@ const css = await readFile(new URL('../dist/styles.css', import.meta.url), 'utf8
 const script = await build({ stdin: { resolveDir: fileURLToPath(new URL('../', import.meta.url)), contents: `
   import { createElement as h } from 'react'
   import { createRoot } from 'react-dom/client'
-  import { DataTable } from 'alpina-ui'
+  import { DataTable, Grid, GridItem } from 'alpina-ui'
   const rows = Array.from({length:90}, (_, i) => ({
     id:'Posting ' + (i+1), amount:i===0 ? -32.5 : i % 2 ? 125 : 980.75,
     date:i % 2 ? '31.01.2026' : '01.02.2026', group: i < 50 ? 'Paper' : 'Binding',
   }))
-  createRoot(document.querySelector('#app')).render(h(DataTable, {
-    caption: 'Production account', empty: 'No postings', rows, rowKey: r => r.id,
+  const root = createRoot(document.querySelector('#app'))
+  window.renderLedger = count => root.render(h(Grid, null, h(GridItem, { small: 4, medium: 4, large: 6 }, h(DataTable, {
+    caption: 'Production account', empty: 'No postings', rows:rows.slice(0, count), rowKey: r => r.id,
     groupBy: r => r.group, totalLabel: 'Grand total', maxHeight: '16rem',
     stickyHeader: true, stickyFirstColumn: true, negativeStyle: 'parentheses', locale: 'de-CH',
     columns:[
@@ -24,7 +25,8 @@ const script = await build({ stdin: { resolveDir: fileURLToPath(new URL('../', i
       { id:'rate', header:'Quantity', format:'decimal', fractionDigits:3, value:()=>2.5 },
       { id:'amount', header:'Balance', format:'chf', value:r=>r.amount, aggregate:'sum' },
     ],
-  }))
+  }))))
+  window.renderLedger(60)
 ` }, format: 'iife', bundle: true, write: false, define: { 'process.env.NODE_ENV': '"production"' } })
 const browser = await launchBrowser()
 try {
@@ -66,6 +68,8 @@ try {
 
   await page.setViewportSize({ width: 1000, height: 1200 })
   await page.emulateMedia({ media: 'print' })
+  assert.ok(await table.evaluate(el => Math.abs(el.clientWidth - document.body.clientWidth) <= 1),
+    'A ledger in a half-width screen grid fills the printable area')
   await table.evaluate(el => {
     const labels = [...el.querySelectorAll('thead th')].map((cell, i) => [cell.querySelector('.al-table-print-label') ?? cell, 'head-' + i])
     labels.push([el.querySelector('tfoot th:first-child'), 'total'])
@@ -81,10 +85,14 @@ try {
   const pages = objects.filter(([, , body]) => /\/Type\s*\/Page\b/.test(body))
   const markers = label => objects.filter(([, , body]) => body.includes('https://print.example/' + label)).map(([, id]) => id)
   const hasMarker = (page, ids) => ids.some(id => new RegExp('/Annots\\s*\\[[^\\]]*?\\b' + id + ' 0 R').test(page[2]))
-  assert.ok(pages.length >= 3, 'Ledger spans at least three A4 pages')
+  assert.equal(pages.length, 2, '60 bookings fit two A4 pages')
   assert.ok(pages.every(page => /\/MediaBox\s*\[0 0 59[45][\d.]* 84[12][\d.]*\]/.test(page[2])))
   for (let i = 0; i < 5; i++) assert.ok(pages.every(page => hasMarker(page, markers('head-' + i))), 'Column ' + i + ' label prints on every sheet')
   assert.deepEqual(pages.map(page => hasMarker(page, markers('total'))), pages.map((_, i) => i === pages.length - 1),
     'Grand total appears only on the last sheet')
+  await page.evaluate(() => window.renderLedger(16))
+  await page.waitForFunction(() => document.querySelectorAll('tbody tr:has(td):not([data-summary])').length === 16)
+  const short = (await page.pdf({ preferCSSPageSize: true })).toString('latin1')
+  assert.equal([...short.matchAll(/\/Type\s*\/Page\b/g)].length, 1, '16 accounts fit one A4 page')
   console.log('Verified the decimal axis, pinned cells, keyboard sorting and repeated A4 ledger headers.')
 } finally { await browser.close() }

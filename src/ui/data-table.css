@@ -76,5 +76,21 @@
   .al-data-table.al-scroll-area { container-type: normal; overflow: visible; max-block-size: none !important; scrollbar-gutter: auto; }
   /* Chromium omits native controls when it repeats a table header on later sheets. */
   .al-data-table th button { display: none; }
-  .al-data-table th .al-table-print-label { display: block; padding: var(--al-space-3) var(--al-space-4); }
+  .al-data-table .al-table { inline-size: 100%; font-size: 9pt; line-height: 12pt; }
+  .al-data-table .al-table > :is(thead, tbody, tfoot) > tr > :is(th, td) {
+    padding: 1mm 1.5mm;
+    border-block-end-width: 0.25mm;
+    border-image: none;
+    overflow-wrap: normal;
+    hyphens: manual;
+  }
+  .al-data-table .al-table > thead > tr > th { font-size: 9pt; line-height: 12pt; }
+  .al-data-table th .al-table-print-label { display: block; }
+  .al-data-table [data-summary] > th { white-space: normal; }
+
+  /* Release screen-only grid tracks and flex fragmentation around a printed ledger. */
+  :is(.al-grid, .al-stack, .al-card):has(.al-data-table) { display: block; break-inside: auto; }
+  .al-layout:has(.al-data-table) { container-type: normal; }
+  .al-grid:has(.al-data-table) { padding-inline: 0; }
+
 }

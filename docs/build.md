@@ -8,7 +8,7 @@ For an application form, give each input a visible label with [Field](https://al
 
 ## Compare table rows and amounts
 
-Use [Table](https://alpina-ui.vercel.app/docs/components/table/) for a straightforward comparison. Choose [DataTable](https://alpina-ui.vercel.app/docs/components/data-table/) when someone will sort, group or inspect records. Identify the currency in the column heading and supply amounts as numbers so sorting still works. Reserve [CurrencyCHF](https://alpina-ui.vercel.app/docs/components/currency-chf/) for amounts that need their own currency label. In the [invoice review project](https://alpina-ui.vercel.app/examples/invoice-review/), try a revision and inspect the result.
+Use [Table](https://alpina-ui.vercel.app/docs/components/table/) for a straightforward comparison. Choose [DataTable](https://alpina-ui.vercel.app/docs/components/data-table/) when someone will sort, group or inspect records. Identify the currency in the column heading and supply amounts as numbers so sorting still works. Set `nowrap: true` on a column of document references such as `2026-0141`, including custom cells that render links. Reserve [CurrencyCHF](https://alpina-ui.vercel.app/docs/components/currency-chf/) for amounts that need their own currency label. In the [invoice review project](https://alpina-ui.vercel.app/examples/invoice-review/), try a revision and inspect the result.
 
 ## Open a window or a menu
 

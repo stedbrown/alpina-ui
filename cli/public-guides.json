@@ -68,12 +68,8 @@
   {
     "id": "beta-review",
     "title": "Beta decisions",
-    "file": "beta-review.md",
-    "navigation": "candidate"
-  },
-  {
-    "id": "portal",
-    "title": "Portal",
-    "file": "portal.md"
+    "file": "beta-status.md",
+    "navigation": "candidate",
+    "mcp": false
   }
 ]

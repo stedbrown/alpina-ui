@@ -4,5 +4,107 @@
   "trailingSlash": true,
   "installCommand": "npm ci --include=dev",
   "buildCommand": "npm run build && npm run catalog -- --release-package",
-  "outputDirectory": "site"
+  "outputDirectory": "site",
+  "redirects": [
+    {
+      "source": "/docs/guides/core/",
+      "destination": "/docs/guides/build/",
+      "statusCode": 301
+    },
+    {
+      "source": "/reference/core.md",
+      "destination": "/reference/build.md",
+      "statusCode": 301
+    },
+    {
+      "source": "/docs/guides/interactive/",
+      "destination": "/docs/guides/build/",
+      "statusCode": 301
+    },
+    {
+      "source": "/reference/interactive.md",
+      "destination": "/reference/build.md",
+      "statusCode": 301
+    },
+    {
+      "source": "/docs/guides/actions/",
+      "destination": "/docs/guides/build/",
+      "statusCode": 301
+    },
+    {
+      "source": "/reference/actions.md",
+      "destination": "/reference/build.md",
+      "statusCode": 301
+    },
+    {
+      "source": "/docs/guides/elements/",
+      "destination": "/docs/guides/build/",
+      "statusCode": 301
+    },
+    {
+      "source": "/reference/elements.md",
+      "destination": "/reference/build.md",
+      "statusCode": 301
+    },
+    {
+      "source": "/docs/guides/workflows/",
+      "destination": "/docs/guides/build/",
+      "statusCode": 301
+    },
+    {
+      "source": "/reference/workflows.md",
+      "destination": "/reference/build.md",
+      "statusCode": 301
+    },
+    {
+      "source": "/docs/guides/research/",
+      "destination": "/docs/guides/design/",
+      "statusCode": 301
+    },
+    {
+      "source": "/reference/research.md",
+      "destination": "/reference/design.md",
+      "statusCode": 301
+    },
+    {
+      "source": "/docs/guides/coverage/",
+      "destination": "/docs/guides/migration/",
+      "statusCode": 301
+    },
+    {
+      "source": "/reference/coverage.md",
+      "destination": "/reference/migration.md",
+      "statusCode": 301
+    },
+    {
+      "source": "/docs/guides/directory/",
+      "destination": "/examples/",
+      "statusCode": 301
+    },
+    {
+      "source": "/reference/directory.md",
+      "destination": "/examples/",
+      "statusCode": 301
+    },
+    {
+      "source": "/docs/guides/portal/",
+      "destination": "/docs/guides/build/",
+      "statusCode": 301
+    },
+    {
+      "source": "/reference/portal.md",
+      "destination": "/reference/build.md",
+      "statusCode": 301
+    },
+    {
+      "source": "/releases/0.11/",
+      "destination": "/docs/guides/design/",
+      "statusCode": 301
+    },
+    {
+      "source": "/releases/0.11",
+      "destination": "/docs/guides/design/",
+      "statusCode": 301
+    }
+  ]
 }

@@ -1,6 +1,6 @@
 import { createElement } from 'react'
 import { renderToString } from 'react-dom/server'
-import { readFile, writeFile, mkdir } from 'node:fs/promises'
+import { readFile, writeFile, mkdir, rm } from 'node:fs/promises'
 import { createHash } from 'node:crypto'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
@@ -18,9 +18,25 @@ const outputDir = path.resolve(process.env.ALPINA_SITE_OUTPUT ?? 'site')
 const guides = {}
 const componentGuidance = JSON.parse(await readFile('docs/component-guidance.json', 'utf8'))
 const guideManifest = JSON.parse(await readFile('cli/public-guides.json', 'utf8'))
+const redirects = JSON.parse(await readFile('vercel.json', 'utf8')).redirects
+// An incremental build may still contain the HTML and Markdown from an older release.
+for (const { source } of redirects) {
+  const retired = /^\/reference\/[a-z0-9-]+\.md$/.test(source) ? source.slice(1)
+    : /^\/(docs\/guides\/[a-z0-9-]+|releases\/\d+(?:\.\d+)*)\/?$/.test(source) ? path.join(source.slice(1), 'index.html') : undefined
+  if (retired) await rm(path.join(outputDir, retired), { force: true })
+}
+const guideAliases = Object.fromEntries(redirects.filter(rule => rule.source.startsWith('/docs/guides/')).map(rule => [rule.source.split('/')[3], rule.destination]))
 const guideFiles = Object.fromEntries(guideManifest.map(({ id, file }) => [id, 'docs/' + file]))
 for (const [key, file] of Object.entries(guideFiles)) {
-  guides[key] = await renderGuide(await readFile(file, 'utf8'))
+  let markdown = await readFile(file, 'utf8')
+  if (key === 'beta-review') {
+    // Keep pending recommendations visible until the maintainer records the decisions.
+    // The review file itself stays in the repository, outside the package and MCP.
+    const review = await readFile('docs/beta-review.md', 'utf8')
+    const table = review.split(/\r?\n/).filter(line => line.startsWith('|')).join('\n')
+    markdown += '\n\n## Proposed status by component\n\n' + table
+  }
+  guides[key] = await renderGuide(markdown)
 }
 
 const directoryStory = await renderGuide(await readFile('docs/directory.md', 'utf8'))
@@ -170,6 +186,7 @@ const catalogOptions = offline => ({
             'export const guides=' +
             JSON.stringify(offline ? offlineGuides : guides) +
             ';export const directoryStory=' + JSON.stringify(directoryStory) +
+            ';export const guideAliases=' + JSON.stringify(guideAliases) +
             ';export const guideManifest=' + JSON.stringify(guideManifest) +
             ';export const componentGuidance=' + JSON.stringify(offline ? componentGuidance : {}) +
             ';export const usageNotes=' +

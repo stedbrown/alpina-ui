@@ -13,7 +13,7 @@
 
 - **Public API** Swiss identifier validation distinguishes shape and prefix errors from check-digit errors across fields, Standard Schema, server actions and QR payloads. Existing validation booleans and signatures remain usable. TableHead and TableCell accept independent text alignment, and guide tables retain the alignment of the original Markdown. The shared message helper accepts an optional reason. Portal, text, field and layout modules now expose the composable parts used by the reference site. See the [declaration report](etc/alpina-ui.api.md) for signatures.
 - The residence application switches language navigation and progress independently when the actual row runs out of room. Keyboard focus follows the active representation.
-- The [0.x migration guide](docs/migrate-1-0.md) includes executable examples. The [Beta review](docs/beta-review.md) recommends a disposition for every Beta entry and reserves decisions for the maintainer.
+- The [0.x migration guide](https://alpina-ui.vercel.app/docs/guides/migrate-1-0/) includes executable examples. The [Beta review](docs/beta-review.md) recommends a disposition for every Beta entry and reserves decisions for the maintainer.
 - CI installs a packed tarball at the minimum and latest supported React/React DOM versions in Next.js, Vite with React Router, and the React Hook Form example. Next exercises App Router server actions and Pages Router hydration.
 - The generated GitHub directory lists every component and copyable block. New light and dark previews, the mountain A, share cards and machine-readable metadata use the same visual identity. SITE_URL configures the public origin.
 - The website and its examples use public Alpina component markup and styles. A dogfooding check guards interactive controls and layout against site-only implementations.
@@ -58,7 +58,7 @@
 
 - BarChart, LineChart, Sparkline and ChartTable draw SVG data graphics with text descriptions and accessible data tables.
 - The portal opens in automatic appearance. Its control cycles through automatic, light and dark and remembers the choice. Negative franc amounts use a mathematical minus with a localized spoken equivalent.
-- The portal revises column alignment, heading hierarchy and spacing. [Before and after](https://alpina-ui.vercel.app/releases/0.11/) · [Design notes on GitHub](https://github.com/stedbrown/alpina-ui/blob/main/docs/release-0.11-design.md)
+- The portal revises column alignment, heading hierarchy and spacing. [Before and after](https://github.com/stedbrown/alpina-ui/blob/main/docs/release-0.11-design.md)
 
 ### Packaging and adoption
 

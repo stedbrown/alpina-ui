@@ -51,7 +51,7 @@ import {
   directorySources,
   directoryStory,
   guides,
-  guideManifest,
+  guideManifest, guideAliases,
   sourceFiles,
   loadPostalSource,
   sources,
@@ -76,7 +76,7 @@ const demos = {
 const guideNames: Record<string, string> = Object.fromEntries(guideManifest.map(({ id, title }) => [id, title]))
 const guideGroups = [
   { title: 'Guides', keys: guideManifest.filter(guide => guide.navigation === 'guides').map(guide => guide.id) },
-  { title: 'Release candidate', keys: guideManifest.filter(guide => guide.navigation === 'candidate').map(guide => guide.id) },
+  { title: 'Release guidance', keys: guideManifest.filter(guide => guide.navigation === 'candidate' && (guide.id !== 'migrate-1-0' || /^\d+\.\d+\.\d+-/.test(version) && version.startsWith('1.0.0-'))).map(guide => guide.id) },
 ]
 const searchTerms: Record<string, string> = {
   stack: 'toolbar spacing action groups',
@@ -226,7 +226,12 @@ export function App({ pathname }: { pathname: string }) {
   ]
 
   const [hash, navigateView] = useRoute()
-  const route = hash || pathRoute || (hostedDocs ? 'guide/start' : 'overview')
+  const requested = hash || pathRoute || (hostedDocs ? 'guide/start' : 'overview')
+  const alias = requested.startsWith('guide/') ? guideAliases[requested.slice(6)] : undefined
+  const route = alias === '/examples/' ? 'project/bilingual-address-book' : alias ? 'guide/' + alias.split('/')[3] : requested
+  useEffect(() => {
+    if (alias) location.replace(hostedDocs ? alias : '#' + route)
+  }, [alias, hostedDocs, route])
   const [itemId, viewPath] = route.split('/')
   const subpage = viewPath === 'codice' ? 'code' : viewPath === 'sorgente' ? 'source' : viewPath
   const item = inventory.find((row) => row[0] === itemId)
@@ -237,7 +242,7 @@ export function App({ pathname }: { pathname: string }) {
       : 'start'
     : null
   const liveDirectory = hash === 'bilingual-address-book' || hash === 'rubrica-bilingue'
-  const projectStory = hash === 'project/bilingual-address-book' || hash === 'guide/directory'
+  const projectStory = route === 'project/bilingual-address-book'
   const directory = hash === 'address-book' || hash === 'rubrica'
   const workflow = workflowProjects.find((project) => project.slug === hash)
   const overview = !guide && !item && !directory

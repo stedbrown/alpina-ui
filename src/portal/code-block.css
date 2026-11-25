@@ -34,6 +34,7 @@
   outline: 2px solid var(--al-focus);
   outline-offset: -2px;
 }
+.al-code-block pre code { font-family: inherit; }
 .al-code-block [role='status']:not(:empty) {
   display: block;
   padding: var(--al-space-2) var(--al-space-4);

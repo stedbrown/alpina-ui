@@ -5,6 +5,11 @@
   background-color: var(--al-surface);
   color: var(--al-ink);
 }
+/* Standalone components establish the typeface, including when embedded in an
+   unstyled document. Descendants inherit their local text, code or print face. */
+:where([class^='al-'], [class*=' al-']):not(:where([class^='al-'] *, [class*=' al-'] *)) {
+  font-family: var(--al-font);
+}
 body[data-al-page] {
   display: flex;
   flex-direction: column;

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { platform, difference, launchVisualBrowser } from './visual-tools.mjs'
 import { assertCaptureCanvas, assertPaintedProfile } from './display-profile.mjs'
-import { mountComponentGallery } from './component-gallery.mjs'
+import { mountComponentGallery, galleryOverlays as overlays } from './component-gallery.mjs'
 const references = new URL('./visual-reference/' + platform + '/', import.meta.url)
 const diagnostics = new URL('../test-results/visual/', import.meta.url)
 const { items } = JSON.parse(await readFile(new URL('../registry.json', import.meta.url), 'utf8'))
@@ -21,21 +21,6 @@ assert.ok(names.length, 'Unknown component ' + requested)
 
 // Capture floating surfaces in use. The viewport includes anchored menus,
 // backdrops, drawers and notifications that extend outside a trigger's box.
-const modal = ['[aria-haspopup="dialog"]', 'Enter', 'dialog[open]']
-const overlays = {
-  dialog: modal, sheet: modal, drawer: modal, command: modal,
-  'alert-dialog': modal, 'date-picker': modal,
-  'dropdown-menu': ['[aria-haspopup="menu"]', 'Enter', '[role="menu"]'],
-  menubar: ['[aria-haspopup="menu"]', 'ArrowDown', '[role="menu"]'],
-  'context-menu': ['[aria-keyshortcuts]', 'Shift+F10', '[role="menu"]'],
-  combobox: ['input[role="combobox"]', 'ArrowDown', '[role="listbox"]'],
-  'canton-combobox': ['input[role="combobox"]', 'ArrowDown', '[role="listbox"]'],
-  popover: ['[aria-haspopup="dialog"]', 'Enter', '.al-popover-panel'],
-  'hover-card': ['button', 'Enter', '.al-hover-panel'],
-  tooltip: ['button[aria-describedby]', 'focus', '[role="tooltip"]'],
-  toast: ['button:text-is("Save preferences")', 'Enter', '.al-toast-dismiss'],
-}
-
 const results = []
 const browser = await launchVisualBrowser()
 const forcedBrowsers = []

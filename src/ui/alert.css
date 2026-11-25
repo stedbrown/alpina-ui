@@ -43,7 +43,6 @@
 }
 .al-alert[data-tone='info'] .al-alert-sign {
   border-radius: 50%;
-  font-family: serif;
 }
 .al-alert[data-tone='success'] .al-alert-sign,
 .al-alert[data-tone='warning'] .al-alert-sign {

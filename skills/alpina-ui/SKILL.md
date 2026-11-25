@@ -18,6 +18,8 @@ For a project that has yet to install Alpina, the public agent index links to th
 
 ## Compose the interface
 
+Use paper, ink and one red accent. Give red a job, such as identifying the current section or the primary action. Use a solid field for a change of section. Keep headings and reading text flush left, align them to the same column edges, and align money at the decimal edge. Use empty columns or vertical space to separate tasks. A page may open with a large heading beside a short measure of text, then change scale to a full-width ledger.
+
 Use `Grid` and `GridItem` when elements must align to shared columns. Use `Stack` for a group whose spacing, direction, baseline alignment, or wrapping should hold as labels change length. Use `Typography`'s element and visual variant separately so heading order follows the document. Look up the `design` guide for Alpina’s type roles, spacing unit, and 4/8/12-column behavior.
 
 For an action menu followed by a confirmation dialog, keep the menu trigger reference and restore focus when the dialog closes. The bilingual address book on the Examples page shows how focus moves after a record is deleted.

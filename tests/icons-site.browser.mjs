@@ -50,7 +50,7 @@ try {
     const page = await openPage({ viewport: { width, height: 850 }, hasTouch: width === 390 })
     await page.goto(origin)
     const header = page.getByRole('banner')
-    await page.getByRole('heading', { level: 1, name: 'Swiss UI for React.' }).waitFor()
+    await page.getByRole('heading', { level: 1, name: 'Swiss design for React.' }).waitFor()
     assert.ok(await header.locator('a[href="/"] img[src="/assets/logo.svg"]').isVisible())
     const repo = header.getByRole('link', { name: 'GitHub', exact: true })
     assert.equal((await repo.innerText()).trim(), 'GitHub')

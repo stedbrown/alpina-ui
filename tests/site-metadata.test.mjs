@@ -57,7 +57,7 @@ test('an alternate-domain build shares and indexes each hosted page on that doma
     assert.deepEqual([width, height], [1200, 630])
     assert.equal(metadata('og:image:width'), String(width))
     assert.equal(metadata('og:image:height'), String(height))
-    assert.match(metadata('og:image:alt'), /Swiss UI for React/)
+    assert.match(metadata('og:image:alt'), /Swiss design for React/)
     assert.equal(metadata('twitter:card'), 'summary_large_image')
     for (const key of ['title', 'description', 'image', 'image:alt']) {
       assert.equal(metadata('twitter:' + key), metadata('og:' + key))

@@ -15,11 +15,11 @@ export function resolveSiteUrl(value) {
 export const siteUrl = resolveSiteUrl(process.env.SITE_URL || packageOrigin)
 export const siteMetadata = {
   name: 'Alpina UI',
-  title: 'Alpina UI — Swiss React components for forms and payments',
-  description: 'Build multilingual Swiss forms, format CHF amounts and print QR bills with open-source React components. Explore working examples on a Swiss typographic grid.',
+  title: 'Alpina UI — Swiss design for React',
+  description: 'Build React interfaces with the International Typographic Style. Try the responsive grid, live type scale and accessible components, then install the open-source library.',
   language: 'en',
   imagePath: '/assets/alpina-preview.png',
-  imageAlt: 'Alpina UI mountain A mark beside the words “Swiss UI for React.”',
+  imageAlt: 'Alpina UI peak mark with the headline “Swiss design for React.”',
   repository: pkg.repository.url.replace(/^git\+/, '').replace(/\.git$/, ''),
 }
 

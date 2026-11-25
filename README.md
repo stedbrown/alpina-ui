@@ -3,7 +3,7 @@
 
 # Alpina UI
 
-React components for Swiss software, from a multilingual address form to a printable QR-bill.
+Open-source React components built on the Swiss typographic grid. Compose forms, tables and charts with a four-pixel rhythm, a measured type scale and one red accent.
 
 [![CI](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml) [![MIT license](https://img.shields.io/badge/license-MIT-222222)](LICENSE) [![Package version](https://img.shields.io/badge/version-1.0.0--rc.2-eb0000)](CHANGELOG.md)
 

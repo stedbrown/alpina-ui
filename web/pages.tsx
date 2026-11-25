@@ -85,14 +85,14 @@ export function Landing({ version, count }: { version: string; count: number }) 
     <PageRegion as="main" id="content" tabIndex={-1}>
       <Grid as="section" width="site" space="cover" align="end" aria-labelledby="home-title">
         <GridItem medium={4} large={7}>
-          <Typography as="h1" variant="title" id="home-title"><Typography as="span" variant="inherit" tone="accent">Swiss UI</Typography><br /> for React.</Typography>
+          <Typography as="h1" variant="title" id="home-title"><Typography as="span" variant="inherit" tone="accent">Swiss design</Typography><br /> for React.</Typography>
         </GridItem>
         <GridItem medium={4} large={4} start={{ large: 9 }}>
           <Stack gap={5}>
-            <Typography variant="lead" measure="narrow">React components for Swiss addresses, payments and multilingual forms.</Typography>
+            <Typography variant="lead" measure="narrow">Open-source React components built on a column grid, a measured type scale and one red accent.</Typography>
             <Stack direction="row" gap={4}>
-              <TextLink variant="action" href="/docs/components/">Browse components ({count})  <Icon name="arrow-right" size={18}/></TextLink>
-              <TextLink href="/start-here/">Start here</TextLink>
+              <TextLink variant="action" href="/start-here/">Start here</TextLink>
+              <TextLink href="/docs/components/">Browse components ({count}) →</TextLink>
             </Stack>
           </Stack>
         </GridItem>

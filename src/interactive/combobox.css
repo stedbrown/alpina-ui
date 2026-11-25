@@ -38,7 +38,8 @@
   display: flex;
   flex-direction: column;
   overflow: clip;
-  border: 1px solid var(--al-ink);
+  border: var(--al-unit) solid var(--al-ink);
+  border-image: linear-gradient(var(--al-ink) 0 0) 1 / 1px;
   background: var(--al-surface);
   color: var(--al-ink);
   padding: var(--al-space-1);
@@ -55,7 +56,7 @@
 .al-combo-popup li {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   gap: var(--al-space-2);
   padding: var(--al-space-2);
   cursor: pointer;
@@ -74,6 +75,7 @@
   margin: var(--al-space-2);
 }
 .al-combo-popup small {
+  line-height: var(--al-leading-caption);
   font-variant-numeric: tabular-nums;
 }
 @media (pointer: coarse) {

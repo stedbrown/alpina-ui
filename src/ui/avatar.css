@@ -10,7 +10,7 @@
   box-sizing: border-box;
   background: var(--al-soft);
   color: var(--al-ink);
-  font: 650 var(--al-type-label)/1 var(--al-font);
+  font: 650 var(--al-type-label)/var(--al-leading-label) var(--al-font);
 }
 .al-avatar[data-size='sm'] {
   --al-avatar-size: 2rem;

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Grid, GridItem, Typography, Switch } from 'alpina-ui'
+import { Grid, GridItem, GridOverlay, Typography, Switch, Stack } from 'alpina-ui'
 
 export function GridExample() {
   const [guides, setGuides] = useState(true)
@@ -22,6 +22,22 @@ export function GridExample() {
     </div>
   )
 }
+export function GridOverlayExample() {
+  const [visible, setVisible] = useState(true)
+  return (
+    <Stack>
+      <label><Switch checked={visible} onChange={e => setVisible(e.target.checked)} /> Show overlay</label>
+      <div style={{ position: 'relative' }}>
+        <Grid space="section">
+          <GridItem><Typography variant="heading">Proof sheet</Typography></GridItem>
+          <GridItem><Typography>Inspect the columns, margins and baseline together.</Typography></GridItem>
+        </Grid>
+        <GridOverlay placement="container" width="full" hidden={!visible} />
+      </div>
+    </Stack>
+  )
+}
+
 export function TypographyExample() {
   return (
     <div style={{ display: 'grid', gap: 16 }}>

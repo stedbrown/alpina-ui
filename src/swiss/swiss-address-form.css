@@ -4,7 +4,8 @@
   inline-size: 100%;
   max-inline-size: 44rem;
   min-inline-size: 0;
-  border: 1px solid var(--al-line);
+  outline: 1px solid var(--al-line);
+  outline-offset: -1px;
   border-radius: var(--al-radius);
   background: var(--al-surface);
   color: var(--al-ink);
@@ -12,8 +13,8 @@
 }
 .al-address-heading {
   padding: var(--al-space-5) var(--al-space-6);
-  border-block-start: 3px solid var(--al-ink);
-  border-block-end: 1px solid var(--al-line);
+  border-block-start: var(--al-unit) solid var(--al-ink);
+  box-shadow: inset 0 -1px var(--al-line);
 }
 .al-address-heading h2 {
   margin: 0;
@@ -78,7 +79,8 @@
   justify-content: flex-end;
   flex-wrap: wrap;
   gap: var(--al-space-4);
-  border-block-start: 1px solid var(--al-line);
+  border-block-start: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 1px 0 0;
   padding: var(--al-space-4) var(--al-space-6);
 }
 .al-address-save-error {

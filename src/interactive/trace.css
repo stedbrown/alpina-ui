@@ -17,14 +17,16 @@
   align-items: baseline;
   gap: var(--al-space-3);
   padding-block: var(--al-space-3);
-  border-block-start: 1px solid var(--al-line);
+  border-block-start: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 1px 0 0;
 }
 .al-trace li > div:only-child {
   grid-column: 1/-1;
 }
 .al-trace time,
 .al-trace-time {
-  font: var(--al-type-label)/1.5 var(--al-mono);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
   color: var(--al-muted);
 }
 .al-trace summary {

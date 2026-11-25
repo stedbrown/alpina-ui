@@ -4,6 +4,7 @@
   inline-size: 100%;
   min-inline-size: 0;
   min-block-size: var(--al-space-11);
+  block-size: calc(var(--al-textarea-rows, 3) * var(--al-leading-body) + var(--al-space-5));
   padding: var(--al-space-2) var(--al-space-3);
   border: 1px solid var(--al-control);
   border-radius: var(--al-radius);
@@ -54,6 +55,7 @@
 @supports (field-sizing: content) {
   .al-textarea[data-grow] {
     field-sizing: content;
-    min-block-size: calc(var(--al-textarea-rows, 3) * var(--al-leading-body) + var(--al-space-4) + 2px);
+    block-size: auto;
+    min-block-size: calc(var(--al-textarea-rows, 3) * var(--al-leading-body) + var(--al-space-5));
   }
 }

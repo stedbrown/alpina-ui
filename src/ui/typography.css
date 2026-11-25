@@ -17,7 +17,8 @@
 }
 .al-type[data-role='lead'] {
   font-size: clamp(var(--al-space-5), 2.3cqi, var(--al-space-9));
-  line-height: 1.13;
+  line-height: var(--al-leading-heading);
+  line-height: round(up, 1.13em, var(--al-unit));
   letter-spacing: -0.035em;
   text-wrap: pretty;
 }
@@ -25,7 +26,8 @@
   font-family: var(--al-display);
   font-size: clamp(3.5rem, 21.25cqi, 24rem);
   font-weight: 700;
-  line-height: .98;
+  line-height: var(--al-leading-display);
+  line-height: round(nearest, .98em, var(--al-unit));
   letter-spacing: -.063em;
   text-wrap: balance;
   overflow-wrap: anywhere;
@@ -51,7 +53,8 @@
   letter-spacing: -0.048em;
 }
 .al-type[data-role='title'] {
-  font: 650 clamp(3rem, 7cqi, 6.75rem)/0.98 var(--al-display);
+  font: 650 clamp(3rem, 7cqi, 6.75rem)/var(--al-leading-display) var(--al-display);
+  line-height: round(nearest, .98em, var(--al-unit));
   letter-spacing: -0.058em;
   overflow-wrap: anywhere;
   hyphens: auto;

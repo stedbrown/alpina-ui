@@ -86,9 +86,17 @@ The theme builder previews a single component surface with your accent, a spacin
 
 Align the introduction, component previews and navigation to the same page margins. Give a working example enough columns for its longest translated label. At narrow widths, let each preview take a full row and keep the heading before its controls in the reading order. [Homepage](https://alpina-ui.vercel.app/) · [Homepage source](https://github.com/stedbrown/alpina-ui/blob/main/web/pages.tsx)
 
+## Rows of controls
+
 Use `space="cover"` to give an opening section responsive vertical padding. Set `surface="accent"` for a red band or `ruler` to show the active columns. The `poster` type role scales with the container width. The site sets `data-al-page` on the body to apply the library’s page defaults.
 
-## Rows of controls
+## Proof the baseline
+
+At the default browser text size the grid unit is 4 CSS pixels. A caption advances by four units, a label by five and body copy by six. The same module sets control heights, vertical padding and the space reserved for structural dividers. Thin dividing strokes can be painted within a complete module, so adding a row does not add a stray pixel to everything below it. Responsive heading leading and section padding round to the nearest whole module as the available width changes.
+
+Press **Ctrl+Shift+G** on any portal page or in the offline catalog to toggle the proofing overlay. The stronger edge bands are the page margins. The vertical fields follow the grid’s 4, 8 and 12 columns, and the horizontal lines mark the baseline interval. The overlay accepts no pointer or keyboard input and disappears for print. Mount `<GridOverlay placement="container" width="full" />` inside a positioned container to inspect a smaller composition. [Overlay specimen](https://alpina-ui.vercel.app/docs/components/grid-overlay/)
+
+Text baselines advance by whole modules within each text run. The first ink position depends on the typeface's ascent. Artwork with an explicit aspect ratio retains that ratio, and the SIX payment slip retains its dimensions in millimetres. These intrinsic dimensions can fall between screen grid lines.
 
 Use `Grid` to allocate areas of the page and `Stack` to arrange elements inside an area. With `direction="row"`, children wrap when space runs out, including when an Italian label becomes a longer German one. `gap={2}` is two modules, or 8 px at a 16 px root. `justify="space-between"` places two groups at opposite ends of the available space. In a column, children stretch across the width and the default gap is 4.
 

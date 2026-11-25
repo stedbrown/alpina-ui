@@ -7,7 +7,8 @@
   display: flex;
   min-inline-size: 0;
   overflow: auto;
-  border-block-end: 1px solid var(--al-ink);
+  border-block-end: var(--al-unit) solid var(--al-ink);
+  border-image: linear-gradient(var(--al-ink) 0 0) 1 / 0 0 1px;
 }
 .al-tab {
   position: relative;

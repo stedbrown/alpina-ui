@@ -1,24 +1,26 @@
 .al-prose {
   color: var(--al-ink);
-  font: var(--al-type-body)/1.6 var(--al-font);
+  font: var(--al-type-body)/var(--al-leading-body) var(--al-font);
   max-width: 76ch;
   min-width: 0;
   overflow-wrap: anywhere;
 }
 .al-prose :where(h1, h2, h3) {
   text-wrap: balance;
-  line-height: 1.08;
+  line-height: var(--al-leading-heading);
+  line-height: round(up, 1.08em, var(--al-unit));
   letter-spacing: -0.035em;
 }
 .al-prose h1 {
   font-size: clamp(2.5rem, 5vw, 4.5rem);
-  margin: 0.5em 0;
+  margin: var(--al-space-6) 0;
 }
 .al-prose h2 {
   font-size: 1.65rem;
-  margin: 2em 0 0.6em;
-  border-top: 1px solid var(--al-line);
-  padding-top: 0.55em;
+  margin: var(--al-space-12) 0 var(--al-space-4);
+  border-block-start: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 1px 0 0;
+  padding-top: var(--al-space-4);
 }
 .al-prose h3 {
   font-size: 1.25rem;
@@ -40,7 +42,7 @@
 }
 .al-prose pre {
   overflow: auto;
-  padding: 0.8rem;
+  padding: var(--al-space-3);
   background: var(--al-soft);
 }
 .al-prose code {
@@ -56,13 +58,14 @@
 }
 .al-prose th,
 .al-prose td {
-  border-top: 1px solid var(--al-line);
-  padding: 0.55em 0.8em;
+  border-block-start: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 1px 0 0;
+  padding: var(--al-space-2) var(--al-space-3);
   text-align: start;
   vertical-align: top;
 }
 .al-prose blockquote {
   border-inline-start: 3px solid var(--al-accent);
-  padding: 0.2em 1em;
+  padding: var(--al-space-1) var(--al-space-4);
   margin: 1em 0;
 }

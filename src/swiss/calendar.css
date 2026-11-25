@@ -1,11 +1,12 @@
-.al-calendar { inline-size: min(100%, 22rem); color: var(--al-ink); font-family: var(--al-font); }
-.al-calendar-head { display: flex; align-items: center; border-block: 1px solid var(--al-line); padding-block: var(--al-space-2); }
+.al-calendar { inline-size: min(100%, 22rem); color: var(--al-ink); font: var(--al-type-body)/var(--al-leading-body) var(--al-font); }
+.al-calendar-head { display: flex; align-items: center; border-block: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 1px 0; padding-block: var(--al-space-2); }
 .al-calendar-head strong { margin-inline-end: auto; }
 .al-calendar-head .al-button { min-inline-size: 2.25rem; font-size: 1.25rem; }
 .al-calendar table { border-collapse: collapse; table-layout: fixed; width: 100%; text-align: center; }
-.al-calendar th { font-size: var(--al-type-caption); font-weight: 500; color: var(--al-muted); padding-block: var(--al-space-2); }
-.al-calendar td { padding: 1px; }
-.al-calendar td button { appearance: none; box-sizing: border-box; width: 100%; min-height: 2.35rem; border: 1px solid transparent; border-radius: var(--al-radius); background: transparent; color: inherit; font: inherit; font-variant-numeric: tabular-nums; cursor: pointer; }
+.al-calendar th { font-size: var(--al-type-caption); line-height: var(--al-leading-caption); font-weight: 500; color: var(--al-muted); padding-block: var(--al-space-2); }
+.al-calendar td { padding: 0; }
+.al-calendar td button { appearance: none; box-sizing: border-box; width: 100%; min-height: var(--al-space-10); padding: 0; display: block; border: 1px solid transparent; border-radius: var(--al-radius); background: transparent; color: inherit; font: inherit; font-variant-numeric: tabular-nums; cursor: pointer; }
 .al-calendar td button[aria-current] { text-decoration: underline; text-underline-offset: .22em; }
 .al-calendar td button:enabled:hover { background: var(--al-hover); }
 .al-calendar td[aria-selected=true] button:enabled { background: var(--al-ink); color: var(--al-surface); font-weight: 700; }

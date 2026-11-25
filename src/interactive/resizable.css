@@ -2,7 +2,8 @@
   display: grid;
   grid-template-columns: minmax(0, var(--al-first-track)) 1.5rem minmax(0, var(--al-second-track));
   min-inline-size: 0;
-  border-block: 1px solid var(--al-ink);
+  border-block: var(--al-unit) solid var(--al-ink);
+  border-image: linear-gradient(var(--al-ink) 0 0) 1 / 1px 0;
   color: var(--al-ink);
   font: 400 var(--al-type-body)/var(--al-leading-body) var(--al-font);
 }

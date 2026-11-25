@@ -56,7 +56,8 @@
   max-inline-size: calc(100vw - var(--al-space-4));
   margin: 0;
   padding: var(--al-space-1);
-  border: 1px solid var(--al-line);
+  border: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 1px;
   border-radius: var(--al-radius);
   font: 400 var(--al-type-body)/var(--al-leading-body) var(--al-font);
   color: var(--al-ink);
@@ -74,7 +75,7 @@
 .al-canton-options li {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   gap: var(--al-space-3);
   padding: var(--al-space-2) var(--al-space-3);
   border-inline-start: 2px solid transparent;

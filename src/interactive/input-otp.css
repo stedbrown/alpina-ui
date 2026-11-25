@@ -1,7 +1,7 @@
 .al-input.al-input-otp {
-  box-sizing: content-box;
-  inline-size: calc(var(--al-otp-length) * 1.45ch);
-  max-inline-size: calc(100% - 2rem);
+  box-sizing: border-box;
+  inline-size: calc(var(--al-otp-length) * 1.45ch + 2 * var(--al-space-3) + 2px);
+  max-inline-size: 100%;
   font-family: var(--al-mono);
   font-size: 1.25rem;
   letter-spacing: 0.45ch;

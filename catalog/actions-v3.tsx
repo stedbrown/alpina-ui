@@ -136,7 +136,7 @@ export function ContextMenuExample() {
         },
       ]}
     >
-      <div style={{ padding: '1rem', border: '1px solid currentColor' }}>
+      <div style={{ padding: '1rem', outline: '1px solid currentColor', outlineOffset: '-1px' }}>
         <Typography as="p" variant="heading">
           Cover proof
         </Typography>

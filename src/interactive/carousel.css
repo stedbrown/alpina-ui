@@ -17,7 +17,8 @@
   justify-content: space-between;
   gap: var(--al-space-3);
   padding-block-start: var(--al-space-3);
-  border-block-start: 1px solid var(--al-ink);
+  border-block-start: var(--al-unit) solid var(--al-ink);
+  border-image: linear-gradient(var(--al-ink) 0 0) 1 / 1px 0 0;
   font-size: var(--al-type-label);
   line-height: var(--al-leading-label);
 }

@@ -4,7 +4,8 @@
   grid-template-columns: 1.5rem minmax(0, 1fr);
   gap: var(--al-space-2);
   padding: var(--al-space-3) var(--al-space-4);
-  border: 1px solid var(--al-line);
+  outline: 1px solid var(--al-line);
+  outline-offset: -1px;
   border-inline-start: 4px solid var(--al-alert-mark);
   border-radius: var(--al-radius);
   background: var(--al-surface);
@@ -34,7 +35,7 @@
   place-items: center;
   inline-size: 1.25rem;
   block-size: 1.25rem;
-  margin-block-start: 0.125rem;
+  margin-block-start: 0;
   border: 1px solid currentColor;
   color: var(--al-alert-mark);
   font: 700 1rem/1 var(--al-font);

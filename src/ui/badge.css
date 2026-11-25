@@ -6,7 +6,8 @@
   max-inline-size: 100%;
   box-sizing: border-box;
   padding: var(--al-space-1) var(--al-space-2);
-  border: 1px solid color-mix(in srgb, var(--al-badge-ink) 27%, var(--al-surface));
+  outline: 1px solid color-mix(in srgb, var(--al-badge-ink) 27%, var(--al-surface));
+  outline-offset: -1px;
   border-radius: calc(var(--al-radius) * 0.65);
   background: var(--al-surface);
   color: var(--al-badge-ink);
@@ -30,6 +31,6 @@
 }
 @media (forced-colors: active) {
   .al-badge {
-    border-color: CanvasText;
+    outline-color: CanvasText;
   }
 }

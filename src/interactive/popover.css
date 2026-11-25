@@ -14,7 +14,8 @@
   overflow: auto;
   padding: var(--al-space-4);
   border: 1px solid var(--al-ink);
-  border-block-start-width: 3px;
+  border-block-width: var(--al-unit);
+  border-image: linear-gradient(var(--al-ink) 0 0) 1 / 3px 1px 1px;
   background: var(--al-surface);
   color: var(--al-ink);
   font: 400 var(--al-type-body)/var(--al-leading-body) var(--al-font);
@@ -25,11 +26,12 @@
 }
 .al-popover-head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: var(--al-space-3);
   margin-block-end: var(--al-space-3);
-  border-block-end: 1px solid var(--al-ink);
+  border-block-end: var(--al-unit) solid var(--al-ink);
+  border-image: linear-gradient(var(--al-ink) 0 0) 1 / 0 0 1px;
 }
 .al-popover-head h3 {
   margin: 0;

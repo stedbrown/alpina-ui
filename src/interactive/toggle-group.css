@@ -3,15 +3,17 @@
   flex-wrap: wrap;
   gap: 1px;
   max-width: 100%;
-  border-block-end: 1px solid var(--al-line);
+  border-block-end: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 0 0 1px;
 }
 .al-toggle-group .al-button {
   border-radius: 0;
   border: 0;
-  border-block-end: 2px solid transparent;
+  border-block-end: var(--al-unit) solid transparent;
 }
 .al-toggle-group .al-button[aria-pressed='true'] {
   border-block-end-color: var(--al-accent);
+  border-image: linear-gradient(var(--al-accent) 0 0) 1 / 0 0 2px;
   font-weight: 700;
   color: var(--al-ink);
 }

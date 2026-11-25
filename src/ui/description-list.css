@@ -9,7 +9,8 @@
   gap: var(--al-space-1) var(--al-space-4);
   padding-block: var(--al-space-3);
 }
-.al-description-list > div + div { border-block-start: 1px solid var(--al-line); }
+.al-description-list > div + div { border-block-start: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 1px 0 0; }
 .al-description-list :is(dt, dd) { min-inline-size: 0; margin: 0; overflow-wrap: anywhere; }
 .al-description-list dt { font-weight: 600; }
 .al-description-list dd { font-variant-numeric: tabular-nums; }

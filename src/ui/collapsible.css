@@ -1,5 +1,6 @@
 .al-collapsible {
-  border-block: 1px solid var(--al-line);
+  border-block: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 1px 0;
   font-family: var(--al-font);
   color: var(--al-ink);
 }

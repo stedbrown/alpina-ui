@@ -25,7 +25,8 @@
   align-items: center;
   column-gap: var(--al-space-2);
   padding-block: var(--al-space-1);
-  border-block-start: 1px solid var(--al-line);
+  border-block-start: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 1px 0 0;
 }
 .al-chart-plot li > :first-child {
   overflow-wrap: anywhere;
@@ -60,7 +61,8 @@
 }
 .al-chart details {
   margin-block-start: var(--al-space-3);
-  border-block-start: 1px solid var(--al-line);
+  border-block-start: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 1px 0 0;
 }
 .al-chart summary {
   cursor: pointer;
@@ -83,7 +85,8 @@
 .al-chart :is(th, td) {
   overflow-wrap: anywhere;
   padding: var(--al-space-2);
-  border-block-end: 1px solid var(--al-line);
+  border-block-end: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 0 0 1px;
 }
 .al-chart th {
   text-align: start;

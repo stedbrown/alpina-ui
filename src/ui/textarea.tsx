@@ -13,7 +13,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
       {...props}
       ref={ref}
       rows={rows}
-      style={autoGrow ? { '--al-textarea-rows': rows > 0 ? rows : 3, ...style } as CSSProperties : style}
+      style={{ '--al-textarea-rows': rows > 0 ? rows : 3, ...style } as CSSProperties}
       data-grow={autoGrow || undefined}
       className={`al-textarea ${className}`.trim()}
     />

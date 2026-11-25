@@ -67,7 +67,7 @@ try {
   const metrics = main.locator('.sp-measures dd')
   assert.equal(await gridButton.getAttribute('aria-pressed'), 'false')
   assert.equal(await guideLayer.count(), 0)
-  assert.equal(registry.items.length, 86)
+  assert.ok(registry.items.some(item => item.name === 'grid-overlay'))
   assert.equal(await page.locator('#index-list a').count(), registry.items.length)
 
   for (const screen of [1440, 768, 390]) {

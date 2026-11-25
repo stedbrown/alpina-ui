@@ -23,7 +23,7 @@ export function useFloating(
     function place() {
       if (!anchor || !panel || !view) return
       const margin = 8
-      const gap = 5
+      const gap = 4
       // A zoomed page or an onscreen keyboard can leave only part of the layout viewport visible.
       const viewport = view.visualViewport
       const viewportWidth = Math.min(viewport?.width ?? Infinity, anchor.ownerDocument.documentElement.clientWidth)
@@ -37,9 +37,9 @@ export function useFloating(
       const availableHeight = Math.min(viewportHeight - margin * 2, Math.max(spaceAbove, spaceBelow, 48))
       if (position === 'combobox') {
         panel.style.width = Math.min(bounds.width, viewportWidth - margin * 2) + 'px'
-        panel.style.maxHeight = 'min(18rem, ' + availableHeight + 'px)'
+        panel.style.maxHeight = 'round(down, min(18rem, ' + availableHeight + 'px), var(--al-unit))'
       } else {
-        panel.style.maxHeight = availableHeight + 'px'
+        panel.style.maxHeight = 'round(down, ' + availableHeight + 'px, var(--al-unit))'
       }
       const box = panel.getBoundingClientRect()
       const preferAbove = position === 'tooltip'

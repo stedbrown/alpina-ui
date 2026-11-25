@@ -3,8 +3,8 @@
   min-width: 0;
 }
 .al-layout[data-space='compact'] { padding-block: var(--al-space-3); }
-.al-layout[data-space='section'] { padding-block: clamp(var(--al-space-8), 5vw, 5rem); }
-.al-layout[data-space='cover'] { padding-block: clamp(var(--al-space-8), 4vw, 4rem); }
+.al-layout[data-space='section'] { padding-block: var(--al-space-8); padding-block: round(nearest, clamp(var(--al-space-8), 5vw, 5rem), var(--al-unit)); }
+.al-layout[data-space='cover'] { padding-block: var(--al-space-8); padding-block: round(nearest, clamp(var(--al-space-8), 4vw, 4rem), var(--al-unit)); }
 .al-layout[data-surface='paper'] { background: var(--al-bg); color: var(--al-ink); }
 .al-layout[data-surface='ink'] { background: var(--al-ink); color: var(--al-bg); }
 .al-layout[data-surface='accent'] { background: var(--al-accent); color: var(--al-on-accent); }

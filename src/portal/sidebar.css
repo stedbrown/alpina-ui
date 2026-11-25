@@ -19,7 +19,8 @@
 }
 .al-sidebar-head {
   min-height: 3.5rem;
-  border-bottom: 1px solid var(--al-line);
+  border-block-end: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 0 0 1px;
 }
 .al-sidebar-tools {
   padding: 1rem 1.25rem 0.75rem;
@@ -34,7 +35,8 @@
   padding: 0.25rem 1.25rem 1.25rem;
 }
 .al-sidebar-foot {
-  border-top: 1px solid var(--al-line);
+  border-block-start: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 1px 0 0;
   font: var(--al-type-caption)/var(--al-leading-caption) var(--al-font);
 }
 @media (max-width: 740px) {

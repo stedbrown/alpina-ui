@@ -1,6 +1,7 @@
 .al-table {
   inline-size: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   color: var(--al-ink);
   text-align: start;
   font: 400 var(--al-type-body)/var(--al-leading-body) var(--al-font);
@@ -15,13 +16,14 @@
 }
 .al-table > :is(thead, tbody, tfoot) > tr > :is(th, td) {
   padding: var(--al-space-3) var(--al-space-4);
-  border-block-end: 1px solid var(--al-line);
+  border-block-end: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 0 0 1px;
   text-align: start;
   vertical-align: baseline;
   overflow-wrap: anywhere;
 }
 .al-table > thead > tr > th {
-  border-block-end-color: var(--al-control);
+  border-image-source: linear-gradient(var(--al-control) 0 0);
   background: var(--al-soft);
   color: var(--al-muted);
   font-size: var(--al-type-label);

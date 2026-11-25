@@ -64,7 +64,8 @@
   overflow: auto;
   overscroll-behavior: contain;
   border: 1px solid var(--al-ink);
-  border-block-start-width: 3px;
+  border-block-width: var(--al-unit);
+  border-image: linear-gradient(var(--al-ink) 0 0) 1 / 3px 1px 1px;
   background: var(--al-surface);
   color: var(--al-ink);
   font: 400 var(--al-type-label)/var(--al-leading-label) var(--al-font);
@@ -88,7 +89,8 @@
   cursor: pointer;
 }
 .al-dropdown-rule {
-  border-block-start: 1px solid var(--al-line);
+  border-block-start: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 1px 0 0;
   margin-block: var(--al-space-1);
 }
 .al-dropdown-shortcut {
@@ -108,7 +110,7 @@
   block-size: 1rem;
   border: 1.5px solid currentColor;
   border-radius: 50%;
-  font: 700 0.875rem/1 var(--al-font);
+  font: 700 0.875rem/var(--al-leading-caption) var(--al-font);
 }
 .al-dropdown-item:focus,
 .al-dropdown-item[data-tone='danger']:focus {

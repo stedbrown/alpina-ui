@@ -3,9 +3,9 @@
   --apx-rule: color-mix(in srgb, var(--al-ink) 21%, transparent);
   display: grid;
   min-inline-size: 0;
-  gap: 1.05rem;
+  gap: 1rem;
   color: var(--al-ink);
-  font: 1rem/1.4 var(--al-font);
+  font: 1rem/var(--al-leading-body) var(--al-font);
   text-align: start;
   overflow-wrap: anywhere;
 }
@@ -20,7 +20,7 @@
 .apx :is(.apx-kicker, .apx-code, .apx-filetype, .apx-money-head, .apx-money-foot) {
   font-family: var(--al-mono);
   font-size: 0.68rem;
-  line-height: 1.4;
+  line-height: round(nearest, 1.4em, var(--al-unit));
   letter-spacing: 0.065em;
 }
 .apx .apx-kicker {
@@ -37,27 +37,29 @@
 }
 .apx .apx-head h3,
 .apx-edition .al-card-title {
-  font: 650 clamp(1.4rem, 3.2vw, 1.95rem)/1.03 var(--al-font);
+  font: 650 clamp(1.4rem, 3.2vw, 1.95rem)/var(--al-leading-label) var(--al-font);
+  line-height: round(nearest, 1.03em, var(--al-unit));
   letter-spacing: -0.045em;
 }
 .apx :is(.apx-meta, .apx-list small, .apx-register small, .apx-tear > small) {
   display: block;
   color: var(--al-muted);
   font-size: 0.87rem;
-  line-height: 1.4;
+  line-height: round(nearest, 1.4em, var(--al-unit));
 }
 .apx :is(.apx-list strong, .apx-register strong, .apx-record strong, .apx-transfer strong) {
   display: block;
   color: var(--al-ink);
   font-weight: 600;
-  line-height: 1.25;
+  line-height: round(nearest, 1.25em, var(--al-unit));
 }
 .apx :is(.apx-code, .apx-filetype) {
   font-variant-numeric: tabular-nums;
 }
 .apx .apx-filetype {
-  padding: 0.3rem 0.45rem;
-  border: 1px solid var(--apx-rule);
+  padding: 0.25rem 0.5rem;
+  outline: 1px solid var(--apx-rule);
+  outline-offset: -1px;
   border-radius: 2px;
 }
 .apx .apx-actions,
@@ -65,7 +67,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 0.5rem;
 }
 .apx .apx-foot,
 .apx .apx-filterbar {
@@ -73,11 +75,12 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 0.65rem 1rem;
+  gap: 0.75rem 1rem;
 }
 .apx .apx-foot {
-  border-block-start: 1px solid var(--apx-rule);
-  padding-block-start: 0.85rem;
+  border-block-start: var(--al-unit) solid var(--apx-rule);
+  border-image: linear-gradient(var(--apx-rule) 0 0) 1 / 1px 0 0;
+  padding-block-start: 0.75rem;
 }
 .apx .apx-filterbar {
   font-size: 0.88rem;
@@ -85,7 +88,7 @@
 }
 .apx .apx-link {
   border: 0;
-  padding: 0.1rem;
+  padding: 0.25rem;
   background: transparent;
   color: var(--al-accent);
   font: inherit;
@@ -96,13 +99,13 @@
 .apx .apx-pair {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.5rem), 1fr));
-  gap: 0.8rem 1.1rem;
+  gap: 0.75rem 1rem;
 }
 .apx .apx-pair > * {
   min-inline-size: 0;
 }
 .apx .apx-empty {
-  padding: 0.8rem;
+  padding: 0.75rem;
   border: 1px dashed var(--apx-rule);
   color: var(--al-muted);
 }
@@ -110,16 +113,18 @@
 .apx .apx-register {
   padding: 0;
   list-style: none;
-  border-block-start: 1px solid var(--al-ink);
+  border-block-start: var(--al-unit) solid var(--al-ink);
+  border-image: linear-gradient(var(--al-ink) 0 0) 1 / 1px 0 0;
 }
 .apx .apx-list > li,
 .apx .apx-register > li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem 0.8rem;
-  padding-block: 0.7rem;
-  border-block-end: 1px solid var(--apx-rule);
+  gap: 0.5rem 0.75rem;
+  padding-block: 0.75rem;
+  border-block-end: var(--al-unit) solid var(--apx-rule);
+  border-image: linear-gradient(var(--apx-rule) 0 0) 1 / 0 0 1px;
 }
 .apx .apx-register > li {
   display: grid;
@@ -127,7 +132,8 @@
 }
 .apx .apx-region {
   align-self: center;
-  font: 600 1rem/1.1 var(--al-mono);
+  font: 600 1rem/var(--al-leading-label) var(--al-mono);
+  line-height: round(nearest, 1.1em, var(--al-unit));
   letter-spacing: -0.05em;
   color: var(--al-muted);
 }
@@ -136,12 +142,13 @@
   gap: 0;
 }
 .apx .apx-readout > div {
-  padding-block: 0.55rem;
+  padding-block: 0.5rem;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 0.35rem 0.6rem;
-  border-block-end: 1px solid var(--apx-rule);
+  gap: 0.25rem 0.5rem;
+  border-block-end: var(--al-unit) solid var(--apx-rule);
+  border-image: linear-gradient(var(--apx-rule) 0 0) 1 / 0 0 1px;
 }
 .apx .apx-readout dt {
   color: var(--al-muted);
@@ -162,12 +169,13 @@
 }
 .apx .apx-record,
 .apx .apx-transfer {
-  border-block: 1px solid var(--apx-rule);
+  border-block: var(--al-unit) solid var(--apx-rule);
+  border-image: linear-gradient(var(--apx-rule) 0 0) 1 / 1px 0;
   padding-block: 1rem;
 }
 .apx .apx-record :is(.apx-meta, small),
 .apx .apx-transfer .apx-meta {
-  margin-block: 0.15rem;
+  margin-block: 0.25rem;
 }
 .apx .apx-transfer + .apx-foot {
   border: 0;
@@ -178,25 +186,28 @@
   place-items: center;
   flex: none;
   inline-size: 3.3rem;
-  block-size: 3.3rem;
+  block-size: 3.25rem;
   background: var(--al-soft);
-  font: 500 2rem/1 var(--al-font);
+  font: 500 2rem/var(--al-leading-label) var(--al-font);
+  line-height: round(nearest, 1em, var(--al-unit));
   color: var(--al-accent);
 }
 .apx .apx-transfer-mark .al-spinner {
   width: 1.7rem;
-  height: 1.7rem;
+  height: 1.75rem;
 }
 .apx .apx-download {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
-  padding: 0.45rem 0.7rem;
-  border: 1px solid var(--al-accent);
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  outline: 1px solid var(--al-accent);
+  outline-offset: -1px;
   border-radius: var(--al-radius);
   background: var(--al-accent);
   color: var(--al-on-accent);
-  font: 600 0.9rem/1.2 var(--al-font);
+  font: 600 0.9rem/var(--al-leading-label) var(--al-font);
+  line-height: round(nearest, 1.2em, var(--al-unit));
   text-decoration: none;
 }
 .apx .apx-download:hover {
@@ -206,7 +217,7 @@
 .apx .apx-greeting {
   display: block;
   font-size: clamp(1.4rem, 3vw, 2rem);
-  line-height: 1.1;
+  line-height: round(nearest, 1.1em, var(--al-unit));
   font-weight: 600;
   letter-spacing: -0.04em;
 }
@@ -216,7 +227,8 @@
   flex: none;
   display: grid;
   place-items: center;
-  font: 650 1.7rem/0.98 var(--al-font);
+  font: 650 1.7rem/var(--al-leading-label) var(--al-font);
+  line-height: round(nearest, 0.98em, var(--al-unit));
   letter-spacing: -0.06em;
 }
 .apx .apx-format {
@@ -226,18 +238,19 @@
   background: var(--al-soft);
 }
 .apx .apx-stamp {
-  padding: 0.6rem;
+  padding: 0.5rem;
   border: 2px solid var(--al-ink);
 }
 .apx .apx-canton {
   width: 3.4rem;
-  height: 3.4rem;
+  height: 3.5rem;
   background: var(--al-accent);
   color: var(--al-on-accent);
 }
 .apx .apx-datecard {
-  padding-block: 0.65rem;
-  border-block: 1px solid var(--apx-rule);
+  padding-block: 0.75rem;
+  border-block: var(--al-unit) solid var(--apx-rule);
+  border-image: linear-gradient(var(--apx-rule) 0 0) 1 / 1px 0;
 }
 .apx .apx-datecard output {
   font-size: 1.2rem;
@@ -247,7 +260,8 @@
 .apx .apx-quantity output {
   flex: none;
   display: block;
-  font: 600 clamp(2.8rem, 5vw, 4.2rem)/1 var(--al-font);
+  font: 600 clamp(2.8rem, 5vw, 4.2rem)/var(--al-leading-label) var(--al-font);
+  line-height: round(nearest, 1em, var(--al-unit));
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.08em;
   color: var(--al-accent);
@@ -255,8 +269,9 @@
 .apx .apx-quantity {
   justify-content: space-between;
   flex-wrap: wrap;
-  padding-block-start: 0.8rem;
-  border-block-start: 1px solid var(--apx-rule);
+  padding-block-start: 0.75rem;
+  border-block-start: var(--al-unit) solid var(--apx-rule);
+  border-image: linear-gradient(var(--apx-rule) 0 0) 1 / 1px 0 0;
 }
 .apx .apx-tear {
   align-items: flex-start;
@@ -264,20 +279,20 @@
   gap: 0.25rem;
   border-inline-start: 0.3rem solid var(--al-accent);
   background: var(--al-soft);
-  padding: 0.9rem 1.1rem;
+  padding: 1rem 1rem;
 }
 .apx .apx-body {
-  line-height: 1.5;
+  line-height: round(nearest, 1.5em, var(--al-unit));
 }
 .apx-edition .al-card-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.7rem;
+  gap: 0.75rem;
 }
 .apx-currency {
-  gap: 0.7rem;
+  gap: 0.75rem;
 }
 .apx .apx-money {
   padding: 1rem clamp(1rem, 3vw, 1.5rem);
@@ -290,46 +305,50 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.65rem;
+  gap: 0.75rem;
 }
 .apx .apx-money-head {
   text-transform: uppercase;
 }
 .apx .apx-money-foot {
   color: #fff;
-  border-block-start: 1px solid #fff;
-  padding-block-start: 0.55rem;
+  border-block-start: var(--al-unit) solid #fff;
+  border-image: linear-gradient(#fff 0 0) 1 / 1px 0 0;
+  padding-block-start: 0.5rem;
 }
 .apx-currency .specimen-value {
-  padding-block: 0.5rem 0.8rem;
+  padding-block: 0.5rem 0.75rem;
   font: 600 var(--al-type-display)/var(--al-leading-display) var(--al-font);
   letter-spacing: -0.035em;
   font-variant-numeric: tabular-nums;
 }
 .apx .apx-controls {
-  padding: 0.8rem;
+  padding: 0.75rem;
   background: var(--al-surface);
-  border: 1px solid var(--apx-rule);
+  outline: 1px solid var(--apx-rule);
+  outline-offset: -1px;
 }
 .apx .apx-checklist {
   display: grid;
-  gap: 0.55rem;
+  gap: 0.5rem;
   padding: 0;
   margin: 0;
   border: 0;
 }
 .apx .apx-checklist legend {
   font-weight: 600;
-  padding: 0 0 0.45rem;
+  padding: 0 0 0.5rem;
 }
 .apx .apx-counter {
   justify-self: end;
   color: var(--al-muted);
-  font: 0.8rem/1.2 var(--al-mono);
+  font: 0.8rem/var(--al-leading-label) var(--al-mono);
+  line-height: round(nearest, 1.2em, var(--al-unit));
 }
 .apx .apx-toggle-row {
-  border-block: 1px solid var(--apx-rule);
-  padding-block: 0.8rem;
+  border-block: var(--al-unit) solid var(--apx-rule);
+  border-image: linear-gradient(var(--apx-rule) 0 0) 1 / 1px 0;
+  padding-block: 0.75rem;
   display: flex;
   justify-content: space-between;
   gap: 0.75rem;
@@ -339,27 +358,30 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.75rem;
 }
 .apx .apx-fileline > span {
   color: var(--al-muted);
-  font: 0.85rem/1.4 var(--al-mono);
+  font: 0.85rem/var(--al-leading-label) var(--al-mono);
+  line-height: round(nearest, 1.4em, var(--al-unit));
 }
 .apx .apx-track {
   display: grid;
-  gap: 0.65rem;
+  gap: 0.75rem;
 }
 .apx .apx-info {
   display: inline-grid;
   place-items: center;
   width: 1.6rem;
-  height: 1.6rem;
+  height: 1.5rem;
   padding: 0;
   background: var(--al-soft);
   color: var(--al-ink);
-  border: 1px solid var(--apx-rule);
+  outline: 1px solid var(--apx-rule);
+  outline-offset: -1px;
   border-radius: 50%;
-  font: 600 0.85rem/1 var(--al-font);
+  font: 600 0.85rem/var(--al-leading-label) var(--al-font);
+  line-height: round(nearest, 1em, var(--al-unit));
   cursor: help;
 }
 .apx .apx-table td:last-child,
@@ -372,14 +394,14 @@
 }
 @media (max-width: 420px) {
   .apx {
-    gap: 0.8rem;
+    gap: 0.75rem;
   }
   .apx .apx-register > li {
     grid-template-columns: 1.65rem minmax(0, 1fr) auto;
-    gap: 0.45rem;
+    gap: 0.5rem;
   }
   .apx .apx-list > li {
-    gap: 0.45rem;
+    gap: 0.5rem;
   }
   .apx .apx-region {
     font-size: 0.88rem;

@@ -3,7 +3,8 @@
   align-items: stretch;
   flex-wrap: wrap;
   gap: var(--al-space-1);
-  border-block: 1px solid var(--al-ink);
+  border-block: var(--al-unit) solid var(--al-ink);
+  border-image: linear-gradient(var(--al-ink) 0 0) 1 / 1px 0;
   padding-block: var(--al-space-1);
 }
 .al-menubar-trigger {
@@ -11,7 +12,7 @@
   color: var(--al-ink);
   border: 0;
   min-block-size: var(--al-space-10);
-  padding-inline: var(--al-space-3);
+  padding: 0 var(--al-space-3);
   font: 600 var(--al-type-label)/var(--al-leading-label) var(--al-font);
   cursor: pointer;
 }

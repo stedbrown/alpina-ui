@@ -12,16 +12,18 @@
   flex: 1 1 6rem;
   min-inline-size: 0;
   padding-block: var(--al-space-2);
-  border-block-start: 2px solid var(--al-line);
+  border-block-start: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 2px 0 0;
   overflow-wrap: anywhere;
 }
-.al-steps > li[aria-current='step'] { border-color: var(--al-accent); font-weight: 700; }
+.al-steps > li[aria-current='step'] { border-color: var(--al-accent); border-image-source: linear-gradient(var(--al-accent) 0 0); font-weight: 700; }
 .al-steps > li > span { font-variant-numeric: tabular-nums; }
 @container al-steps (max-width: 20rem) {
   .al-steps > li {
     flex-basis: 100%;
     padding: var(--al-space-1) var(--al-space-2);
     border-block-start: 0;
+    border-image: none;
     border-inline-start: 2px solid var(--al-line);
   }
   .al-steps > li[aria-current='step'] { border-inline-start-color: var(--al-accent); }

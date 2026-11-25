@@ -7,6 +7,7 @@ body[data-al-page] {
   background: var(--al-bg);
   color: var(--al-ink);
   font-family: var(--al-font);
+  line-height: var(--al-leading-body);
 }
 body[data-al-page] > footer:last-child { margin-block-start: auto; }
 :root,

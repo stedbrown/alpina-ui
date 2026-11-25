@@ -3,7 +3,8 @@
   align-items: stretch;
   max-inline-size: 100%;
   min-inline-size: 0;
-  border: 1px solid var(--al-control);
+  border: var(--al-unit) solid var(--al-control);
+  border-image: linear-gradient(var(--al-control) 0 0) 1 / 1px;
   border-radius: var(--al-radius);
   background: var(--al-bg);
   color: var(--al-ink);
@@ -34,5 +35,6 @@
 }
 .al-input-group:has([aria-invalid='true'], :user-invalid) {
   border-color: var(--al-danger);
-  border-block-end-width: 2px;
+  border-image-source: linear-gradient(var(--al-danger) 0 0);
+  border-image-width: 1px 1px 2px;
 }

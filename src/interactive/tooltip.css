@@ -12,7 +12,8 @@
   max-inline-size: min(32ch, calc(var(--al-visible-width, 100vw) - 1rem));
   overflow: auto;
   padding: var(--al-space-2) var(--al-space-3);
-  border: 1px solid var(--al-ink);
+  border: var(--al-unit) solid var(--al-ink);
+  border-image: linear-gradient(var(--al-ink) 0 0) 1 / 1px;
   border-radius: 0;
   background: var(--al-ink);
   color: var(--al-surface);

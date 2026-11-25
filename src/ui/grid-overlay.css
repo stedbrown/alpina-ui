@@ -1,0 +1,18 @@
+.al-grid-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  pointer-events: none;
+  user-select: none;
+}
+.al-grid-overlay[data-placement='container'] { position: absolute; z-index: 2; }
+.al-grid-overlay[hidden] { display: none; }
+.al-grid-overlay .al-layout,
+.al-grid-overlay .al-grid { block-size: 100%; }
+.al-grid-overlay .al-grid {
+  background-image: linear-gradient(to right,
+    color-mix(in srgb, var(--al-accent) 12%, transparent) 0 var(--al-margin),
+    transparent var(--al-margin) calc(100% - var(--al-margin)),
+    color-mix(in srgb, var(--al-accent) 12%, transparent) calc(100% - var(--al-margin)));
+}
+@media print { .al-grid-overlay { display: none; } }

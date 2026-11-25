@@ -463,6 +463,19 @@
       ]
     },
     {
+      "name": "grid-overlay",
+      "group": "ui",
+      "entry": "ui/grid-overlay.tsx",
+      "usage": "Mount the overlay alongside a page or inside a positioned container with placement set to container. Use hidden to toggle it. The portal shortcut is Ctrl+Shift+G.",
+      "files": [
+        "theme.css",
+        "ui/grid-overlay.tsx",
+        "ui/grid.tsx",
+        "ui/grid.css",
+        "ui/grid-overlay.css"
+      ]
+    },
+    {
       "name": "icon",
       "group": "ui",
       "entry": "ui/icon.tsx",

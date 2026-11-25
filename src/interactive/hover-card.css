@@ -34,7 +34,8 @@
   overflow-wrap: anywhere;
   padding: var(--al-space-4);
   border: 1px solid var(--al-ink);
-  border-block-start-width: 3px;
+  border-block-width: var(--al-unit);
+  border-image: linear-gradient(var(--al-ink) 0 0) 1 / 3px 1px 1px;
   overflow: auto;
   color: var(--al-ink);
   background: var(--al-surface);

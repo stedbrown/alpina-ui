@@ -1,10 +1,12 @@
 .al-accordion {
-  border-block-start: 2px solid var(--al-ink);
+  border-block-start: var(--al-unit) solid var(--al-ink);
+  border-image: linear-gradient(var(--al-ink) 0 0) 1 / 2px 0 0;
   color: var(--al-ink);
   font: 400 var(--al-type-body)/var(--al-leading-body) var(--al-font);
 }
 .al-accordion-item {
-  border-block-end: 1px solid var(--al-ink);
+  border-block-end: var(--al-unit) solid var(--al-ink);
+  border-image: linear-gradient(var(--al-ink) 0 0) 1 / 0 0 1px;
 }
 .al-accordion-heading {
   margin: 0;

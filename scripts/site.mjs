@@ -5,12 +5,27 @@ import { build } from 'esbuild'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { marked } from 'marked'
+import { GridOverlay } from 'alpina-ui'
 
 const origin = 'https://alpina-ui.vercel.app'
 const siteName = 'Alpina UI'
 const escape = (text) => String(text).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
 const sha = (text) => createHash('sha256').update(text).digest('hex').slice(0, 16)
 const render = (component, props) => renderToStaticMarkup(createElement(component, props))
+
+// Keep the proofing layer outside the app root so it works on static and hydrated routes.
+const overlay = render(GridOverlay, { hidden: true, 'data-site-grid': '' })
+function listenForGridShortcut() {
+  document.addEventListener('keydown', event => {
+    if (!event.ctrlKey || !event.shiftKey || event.altKey || event.metaKey ||
+        event.key.toLowerCase() !== 'g' || event.repeat || event.isComposing || event.defaultPrevented) return
+    const layer = document.querySelector('[data-site-grid]')
+    if (!layer) return
+    event.preventDefault()
+    layer.hidden = !layer.hidden
+  })
+}
+export const siteGrid = overlay + '<script>(' + listenForGridShortcut.toString() + ')()</script>'
 
 async function output(name, data) {
   const target = path.join('site', name)
@@ -107,7 +122,7 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
     if (options.block) tags.push('<script type="module" src="' + blockJS + '"></script>')
     if (options.filter) tags.push('<script type="module" src="' + filterJS + '"></script>')
     const content = options.app ? '<div id="app">' + body + '</div><script defer src="' + appJS + '"></script>' : body
-    await output(route + 'index.html', '<!doctype html>\n<html lang="en"><head>' + tags.join('\n') + '</head><body data-al-page>' + content + '</body></html>')
+    await output(route + 'index.html', '<!doctype html>\n<html lang="en"><head>' + tags.join('\n') + '</head><body data-al-page>' + siteGrid + content + '</body></html>')
     paths.push(url)
   }
 

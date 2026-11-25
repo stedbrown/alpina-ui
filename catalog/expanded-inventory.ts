@@ -336,6 +336,13 @@ export const expanded = [
     "Keep an image or specimen with its caption and source."
   ],
   [
+    "grid-overlay",
+    "GridOverlay",
+    "Baseline overlay",
+    "Graphic design",
+    "Inspect responsive columns, margins, and the four-pixel baseline without changing the layout."
+  ],
+  [
     "icon",
     "Icon",
     "Interface icons",

@@ -7,6 +7,7 @@
   padding-block-end: max(var(--al-modal-inset), env(safe-area-inset-bottom));
   transform: translateY(var(--al-drag, 0));
   border-block-end: 0;
+  box-shadow: none;
 }
 .al-drawer-grip {
   display: grid;

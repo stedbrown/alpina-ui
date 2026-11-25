@@ -10,11 +10,11 @@
   gap: var(--al-space-3);
 }
 .al-questionnaire-head {
-  font: 500 var(--al-type-label)/1.4 var(--al-mono);
+  font: 500 var(--al-type-label)/var(--al-leading-label) var(--al-mono);
 }
 .al-questionnaire-head progress {
   flex: 1;
-  height: 0.4rem;
+  height: var(--al-space-2);
   accent-color: var(--al-accent);
 }
 .al-questionnaire h3 {
@@ -24,14 +24,17 @@
   margin: 0;
   padding: 0;
   border: 0;
-  border-block-start: 1px solid var(--al-line);
+  border-block-start: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 1px 0 0;
 }
 .al-questionnaire fieldset label {
   display: flex;
   align-items: center;
   gap: var(--al-space-3);
+  box-sizing: border-box;
   min-height: 2.75rem;
-  border-block-end: 1px solid var(--al-line);
+  border-block-end: var(--al-unit) solid var(--al-line);
+  border-image: linear-gradient(var(--al-line) 0 0) 1 / 0 0 1px;
 }
 .al-questionnaire fieldset input {
   accent-color: var(--al-accent);

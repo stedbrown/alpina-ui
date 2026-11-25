@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { chromium } from 'playwright-core'
@@ -6,6 +7,7 @@ import { chromium } from 'playwright-core'
 const origin = 'https://alpina.test'
 const site = new URL('../site/', import.meta.url)
 const executable = process.env.CHROME_PATH ?? process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
+const componentCount = JSON.parse(await readFile(new URL('../registry.json', import.meta.url))).items.length
 const browser = await chromium.launch(
   executable ? { executablePath: executable } : existsSync(chromium.executablePath()) ? {} : { channel: 'chrome' },
 )
@@ -34,7 +36,7 @@ try {
   await filter.fill('unknowncomponent')
   assert.ok((await main.getByRole('status').innerText()).startsWith('No matches'))
   await main.getByRole('button', { name: 'Clear' }).click()
-  assert.equal(await main.getByRole('link').count(), 86)
+  assert.equal(await main.getByRole('link').count(), componentCount)
   assert.ok(await filter.evaluate(input => input === document.activeElement))
   await page.goto(origin + '/docs/')
   await main.getByRole('heading', { name: 'Getting started', level: 1 }).waitFor()
@@ -51,7 +53,7 @@ try {
   assert.equal(await main.getByRole('link', { name: 'DataTable', exact: true }).getAttribute('href'), 'https://alpina-ui.vercel.app/docs/components/data-table/')
   assert.equal(await nav.getByRole('link', { name: 'Examples' }).getAttribute('href'), '/examples/')
   assert.equal(await nav.getByRole('link', { name: 'Agents' }).getAttribute('href'), '/agents/')
-  assert.equal(await index.getByRole('link').count(), 86)
+  assert.equal(await index.getByRole('link').count(), componentCount)
   await index.getByRole('link', { name: 'DropdownMenu', exact: true }).click()
   await main.getByRole('heading', { name: 'DropdownMenu', level: 1 }).waitFor()
   await main.getByRole('button', { name: 'API', exact: true }).click()

@@ -2,9 +2,10 @@ import { PageRegion, Prose } from 'alpina-ui'
 import { AppearanceButton } from './appearance-button.js'
 import type { ReactNode } from 'react'
 import {
-  Avatar, Figure, Grid, GridItem, Icon, iconNames, NavigationMenu, Separator,
-  Stack, TextLink, Typography, type IconName,
+  Avatar, Grid, GridItem, Icon, NavigationMenu, Separator,
+  Stack, TextLink, Typography,
 } from 'alpina-ui'
+import { AccessStudy, AppearanceStudy, GridStudy, Installation, MigrationStudy, SwissStudy, TypeStudy } from './landing-sections.js'
 import { HomeShowcase } from './home-showcase.js'
 import { projects } from './projects.js'
 
@@ -67,7 +68,6 @@ export function Footer({ version }: { version?: string } = {}) {
   )
 }
 
-const iconSamples: IconName[] = ['git-branch', 'grid', 'calendar', 'map-pin', 'sliders', 'book']
 
 export function PageHeading({ title, summary, children }: { title: string; summary: ReactNode; children?: ReactNode }) {
   return <Grid as="section" width="site" space="section" align="start" aria-labelledby="page-title">
@@ -79,7 +79,7 @@ export function PageHeading({ title, summary, children }: { title: string; summa
   </Grid>
 }
 
-export function Landing({ version, count }: { version: string; count: number }) {
+export function Landing({ version, count, queue, command, installation }: { version: string; count: number; queue: string; command: string; installation: string }) {
   return <>
     <Masthead current="home" />
     <PageRegion as="main" id="content" tabIndex={-1}>
@@ -100,56 +100,14 @@ export function Landing({ version, count }: { version: string; count: number }) 
           </Stack>
         </Stack></GridItem>
       </Grid>
-      <HomeShowcase />
-      <Grid width="site"><GridItem><Separator weight="section" /></GridItem></Grid>
-      <Grid as="section" width="site" space="section" align="center" aria-labelledby="icons-title">
-        <GridItem medium={4} large={5}>
-          <Stack gap={3} align="start">
-            <Typography as="h2" variant="display" id="icons-title">Alpina icons</Typography>
-            <Typography measure="narrow">Pictograms for navigation, controls and Git workflows, drawn on a 24-unit grid. Use them at text size or scale them up.</Typography>
-            <TextLink href="/icons/">Explore all {iconNames.length} icons <Icon name="arrow-right" size={16} /></TextLink>
-          </Stack>
-        </GridItem>
-        <GridItem medium={4} large={6} start={{ large: 7 }}>
-          <Stack direction="row" gap={5} justify="space-between" aria-hidden="true">
-            {iconSamples.map(name => <Icon key={name} name={name} size={40} />)}
-          </Stack>
-        </GridItem>
-      </Grid>
-      <Grid width="site"><GridItem><Separator /></GridItem></Grid>
-      <Grid as="section" width="site" space="section" aria-labelledby="projects-title">
-        <GridItem medium={3} large={4}>
-          <Stack gap={3} align="start">
-            <Typography as="h2" variant="display" id="projects-title">Examples</Typography>
-            <Typography measure="narrow">Try a complete interaction, then open the project's React source.</Typography>
-            <TextLink href="/examples/">All {projects.length} projects <Icon name="arrow-right" size={16} /></TextLink>
-          </Stack>
-        </GridItem>
-        <GridItem medium={5} large={7} start={{ large: 6 }}>
-          <Stack gap={4}>{projects.slice(0, 2).map((project) =>
-            <Stack key={project.slug} gap={1} align="start">
-              <Typography as="h3" variant="heading"><TextLink href={'/examples/' + project.slug + '/'}>{project.title}</TextLink></Typography>
-              <Typography measure="reading">{project.description}</Typography>
-            </Stack>
-          )}</Stack>
-        </GridItem>
-      </Grid>
-      <Grid width="site"><GridItem><Separator /></GridItem></Grid>
-      <Grid as="section" width="site" space="section" align="center" aria-labelledby="design-title">
-        <GridItem medium={4} large={5}>
-          <Stack gap={4} align="start">
-            <Typography as="h2" variant="display" id="design-title">The Swiss grid</Typography>
-            <Typography measure="narrow">Four, eight or twelve columns align labels, actions and figures as the space changes. A four-pixel spacing unit gives forms and editorial pages the same rhythm.</Typography>
-            <TextLink href="/principles/">Explore the design principles →</TextLink>
-            <TextLink href="/kit/">Download the designer kit →</TextLink>
-            <TextLink href="/docs/guides/design/">Read the design notes →</TextLink>
-          </Stack>
-        </GridItem>
-        <GridItem medium={4} large={5} start={{ large: 7 }}>
-          <Figure image={{ src: '/assets/alpina-type-specimen.webp', alt: 'A red Alpina booklet over a sheet of printed letterforms.', width: 1280, height: 880, loading: 'lazy' }}
-            caption="Alpina letterform study" />
-        </GridItem>
-      </Grid>
+      <GridStudy />
+      <TypeStudy />
+      <HomeShowcase queue={queue} />
+      <AppearanceStudy />
+      <AccessStudy />
+      <SwissStudy />
+      <MigrationStudy />
+      <Installation html={installation} command={command} />
     </PageRegion>
     <Footer version={version} />
   </>

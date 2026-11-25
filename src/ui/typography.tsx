@@ -11,6 +11,8 @@ export interface TypographyProps extends HTMLAttributes<HTMLElement> {
   measure?: 'reading' | 'narrow'
   /** Adjust display type to the active 4/8/12-column grid. */
   responsive?: boolean
+  /** Natural font spacing or the calibrated tracking for the selected display role. */
+  tracking?: 'normal' | 'optical'
   numeric?: boolean
   tone?: 'ink' | 'paper' | 'accent'
 }
@@ -21,6 +23,7 @@ export const Typography = forwardRef<HTMLElement, TypographyProps>(function Typo
     measure,
     numeric = false,
     responsive = false,
+    tracking,
     tone,
     className = '',
     ...props
@@ -35,6 +38,7 @@ export const Typography = forwardRef<HTMLElement, TypographyProps>(function Typo
     className: ('al-type ' + className).trim(),
     'data-role': variant,
     'data-tone': tone,
+    'data-tracking': tracking,
     'data-measure': measure,
     'data-responsive': responsive || undefined,
     'data-numeric': numeric || undefined,

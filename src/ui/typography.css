@@ -118,3 +118,6 @@ address.al-type { font-style: normal; }
   overflow-wrap: break-word;
   text-wrap: wrap;
 }
+
+.al-type[data-tracking='normal'] { letter-spacing: normal; }
+.al-type[data-tracking='optical'] { letter-spacing: var(--al-display-tracking); }

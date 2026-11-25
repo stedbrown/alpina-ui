@@ -4,7 +4,7 @@ import {
   Typography, formatCHF,
 } from 'alpina-ui'
 import { initialCopies, posterEstimate } from './poster-estimate.js'
-import { TypeSpecimen } from './type-specimen.js'
+import { SectionIntro } from './landing-sections.js'
 
 const printWeeks = [
   { week: '15–19 March 2027', hours: [4, 7, 5, 8, 6] },
@@ -89,12 +89,14 @@ function PressLog() {
   )
 }
 
-export function HomeShowcase() {
-  return (
-    <Grid as="section" id="component-showcase" aria-label="Interactive component examples" width="site" space="compact">
-      <GridItem medium={4} large={4} subgrid="rows"><TypeSpecimen /></GridItem>
-      <GridItem medium={4} large={4} subgrid="rows"><PrintEstimate /></GridItem>
-      <GridItem medium={8} large={4} subgrid="rows"><PressLog /></GridItem>
-    </Grid>
-  )
+export function HomeShowcase({ queue }: { queue: string }) {
+  return <Grid as="section" id="component-showcase" aria-labelledby="components-title" width="site" space="section">
+    <GridItem><Separator weight="section" /></GridItem>
+    <GridItem medium={3} large={4}><SectionIntro id="components-title" title="The components" text="Work the print desk. Estimate an edition, sort the queue, open a job sheet or inspect the hours on press.">
+      <TextLink href="/examples/">Explore complete projects →</TextLink>
+    </SectionIntro></GridItem>
+    <GridItem medium={5} large={7} start={{ large: 6 }}><PrintEstimate /></GridItem>
+    <GridItem medium={4} large={5}><PressLog /></GridItem>
+    <GridItem medium={4} large={7} start={{ large: 6 }}><Stack gap={4} data-landing-island="queue" dangerouslySetInnerHTML={{ __html: queue }} /></GridItem>
+  </Grid>
 }

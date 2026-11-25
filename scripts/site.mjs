@@ -144,7 +144,7 @@ async function loadPages() {
 }
 
 export async function buildWebsite({ outputDir, guides, guideFiles, guideManifest, apiReference, componentGuidance, registry, script, css, notices, renderComponent }) {
-  const { Landing, StartHere, Examples, DesignerKit, StaticApi, Icons, Themes, Principles, Blocks, BlockPage, blockDemos, blocks, ComponentDirectory, ComponentStatus, ReferencePage, GuideLanguages, downloadLabel, ExampleIntroduction, inventory, projects } = await loadPages()
+  const { Landing, PressQueue, InstallCommand, StartHere, Examples, DesignerKit, StaticApi, Icons, Themes, Principles, Blocks, BlockPage, blockDemos, blocks, ComponentDirectory, ComponentStatus, ReferencePage, GuideLanguages, downloadLabel, ExampleIntroduction, inventory, projects } = await loadPages()
   async function output(name, data) {
     const target = path.join(outputDir, name)
     await mkdir(path.dirname(target), { recursive: true })
@@ -164,11 +164,11 @@ export async function buildWebsite({ outputDir, guides, guideFiles, guideManifes
   const latinFont = '/assets/' + path.basename(fontBuild.outputFiles.find(file => /inter-latin-standard-normal-.*\.woff2$/.test(file.path)).path)
   const fontsURL = '/assets/fonts-' + sha(fontCSS) + '.css'
   const showcaseBuild = await build({
-    entryPoints: ['web/home-showcase-controls.js'], bundle: true, format: 'esm',
-    target: 'es2022', write: false, minify: true,
+    entryPoints: ['web/home-showcase-controls.js'], bundle: true, splitting: true, format: 'esm',
+    target: 'es2022', jsx: 'automatic', define: { 'process.env.NODE_ENV': '"production"' }, write: false, minify: true,
+    outdir: 'assets', entryNames: 'showcase-[hash]', chunkNames: 'sample-[hash]',
   })
-  const showcase = showcaseBuild.outputFiles[0].text
-  const showcaseJS = '/assets/showcase-' + sha(showcase) + '.js'
+  const showcaseJS = '/assets/' + path.basename(showcaseBuild.outputFiles.find(file => path.basename(file.path).startsWith('showcase-')).path)
   const icons = await readFile('web/icon-controls.js', 'utf8')
   const iconsJS = '/assets/icons-' + sha(icons) + '.js'
   const pickerBuild = await build({ entryPoints: ['web/static-selects.ts'], bundle: true, format: 'esm', target: 'es2022', write: false, minify: true })
@@ -191,7 +191,7 @@ export async function buildWebsite({ outputDir, guides, guideFiles, guideManifes
     output(appJS, script), output(appCSS, css), output(coreCSS, core),
     output(fontsURL, fontCSS),
     ...fontBuild.outputFiles.filter(file => file.path.endsWith('.woff2')).map(file => output('assets/' + path.basename(file.path), file.contents)),
-    output(showcaseJS, showcase), output(iconsJS, icons),
+    ...showcaseBuild.outputFiles.map(file => output('assets/' + path.basename(file.path), file.contents)), output(iconsJS, icons),
     output(themeJS, theme), output(pickerJS, picker),
     ...blockBuild.outputFiles.map(file => output('assets/' + path.basename(file.path), file.contents)),
     output(filterJS, filter),
@@ -256,8 +256,11 @@ export async function buildWebsite({ outputDir, guides, guideFiles, guideManifes
   // Translate only known bookmarks from the original single-file catalog. Leave local page anchors alone.
   const ids = JSON.stringify(registry.items.map((item) => item.name))
   const legacy = `(()=>{const h=location.hash.slice(1);if(!h)return;const p={rubrica:"client-directory","address-book":"client-directory","rubrica-bilingue":"bilingual-address-book","bilingual-address-book":"bilingual-address-book"};if(Object.hasOwn(p,h))location.replace("/examples/"+p[h]+"/");else if(h==="overview"||h.startsWith("guide/")||${ids}.includes(h.split("/")[0]))location.replace("/docs/#"+h)})();`
+  const command = 'npm install ' + siteUrl + '/alpina-ui-' + registry.version + '.tgz'
+  const queue = renderToString(createElement(PressQueue), { identifierPrefix: 'landing-queue-' })
+  const installation = renderToString(createElement(InstallCommand, { command }), { identifierPrefix: 'landing-install-' })
   await page('/', siteMetadata.name, siteMetadata.description,
-    render(Landing, { version: registry.version, count: inventory.length }), { redirect: legacy, showcase: true })
+    render(Landing, { version: registry.version, count: inventory.length, queue, command, installation }), { redirect: legacy, showcase: true })
   await page('/start-here/', 'Start here', 'Choose a developer, designer or shadcn migration path into Alpina UI.', render(StartHere))
   await buildDesignerKit(output)
   await page('/kit/', 'Designer kit', 'Download editable column grids, an A4 type sheet and light and dark design tokens for your design tools.', render(DesignerKit))

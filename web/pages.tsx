@@ -1,7 +1,7 @@
 import { AppearanceButton } from './appearance-button.js'
 import type { ReactNode } from 'react'
 import {
-  Button, Figure, Grid, GridItem, Icon, iconNames, NavigationMenu, Separator,
+  Avatar, Figure, Grid, GridItem, Icon, iconNames, NavigationMenu, Separator,
   Stack, TextLink, Typography, type IconName,
 } from 'alpina-ui'
 import { HomeShowcase } from './home-showcase.js'
@@ -29,14 +29,15 @@ export function Masthead({ current }: { current: Section }) {
     <Grid as="header" width="site" space="compact">
       <GridItem>
         <TextLink variant="skip" href="#content">Skip to content</TextLink>
-        <Stack direction="row" justify="space-between" align="start" gap={2} wrap={false}>
+        <Stack direction="row" justify="space-between" align="start" gap={1} wrap={false}>
           <Stack direction="row" gap={1} wrap={false}>
-            <TextLink variant="quiet" href="/" aria-current={current === 'home' ? 'page' : undefined}>
-              <Typography as="span" variant="heading">Alpina UI</Typography>
+            <TextLink variant="quiet" href="/" aria-label="Alpina UI" aria-current={current === 'home' ? 'page' : undefined}>
+              <Stack direction="row" gap={1} wrap={false}>
+                <Avatar decorative size="sm" name="Alpina" src="/assets/alpina-mark.png" />
+                <Typography as="span" variant="label">Alpina</Typography>
+              </Stack>
             </TextLink>
-            <Button asChild variant="ghost" size="sm"><a href={repository} aria-label="GitHub" title="GitHub repository">
-              <Icon name="git-branch" size={18} />
-            </a></Button>
+            <TextLink href={repository} variant="quiet" aria-label="GitHub" title="GitHub repository"><Typography as="span" variant="label"><GitHubLabel /></Typography></TextLink>
           </Stack>
           <NavigationMenu label="Main navigation" orientation="horizontal" align="end" collapseLabel="Menu" sections={[{ links }]} />
           <AppearanceButton />
@@ -80,12 +81,20 @@ export function Landing({ version, count }: { version: string; count: number }) 
   return <>
     <Masthead current="home" />
     <main id="content" tabIndex={-1}>
-      <PageHeading title="Alpina UI" summary="React components for Swiss addresses, payments and multilingual forms.">
-        <Stack direction="row" gap={4}>
-          <TextLink variant="action" href="/docs/components/">Browse components ({count})  <Icon name="arrow-right" size={18}/></TextLink>
-          <TextLink href="/docs/">Installation</TextLink>
-        </Stack>
-      </PageHeading>
+      <Grid as="section" width="site" space="cover" align="end" aria-labelledby="home-title">
+        <GridItem medium={4} large={7}>
+          <Typography as="h1" variant="title" id="home-title"><Typography as="span" variant="inherit" tone="accent">Swiss UI</Typography><br /> for React.</Typography>
+        </GridItem>
+        <GridItem medium={4} large={4} start={{ large: 9 }}>
+          <Stack gap={5}>
+            <Typography variant="lead" measure="narrow">React components for Swiss addresses, payments and multilingual forms.</Typography>
+            <Stack direction="row" gap={4}>
+              <TextLink variant="action" href="/docs/components/">Browse components ({count})  <Icon name="arrow-right" size={18}/></TextLink>
+              <TextLink href="/docs/">Installation</TextLink>
+            </Stack>
+          </Stack>
+        </GridItem>
+      </Grid>
       <HomeShowcase />
       <Grid width="site"><GridItem><Separator weight="section" /></GridItem></Grid>
       <Grid as="section" width="site" space="section" align="center" aria-labelledby="icons-title">

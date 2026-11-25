@@ -73,7 +73,15 @@ try {
   await chooser.setFiles({ name: 'first.txt', mimeType: 'text/plain', buffer: Buffer.alloc(1250, 'a') })
   await zone.getByText(/1,3\s+ko/).waitFor()
   assert.match(await zone.getByRole('status').textContent(), /Ajout.*first.txt/)
-  await transfer(input, 'drop', ['second.txt'])
+  await input.evaluate(node => {
+    const transfer = new DataTransfer()
+    for (const file of [new File(['image'], 'broken.png'), new File(['second.txt contents'], 'second.txt'), new File([new Uint8Array(1251)], 'oversize.txt')]) transfer.items.add(file)
+    node.dispatchEvent(new DragEvent('drop', { bubbles: true, cancelable: true, dataTransfer: transfer }))
+  })
+  const rejections = zone.getByRole('alert')
+  assert.match(await rejections.textContent(), /broken.png.*Choisissez.*oversize.txt.*Taille maximale/)
+  assert.match(await zone.getByRole('status').textContent(), /Ajout.*second.txt/)
+  assert.deepEqual((await payload(input)).map(([name]) => name), ['first.txt', 'second.txt'])
   await transfer(input, 'paste', ['clipboard.txt'])
   assert.deepEqual(await payload(input), [
     ['first.txt', 'a'.repeat(1250)], ['second.txt', 'second.txt contents'], ['clipboard.txt', 'clipboard.txt contents'],
@@ -106,7 +114,7 @@ try {
   assert.deepEqual(await payload(draft), [['draft.txt', 'original bytes']])
   await transfer(draft, 'paste', ['a.txt', 'b.txt'])
   await page.getByRole('alert').getByText('Tscherni ina datoteca a la giada.').waitFor()
-  assert.deepEqual(await payload(draft), [['draft.txt', 'original bytes']])
+  assert.deepEqual(await payload(draft), [['a.txt', 'a.txt contents']])
   await transfer(draft, 'paste', ['single.txt'])
   assert.deepEqual(await payload(draft), [['single.txt', 'single.txt contents']])
   await page.getByRole('button', { name: 'Reset' }).click()

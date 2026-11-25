@@ -19,7 +19,9 @@ export interface FileInputProps extends Omit<ComponentPropsWithoutRef<'input'>, 
   onFilesChange?: (files: File[]) => void
 }
 
-type FileError = '' | 'unsupported' | 'one' | 'required' | { kind: 'tooLarge' | 'tooMany'; limit: number }
+type FileIssue = { reason: 'unsupported' | 'one' } | { reason: 'tooLarge' | 'tooMany'; limit: number }
+type Rejection = { name: string } & FileIssue
+type FileError = '' | 'required' | Rejection[]
 
 const useBrowserLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect
 
@@ -92,25 +94,25 @@ export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(function F
   }, [])
 
   function choose(incoming: File[]): File[] | undefined {
-    if ((!multiple && incoming.length > 1) || incoming.some(file => !accepts(file, accept))) {
-      setError(!multiple && incoming.length > 1 ? 'one' : 'unsupported')
-      return
-    }
-    if (maxSize !== undefined && incoming.some(file => file.size > maxSize)) {
-      setError({ kind: 'tooLarge', limit: maxSize })
-      return
-    }
     const next = multiple ? [...selected] : []
+    const added: string[] = []
+    const rejected: Rejection[] = []
     for (const file of incoming) {
-      if (!next.includes(file)) next.push(file)
+      if (next.includes(file)) continue
+      let issue: FileIssue | undefined
+      if (!accepts(file, accept)) issue = { reason: 'unsupported' }
+      else if (maxSize !== undefined && file.size > maxSize) issue = { reason: 'tooLarge', limit: maxSize }
+      else if (!multiple && next.length) issue = { reason: 'one' }
+      else if (maxFiles !== undefined && next.length >= maxFiles) issue = { reason: 'tooMany', limit: maxFiles }
+      if (issue) rejected.push({ name: file.name, ...issue })
+      else {
+        next.push(file)
+        added.push(file.name)
+      }
     }
-    if (maxFiles !== undefined && next.length > maxFiles) {
-      setError({ kind: 'tooMany', limit: maxFiles })
-      return
-    }
-    setError('')
-    if (incoming.length) setNotice({ action: 'added', names: incoming.map(file => file.name).join(', ') })
-    return next
+    setError(rejected.length ? rejected : '')
+    setNotice(added.length ? { action: 'added', names: added.join(', ') } : undefined)
+    return added.length ? next : undefined
   }
 
   function transfer(next: File[]) {
@@ -150,7 +152,7 @@ export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(function F
     }}>
     <div className="al-file-actions">
       <input {...props} ref={input} id={inputId} className="al-file-native" type="file" accept={accept} multiple={multiple} disabled={disabled}
-        aria-invalid={error ? true : props['aria-invalid']}
+        aria-invalid={error && !selected.length ? true : props['aria-invalid']}
         aria-describedby={[describedBy, uid + '-hint', error && uid + '-error'].filter(Boolean).join(' ') || undefined}
         onInvalid={event => {
           onInvalid?.(event)
@@ -188,9 +190,13 @@ export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(function F
       </li>
     ))}</ul>}
     <span className="al-file-announcement" role="status" aria-live="polite" aria-atomic="true">{notice && words[notice.action] + ' · ' + notice.names}</span>
-    {error && <span id={uid + '-error'} className="al-file-error" role="alert">{typeof error === 'string' ? words[error] :
-      error.kind === 'tooLarge' ? words.tooLarge.replace('{size}', fileSize(error.limit, locale)) :
-      words.tooMany.replace('{count}', formatSwissNumber(error.limit, locale))}</span>}
+    {error && <div id={uid + '-error'} className="al-file-error" role="alert">
+      {error === 'required' ? words.required : <ul>{error.map((issue, index) => (
+        <li key={index}><bdi>{issue.name}</bdi>{' · '}<span>{issue.reason === 'tooLarge' ? words.tooLarge.replace('{size}', fileSize(issue.limit, locale))
+          : issue.reason === 'tooMany' ? words.tooMany.replace('{count}', formatSwissNumber(issue.limit, locale))
+          : words[issue.reason]}</span></li>
+      ))}</ul>}
+    </div>}
   </div>
 })
 

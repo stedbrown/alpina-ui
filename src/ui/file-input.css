@@ -32,3 +32,5 @@
   .al-file-native:required:invalid ~ .al-file-empty,
   .al-file-native:required:valid ~ .al-file-fallback-selected { display: inline; }
 }
+
+.al-file-error ul { margin: 0; padding-inline-start: 1.25em; overflow-wrap: anywhere; }

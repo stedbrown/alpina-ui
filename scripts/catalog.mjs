@@ -26,6 +26,7 @@ const guideFiles = {
   start: 'docs/start.md',
   cli: 'docs/cli.md',
   release: 'docs/release.md',
+  'api-stability': 'docs/api-stability.md',
   directory: 'docs/directory.md',
   core: 'docs/core.md',
   design: 'docs/design.md',

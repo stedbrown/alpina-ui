@@ -102,7 +102,9 @@
     "prepare:integrations": "node integrations/prepare.mjs",
     "test:integrations": "npm run prepare:integrations && npm ci --prefix integrations && npm run build --prefix integrations --workspaces && node integrations/test.mjs && node integrations/schema-consumers.mjs",
     "prepack": "npm run build",
-    "test:performance": "node scripts/lighthouse.mjs"
+    "test:performance": "node scripts/lighthouse.mjs",
+    "api:check": "node scripts/api-report.mjs",
+    "api:update": "node scripts/api-report.mjs --update"
   },
   "imports": {
     "#postal-loader": {

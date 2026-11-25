@@ -252,6 +252,7 @@ try {
     'swiss',
     'qr-bill',
     'validation',
+    'api-stability',
     'design',
     'research',
     'portal',
@@ -289,7 +290,7 @@ try {
   console.log(
     'Offline catalog passed: ' + registry.items.length + ' previews, ' +
       inspected.size +
-      ' source files, 17 guides, the 4/8/12-column specimen and the address book.',
+      ' source files, 18 guides, the 4/8/12-column specimen and the address book.',
   )
 } finally {
   await browser.close()

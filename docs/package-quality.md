@@ -4,6 +4,8 @@ The [component status directory](https://alpina-ui.vercel.app/status/) lists the
 
 Dates cover the registry entry and its transitive source files, including the individual component styles. The global theme and license texts are excluded. The checked-in dates survive shallow or source-only builds. After editing source, run `npm run build` and `npm run status:update`. The updater reads committed dates from Git, uses the current Swiss civil date for pending changes, and preserves the dates of unchanged source fingerprints.
 
+The declaration report tracks changes to the public package contract. Review the compatibility and deprecation policy before changing a component’s signature. [API stability](https://github.com/stedbrown/alpina-ui/blob/main/docs/api-stability.md)
+
 ## Transfer budgets
 
 Run `npm run test:package-quality` after building. Each public subpath has a ceiling for initial JavaScript, deferred JavaScript, and component CSS. Figures are gzip bytes after esbuild minification, with React and React DOM external. Initial JS includes static chunk imports. Deferred JS counts the remaining chunks, including optional datasets. CSS is the individual compiled component sheet; the shared theme is loaded separately. The Button check also builds a named import from the root barrel and inspects the modules contributing bytes to every output.

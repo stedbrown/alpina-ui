@@ -7,7 +7,7 @@ import ts from 'typescript'
 import { execSync } from 'node:child_process'
 import { buildApiReference } from './api-reference.mjs'
 import { readDirectorySources } from './directory-sources.mjs'
-import { buildWebsite, siteGrid } from './site.mjs'
+import { appearanceHead, buildWebsite, siteGrid } from './site.mjs'
 
 process.chdir(fileURLToPath(new URL('../', import.meta.url)))
 const guides = {}
@@ -205,7 +205,7 @@ const offlineFonts = await build({
   entryPoints: ['src/fonts.css'], bundle: true, write: false, minify: true, loader: { '.woff2': 'dataurl' },
 })
 const html =
-  '<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffffff"><title>Alpina UI</title><style>' +
+  '<!doctype html>\n<html lang="en" data-al-theme="auto"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffffff"><title>Alpina UI</title>' + appearanceHead + '<style>' +
   css + offlineFonts.outputFiles[0].text +
   '</style></head><body>' + siteGrid + '<div id="app"></div><noscript>Enable JavaScript to try the interactive components.</noscript><script>' +
   script +

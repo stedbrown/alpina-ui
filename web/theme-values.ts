@@ -13,7 +13,7 @@ export function contrast(a: string, b: string) {
   return (Math.max(first, second) + 0.05) / (Math.min(first, second) + 0.05)
 }
 
-export function themeValues({ accent, unit, mode }: typeof defaultTheme) {
+function palette(accent: string, unit: number, mode: string) {
   const bg = mode === 'dark' ? '#000000' : '#ffffff'
   const ink = mode === 'dark' ? '#ffffff' : '#000000'
   // Prefer the existing white label whenever it passes WCAG AA.
@@ -24,8 +24,22 @@ export function themeValues({ accent, unit, mode }: typeof defaultTheme) {
     '--al-accent-hover': label === '#ffffff' ? '#000000' : '#ffffff',
     '--al-unit': unit / 16 + 'rem',
   }
-  const selector = mode === 'dark' ? '[data-al-theme="dark"]' : ':root:not([data-al-theme="dark"]), [data-al-theme="light"]'
-  const rules = Object.entries(values).map(([key, value]) => '    ' + key + ': ' + value + ';')
-  const css = ['@media (forced-colors: none) {', '  ' + selector + ' {', ...rules, '  }', '}'].join('\n')
-  return { values, css, button: contrast(label, accent), text: contrast(accent, bg) }
+  return { values, button: contrast(label, accent), text: contrast(accent, bg) }
+}
+
+export const darkAccent = '#ff5252'
+
+export function themeValues({ accent, unit, mode }: typeof defaultTheme, systemDark = false, useDefaultAccent = false) {
+  const automatic = mode === 'auto'
+  function resolve(scheme: string) {
+    return palette(useDefaultAccent ? (scheme === 'dark' ? darkAccent : defaultTheme.accent) : accent, unit, scheme)
+  }
+  const css = (automatic ? ['light', 'dark'] : [mode]).map(scheme => {
+    const selector = automatic ? '[data-al-theme="auto"]' : scheme === 'dark'
+      ? '[data-al-theme="dark"]' : ':root:not([data-al-theme]), [data-al-theme="light"]'
+    const media = '(forced-colors: none)' + (automatic ? ' and (prefers-color-scheme: ' + scheme + ')' : '')
+    const rules = Object.entries(resolve(scheme).values).map(([key, value]) => '    ' + key + ': ' + value + ';')
+    return ['@media ' + media + ' {', '  ' + selector + ' {', ...rules, '  }', '}'].join('\n')
+  }).join('\n')
+  return { ...resolve(automatic ? (systemDark ? 'dark' : 'light') : mode), css }
 }

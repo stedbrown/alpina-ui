@@ -7,6 +7,9 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { marked } from 'marked'
 import { GridOverlay } from 'alpina-ui'
 
+// Apply the saved catalog appearance before the first paint on every public page.
+export const appearanceHead = '<script>try{const t=localStorage.getItem("alpina-catalog-theme");if(t==="dark"||t==="light")document.documentElement.dataset.alTheme=t}catch{}</script>'
+
 const origin = 'https://alpina-ui.vercel.app'
 const siteName = 'Alpina UI'
 const escape = (text) => String(text).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
@@ -114,6 +117,7 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
       '<meta name="twitter:card" content="summary_large_image"><meta property="og:image:alt" content="Alpina UI homepage with a print estimate, a Swiss invoice and a press-hours chart">',
       '<link rel="license" href="/third-party-notices.txt"><link rel="stylesheet" href="' + (options.app ? appCSS : coreCSS) + '">',
       '<link rel="stylesheet" href="' + fontsURL + '">',
+      appearanceHead,
     ]
     if (options.redirect) tags.push('<script>' + options.redirect + '</script>')
     if (options.showcase) tags.push('<script type="module" src="' + showcaseJS + '"></script>')
@@ -122,7 +126,7 @@ export async function buildWebsite({ guides, guideFiles, apiReference, registry,
     if (options.block) tags.push('<script type="module" src="' + blockJS + '"></script>')
     if (options.filter) tags.push('<script type="module" src="' + filterJS + '"></script>')
     const content = options.app ? '<div id="app">' + body + '</div><script defer src="' + appJS + '"></script>' : body
-    await output(route + 'index.html', '<!doctype html>\n<html lang="en"><head>' + tags.join('\n') + '</head><body data-al-page>' + siteGrid + content + '</body></html>')
+    await output(route + 'index.html', '<!doctype html>\n<html lang="en" data-al-theme="auto"><head>' + tags.join('\n') + '</head><body data-al-page>' + siteGrid + content + '</body></html>')
     paths.push(url)
   }
 

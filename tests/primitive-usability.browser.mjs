@@ -61,7 +61,7 @@ try {
   assert.equal(await page.getByRole('progressbar', { name: 'Printing' }).evaluate((el) => el.value), 100)
   assert.equal(await page.getByText('שלום').evaluate((el) => getComputedStyle(el).direction), 'rtl')
   assert.ok(await page.getByRole('status').getByText('Loading a proof').isVisible())
-  assert.equal(await page.locator('.al-skeleton').evaluate((el) => getComputedStyle(el).animationIterationCount), '2')
+  assert.equal(await page.locator('.al-skeleton').evaluate((el) => getComputedStyle(el).animationName), 'none')
   await page.emulateMedia({ reducedMotion: 'reduce' })
   assert.equal(await page.locator('.al-spinner').evaluate((el) => getComputedStyle(el, '::before').animationName), 'none')
   assert.equal(await page.locator('.al-skeleton').evaluate((el) => getComputedStyle(el).animationName), 'none')

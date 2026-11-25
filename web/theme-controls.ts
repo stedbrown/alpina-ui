@@ -13,12 +13,15 @@ const css = document.querySelector<HTMLTextAreaElement>('#theme-css')!
 const feedback = document.querySelector<HTMLElement>('#copy-feedback')!
 const reset = document.querySelector<HTMLButtonElement>('#theme-reset')!
 const forcedColors = window.matchMedia('(forced-colors: active)')
+const darkScheme = window.matchMedia('(prefers-color-scheme: dark)')
+let useDefaultAccent = true
 
 function score(ratio: number) {
   return ratio.toFixed(2) + ':1 · ' + (ratio >= 4.5 ? 'Pass' : 'Fail')
 }
 function update() {
-  const theme = themeValues({ accent: accent.value, unit: Number(unit.value), mode: mode.value })
+  const theme = themeValues({ accent: accent.value, unit: Number(unit.value), mode: mode.value }, darkScheme.matches, useDefaultAccent)
+  accent.value = theme.values['--al-accent']
   preview.dataset.alTheme = mode.value
   for (const [key, value] of Object.entries(theme.values)) {
     if (forcedColors.matches) preview.style.removeProperty(key)
@@ -30,12 +33,14 @@ function update() {
   feedback.textContent = ''
   reset.disabled = accent.value === defaultTheme.accent && Number(unit.value) === defaultTheme.unit && mode.value === defaultTheme.mode
 }
-accent.addEventListener('input', update)
+accent.addEventListener('input', () => { useDefaultAccent = false; update() })
 unit.addEventListener('change', update)
 mode.addEventListener('change', update)
 forcedColors.addEventListener('change', update)
+darkScheme.addEventListener('change', update)
 reset.addEventListener('click', () => {
   accent.value = defaultTheme.accent
+  useDefaultAccent = true
   unit.value = String(defaultTheme.unit)
   mode.value = defaultTheme.mode
   update()

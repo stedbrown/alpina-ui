@@ -24,7 +24,7 @@
   mask-image:
     radial-gradient(circle closest-side, transparent 51%, black 57%), conic-gradient(transparent, black);
   mask-composite: intersect;
-  animation: al-spinner-dial 960ms steps(8, end) infinite;
+  animation: al-spinner-dial calc(8 * var(--al-duration-fast)) steps(8, end) infinite;
 }
 .al-spinner-label {
   position: absolute;

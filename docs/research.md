@@ -12,7 +12,7 @@ Alpina uses white, black, and red as its three solid colors. The white field con
 
 ### Choosing a red
 
-Alpina uses `#EB0000`. Against pure white, the contrast ratio is approximately 4.63 to 1. Against pure black, it is about 4.53 to 1. The accent remains legible in both themes. Fine rules between surfaces use mixtures of black and white. Essential control outlines have stronger contrast. The selected index entry combines color with a vertical rule and bold type. Forced-colors mode lets readers use their system palette. The ratios above apply to the stated solid color pairs. [W3C, minimum contrast and relative luminance](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
+Light paper uses `#EB0000` with white button labels (4.63:1). Dark paper uses `#FF5252` with black button labels (6.58:1). The same ratios apply to accent text on the corresponding page background. Fine rules use mixtures of black and white. Essential controls have stronger boundaries. The selected index entry combines color with a vertical rule and bold type. Forced-colors mode follows the reader's system palette. [W3C, minimum contrast and relative luminance](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
 
 ## A grid for a series
 

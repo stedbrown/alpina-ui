@@ -22,7 +22,7 @@ export function Themes() {
                 {[3, 4, 5, 6].map(unit => <option key={unit} value={unit}>{unit} px</option>)}
               </Select>}</Field>
               <Field label="Appearance" id="theme-mode">{props => <Select {...props} defaultValue="light">
-                <option value="light">Light</option><option value="dark">Dark</option>
+                <option value="light">Light</option><option value="dark">Dark</option><option value="auto">Use device setting</option>
               </Select>}</Field>
               <Stack align="start"><Button id="theme-reset" variant="outline">Restore defaults</Button></Stack>
             </Stack>
@@ -30,7 +30,7 @@ export function Themes() {
           <noscript><Typography>Enable JavaScript to edit this theme. The default CSS is available below.</Typography></noscript>
         </GridItem>
         <GridItem medium={5} large={7} start={{ large: 6 }}>
-          <Stack id="theme-preview" surface="paper" inset={5} gap={4} role="region" aria-label="Live invoice preview">
+          <Stack id="theme-preview" data-al-theme="light" surface="paper" inset={5} gap={4} role="region" aria-label="Live invoice preview">
             <Separator weight="section" />
             <Stack direction="row" justify="space-between">
               <Typography as="h2" variant="heading">Studio invoice</Typography><Badge tone="accent">Open</Badge>

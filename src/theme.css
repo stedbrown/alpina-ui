@@ -13,6 +13,7 @@ body[data-al-page] {
 }
 body[data-al-page] > footer:last-child { margin-block-start: auto; }
 :root,
+[data-al-theme='auto'],
 [data-al-theme='dark'],
 [data-al-theme='light'] {
   color-scheme: light;
@@ -34,6 +35,9 @@ body[data-al-page] > footer:last-child { margin-block-start: auto; }
   --al-focus: var(--al-ink);
   --al-radius: 0px;
   --al-shadow: none;
+  --al-duration-fast: 120ms;
+  --al-duration-normal: 180ms;
+  --al-ease: cubic-bezier(.2, 0, 0, 1);
   --al-shadow-raised: 0 4px 0 -1px var(--al-ink);
   --al-unit: 0.25rem;
   --al-space-0: 0;
@@ -67,14 +71,22 @@ body[data-al-page] > footer:last-child { margin-block-start: auto; }
   --al-mono: ui-monospace, 'SFMono-Regular', Consolas, monospace;
   --al-measure: 66ch;
 }
-[data-al-theme='dark'] {
-  color-scheme: dark;
-  --al-bg: #000;
-  --al-surface: #000;
-  --al-ink: #fff;
-  --al-on-accent: #fff;
-  --al-accent-hover: #000;
-  --al-focus: #fff;
+[data-al-theme='auto'] { color-scheme: light dark; }
+[data-al-theme='dark'] { color-scheme: dark; }
+:is([data-al-theme='auto'], [data-al-theme='dark']) {
+  --al-bg: light-dark(#fff, #000);
+  --al-surface: var(--al-bg);
+  --al-ink: light-dark(#000, #fff);
+  --al-accent: light-dark(#eb0000, #ff5252);
+  --al-on-accent: light-dark(#fff, #000);
+  --al-accent-hover: var(--al-ink);
+  --al-focus: var(--al-ink);
+}
+@media (prefers-reduced-motion: reduce) {
+  :root, [data-al-theme] {
+    --al-duration-fast: 0ms;
+    --al-duration-normal: 0ms;
+  }
 }
 @media (forced-colors: active) {
   :root,

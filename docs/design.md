@@ -116,6 +116,8 @@ Supply one `lead` and one `detail` field to either preset. For a different layou
 
 ## Set a page on the grid
 
+Use `data-al-theme="auto"` on a page or container to follow the device's color scheme. Explicit `light` and `dark` values also work inside an automatic theme. A switch changes its track over `--al-duration-fast` (120 ms) using `--al-ease`. The standard duration is 180 ms. Reduced motion sets both durations to zero and stops the loading dial. The skeleton reserves its space with a static tint.
+
 The theme builder previews a single component surface with your accent, a spacing unit and light or dark paper. It reports the text contrast for the button label and for accent text on the background. The exported CSS preserves system colors in forced-colors mode. Import it after the library stylesheet and apply the corresponding `data-al-theme` attribute to the container. [Theme builder](https://alpina-ui.vercel.app/themes/) · [WCAG minimum text contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
 
 Align the introduction, component previews and navigation to the same page margins. Give a working example enough columns for its longest translated label. At narrow widths, let each preview take a full row and keep the heading before its controls in the reading order. [Homepage](https://alpina-ui.vercel.app/) · [Homepage source](https://github.com/stedbrown/alpina-ui/blob/main/web/pages.tsx)

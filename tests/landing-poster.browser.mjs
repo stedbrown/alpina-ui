@@ -88,6 +88,18 @@ try {
   const enlarged = await page.addStyleTag({ content: 'html { font-size: 200% !important } * { line-height: 1.5 !important; letter-spacing: .12em !important; word-spacing: .16em !important } p { margin-block-end: 2em !important }' })
   await checkFigures('800 px with enlarged type and spacing')
   await enlarged.evaluate(node => node.remove())
+  const footer = page.getByRole('contentinfo')
+  const brand = footer.getByRole('link', { name: 'Alpina UI home' })
+  assert.ok(await brand.locator('img[src="/assets/logo.svg"]').isVisible())
+  assert.match(await footer.getByRole('link', {name: /^Version /}).innerText(), /\d+\.\d+\.\d+/)
+  assert.equal(await footer.getByRole('link', {name: 'MIT license'}).getAttribute('href'), 'https://github.com/stedbrown/alpina-ui/blob/main/LICENSE')
+  const languages = footer.getByRole('navigation', {name: 'Getting started by language'})
+  for (const [lang, name] of [['en', 'English'], ['de', 'Deutsch'], ['fr', 'Français'], ['it', 'Italiano']]) {
+    const link = languages.getByRole('link', {name})
+    assert.equal(await link.getAttribute('lang'), lang)
+    assert.equal(await link.getAttribute('hreflang'), lang)
+    assert.equal(await link.getAttribute('href'), '/docs/guides/start/' + (lang === 'en' ? '' : lang + '/'))
+  }
   console.log('The live cover fills the viewport, its headline fits the grid and its column guides work from the keyboard.')
 } finally {
   await browser.close()

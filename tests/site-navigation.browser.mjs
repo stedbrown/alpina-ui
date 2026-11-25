@@ -23,7 +23,9 @@ try {
     await route.fulfill({ path: fileURLToPath(new URL('.' + file, site)) })
   })
   await page.goto(origin + '/')
-  await page.getByRole('link', { name: 'Start here', exact: true }).click()
+  const startHere = { name: 'Start here', exact: true }
+  assert.equal(await page.getByRole('contentinfo').getByRole('link', startHere).getAttribute('href'), '/start-here/')
+  await page.getByRole('main').getByRole('link', startHere).click()
   await page.getByRole('heading', { name: 'Start here', level: 1 }).waitFor()
   for (const [label, href] of [['Set up React', '/docs/guides/start/'], ['Open the designer kit', '/kit/'], ['Read the migration guide', '/docs/guides/migration/']]) {
     assert.equal(await page.getByRole('link', { name: new RegExp(label) }).getAttribute('href'), href)

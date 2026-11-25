@@ -51,12 +51,45 @@ export function Masthead({ current }: { current: Section }) {
 }
 
 export function Footer({ version }: { version?: string } = {}) {
+  if (version) return <Grid as="footer" width="site" surface="ink" space="chapter" align="start">
+    <GridItem medium={3} large={4}><Stack align="start" gap={6}>
+      <Typography variant="folio" numeric aria-hidden="true">10</Typography>
+      <TextLink href="/" variant="quiet" aria-label="Alpina UI home">
+        <Stack direction="row" gap={3} wrap={false}>
+          <Avatar decorative name="Alpina" size="lg" src="/assets/logo.svg" />
+          <Typography as="span" variant="heading">Alpina UI</Typography>
+        </Stack>
+      </TextLink>
+      <TextLink href="/docs/guides/release/">Version {version}</TextLink>
+    </Stack></GridItem>
+    <GridItem medium={2} large={2} start={{ large: 6 }}><Stack role="navigation" aria-label="Footer library links" align="start" gap={2}>
+      <Typography as="h2" variant="label">Library</Typography>
+      <TextLink href="/start-here/">Start here</TextLink>
+      <TextLink href="/docs/">Documentation</TextLink>
+      <TextLink href="/docs/components/">Components</TextLink>
+      <TextLink href="/examples/">Examples</TextLink>
+      <TextLink href="/kit/">Designer kit</TextLink>
+    </Stack></GridItem>
+    <GridItem medium={3} large={2}><Stack role="navigation" aria-label="Footer project links" align="start" gap={2}>
+      <Typography as="h2" variant="label">Project</Typography>
+      <TextLink href="/principles/">Design principles</TextLink>
+      <TextLink href="/status/">Component status</TextLink>
+      <TextLink href={repository}><GitHubLabel /></TextLink>
+      <TextLink href={repository + '/blob/main/LICENSE'}>MIT license</TextLink>
+    </Stack></GridItem>
+    <GridItem medium={3} large={3}><Stack role="navigation" aria-label="Getting started by language" align="start" gap={2}>
+      <Typography as="h2" variant="label">Guide language</Typography>
+      {[
+        ['en', 'English'], ['de', 'Deutsch'], ['fr', 'Français'], ['it', 'Italiano'],
+      ].map(([lang, name]) => <TextLink key={lang} lang={lang} hrefLang={lang}
+        href={'/docs/guides/start/' + (lang === 'en' ? '' : lang + '/')}>{name}</TextLink>)}
+    </Stack></GridItem>
+  </Grid>
   return (
-    <Grid as="footer" width="site" surface="ink" space={version ? "chapter" : "compact"}>
-      {version && <GridItem><Typography variant="folio" numeric aria-hidden="true">10</Typography></GridItem>}
+    <Grid as="footer" width="site" surface="ink" space="compact">
       <GridItem>
         <Stack direction="row" justify="space-between" align="baseline" gap={2} columnGap={6}>
-          <TextLink href="/" variant="quiet"><Typography as="span" variant="label">Alpina UI{version && ' · v' + version}</Typography></TextLink>
+          <TextLink href="/" variant="quiet"><Typography as="span" variant="label">Alpina UI</Typography></TextLink>
           <Stack direction="row" gap={4}>
             <TextLink href={repository + '/blob/main/LICENSE'}>MIT license</TextLink>
             <TextLink href="/kit/">Designer kit</TextLink>

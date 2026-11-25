@@ -94,6 +94,13 @@ try {
     cwd: scratch, env: { ...process.env, NODE_ENV: 'production' }, encoding: 'utf8',
   }).trim()
   console.log('Installed runtime exports: ' + expectedRuntime)
+  // Compile exactly the examples delivered to an agent in the installed archive.
+  const skill = await readFile(join(scratch, 'node_modules/alpina-ui/skills/alpina-ui/SKILL.md'), 'utf8')
+  const examples = [...skill.matchAll(/^```tsx\r?\n([\s\S]*?)^```/gm)]
+  assert.equal(examples.length, 4, 'Four copyable Alpina workflow examples')
+  for (const [i, match] of examples.entries()) {
+    await writeFile(join(scratch, 'swiss-form/src/agent-example-' + i + '.tsx'), match[1])
+  }
   npm(['run', 'build', '--workspaces'], scratch)
   execFileSync(process.execPath, [join(source, 'test.mjs'), scratch, expectedRuntime], { stdio: 'inherit' })
 } finally {

@@ -1,4 +1,4 @@
-import { Badge, Bubble, DescriptionList, Kbd, Stack, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, Typography } from 'alpina-ui'
+import { Badge, Bubble, DescriptionList, Kbd, ScrollArea, Stack, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, Typography } from 'alpina-ui'
 
 const locales = {
   'de-CH': 'German',
@@ -41,13 +41,13 @@ export function ComponentGuidance({ slug, entry }: { slug: string; entry: Guidan
     {sections.map(([title, detail]) => <Stack gap={1} key={title}>
       <Typography as="h2" variant="heading">{title}</Typography>
       <Typography measure="reading">{detail}</Typography>
-      {title === 'Accessibility' && <Table>
+      {title === 'Accessibility' && <ScrollArea label="Keyboard reference"><Table>
         <TableCaption>Keys</TableCaption>
         <TableHeader><TableRow><TableHead>Key</TableHead><TableHead>Action</TableHead></TableRow></TableHeader>
         <TableBody>{entry.keys.map(([keys, action]) => (
           <TableRow key={keys}><TableHead scope="row">{keys}</TableHead><TableCell>{action}</TableCell></TableRow>
         ))}</TableBody>
-      </Table>}
+      </Table></ScrollArea>}
       {title === 'Content' && <Stack gap={4}>
         <DescriptionList aria-label="Editorial comparison" items={[
           { term: 'Use', detail: <CopySpecimen slug={slug} value={entry.example.good} /> },

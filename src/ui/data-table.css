@@ -38,7 +38,8 @@
   border-radius: calc(var(--al-radius) * 0.65);
   cursor: pointer;
   text-align: inherit;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  white-space: inherit;
 }
 @media (pointer: coarse) {
   .al-data-table th button {

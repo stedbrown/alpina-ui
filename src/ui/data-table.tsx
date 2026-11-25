@@ -160,7 +160,7 @@ function DataTableView<Row>({
           <TableRow>{columns.map(col => {
             const sorted = active === col
             const title = col.header + ('format' in col && col.format === 'chf' ? ' (CHF)' : '')
-            return <TableHead key={col.id} data-align={alignment(col)} numeric={alignment(col) === 'end'} aria-sort={sorted ? current?.direction : undefined}>
+            return <TableHead key={col.id} data-align={alignment(col)} data-unbroken={title.length <= 20 || undefined} numeric={alignment(col) === 'end'} aria-sort={sorted ? current?.direction : undefined}>
               {sortable(col) ? <>
                 <button type="button" onClick={() => change(col.id)}>{title}
                   <span aria-hidden="true">{sorted ? (current?.direction === 'ascending' ? '↑' : '↓') : '↕'}</span>

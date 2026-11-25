@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { existsSync } from 'node:fs'
 import { chromium } from 'playwright-core'
+import { readableLabelIssues } from './readable-labels.mjs'
 import { publicRoutes, openPublicPage, siteOrigin } from './public-pages.mjs'
 
 // CSS pixels. Fractional glyph bearings can extend a pixel beyond a line box.
@@ -171,7 +172,7 @@ try {
         await page.setViewportSize({ width, height: 900 })
         if (route === '/blocks/public-service/')
           await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))))
-        const issues = await page.evaluate(layoutIssues)
+        const issues = [...await page.evaluate(layoutIssues), ...await page.evaluate(readableLabelIssues)]
         if (issues.length) failures.push(route + ' ' + width + 'px: ' + issues.join(', '))
         const menu = page.locator('nav[data-collapsible] summary:visible').first()
         if (await menu.count()) {

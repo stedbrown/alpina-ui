@@ -1,3 +1,4 @@
+import { readableLabelIssues } from './readable-labels.mjs'
 import assert from 'node:assert/strict'
 import { build } from 'esbuild'
 import { launchBrowser } from './launch-browser.mjs'
@@ -103,6 +104,11 @@ try {
   await main.getByText('Pass 4 da 4', { exact: true }).waitFor()
   for (const text of ['Ada Roth', '756.1234.5678.97', 'Testweg 12a', '3000 Bern', 'Svizra', attachment.name])
     assert.ok((await main.locator('dl').allTextContents()).join(' ').includes(text), text)
+  for (const width of [320, 360, 640, 768, 800, 960, 1024, 1440]) {
+    await page.setViewportSize({ width, height: 900 })
+    assert.deepEqual(await main.evaluate(readableLabelIssues), [], 'Review summary at ' + width + 'px')
+  }
+  await page.setViewportSize({ width: 390, height: 844 })
   await languageSelect.selectOption('en')
   await button('Edit · Postal address').click()
   assert.equal(await input('town').inputValue(), 'Bern')

@@ -28,9 +28,17 @@ const guideMarkdown = new Marked({ renderer: {
     return render(TextLink, { href, title, dangerouslySetInnerHTML: { __html: this.parser.parseInline(tokens) } })
   },
   table({ header, rows }) {
+    // A hard hyphen is a browser line-break opportunity, even with hyphens: none.
+    // Keep editorial compounds intact in headings and preserve the original copyable text.
+    const headerText = tokens => tokens.map(token => {
+      if (token.type !== 'text' || token.tokens) return this.parser.parseInline([token])
+      return token.text.split(/([\p{L}\p{N}]+(?:[-‑][\p{L}\p{N}]+)+)/gu).map((text, index) => index % 2
+        ? render(Typography, { as: 'span', variant: 'inherit', 'data-unbroken': true, children: text })
+        : this.parser.parseInline([{ ...token, text }])).join('')
+    }).join('')
     const cells = (entries, Cell) => entries.map((cell, index) => createElement(Cell, {
       key: index, scope: Cell === TableHead ? 'col' : undefined, textAlign: cell.align ?? undefined,
-      dangerouslySetInnerHTML: { __html: this.parser.parseInline(cell.tokens) },
+      dangerouslySetInnerHTML: { __html: Cell === TableHead ? headerText(cell.tokens) : this.parser.parseInline(cell.tokens) },
     }))
     return render(Table, { tabIndex: 0, children: [
       createElement(TableHeader, { key: 'head' }, createElement(TableRow, null, cells(header, TableHead))),

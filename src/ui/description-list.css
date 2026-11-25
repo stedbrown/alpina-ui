@@ -1,5 +1,7 @@
 .al-description-list {
   container: al-description / inline-size;
+  inline-size: 100%;
+  min-inline-size: 0;
   margin: 0;
   color: inherit;
   font: 400 var(--al-type-body)/var(--al-leading-body) var(--al-font);
@@ -11,7 +13,7 @@
 }
 .al-description-list > div + div { border-block-start: var(--al-unit) solid var(--al-line);
   border-image: linear-gradient(var(--al-line) 0 0) 1 / 1px 0 0; }
-.al-description-list :is(dt, dd) { min-inline-size: 0; margin: 0; overflow-wrap: anywhere; }
+.al-description-list :is(dt, dd) { min-inline-size: 0; margin: 0; overflow-wrap: break-word; }
 .al-description-list dt { font-weight: 600; }
 .al-description-list dd { font-variant-numeric: tabular-nums; }
 @container al-description (min-width: 25rem) {

@@ -20,7 +20,7 @@
   border-image: linear-gradient(var(--al-line) 0 0) 1 / 0 0 1px;
   text-align: start;
   vertical-align: baseline;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 .al-table > thead > tr > th {
   /* Let auto layout reserve each word's width before wrapping body copy. */
@@ -59,7 +59,15 @@
   white-space: nowrap;
 }
 
-.al-table-amount, .al-table-date {
+.al-table-token {
+  display: inline-block;
+  max-inline-size: min(36ch, 25vi);
+  overflow-x: auto;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.al-table [data-unbroken], .al-table time, .al-table-amount, .al-table-date {
   white-space: nowrap;
   font-variant-numeric: tabular-nums lining-nums;
 }
@@ -85,6 +93,7 @@
   .al-table[data-sticky-header][data-sticky-first] > thead > tr > :first-child { z-index: 3; }
 }
 @media print {
+  .al-table-token { max-inline-size: none; overflow: visible; }
   .al-table thead { display: table-header-group; }
   .al-table > tfoot:has([data-summary='total']) { display: table-row-group; }
   .al-table tr { break-inside: avoid; }

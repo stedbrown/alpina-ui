@@ -2,6 +2,12 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import { renderGuide } from '../scripts/site.mjs'
 
+test('prose table headings can wrap before and after a hyphenated compound without splitting it', async () => {
+  const html = await renderGuide('| Office | Documented full-day closures |\n| --- | --- |\n| A | An ordinary full-day closure. |')
+  assert.match(html, /Documented <span[^>]*data-unbroken="true"[^>]*>full-day<\/span> closures/)
+  assert.ok(html.includes('An ordinary full-day closure.'))
+})
+
 test('inline ISO dates stay atomic and copyable while code examples retain their source', async () => {
   const html = await renderGuide([
     'On `2026-04-05`, compare `2026-02-30` and `format("2026-04-05")`.',

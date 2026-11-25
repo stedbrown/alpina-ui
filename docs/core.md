@@ -148,6 +148,8 @@ export function Invoices({ rows }: { rows: readonly Invoice[] }) {
 | `defaultSort?: DataSort` | For internal state, set the initial sort with `{ column, direction }`. `column` must identify a sortable column. |
 | `sort?: DataSort \| null`, `onSortChange?(next: DataSort)` | Pass `sort` and update it in the callback to control sorting. `null` keeps the order of the supplied rows. The callback also receives changes in uncontrolled mode. |
 
+On narrow screens the table scrolls inside its named region. Short column headings, invoice references such as `2026-0158`, dates, badges and action labels keep their words intact. Longer descriptions wrap at spaces.
+
 Directions are `ascending` and `descending`. The first click on a new column sorts ascending. Subsequent activations alternate directions. Enter and Space activate the header buttons. The active header exposes `aria-sort`. The visual arrows are decorative.
 
 ### Reconcile a Swiss ledger

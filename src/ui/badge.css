@@ -13,7 +13,7 @@
   color: var(--al-badge-ink);
   font: 600 var(--al-type-caption)/var(--al-leading-caption) var(--al-font);
   letter-spacing: 0.015em;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
 }
 .al-badge[data-tone='accent'] {
   --al-badge-ink: var(--al-accent);

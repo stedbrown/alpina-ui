@@ -11,7 +11,7 @@
   background: var(--al-accent);
   color: var(--al-on-accent);
   max-inline-size: 100%;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
   font: 600 var(--al-type-label)/var(--al-leading-label) var(--al-font);
   letter-spacing: 0.005em;
   text-align: center;

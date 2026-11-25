@@ -276,7 +276,7 @@ export async function buildWebsite({ outputDir, guides, guideFiles, apiReference
   for (const block of blocks) {
     await page('/blocks/' + block.slug + '/', block.title + ' block', block.detail, render(BlockPage, { block, preview: renderToString(await blockDemos[block.slug]()) }), { block: true })
   }
-  await page('/examples/', 'Example projects', 'Try workshop registration, invoice review, a bilingual studio address book and a client directory built with Alpina UI.', render(Examples))
+  await page('/examples/', 'Example projects', 'Try workshop registration, invoice review, a bilingual studio address book and a client directory built with Alpina UI.', render(Examples, { directoryStory: await renderGuide((await readFile('docs/directory.md', 'utf8')).replace(/^#+ /gm, heading => '#' + heading)) }))
   await page('/docs/components/', 'Component index', 'Find a React component by name, task or category and open its preview, source code and API.', render(ComponentDirectory), { filter: true })
   const status = JSON.parse(await readFile('scripts/component-status.json', 'utf8'))
   const records = inventory.map(([slug, name]) => ({ ...status[slug], slug, name }))

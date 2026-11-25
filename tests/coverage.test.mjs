@@ -4,7 +4,6 @@ import test from 'node:test'
 import * as api from '../dist/index.js'
 
 const registry = JSON.parse(await readFile(new URL('../registry.json', import.meta.url), 'utf8'))
-const guide = await readFile(new URL('../docs/coverage.md', import.meta.url), 'utf8')
 const migration = await readFile(new URL('../docs/migration.md', import.meta.url), 'utf8')
 // Snapshot of the official All Components section, read on 2026-11-24.
 const names = [
@@ -81,26 +80,23 @@ const supplemental = [
 ]
 
 test('the 66 documented names resolve to published entries and public React exports', () => {
-  const rows = [...guide.matchAll(/^\| ([^|]+?) \| `([a-z-]+)` \| `(\w+)` \| (\w+) \|$/gm)]
-  assert.deepEqual(rows.map(([, name]) => name), names)
   const mappings = [...migration.matchAll(/^\| ([^|]+?) \| \[(\w+)\]\(https:\/\/alpina-ui\.vercel\.app\/docs\/components\/([\w-]+)\/\) \| (.+?) \|$/gm)]
-  assert.deepEqual(mappings.map(([, name, component, slug]) => [name, slug, component]),
-    rows.map(([, name, slug, component]) => [name, slug, component]))
+  assert.deepEqual(mappings.map(([, name]) => name), names)
   const installed = new Map(registry.items.map((entry) => [entry.name, entry]))
-  for (const [, name, slug, component, group] of rows) {
+  for (const [, name, component, slug] of mappings) {
     assert.equal(slug, name.toLowerCase().replaceAll(' ', '-'))
     const entry = installed.get(slug)
     assert.ok(entry, 'Missing registry item ' + slug)
-    assert.equal(entry.entry, group + '/' + slug + '.tsx')
+    assert.equal(entry.entry, entry.group + '/' + slug + '.tsx')
     assert.ok(entry.files.includes(entry.entry))
     // React.forwardRef returns an object while ordinary function components are functions.
     assert.ok(typeof api[component] === 'function' || api[component]?.$$typeof, component)
   }
-  const covered = new Set(rows.map(([, , slug]) => slug))
-  const extras = guide.split(/^## The \d+ additional entries /m)[1]
+  const covered = new Set(mappings.map(([, , , slug]) => slug))
+  const extras = migration.split(/^## The \d+ additional entries /m)[1]
   const listed = [...extras.matchAll(/^\| [^|]+ \| ([^|]+) \|$/gm)]
     .flatMap(([, entries]) => [...entries.matchAll(/`([a-z-]+)`/g)].map(match => match[1])).sort()
   assert.deepEqual(listed, supplemental, 'The coverage guide lists each additional component once.')
   assert.deepEqual([...installed.keys()].filter((slug) => !covered.has(slug)).sort(), supplemental)
-  assert.equal(registry.items.length, rows.length + supplemental.length)
+  assert.equal(registry.items.length, mappings.length + supplemental.length)
 })

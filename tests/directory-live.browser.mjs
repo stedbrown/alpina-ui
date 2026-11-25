@@ -12,7 +12,7 @@ const browser = await chromium.launch(
 try {
   const page = await browser.newPage({ offline: true, viewport: { width: 390, height: 844 } })
   const site = new URL('../site/catalog.html', import.meta.url).href
-  await page.goto(site + '#guide/directory')
+  await page.goto(site + '#project/bilingual-address-book')
   assert.equal(await page.locator('html').getAttribute('lang'), 'en')
   await page.getByRole('link', { name: 'Open the IT / DE address book' }).click()
   await page.getByRole('heading', { name: 'Rubrica degli atelier', level: 1 }).waitFor()

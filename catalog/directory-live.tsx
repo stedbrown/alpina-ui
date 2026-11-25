@@ -9,7 +9,7 @@ export function DirectoryLive({ standalone = false }: { standalone?: boolean }) 
   }, [])
   return <>
     {!standalone && <Stack role="navigation" lang="en" aria-label="Alpina UI" align="start" inset={4}>
-      <TextLink href="#guide/directory"><Icon name="arrow-left" /> Alpina UI</TextLink>
+      <TextLink href="#project/bilingual-address-book"><Icon name="arrow-left" /> Alpina UI</TextLink>
     </Stack>}
     <AtelierDirectory />
   </>

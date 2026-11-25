@@ -49,6 +49,7 @@ import {
   apiReference, brandMark,
   componentFiles,
   directorySources,
+  directoryStory,
   guides,
   guideManifest,
   sourceFiles,
@@ -236,6 +237,7 @@ export function App({ pathname }: { pathname: string }) {
       : 'start'
     : null
   const liveDirectory = hash === 'bilingual-address-book' || hash === 'rubrica-bilingue'
+  const projectStory = hash === 'project/bilingual-address-book' || hash === 'guide/directory'
   const directory = hash === 'address-book' || hash === 'rubrica'
   const workflow = workflowProjects.find((project) => project.slug === hash)
   const overview = !guide && !item && !directory
@@ -367,10 +369,11 @@ export function App({ pathname }: { pathname: string }) {
                 { href: '#overview', label: 'Specimen', current: overview },
                 { href: '#address-book', label: 'Client address book', current: directory },
                 { href: '#bilingual-address-book', label: 'IT / DE address book' },
+                { href: '#project/bilingual-address-book', label: 'Address book case study', current: projectStory },
                 ...workflowProjects.map(({ slug, title }) => ({ href: '#' + slug, label: title })),
                 { href: '#guide/start', label: 'Installation', current: guide === 'start' },
                 {
-                  href: '#guide/research',
+                  href: '#guide/design',
                   label: 'Documentation',
                   current: !!guide && guide !== 'start',
                 },
@@ -419,6 +422,11 @@ export function App({ pathname }: { pathname: string }) {
     >
       {item ? (
         <Workbench key={item[0]} item={item} hostedDocs={hostedDocs} mode={mode} navigateView={navigateView} />
+      ) : projectStory ? (
+        <Stack gap={4}>
+          <Prose dangerouslySetInnerHTML={{ __html: directoryStory }} />
+          <DirectorySource files={directorySources} hosted={hostedDocs} />
+        </Stack>
       ) : guide ? (
         <>
           {!hostedDocs && (
@@ -441,7 +449,6 @@ export function App({ pathname }: { pathname: string }) {
           ) : (
             <Prose data-guide-content="" dangerouslySetInnerHTML={{ __html: guides[guide] }} />
           )}
-          {guide === 'directory' && <DirectorySource files={directorySources} hosted={hostedDocs} />}
         </>
       ) : directory ? (
         <Overview />

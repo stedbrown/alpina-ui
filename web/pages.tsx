@@ -1,4 +1,4 @@
-import { PageRegion } from 'alpina-ui'
+import { PageRegion, Prose } from 'alpina-ui'
 import { AppearanceButton } from './appearance-button.js'
 import type { ReactNode } from 'react'
 import {
@@ -152,7 +152,7 @@ export function Landing({ version, count }: { version: string; count: number }) 
   </>
 }
 
-export function Examples() {
+export function Examples({ directoryStory }: { directoryStory: string }) {
   return <>
     <Masthead current="examples" />
     <PageRegion as="main" id="content" tabIndex={-1}>
@@ -173,6 +173,15 @@ export function Examples() {
           </GridItem>
         </Grid>
       )}
+      <Grid as="section" width="site" space="section" aria-label="Address book case study">
+        <GridItem medium={7} large={8}>
+          <Stack gap={3} align="start">
+            <Prose dangerouslySetInnerHTML={{ __html: directoryStory }} />
+            <TextLink href="/examples/bilingual-address-book/">Open the IT / DE address book</TextLink>
+            <TextLink href="/catalog.html#project/bilingual-address-book">Inspect the project files offline</TextLink>
+          </Stack>
+        </GridItem>
+      </Grid>
       <Grid as="section" width="site" space="section" aria-labelledby="integrations-title">
         <GridItem medium={4} large={5}>
           <Typography as="h2" variant="display" id="integrations-title">Framework integrations</Typography>

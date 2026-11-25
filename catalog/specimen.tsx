@@ -85,7 +85,6 @@ export function Specimen({ hosted }: { hosted: boolean }) {
     </Stack></GridItem></Grid>
     <Grid><GridItem><NavigationMenu label="Explore the system" orientation="horizontal" sections={[{ links: [
       { href: guideHref('design', hosted), label: 'Design guide' },
-      { href: guideHref('research', hosted), label: 'Research and sources' },
       { href: componentHref('grid', hosted), label: 'Grid' },
       { href: componentHref('typography', hosted), label: 'Typography' },
       { href: hosted ? clientProject : '#address-book', label: 'Sample address book' },

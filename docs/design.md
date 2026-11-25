@@ -166,3 +166,33 @@ Use `Grid` to allocate areas of the page and `Stack` to arrange elements inside 
 Place a Grid inside `GridSpecimen` to inspect the same content at its available width or at a width in CSS pixels. A fixed proof scrolls inside its labelled region. `observeGridSpecimen(viewport, textSample, onMeasure)` reports the rendered width, column count, margin, gutter, grid unit, font size, line height and horizontal overflow after a resize. Call its returned cleanup function when the specimen unmounts.
 
 Use `Typography variant="display" responsive` for display text that follows the enclosing Alpina grid. Its size and line height are 40/40 px up to 19 rem, 48/48 px up to the 54 rem breakpoint and 64/64 px above it at the default grid unit. A `DescriptionList layout="columns"` can present those measurements as a compact row that wraps in reading order.
+
+## Reading the original work
+
+### Where the red goes
+
+In Josef Müller-Brockmann's *der Film* (1960), the title crosses a black field. Small red text giving the venue and opening hours aligns with the F in Film. A viewer can recognize the subject from across a room and find the details up close. The same axis links the two readings. The Smithsonian catalog also identifies the gray of “der” and the white of “Film.” [Cooper Hewitt, Smithsonian Design Museum, *der Film*](https://www.si.edu/object/der-film-film%3Achndm_1999-46-2)
+
+Alpina uses white, black, and red as its three solid colors. The white field continues from the portal title to the example. Red marks the date in the program, the current index entry, and primary actions. In an alert, the word identifying the state must carry the meaning on its own. A border or sign can reinforce it. Frequent use weakens the accent. The three-color constraint belongs to Alpina's art direction. Historical poster designers made their own decisions about inks.
+
+#### Choosing a red
+
+Light paper uses `#EB0000` with white button labels (4.63:1). Dark paper uses `#FF5252` with black button labels (6.58:1). The same ratios apply to accent text on the corresponding page background. Fine rules use mixtures of black and white. Essential controls have stronger boundaries. The selected index entry combines color with a vertical rule and bold type. Forced-colors mode follows the reader's system palette. [W3C, minimum contrast and relative luminance](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
+
+### A grid for a series
+
+Müller-Brockmann's *Musica Viva* posters form a family of compositions. In the 1958 example, four circular shapes relate to a three-column structure. The program establishes an axis for practical information, while the figure conveys the character of the evening. Looking at successive editions shows how much variation one structure can sustain. [Poster House, *The Swiss Grid*](https://access.posterhouse.org/exhibition/swiss-grid-2/)
+
+Karl Gerstner explored this question in the four essays of *Designing Programmes* (1964). Designing a program means deciding which relationships must hold and which parameters can vary. A digital application makes the result observable. In Alpina's specimen, the same schedule appears in 320, 640, and 960 px containers. The time, title, and format stay identifiable. Turn on the grid to inspect the axes. Change the width to see what the browser actually computes. [Lars Müller Publishers, *Designing Programmes* facsimile](https://www.lars-mueller-publishers.com/designing-programmes-0)
+
+### Basel and optical alignment
+
+In *Giselle* (1959), Armin Hofmann sets a moving photographic figure against the crisp outlines of letters. A quieter detail is the optical alignment of the numeral 1. Its vertical stroke matters to the eye as much as the geometric edge of the glyph. For the 1960–61 Stadttheater Basel season, a recurring large letter leaves a clear area for the changing weekly program. Audiences could recognize the season as the content changed. [MoMA, *Giselle*](https://www.moma.org/collection/works/6775/) · [Poster House, exhibition commentary](https://access.posterhouse.org/exhibition/swiss-grid-2/) · [Poster House, *Stadttheater Basel*](https://collection.posterhouse.org/poster/stadttheater-basel-saison-60-61/)
+
+Timetable digits must be comparable row by row. Alpina uses tabular figures for them. A display heading can use tighter spacing, while a text input needs to remain easy to read at body size. In the portal, the API name, display title, and description recur in consistent positions. The largest area belongs to the component. A calendar and a keyboard hint can therefore use different widths on the same page.
+
+### From the page to wayfinding
+
+The 1978–80 Swiss Federal Railways (SBB) manual documents the construction of the symbol, pictograms, platform numbers, and sign dimensions. Hans Hartmann designed the mark in 1972. Müller-Brockmann and his collaborators later addressed the relationships among symbols, text, and sign surfaces. In an interface, a position can likewise retain its meaning across views. The selected entry, view title, and content form a route that can also be followed with a keyboard. [Museum für Gestaltung Zürich, SBB manual](https://old.eguide.ch/en/objekt/sbb/)
+
+Today's SBB digital design system publishes column counts, margins, and gutters for different available widths. Its visual design guidance also addresses zoom and interactive targets. This is a precedent for documenting the measurements of a product. In Alpina, breakpoints refer to a component's container so a grid inside a panel responds to the width of that panel. [SBB Lyne layout](https://digital.sbb.ch/en/design-system/lyne/design-tokens/layout/) · [SBB accessible visual design](https://digital.sbb.ch/en/accessibility/roles/visual-design/)

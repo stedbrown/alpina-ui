@@ -54,7 +54,7 @@ For a Next.js application, import `Link` from `next/link` and pass `href="/conta
 
 ## Component-by-component migration
 
-These 66 families follow the project's recorded shadcn/ui component index. Each Alpina reference includes the actual preview, prop types and editable source. The porting column highlights the API or interaction to check first. [Original component index](https://ui.shadcn.com/docs/components) · [Differences in supported features](https://alpina-ui.vercel.app/docs/guides/coverage/)
+These 66 families follow the project's recorded shadcn/ui component index. Each Alpina reference includes the actual preview, prop types and editable source. The porting column highlights the API or interaction to check first. [Original component index](https://ui.shadcn.com/docs/components)
 
 | shadcn/ui family | Alpina reference | What to change or verify |
 | --- | --- | --- |
@@ -124,3 +124,37 @@ These 66 families follow the project's recorded shadcn/ui component index. Each 
 | Tooltip | [Tooltip](https://alpina-ui.vercel.app/docs/components/tooltip/) | Pass a focusable child element and short `content` text. Keep the existing control’s accessible name. |
 | Trace | [Trace](https://alpina-ui.vercel.app/docs/components/trace/) | Pass ordered `events` with IDs, titles and optional detail. Use the detail disclosure for an event’s expanded explanation. |
 | Typography | [Typography](https://alpina-ui.vercel.app/docs/components/typography/) | Use `as` for the semantic element and `variant` for the visual role. Apply `numeric` to comparable figures. |
+
+## Differences to consider
+
+| Family | Documented behavior |
+| --- | --- |
+| Attachment | Alpina links to a file with its metadata or collects a local attachment in upload mode. shadcn/ui also composes media previews, upload progress, and independent actions. [shadcn/ui Attachment](https://ui.shadcn.com/docs/components/base/attachment) |
+| Bubble | Alpina places content at the start or end of a conversation row. shadcn/ui also documents bubble groups, reactions, and collapsible text. [shadcn/ui Bubble](https://ui.shadcn.com/docs/components/base/bubble) |
+| Marker | Alpina places a sign beside text to distinguish three states. shadcn/ui also uses this family for system notes, bordered rows, and labeled separators in a conversation. [shadcn/ui Marker](https://ui.shadcn.com/docs/components/base/marker) |
+| Message | Alpina composes an article with an author, optional time, and bubble. shadcn/ui provides dedicated parts for the avatar, header, footer, and alignment. [shadcn/ui Message](https://ui.shadcn.com/docs/components/base/message) |
+| Message Scroller | Alpina follows new messages and offers a return to the bottom for readers browsing earlier messages. shadcn/ui also documents per-turn anchoring, transcript restoration, prepending history, and jumping to a specific message. [shadcn/ui Message Scroller](https://ui.shadcn.com/docs/components/base/message-scroller) |
+| Questionnaire | Alpina handles a sequence of required single-choice questions with review and submission. shadcn/ui also offers multiple selection, free-form answers, and skippable questions. [shadcn/ui Questionnaire](https://ui.shadcn.com/docs/components/base/questionnaire) |
+| Trace | Alpina presents an ordered timeline with times and expandable details. shadcn/ui Trace parts also compose tool calls, sources, and incremental agent updates. [shadcn/ui Trace](https://ui.shadcn.com/docs/components/base/trace) |
+| Code Block | Alpina displays and copies a string with a header. shadcn/ui also documents line numbers, diffs, and terminal output. [shadcn/ui Code Block](https://ui.shadcn.com/docs/components/base/code-block) |
+| Chart | Alpina plots bars for positive and negative values and includes the underlying data table. The shadcn/ui Recharts integration offers additional chart families. [shadcn/ui Chart](https://ui.shadcn.com/docs/components/base/chart) |
+| Data Table | Alpina sorts Swiss dates and amounts, groups rows with subtotals, prints repeated headings, and accepts custom cells. The shadcn/ui guide builds on TanStack Table and also covers filtering, pagination, and column visibility. [shadcn/ui Data Table](https://ui.shadcn.com/docs/components/base/data-table) |
+| Calendar and Date Picker | Alpina selects one civil date at a time in the four Swiss national languages and returns an ISO date value. The shadcn/ui documentation also covers date ranges. [shadcn/ui Calendar](https://ui.shadcn.com/docs/components/base/calendar) |
+| Select and Native Select | Both Alpina entries use an HTML `select` with a styled popup and native keyboard navigation. The shadcn/ui Select family describes a composite control with a trigger and list. [shadcn/ui Select](https://ui.shadcn.com/docs/components/base/select) |
+| Slider | Alpina uses a single-value HTML slider. shadcn/ui also documents a slider with multiple thumbs. [shadcn/ui Slider](https://ui.shadcn.com/docs/components/base/slider) |
+
+## The 31 additional entries in Alpina 1.0.0-rc.2
+
+| Purpose | Alpina entries |
+| --- | --- |
+| Layout and portal | `app-shell`, `figure`, `grid`, `grid-overlay`, `stack`, `prose`, `text-link` |
+| SVG data graphics | `bar-chart`, `line-chart`, `sparkline`, `chart-table` |
+| Interface symbols | `icon` |
+| Read-only summaries and workflows | `description-list`, `steps` |
+| Language, cantons, and addresses | `canton-combobox`, `canton-select`, `locale-select`, `multilingual-field`, `swiss-address-form`, `swiss-postal-code-input` |
+| File selection | `file-input` |
+| Formatting | `currency-chf`, `swiss-date` |
+| Printable documents | `letter`, `invoice-document` |
+| Payments and identifiers | `swiss-qr-bill`, `qr-bill-scanner`, `iban-input`, `ahv-input`, `phone-input`, `uid-input` |
+
+The QR-bill checks its account, reference and currency combination before encoding a payment. The four identifier inputs check telephone number structure or the check digits of an IBAN, AHV or business UID. A checksum does not establish registration or ownership. The grid overlay provides visual inspection independently of the modular grid used to lay out an application. [QR-bill printing](https://alpina-ui.vercel.app/docs/guides/qr-bill/) · [Swiss forms and formatting](https://alpina-ui.vercel.app/docs/guides/swiss/)

@@ -56,7 +56,7 @@ export function NavigationMenuExample() {
           title: 'Documentation',
           links: [
             { href: '#navigation-menu', label: 'Navigation', current: true },
-            { href: '#guide/research', label: 'Swiss design research' },
+            { href: '#guide/design', label: 'Swiss design research' },
           ],
         },
       ]}
@@ -74,7 +74,7 @@ export function CodeBlockExample() {
 export function TextLinkExample() {
   return (
     <Typography>
-      See the <TextLink href="#guide/research">Swiss graphic design research</TextLink> for the sources behind this project.
+      See the <TextLink href="#guide/design">Swiss graphic design research</TextLink> for the sources behind this project.
     </Typography>
   )
 }
@@ -84,7 +84,7 @@ export function ProseExample() {
       <Typography as="h2" variant="heading">Theatre publications</Typography>
       <Typography>The programme changes each week. The first column always shows the date and time.</Typography>
       <Typography>
-        <TextLink href="#guide/research">Read the research</TextLink>
+        <TextLink href="#guide/design">Read the research</TextLink>
       </Typography>
     </Prose>
   )

@@ -23,6 +23,7 @@ for (const [key, file] of Object.entries(guideFiles)) {
   guides[key] = await renderGuide(await readFile(file, 'utf8'))
 }
 
+const directoryStory = await renderGuide(await readFile('docs/directory.md', 'utf8'))
 const offlineGuides = Object.fromEntries(Object.entries(guides).map(([key, html]) => [key,
   html.replace(/href="([^"]*)\/docs\/(components|guides)\/([\w-]+)\/"/g, (link, origin, section, slug) =>
     origin === siteUrl ? 'href="#' + (section === 'guides' ? 'guide/' : '') + slug + '"' : link),
@@ -168,6 +169,7 @@ const catalogOptions = offline => ({
           contents:
             'export const guides=' +
             JSON.stringify(offline ? offlineGuides : guides) +
+            ';export const directoryStory=' + JSON.stringify(directoryStory) +
             ';export const guideManifest=' + JSON.stringify(guideManifest) +
             ';export const componentGuidance=' + JSON.stringify(offline ? componentGuidance : {}) +
             ';export const usageNotes=' +

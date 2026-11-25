@@ -72,21 +72,6 @@
     "navigation": "candidate"
   },
   {
-    "id": "research",
-    "title": "Research",
-    "file": "research.md"
-  },
-  {
-    "id": "coverage",
-    "title": "Coverage",
-    "file": "coverage.md"
-  },
-  {
-    "id": "directory",
-    "title": "Directory",
-    "file": "directory.md"
-  },
-  {
     "id": "portal",
     "title": "Portal",
     "file": "portal.md"

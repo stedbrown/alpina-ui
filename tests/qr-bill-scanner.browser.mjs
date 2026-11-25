@@ -51,7 +51,7 @@ try {
       }
       assert.match(await scanner.innerText(), /Atelier Étude/)
       assert.match(await scanner.innerText(), /CHF\s211\.00/)
-      assert.match(await scanner.innerText(), /RF18539007547034/)
+      assert.equal(await scanner.getByText('SCOR · RF18 5390 0754 7034', { exact: true }).count(), 1)
       if (name.endsWith('pdf')) assert.equal(await scanner.locator('dt').filter({ hasText: 'PDF page' }).locator('..').locator('dd').innerText(), name === 'invoice.pdf' ? '2' : '1')
       await scanner.getByRole('button', { name: 'Confirm details' }).press('Enter')
       await scanner.getByText('Payment details confirmed.', { exact: true }).waitFor()
@@ -85,7 +85,7 @@ try {
       track.stop = () => { clearInterval(draw); window.cameraState.stopped++; stop() }
       return stream
     } })
-  }, buildSwissQrPayload(bill))
+  }, buildSwissQrPayload({ ...bill, iban: 'CH4431999123000889012', reference: { type: 'QRR', value: '210000000003139471430009017' } }))
   await phone.goto(siteOrigin + '/docs/components/qr-bill-scanner/')
   const scanner = phone.getByRole('region', { name: 'Scan a payment slip' })
   assert.equal(await phone.evaluate(() => window.cameraState.requested), 0)
@@ -97,6 +97,7 @@ try {
   await phone.evaluate(() => { window.cameraState.raw = window.samplePayload + '\ninvalid billing information' })
   await camera.press('Enter')
   await scanner.getByRole('heading', { name: 'Review payment details' }).waitFor()
+  assert.equal(await scanner.getByText('QRR · 21 00000 00003 13947 14300 09017', { exact: true }).count(), 1)
   assert.equal(await phone.evaluate(() => window.cameraState.stopped), 2)
   assert.match(await scanner.innerText(), /Additional information omitted/)
   assert.match(await scanner.innerText(), /Line 32/)
@@ -133,6 +134,7 @@ try {
   await consumer.getByRole('heading', { name: 'Controllar las datas da pajament' }).waitFor()
   assert.deepEqual(await consumer.evaluate(() => window.confirmedBills), [])
   assert.match(await consumer.locator('main').innerText(), /CHF\s211,00/)
+  assert.equal(await consumer.getByText('SCOR · RF18 5390 0754 7034', { exact: true }).count(), 1)
   await consumer.locator('html').evaluate(el => el.style.fontSize = '200%')
   assert.ok(await consumer.locator('.al-qr-value').evaluateAll(elements => elements.every(el => {
     const range = document.createRange()

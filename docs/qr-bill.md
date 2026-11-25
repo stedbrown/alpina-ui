@@ -24,6 +24,22 @@ export function PaymentSlip() {
 }
 ```
 
+## Generate a payment reference
+
+Keep the unformatted reference in the payment data. A QR-IBAN takes a QR reference (QRR). An ordinary IBAN can take an ISO 11649 creditor reference (SCOR). Pass a string to preserve leading zeroes or a long invoice number.
+
+```ts
+import { createQrReference, createCreditorReference, formatQrReference, formatCreditorReference } from 'alpina-ui'
+
+const qrr = createQrReference('21000000000313947143000901')
+formatQrReference(qrr) // 21 00000 00003 13947 14300 09017
+
+const scor = createCreditorReference('539007547034')
+formatCreditorReference(scor) // RF18 5390 0754 7034
+```
+
+A QRR body accepts up to 26 decimal digits, including at least one nonzero digit. A SCOR body accepts up to 21 ASCII letters or digits. Each generator adds the check digits. The slip and the scanner use the same display grouping. [SIX implementation guidelines, sections 3.5 and 4.4](https://www.six-group.com/dam/download/banking-services/standardization/qr-bill/ig-qr-bill-v2.4-en.pdf)
+
 ## Printing a document
 
 The full Alpina stylesheet sets A4 portrait with 16 mm top and side margins and an 18 mm foot margin. Printed tables repeat their headings and keep rows together. Cards stay together when they fit a page, and document links show their destinations. Navigation and elements marked `data-al-print="hide"` disappear. Apps importing individual component styles can add `import 'alpina-ui/print.css'` for the same document rules. A standalone QR-bill uses its own zero-margin A4 page to preserve the physical dimensions of the payment section.

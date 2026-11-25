@@ -6,9 +6,9 @@ import { Field } from '../ui/field.js'
 import { FileInput } from '../ui/file-input.js'
 import { Stack } from '../ui/stack.js'
 import { Typography } from '../ui/typography.js'
+import { formatCreditorReference, formatQrReference, type SwissQrAddress, type SwissQrBillData } from './qr-payment.js'
 import { formatSwissNumber } from './format-swiss-number.js'
 import type { SwissLocale } from './locales.js'
-import type { SwissQrAddress, SwissQrBillData } from './qr-payment.js'
 import { parseSwissQrPayload, SwissQrPayloadError } from './parse-swiss-qr-payload.js'
 import { cameraPayload, nativeQrDetector, readQrFile } from './qr-reader.internal.js'
 import { scannerLabels } from './qr-scanner-labels.internal.js'
@@ -138,12 +138,15 @@ export const QrBillScanner = forwardRef<HTMLElement, QrBillScannerProps>(functio
     const digits = formatSwissNumber(payment.amount, locale, { minimumFractionDigits: 2 })
     return exact(locale === 'fr-CH' ? digits + '\u00a0' + payment.currency : payment.currency + '\u00a0' + digits)
   }
+  const reference = bill?.reference
+  const formattedReference = reference?.value && (reference.type === 'QRR'
+    ? formatQrReference(reference.value) : formatCreditorReference(reference.value))
   const details = bill ? [
     { term: t.creditor, detail: displayAddress(bill.creditor) },
     { term: 'IBAN', detail: exact(bill.iban.match(/.{1,4}/g)!.join(' ')) },
     { term: t.amount, detail: amount(bill) },
     ...(bill.debtor ? [{ term: t.debtor, detail: displayAddress(bill.debtor) }] : []),
-    ...(bill.reference?.value ? [{ term: t.reference, detail: exact(bill.reference.type + ' · ' + bill.reference.value) }] : []),
+    ...(formattedReference ? [{ term: t.reference, detail: exact(reference.type + ' · ' + formattedReference) }] : []),
     ...(bill.message ? [{ term: t.message, detail: bill.message }] : []),
     ...(bill.billingInformation ? [{ term: t.billing, detail: bill.billingInformation }] : []),
     ...(bill.alternativeProcedures?.length ? [{ term: t.alternatives, detail: bill.alternativeProcedures.join(' · ') }] : []),

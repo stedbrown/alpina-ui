@@ -3,15 +3,19 @@ export type IdentifierIssue = 'format' | 'checksum' | undefined
 /** Normalize conventional spacing and letter case without discarding invalid characters. */
 export const compactIban = (value: string): string => value.replace(/\s/gu, '').toUpperCase()
 
-function mod97Issue(value: string): IdentifierIssue {
-  const check = Number(value.slice(2, 4))
-  if (check < 2 || check > 98) return 'checksum'
+/** Modulo 97 with A–Z expanded to their two-digit ISO 7064 values. */
+export function mod97(value: string): number {
   let remainder = 0
-  for (const char of value.slice(4) + value.slice(0, 4)) {
+  for (const char of value) {
     const digit = parseInt(char, 36)
     remainder = (remainder * (digit < 10 ? 10 : 100) + digit) % 97
   }
-  return remainder === 1 ? undefined : 'checksum'
+  return remainder
+}
+
+function mod97Issue(value: string): IdentifierIssue {
+  const check = Number(value.slice(2, 4))
+  return check >= 2 && check <= 98 && mod97(value.slice(4) + value.slice(0, 4)) === 1 ? undefined : 'checksum'
 }
 
 export function ibanIssue(value: string, requireQr = false): IdentifierIssue {
@@ -40,14 +44,18 @@ export function uidIssue(value: string): IdentifierIssue {
   return (11 - sum % 11) % 11 === Number(digits[8]) ? undefined : 'checksum'
 }
 
+export function qrCheckDigit(body: string): number {
+  const next = [0, 9, 4, 6, 8, 2, 7, 1, 3, 5]
+  let carry = 0
+  for (const digit of body) carry = next[(carry + Number(digit)) % 10]
+  return (10 - carry) % 10
+}
+
 /** Validates a 27-digit QR reference, including its recursive modulo-10 check digit. */
 export function qrrIssue(input: string): IdentifierIssue {
   const value = input.replace(/ /g, '')
   if (!/^\d{27}$/.test(value) || /^0+$/.test(value)) return 'format'
-  const next = [0, 9, 4, 6, 8, 2, 7, 1, 3, 5]
-  let carry = 0
-  for (const digit of value) carry = next[(carry + Number(digit)) % 10]
-  return carry === 0 ? undefined : 'checksum'
+  return qrCheckDigit(value.slice(0, -1)) === Number(value[26]) ? undefined : 'checksum'
 }
 
 export function scorIssue(input: string): IdentifierIssue {

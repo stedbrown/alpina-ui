@@ -1,5 +1,5 @@
 import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
-import { prepareSwissQrBill, type SwissQrAddress, type SwissQrBillData } from './qr-payment.js'
+import { formatCreditorReference, formatQrReference, prepareSwissQrBill, type SwissQrAddress, type SwissQrBillData } from './qr-payment.js'
 import { qrMatrix } from './qr-matrix.js'
 import type { SwissLocale } from './locales.js'
 import './swiss-qr-bill.css'
@@ -125,8 +125,8 @@ function Entry({ title, children }: { title: string; children: ReactNode }) {
 
 function Details({ bill, words, receipt = false, blankLabel }: { bill: Payment; words: BillLabels; receipt?: boolean; blankLabel?: string }) {
   const reference = bill.type === 'QRR'
-    ? bill.reference.slice(0, 2) + ' ' + grouped(bill.reference.slice(2), 5)
-    : grouped(bill.reference, 4)
+    ? formatQrReference(bill.reference)
+    : bill.type === 'SCOR' ? formatCreditorReference(bill.reference) : ''
   const omitStreet = receipt && [bill.creditor, bill.debtor].some(party => party &&
     (party.name.length > 22 || party.town.length + party.postalCode.length > 21 ||
      (party.street?.length ?? 0) + (party.buildingNumber?.length ?? 0) > 22))

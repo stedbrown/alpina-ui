@@ -1,7 +1,7 @@
 import { qrErrorMessage, type SwissQrErrorCode } from './qr-messages.internal.js'
 import type { SwissMessageLocale } from './locales.js'
 import { compactIban, isQrIban } from './identifiers.js'
-import { ibanIssue, qrrIssue, scorIssue, type IdentifierIssue } from './identifier-checks.internal.js'
+import { ibanIssue, mod97, qrCheckDigit, qrrIssue, scorIssue, type IdentifierIssue } from './identifier-checks.internal.js'
 import { checkDigitMessages, checkDigitPairMessages } from './input-messages.internal.js'
 
 /** A structured address in the Swiss Payments Code (SIX QR-bill IG 2.4). */
@@ -92,6 +92,44 @@ export function isQrReference(input: string): boolean {
 /** Validates an ISO 11649 creditor reference with the ISO 7064 MOD 97-10 check. */
 export function isCreditorReference(input: string): boolean {
   return scorIssue(input) === undefined
+}
+
+function referenceBody(value: string | number | bigint): string {
+  if (typeof value !== 'string' && typeof value !== 'bigint' && typeof value !== 'number')
+    throw new TypeError('Expected an identifier string, integer or bigint.')
+  if (typeof value === 'number' && !Number.isSafeInteger(value))
+    throw new RangeError('Pass long identifiers as strings or bigint to preserve every digit.')
+  return String(value)
+}
+
+/** Add the recursive modulo-10 digit to 1–26 digits and left-pad to the SIX length. */
+export function createQrReference(value: string | number | bigint): string {
+  const input = referenceBody(value)
+  if (!/^\d{1,26}$/.test(input) || /^0+$/.test(input))
+    throw new RangeError('Supply 1 to 26 decimal digits, with at least one nonzero digit.')
+  const body = input.padStart(26, '0')
+  return body + qrCheckDigit(body)
+}
+
+/** Create an ISO 11649 reference from 1–21 ASCII letters or digits. */
+export function createCreditorReference(value: string | number | bigint): string {
+  const input = referenceBody(value)
+  if (!/^[a-zA-Z0-9]{1,21}$/.test(input)) throw new RangeError('Supply 1 to 21 letters A–Z or decimal digits.')
+  const body = input.toUpperCase()
+  return 'RF' + String(98 - mod97(body + 'RF00')).padStart(2, '0') + body
+}
+
+/** Format a complete, valid QR reference in the SIX 2 + 5 × 5 grouping. */
+export function formatQrReference(value: string): string {
+  if (!isQrReference(value)) throw new RangeError('Expected a complete QR reference with a valid check digit.')
+  const compact = value.replace(/ /g, '')
+  return compact.slice(0, 2) + ' ' + compact.slice(2).match(/.{5}/g)!.join(' ')
+}
+
+/** Format a complete, valid ISO 11649 creditor reference in groups of four. */
+export function formatCreditorReference(value: string): string {
+  if (!isCreditorReference(value)) throw new RangeError('Expected a complete ISO 11649 reference with valid check digits.')
+  return value.replace(/ /g, '').toUpperCase().match(/.{1,4}/g)!.join(' ')
 }
 
 // IG 2.4 §4.4 permits a zero amount only for these exact non-payable notifications.

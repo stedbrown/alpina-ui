@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { buildSwissQrPayload, isQrReference, isCreditorReference } from 'alpina-ui'
+import { buildSwissQrPayload, createQrReference, createCreditorReference, formatQrReference, formatCreditorReference,
+  isQrReference, isCreditorReference } from 'alpina-ui'
 
 // Test identifiers from the SIX Implementation Guidelines for the QR-bill 2.4, Annex A.
 const iban = 'CH58 0079 1123 0008 8901 2'
@@ -9,6 +10,24 @@ const qrr = '21 00000 00003 13947 14300 09017'
 const creditor = { name: "Atelier de l'Île", street: 'Forchstrasse', buildingNumber: '6a', postalCode: '8008', town: 'Zürich', country: 'CH' }
 const debtor = { name: 'Pavla Șandor', postalCode: '7000', town: 'Cuira', country: 'CH' }
 const bill = { iban, creditor, currency: 'CHF' }
+
+test('the public reference generators preserve identifiers and match SIX and ISO examples', () => {
+  assert.equal(createQrReference('21000000000313947143000901'), '210000000003139471430009017')
+  assert.equal(formatQrReference(qrr), '21 00000 00003 13947 14300 09017')
+  assert.equal(formatQrReference(formatQrReference(qrr)), formatQrReference(qrr))
+  assert.equal(createQrReference(1), createQrReference('0001'))
+  assert.ok(isQrReference(createQrReference(99999999999999999999999999n)))
+  assert.equal(createCreditorReference('539007547034'), 'RF18539007547034')
+  assert.equal(formatCreditorReference('rf18 539007547034'), 'RF18 5390 0754 7034')
+  assert.ok(isCreditorReference(createCreditorReference('Ab0123456789abcdefghI')))
+  assert.equal(createCreditorReference('0191230100405jsh0438'), 'RF240191230100405JSH0438')
+  for (const value of ['', -1, '0', '00', 'A1', '123456789012345678901234567', 1.5, Number.MAX_SAFE_INTEGER + 1])
+    assert.throws(() => createQrReference(value), RangeError)
+  for (const value of ['', -2, 'A-1', 'Ä', 'A'.repeat(22), 1.5, Number.MAX_SAFE_INTEGER + 1])
+    assert.throws(() => createCreditorReference(value), RangeError)
+  assert.throws(() => formatQrReference('210000000003139471430009018'), RangeError)
+  assert.throws(() => formatCreditorReference('RF19539007547034'), RangeError)
+})
 
 test('the payload preserves required empty lines, decimal amounts and registered extension positions', () => {
   const base = buildSwissQrPayload(bill)

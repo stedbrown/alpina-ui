@@ -42,6 +42,7 @@
   border-inline-start: 1px solid color-mix(in srgb, currentColor 19%, transparent);
   background: transparent;
 }
+.al-layout[data-space='viewport'] .al-type[data-role='lead'] { hyphens: none; }
 .al-grid-guides[hidden] { display: none; }
 .al-grid-item {
   /* Placement belongs to this item, including when it contains a second grid. */

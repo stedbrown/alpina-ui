@@ -19,7 +19,7 @@ export const siteMetadata = {
   description: 'Build React interfaces with the International Typographic Style. Try the responsive grid, live type scale and accessible components, then install the open-source library.',
   language: 'en',
   imagePath: '/assets/alpina-preview.png',
-  imageAlt: 'Alpina UI peak mark with the headline “Swiss design for React.”',
+  imageAlt: 'The Alpina peak above “Swiss design for React.” in white on a red twelve-column grid. Four figures describe the library.',
   repository: pkg.repository.url.replace(/^git\+/, '').replace(/\.git$/, ''),
 }
 

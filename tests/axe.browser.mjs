@@ -9,28 +9,30 @@ const browser = await chromium.launch(executablePath ? { executablePath } : exis
 try {
   const routes = await publicRoutes()
   const failures = []
-  const remaining = [...routes]
-  async function auditPages() {
-    const page = await openPublicPage(browser, { viewport: { width: 1280, height: 900 } })
-    page.on('pageerror', error => failures.push(new URL(page.url()).pathname + ' ' + error.message))
+  const isComponent = path => /^\/docs\/components\/[^/]+\/$/.test(path)
+  const components = routes.filter(isComponent)
+  async function auditPages(remaining, width, colorScheme, scope) {
+    const profile = width + ' px ' + colorScheme
+    const page = await openPublicPage(browser, { viewport: { width, height: 900 }, colorScheme })
+    page.on('pageerror', error => failures.push(profile + ' ' + new URL(page.url()).pathname + ' ' + error.message))
     for (let path; (path = remaining.shift());) {
       await page.goto(siteOrigin + path)
       await page.getByRole('main').waitFor()
-      if (/^\/docs\/components\/[^/]+\/$/.test(path)) await page.locator('.al-preview-content > *').first().waitFor()
+      if (isComponent(path)) await page.locator('.al-preview-content > *').first().waitFor()
       await page.evaluate(() => document.fonts.ready)
       await page.addScriptTag({ content: axe.source })
-      const result = await page.evaluate(async () => {
-        const { violations } = await window.axe.run(document, {
+      const result = await page.evaluate(async scope => {
+        const { violations } = await window.axe.run(scope === 'html' ? document : document.querySelector(scope), {
           runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22a', 'wcag22aa'] },
           resultTypes: ['violations'],
         })
         return violations.map(rule => rule.id + ': ' + rule.nodes.map(node => node.target.join(' ')).join(', '))
-      })
-      if (result.length) failures.push(path + ' ' + result.join('\n  '))
+      }, scope)
+      if (result.length) failures.push(profile + ' ' + path + ' ' + result.join('\n  '))
       // WCAG 2.4.11 requires a focused component to stay at least partly visible.
       // Sample the visible viewport intersection after the browser's own focus scroll.
-      const obscured = await page.evaluate(() => {
-        const fields = document.querySelectorAll('a[href], button, input, select, textarea, summary, [tabindex]')
+      const obscured = await page.evaluate(scope => {
+        const fields = document.querySelector(scope).querySelectorAll('a[href], button, input, select, textarea, summary, [tabindex]')
         function exposed(element) {
           // A wrapped link can have empty space between its two visible fragments.
           for (const box of element.getClientRects()) {
@@ -53,12 +55,19 @@ try {
           }
         }
         return hidden
-      })
-      if (obscured.length) failures.push(path + ' focused controls obscured: ' + obscured.join(', '))
+      }, scope)
+      if (obscured.length) failures.push(profile + ' ' + path + ' focused controls obscured: ' + obscured.join(', '))
     }
     await page.close()
   }
-  await Promise.all(Array.from({ length: 3 }, auditPages))
+  for (const [pages, width, scheme, scope] of [
+    [routes, 1280, 'light', 'html'],
+    [components, 360, 'light', '.al-preview-content'],
+    [components, 1280, 'dark', '.al-preview-content'],
+  ]) {
+    const remaining = [...pages]
+    await Promise.all(Array.from({ length: 2 }, () => auditPages(remaining, width, scheme, scope)))
+  }
   assert.equal(failures.length, 0, failures.sort().join('\n'))
-  console.log('axe checked WCAG A/AA rules on ' + routes.length + ' public pages.')
+  console.log('axe checked ' + routes.length + ' public pages and ' + components.length * 2 + ' mobile-light and desktop-dark component previews.')
 } finally { await browser.close() }

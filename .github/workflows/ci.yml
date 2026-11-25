@@ -23,6 +23,7 @@ permissions:
 jobs:
   checks:
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
     outputs:
       archive: ${{ steps.package.outputs.archive }}
       sha512: ${{ steps.package.outputs.sha512 }}
@@ -115,6 +116,7 @@ jobs:
   react-matrix:
     name: Packed consumers / React ${{ matrix.endpoint }}
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:

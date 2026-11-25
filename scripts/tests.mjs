@@ -6,8 +6,10 @@ const files = names.filter((name) =>
   browser ? name === 'browser.mjs' || name.endsWith('.browser.mjs') : name.endsWith('.test.mjs'),
 )
 for (const name of files) {
+  console.log('Running ' + name)
   const result = spawnSync(process.execPath, [...(browser ? [] : ['--test']), 'tests/' + name], {
-    stdio: 'inherit',
+    stdio: 'inherit', timeout: (browser ? 300 : 120) * 1000, killSignal: 'SIGKILL',
   })
+  if (result.error) throw new Error(name + ': ' + result.error.message, { cause: result.error })
   if (result.status !== 0) process.exit(result.status ?? 1)
 }

@@ -240,7 +240,7 @@ try {
     }
   }
 
-  for (const width of [320, 768, 1440, 2560]) {
+  for (const width of [320, 768, 1440, 1920, 2560]) {
     await page.setViewportSize({width, height:900})
     if (width >= 1440) {
       const quote = await estimate.boundingBox()

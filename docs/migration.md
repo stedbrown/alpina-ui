@@ -145,7 +145,7 @@ These 66 families follow the project's recorded shadcn/ui component index. Each 
 | Select and Native Select | Both Alpina entries use an HTML `select` with a styled popup and native keyboard navigation. The shadcn/ui Select family describes a composite control with a trigger and list. [shadcn/ui Select](https://ui.shadcn.com/docs/components/base/select) |
 | Slider | Alpina uses a single-value HTML slider. shadcn/ui also documents a slider with multiple thumbs. [shadcn/ui Slider](https://ui.shadcn.com/docs/components/base/slider) |
 
-## The 31 additional entries in Alpina 1.0.0-rc.7
+## The 32 additional entries in Alpina 1.0.0-rc.7
 
 | Purpose | Alpina entries |
 | --- | --- |
@@ -153,7 +153,7 @@ These 66 families follow the project's recorded shadcn/ui component index. Each 
 | SVG data graphics | `bar-chart`, `line-chart`, `sparkline`, `chart-table` |
 | Interface symbols | `icon` |
 | Read-only summaries and workflows | `description-list`, `steps` |
-| Language, cantons, and addresses | `canton-combobox`, `canton-select`, `locale-select`, `multilingual-field`, `swiss-address-form`, `swiss-postal-code-input` |
+| Language, cantons, and addresses | `canton-combobox`, `canton-select`, `locale-select`, `multilingual-field`, `swiss-address-form`, `swiss-locality-combobox`, `swiss-postal-code-input` |
 | File selection | `file-input` |
 | Formatting | `currency-chf`, `swiss-date` |
 | Printable documents | `letter`, `invoice-document` |

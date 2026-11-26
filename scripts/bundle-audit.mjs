@@ -73,11 +73,18 @@ const { lookupSwissPostalCode } = await import('data:text/javascript;base64,' + 
 assert.ok((await lookupSwissPostalCode('6900')).some(entry => entry.locality === 'Massagno'))
 
 const failures = []
+// Components that search the swisstopo directory load it in a deferred chunk.
+const postalComponents = ['swiss-address-form', 'swiss-locality-combobox']
 for (const item of items.toSorted((a, b) => a.name.localeCompare(b.name))) {
   const code = 'export * from ' + JSON.stringify('alpina-ui/' + item.group + '/' + item.name)
-  const result = await bundle(code, true, item.name === 'swiss-address-form' ? ['alpina-postal-chunk'] : item.name === 'qr-bill-scanner' ? ['alpina-scanner-chunk'] : undefined)
+  const result = await bundle(code, true, postalComponents.includes(item.name) ? ['alpina-postal-chunk'] : item.name === 'qr-bill-scanner' ? ['alpina-scanner-chunk'] : undefined)
   const { js, lazy, eager } = weights(result)
-  if (item.name === 'swiss-address-form') {
+  const actual = { js, lazy, css: gzipSync(await readFile('dist/styles/' + item.name + '.css')).length }
+  if (record && (selected.includes('--all') || selected.includes(item.name))) {
+    budgets[item.name] = Object.fromEntries(Object.entries(actual).map(([key, bytes]) =>
+      [key, bytes ? Math.ceil(bytes * 1.1 / 64) * 64 : 0]))
+  }
+  if (postalComponents.includes(item.name)) {
     const data = Object.entries(result.metafile.outputs).filter(([, output]) =>
       output.inputs['dist/swiss/postal-localities.data.js']?.bytesInOutput > 0)
     assert.equal(data.length, 1, 'Address autocomplete must include the directory')
@@ -85,11 +92,6 @@ for (const item of items.toSorted((a, b) => a.name.localeCompare(b.name))) {
     const fallback = await bundle(code)
     assert.equal(fallback.outputFiles.length, 1, 'Zero-config esbuild should inline the address directory')
     assert.ok(weights(fallback).js <= budgets[item.name].js + budgets[item.name].lazy, 'Inline address directory exceeds total budget')
-  }
-  const actual = { js, lazy, css: gzipSync(await readFile('dist/styles/' + item.name + '.css')).length }
-  if (record && (selected.includes('--all') || selected.includes(item.name))) {
-    budgets[item.name] = Object.fromEntries(Object.entries(actual).map(([key, bytes]) =>
-      [key, bytes ? Math.ceil(bytes * 1.1 / 64) * 64 : 0]))
   }
   const ceiling = budgets[item.name]
   if (!ceiling) {

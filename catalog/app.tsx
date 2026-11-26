@@ -86,6 +86,7 @@ const searchTerms: Record<string, string> = {
   'dropdown-menu': 'dropdown contextual actions',
   'canton-select': 'canton filter all cantons',
   'canton-combobox': 'canton filter search location',
+  'swiss-locality-combobox': 'postcode municipality commune gemeinde comune npa plz town locality bfs',
   input: 'search contacts filter',
   'data-table': 'sort contacts list',
   'locale-select': 'language selector Deutsch Français Italiano Rumantsch grischun German French Italian Romansh',

@@ -406,13 +406,18 @@
   },
   "swiss-address-form": {
     "stage": "Stable",
-    "changed": "2026-11-25",
-    "source": "baeb53bca54e314de7b9"
+    "changed": "2026-11-26",
+    "source": "b3cf1977e2e31d96d528"
   },
   "swiss-date": {
     "stage": "Stable",
     "changed": "2026-11-25",
     "source": "72dd6aac1890d1e52cb3"
+  },
+  "swiss-locality-combobox": {
+    "stage": "Beta",
+    "changed": "2026-11-26",
+    "source": "6d24c41a06e344651e48"
   },
   "swiss-postal-code-input": {
     "stage": "Stable",

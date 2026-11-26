@@ -108,6 +108,7 @@ Documentation: https://alpinaui.com/docs/
 - swiss/qr-bill-scanner · styles/qr-bill-scanner.css
 - swiss/swiss-address-form · styles/swiss-address-form.css
 - swiss/swiss-date · styles/swiss-date.css
+- swiss/swiss-locality-combobox · styles/swiss-locality-combobox.css
 - swiss/swiss-postal-code-input · styles/swiss-postal-code-input.css
 - swiss/swiss-qr-bill · styles/swiss-qr-bill.css
 - swiss/uid-input · styles/uid-input.css
@@ -340,6 +341,7 @@ export * from './swiss/qr-payment.js';
 export * from './swiss/schemas.js';
 export * from './swiss/swiss-address-form.js';
 export * from './swiss/swiss-date.js';
+export * from './swiss/swiss-locality-combobox.js';
 export * from './swiss/swiss-postal-code-input.js';
 export * from './swiss/swiss-qr-bill.js';
 export * from './swiss/uid-input.js';
@@ -2103,7 +2105,19 @@ export interface SwissPostalLocality {
     readonly locality: string;
     readonly canton: CantonCode;
 }
+export interface SwissLocality {
+    readonly postalCode: string;
+    readonly locality: string;
+    readonly municipality: string;
+    readonly bfsNumber: number;
+    readonly canton: CantonCode;
+}
+export interface SwissLocalitySearchOptions {
+    readonly limit?: number;
+    readonly canton?: CantonCode;
+}
 export declare function lookupSwissPostalCode(postalCode: string): Promise<SwissPostalLocality[]>;
+export declare function searchSwissLocalities(query: string, { limit, canton }?: SwissLocalitySearchOptions): Promise<SwissLocality[]>;
 ~~~
 
 ## swiss/print-document.d.ts
@@ -2345,6 +2359,35 @@ export interface SwissDateProps extends Omit<ComponentPropsWithoutRef<"time">, "
     locale?: SwissLocale;
 }
 export declare const SwissDate: import("react").ForwardRefExoticComponent<SwissDateProps & import("react").RefAttributes<HTMLTimeElement>>;
+~~~
+
+## swiss/swiss-locality-combobox.d.ts
+Client entry.
+~~~ts
+import type { CantonCode } from './cantons.js';
+import type { SwissMessageLocale } from './locales.js';
+import { type SwissLocality } from './postal-localities.js';
+export interface SwissLocalityComboboxProps {
+    locale?: SwissMessageLocale;
+    value?: SwissLocality | null;
+    defaultValue?: SwissLocality | null;
+    onLocalityChange?: (locality: SwissLocality | null) => void;
+    canton?: CantonCode;
+    limit?: number;
+    id?: string;
+    name?: string;
+    label?: string;
+    description?: string;
+    error?: string;
+    placeholder?: string;
+    noResults?: string;
+    clearLabel?: string;
+    requiredMessage?: string;
+    disabled?: boolean;
+    required?: boolean;
+    className?: string;
+}
+export declare const SwissLocalityCombobox: import("react").ForwardRefExoticComponent<SwissLocalityComboboxProps & import("react").RefAttributes<HTMLInputElement>>;
 ~~~
 
 ## swiss/swiss-postal-code-input.d.ts

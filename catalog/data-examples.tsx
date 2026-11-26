@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Stack, Typography, BarChart, ChartTable, LineChart, Sparkline, CantonCombobox, type CantonCode, DataTable } from 'alpina-ui'
+import { Stack, Typography, BarChart, ChartTable, LineChart, Sparkline, CantonCombobox, type CantonCode, DataTable, DescriptionList, SwissLocalityCombobox, type SwissLocality } from 'alpina-ui'
 
 export function CantonComboboxExample() {
   const [code, setCode] = useState<CantonCode | ''>('')
@@ -14,6 +14,21 @@ export function CantonComboboxExample() {
       <Typography as="output" aria-live="polite">
         {code ? 'Selected code · ' + code : 'No canton selected'}
       </Typography>
+    </Stack>
+  )
+}
+
+export function SwissLocalityComboboxExample() {
+  const [place, setPlace] = useState<SwissLocality | null>(null)
+  return (
+    <Stack gap={4}>
+      <Typography>Type 6900, Viganello or Zuerich. Each suggestion names its political municipality.</Typography>
+      <SwissLocalityCombobox locale="it-CH" name="residence" value={place} onLocalityChange={setPlace} />
+      <DescriptionList aria-live="polite" items={place ? [
+        { term: 'Municipality', detail: place.municipality },
+        { term: 'BFS number', detail: String(place.bfsNumber) },
+        { term: 'Canton', detail: place.canton },
+      ] : [{ term: 'Selection', detail: 'No locality selected' }]} />
     </Stack>
   )
 }

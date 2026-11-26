@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- **Public API** SwissLocalityCombobox finds a locality by postcode, locality or municipality name and returns its political municipality, BFS number and canton. `searchSwissLocalities` offers the same search without a component. The search ignores accents and case and accepts umlaut spellings such as Zuerich.
+- The packaged swisstopo directory adds the political municipality and its BFS number to each locality. `lookupSwissPostalCode` returns the same results as before. The deferred directory download grows from 30 to 58 kB compressed.
+
 ## 1.0.0-rc.7 · 26 November 2026
 
 - **Public API** ComponentPreview accepts `defaultWidth` and `onWidthChange`. The documentation keeps the chosen preview width in the address, so `?width=320` opens a narrow case that can be shared in a pull request.

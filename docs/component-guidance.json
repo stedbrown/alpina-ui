@@ -2684,5 +2684,39 @@
         "Paste files from the clipboard while focus is in the field."
       ]
     ]
+  },
+  "swiss-locality-combobox": {
+    "use": "Find a locality from its postcode or name and keep its political municipality, BFS number and canton with the choice.",
+    "avoid": "Use SwissPostalCodeInput alone when an address only needs the four digits and the locality is typed separately.",
+    "access": "Keep the visible label, announce an empty search in the popup and let people review the municipality before they commit with Enter.",
+    "content": "Ask for the postcode or locality in one short hint. Show the municipality next to each suggestion because several towns share one postcode.",
+    "example": {
+      "good": "Postcode or locality",
+      "poor": "Enter geographic object identifier"
+    },
+    "copy": {
+      "de-CH": "PLZ oder Ort",
+      "fr-CH": "NPA ou localité",
+      "it-CH": "NPA o località",
+      "rm-CH": "NPA u lieu"
+    },
+    "keys": [
+      [
+        "Type",
+        "Search postcodes, localities and municipalities."
+      ],
+      [
+        "↑ / ↓",
+        "Move through the suggestions."
+      ],
+      [
+        "Enter",
+        "Commit the active suggestion."
+      ],
+      [
+        "Escape / Tab",
+        "Close the suggestions and keep the committed locality."
+      ]
+    ]
   }
 }

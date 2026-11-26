@@ -406,13 +406,18 @@
   },
   "swiss-address-form": {
     "js": 11072,
-    "lazy": 34240,
+    "lazy": 64256,
     "css": 3840
   },
   "swiss-date": {
     "js": 1344,
     "lazy": 0,
     "css": 256
+  },
+  "swiss-locality-combobox": {
+    "js": 5440,
+    "lazy": 64256,
+    "css": 1984
   },
   "swiss-postal-code-input": {
     "js": 1664,

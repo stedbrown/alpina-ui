@@ -9,6 +9,7 @@ Alpina ships React components and pure functions for Swiss data. Set a locale on
 | `LocaleSelect` | `value?`, `defaultValue?`, `onLocaleChange?(locale)` | `select` with each of the four languages named in its own language |
 | `CantonSelect` | `locale?`, `value?`, `defaultValue?`, `placeholder?`, `onCantonChange?(code)` | `select` with 26 localized canton names and their abbreviations |
 | `CantonCombobox` | `locale?`, `value?`, `defaultValue?`, `onCantonChange?(code)`, `name?`, `required?` | Labeled search field and list of cantons |
+| `SwissLocalityCombobox` | `locale?`, `value?`, `defaultValue?`, `onLocalityChange?(locality)`, `canton?`, `name?`, `required?` | Search field for postcodes, localities and municipalities |
 | `SwissPostalCodeInput` | `value?` and `defaultValue?` as strings, `required?`, `onChange?` | Text input with a numeric keypad |
 | `SwissAddressForm` | `onSave`, `initialValue?`, `locale?`, `labels?`, `className?` | Postal address form with five required fields |
 | `UidInput` | `value?`, `defaultValue?`, `validationMessage?` | Swiss business identifier with modulo-11 validation |
@@ -71,7 +72,21 @@ After four digits, `SwissAddressForm` offers the official locality and canton to
 
 `await lookupSwissPostalCode('6900')` returns an array of `{ locality, canton }` pairs. An unknown or incomplete postcode returns an empty array. The first valid lookup imports the packaged dataset, so a code-splitting bundler can fetch it on demand. The hosted portal loads it from the same origin. No address is sent to a third party. The downloadable catalog includes the data for offline use.
 
-The 1 November 2026 edition contains 3,177 Swiss residential postcodes and 4,233 distinct locality/canton pairs. Alpina uses postal locality names, removes repeated municipality rows and preserves cantons across boundaries. Liechtenstein records are outside the Swiss canton selector. The publisher updates this directory monthly. [Official directory of towns and cities](https://www.swisstopo.admin.ch/en/official-directory-of-towns-and-cities)
+### Search localities and municipalities
+
+`SwissLocalityCombobox` finds a locality from its postcode or name and keeps the political municipality with the choice. Typing 6900 offers Lugano, Massagno and two Paradiso entries, because Paradiso addresses belong to two municipalities. Viganello returns 6962 Viganello in the municipality of Lugano. The search ignores accents and case, accepts Zuerich for Zürich, both names of Biel/Bienne and Sankt for St.
+
+```tsx
+import { SwissLocalityCombobox, type SwissLocality } from 'alpina-ui'
+
+export function Residence({ onChange }: { onChange: (place: SwissLocality | null) => void }) {
+  return <SwissLocalityCombobox name="residence" locale="it-CH" required onLocalityChange={onChange} />
+}
+```
+
+Each result has `postalCode`, `locality`, `municipality`, `bfsNumber` and `canton`. The BFS number identifies the municipality in federal and cantonal registers. With `name="residence"`, a form submits `residence.postalCode`, `residence.locality`, `residence.municipality`, `residence.bfsNumber` and `residence.canton`. Set `canton` to limit suggestions to one canton. Without a component, `await searchSwissLocalities('lug', { limit: 5 })` returns the same results. A query can combine a postcode with a name, as in `6900 par`.
+
+The 1 November 2026 edition contains 3,177 Swiss residential postcodes, 4,233 distinct locality/canton pairs and 2,112 municipalities. A locality that spans municipalities appears once for each municipality, and the locality with most addresses comes first. Alpina preserves cantons across boundaries. Liechtenstein records are outside the Swiss canton selector. The publisher updates this directory monthly. [Official directory of towns and cities](https://www.swisstopo.admin.ch/en/official-directory-of-towns-and-cities)
 
 **Source ©swisstopo.** The federal OGD terms allow adaptation, redistribution and commercial use with attribution. Include the source credit when displaying or redistributing suggestions in a custom interface. [swisstopo terms of use](https://www.swisstopo.admin.ch/en/terms-of-use-free-geodata-and-geoservices)
 

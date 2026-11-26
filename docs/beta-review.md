@@ -14,6 +14,7 @@ These recommendations are for the maintainer’s review of the first release can
 | [MultilingualField](https://alpinaui.com/docs/components/multilingual-field/) | Experimental | FormData names and keyboard switching have browser tests. Ask editors and screen-reader users to review copy-from-source and completeness announcements. |
 | [QrBillScanner](https://alpinaui.com/docs/components/qr-bill-scanner/) | Experimental | Image and PDF fixtures exercise decoding. Confirm camera permission recovery and review on phones used at a counter. |
 | [Sparkline](https://alpinaui.com/docs/components/sparkline/) | Stable | The small trend view shares the tested series, loading and table contracts with the larger plots. |
+| [SwissLocalityCombobox](https://alpinaui.com/docs/components/swiss-locality-combobox/) | Experimental | Search, ranking and form submission have tests against the packaged swisstopo directory. Ask public-service and insurance teams to confirm the submitted municipality fields and the yearly data update. |
 | [SwissQrBill](https://alpinaui.com/docs/components/swiss-qr-bill/) | Experimental | Payload, QR and print tests cover the generated slip. Obtain independent acceptance of representative printed bills before committing to the payment contract. |
 | [UidInput](https://alpinaui.com/docs/components/uid-input/) | Stable | The CHE format and modulo-11 checksum are deterministic. Input and schema tests cover formatted values and invalid identifiers. |
 

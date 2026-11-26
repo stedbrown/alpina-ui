@@ -81,6 +81,7 @@ export const names = {
   'canton-select': ['canton selector', 'Kantonsauswahl', 'sélecteur de canton', 'selettore del cantone', 'selecziun dal chantun'],
   'canton-combobox': ['canton search', 'Kantonssuche', 'recherche de canton', 'ricerca cantone', 'tschertga dal chantun'],
   'swiss-postal-code-input': ['postal code', 'Postleitzahl', 'numéro postal', 'numero postale', 'numer postal'],
+  'swiss-locality-combobox': ['municipality search', 'Gemeindesuche', 'recherche de commune', 'ricerca comune', 'tschertga da la vischnanca'],
   'multilingual-field': ['translation field', 'Übersetzungsfeld', 'champ multilingue', 'campo multilingue', 'champ pluriling'],
   'iban-input': ['bank account', 'Bankkonto', 'compte bancaire', 'conto bancario', 'conto bancar'],
   'ahv-input': ['social insurance number', 'AHV Nummer', 'numéro AVS', 'numero AVS', 'numer da l’AVS'],
@@ -115,6 +116,9 @@ export const topics = [
   { items: ['swiss-address-form', 'swiss-postal-code-input', 'canton-select', 'canton-combobox'], aliases: [
     'address|mailing address|street address|SwissAddressFields', 'Adresse|Anschrift|Wohnadresse', 'adresse|domicile|coordonnées postales',
     'indirizzo|recapito|domicilio', 'adressa|domicil|lieu da domicil'] },
+  { items: ['swiss-locality-combobox', 'swiss-postal-code-input', 'swiss-address-form'], aliases: [
+    'municipality|locality|town lookup|BFS number', 'Gemeinde|Ortschaft|Ort suchen|BFS-Nummer', 'commune|localité|rechercher une localité|numéro OFS',
+    'comune|località|cerca località|numero UST', 'vischnanca|lieu|tschertgar in lieu|numer UST'] },
   { items: ['swiss-postal-code-input', 'swiss-address-form'], aliases: [
     'postal code|postcode|ZIP code', 'Postleitzahl|PLZ|Postleitzahl eingeben',
     'code postal|NPA|numéro postal d’acheminement', 'codice postale|NPA|numero postale di avviamento|CAP',

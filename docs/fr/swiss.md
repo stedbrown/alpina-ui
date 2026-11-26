@@ -9,6 +9,7 @@ Alpina fournit des composants React et des fonctions pures pour les données sui
 | `LocaleSelect` | `value?`, `defaultValue?`, `onLocaleChange?(locale)` | `select` avec les quatre langues nommées dans leur propre langue |
 | `CantonSelect` | `locale?`, `value?`, `defaultValue?`, `placeholder?`, `onCantonChange?(code)` | `select` avec les noms localisés et abréviations des 26 cantons |
 | `CantonCombobox` | `locale?`, `value?`, `defaultValue?`, `onCantonChange?(code)`, `name?`, `required?` | Champ de recherche avec libellé et liste des cantons |
+| `SwissLocalityCombobox` | `locale?`, `value?`, `defaultValue?`, `onLocalityChange?(locality)`, `canton?`, `name?`, `required?` | Champ de recherche pour NPA, localités et communes |
 | `SwissPostalCodeInput` | `value?` et `defaultValue?` sous forme de chaînes, `required?`, `onChange?` | Champ de texte avec clavier numérique |
 | `SwissAddressForm` | `onSave`, `initialValue?`, `locale?`, `labels?`, `className?` | Formulaire postal à cinq champs obligatoires |
 | `UidInput` | `value?`, `defaultValue?`, `validationMessage?` | Identifiant des entreprises avec contrôle modulo 11 |
@@ -71,7 +72,21 @@ Après quatre chiffres, `SwissAddressForm` propose la localité officielle et so
 
 `await lookupSwissPostalCode('6900')` renvoie des paires `{ locality, canton }`, ou une liste vide pour un NPA inconnu ou incomplet. La première recherche valide importe les données à la demande. Le portail les charge depuis la même origine sans transmettre d’adresse à un tiers. Le catalogue téléchargeable les inclut hors ligne.
 
-L’édition du 1er novembre 2026 contient 3 177 NPA résidentiels suisses et 4 233 couples localité/canton. Alpina conserve les noms postaux, élimine les lignes communales en double et préserve les cantons aux frontières. Le sélecteur exclut le Liechtenstein. Le répertoire est mis à jour chaque mois. [Répertoire officiel des localités](https://www.swisstopo.admin.ch/en/official-directory-of-towns-and-cities)
+### Rechercher des localités et des communes
+
+`SwissLocalityCombobox` trouve une localité par son NPA ou son nom et conserve la commune politique avec le choix. Le 6900 propose Lugano, Massagno et deux entrées Paradiso, car les adresses de Paradiso appartiennent à deux communes. Viganello renvoie 6962 Viganello dans la commune de Lugano. La recherche ignore les accents et la casse, accepte Zuerich pour Zürich, les deux noms de Biel/Bienne et Sankt pour St.
+
+```tsx
+import { SwissLocalityCombobox, type SwissLocality } from 'alpina-ui'
+
+export function Residence({ onChange }: { onChange: (place: SwissLocality | null) => void }) {
+  return <SwissLocalityCombobox name="residence" locale="it-CH" required onLocalityChange={onChange} />
+}
+```
+
+Chaque résultat contient `postalCode`, `locality`, `municipality`, `bfsNumber` et `canton`. Le numéro OFS identifie la commune dans les registres fédéraux et cantonaux. Avec `name="residence"`, un formulaire envoie `residence.postalCode`, `residence.locality`, `residence.municipality`, `residence.bfsNumber` et `residence.canton`. `canton` limite les suggestions à un canton. Sans composant, `await searchSwissLocalities('lug', { limit: 5 })` renvoie les mêmes résultats. Une recherche peut combiner NPA et nom, comme `6900 par`.
+
+L’édition du 1er novembre 2026 contient 3 177 NPA résidentiels suisses, 4 233 couples localité/canton et 2 112 communes. Une localité répartie sur plusieurs communes apparaît une fois par commune, en commençant par celle qui compte le plus d’adresses. Alpina préserve les cantons aux frontières. Le sélecteur exclut le Liechtenstein. Le répertoire est mis à jour chaque mois. [Répertoire officiel des localités](https://www.swisstopo.admin.ch/en/official-directory-of-towns-and-cities)
 
 **Source ©swisstopo.** Les conditions fédérales OGD autorisent l’adaptation, la redistribution et l’usage commercial avec attribution. Indiquez la source lors de l’affichage ou de la redistribution des suggestions dans une interface personnalisée. [Conditions d’utilisation](https://www.swisstopo.admin.ch/en/terms-of-use-free-geodata-and-geoservices)
 

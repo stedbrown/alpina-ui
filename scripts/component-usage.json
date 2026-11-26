@@ -95,5 +95,6 @@
   "sparkline": "Show a short trend with its last observation and the underlying values. Pass title, description and data with label and value for each observation. Use loading while fetching data and formatValue for units.",
   "chart-table": "Compare magnitudes while reading precise values in a semantic table. Pass title, description and data with label and value for each observation. Use loading while fetching data and formatValue for units.",
   "qr-bill-scanner": "Choose an on-device image or PDF, or request the camera after an explicit action. Review the decoded creditor, IBAN, amount and reference before confirming.",
-  "file-input": "Present file types and purpose beside the field. Choose, drop or paste files, review names and sizes, then submit the native multipart form."
+  "file-input": "Present file types and purpose beside the field. Choose, drop or paste files, review names and sizes, then submit the native multipart form.",
+  "swiss-locality-combobox": "Type a postcode, a locality or a municipality, with or without accents. Up and Down move through the suggestions, Enter commits one and Escape restores the committed locality. With a name, the form submits name.postalCode, name.locality, name.municipality, name.bfsNumber and name.canton."
 }

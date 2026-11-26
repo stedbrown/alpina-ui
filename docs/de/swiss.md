@@ -9,6 +9,7 @@ Alpina liefert React-Komponenten und reine Funktionen für Schweizer Daten. Lege
 | `LocaleSelect` | `value?`, `defaultValue?`, `onLocaleChange?(locale)` | `select` mit den vier Sprachnamen in der jeweiligen Sprache |
 | `CantonSelect` | `locale?`, `value?`, `defaultValue?`, `placeholder?`, `onCantonChange?(code)` | `select` mit den 26 übersetzten Kantonsnamen und Kürzeln |
 | `CantonCombobox` | `locale?`, `value?`, `defaultValue?`, `onCantonChange?(code)`, `name?`, `required?` | Beschriftetes Suchfeld und Kantonsliste |
+| `SwissLocalityCombobox` | `locale?`, `value?`, `defaultValue?`, `onLocalityChange?(locality)`, `canton?`, `name?`, `required?` | Suchfeld für Postleitzahlen, Orte und Gemeinden |
 | `SwissPostalCodeInput` | `value?` und `defaultValue?` als Zeichenketten, `required?`, `onChange?` | Textfeld mit Zifferntastatur |
 | `SwissAddressForm` | `onSave`, `initialValue?`, `locale?`, `labels?`, `className?` | Adressformular mit fünf Pflichtfeldern |
 | `UidInput` | `value?`, `defaultValue?`, `validationMessage?` | Unternehmensidentifikation mit Modulo-11-Prüfung |
@@ -71,7 +72,21 @@ Nach vier Ziffern schlägt `SwissAddressForm` den amtlichen Ort mit Kanton vor. 
 
 `await lookupSwissPostalCode('6900')` liefert Paare aus `{ locality, canton }`, bei unbekannter oder unvollständiger PLZ ein leeres Array. Die erste gültige Suche importiert die Daten bei Bedarf. Das Portal lädt sie von derselben Herkunft, ohne Adressen an Dritte zu senden. Der herunterladbare Katalog enthält sie offline.
 
-Die Ausgabe vom 1. November 2026 enthält 3 177 Schweizer Wohnort-PLZ und 4 233 unterschiedliche Ort-Kanton-Paare. Alpina übernimmt Postortsnamen, entfernt doppelte Gemeindezeilen und erhält Kantone an Gebietsgrenzen. Liechtenstein liegt ausserhalb der Kantonsauswahl. Das amtliche Verzeichnis erscheint monatlich. [Amtliches Ortschaftenverzeichnis](https://www.swisstopo.admin.ch/en/official-directory-of-towns-and-cities)
+### Orte und Gemeinden suchen
+
+`SwissLocalityCombobox` findet einen Ort über PLZ oder Namen und speichert die politische Gemeinde mit der Auswahl. 6900 schlägt Lugano, Massagno und zweimal Paradiso vor, weil Adressen in Paradiso zu zwei Gemeinden gehören. Viganello liefert 6962 Viganello in der Gemeinde Lugano. Die Suche ignoriert Akzente sowie Gross- und Kleinschreibung und akzeptiert Zuerich für Zürich, beide Namen von Biel/Bienne und Sankt für St.
+
+```tsx
+import { SwissLocalityCombobox, type SwissLocality } from 'alpina-ui'
+
+export function Residence({ onChange }: { onChange: (place: SwissLocality | null) => void }) {
+  return <SwissLocalityCombobox name="residence" locale="it-CH" required onLocalityChange={onChange} />
+}
+```
+
+Jedes Ergebnis enthält `postalCode`, `locality`, `municipality`, `bfsNumber` und `canton`. Die BFS-Nummer identifiziert die Gemeinde in eidgenössischen und kantonalen Registern. Mit `name="residence"` sendet ein Formular `residence.postalCode`, `residence.locality`, `residence.municipality`, `residence.bfsNumber` und `residence.canton`. `canton` beschränkt die Vorschläge auf einen Kanton. Ohne Komponente liefert `await searchSwissLocalities('lug', { limit: 5 })` dieselben Ergebnisse. Eine Suche kann PLZ und Namen verbinden, etwa `6900 par`.
+
+Die Ausgabe vom 1. November 2026 enthält 3 177 Schweizer Wohnort-PLZ, 4 233 unterschiedliche Ort-Kanton-Paare und 2 112 Gemeinden. Ein Ort, der sich über mehrere Gemeinden erstreckt, erscheint einmal pro Gemeinde, beginnend mit der Gemeinde mit den meisten Adressen. Alpina erhält Kantone an Gebietsgrenzen. Liechtenstein liegt ausserhalb der Kantonsauswahl. Das amtliche Verzeichnis erscheint monatlich. [Amtliches Ortschaftenverzeichnis](https://www.swisstopo.admin.ch/en/official-directory-of-towns-and-cities)
 
 **Quelle ©swisstopo.** Die OGD-Bedingungen des Bundes erlauben Bearbeitung, Weitergabe und kommerzielle Nutzung mit Quellenangabe. Nenne die Quelle auch in eigenen Oberflächen bei Anzeige oder Weitergabe der Vorschläge. [Nutzungsbedingungen](https://www.swisstopo.admin.ch/en/terms-of-use-free-geodata-and-geoservices)
 

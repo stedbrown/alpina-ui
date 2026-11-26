@@ -14,7 +14,8 @@ CANTONS = set("ZH BE LU UR SZ OW NW GL ZG FR SO BS BL SH AR AI SG GR AG TG TI VD
 def main():
     if hashlib.sha256(SNAPSHOT.read_bytes()).hexdigest() != ARCHIVE_SHA256:
         raise ValueError("The postcode archive does not match the pinned publisher download")
-    entries = set()
+    entries = {}
+    municipalities = {}
     with ZipFile(SNAPSHOT) as archive:
         with archive.open("AMTOVZ_CSV_LV95/AMTOVZ_CSV_LV95.csv") as data:
             rows = csv.DictReader(io.TextIOWrapper(data, encoding="utf-8-sig", newline=""), delimiter=";")
@@ -26,10 +27,20 @@ def main():
                 valid_code = len(code) == 4 and code.isascii() and code.isdigit()
                 if canton not in CANTONS or not valid_code or not locality.strip() or len(locality.splitlines()) != 1:
                     raise ValueError(f"Unexpected directory record: {row!r}")
-                entries.add((code, locality, canton))
+                bfs, municipality = int(row["BFS-Nr"]), row["Gemeindename"]
+                if not 1 <= bfs <= 9999 or not municipality.strip() or municipalities.get(bfs, municipality) != municipality:
+                    raise ValueError(f"Unexpected municipality: {row!r}")
+                municipalities[bfs] = municipality
+                share = float(row["Adressenanteil"].rstrip(" %"))
+                key = (code, locality, canton, bfs)
+                entries[key] = entries.get(key, 0) + share
 
-    # Fixed-width prefix: four postcode digits and two canton letters, then the complete official name.
-    lines = [code + canton + locality for code, locality, canton in sorted(entries)]
+    # Fixed-width prefix: four postcode digits and two canton letters, then the complete official name,
+    # a tab and the municipality's BFS number. Within a postcode the locality with most addresses comes first.
+    # Municipality names follow as "=" lines: "=5192<tab>Lugano".
+    order = sorted(entries, key=lambda key: (key[0], -entries[key], key[1], key[3]))
+    lines = [code + canton + locality + "	" + str(bfs) for code, locality, canton, bfs in order]
+    lines += ["=" + str(bfs) + "	" + name for bfs, name in sorted(municipalities.items())]
     rows = "\n".join(lines).replace("\\", "\\\\").replace("`", "\\`").replace("${", "\\${")
     output = (
         "/*! ©swisstopo. Official directory of towns and cities, 2026-11-01.\n"
@@ -38,7 +49,7 @@ def main():
         "const rows: string = `\n" + rows + "\n`\nexport default rows\n"
     )
     (ROOT / "src/swiss/postal-localities.data.ts").write_bytes(output.encode("utf-8"))
-    print(f"Generated {len(lines)} locality/canton pairs for {len({row[0] for row in entries})} postcodes.")
+    print(f"Generated {len(entries)} localities in {len(municipalities)} municipalities for {len({key[0] for key in entries})} postcodes.")
 
 
 if __name__ == "__main__":

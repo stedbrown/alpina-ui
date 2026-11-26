@@ -1285,6 +1285,33 @@
       ]
     },
     {
+      "name": "swiss-locality-combobox",
+      "group": "swiss",
+      "entry": "swiss/swiss-locality-combobox.tsx",
+      "summary": "Find a Swiss locality by postcode or name and return its municipality, BFS number and canton.",
+      "usage": "Type a postcode, a locality or a municipality, with or without accents. Up and Down move through the suggestions, Enter commits one and Escape restores the committed locality. With a name, the form submits name.postalCode, name.locality, name.municipality, name.bfsNumber and name.canton.",
+      "files": [
+        "theme.css",
+        "swiss/swiss-locality-combobox.tsx",
+        "interactive/floating.ts",
+        "ui/button.tsx",
+        "ui/slot.tsx",
+        "ui/button.css",
+        "ui/field.tsx",
+        "ui/field.css",
+        "ui/input.tsx",
+        "ui/input.css",
+        "swiss/cantons.ts",
+        "swiss/locales.ts",
+        "swiss/locale-context.internal.ts",
+        "swiss/postal-localities.ts",
+        "swiss/postal-loader.internal.ts",
+        "swiss/postal-localities.data.ts",
+        "swiss/swiss-locality-combobox.css",
+        "swiss/alpina-provider.ts"
+      ]
+    },
+    {
       "name": "iban-input",
       "group": "swiss",
       "entry": "swiss/iban-input.tsx",

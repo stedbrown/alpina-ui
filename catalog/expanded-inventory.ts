@@ -7,6 +7,13 @@ export const expanded = [
     "Edit translations for all four national languages with character counts and per-language form values."
   ],
   [
+    "swiss-locality-combobox",
+    "SwissLocalityCombobox",
+    "Locality and municipality",
+    "Swiss localization",
+    "Find a Swiss locality by postcode or name and return its municipality, BFS number and canton."
+  ],
+  [
     "iban-input",
     "IbanInput",
     "Swiss bank account",

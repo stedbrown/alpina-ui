@@ -9,6 +9,7 @@ Alpina offre componenti React e funzioni pure per i dati svizzeri. Imposta la li
 | `LocaleSelect` | `value?`, `defaultValue?`, `onLocaleChange?(locale)` | `select` con i nomi delle quattro lingue nella rispettiva lingua |
 | `CantonSelect` | `locale?`, `value?`, `defaultValue?`, `placeholder?`, `onCantonChange?(code)` | `select` con i nomi tradotti dei 26 cantoni e le sigle |
 | `CantonCombobox` | `locale?`, `value?`, `defaultValue?`, `onCantonChange?(code)`, `name?`, `required?` | Campo di ricerca con etichetta ed elenco dei cantoni |
+| `SwissLocalityCombobox` | `locale?`, `value?`, `defaultValue?`, `onLocalityChange?(locality)`, `canton?`, `name?`, `required?` | Campo di ricerca per NPA, località e comuni |
 | `SwissPostalCodeInput` | `value?` e `defaultValue?` come stringhe, `required?`, `onChange?` | Campo di testo con tastiera numerica |
 | `SwissAddressForm` | `onSave`, `initialValue?`, `locale?`, `labels?`, `className?` | Modulo postale con cinque campi obbligatori |
 | `UidInput` | `value?`, `defaultValue?`, `validationMessage?` | Identificativo delle imprese con controllo modulo 11 |
@@ -71,7 +72,21 @@ Dopo quattro cifre `SwissAddressForm` propone località e cantone insieme. Il 69
 
 `await lookupSwissPostalCode('6900')` restituisce coppie `{ locality, canton }`. Per NPA sconosciuti o incompleti restituisce un array vuoto. La prima ricerca valida importa il dataset su richiesta. Il portale lo carica dalla stessa origine, senza inviare indirizzi a terzi. Il catalogo scaricabile lo include offline.
 
-L’edizione del 1° novembre 2026 contiene 3 177 NPA residenziali svizzeri e 4 233 coppie località/cantone. Alpina usa i nomi postali, elimina righe comunali duplicate e conserva i cantoni nelle zone di confine. Il selettore esclude il Liechtenstein. Il repertorio è aggiornato mensilmente. [Elenco ufficiale delle località](https://www.swisstopo.admin.ch/en/official-directory-of-towns-and-cities)
+### Cercare località e comuni
+
+`SwissLocalityCombobox` trova una località dal NPA o dal nome e conserva il comune politico insieme alla scelta. Con 6900 propone Lugano, Massagno e due voci Paradiso, perché gli indirizzi di Paradiso appartengono a due comuni. Viganello restituisce 6962 Viganello nel comune di Lugano. La ricerca ignora accenti e maiuscole, accetta Zuerich per Zürich, entrambi i nomi di Biel/Bienne e Sankt per St.
+
+```tsx
+import { SwissLocalityCombobox, type SwissLocality } from 'alpina-ui'
+
+export function Residence({ onChange }: { onChange: (place: SwissLocality | null) => void }) {
+  return <SwissLocalityCombobox name="residence" locale="it-CH" required onLocalityChange={onChange} />
+}
+```
+
+Ogni risultato contiene `postalCode`, `locality`, `municipality`, `bfsNumber` e `canton`. Il numero UST identifica il comune nei registri federali e cantonali. Con `name="residence"` il modulo invia `residence.postalCode`, `residence.locality`, `residence.municipality`, `residence.bfsNumber` e `residence.canton`. Imposta `canton` per limitare i suggerimenti a un cantone. Senza componente, `await searchSwissLocalities('lug', { limit: 5 })` restituisce gli stessi risultati. Una ricerca può unire NPA e nome, come `6900 par`.
+
+L’edizione del 1° novembre 2026 contiene 3 177 NPA residenziali svizzeri, 4 233 coppie località/cantone e 2 112 comuni. Una località divisa tra più comuni compare una volta per comune, a partire da quella con più indirizzi. Alpina conserva i cantoni nelle zone di confine. Il selettore esclude il Liechtenstein. Il repertorio è aggiornato mensilmente. [Elenco ufficiale delle località](https://www.swisstopo.admin.ch/en/official-directory-of-towns-and-cities)
 
 **Fonte ©swisstopo.** Le condizioni federali OGD permettono adattamento, ridistribuzione e uso commerciale con attribuzione. Cita la fonte anche nelle interfacce personalizzate che mostrano o ridistribuiscono i suggerimenti. [Condizioni d’uso](https://www.swisstopo.admin.ch/en/terms-of-use-free-geodata-and-geoservices)
 

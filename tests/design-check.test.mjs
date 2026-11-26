@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { spawnSync } from 'node:child_process'
 import { mkdtempSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import test from 'node:test'
 import { fileURLToPath } from 'node:url'
@@ -47,7 +48,7 @@ test('the library’s own blocks and examples pass the design check', () => {
 })
 
 test('alpina check reports findings and sets the exit status', () => {
-  const dir = mkdtempSync(join(fileURLToPath(new URL('../test-results/', import.meta.url)), 'design-check-'))
+  const dir = mkdtempSync(join(tmpdir(), 'alpina-design-check-'))
   const good = join(dir, 'good.tsx')
   const bad = join(dir, 'bad.css')
   writeFileSync(good, "import { Grid } from 'alpina-ui'\nexport const Page = () => <Grid />\n")

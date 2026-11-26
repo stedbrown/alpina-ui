@@ -104,7 +104,7 @@ These 66 families follow the project's recorded shadcn/ui component index. Each 
 | Navigation Menu | [NavigationMenu](https://alpinaui.com/docs/components/navigation-menu/) | Use labeled `sections` of links. Give router entries their route identity in `href` and their link element in `label` with `asChild`. |
 | Pagination | [Pagination](https://alpinaui.com/docs/components/pagination/) | Build numbered `items` with real URLs. Set `currentPage` and provide `pageLabel` for translated accessible names. |
 | Popover | [Popover](https://alpinaui.com/docs/components/popover/) | Supply a title, trigger, close label and panel children. Use `onOpenChange` to synchronize controlled state. |
-| Progress | [Progress](https://alpinaui.com/docs/components/progress/) | Pass a numeric `value` and optional `max`. Omit `value` for indeterminate progress and supply the accessible `label`. |
+| Progress | [Progress](https://alpinaui.com/docs/components/progress/) | Pass a numeric `value` and optional `max`. Omit `value` for indeterminate progress and supply the accessible `label`. Add `showLabel` to print the label and value above the bar. |
 | Questionnaire | [Questionnaire](https://alpinaui.com/docs/components/questionnaire/) | Build `questions` with IDs and single-choice options. Consume reviewed answers in `onComplete`; keep multi-select and free text in a different form. |
 | Radio Group | [RadioGroup](https://alpinaui.com/docs/components/radio-group/) | Pass the group label and option array. Use `onValueChange` for its single value and `name` for native form submission. |
 | Resizable | [Resizable](https://alpinaui.com/docs/components/resizable/) | Provide two panes through `first` and `second`. Configure the split with `orientation`, `min`, `max` and `step`. |

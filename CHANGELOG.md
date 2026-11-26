@@ -8,6 +8,9 @@
 - UidInput and `isSwissUid` accept a UID typed with spaces, such as CHE 109 322 551.
 - **Public API** The MCP server adds `check_design` and the CLI adds `alpina check`. Both review a file for gradients, rounded corners, centered text, hard-coded colors, floating shadows, other typefaces, utility overrides, nested cards and extra accents, and name the Alpina replacement for each finding.
 - **Public API** SwissLocalityCombobox finds a locality by postcode, locality or municipality name and returns its political municipality, BFS number and canton. `searchSwissLocalities` offers the same search without a component. The search ignores accents and case and accepts umlaut spellings such as Zuerich.
+- **Public API** Progress accepts `showLabel` to print its label and current value above the bar, as a percentage or through `formatValue`. The bar keeps the same accessible name and value, and the default stays a bare bar.
+- Command closes and returns focus before it runs `onSelect`, so an action that moves focus to a heading or field keeps it there.
+- A numeric heading or display that holds CurrencyCHF or SwissDate keeps its width inside a row of Stack or a grid track. It used to collapse to zero width. Long figures still shrink to fit a narrow column.
 - The packaged swisstopo directory adds the political municipality and its BFS number to each locality. `lookupSwissPostalCode` returns the same results as before. The deferred directory download grows from 30 to 58 kB compressed.
 
 ## 1.0.0-rc.7 · 26 November 2026

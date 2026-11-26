@@ -3128,6 +3128,7 @@ export interface ProgressProps extends Omit<ComponentPropsWithoutRef<"progress">
     value?: number;
     max?: number;
     formatValue?: (value: number, max: number) => string;
+    showLabel?: boolean;
 }
 export declare const Progress: import("react").ForwardRefExoticComponent<ProgressProps & import("react").RefAttributes<HTMLProgressElement>>;
 ~~~

@@ -665,15 +665,13 @@ export function ProgressExample() {
           Print run setup
         </Typography>
       </Stack>
-      <Stack gap={2}>
-        <Stack direction="row" justify="space-between">
-          <strong>Checks complete</strong>
-          <Typography as="output">
-            {done.length} / {tasks.length}
-          </Typography>
-        </Stack>
-        <Progress value={done.length} max={tasks.length} label="Print checks complete" />
-      </Stack>
+      <Progress
+        value={done.length}
+        max={tasks.length}
+        label="Print checks complete"
+        formatValue={(value, max) => `${value} of ${max}`}
+        showLabel
+      />
       <Stack gap={2}>
         {tasks.map((task) => (
           <Stack asChild direction="row" gap={2} key={task}>

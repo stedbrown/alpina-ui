@@ -54,6 +54,9 @@ To own the source, run `npx --no-install alpina add button`. To copy a complete 
 - UidInput and `isSwissUid` accept a UID typed with spaces, such as CHE 109 322 551.
 - The MCP server adds `check_design` and the CLI adds `alpina check`.
 - SwissLocalityCombobox finds a locality by postcode, locality or municipality name and returns its political municipality, BFS number and canton.
+- Progress accepts `showLabel` to print its label and current value above the bar, as a percentage or through `formatValue`.
+- Command closes and returns focus before it runs `onSelect`, so an action that moves focus to a heading or field keeps it there.
+- A numeric heading or display that holds CurrencyCHF or SwissDate keeps its width inside a row of Stack or a grid track.
 - The packaged swisstopo directory adds the political municipality and its BFS number to each locality.
 
 **Recent releases**

@@ -126,8 +126,8 @@
   },
   "command": {
     "stage": "Stable",
-    "changed": "2026-11-25",
-    "source": "41af37dd8e06eb453314"
+    "changed": "2026-11-26",
+    "source": "9894a8b88e557d14efd2"
   },
   "context-menu": {
     "stage": "Stable",
@@ -321,23 +321,23 @@
   },
   "progress": {
     "stage": "Stable",
-    "changed": "2026-11-25",
-    "source": "b9a05a1805366c56332d"
+    "changed": "2026-11-26",
+    "source": "8469408758264f0fde0d"
   },
   "prose": {
     "stage": "Stable",
-    "changed": "2026-11-25",
-    "source": "380613c0989d87e000d3"
+    "changed": "2026-11-26",
+    "source": "f517785170ef7d7bbf21"
   },
   "qr-bill-scanner": {
     "stage": "Beta",
     "changed": "2026-11-26",
-    "source": "5e12daf978d308ad9c15"
+    "source": "83b894528fafc94eaecf"
   },
   "questionnaire": {
     "stage": "Stable",
-    "changed": "2026-11-25",
-    "source": "03096a3776e50bd8ed0b"
+    "changed": "2026-11-26",
+    "source": "ba2c1031143b5c524894"
   },
   "radio-group": {
     "stage": "Stable",
@@ -401,13 +401,13 @@
   },
   "steps": {
     "stage": "Stable",
-    "changed": "2026-11-25",
-    "source": "177734a955f5937620e8"
+    "changed": "2026-11-26",
+    "source": "c95ac053d17b399bddee"
   },
   "swiss-address-form": {
     "stage": "Stable",
     "changed": "2026-11-26",
-    "source": "ad2689c248ebf64d96af"
+    "source": "5e8ba223c28476a76cd4"
   },
   "swiss-date": {
     "stage": "Stable",
@@ -481,8 +481,8 @@
   },
   "typography": {
     "stage": "Stable",
-    "changed": "2026-11-25",
-    "source": "e3f47ca65799fff3ef18"
+    "changed": "2026-11-26",
+    "source": "c3837b59506a52ce55bc"
   },
   "uid-input": {
     "stage": "Stable",

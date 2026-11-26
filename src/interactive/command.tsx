@@ -1,5 +1,6 @@
 'use client'
 import { useId, useRef, useState, type ReactElement, type ReactNode } from 'react'
+import { flushSync } from 'react-dom'
 import { Input } from '../ui/input.js'
 import { Dialog } from './dialog.js'
 import { useControllable } from './controllable.js'
@@ -54,7 +55,8 @@ export function Command({
   }, [visible, active])
   function run(item: CommandItem) {
     if (item.disabled) return
-    change(false)
+    // Close and restore focus first, so onSelect may move focus anywhere without the dialog taking it back.
+    flushSync(() => change(false))
     item.onSelect?.()
     onValueSelect?.(item.value)
   }

@@ -1769,7 +1769,7 @@
     "use": "Show how much of an operation has finished when the total can be measured, such as imported records.",
     "avoid": "A spinner with an activity label fits work whose completion cannot be estimated.",
     "access": "Name the operation. Update its numeric value with measured progress and avoid announcing every percentage point.",
-    "content": "Use the activity name and a short count or percentage. Pair a completed quantity with its total in all four translations.",
+    "content": "Use the activity name and a short count or percentage. Pair a completed quantity with its total in all four translations. Add showLabel when no nearby heading names the operation; formatValue sets the printed and spoken value.",
     "example": {
       "good": "Imported 18 of 30 addresses",
       "poor": "Almost there…"

@@ -35,3 +35,26 @@
   }
   .al-progress:indeterminate::-webkit-progress-bar { background: transparent; }
 }
+.al-progress-field {
+  display: grid;
+  gap: var(--al-space-2);
+  min-inline-size: 0;
+}
+.al-progress-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--al-space-1) var(--al-space-3);
+  color: var(--al-ink);
+  font: var(--al-type-label)/var(--al-leading-label) var(--al-font);
+}
+.al-progress-label {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+.al-progress-value {
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+}

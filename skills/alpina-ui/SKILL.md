@@ -8,10 +8,10 @@ license: MIT
 
 Start with the version used by the application. Package imports and editable component copies are both supported. Follow the convention already present in the project.
 
-For a new project install the publicly hosted release archive. The URL pins the version in the application's lockfile.
+For a new project install the package from npm. Release candidates use the `next` tag. To pin the exact release by URL, install the portal archive instead: `npm install https://alpinaui.com/alpina-ui-1.0.0-rc.7.tgz`.
 
 ```sh
-npm install https://alpinaui.com/alpina-ui-1.0.0-rc.6.tgz
+npm install alpina-ui@next
 ```
 
 The public index links to the installation guide, component registry and Markdown guides. [Alpina agent index](https://alpinaui.com/llms.txt)

@@ -127,7 +127,7 @@ async function loadPages() {
 }
 
 export async function buildWebsite({ outputDir, guides, guideFiles, guideManifest, apiReference, componentGuidance, registry, script, css, notices, renderComponent }) {
-  const { Landing, homeIsland, homeIslandNames, StartHere, Examples, DesignerKit, StaticApi, Icons, Themes, Principles, Blocks, BlockPage, blockDemos, blocks, ComponentDirectory, ComponentStatus, ReferencePage, GuideLanguages, downloadLabel, ExampleIntroduction, inventory, projects } = await loadPages()
+  const { Landing, homeIsland, homeIslandNames, StartHere, Examples, DesignerKit, StaticApi, Icons, Themes, ThemeBuilder, Principles, Blocks, BlockPage, blockDemos, blocks, ComponentDirectory, ComponentStatus, ReferencePage, GuideLanguages, downloadLabel, ExampleIntroduction, inventory, projects } = await loadPages()
   async function output(name, data) {
     const target = path.join(outputDir, name)
     await mkdir(path.dirname(target), { recursive: true })
@@ -157,7 +157,10 @@ export async function buildWebsite({ outputDir, guides, guideFiles, guideManifes
   const pickerBuild = await build({ entryPoints: ['web/static-selects.ts'], bundle: true, format: 'esm', target: 'es2022', write: false, minify: true })
   const picker = pickerBuild.outputFiles[0].text
   const pickerJS = '/assets/picker-' + sha(picker) + '.js'
-  const themeBuild = await build({ entryPoints: ['web/theme-controls.ts'], bundle: true, format: 'esm', target: 'es2022', write: false, minify: true })
+  const themeBuild = await build({
+    entryPoints: ['web/theme-controls.tsx'], bundle: true, format: 'esm', target: 'es2022', jsx: 'automatic',
+    define: { 'process.env.NODE_ENV': '"production"' }, write: false, minify: true,
+  })
   const theme = themeBuild.outputFiles[0].text
   const themeJS = '/assets/themes-' + sha(theme) + '.js'
   const blockBuild = await build({
@@ -251,7 +254,7 @@ export async function buildWebsite({ outputDir, guides, guideFiles, guideManifes
   await buildDesignerKit(output)
   await page('/kit/', 'Designer kit', 'Download editable column grids, an A4 type sheet and light and dark design tokens for your design tools.', render(DesignerKit))
   await page('/icons/', 'Alpina icons', 'Browse original SVG icons for navigation, actions, content and Git workflows. Preview sizes and copy React code.', render(Icons), { icons: true })
-  await page('/themes/', 'Theme builder', 'Preview your accent, grid and light or dark appearance on Alpina components. Check text contrast and copy CSS variables.', render(Themes), { theme: true })
+  await page('/themes/', 'Theme builder', 'Choose an accent for light and dark, preview it on Alpina components, check text contrast and copy CSS variables.', render(Themes, { html: renderToString(createElement(ThemeBuilder), { identifierPrefix: 'theme-' }) }), { theme: true })
   await page('/principles/', 'Design principles', 'Eight Swiss design decisions demonstrated with working Alpina components and paired examples.', render(Principles))
   await page('/blocks/', 'Page blocks', 'Copy login, dashboard, account settings, CHF pricing and public service pages with the Alpina CLI.', render(Blocks))
   for (const block of blocks) {

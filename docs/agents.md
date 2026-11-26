@@ -24,7 +24,7 @@ For a workspace, compose `AppShell` with `SideNav`. For brief confirmations, cal
 
 ## Connect the local MCP server
 
-Install the package from npm in your application using Node.js 20 or later. The package includes the reference data used by the server. To pin the exact release instead, install the portal archive: `npm install https://alpinaui.com/alpina-ui-1.0.0-rc.6.tgz`.
+Install the package from npm in your application using Node.js 20 or later. The package includes the reference data used by the server. To pin the exact release instead, install the portal archive: `npm install https://alpinaui.com/alpina-ui-1.0.0-rc.7.tgz`.
 
 ```sh
 npm install alpina-ui@next

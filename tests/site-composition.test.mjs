@@ -65,7 +65,7 @@ function audit(name, source) {
     if (ts.isPropertyAccessExpression(node) && node.name.text === 'style') {
       const call = node.parent.parent
       // The theme preview applies and removes only the user's Alpina token selection.
-      const themeOperation = name === 'web/theme-controls.ts' && ts.isCallExpression(call) &&
+      const themeOperation = name === 'web/theme-builder.tsx' && ts.isCallExpression(call) &&
         ['preview.style.removeProperty(key)', 'preview.style.setProperty(key, value)'].includes(call.getText(file))
       if (!themeOperation) report(node, 'Apply layout through component props')
     }

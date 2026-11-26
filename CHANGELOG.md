@@ -1,10 +1,12 @@
 # Changelog
 
-## Unreleased
+## 1.0.0-rc.7 · 26 November 2026
 
 - **Public API** ComponentPreview accepts `defaultWidth` and `onWidthChange`. The documentation keeps the chosen preview width in the address, so `?width=320` opens a narrow case that can be shared in a pull request.
-- Centre the QR-bill scissors on the horizontal perforation and align them with the 5 mm margin.
+- Center both QR-bill scissors on their perforations, 5 mm from the slip edges, and keep them visible above a scrolling or fitted slip.
 - Rebuild the homepage around working components: an invoice dashboard, a Swiss form with postcode, canton and holiday lookup, and a QR-bill that re-encodes as you type. Install from npm with `npm install alpina-ui@next`.
+- The theme builder sets separate accents for light and dark, suggests a dark accent that reads on black, offers five starting colors, previews both appearances side by side and keeps the theme in a shareable address. Its CSS covers light, dark and device-following containers.
+- The guides, the agent page and the project skill install from npm. Each release remains available as a checksummed archive on the portal.
 
 ## 1.0.0-rc.6 · 25 November 2026
 

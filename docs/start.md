@@ -1,6 +1,6 @@
 # Getting started
 
-Alpina UI 1.0.0-rc.6 includes 97 installable React component entries and five copyable pages. The package contains ESM modules, TypeScript declarations, stylesheets and editable source. The Start and Swiss guides are also available in German, French and Italian. The address form provides field labels and error messages in all four Swiss national languages.
+Alpina UI 1.0.0-rc.7 includes 97 installable React component entries and five copyable pages. The package contains ESM modules, TypeScript declarations, stylesheets and editable source. The Start and Swiss guides are also available in German, French and Italian. The address form provides field labels and error messages in all four Swiss national languages.
 
 <!-- alpina-download -->
 
@@ -16,7 +16,7 @@ In a React 18.2 or 19 project with Node.js 20 or later, install the package from
 npm install alpina-ui@next
 ```
 
-The portal also hosts each release as an archive with its SHA‑512 digest. The URL pins the exact version in your lockfile: `npm install https://alpinaui.com/alpina-ui-1.0.0-rc.6.tgz`. If you downloaded the archive first, run `npm install ./alpina-ui-1.0.0-rc.6.tgz` in the directory that contains it. Import the CSS once at your application entry point. The JavaScript modules can also run during server rendering.
+The portal also hosts each release as an archive with its SHA‑512 digest. The URL pins the exact version in your lockfile: `npm install https://alpinaui.com/alpina-ui-1.0.0-rc.7.tgz`. If you downloaded the archive first, run `npm install ./alpina-ui-1.0.0-rc.7.tgz` in the directory that contains it. Import the CSS once at your application entry point. The JavaScript modules can also run during server rendering.
 
 ```tsx
 import "alpina-ui/styles.css"

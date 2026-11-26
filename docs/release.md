@@ -1,5 +1,11 @@
 # Upgrading Alpina UI
 
+## Version 1.0.0-rc.7
+
+Install with `npm install alpina-ui@next`, or pin the [candidate archive](https://alpinaui.com/alpina-ui-1.0.0-rc.7.tgz) and verify its [SHA-512 digest](https://alpinaui.com/alpina-ui-1.0.0-rc.7.tgz.sha512). The homepage now runs real components, and the theme builder sets a separate dark accent and shares a theme by its address. [Homepage](https://alpinaui.com/) · [Theme builder](https://alpinaui.com/themes/)
+
+The QR-bill scissors sit on the perforations, and `ComponentPreview` can open at a given width. The guides and the project skill install from npm. [SwissQrBill](https://alpinaui.com/docs/components/swiss-qr-bill/)
+
 ## Version 1.0.0-rc.6
 
 The site navigation now identifies the active section and brings the release, appearance and GitHub controls together. Try the working migration comparison and enlarge the reservation form in the homepage accessibility section. [Homepage](https://alpinaui.com/) · [NavigationMenu](https://alpinaui.com/docs/components/navigation-menu/)

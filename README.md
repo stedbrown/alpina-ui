@@ -5,7 +5,7 @@
 
 Open-source React components built on the Swiss typographic grid. Compose forms, tables and charts with a four-pixel rhythm, a measured type scale and one red accent.
 
-[![CI](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml) [![MIT license](https://img.shields.io/badge/license-MIT-222222)](LICENSE) [![Package version](https://img.shields.io/badge/version-1.0.0--rc.6-eb0000)](CHANGELOG.md)
+[![CI](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml) [![MIT license](https://img.shields.io/badge/license-MIT-222222)](LICENSE) [![Package version](https://img.shields.io/badge/version-1.0.0--rc.7-eb0000)](CHANGELOG.md)
 
 [Live site](https://alpinaui.com/) · [Start here](https://alpinaui.com/start-here/) · [Documentation](https://alpinaui.com/docs/) · [Designer kit](https://alpinaui.com/kit/) · [Design principles](https://alpinaui.com/principles/) · [Changelog](CHANGELOG.md) · [API stability](docs/api-stability.md)
 
@@ -23,7 +23,7 @@ In an existing React 18.2 or 19 app, install the package from npm and import the
 npm install alpina-ui@next
 ```
 
-Each release is also hosted as an archive with its SHA-512 digest: `npm install https://alpinaui.com/alpina-ui-1.0.0-rc.6.tgz`.
+Each release is also hosted as an archive with its SHA-512 digest: `npm install https://alpinaui.com/alpina-ui-1.0.0-rc.7.tgz`.
 
 ```tsx
 import { Button, CurrencyCHF } from 'alpina-ui'

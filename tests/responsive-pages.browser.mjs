@@ -179,7 +179,7 @@ try {
           await page.keyboard.press('Escape')
         }
       }
-      if (route === '/themes/') assert.match(await page.locator('#theme-preview time').innerText(), /March/)
+      if (route === '/themes/') assert.match(await page.locator('[data-theme-preview="light"] time').innerText(), /March/)
     }
   }))
   assert.deepEqual(failures.sort(), [], 'Public page layout regressions')

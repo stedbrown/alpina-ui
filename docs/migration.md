@@ -145,7 +145,7 @@ These 66 families follow the project's recorded shadcn/ui component index. Each 
 | Select and Native Select | Both Alpina entries use an HTML `select` with a styled popup and native keyboard navigation. The shadcn/ui Select family describes a composite control with a trigger and list. [shadcn/ui Select](https://ui.shadcn.com/docs/components/base/select) |
 | Slider | Alpina uses a single-value HTML slider. shadcn/ui also documents a slider with multiple thumbs. [shadcn/ui Slider](https://ui.shadcn.com/docs/components/base/slider) |
 
-## The 31 additional entries in Alpina 1.0.0-rc.6
+## The 31 additional entries in Alpina 1.0.0-rc.7
 
 | Purpose | Alpina entries |
 | --- | --- |

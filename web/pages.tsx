@@ -3,7 +3,7 @@ import { Masthead, repository } from './masthead.js'
 export { Masthead } from './masthead.js'
 import type { ReactNode } from 'react'
 import {
-  Avatar, Grid, GridItem, Icon, Label, Separator, Switch,
+  Avatar, Grid, GridItem, Icon, Separator,
   Stack, TextLink, Typography,
 } from 'alpina-ui'
 import { GridStudy, Installation, MigrationStudy } from './landing-sections.js'
@@ -88,13 +88,7 @@ export function Landing({ version, count, command, islands, migration }: { versi
             <Typography variant="folio" numeric aria-hidden="true">01</Typography>
             <Typography variant="label">Open-source React library</Typography>
           </Stack>
-          <Stack direction="row" gap={3}>
-            <TextLink variant="action" href="/start-here/">Start here</TextLink>
-            <Stack direction="row" gap={2} inset={1} surface="paper" scripting="enabled">
-              <Switch id="cover-guides-toggle" aria-controls="cover-guides" defaultChecked />
-              <Label htmlFor="cover-guides-toggle">Column guides</Label>
-            </Stack>
-          </Stack>
+          <TextLink variant="action" href="/start-here/">Start here</TextLink>
         </Stack></GridItem>
         <GridItem entranceStep={1}><Typography as="h1" variant="masthead" responsive id="home-title">Swiss design<br /> for React.</Typography></GridItem>
         {[

@@ -1,7 +1,4 @@
-import { enhanceCover } from './cover-controls.js'
 import { enhanceSpecimen } from './type-specimen-controls.js'
-
-enhanceCover()
 
 const specimen = document.getElementById('type-specimen')
 if (specimen) enhanceSpecimen(specimen)

@@ -8,7 +8,6 @@ try {
   await page.goto(siteOrigin)
   await page.evaluate(() => document.fonts.ready)
   const cover = page.getByRole('region', { name: 'Swiss design for React.' })
-  const control = cover.getByRole('switch', { name: 'Column guides' })
   async function checkFigures(width) {
     const figures = await cover.locator('[data-role="title"][data-numeric]').evaluateAll(nodes => nodes.map(node => {
       const run = new Range()
@@ -56,9 +55,7 @@ try {
       if (i > 0) assert.notEqual(field.color, fields[i - 1].color, 'Adjacent chapter fields ' + i + ' and ' + (i + 1) + ' in ' + scheme)
     }
   }
-  await control.press('Space')
-  assert.ok(await cover.locator('#cover-guides').isHidden())
-  await control.press('Space')
+  assert.equal(await cover.getByRole('switch').count(), 0, 'The cover has no guide switch')
   assert.ok(await cover.locator('#cover-guides').isVisible())
   for (const preference of ['no-preference', 'reduce']) {
     await page.emulateMedia({ reducedMotion: preference })
@@ -100,7 +97,7 @@ try {
     assert.equal(await link.getAttribute('hreflang'), lang)
     assert.equal(await link.getAttribute('href'), '/docs/guides/start/' + (lang === 'en' ? '' : lang + '/'))
   }
-  console.log('The live cover fills the viewport, its headline fits the grid and its column guides work from the keyboard.')
+  console.log('The live cover fills the viewport, its headline fits the grid and its column guides stay visible.')
 } finally {
   await browser.close()
 }

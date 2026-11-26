@@ -4,7 +4,7 @@
 
 Open-source React components built on the Swiss typographic grid. Compose forms, tables and charts with a four-pixel rhythm, a measured type scale and one red accent.
 
-[![CI](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml) [![MIT license](https://img.shields.io/badge/license-MIT-222222)](LICENSE) [![Package version](https://img.shields.io/badge/version-{{BADGE_VERSION}}-eb0000)](CHANGELOG.md)
+[![CI](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml) [![MIT license](https://img.shields.io/badge/license-MIT-222222)](LICENSE) [![Package version](https://img.shields.io/badge/version-{{BADGE_VERSION}}-eb0000)](CHANGELOG.md) [![npm](https://img.shields.io/npm/v/alpina-ui/{{NPM_TAG}}?label=npm%20{{NPM_TAG}}&color=222222)](https://www.npmjs.com/package/alpina-ui) [![GitHub release](https://img.shields.io/github/v/release/stedbrown/alpina-ui?include_prereleases&label=release&color=222222)](https://github.com/stedbrown/alpina-ui/releases)
 
 [Live site]({{SITE}}/) · [Start here]({{SITE}}/start-here/) · [Documentation]({{SITE}}/docs/) · [Designer kit]({{SITE}}/kit/) · [Design principles]({{SITE}}/principles/) · [Changelog](CHANGELOG.md) · [API stability](docs/api-stability.md)
 
@@ -34,6 +34,10 @@ export function Checkout() {
 ```
 
 To own the source, run `npx --no-install alpina add button`. To copy a complete page, use `npx --no-install alpina add block/dashboard`. Import `alpina-ui/fonts.css` for self-hosted Inter. Components establish the typeface even in a document with an unstyled body. A Tailwind v4 token bridge is also available. [Installation guide]({{SITE}}/docs/) · [CLI commands]({{SITE}}/docs/guides/cli/)
+
+## Versions
+
+{{VERSIONS}}
 
 ## What comes with Alpina
 

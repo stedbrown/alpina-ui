@@ -5,7 +5,7 @@
 
 Open-source React components built on the Swiss typographic grid. Compose forms, tables and charts with a four-pixel rhythm, a measured type scale and one red accent.
 
-[![CI](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml) [![MIT license](https://img.shields.io/badge/license-MIT-222222)](LICENSE) [![Package version](https://img.shields.io/badge/version-1.0.0--rc.7-eb0000)](CHANGELOG.md)
+[![CI](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/stedbrown/alpina-ui/actions/workflows/ci.yml) [![MIT license](https://img.shields.io/badge/license-MIT-222222)](LICENSE) [![Package version](https://img.shields.io/badge/version-1.0.0--rc.7-eb0000)](CHANGELOG.md) [![npm](https://img.shields.io/npm/v/alpina-ui/next?label=npm%20next&color=222222)](https://www.npmjs.com/package/alpina-ui) [![GitHub release](https://img.shields.io/github/v/release/stedbrown/alpina-ui?include_prereleases&label=release&color=222222)](https://github.com/stedbrown/alpina-ui/releases)
 
 [Live site](https://alpinaui.com/) · [Start here](https://alpinaui.com/start-here/) · [Documentation](https://alpinaui.com/docs/) · [Designer kit](https://alpinaui.com/kit/) · [Design principles](https://alpinaui.com/principles/) · [Changelog](CHANGELOG.md) · [API stability](docs/api-stability.md)
 
@@ -35,6 +35,34 @@ export function Checkout() {
 ```
 
 To own the source, run `npx --no-install alpina add button`. To copy a complete page, use `npx --no-install alpina add block/dashboard`. Import `alpina-ui/fonts.css` for self-hosted Inter. Components establish the typeface even in a document with an unstyled body. A Tailwind v4 token bridge is also available. [Installation guide](https://alpinaui.com/docs/) · [CLI commands](https://alpinaui.com/docs/guides/cli/)
+
+## Versions
+
+| Channel | Version | Install |
+| --- | --- | --- |
+| npm `next` | 1.0.0-rc.7 | `npm install alpina-ui@next` |
+| Checksummed archive | 1.0.0-rc.7 | `npm install https://alpinaui.com/alpina-ui-1.0.0-rc.7.tgz` |
+| `main` branch | Changes after 1.0.0-rc.7 | Live on [alpinaui.com](https://alpinaui.com/) before the next release |
+
+91 component entries are Stable and covered by the 1.x compatibility policy. 7 remain Beta while their [review](docs/beta-review.md) collects device, printing and assistive-technology evidence. [Component status](https://alpinaui.com/status/) · [API stability](docs/api-stability.md)
+
+**On `main`, not yet on npm**
+
+- BarChart, LineChart, Sparkline, ChartTable, GridOverlay and UidInput join the 1.x compatibility guarantee.
+- Charts accept `locale` for their default labels in the four national languages and English.
+- Calendar lets people jump to a month and a year from two menus.
+- UidInput and `isSwissUid` accept a UID typed with spaces, such as CHE 109 322 551.
+- The MCP server adds `check_design` and the CLI adds `alpina check`.
+- SwissLocalityCombobox finds a locality by postcode, locality or municipality name and returns its political municipality, BFS number and canton.
+- The packaged swisstopo directory adds the political municipality and its BFS number to each locality.
+
+**Recent releases**
+
+- **1.0.0-rc.7** · 26 November 2026 · 5 changes
+- **1.0.0-rc.6** · 25 November 2026 · 4 changes
+- **1.0.0-rc.5** · 25 November 2026 · 3 changes
+
+[Full changelog](CHANGELOG.md) · [GitHub releases](https://github.com/stedbrown/alpina-ui/releases)
 
 ## What comes with Alpina
 

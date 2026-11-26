@@ -75,3 +75,38 @@ test('negative bars have an independent hatch, and line axes label an intermedia
     assert.match(line, /class="al-series-guides"[\s\S]*?stroke-dasharray="2 4"/)
   }
 })
+
+test('a missing reading keeps its place in single-series plots and tables', () => {
+  const data = [{ label: 'Jan', value: 4 }, { label: 'Feb', value: NaN }, { label: 'Mar', value: 2 }, { label: 'Apr', value: 6 }]
+  for (const component of series) {
+    const markup = html(component, { data })
+    assert.match(markup, /<th scope="row">Feb<\/th>(<td><\/td>)?<td>—<\/td>/)
+    assert.doesNotMatch(markup, /NaN/)
+  }
+  assert.equal((html(BarChart, { data }).match(/class="al-value-bar"/g) ?? []).length, 3)
+  const line = html(LineChart, { data })
+  assert.equal((line.match(/<polyline /g) ?? []).length, 1)
+  assert.match(line, /<circle cx="0%"[^>]*r="2"/)
+  assert.match(line, /class="al-series-middle"[^>]*>Feb</)
+  assert.match(html(Sparkline, { data: [...data, { label: 'May', value: NaN }] }), /<span>6<\/span>/)
+})
+
+test('a locale selects the default labels and Swiss digit grouping', () => {
+  const data = [{ label: '2025', value: 12500.5 }, { label: '2026', value: -1250 }]
+  assert.match(html(BarChart, { data }), /<td>12’500.5<\/td>/)
+  const expected = {
+    'de-CH': ['Datentabelle', 'Kategorie', 'Wert', '12’500.5'],
+    'fr-CH': ['Tableau des données', 'Catégorie', 'Valeur', '12 500,5'],
+    'it-CH': ['Tabella dei dati', 'Categoria', 'Valore', '12’500.5'],
+    'rm-CH': ['Tabella da datas', 'Categoria', 'Valur', '12 500,5'],
+  }
+  for (const [locale, [table, category, value, number]] of Object.entries(expected)) {
+    const markup = html(LineChart, { data, locale })
+    for (const text of [table, category, value, number]) assert.ok(markup.includes('>' + text + '<'), locale + ' ' + text)
+    assert.ok(html(LineChart, { data, locale, series: [{ name: 'A', data }] }).includes('>' + table + '<'))
+    assert.ok(html(ChartTable, { data, locale }).includes('>' + { 'de-CH': 'Vergleich', 'fr-CH': 'Comparaison', 'it-CH': 'Confronto', 'rm-CH': 'Cumparegliaziun' }[locale] + '<'))
+  }
+  assert.match(html(Sparkline, { data: [], locale: 'it-CH' }), /Nessun dato/)
+  assert.match(html(Sparkline, { data, loading: true, locale: 'de-CH' }), /Daten werden geladen…/)
+  assert.match(html(BarChart, { data, locale: 'de-CH', formatValue: n => n + ' t' }), /<td>12500.5 t<\/td>/)
+})

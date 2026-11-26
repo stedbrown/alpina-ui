@@ -6,8 +6,8 @@
   },
   "ahv-input": {
     "stage": "Stable",
-    "changed": "2026-11-25",
-    "source": "5827d46bd125a91a2726"
+    "changed": "2026-11-26",
+    "source": "eb20a8379d00df5101b3"
   },
   "alert": {
     "stage": "Stable",
@@ -45,9 +45,9 @@
     "source": "ae35905081de17c1f435"
   },
   "bar-chart": {
-    "stage": "Beta",
-    "changed": "2026-11-25",
-    "source": "c06a83c4520d0cbca047"
+    "stage": "Stable",
+    "changed": "2026-11-26",
+    "source": "b54a1ccadd590131ed64"
   },
   "breadcrumb": {
     "stage": "Stable",
@@ -71,8 +71,8 @@
   },
   "calendar": {
     "stage": "Stable",
-    "changed": "2026-11-25",
-    "source": "3efce861583282aee2d0"
+    "changed": "2026-11-26",
+    "source": "c2574689d21137f07042"
   },
   "canton-combobox": {
     "stage": "Stable",
@@ -100,9 +100,9 @@
     "source": "1f74b0b33de6f136d0c1"
   },
   "chart-table": {
-    "stage": "Beta",
-    "changed": "2026-11-25",
-    "source": "44fc08668c0fc21d6309"
+    "stage": "Stable",
+    "changed": "2026-11-26",
+    "source": "429cf59f863e4a2137ac"
   },
   "checkbox": {
     "stage": "Stable",
@@ -146,8 +146,8 @@
   },
   "date-picker": {
     "stage": "Stable",
-    "changed": "2026-11-25",
-    "source": "f200541e71edaa610276"
+    "changed": "2026-11-26",
+    "source": "9a70248e6aac371f7e26"
   },
   "description-list": {
     "stage": "Stable",
@@ -200,7 +200,7 @@
     "source": "b26f25eba07fb551bb16"
   },
   "grid-overlay": {
-    "stage": "Beta",
+    "stage": "Stable",
     "changed": "2026-11-25",
     "source": "918534ad3572decd90a0"
   },
@@ -211,8 +211,8 @@
   },
   "iban-input": {
     "stage": "Stable",
-    "changed": "2026-11-25",
-    "source": "a20e7194216fd3317f89"
+    "changed": "2026-11-26",
+    "source": "034769adb4962a4b2d3a"
   },
   "icon": {
     "stage": "Stable",
@@ -236,8 +236,8 @@
   },
   "invoice-document": {
     "stage": "Beta",
-    "changed": "2026-11-25",
-    "source": "1623a2fee8d5577f717b"
+    "changed": "2026-11-26",
+    "source": "89f1c74bd1a8d420fc2f"
   },
   "item": {
     "stage": "Stable",
@@ -256,13 +256,13 @@
   },
   "letter": {
     "stage": "Beta",
-    "changed": "2026-11-25",
-    "source": "0f91d53c96ce0d3f92c9"
+    "changed": "2026-11-26",
+    "source": "0ff681bd3b314f1ced23"
   },
   "line-chart": {
-    "stage": "Beta",
-    "changed": "2026-11-25",
-    "source": "cf482f5778f1363f9400"
+    "stage": "Stable",
+    "changed": "2026-11-26",
+    "source": "d371f6dd994a3a549a19"
   },
   "locale-select": {
     "stage": "Stable",
@@ -311,8 +311,8 @@
   },
   "phone-input": {
     "stage": "Stable",
-    "changed": "2026-11-25",
-    "source": "55ebc9e9c985b3aa1b55"
+    "changed": "2026-11-26",
+    "source": "f0b6eb517f95e01298c4"
   },
   "popover": {
     "stage": "Stable",
@@ -331,8 +331,8 @@
   },
   "qr-bill-scanner": {
     "stage": "Beta",
-    "changed": "2026-11-25",
-    "source": "3afd465e16bb2a337211"
+    "changed": "2026-11-26",
+    "source": "5e12daf978d308ad9c15"
   },
   "questionnaire": {
     "stage": "Stable",
@@ -385,9 +385,9 @@
     "source": "cf60941fa57e448974e8"
   },
   "sparkline": {
-    "stage": "Beta",
-    "changed": "2026-11-25",
-    "source": "0b506f6c76e1b4a12e45"
+    "stage": "Stable",
+    "changed": "2026-11-26",
+    "source": "1b69b4f17fc323371533"
   },
   "spinner": {
     "stage": "Stable",
@@ -407,7 +407,7 @@
   "swiss-address-form": {
     "stage": "Stable",
     "changed": "2026-11-26",
-    "source": "b3cf1977e2e31d96d528"
+    "source": "ad2689c248ebf64d96af"
   },
   "swiss-date": {
     "stage": "Stable",
@@ -421,13 +421,13 @@
   },
   "swiss-postal-code-input": {
     "stage": "Stable",
-    "changed": "2026-11-25",
-    "source": "583e0f8a9babcdafcba8"
+    "changed": "2026-11-26",
+    "source": "1172f096d18ca2ccb790"
   },
   "swiss-qr-bill": {
     "stage": "Beta",
-    "changed": "2026-11-25",
-    "source": "13e8aa0da4c83ce81bf3"
+    "changed": "2026-11-26",
+    "source": "4d011ceae5d9dd957d89"
   },
   "switch": {
     "stage": "Stable",
@@ -485,8 +485,8 @@
     "source": "e3f47ca65799fff3ef18"
   },
   "uid-input": {
-    "stage": "Beta",
-    "changed": "2026-11-25",
-    "source": "e01b617e72ef6e4b1810"
+    "stage": "Stable",
+    "changed": "2026-11-26",
+    "source": "73339b7923a6f5da2068"
   }
 }

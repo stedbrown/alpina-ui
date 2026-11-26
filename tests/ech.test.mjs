@@ -5,6 +5,8 @@ import { isSwissUid, formatSwissUid, toEchMailAddress } from 'alpina-ui'
 test('eCH-0108 UID check digit accepts the official example, zero and rejects an unassignable ten', () => {
   assert.equal(formatSwissUid('che109322551'), 'CHE-109.322.551')
   assert.equal(isSwissUid('CHE-100.000.070'), true)
+  for (const typed of ['CHE 109 322 551', 'CHE-109 322 551', 'che 109.322.551']) assert.equal(formatSwissUid(typed), 'CHE-109.322.551', typed)
+  assert.equal(isSwissUid('CHE  109 322 551'), false)
   for (const id of ['CHE-109.322.552', 'CHE-123.456.789', 'CHE-000.000.000', '109322551', 'CHE-109.322.551 MWST', 'CH109322551']) {
     assert.equal(isSwissUid(id), false, id)
   }

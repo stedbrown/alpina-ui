@@ -1,4 +1,5 @@
 import { searchComponents } from './search-components.mjs'
+import { checkDesign, formatFindings } from './design-check.mjs'
 import { once } from 'node:events'
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
@@ -30,6 +31,10 @@ const tools = [
     slug: string('Guide identifier returned by this tool, for example swiss or design.'),
     language: string('Optional guide language. Start and Swiss are available in en, it, de and fr.'),
   }),
+  tool('check_design', 'Review React, CSS or HTML you wrote against Alpina’s Swiss typographic rules before you finish. Reports gradients, rounded corners, centered text, hard-coded colors, floating shadows, other typefaces, utility classes on Alpina components, nested cards and extra accent colors, each with the replacement. Rhythm, alignment and hierarchy still need your own review against the design guide.', {
+    source: string('The full text of one file.'),
+    file: string('Optional file name used in the report.'),
+  }, ['source']),
 ]
 
 const object = (value) => value !== null && typeof value === 'object' && !Array.isArray(value)
@@ -53,6 +58,7 @@ async function callTool(root, registry, guides, name, args) {
       ? matches.map((entry) => entry.name + ' (' + entry.group + ') — ' + entry.summary).join('\n')
       : 'No matching components.')
   }
+  if (name === 'check_design') return resultText(formatFindings(checkDesign(args.source), args.file ?? 'source'))
   if (name === 'get_guide') {
     if (args.slug === undefined) return resultText([...guides.keys()].join('\n'))
     const guide = guides.get(args.slug)

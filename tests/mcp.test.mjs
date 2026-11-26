@@ -36,7 +36,7 @@ test('stdio client can discover and read the installed registry, types, source a
   const result = replies.map((r) => r.result)
   assert.equal(result[0].protocolVersion, hello.params.protocolVersion)
   assert.equal(result[0].serverInfo.version, JSON.parse(read('registry.json')).version)
-  assert.deepEqual(result[1].tools.map((tool) => tool.name), ['search_components', 'get_component', 'get_guide'])
+  assert.deepEqual(result[1].tools.map((tool) => tool.name), ['search_components', 'get_component', 'get_guide', 'check_design'])
   assert.match(result[2].content[0].text, /^dropdown-menu \(interactive\) — .+/)
   assert.ok(result[3].content[0].text.includes(read('dist/interactive/dropdown-menu.d.ts').trim()))
   assert.ok(result[3].content[0].text.includes(JSON.parse(read('registry.json')).items.find(entry => entry.name === 'dropdown-menu').usage))

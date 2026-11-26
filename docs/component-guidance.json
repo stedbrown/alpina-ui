@@ -357,7 +357,7 @@
   },
   "calendar": {
     "use": "Let people inspect a whole month or compare candidate appointment dates with neighbouring days and holidays.",
-    "avoid": "Use a text date field for a known date far from the current month, such as a birth date.",
+    "avoid": "Use a text date field when people already know the exact date by heart, such as a birth date. The month and year menus suit a date they still need to find.",
     "access": "Name the calendar and preserve the focus indicator while moving between dates by keyboard. Give holidays a textual name in addition to the visual mark.",
     "content": "Use the local month name and the full holiday name where space allows. Explain in one sentence what a marked date means for this service.",
     "example": {

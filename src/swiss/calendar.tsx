@@ -3,8 +3,10 @@ import { useSwissLocale } from './locale-context.internal.js'
 
 import { forwardRef, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import { Button } from '../ui/button.js'
+import { Select } from '../ui/select.js'
 import { useControllable } from '../interactive/controllable.js'
 import { addDays, addMonths, calendarLabels, calendarText, calendarWeekNames, clampDay, firstCivilDay, isoWeek, lastCivilDay, mondayIndex, monthLength, zurichToday } from './calendar-dates.js'
+import { calendarMonthNames, calendarYears } from './calendar-menus.internal.js'
 import { formatSwissDate, parseCivilDate } from './format-swiss-date.js'
 import { type SwissLocale } from './locales.js'
 import type { CantonCode } from './cantons.js'
@@ -32,12 +34,15 @@ export interface CalendarProps {
   holidayRegion?: SwissHolidayRegion
   /** Add documented customary office closure days to the statutory schedule. */
   observance?: SwissHolidayObservance
+  /** `dropdown` lets people jump to a month and year from two menus. `label` shows the month as text. */
+  captionLayout?: 'dropdown' | 'label'
   className?: string
 }
 
 export const Calendar = forwardRef<HTMLElement, CalendarProps>(function Calendar(
   { value, defaultValue = '', onValueChange, defaultMonth, min = firstCivilDay, max = lastCivilDay, locale: requestedLocale,
-    showWeekNumbers = false, isDateDisabled, dayStatus, disableHolidays = false, canton, holidayRegion, observance, className = '' },
+    showWeekNumbers = false, isDateDisabled, dayStatus, disableHolidays = false, canton, holidayRegion, observance,
+    captionLayout = 'dropdown', className = '' },
   ref,
 ) {
   const locale = useSwissLocale(requestedLocale)
@@ -102,6 +107,16 @@ export const Calendar = forwardRef<HTMLElement, CalendarProps>(function Calendar
     }
   }
 
+  // Keep the day of the month when jumping, as PageUp and PageDown do, within the bounds.
+  function jump(targetYear: number, targetMonth: number) {
+    const target = String(targetYear).padStart(4, '0') + '-' + String(targetMonth).padStart(2, '0') + '-01'
+    const day = clampDay(target.slice(0, 8) + String(Math.min(Number(current.slice(8)), monthLength(target))).padStart(2, '0'), min, max)
+    setCursor(day)
+  }
+  const monthNames = useMemo(() => calendarMonthNames(locale), [locale])
+  const years = useMemo(() => calendarYears(year, min, max, today), [year, min, max, today])
+  const monthNumber = Number(month.slice(5))
+
   function moveMonth(offset: number) {
     const day = clampDay(addMonths(current, offset), min, max)
     const boundary = offset < 0 ? min : max
@@ -112,7 +127,18 @@ export const Calendar = forwardRef<HTMLElement, CalendarProps>(function Calendar
   return (
     <section ref={ref} className={('al-calendar ' + className).trim()} lang={locale} aria-labelledby={id}>
       <div className="al-calendar-head">
-        <strong id={id} aria-live="polite" aria-atomic="true">{labels.month}</strong>
+        <strong id={id} aria-live="polite" aria-atomic="true" className={captionLayout === 'dropdown' ? 'al-calendar-caption-hidden' : undefined}>{labels.month}</strong>
+        {captionLayout === 'dropdown' && <span className="al-calendar-pickers">
+          <Select className="al-calendar-select" aria-label={text.month} value={monthNumber}
+            onChange={event => jump(year, Number(event.currentTarget.value))}>
+            {monthNames.map((name, i) => { const value = String(year).padStart(4, '0') + '-' + String(i + 1).padStart(2, '0')
+              return <option key={i} value={i + 1} disabled={value < min.slice(0, 7) || value > max.slice(0, 7)}>{name}</option> })}
+          </Select>
+          <Select className="al-calendar-select" aria-label={text.year} value={year}
+            onChange={event => jump(Number(event.currentTarget.value), monthNumber)}>
+            {years.map(option => <option key={option} value={option}>{option}</option>)}
+          </Select>
+        </span>}
         <Button size="sm" variant="ghost" aria-label={text.prev} disabled={month <= min.slice(0, 7)} onClick={() => moveMonth(-1)}>‹</Button>
         <Button size="sm" variant="ghost" aria-label={text.next} disabled={month >= max.slice(0, 7)} onClick={() => moveMonth(1)}>›</Button>
       </div>

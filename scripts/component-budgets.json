@@ -45,9 +45,9 @@
     "css": 512
   },
   "bar-chart": {
-    "js": 2560,
+    "js": 3392,
     "lazy": 0,
-    "css": 1408
+    "css": 1472
   },
   "breadcrumb": {
     "js": 1152,
@@ -70,9 +70,9 @@
     "css": 192
   },
   "calendar": {
-    "js": 7808,
+    "js": 9984,
     "lazy": 0,
-    "css": 1728
+    "css": 2560
   },
   "canton-combobox": {
     "js": 5120,
@@ -100,9 +100,9 @@
     "css": 896
   },
   "chart-table": {
-    "js": 1344,
+    "js": 2176,
     "lazy": 0,
-    "css": 1408
+    "css": 1472
   },
   "checkbox": {
     "js": 384,
@@ -145,9 +145,9 @@
     "css": 1856
   },
   "date-picker": {
-    "js": 9408,
+    "js": 11584,
     "lazy": 0,
-    "css": 2688
+    "css": 3456
   },
   "description-list": {
     "js": 320,
@@ -260,9 +260,9 @@
     "css": 1280
   },
   "line-chart": {
-    "js": 2816,
+    "js": 3776,
     "lazy": 0,
-    "css": 1408
+    "css": 1472
   },
   "locale-select": {
     "js": 2304,
@@ -385,9 +385,9 @@
     "css": 512
   },
   "sparkline": {
-    "js": 1920,
+    "js": 2880,
     "lazy": 0,
-    "css": 1408
+    "css": 1472
   },
   "spinner": {
     "js": 320,

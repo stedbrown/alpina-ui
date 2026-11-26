@@ -307,8 +307,11 @@
         "ui/plot-axis.tsx",
         "ui/plot-frame.tsx",
         "ui/number-text.ts",
+        "swiss/format-swiss-number.ts",
+        "swiss/locales.ts",
         "ui/chart-datum.ts",
-        "ui/plots.css"
+        "ui/plots.css",
+        "swiss/UNICODE-LICENSE.txt"
       ]
     },
     {
@@ -324,9 +327,12 @@
         "ui/plot-axis.tsx",
         "ui/plot-frame.tsx",
         "ui/number-text.ts",
+        "swiss/format-swiss-number.ts",
+        "swiss/locales.ts",
         "ui/chart-datum.ts",
         "ui/plots.css",
-        "ui/line-plot.tsx"
+        "ui/line-plot.tsx",
+        "swiss/UNICODE-LICENSE.txt"
       ]
     },
     {
@@ -340,10 +346,13 @@
         "ui/sparkline.tsx",
         "ui/plot-frame.tsx",
         "ui/number-text.ts",
+        "swiss/format-swiss-number.ts",
+        "swiss/locales.ts",
         "ui/chart-datum.ts",
         "ui/plots.css",
         "ui/line-plot.tsx",
-        "ui/plot-axis.tsx"
+        "ui/plot-axis.tsx",
+        "swiss/UNICODE-LICENSE.txt"
       ]
     },
     {
@@ -357,8 +366,11 @@
         "ui/chart-table.tsx",
         "ui/plot-frame.tsx",
         "ui/number-text.ts",
+        "swiss/format-swiss-number.ts",
+        "swiss/locales.ts",
         "ui/chart-datum.ts",
-        "ui/plots.css"
+        "ui/plots.css",
+        "swiss/UNICODE-LICENSE.txt"
       ]
     },
     {
@@ -1554,9 +1566,14 @@
         "ui/button.tsx",
         "ui/slot.tsx",
         "ui/button.css",
+        "ui/select.tsx",
+        "ui/select-enhancement.internal.tsx",
+        "ui/select-picker.internal.ts",
+        "ui/select.css",
         "interactive/controllable.ts",
         "swiss/calendar-dates.ts",
         "swiss/format-swiss-date.ts",
+        "swiss/calendar-menus.internal.ts",
         "swiss/cantons.ts",
         "swiss/holidays.ts",
         "swiss/calendar.css",
@@ -1584,8 +1601,13 @@
         "ui/slot.tsx",
         "ui/button.css",
         "swiss/calendar.tsx",
+        "ui/select.tsx",
+        "ui/select-enhancement.internal.tsx",
+        "ui/select-picker.internal.ts",
+        "ui/select.css",
         "swiss/calendar-dates.ts",
         "swiss/format-swiss-date.ts",
+        "swiss/calendar-menus.internal.ts",
         "swiss/cantons.ts",
         "swiss/holidays.ts",
         "swiss/calendar.css",

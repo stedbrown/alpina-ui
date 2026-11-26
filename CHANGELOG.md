@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- **Stable** BarChart, LineChart, Sparkline, ChartTable, GridOverlay and UidInput join the 1.x compatibility guarantee.
+- **Public API** Charts accept `locale` for their default labels in the four national languages and English. Values use Swiss digit grouping by default, such as 12’500.5. A missing reading keeps its place in a single series: the line breaks, the bar is left out and the table shows a dash.
+- **Public API** Calendar lets people jump to a month and a year from two menus. The year menu spans the bounds, or a century back and twenty years ahead. `captionLayout="label"` keeps the previous text heading.
+- UidInput and `isSwissUid` accept a UID typed with spaces, such as CHE 109 322 551.
 - **Public API** SwissLocalityCombobox finds a locality by postcode, locality or municipality name and returns its political municipality, BFS number and canton. `searchSwissLocalities` offers the same search without a component. The search ignores accents and case and accepts umlaut spellings such as Zuerich.
 - The packaged swisstopo directory adds the political municipality and its BFS number to each locality. `lookupSwissPostalCode` returns the same results as before. The deferred directory download grows from 30 to 58 kB compressed.
 

@@ -1,6 +1,6 @@
 import { CategoryAxis, LineGuides } from './plot-axis.js'
 import type { Ref } from 'react'
-import { PlotFrame, scaleSeries, ValueBar, type PlotProps } from './plot-frame.js'
+import { MISSING, plotLabels, PlotFrame, scaleSeries, ValueBar, type PlotProps } from './plot-frame.js'
 import type { ChartDatum } from './chart-datum.js'
 
 export interface ChartSeries {
@@ -16,12 +16,14 @@ export interface ComparisonPlotProps extends Omit<PlotProps, 'data'> {
 
 function dash(index: number) { return index === 0 ? undefined : (index * 2 + 2) + ' 3' }
 
-export function ComparisonPlot({ series = [], kind, elementRef, categoryLabel = 'Category', tableLabel = 'Data table', ...props }:
+export function ComparisonPlot({ series = [], kind, elementRef, categoryLabel, tableLabel, ...props }:
   Omit<ComparisonPlotProps, 'data'> & { kind: 'bars' | 'lines'; elementRef: Ref<HTMLElement> }) {
   const categories = [...new Set(series.flatMap(group => group.data.map(point => point.label)))]
   const observations = series.flatMap(group => group.data).filter(point => Number.isFinite(point.value))
   const values = series.map(group => new Map(group.data.filter(point => Number.isFinite(point.value)).map(point => [point.label, point.value])))
   const { min, max, position } = scaleSeries(observations, kind === 'bars')
+  const text = plotLabels(props.locale)
+  const caption = tableLabel ?? text.table
   const x = (i: number) => categories.length === 1 ? 50 : 100 * i / (categories.length - 1)
   const y = (value: number) => max === min ? 72 : 140 - position(value) * 1.36
 
@@ -36,7 +38,7 @@ export function ComparisonPlot({ series = [], kind, elementRef, categoryLabel = 
         const value = values[index].get(label)
         return <li key={index} data-series={index % 3}><span>{group.name}</span>
           {value === undefined ? <span /> : <ValueBar value={value} position={position} />}
-          <span>{value === undefined ? '—' : format(value)}</span></li>
+          <span>{value === undefined ? MISSING : format(value)}</span></li>
       })}</ol></div>)}</div> : <div className="al-series-line" aria-hidden="true">
       <div className="al-series-scale" data-flat={min === max || undefined}><span>{format(max)}</span>{min !== max && <span>{format(min)}</span>}</div>
       <svg width="100%" height="144" className="al-series-trace">
@@ -60,11 +62,11 @@ export function ComparisonPlot({ series = [], kind, elementRef, categoryLabel = 
       </svg>
       <CategoryAxis labels={categories} />
     </div>}
-    <details><summary>{tableLabel}</summary><div className="al-series-table-scroll" role="region" aria-label={tableLabel} tabIndex={0}><table className="al-series-table">
-      <thead><tr><th scope="col">{categoryLabel}</th>{series.map((group, i) => <th scope="col" key={i}>{group.name}</th>)}</tr></thead>
+    <details><summary>{caption}</summary><div className="al-series-table-scroll" role="region" aria-label={caption} tabIndex={0}><table className="al-series-table">
+      <thead><tr><th scope="col">{categoryLabel ?? text.category}</th>{series.map((group, i) => <th scope="col" key={i}>{group.name}</th>)}</tr></thead>
       <tbody>{categories.map(label => <tr key={label}><th scope="row">{label}</th>{values.map((group, i) => {
         const value = group.get(label)
-        return <td key={i}>{value === undefined ? '—' : format(value)}</td>
+        return <td key={i}>{value === undefined ? MISSING : format(value)}</td>
       })}</tr>)}</tbody>
     </table></div></details>
   </>} />

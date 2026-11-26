@@ -2,6 +2,15 @@
 .al-calendar-head { display: flex; align-items: center; border-block: var(--al-unit) solid var(--al-line);
   border-image: linear-gradient(var(--al-line) 0 0) 1 / 1px 0; padding-block: var(--al-space-2); }
 .al-calendar-head strong { margin-inline-end: auto; }
+.al-calendar-head .al-calendar-caption-hidden {
+  position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; margin: 0;
+}
+.al-calendar-pickers { display: flex; flex-wrap: wrap; gap: 0 var(--al-space-3); margin-inline-end: auto; min-inline-size: 0; }
+.al-calendar .al-calendar-select {
+  inline-size: auto; min-block-size: var(--al-space-8); padding: 0 var(--al-space-6) 0 0;
+  border-width: 0 0 1px; border-radius: 0; background-color: transparent; box-shadow: none;
+  font-weight: 650; font-variant-numeric: tabular-nums;
+}
 .al-calendar-head .al-button { min-inline-size: 2.25rem; font-size: 1.25rem; }
 .al-calendar table { border-collapse: collapse; table-layout: fixed; width: 100%; text-align: center; }
 .al-calendar th { font-size: var(--al-type-caption); line-height: var(--al-leading-caption); font-weight: 500; color: var(--al-muted); padding-block: var(--al-space-2); }
@@ -41,6 +50,7 @@
 @container calendar (max-width: 17rem) {
   .al-calendar-head { display: grid; grid-template-columns: 1fr 1fr; }
   .al-calendar-head strong { grid-column: 1 / -1; overflow-wrap: break-word; }
+  .al-calendar-pickers { grid-column: 1 / -1; margin-block-end: var(--al-space-1); }
   .al-calendar td button { font-size: .875em; }
   .al-calendar-short { display: none; }
   .al-calendar-narrow { display: inline; }

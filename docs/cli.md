@@ -85,3 +85,11 @@ For each changed file, `--patch` runs the local Git executable to compare the tw
 4. Try the component in your application, then repeat `diff` to see which local changes you retained.
 
 A completed comparison exits with code 0 even when it finds differences. An unknown argument, invalid path, or read error produces exit code 1.
+
+## Review a page against the design rules
+
+```sh
+npx --no-install alpina check src/app/page.tsx src/app/styles.css
+```
+
+The check reads React, CSS and HTML files and lists each line that uses a gradient, rounded corners, centered text, a hard-coded color, a floating shadow, another typeface, utility classes on an Alpina component, a card inside a card or more than one accent color. Each finding names the Alpina replacement. Add the comment `alpina-design-ignore` to a line that needs an exception. The command exits with code 1 when it finds something, so it can guard a pull request. Alignment, rhythm and hierarchy still need a person, guided by the [design guide](design.md).

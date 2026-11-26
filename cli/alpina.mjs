@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url'
 const usage = [
   'alpina list',
   'alpina mcp',
+  'alpina check src/app/page.tsx …',
   'alpina init [--dir components/alpina] [--dry-run]',
   'alpina add button block/login … [--dir components/alpina] [--dry-run]',
   'alpina add --all [--dir components/alpina] [--dry-run]',
@@ -88,6 +89,18 @@ async function run([command, ...args]) {
   if (command === 'mcp' && !args.length) {
     const { serveCatalog } = await import('./mcp.mjs')
     return serveCatalog(root, registry)
+  }
+  if (command === 'check') {
+    if (!args.length) throw new Error(usage)
+    const { checkDesign, formatFindings } = await import('./design-check.mjs')
+    let count = 0
+    for (const file of args) {
+      const findings = checkDesign(await readFile(file, 'utf8'))
+      count += findings.length
+      console.log(formatFindings(findings, file))
+    }
+    if (count) process.exitCode = 1
+    return
   }
   const entries = [...registry.items, ...await blockEntries()]
   if (command === 'list' && !args.length) {

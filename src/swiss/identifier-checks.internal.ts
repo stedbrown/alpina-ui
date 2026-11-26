@@ -36,7 +36,7 @@ export function ahvIssue(value: string): IdentifierIssue {
 
 /** Validate the nine digits of a CHE identifier according to eCH-0108. */
 export function uidIssue(value: string): IdentifierIssue {
-  const match = /^CHE-?([1-9]\d{2})\.?(\d{3})\.?(\d{3})$/i.exec(value.trim())
+  const match = /^CHE[-\s]?([1-9]\d{2})[.\s]?(\d{3})[.\s]?(\d{3})$/i.exec(value.trim())
   if (!match) return 'format'
   const digits = match.slice(1).join('')
   const weights = [5, 4, 3, 2, 7, 6, 5, 4]

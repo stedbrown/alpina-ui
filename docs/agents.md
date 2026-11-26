@@ -43,13 +43,16 @@ Configure a local **stdio** server in your MCP client. Start `node` with the abs
 }
 ```
 
-Restart or reconnect the client and open its tool list. It should show the three tools below. The process reads the package’s installed reference files and works offline. It runs locally even when the application lives on Vercel.
+Restart or reconnect the client and open its tool list. It should show the four tools below. The process reads the package’s installed reference files and works offline. It runs locally even when the application lives on Vercel.
 
 | Tool | Example arguments | Result |
 | --- | --- | --- |
 | `search_components` | `{"query":"tabella contabile"}` | Ranked identifiers, groups and one-line descriptions. Search component names and tasks in English, German, French, Italian and Romansh. The offline index accepts partial words, omitted accents and misspellings such as `dropdwon`. Use `{}` for the full registry. |
 | `get_component` | `{"name":"dropdown-menu"}` | The import path, public documentation URL, installed usage notes, TypeScript declaration and source paths. Add `"file":"interactive/action-list.tsx"` to read one listed file. |
 | `get_guide` | `{"slug":"build"}` | The installed Markdown guide. Use `{}` to discover guide identifiers. |
+| `check_design` | `{"source":"…","file":"page.tsx"}` | Findings for one file, each with its line and the Alpina replacement: gradients, rounded corners, centered text, hard-coded colors, floating shadows, other typefaces, utility classes on Alpina components, nested cards and extra accent colors. |
+
+Without MCP, run the same review from a terminal with `npx --no-install alpina check src/app/page.tsx`. It exits with status 1 when it finds something, so it can run in CI. Add the comment `alpina-design-ignore` to a line that needs an exception, such as a logo color. The check cannot judge rhythm, alignment or hierarchy. Read the `design` guide for those.
 
 Try asking, “Which Alpina component lets someone filter by canton? Check the installed API and show how to clear the filter.” The agent can look up both canton controls and inspect their props before choosing one. Your editor handles any changes to the application. [MCP tools](https://modelcontextprotocol.io/specification/2025-11-25/server/tools)
 
